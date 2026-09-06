@@ -23,6 +23,9 @@ class TestMascotteLupulus(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
+        if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS"):
+            cls.root = None
+            return
         try:
             cls.root = tk.Tk()
             cls.root.withdraw()

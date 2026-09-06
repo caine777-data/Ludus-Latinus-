@@ -2,6 +2,8 @@
 Tests unitaires pour le module de réactivité responsive app/responsive.py.
 """
 
+import os
+import sys
 import tkinter as tk
 import unittest
 from unittest.mock import MagicMock
@@ -12,6 +14,10 @@ from app.responsive import adapter_geometrie_fenetre, lier_wraplength_dynamique
 class TestResponsive(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS"):
+            cls.has_tk = False
+            cls.root = None
+            return
         try:
             cls.root = tk.Tk()
             cls.root.withdraw()

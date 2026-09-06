@@ -4,6 +4,7 @@ Application d'apprentissage du latin pas à pas pour collégiens.
 """
 
 import argparse
+import os
 import sys
 
 from app.version import APP_NAME, __version__
@@ -36,14 +37,17 @@ def controle_sante():
     try:
         import tkinter
         _dire(f"tkinter        : OK (Tcl/Tk {tkinter.TkVersion})")
-        try:
-            racine = tkinter.Tk()
-            racine.destroy()
-            _dire("fenêtre Tk     : OK")
-        except tkinter.TclError as exc:
-            # Aucun écran disponible (CI sans serveur graphique) : Tk s'est
-            # bien chargé, c'est tout ce que l'on cherche à prouver ici.
-            _dire(f"fenêtre Tk     : pas d'écran ({exc}) — sans gravité")
+        if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS"):
+            _dire("fenêtre Tk     : ignorée sur macOS en CI (pas de WindowServer)")
+        else:
+            try:
+                racine = tkinter.Tk()
+                racine.destroy()
+                _dire("fenêtre Tk     : OK")
+            except tkinter.TclError as exc:
+                # Aucun écran disponible (CI sans serveur graphique) : Tk s'est
+                # bien chargé, c'est tout ce que l'on cherche à prouver ici.
+                _dire(f"fenêtre Tk     : pas d'écran ({exc}) — sans gravité")
     except Exception as exc:
         soucis.append(f"tkinter indisponible : {exc}")
 

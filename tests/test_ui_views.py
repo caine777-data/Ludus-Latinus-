@@ -1,5 +1,7 @@
 """Test d'intégration graphique de toutes les vues de leçons."""
 
+import os
+import sys
 import tkinter as tk
 import unittest
 
@@ -10,6 +12,10 @@ from app.ui import PythonLearnApp
 class TestUIViews(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if sys.platform == "darwin" and os.environ.get("GITHUB_ACTIONS"):
+            cls.root = None
+            cls.app = None
+            return
         try:
             cls.root = tk.Tk()
             cls.root.withdraw()

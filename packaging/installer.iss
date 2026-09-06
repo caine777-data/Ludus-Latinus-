@@ -71,5 +71,5 @@ Name: "{autodesktop}\{#MonApp}"; Filename: "{app}\{#MonExe}"; Tasks: desktopicon
 Filename: "{app}\{#MonExe}"; Description: "{cm:LaunchProgram,{#MonApp}}"; Flags: nowait postinstall skipifsilent
 
 [UninstallDelete]
-; La progression de l'apprenant vit dans %USERPROFILE%\.python-learn et n'est
+; La progression de l'apprenant vit dans %USERPROFILE%\.latin-learn et n'est
 ; volontairement PAS supprimée : désinstaller ne doit pas effacer son travail.
