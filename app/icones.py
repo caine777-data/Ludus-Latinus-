@@ -91,6 +91,7 @@ def get_icones_toolbar():
         "tb_maj": "icone_maj",
         "tb_glossaire": "icone_glossaire",
         "tb_revision": "icone_revision",
+        "tb_succes": "icone_trophee",
         "tb_stats": "icone_stats",
     }
     resultat = {}

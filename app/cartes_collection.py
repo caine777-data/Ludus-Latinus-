@@ -170,11 +170,15 @@ class BoosterOpeningDialog(tk.Toplevel):
                 else:
                     audio.play_coin()
 
-                # Enregistrer dans le profil
                 debloquees = set(self.app.data.get("cartes_collection", []))
                 debloquees.add(c["id"])
                 self.app.data["cartes_collection"] = list(debloquees)
                 prog.save_progress(self.app.data)
+                try:
+                    from app.succes import verifier_tous_succes
+                    verifier_tous_succes(self.app)
+                except Exception:
+                    pass
 
                 if self.cartes_revelees >= len(self.cartes):
                     self.lbl_statut.configure(text="🎉 Toutes les cartes sont révélées ! Ajoutées à ton Album !", fg="#2ecc71")

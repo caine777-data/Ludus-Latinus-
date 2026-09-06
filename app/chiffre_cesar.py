@@ -294,6 +294,11 @@ class ChiffreCesarWindow(tk.Toplevel):
                 fg="#2ecc71"
             )
             self.app.ajouter_sesterces(m["gain"])
+            try:
+                from app.succes import incrementer_stat_succes
+                incrementer_stat_succes(self.app, "cesar_resolus")
+            except Exception:
+                pass
             if self.mission_idx < len(MISSIONS_CESAR) - 1:
                 self.after(2200, self._mission_suivante)
             else:

@@ -31,7 +31,18 @@ _DEFAULT = {"completed": [], "code": {}, "badges": [], "theme": "rome",
             "sesterces": 50, "sound_enabled": True,
             "genre": "garcon", "nom_heros": "Marcus",
             "avatar": {"toge": "lin_blanc", "couronne": "aucune", "accessoire": "stylet", "fond": "villa"},
-            "musee_debloques": ["rome_fondation"]}
+            "musee_debloques": ["rome_fondation"],
+            "cartes_collection": [],
+            "succes_debloques": [],
+            "stats_succes": {
+                "audio_ecoutes": 0,
+                "cesar_resolus": 0,
+                "marche_transactions": 0,
+                "duels_parfaits": 0,
+                "duels_gagnes": 0
+            },
+            "lupulus_costume": "standard",
+            "lupulus_costumes_debloques": ["standard"]}
 
 # Renseigné par load_progress() quand le chargement ne s'est pas passé
 # normalement, pour que l'interface puisse prévenir l'apprenant au lieu
@@ -167,6 +178,9 @@ def normaliser(data):
     """Complète un dict de progression avec les clés par défaut manquantes."""
     for cle, valeur in _DEFAULT.items():
         data.setdefault(cle, valeur.copy() if isinstance(valeur, (dict, list)) else valeur)
+    if isinstance(data.get("stats_succes"), dict):
+        for k, v in _DEFAULT["stats_succes"].items():
+            data["stats_succes"].setdefault(k, v)
     return data
 
 

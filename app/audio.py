@@ -254,10 +254,32 @@ def play_cloche():
     _play_bytes_async(_CACHED_SOUNDS.get("cloche_temple"))
 
 
+_SPEAK_LISTENERS = []
+
+
+def add_speak_listener(callback):
+    """Enregistre un écouteur appelé à chaque phrase prononcée."""
+    if callback not in _SPEAK_LISTENERS:
+        _SPEAK_LISTENERS.append(callback)
+
+
+def remove_speak_listener(callback):
+    """Retire un écouteur de prononciation."""
+    if callback in _SPEAK_LISTENERS:
+        _SPEAK_LISTENERS.remove(callback)
+
+
 def speak_latin(text: str):
     """Prononce un mot ou une phrase en latin à voix haute avec prononciation restituée."""
     if not _SOUND_ENABLED or not text:
         return
+
+    for cb in list(_SPEAK_LISTENERS):
+        try:
+            cb(text)
+        except Exception:
+            pass
+
     try:
         from app.phonetique_latine import transcrire_latin_phonetique
         texte_restitue = transcrire_latin_phonetique(text)

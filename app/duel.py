@@ -268,6 +268,14 @@ class DuelWindow(tk.Toplevel):
         audio.play_foule()
         self.app.ajouter_sesterces(15)
 
+        try:
+            from app.succes import incrementer_stat_succes
+            if (self.score_j1 >= self.max_points and self.score_j2 == 0) or (self.score_j2 >= self.max_points and self.score_j1 == 0):
+                incrementer_stat_succes(self.app, "duels_parfaits")
+            incrementer_stat_succes(self.app, "duels_gagnes")
+        except Exception:
+            pass
+
         messagebox.showinfo(
             "🏆 Triomphe du Colisée !",
             f"Victoire éclatante de {vainqueur} !\n\n"

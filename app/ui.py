@@ -131,6 +131,9 @@ class PythonLearnApp:
         self._init_fonts()
         self._build_layout()
         self.apply_theme()
+        root.bind("<F11>", self._toggle_fullscreen)
+        root.bind("<Escape>", self._quitter_fullscreen_si_actif)
+        audio.add_speak_listener(self._sur_ecoute_audio)
         self._populate_tree()
         self._refresh_badges()
         self._refresh_status()
@@ -288,6 +291,7 @@ class PythonLearnApp:
             ("tb_fiches", self._ouvrir_fiches_a4),
             ("tb_profils", self._ouvrir_profils),
             ("tb_maj", self._ouvrir_mise_a_jour),
+            ("tb_succes", self._ouvrir_succes),
             ("tb_glossaire", self._show_glossaire),
             ("tb_revision", self._revision),
             ("tb_stats", self._show_stats),
@@ -567,6 +571,19 @@ class PythonLearnApp:
     def _ouvrir_fiches_a4(self):
         FichesExportDialog(self.root, self)
 
+    def _ouvrir_succes(self):
+        """Ouvre le Panthéon des Trophées et Succès Romains."""
+        from app.succes import SuccesWindow
+        SuccesWindow(self.root, self)
+
+    def _ouvrir_penderie(self):
+        """Ouvre la Penderie de Lupulus pour habiller la mascotte."""
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.ouvrir_penderie()
+        else:
+            from app.mascotte import PenderieLupulusDialog
+            PenderieLupulusDialog(self.root, self)
+
     def _toggle_sidebar(self):
         """Replie ou déploie la barre latérale pour maximiser l'espace de lecture."""
         if getattr(self, "side_visible", True):
@@ -627,6 +644,53 @@ class PythonLearnApp:
         self.data["sesterces"] = self.data.get("sesterces", 0) + montant
         prog.save_progress(self.data)
         self._refresh_header_stats()
+        try:
+            from app.succes import verifier_tous_succes
+            verifier_tous_succes(self)
+        except Exception:
+            pass
+
+    def _toggle_fullscreen(self, event=None):
+        """Bascule entre le mode plein écran et le mode fenêtré."""
+        est_plein_ecran = not bool(self.root.attributes("-fullscreen"))
+        self.root.attributes("-fullscreen", est_plein_ecran)
+        if est_plein_ecran:
+            self._show_banner("Mode Plein Écran activé 🏛️ (Appuie sur F11 ou Échap pour quitter)", self.C["accent"])
+        return "break"
+
+    def _quitter_fullscreen_si_actif(self, event=None):
+        """Quitte le plein écran si actif lors de l'appui sur Échap."""
+        if bool(self.root.attributes("-fullscreen")):
+            self.root.attributes("-fullscreen", False)
+            self._show_banner("Retour au mode fenêtré", self.C["muted"])
+            return "break"
+
+    def _sur_ecoute_audio(self, texte):
+        """Incrémente la statistique d'écoute de latin et teste le trophée Polyglotte."""
+        try:
+            from app.succes import incrementer_stat_succes
+            incrementer_stat_succes(self, "audio_ecoutes")
+        except Exception:
+            pass
+
+    def notifier_succes(self, succes_info):
+        """Affiche une bannière animée et félicite l'élève lors du déblocage d'un succès."""
+        titre = succes_info.get("titre", "Succès Débloqué")
+        gain = succes_info.get("recompense_sesterces", 0)
+        icone = succes_info.get("icone", "🏆")
+        msg = f"{icone} TROPHÉE DÉBLOQUÉ : {titre} ! (+{gain} Sesterces 🪙)"
+        self._show_banner(msg, "#d4af37")
+        try:
+            audio.play_tuba_fanfare()
+        except Exception:
+            pass
+        self._animer_confettis()
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.set_emotion(
+                "triomphe",
+                f"Trophée antique débloqué : {titre} ! Macte animo !",
+                duree_ms=6000
+            )
 
     def donnees_niveau(self):
         xp = stats.xp_total(self.data.get("completed", []), self.data.get("badges", []))

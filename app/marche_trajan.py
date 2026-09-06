@@ -303,6 +303,11 @@ class MarcheTrajanWindow(tk.Toplevel):
             self.score_session += 10
             # Récompense sesterces
             self.app.ajouter_sesterces(5)
+            try:
+                from app.succes import incrementer_stat_succes
+                incrementer_stat_succes(self.app, "marche_transactions")
+            except Exception:
+                pass
             audio.play_coin()
             self.lbl_score.configure(
                 text=f"Score : {self.score_session} pts | 🪙 {self.app.data.get('sesterces', 0)} Sesterces"
