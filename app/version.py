@@ -13,7 +13,7 @@ puis poser le tag correspondant (ex. `git tag v1.1.0`).
 import re
 from pathlib import Path
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 APP_NAME = "Ludus Latinus"
 APP_ID = "ludus-latinus"
@@ -62,7 +62,7 @@ def calculer_nouvelle_version(actuelle, action, version_manuelle=""):
 def appliquer_version(nouvelle_version):
     # 1. app/version.py
     t_ver = FICHIER_VERSION.read_text(encoding="utf-8")
-    t_ver = re.sub(r'__version__\s*=\s*"[^"]+"', f'__version__ = "{nouvelle_version}"', t_ver)
+    t_ver = re.sub(r'__version__\s*=\s*"[^"]+"', f'__version__ = "1.0.1"', t_ver)
     FICHIER_VERSION.write_text(t_ver, encoding="utf-8")
 
     # 2. pyproject.toml

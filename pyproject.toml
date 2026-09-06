@@ -1,6 +1,6 @@
 [project]
 name = "ludus-latinus"
-version = "1.0.0"
+version = "1.0.1"
 description = "Apprendre le latin pas à pas — L'Aventure Romaine pour collégiens."
 readme = "README.md"
 requires-python = ">=3.10"
