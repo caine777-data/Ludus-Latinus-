@@ -5,16 +5,13 @@ pluie de sesterces, fanfare de tubas et diplôme impérial imprimable.
 """
 
 import math
-from pathlib import Path
 import random
-import time
 import tkinter as tk
-from tkinter import ttk
 import webbrowser
+from pathlib import Path
 
 from app import audio
 from app import progress as prog
-from app.version import APP_NAME, AUTEUR
 
 
 def diplome_triomphe_html(nom_heros, genre, sesterces_total, date_str):
@@ -145,7 +142,7 @@ def diplome_triomphe_html(nom_heros, genre, sesterces_total, date_str):
     <div class="aigle">🦅</div>
     <h1>Diplôme Impérial d'Honneur</h1>
     <div class="sous-titre">Cycle Collège — Classe de 5ème</div>
-    
+
     <div class="texte-intro">Le Sénat de Rome et l'Académie de Ludus Latinus décernent ce titre suprême {accord} :</div>
     <div class="nom-heros">🏛️ {nom_heros} 🏛️</div>
     <div class="citation">« VENI, VIDI, VICI — GLOIRE AU NOUVEL {titre_heros} DU LATIN ! »</div>
@@ -192,17 +189,16 @@ class Triomphe5emeDialog(tk.Toplevel):
         self.configure(bg="#1a0914")
         self.resizable(False, False)
 
-        w, h = 720, 650
-        sw = self.winfo_screenwidth()
-        sh = self.winfo_screenheight()
-        self.geometry(f"{w}x{h}+{(sw - w) // 2}+{(sh - h) // 2}")
+        from app.responsive import adapter_geometrie_fenetre
+        w, h = adapter_geometrie_fenetre(self, 720, 650, min_w=600, min_h=500)
 
         # Liseré d'or supérieur étincelant
         tk.Frame(self, bg="#ffd700", height=6).pack(fill=tk.X, side=tk.TOP)
 
         # Zone Canvas interactive pour l'animation (Rayons tournants + Médaillon + Pluie)
         self.cw = w
-        self.ch = 330
+        self.ch = min(330, max(220, int(h * 0.48)))
+        self._anim_timer = None
         self.canvas = tk.Canvas(self, width=self.cw, height=self.ch, bg="#1a0914", highlightthickness=0)
         self.canvas.pack(fill=tk.X, side=tk.TOP)
 
@@ -243,7 +239,7 @@ class Triomphe5emeDialog(tk.Toplevel):
             ("⚔️ Boss", "10 Vaincus"),
             ("🪙 Récompense", "+200 Sesterces")
         ]
-        for idx, (label, val) in enumerate(sc_cols):
+        for label, val in sc_cols:
             col = tk.Frame(stats_card, bg="#3b162f")
             col.pack(side=tk.LEFT, expand=True)
             tk.Label(col, text=label, font=(app.body.cget("family"), 9), bg="#3b162f", fg="#d4af37").pack()
@@ -395,7 +391,16 @@ class Triomphe5emeDialog(tk.Toplevel):
             )
 
         self.nb_ticks += 1
-        self.after(35, self._animer)
+        self._anim_timer = self.after(35, self._animer)
+
+    def destroy(self):
+        if self._anim_timer:
+            try:
+                self.after_cancel(self._anim_timer)
+            except Exception:
+                pass
+            self._anim_timer = None
+        super().destroy()
 
     def _ouvrir_diplome(self):
         nom = prog.get_nom_heros(self.app.data)

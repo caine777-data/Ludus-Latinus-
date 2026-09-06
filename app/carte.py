@@ -3,12 +3,11 @@ Carte d'Aventure interactive : La Via Appia de Rome.
 Affiche la route des 10 Mondes avec étapes milliaires, étoiles dorées et accès direct.
 """
 
-from pathlib import Path
 import tkinter as tk
 from tkinter import ttk
 
 from app import audio
-from content import CURRICULUM, find_lesson
+from content import CURRICULUM
 
 
 class CarteAventureWindow(tk.Toplevel):
@@ -22,10 +21,8 @@ class CarteAventureWindow(tk.Toplevel):
         self.configure(bg=self.C["panel"])
         self.resizable(True, True)
 
-        w, h = 820, 640
-        sw = self.winfo_screenwidth()
-        sh = self.winfo_screenheight()
-        self.geometry(f"{w}x{h}+{(sw - w) // 2}+{(sh - h) // 2}")
+        from app.responsive import adapter_geometrie_fenetre
+        w, h = adapter_geometrie_fenetre(self, 820, 640, min_w=680, min_h=480)
 
         # Liseré supérieur
         tk.Frame(self, bg=self.C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
@@ -137,11 +134,11 @@ class CarteAventureWindow(tk.Toplevel):
 
                 # Pointeur / Borne
                 rayon = 22 if not is_boss else 28
-                item_circle = self.canvas.create_oval(
+                self.canvas.create_oval(
                     lx - rayon, ly - rayon, lx + rayon, ly + rayon,
                     fill=fill_c, outline="#ffffff", width=2, tags=("milestone", lid)
                 )
-                item_icon = self.canvas.create_text(
+                self.canvas.create_text(
                     lx, ly, text=symb, font=("Segoe UI Emoji", 14 if not is_boss else 18),
                     tags=("milestone", lid)
                 )

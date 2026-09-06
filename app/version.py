@@ -10,9 +10,8 @@ Pour publier une nouvelle version : modifier __version__ ici, committer,
 puis poser le tag correspondant (ex. `git tag v1.1.0`).
 """
 
-import os
-from pathlib import Path
 import re
+from pathlib import Path
 
 __version__ = "1.0.0"
 

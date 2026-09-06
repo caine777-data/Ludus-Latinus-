@@ -136,8 +136,8 @@ class MuseeWindow(tk.Toplevel):
         super().__init__(parent)
         self.app = app
         self.title("Le Musée des Curiosités et Secrets de Rome 📜")
-        self.geometry("880x640")
-        self.minsize(820, 600)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 880, 640, min_w=720, min_h=480)
         self.configure(bg=app.C["bg"])
         self.transient(parent)
 

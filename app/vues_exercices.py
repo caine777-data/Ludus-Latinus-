@@ -26,6 +26,11 @@ class _VueBase:
         self.frame = ttk.Frame(parent)
         self._zones_texte = []
 
+    def lier_redimensionnement(self, *labels):
+        """Met à jour dynamiquement le wraplength des labels au redimensionnement."""
+        from app.responsive import lier_wraplength_dynamique
+        lier_wraplength_dynamique(self.frame, *labels)
+
     def tr(self, cle, **kw):
         return self.app.tr(cle, **kw)
 
@@ -82,6 +87,7 @@ class VuePuzzle(_VueBase):
 
         self.retour = ttk.Label(f, text="", style="TLabel", wraplength=720)
         self.retour.pack(anchor="w", padx=16, pady=8)
+        self.lier_redimensionnement(self.titre, self.retour)
 
     def _ecouter(self):
         phrase = self.lecon.get("latin") or self.source_lbl.cget("text")
@@ -197,6 +203,7 @@ class VueTrou(_VueBase):
 
         self.retour = ttk.Label(f, text="", style="TLabel", wraplength=720)
         self.retour.pack(anchor="w", padx=16, pady=6)
+        self.lier_redimensionnement(self.titre, self.consigne, self.retour)
 
     def _inserer_char(self, c):
         self.saisie.insert(tk.INSERT, c)
@@ -262,7 +269,7 @@ class VueDecodeur(_VueBase):
         legende = ttk.Frame(f)
         legende.pack(anchor="w", padx=16, pady=6)
         ttk.Label(legende, text="Légende :", font=(app.body.cget("family"), 9, "bold")).pack(side=tk.LEFT, padx=(0, 6))
-        for r_id, r_label, r_bg, r_fg in self.ROLES:
+        for _r_id, r_label, r_bg, r_fg in self.ROLES:
             lbl = tk.Label(legende, text=r_label, bg=r_bg, fg=r_fg, padx=6, pady=2,
                            font=(app.body.cget("family"), 9, "bold"))
             lbl.pack(side=tk.LEFT, padx=4)
@@ -276,6 +283,7 @@ class VueDecodeur(_VueBase):
 
         self.retour = ttk.Label(f, text="", style="TLabel", wraplength=720)
         self.retour.pack(anchor="w", padx=16, pady=6)
+        self.lier_redimensionnement(self.titre, self.aide, self.retour)
 
     def _ecouter(self):
         phrase = " ".join(self.lecon.get("mots", []))
@@ -396,9 +404,11 @@ class VueArene(_VueBase):
 
         self.retour = ttk.Label(f, text="", style="TLabel", wraplength=720)
         self.retour.pack(anchor="w", padx=16, pady=6)
+        self.lier_redimensionnement(self.titre, self.question_lbl, self.retour)
 
     def charger(self, lecon):
         from pathlib import Path
+
         from app import progress as prog
 
         self.lecon = lecon

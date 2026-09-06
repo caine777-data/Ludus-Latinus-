@@ -121,8 +121,12 @@ class PythonLearnApp:
 
         audio.set_sound_enabled(self.data.get("sound_enabled", True))
         root.title("Ludus Latinus — L'Aventure Romaine 🏛️")
-        root.geometry("1180x780")
-        root.minsize(980, 660)
+        sw = root.winfo_screenwidth()
+        sh = root.winfo_screenheight()
+        w_init = min(1180, max(760, sw - 60))
+        h_init = min(780, max(520, sh - 80))
+        root.geometry(f"{w_init}x{h_init}")
+        root.minsize(min(760, sw - 20), min(500, sh - 40))
 
         self._init_fonts()
         self._build_layout()
@@ -228,7 +232,7 @@ class PythonLearnApp:
 
     # --------------------------------------------------------------- polices
     def _init_fonts(self):
-        from app.polices import get_famille_titre, get_famille_corps
+        from app.polices import get_famille_corps, get_famille_titre
         f_titre = get_famille_titre()
         f_corps = get_famille_corps()
 
@@ -260,7 +264,6 @@ class PythonLearnApp:
         self._largeur_barre = 0
         self._icones_toolbar = {}     # Références d'icônes romaines 3D
 
-        from app.icones import get_icones_toolbar
         icones_map = get_icones_toolbar()
 
         # Pas de largeur fixe : le nom du thème suffit, et la barre est
@@ -315,13 +318,25 @@ class PythonLearnApp:
         self.outer_paned = outer
         outer.pack(fill=tk.BOTH, expand=True, padx=8, pady=(4, 0))
 
-        # --- barre latérale ---
-        side = ttk.Frame(outer, style="Panel.TFrame", width=340)
+        # --- barre latérale responsive ---
+        side = ttk.Frame(outer, style="Panel.TFrame", width=300)
+        self.side = side
+        self.side_visible = True
         outer.add(side, weight=0)
 
-        self.side_header = tk.Label(side, text=self.tr("side_parcours"),
-                                    font=self.title_font, anchor="w")
-        self.side_header.pack(fill=tk.X, pady=(8, 4), padx=4)
+        side_hdr_box = tk.Frame(side, bg=self.C["panel"])
+        side_hdr_box.pack(fill=tk.X, pady=(8, 4), padx=4)
+
+        self.side_header = tk.Label(side_hdr_box, text=self.tr("side_parcours"),
+                                    font=self.title_font, anchor="w", bg=self.C["panel"], fg=self.C["heading"])
+        self.side_header.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        self.btn_collapse_side = tk.Button(
+            side_hdr_box, text="◀ Réduire", font=(self.body.cget("family"), 8),
+            bg=self.C["editor"], fg=self.C["muted"], relief="flat", padx=6, pady=2, cursor="hand2",
+            command=self._toggle_sidebar
+        )
+        self.btn_collapse_side.pack(side=tk.RIGHT)
 
         self.search_var = tk.StringVar()
         self.search_entry = tk.Entry(side, textvariable=self.search_var)
@@ -331,7 +346,7 @@ class PythonLearnApp:
         tree_wrap = ttk.Frame(side, style="Panel.TFrame")
         tree_wrap.pack(fill=tk.BOTH, expand=True, padx=6, pady=4)
         self.tree = ttk.Treeview(tree_wrap, show="tree", selectmode="browse")
-        self.tree.column("#0", width=320, minwidth=220, stretch=True)
+        self.tree.column("#0", width=280, minwidth=180, stretch=True)
         sb = ttk.Scrollbar(tree_wrap, orient="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=sb.set)
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -360,6 +375,14 @@ class PythonLearnApp:
         main.add(top, weight=3)
         top_title_bar = ttk.Frame(top)
         top_title_bar.pack(fill=tk.X, padx=12, pady=(8, 4))
+
+        self.btn_expand_side = tk.Button(
+            top_title_bar, text="📚 Parcours", font=(self.body.cget("family"), 9, "bold"),
+            bg=self.C["accent"], fg=self.C["sel_fg"], relief="flat", cursor="hand2", padx=8, pady=2,
+            command=self._toggle_sidebar
+        )
+        # N'est affiché que si la barre latérale est repliée
+
         self.lesson_title = ttk.Label(top_title_bar, text="", style="Title.TLabel")
         self.lesson_title.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
@@ -530,6 +553,17 @@ class PythonLearnApp:
 
     def _ouvrir_fiches_a4(self):
         FichesExportDialog(self.root, self)
+
+    def _toggle_sidebar(self):
+        """Replie ou déploie la barre latérale pour maximiser l'espace de lecture."""
+        if getattr(self, "side_visible", True):
+            self.outer_paned.forget(self.side)
+            self.side_visible = False
+            self.btn_expand_side.pack(side=tk.LEFT, padx=(0, 8))
+        else:
+            self.outer_paned.insert(0, self.side, weight=0)
+            self.side_visible = True
+            self.btn_expand_side.pack_forget()
 
     def _ouvrir_profils(self):
         ProfileDialog(self.root, self)
@@ -945,6 +979,19 @@ class PythonLearnApp:
                                        wraplength=720, justify="left")
         self.quiz_feedback.pack(anchor="w", padx=16)
 
+        # Adaptation dynamique du saut de ligne lors du redimensionnement d'écran
+        def _sur_configure_bottom(event):
+            w = max(240, event.width - 40)
+            try:
+                self.mode_label.configure(wraplength=w)
+                self.enonce.configure(wraplength=w)
+                self.feedback.configure(wraplength=w)
+                self.quiz_question.configure(wraplength=w)
+                self.quiz_feedback.configure(wraplength=w)
+            except Exception:
+                pass
+        self.bottom.bind("<Configure>", _sur_configure_bottom)
+
     # ----------------------------------------------------------------- thème
     def apply_theme(self):
         C = self.C
@@ -1099,11 +1146,18 @@ class PythonLearnApp:
     def _zoom(self, delta):
         if delta == 0:
             self.code_size = 11
+            body_size = 11
         else:
-            self.code_size = max(8, min(22, self.code_size + delta))
+            self.code_size = max(8, min(24, self.code_size + delta))
+            actuelle = self.body.cget("size")
+            body_size = max(9, min(20, actuelle + delta))
         self.code_font.configure(size=self.code_size)
+        self.body.configure(size=body_size)
+        self._configure_text_tags()
         self.editor.refresh_font()
         self.editor.highlight()
+        if self.current:
+            self._render_content(self.txt(self.current, "content"))
 
     def _configure_text_tags(self):
         C = self.C
@@ -1833,7 +1887,7 @@ class PythonLearnApp:
                 nom = LEVEL_BADGE_NAMES.get(level["id"], level["title"])
                 nb = len([b for b in self.data["badges"] if not b.startswith("triomphe")])
                 tous_mondes_termines = all(
-                    all(lesson_done(l, self.data["completed"]) for l in lvl["lessons"])
+                    all(lesson_done(les, self.data["completed"]) for les in lvl["lessons"])
                     for lvl in CURRICULUM
                 )
                 if tous_mondes_termines:

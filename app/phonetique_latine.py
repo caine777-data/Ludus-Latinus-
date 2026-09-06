@@ -8,11 +8,9 @@ Applique les règles de prononciation de l'époque cicéronienne :
 - Règle de l'accent tonique romain (pénultième / antépénultième).
 """
 
-import os
 import re
 import subprocess
 import threading
-
 
 # Table de substitution phonétique classique pour la synthèse
 REGLES_PHONETIQUES = [

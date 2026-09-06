@@ -5,9 +5,9 @@ qui réagit aux actions de l'élève (succès, hésitation, erreur, triomphe)
 avec des bulles de dialogues latines et des animations d'émotions.
 """
 
-from pathlib import Path
 import random
 import tkinter as tk
+from pathlib import Path
 
 try:
     from PIL import Image, ImageTk
@@ -90,6 +90,14 @@ class MascotteWidget(tk.Frame):
             justify=tk.LEFT
         )
         self.bulle_lbl.pack(fill=tk.BOTH, expand=True)
+
+        def _sur_config_bulle(event):
+            w = max(100, event.width - 16)
+            try:
+                self.bulle_lbl.configure(wraplength=w)
+            except Exception:
+                pass
+        self.bulle_frame.bind("<Configure>", _sur_config_bulle)
 
         # 2. Conteneur image cliquable
         self.img_lbl = tk.Label(self, bg=bg_col, cursor="hand2")

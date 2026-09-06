@@ -4,6 +4,7 @@ Permet au collégien d'équiper son personnage avec les Sesterces gagnés.
 """
 
 import tkinter as tk
+from pathlib import Path
 from tkinter import messagebox, ttk
 
 from app import audio
@@ -28,17 +29,13 @@ BOUTIQUE = {
     ]
 }
 
-
-from pathlib import Path
-
-
 class AvatarWindow(tk.Toplevel):
     def __init__(self, parent, app):
         super().__init__(parent)
         self.app = app
         self.title("Mon Héros Romain & Boutique du Forum 🏛️")
-        self.geometry("680x700")
-        self.minsize(640, 640)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 680, 680, min_w=580, min_h=480)
         self.configure(bg=app.C["bg"])
         self.transient(parent)
 

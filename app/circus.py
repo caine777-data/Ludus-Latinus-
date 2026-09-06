@@ -3,14 +3,13 @@ Mini-jeu arcade : La Course de Chars au Circus Maximus.
 Affrontement de rapidité entre le Char Bleu (le joueur) et le Char Rouge (le champion rival).
 """
 
-import math
 import random
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox
 
 from app import audio
-from app.animations import declencher_pluie_sesterces
 from app import progress as prog
+from app.animations import declencher_pluie_sesterces
 
 QUESTIONS_CIRCUS = [
     {"q": "Que signifie 'equus' (qui tire ton char) ?", "rep": "Le cheval", "fausses": ["Le loup", "L'aigle", "Le taureau"]},
@@ -37,10 +36,8 @@ class CircusMaximusWindow(tk.Toplevel):
         self.configure(bg=self.C["panel"])
         self.resizable(False, False)
 
-        w, h = 760, 580
-        sw = self.winfo_screenwidth()
-        sh = self.winfo_screenheight()
-        self.geometry(f"{w}x{h}+{(sw - w) // 2}+{(sh - h) // 2}")
+        from app.responsive import adapter_geometrie_fenetre
+        w, h = adapter_geometrie_fenetre(self, 760, 580, min_w=640, min_h=460)
 
         # Liseré supérieur
         tk.Frame(self, bg=self.C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
@@ -52,7 +49,7 @@ class CircusMaximusWindow(tk.Toplevel):
         tk.Label(hdr, text="🏎️ La Grande Course du Circus Maximus",
                  font=(app.title_font.cget("family"), 16, "bold"),
                  bg=self.C["panel"], fg=self.C["accent"]).pack(side=tk.LEFT)
-        self.lap_lbl = tk.Label(hdr, text="🏁 Tour 1/3  •  Distance : 0 m",
+        self.lap_lbl = tk.Label(hdr, text=f"🏁 {nom_h} • Tour 1/3  •  Distance : 0 m",
                                 font=(app.body.cget("family"), 10, "bold"),
                                 bg=self.C["panel"], fg=self.C["fg"])
         self.lap_lbl.pack(side=tk.RIGHT)

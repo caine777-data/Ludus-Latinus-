@@ -3,3 +3,4 @@
 
 pyinstaller>=6.0     # génération des exécutables
 ruff>=0.6            # vérification du style (ruff check .)
+Pillow>=10.0.0       # traitement et rendu d'images haute fidélité

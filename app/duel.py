@@ -6,13 +6,12 @@ Deux joueurs s'affrontent en direct au buzzer :
 Le plus rapide à donner la bonne réponse repousse son adversaire dans l'arène !
 """
 
-from pathlib import Path
 import random
 import tkinter as tk
 from tkinter import messagebox
 
 from app import audio
-from app.polices import police_corps, police_monument, police_titre
+from app.polices import police_corps, police_titre
 
 QUESTIONS_DUEL = [
     {"q": "Que signifie « Lupus » ?", "choix": ["Loup", "Lièvre", "Lune"], "rep": 0},
@@ -47,8 +46,8 @@ class DuelWindow(tk.Toplevel):
         self.C = app.C
 
         self.title("⚔️ Colosseum Duellum — Duel à 2 Joueurs — Ludus Latinus")
-        self.geometry("960x680")
-        self.minsize(860, 580)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 960, 680, min_w=780, min_h=520)
         self.configure(bg="#15161e")
 
         self.score_j1 = 0
@@ -127,7 +126,7 @@ class DuelWindow(tk.Toplevel):
         tk.Label(camp_j1, text="Touches de jeu : [A] [Z] [E]", font=police_corps(10, gras=True), bg="#1a233a", fg="#ffd700").pack(pady=(0, 8))
 
         self.btn_j1 = []
-        for i, let in enumerate(["A", "Z", "E"]):
+        for let in ["A", "Z", "E"]:
             b = tk.Label(camp_j1, text=f"[{let}] Option", font=police_corps(11, gras=True),
                          bg="#243050", fg="#ffffff", bd=1, relief="raised", padx=10, pady=8)
             b.pack(fill=tk.X, pady=4)
@@ -144,7 +143,7 @@ class DuelWindow(tk.Toplevel):
         tk.Label(camp_j2, text="Touches de jeu : [1] [2] [3] ou [J] [K] [L]", font=police_corps(10, gras=True), bg="#3a1a23", fg="#ffd700").pack(pady=(0, 8))
 
         self.btn_j2 = []
-        for i, let in enumerate(["1 / J", "2 / K", "3 / L"]):
+        for let in ["1 / J", "2 / K", "3 / L"]:
             b = tk.Label(camp_j2, text=f"[{let}] Option", font=police_corps(11, gras=True),
                          bg="#502430", fg="#ffffff", bd=1, relief="raised", padx=10, pady=8)
             b.pack(fill=tk.X, pady=4)

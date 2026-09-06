@@ -8,7 +8,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from content import CURRICULUM, find_lesson, traduit
+from content import traduit
 
 
 class TestChampTraduit(unittest.TestCase):

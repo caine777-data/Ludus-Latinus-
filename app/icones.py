@@ -4,8 +4,8 @@ Fournit les icônes thématiques dorées pour la barre d'outils, les boutons,
 les rubans de statistiques et les dialogues.
 """
 
-from pathlib import Path
 import tkinter as tk
+from pathlib import Path
 
 try:
     from PIL import Image, ImageTk

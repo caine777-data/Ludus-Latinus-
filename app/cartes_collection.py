@@ -4,8 +4,8 @@ Fournit une collection interactive de 24 cartes romaines (divinités, monstres, 
 avec raretés (Marbre, Argent, Or, Légendaire), ouverture de paquets et statistiques.
 """
 
-from pathlib import Path
 import tkinter as tk
+from pathlib import Path
 from tkinter import messagebox, ttk
 
 try:
@@ -14,15 +14,15 @@ try:
 except ImportError:
     HAS_PIL = False
 
+from app import audio
+from app import progress as prog
+from app.polices import police_corps, police_titre
 from content.cartes_data import (
     CARTES_COLLECTION,
     CATEGORIES,
-    INDEX_CARTES,
     RARETES,
     tirage_booster,
 )
-from app import audio, progress as prog
-from app.polices import police_corps, police_monument, police_titre
 
 ASSETS_IMAGES = Path(__file__).resolve().parent.parent / "assets" / "images"
 PRIX_BOOSTER = 100
@@ -41,10 +41,9 @@ class CarteWidget(tk.Frame):
         couleur_rarete = rarete["couleur"] if self.debloquee else "#555555"
         bg_card = "#1f2335" if self.debloquee else "#181a24"
 
-        self.configure(bg=bg_card, highlightbackground=couleur_rarete, highlightthickness=2)
-
         w = 140 if taille_reduite else 260
         h = 210 if taille_reduite else 380
+        self.configure(bg=bg_card, highlightbackground=couleur_rarete, highlightthickness=2, width=w, height=h)
 
         # Titre de la carte
         titre_txt = self.carte["nom"] if self.debloquee else "Mystère"
@@ -122,7 +121,8 @@ class BoosterOpeningDialog(tk.Toplevel):
         self.cartes_revelees = 0
 
         self.title("✨ Ouverture de Booster Mythologique — Ludus Latinus")
-        self.geometry("740x520")
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 740, 520, min_w=580, min_h=440)
         self.configure(bg="#1a1b26")
         self.transient(master)
         self.grab_set()
@@ -196,8 +196,8 @@ class AlbumCartesWindow(tk.Toplevel):
         self.C = app.C
 
         self.title("🃏 Album des Cartes Mythologiques — Ludus Latinus")
-        self.geometry("980x700")
-        self.minsize(800, 600)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 980, 700, min_w=760, min_h=520)
         self.configure(bg=self.C["bg"])
 
         self.categorie_filtre = "toutes"

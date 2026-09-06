@@ -3,10 +3,10 @@ Tests unitaires pour la génération de fiches de révision et flashcards A4 / P
 """
 
 import os
-from pathlib import Path
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

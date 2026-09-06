@@ -4,8 +4,8 @@ Permet à plusieurs joueurs (enfants, parents) de jouer sur le même ordinateur
 avec des sauvegardes, sesterces et héros indépendants.
 """
 
-from pathlib import Path
 import tkinter as tk
+from pathlib import Path
 from tkinter import messagebox, simpledialog, ttk
 
 from app import audio

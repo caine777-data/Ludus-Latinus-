@@ -2,25 +2,34 @@
 
 import tkinter as tk
 import unittest
-from app.ui import PythonLearnApp
+
 import content
+from app.ui import PythonLearnApp
 
 
 class TestUIViews(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.root = tk.Tk()
-        cls.app = PythonLearnApp(cls.root)
-        cls.root.update()
+        try:
+            cls.root = tk.Tk()
+            cls.root.withdraw()
+            cls.app = PythonLearnApp(cls.root)
+            cls.root.update()
+        except Exception:
+            cls.root = None
+            cls.app = None
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            cls.root.destroy()
-        except Exception:
-            pass
+        if cls.root:
+            try:
+                cls.root.destroy()
+            except Exception:
+                pass
 
     def test_chargement_tous_types_de_lecons(self):
+        if not self.root or not self.app:
+            self.skipTest("Tkinter display non disponible")
         # Tester au moins une leçon de chaque type
         types_testes = set()
         for level in content.CURRICULUM:

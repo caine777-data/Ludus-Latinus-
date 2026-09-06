@@ -1,8 +1,9 @@
 """Tests unitaires pour les fonctionnalités de Ludus Latinus."""
 
 import unittest
-from app import audio, exercices_latin, stats
+
 import content
+from app import exercices_latin, stats
 
 
 class TestExercicesLatin(unittest.TestCase):

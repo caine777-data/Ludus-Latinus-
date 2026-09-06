@@ -11,7 +11,7 @@ Gère la validation des 5 grands types d'activités linguistiques :
 """
 
 import re
-import unicodedata
+
 
 # ------------------------------------------------------------- Normalisation
 def normaliser_mot(mot: str) -> str:
@@ -33,7 +33,7 @@ def normaliser_texte(texte: str) -> str:
 # ---------------------------------------------------------- 1. Puzzle de mots
 def verifier_puzzle(mots_proposes, solutions_attendues):
     """Vérifie une proposition de puzzle de mots.
-    
+
     mots_proposes : liste de str ou str unique
     solutions_attendues : liste de listes de str, ou liste de str
     """
@@ -68,7 +68,7 @@ def verifier_puzzle(mots_proposes, solutions_attendues):
 # ---------------------------------------------------------- 2. Texte à trous
 def verifier_trou(reponse_saisie: str, solutions_attendues):
     """Vérifie la saisie d'un texte à trous ou d'une désinence.
-    
+
     Tolérant aux majuscules, espaces et accents optionnels.
     """
     saisie = normaliser_mot(reponse_saisie)
@@ -85,13 +85,14 @@ def verifier_trou(reponse_saisie: str, solutions_attendues):
             return True, f"Parfait ! La bonne réponse est bien « {sol} »."
 
     sol_principale = solutions[0] if solutions else ""
-    return False, f"Pas tout à fait. Pense bien à la règle !"
+    indice = f" (Indice : commence par « {sol_principale[:2]}... »)" if len(sol_principale) >= 2 else ""
+    return False, f"Pas tout à fait. Pense bien à la règle !{indice}"
 
 
 # ---------------------------------------------------------- 3. Décodeur de cas
 def verifier_decodeur(roles_attribues: dict, roles_attendus: dict):
     """Vérifie les étiquettes grammaticales attribuées aux mots d'une phrase.
-    
+
     roles_attribues : {0: "sujet", 1: "cod", 2: "verbe"}
     roles_attendus : {0: "sujet", 1: "cod", 2: "verbe"}
     """
@@ -103,7 +104,7 @@ def verifier_decodeur(roles_attribues: dict, roles_attendus: dict):
 
     if not erreurs:
         return True, "Formidable ! Tu as démasqué le rôle de chaque mot dans la phrase !"
-    
+
     nb_err = len(erreurs)
     return False, f"Attention, il y a {nb_err} mot(s) qui n'ont pas le bon rôle grammatical."
 
@@ -113,7 +114,7 @@ def verifier_paire(mot_latin: str, mot_francais: str, paires_attendues: dict):
     """Vérifie si une association instantanée de deux mots est correcte."""
     latin = normaliser_mot(mot_latin)
     fr = normaliser_mot(mot_francais)
-    
+
     attendus_norm = {normaliser_mot(k): normaliser_mot(v) for k, v in paires_attendues.items()}
     if attendus_norm.get(latin) == fr:
         return True
@@ -142,7 +143,7 @@ class EtatCombatArene:
         q = self.question_actuelle()
         if not q:
             return False, "Combat terminé"
-        
+
         correct = (reponse_idx == q.get("answer"))
         if correct:
             self.pv_actuels = max(0, self.pv_actuels - 1)

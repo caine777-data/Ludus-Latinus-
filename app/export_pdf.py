@@ -9,11 +9,11 @@ L'impression ou l'enregistrement en PDF s'effectue directement via le navigateur
 du système ou via la boîte de dialogue d'impression (Ctrl+P).
 """
 
-from pathlib import Path
 import tempfile
 import tkinter as tk
-from tkinter import messagebox
 import webbrowser
+from pathlib import Path
+from tkinter import messagebox
 
 from app.polices import police_corps, police_titre
 
@@ -545,8 +545,8 @@ class FichesExportDialog(tk.Toplevel):
         self.C = app.C
 
         self.title("📄 Fiches & Flashcards A4 / PDF — Ludus Latinus")
-        self.geometry("620x460")
-        self.minsize(560, 420)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 620, 460, min_w=520, min_h=380)
         self.configure(bg="#15161e")
 
         self._build_ui()

@@ -8,7 +8,7 @@ a des solutions cohérentes et des identifiants uniques.
 import unittest
 
 from app import exercices_latin
-from content import CURRICULUM, exercice_count, get_exercice, lesson_items
+from content import CURRICULUM
 
 
 class TestCurriculum(unittest.TestCase):

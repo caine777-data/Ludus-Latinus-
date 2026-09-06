@@ -5,10 +5,9 @@ pour sublimer les illustrations, portraits de héros et monstres de l'applicatio
 """
 
 import math
-import os
 from pathlib import Path
-import tkinter as tk
-from PIL import Image, ImageDraw, ImageOps, ImageTk
+
+from PIL import Image, ImageDraw, ImageTk
 
 ASSETS_DIR = Path(__file__).resolve().parent.parent / "assets" / "images"
 

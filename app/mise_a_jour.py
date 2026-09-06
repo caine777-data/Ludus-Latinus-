@@ -5,17 +5,16 @@ Vérifie les releases sur l'API GitHub et permet de télécharger directement le
 
 import json
 import os
-from pathlib import Path
 import re
-import sys
 import threading
 import tkinter as tk
-from tkinter import messagebox, simpledialog, ttk
 import urllib.error
 import urllib.request
 import webbrowser
+from pathlib import Path
+from tkinter import messagebox, simpledialog, ttk
 
-from app.version import APP_NAME, DEPOT, __version__
+from app.version import DEPOT, __version__
 
 
 def _parse_version(v_str):
@@ -195,7 +194,8 @@ class MiseAJourDialog(tk.Toplevel):
                 msg = f"Erreur GitHub HTTP {exc.code} : {exc.reason}"
             self.after(0, lambda: self._afficher_erreur(msg, owner, repo))
         except Exception as exc:
-            self.after(0, lambda: self._afficher_erreur(f"Erreur de connexion : {exc}", owner, repo))
+            err_msg = f"Erreur de connexion : {exc}"
+            self.after(0, lambda m=err_msg: self._afficher_erreur(m, owner, repo))
 
     def _afficher_resultat(self, data, owner, repo):
         self.release_data = data
@@ -298,7 +298,8 @@ class MiseAJourDialog(tk.Toplevel):
 
             self.after(0, lambda: self._telechargement_termine(dest_fichier))
         except Exception as exc:
-            self.after(0, lambda: self._telechargement_echoue(str(exc)))
+            err_msg = str(exc)
+            self.after(0, lambda m=err_msg: self._telechargement_echoue(m))
 
     def _maj_progression(self, pct, msg):
         self.prog_bar["value"] = pct

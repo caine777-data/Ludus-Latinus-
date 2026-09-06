@@ -1,5 +1,2 @@
-# L'application ne dépend QUE de la bibliothèque standard de Python
-# (tkinter est inclus avec Python sous Windows et macOS).
-# Aucune dépendance à installer pour FAIRE TOURNER l'application.
-#
-# Pour CONSTRUIRE l'exécutable en local, voir requirements-dev.txt.
+# Dépendance pour le traitement d'images haute fidélité (cadres romains, cartes 3D, icônes)
+Pillow>=10.0.0

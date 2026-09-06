@@ -7,9 +7,9 @@ Fournit des effets visuels ludiques sans aucune dépendance tierce :
 - Secousse d'impact (ScreenShake) lors des coups critiques
 """
 
-import math
 import random
 import tkinter as tk
+
 from app import audio
 
 
@@ -122,7 +122,6 @@ def effet_slash_epee(canvas, x1, y1, x2, y2, color="#ffd700", on_complete=None):
 def secousse_widget(widget, distance=8, repetitions=4):
     """Fait trembler visuellement un widget lors d'un impact en arène."""
     try:
-        orig_padx = 0
         offsets = [distance, -distance, distance // 2, 0]
 
         def _step(idx=0):

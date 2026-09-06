@@ -5,12 +5,10 @@ et un atelier libre pour crypter/décrypter des messages secrets entre élèves.
 """
 
 import math
-from pathlib import Path
 import tkinter as tk
-from tkinter import messagebox, ttk
 
 from app import audio
-from app.polices import police_corps, police_monument, police_titre
+from app.polices import police_corps, police_titre
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -75,8 +73,8 @@ class ChiffreCesarWindow(tk.Toplevel):
         self.C = app.C
 
         self.title("📜 L'Atelier Secret : Le Chiffre de César — Ludus Latinus")
-        self.geometry("900x720")
-        self.minsize(800, 620)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 900, 720, min_w=720, min_h=520)
         self.configure(bg=self.C["bg"])
 
         self.cle_actuelle = 3
@@ -306,7 +304,7 @@ class ChiffreCesarWindow(tk.Toplevel):
         else:
             audio.play_wrong()
             self.lbl_feedback_mission.configure(
-                text=f"Ce n'est pas tout à fait le bon message. Règle la roue sur la clé de l'ordre !",
+                text="Ce n'est pas tout à fait le bon message. Règle la roue sur la clé de l'ordre !",
                 fg="#e74c3c"
             )
 

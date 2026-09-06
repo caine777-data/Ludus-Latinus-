@@ -16,17 +16,16 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Education",
 ]
-# L'application ne dépend que de la bibliothèque standard.
-dependencies = []
+dependencies = ["pillow>=10.0.0"]
 
 [project.optional-dependencies]
-dev = ["pyinstaller>=6.0", "ruff>=0.6"]
+dev = ["pyinstaller>=6.0", "ruff>=0.6", "pillow>=10.0.0"]
 
 [project.gui-scripts]
-python-learn = "main:main"
+ludus-latinus = "main:main"
 
 [project.urls]
-Source = "https://github.com/cedricmonna/python-learn"
+Source = "https://github.com/caine777-data/ludus-latinus"
 
 # --------------------------------------------------------------------------
 # Ruff — vérification du style et des erreurs évidentes.

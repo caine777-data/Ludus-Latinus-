@@ -4,13 +4,11 @@ Permet aux élèves de maîtriser les chiffres romains (I, V, X, L, C, D, M)
 et le calcul mental à travers des transactions au cœur du Forum romain.
 """
 
-from pathlib import Path
 import random
 import tkinter as tk
-from tkinter import messagebox, ttk
 
-from app import audio, progress as prog
-from app.polices import police_corps, police_monument, police_titre
+from app import audio
+from app.polices import police_corps, police_titre
 
 # Valeurs des chiffres romains
 VALEURS_ROMAINES = [
@@ -72,8 +70,8 @@ class MarcheTrajanWindow(tk.Toplevel):
         self.C = app.C
 
         self.title("🏺 Le Marché de Trajan — Chiffres Romains & Sesterces")
-        self.geometry("860x650")
-        self.minsize(750, 550)
+        from app.responsive import adapter_geometrie_fenetre
+        adapter_geometrie_fenetre(self, 860, 650, min_w=680, min_h=480)
         self.configure(bg=self.C["bg"])
 
         self.score_session = 0
@@ -183,7 +181,7 @@ class MarcheTrajanWindow(tk.Toplevel):
             b = tk.Button(
                 self.tuiles_frame, text=lettre, font=("Palatino Linotype", 14, "bold"),
                 bg="#d4af37", fg="#1a1b26", width=3, cursor="hand2",
-                command=lambda l=lettre: self._ajouter_lettre(l)
+                command=lambda let=lettre: self._ajouter_lettre(let)
             )
             b.pack(side=tk.LEFT, padx=4)
             self.btn_tuiles.append(b)

@@ -3,24 +3,31 @@ Tests unitaires pour le module app.cadres (cadres romains antiques, médaillons 
 """
 
 import os
-from pathlib import Path
 import sys
 import unittest
-from PIL import Image
+
+try:
+    from PIL import Image
+    HAS_PIL = True
+except ImportError:
+    Image = None
+    HAS_PIL = False
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.cadres import (
+    STYLES_CADRES,
+    charger_photo_romaine,
     creer_cadre_antique,
     creer_cadre_medaillon,
-    charger_photo_romaine,
-    STYLES_CADRES
 )
 
 
 class TestCadresRomains(unittest.TestCase):
 
     def setUp(self):
+        if not HAS_PIL:
+            self.skipTest("Pillow (PIL) non disponible")
         self.img_test = Image.new("RGB", (100, 80), (120, 100, 80))
 
     def test_styles_disponibles(self):

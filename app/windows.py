@@ -47,15 +47,32 @@ class Celebration(tk.Toplevel):
             r = self.canvas.create_rectangle(
                 x, y, x + 6, y + 11, fill=random.choice(couleurs), outline="")
             self.parts.append((r, random.uniform(2.5, 6)))
+        self._tick_id = None
+        self._close_id = None
         self._tick(0)
-        self.after(5000, lambda: self.winfo_exists() and self.destroy())
+        self._close_id = self.after(5000, lambda: self.winfo_exists() and self.destroy())
 
     def _tick(self, n):
         if n > 70 or not self.winfo_exists():
             return
         for r, sp in self.parts:
             self.canvas.move(r, 0, sp)
-        self.after(40, lambda: self._tick(n + 1))
+        self._tick_id = self.after(40, lambda: self._tick(n + 1))
+
+    def destroy(self):
+        if hasattr(self, "_tick_id") and self._tick_id:
+            try:
+                self.after_cancel(self._tick_id)
+            except Exception:
+                pass
+            self._tick_id = None
+        if hasattr(self, "_close_id") and self._close_id:
+            try:
+                self.after_cancel(self._close_id)
+            except Exception:
+                pass
+            self._close_id = None
+        super().destroy()
 
 
 class StepWindow(tk.Toplevel):
@@ -250,6 +267,15 @@ class ExamWindow(tk.Toplevel):
                  font=(self.app.body.cget("family"), 22, "bold")).pack(pady=10)
         ttk.Button(self, text=self.tr("ex_fermer"), command=self.destroy).pack(pady=16)
 
+    def destroy(self):
+        if hasattr(self, "_after_id") and self._after_id:
+            try:
+                self.after_cancel(self._after_id)
+            except Exception:
+                pass
+            self._after_id = None
+        super().destroy()
+
 
 class FlashcardWindow(tk.Toplevel):
     """Révision en cartes : recto (terme) / verso (définition)."""
@@ -279,6 +305,14 @@ class FlashcardWindow(tk.Toplevel):
                               width=44, height=8)
         self.carte.pack(fill=tk.BOTH, expand=True, padx=20, pady=12)
         self.carte.bind("<Button-1>", lambda e: self._retourner())
+
+        def _sur_config(e):
+            if e.widget == self:
+                try:
+                    self.carte.configure(wraplength=max(200, e.width - 40))
+                except Exception:
+                    pass
+        self.bind("<Configure>", _sur_config)
 
         nav = tk.Frame(self, bg=C["bg"])
         nav.pack(pady=10)
