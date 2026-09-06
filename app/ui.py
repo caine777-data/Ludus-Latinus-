@@ -542,6 +542,19 @@ class PythonLearnApp:
     def _ouvrir_album_cartes(self):
         AlbumCartesWindow(self.root, self)
 
+    def ouvrir_booster(self, gratuit=False):
+        """Ouvre un booster de cartes mythologiques 3D."""
+        from app.cartes_collection import PRIX_BOOSTER, BoosterOpeningDialog
+        from content.cartes_data import tirage_booster
+        if not gratuit:
+            sesterces = self.data.get("sesterces", 0)
+            if sesterces < PRIX_BOOSTER:
+                messagebox.showinfo("Boutique de Cartes", f"Il te faut {PRIX_BOOSTER} Sesterces pour acheter un booster.\nTu en as {sesterces} 🪙.")
+                return
+            self.ajouter_sesterces(-PRIX_BOOSTER)
+        cartes = tirage_booster()
+        BoosterOpeningDialog(self.root, self, cartes)
+
     def _ouvrir_marche_trajan(self):
         MarcheTrajanWindow(self.root, self)
 

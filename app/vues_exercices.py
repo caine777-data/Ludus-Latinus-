@@ -490,6 +490,14 @@ class VueArene(_VueBase):
             declencher_pluie_sesterces(self.app.root, count=26)
             self.app.valider_item(self.lecon["id"], "Boss de l'Arène terrassé ! +50 Sesterces 🪙")
             self.app.ajouter_sesterces(50)
+            btn_booster = ttk.Button(
+                self.cadre_options,
+                text="🎁 Ouvrir ton Booster de Victoire (3 Cartes) !",
+                style="Primary.TButton",
+                command=lambda: self.app.ouvrir_booster(gratuit=True)
+            )
+            btn_booster.pack(pady=10)
+            self.boutons_options.append(btn_booster)
             return
 
         q = self.combat.question_actuelle()
