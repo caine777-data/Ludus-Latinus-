@@ -129,6 +129,22 @@ def _init_cache():
         _CACHED_SOUNDS["chariot_whip"] = _generer_wav_tones([
             (1800, 0.02), (450, 0.05), (220, 0.08)
         ], volume=0.50)
+
+        # Son Foule du Colisée : Clameur victorieuse
+        _CACHED_SOUNDS["foule_colisee"] = _generer_wav_tones([
+            (220, 0.08), (277, 0.08), (330, 0.10), (440, 0.12),
+            (554, 0.14), (659, 0.25), (880, 0.35)
+        ], volume=0.50)
+
+        # Son Parchemin Antique : Bruissement de papyrus
+        _CACHED_SOUNDS["parchemin"] = _generer_wav_tones([
+            (320, 0.03), (480, 0.04), (260, 0.05), (380, 0.08)
+        ], volume=0.35)
+
+        # Son Cloche de Sanctuaire / Temple
+        _CACHED_SOUNDS["cloche_temple"] = _generer_wav_tones([
+            (880, 0.10), (1320, 0.40), (1760, 0.30)
+        ], volume=0.45)
     except Exception:
         pass
 
@@ -214,11 +230,41 @@ def play_chariot_whip():
     _play_bytes_async(_CACHED_SOUNDS.get("chariot_whip"))
 
 
+def play_foule():
+    """Clameur victorieuse de la foule du Colisée."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("foule_colisee"))
+
+
+def play_parchemin():
+    """Bruit de papyrus / rouleau déroulé."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("parchemin"))
+
+
+def play_cloche():
+    """Cloche solennelle de sanctuaire romain."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("cloche_temple"))
+
+
 def speak_latin(text: str):
-    """Prononce un mot ou une phrase en latin à voix haute en arrière-plan."""
+    """Prononce un mot ou une phrase en latin à voix haute avec prononciation restituée."""
     if not _SOUND_ENABLED or not text:
         return
-    texte_clean = text.replace('"', ' ').replace("'", " ").strip()
+    try:
+        from app.phonetique_latine import transcrire_latin_phonetique
+        texte_restitue = transcrire_latin_phonetique(text)
+    except Exception:
+        texte_restitue = text
+
+    texte_clean = texte_restitue.replace('"', ' ').replace("'", " ").strip()
 
     def _parler():
         try:
@@ -233,7 +279,7 @@ def speak_latin(text: str):
                 subprocess.run(
                     ["powershell", "-NoProfile", "-Command", ps_script],
                     startupinfo=startupinfo,
-                    creationflags=subprocess.CREATE_NO_WINDOW,
+                    creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
                     timeout=6
                 )
         except Exception:

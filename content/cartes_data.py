@@ -1,0 +1,344 @@
+"""
+Base de données des 24 Cartes Mythologiques et Historiques de Ludus Latinus.
+Chaque carte possède une rareté (commune, rare, épique, légendaire),
+des caractéristiques d'arène (ATK/DEF), une citation latine et son anecdote.
+"""
+
+RARETES = {
+    "commune": {"nom": "Commune", "couleur": "#bdc3c7", "bordure": "#7f8c8d", "taux": 0.60},
+    "rare": {"nom": "Rare", "couleur": "#3498db", "bordure": "#2980b9", "taux": 0.25},
+    "epique": {"nom": "Épique", "couleur": "#9b59b6", "bordure": "#8e44ad", "taux": 0.12},
+    "legendaire": {"nom": "Légendaire", "couleur": "#f1c40f", "bordure": "#d4af37", "taux": 0.03},
+}
+
+CATEGORIES = {
+    "divinites": "⚡ Divinités de l'Olympe",
+    "monstres": "🐉 Monstres & Créatures",
+    "heros": "🛡️ Héros & Légendes",
+    "monuments": "🏛️ Monuments & Histoire",
+}
+
+CARTES_COLLECTION = [
+    # --- 1. Divinités ---
+    {
+        "id": "div_jupiter",
+        "nom": "Jupiter",
+        "nom_latin": "Iuppiter Optimus Maximus",
+        "categorie": "divinites",
+        "rarete": "legendaire",
+        "atk": 98,
+        "def": 95,
+        "citation": "Iuppiter fulmine caelum regit.",
+        "anecdote": "Roi des dieux, maître des cieux et du tonnerre. Son temple sur le Capitole était le cœur sacré de Rome.",
+        "img": "boss_mercure_cadre_140.png",
+    },
+    {
+        "id": "div_minerve",
+        "nom": "Minerve",
+        "nom_latin": "Minerva Sapientissima",
+        "categorie": "divinites",
+        "rarete": "epique",
+        "atk": 86,
+        "def": 92,
+        "citation": "Sapientia et virtus vincunt.",
+        "anecdote": "Déesse de la sagesse, de la stratégie militaire et des artisans. Accompagnée de sa chouette aux yeux d'or.",
+        "img": "boss_sphinx_cadre_140.png",
+    },
+    {
+        "id": "div_mars",
+        "nom": "Mars Ultor",
+        "nom_latin": "Mars Deus Belli",
+        "categorie": "divinites",
+        "rarete": "epique",
+        "atk": 95,
+        "def": 84,
+        "citation": "Si vis pacem, para bellum.",
+        "anecdote": "Père légendaire de Romulus et Rémus, dieu de la guerre et protecteur des légions romaines en marche.",
+        "img": "boss_gladiateur_cadre_140.png",
+    },
+    {
+        "id": "div_neptune",
+        "nom": "Neptune",
+        "nom_latin": "Neptunus Deus Marium",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 88,
+        "def": 87,
+        "citation": "Aequora tument et venti furent.",
+        "anecdote": "Frère de Jupiter, il commande aux mers, aux séismes et aux chevaux avec son trident doré.",
+        "img": "boss_mercure_cadre_140.png",
+    },
+    {
+        "id": "div_mercure",
+        "nom": "Mercure",
+        "nom_latin": "Mercurius Nuntius Deorum",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 82,
+        "def": 78,
+        "citation": "Velociter per auras volat.",
+        "anecdote": "Le messager des dieux aux sandales ailées, protecteur des marchands, des voyageurs et des voleurs d'esprit.",
+        "img": "boss_mercure_cadre_140.png",
+    },
+    {
+        "id": "div_apollon",
+        "nom": "Apollon",
+        "nom_latin": "Apollo Deus Solis",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 85,
+        "def": 80,
+        "citation": "Sol omnibus lucet.",
+        "anecdote": "Dieu de la lumière, des arts, de la poésie et de la médecine, armé d'un arc d'argent et d'une lyre d'or.",
+        "img": "trophee_triomphe_medaillon_130.png",
+    },
+
+    # --- 2. Monstres & Créatures ---
+    {
+        "id": "mon_cerbere",
+        "nom": "Cerbère",
+        "nom_latin": "Cerberus Custos Inferorum",
+        "categorie": "monstres",
+        "rarete": "epique",
+        "atk": 91,
+        "def": 89,
+        "citation": "Tres fauces, una custodia.",
+        "anecdote": "Le colossal molosse à trois têtes qui garde la porte des Enfers pour empêcher les ombres de s'échapper.",
+        "img": "musee_cave_canem.png",
+    },
+    {
+        "id": "mon_meduse",
+        "nom": "Méduse la Gorgone",
+        "nom_latin": "Medusa Gorgonis",
+        "categorie": "monstres",
+        "rarete": "epique",
+        "atk": 94,
+        "def": 75,
+        "citation": "Aspice et lapis eris.",
+        "anecdote": "Créature aux cheveux de serpents dont le regard pétrifie instantanément quiconque croise ses yeux.",
+        "img": "boss_sphinx_cadre_140.png",
+    },
+    {
+        "id": "mon_minotaure",
+        "nom": "Le Minotaure",
+        "nom_latin": "Minotaurus Labyrinthi",
+        "categorie": "monstres",
+        "rarete": "rare",
+        "atk": 89,
+        "def": 85,
+        "citation": "In tenebris labyrinthi mugit.",
+        "anecdote": "Moitié homme, moitié taureau, enfermé dans l'impénétrable dédale bâti par l'architecte Dédale.",
+        "img": "boss_minotaure_cadre_140.png",
+    },
+    {
+        "id": "mon_lion",
+        "nom": "Le Lion de Némée",
+        "nom_latin": "Leo Nemaeus Invictus",
+        "categorie": "monstres",
+        "rarete": "rare",
+        "atk": 88,
+        "def": 96,
+        "citation": "Pellis nullis telis perforabilis.",
+        "anecdote": "Un monstre à la peau impénétrable que ni les flèches ni les épées de bronze ne pouvaient percer.",
+        "img": "boss_lion_cadre_140.png",
+    },
+    {
+        "id": "mon_pegase",
+        "nom": "Pégase",
+        "nom_latin": "Pegasus Alatus",
+        "categorie": "monstres",
+        "rarete": "commune",
+        "atk": 75,
+        "def": 82,
+        "citation": "Ad astra pennis vehor.",
+        "anecdote": "Le sublime étalon ailé capable de voler jusqu'au sommet du mont Olympe auprès des divinités.",
+        "img": "musee_pegase.png",
+    },
+    {
+        "id": "mon_sphinx",
+        "nom": "Le Sphinx",
+        "nom_latin": "Sphinx Aenigmatica",
+        "categorie": "monstres",
+        "rarete": "commune",
+        "atk": 77,
+        "def": 79,
+        "citation": "Solve aenigma aut peries.",
+        "anecdote": "Gardienne ailée au corps de lionne qui dévore ceux qui échouent à résoudre ses énigmes sacrées.",
+        "img": "boss_sphinx_cadre_140.png",
+    },
+
+    # --- 3. Héros & Légendes ---
+    {
+        "id": "her_hercule",
+        "nom": "Hercule",
+        "nom_latin": "Hercules Victor",
+        "categorie": "heros",
+        "rarete": "legendaire",
+        "atk": 99,
+        "def": 94,
+        "citation": "Labor omnia vincit improbus.",
+        "anecdote": "Le plus puissant demi-dieu de l'Antiquité, triomphateur des 12 Travaux réputés impossibles.",
+        "img": "avatar_garcon_medaillon_140.png",
+    },
+    {
+        "id": "her_enee",
+        "nom": "Énée le Troyen",
+        "nom_latin": "Aeneas Filius Veneris",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 87,
+        "def": 90,
+        "citation": "Arma virumque cano.",
+        "anecdote": "Prince troyen échappé de Troie en flammes, ancêtre du peuple romain chanté par Virgile.",
+        "img": "avatar_garcon_medaillon_140.png",
+    },
+    {
+        "id": "her_romulus",
+        "nom": "Romulus",
+        "nom_latin": "Romulus Primus Rex",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 89,
+        "def": 88,
+        "citation": "Roma aeterna hic oritur.",
+        "anecdote": "Fondateur de Rome sur le mont Palatin en 753 av. J.-C., après avoir tracé le sillon sacré avec sa charrue.",
+        "img": "musee_louve.png",
+    },
+    {
+        "id": "her_ulysse",
+        "nom": "Ulysse",
+        "nom_latin": "Ulixes Astutus",
+        "categorie": "heros",
+        "rarete": "rare",
+        "atk": 82,
+        "def": 86,
+        "citation": "Ingenio plus quam viribus.",
+        "anecdote": "Le maître de la ruse, inventeur du cheval de Troie et voyageur intrépide de l'Odyssée.",
+        "img": "avatar_garcon_medaillon_140.png",
+    },
+    {
+        "id": "her_achille",
+        "nom": "Achille",
+        "nom_latin": "Achilles Invulnerabilis",
+        "categorie": "heros",
+        "rarete": "rare",
+        "atk": 96,
+        "def": 74,
+        "citation": "Mors celeris, gloria sempiterna.",
+        "anecdote": "Guerrier invincible plongé dans le fleuve Styx par sa mère Thétis, à l'exception de son talon.",
+        "img": "boss_gladiateur_cadre_140.png",
+    },
+    {
+        "id": "her_julia",
+        "nom": "Julia la Vestale",
+        "nom_latin": "Iulia Heroina Romana",
+        "categorie": "heros",
+        "rarete": "commune",
+        "atk": 80,
+        "def": 83,
+        "citation": "Fortuna audaces iuvat.",
+        "anecdote": "Jeune héroïne romaine courageuse et brillante élève du Ludus Latinus.",
+        "img": "avatar_fille_medaillon_140.png",
+    },
+
+    # --- 4. Monuments & Histoire ---
+    {
+        "id": "mon_cesar",
+        "nom": "Jules César",
+        "nom_latin": "Caius Iulius Caesar",
+        "categorie": "monuments",
+        "rarete": "legendaire",
+        "atk": 97,
+        "def": 91,
+        "citation": "Veni, vidi, vici.",
+        "anecdote": "Général de génie, conquérant de la Gaule et dictateur à vie. Il a franchi le Rubicon pour changer le destin de Rome.",
+        "img": "logo_centurion_120.png",
+    },
+    {
+        "id": "mon_colisee",
+        "nom": "Le Colisée",
+        "nom_latin": "Amphitheatrum Flavium",
+        "categorie": "monuments",
+        "rarete": "epique",
+        "atk": 85,
+        "def": 97,
+        "citation": "Dum stat Colyseus, stat Roma.",
+        "anecdote": "Le plus grand amphithéâtre du monde antique, pouvant accueillir plus de 50 000 spectateurs éblouis.",
+        "img": "musee_gladiateur.png",
+    },
+    {
+        "id": "mon_scutum",
+        "nom": "Le Scutum & Gladius",
+        "nom_latin": "Scutum Legionarium",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 81,
+        "def": 93,
+        "citation": "In scuto fides, in gladio virtus.",
+        "anecdote": "Le bouclier cintré et le glaive court à double tranchant qui ont forgé la discipline des légions romaines.",
+        "img": "musee_legion.png",
+    },
+    {
+        "id": "mon_circus",
+        "nom": "Le Circus Maximus",
+        "nom_latin": "Circus Maximus",
+        "categorie": "monuments",
+        "rarete": "rare",
+        "atk": 88,
+        "def": 80,
+        "citation": "Panem et circenses.",
+        "anecdote": "L'hippodrome géant de Rome où 250 000 spectateurs vibraient au son des chars lancés à pleine vitesse.",
+        "img": "musee_circus.png",
+    },
+    {
+        "id": "mon_via_appia",
+        "nom": "La Via Appia",
+        "nom_latin": "Regina Viarum",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 70,
+        "def": 90,
+        "citation": "Omnes viae Romam ducunt.",
+        "anecdote": "La 'Reine des Voies', première route militaire pavée reliant Rome à Brindisi sur des centaines de milles.",
+        "img": "musee_cave_canem.png",
+    },
+    {
+        "id": "mon_aqueduc",
+        "nom": "L'Aqueduc Romain",
+        "nom_latin": "Aquaeductus Romanus",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 72,
+        "def": 91,
+        "citation": "Aqua vitae et civitatis.",
+        "anecdote": "Prouesse d'ingénierie acheminant des millions de litres d'eau pure des montagnes jusqu'au cœur des cités.",
+        "img": "musee_thermes.png",
+    },
+]
+
+INDEX_CARTES = {c["id"]: c for c in CARTES_COLLECTION}
+
+
+def tirage_booster(nb_cartes=3):
+    """Effectue un tirage aléatoire pondéré par la rareté pour un booster."""
+    import random
+    cartes_par_rarete = {r: [] for r in RARETES}
+    for c in CARTES_COLLECTION:
+        cartes_par_rarete[c["rarete"]].append(c)
+
+    poids = [RARETES[r]["taux"] for r in RARETES]
+    cles_raretes = list(RARETES.keys())
+
+    tirage = []
+    # Garantie : au moins une carte Rare ou supérieure dans chaque booster !
+    for i in range(nb_cartes):
+        if i == nb_cartes - 1 and not any(c["rarete"] in ("rare", "epique", "legendaire") for c in tirage):
+            rarete_choisie = random.choice(["rare", "epique", "legendaire"])
+        else:
+            rarete_choisie = random.choices(cles_raretes, weights=poids, k=1)[0]
+
+        liste_candidats = cartes_par_rarete[rarete_choisie]
+        carte = random.choice(liste_candidats)
+        tirage.append(carte)
+
+    return tirage
