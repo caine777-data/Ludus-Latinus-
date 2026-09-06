@@ -14,12 +14,28 @@ from . import (
     monde8_marche,
     monde9_legion,
     monde10_monstres,
+    monde11_heros,
+    monde12_spqr,
+    monde13_marenostrum,
+    monde14_legions,
+    monde15_imparfait,
+    monde16_parfait,
+    monde17_cesar,
+    monde18_triomphe_rep,
+    monde19_auguste,
+    monde20_chemins,
+    monde21_pompei,
+    monde22_ablatif_absolu,
+    monde23_passif,
+    monde24_infinitive,
+    monde25_poetes,
+    monde26_triomphe_cycle4,
     packs,
 )
 from .glossaire import GLOSSAIRE as GLOSSAIRE
 from .glossaire import get_glossaire as get_glossaire
 
-CURRICULUM = [
+CURRICULUM_5EME = [
     monde1_salve.LEVEL,
     monde2_domus.LEVEL,
     monde3_dieux.LEVEL,
@@ -31,6 +47,78 @@ CURRICULUM = [
     monde9_legion.LEVEL,
     monde10_monstres.LEVEL,
 ]
+
+CURRICULUM_4EME = [
+    monde11_heros.LEVEL,
+    monde12_spqr.LEVEL,
+    monde13_marenostrum.LEVEL,
+    monde14_legions.LEVEL,
+    monde15_imparfait.LEVEL,
+    monde16_parfait.LEVEL,
+    monde17_cesar.LEVEL,
+    monde18_triomphe_rep.LEVEL,
+]
+
+CURRICULUM_3EME = [
+    monde19_auguste.LEVEL,
+    monde20_chemins.LEVEL,
+    monde21_pompei.LEVEL,
+    monde22_ablatif_absolu.LEVEL,
+    monde23_passif.LEVEL,
+    monde24_infinitive.LEVEL,
+    monde25_poetes.LEVEL,
+    monde26_triomphe_cycle4.LEVEL,
+]
+
+CLASSES = {
+    "5eme": {
+        "id": "5eme",
+        "titre": "5ème",
+        "sous_titre": "Les Origines & La Cité",
+        "icone": "🏛️",
+        "description": "Premiers pas à Rome, alphabet, 1re et 2e déclinaisons, présent et mythes fondateurs.",
+        "curriculum": CURRICULUM_5EME,
+    },
+    "4eme": {
+        "id": "4eme",
+        "titre": "4ème",
+        "sous_titre": "La République & L'Expansion",
+        "icone": "⚔️",
+        "description": "3e déclinaison, adjectifs, imparfait, parfait, conquêtes de César et fin de la République.",
+        "curriculum": CURRICULUM_4EME,
+    },
+    "3eme": {
+        "id": "3eme",
+        "titre": "3ème",
+        "sous_titre": "L'Empire & Les Grands Auteurs",
+        "icone": "👑",
+        "description": "4e et 5e déclinaisons, ablatif absolu, proposition infinitive, voix passive, Auguste et Virgile.",
+        "curriculum": CURRICULUM_3EME,
+    },
+}
+
+CURRICULUM = CURRICULUM_5EME + CURRICULUM_4EME + CURRICULUM_3EME
+
+
+def get_curriculum_classe(classe="5eme"):
+    """Retourne les mondes correspondant à la classe choisie ('5eme', '4eme', '3eme')."""
+    if classe in CLASSES:
+        return CLASSES[classe]["curriculum"]
+    return CURRICULUM_5EME
+
+
+def find_classe_for_lesson(lesson_id_or_lesson):
+    """Retourne la classe ('5eme', '4eme', '3eme') à laquelle appartient une leçon."""
+    if isinstance(lesson_id_or_lesson, dict):
+        lid = lesson_id_or_lesson.get("id")
+    else:
+        lid = lesson_id_or_lesson
+    for classe_key, cinfo in CLASSES.items():
+        for level in cinfo["curriculum"]:
+            for lesson in level["lessons"]:
+                if lesson["id"] == lid:
+                    return classe_key
+    return "5eme"
 
 _packs_charges = False
 

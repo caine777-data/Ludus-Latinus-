@@ -48,10 +48,13 @@ from app.windows import (
     StepWindow,
 )
 from content import (
+    CLASSES,
     CURRICULUM,
     ajouter_packs,
     exercice_count,
+    find_classe_for_lesson,
     find_lesson,
+    get_curriculum_classe,
     get_exercice,
     get_glossaire,
     hints_for,
@@ -74,13 +77,8 @@ LARGEUR_ICONE = 3
 _SANS_EDITEUR = ("quiz", "puzzle", "trou", "decodeur", "arene", "predire", "ordre")
 
 LEVEL_BADGE_NAMES = {
-    "monde1": "1 · Premiers pas à Rome 🏛️",
-    "monde2": "2 · Dans la maison romaine 🏠",
-    "monde3": "3 · Les Dieux de l'Olympe ⚡",
-    "monde4": "4 · Les Cas & Travaux d'Hercule 🦁",
-    "monde5": "5 · Les Verbes au Présent ⚔️",
-    "monde6": "6 · Les Gladiateurs & le Colisée 🛡️",
-    "monde7": "7 · Détective des Mots & Devises 📜",
+    level["id"]: f"{i + 1} · {level['title']}"
+    for i, level in enumerate(CURRICULUM)
 }
 
 
@@ -342,6 +340,25 @@ class PythonLearnApp:
         )
         self.btn_collapse_side.pack(side=tk.RIGHT)
 
+        # --- Sélecteur de classe interactif (5ème, 4ème, 3ème) ---
+        self.classe_bar = tk.Frame(side, bg=self.C["panel"])
+        self.classe_bar.pack(fill=tk.X, padx=4, pady=(2, 6))
+
+        self.btn_classes = {}
+        for cid, cinfo in CLASSES.items():
+            b = tk.Button(
+                self.classe_bar,
+                text=f"{cinfo['icone']} {cinfo['titre']}",
+                font=(self.body.cget("family"), 9, "bold"),
+                relief="flat",
+                cursor="hand2",
+                padx=4,
+                pady=3,
+                command=lambda c=cid: self._changer_classe(c),
+            )
+            b.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+            self.btn_classes[cid] = b
+
         self.search_var = tk.StringVar()
         self.search_entry = tk.Entry(side, textvariable=self.search_var)
         self.search_entry.pack(fill=tk.X, padx=6, pady=(0, 4))
@@ -365,11 +382,6 @@ class PythonLearnApp:
         self.badge_bar = tk.Frame(side)
         self.badge_bar.pack(fill=tk.X, padx=6, pady=(2, 8))
         self.badge_labels = {}
-        for level in CURRICULUM:
-            lbl = tk.Label(self.badge_bar, text="🔒",
-                           font=(self.body.cget("family"), 9))
-            lbl.pack(side=tk.LEFT, expand=True)
-            self.badge_labels[level["id"]] = lbl
 
         # --- zone principale ---
         main = ttk.PanedWindow(outer, orient=tk.VERTICAL)
@@ -1123,6 +1135,9 @@ class PythonLearnApp:
         self.search_entry.configure(bg=C["editor"], fg=C["fg"], insertbackground=C["fg"],
                                     relief="flat")
         self.side_header.configure(bg=C["panel"], fg=C["accent"])
+        if hasattr(self, "classe_bar"):
+            self.classe_bar.configure(bg=C["panel"])
+            self._rafraichir_selecteur_classe()
         self.badge_title.configure(bg=C["panel"], fg=C["muted"])
         self.badge_bar.configure(bg=C["panel"])
         self.banner.configure(bg=C["panel"], fg=C["fg"])
@@ -1285,11 +1300,71 @@ class PythonLearnApp:
             self._tip = None
         self._tip_row = None
 
+    def _rafraichir_selecteur_classe(self):
+        if not hasattr(self, "btn_classes"):
+            return
+        active = self.data.get("classe_active", "5eme")
+        for cid, btn in self.btn_classes.items():
+            cinfo = CLASSES.get(cid, {})
+            if cid == active:
+                btn.configure(
+                    text=f"{cinfo.get('icone', '')} {cinfo.get('titre', cid)}",
+                    bg=self.C["accent"],
+                    fg=self.C["sel_fg"],
+                    font=(self.body.cget("family"), 9, "bold"),
+                    relief="flat",
+                )
+            else:
+                btn.configure(
+                    text=f"{cinfo.get('icone', '')} {cinfo.get('titre', cid)}",
+                    bg=self.C["editor"],
+                    fg=self.C["muted"],
+                    font=(self.body.cget("family"), 9, "normal"),
+                    relief="flat",
+                )
+
+    def _sauvegarder(self):
+        """Sauvegarde immédiatement l'état courant de la progression."""
+        prog.save_progress(self.data)
+
+    def _changer_classe(self, classe):
+        if classe not in CLASSES:
+            return
+        self.data["classe_active"] = classe
+        self._sauvegarder()
+        self._rafraichir_selecteur_classe()
+        self._populate_tree()
+        self._refresh_badges()
+        self._refresh_status()
+
+        # Si la leçon actuelle n'appartient pas à la classe choisie, basculer sur la 1re
+        cur_classe = find_classe_for_lesson(self.current) if self.current else None
+        if cur_classe != classe:
+            mondes = get_curriculum_classe(classe)
+            target_lesson = None
+            for lvl in mondes:
+                for les in lvl["lessons"]:
+                    if not lesson_done(les, self.data["completed"]):
+                        target_lesson = les
+                        break
+                if target_lesson:
+                    break
+            if not target_lesson and mondes and mondes[0]["lessons"]:
+                target_lesson = mondes[0]["lessons"][0]
+            if target_lesson:
+                self._charger_item(target_lesson["id"])
+
     def _populate_tree(self):
         self.tree.delete(*self.tree.get_children())
         self.item_to_lesson = {}
         q = self.search_query
-        for level in CURRICULUM:
+        if q:
+            mondes = CURRICULUM
+        else:
+            classe = self.data.get("classe_active", "5eme")
+            mondes = get_curriculum_classe(classe)
+
+        for level in mondes:
             lessons = [lecon for lecon in level["lessons"]
                        if not q or q in self.txt(lecon, "title").lower()]
             if q and not lessons:
@@ -1319,6 +1394,14 @@ class PythonLearnApp:
                                         tags=("done",) if d else ())
                 self.item_to_lesson[node] = lesson
 
+        if self.current:
+            for node, les in self.item_to_lesson.items():
+                if les.get("id") == self.current.get("id"):
+                    self._ignore_next_select = True
+                    self.tree.selection_set(node)
+                    self.tree.see(node)
+                    break
+
     def _suffixe_lecon(self, lesson):
         """Petits marqueurs en fin de titre : ★ favori, 📝 note."""
         suffixe = ""
@@ -1330,11 +1413,26 @@ class PythonLearnApp:
 
     def _refresh_badges(self):
         C = self.C
-        for level in CURRICULUM:
-            lbl = self.badge_labels[level["id"]]
-            earned = level["id"] in self.data["badges"]
-            lbl.configure(text="🏅" if earned else "🔒", bg=C["panel"],
-                          fg=C["accent"] if earned else C["muted"])
+        classe = self.data.get("classe_active", "5eme")
+        mondes = get_curriculum_classe(classe)
+        info_classe = CLASSES.get(classe, CLASSES["5eme"])
+        if hasattr(self, "badge_title"):
+            self.badge_title.configure(text=f"{self.tr('side_badges')} ({info_classe['titre']})")
+        if hasattr(self, "badge_bar"):
+            for w in self.badge_bar.winfo_children():
+                w.destroy()
+            self.badge_labels = {}
+            for level in mondes:
+                earned = level["id"] in self.data["badges"]
+                lbl = tk.Label(
+                    self.badge_bar,
+                    text="🏅" if earned else "🔒",
+                    font=(self.body.cget("family"), 9),
+                    bg=C["panel"],
+                    fg=C["accent"] if earned else C["muted"],
+                )
+                lbl.pack(side=tk.LEFT, expand=True)
+                self.badge_labels[level["id"]] = lbl
 
     def _select_first_incomplete(self):
         for node, lesson in self.item_to_lesson.items():
@@ -1963,18 +2061,40 @@ class PythonLearnApp:
                 self._refresh_status()
                 nom = LEVEL_BADGE_NAMES.get(level["id"], level["title"])
                 nb = len([b for b in self.data["badges"] if not b.startswith("triomphe")])
+                mondes_5eme = get_curriculum_classe("5eme")
+                tous_5eme = all(
+                    all(lesson_done(les, self.data["completed"]) for les in lvl["lessons"])
+                    for lvl in mondes_5eme
+                )
+                if tous_5eme and "triomphe_5eme" not in self.data["badges"]:
+                    prog.award_badge(self.data, "triomphe_5eme")
+                    self.ajouter_sesterces(200)
+                    self.reagir_triomphe("Triomphe de 5ème ! Tu as conquis tout le programme des Origines !")
+                    self._animer_confettis()
+                    from app.triomphe import Triomphe5emeDialog
+                    self.root.after(300, lambda: Triomphe5emeDialog(self.root, self))
+
+                mondes_4eme = get_curriculum_classe("4eme")
+                tous_4eme = all(
+                    all(lesson_done(les, self.data["completed"]) for les in lvl["lessons"])
+                    for lvl in mondes_4eme
+                )
+                if tous_4eme and "triomphe_4eme" not in self.data["badges"]:
+                    prog.award_badge(self.data, "triomphe_4eme")
+                    self.ajouter_sesterces(250)
+                    self.reagir_triomphe("Triomphe de 4ème ! Tu as maîtrisé la République et ses héros !")
+                    self._animer_confettis()
+
                 tous_mondes_termines = all(
                     all(lesson_done(les, self.data["completed"]) for les in lvl["lessons"])
                     for lvl in CURRICULUM
                 )
                 if tous_mondes_termines:
-                    if "triomphe_5eme" not in self.data["badges"]:
-                        prog.award_badge(self.data, "triomphe_5eme")
-                        self.ajouter_sesterces(200)
-                    self.reagir_triomphe("Triomphe absolu ! Tous les mondes de Rome sont conquis !")
+                    if "triomphe_cycle4" not in self.data["badges"]:
+                        prog.award_badge(self.data, "triomphe_cycle4")
+                        self.ajouter_sesterces(500)
+                    self.reagir_triomphe("Triomphe absolu du Cycle 4 ! Tout le collège est conquis !")
                     self._animer_confettis()
-                    from app.triomphe import Triomphe5emeDialog
-                    self.root.after(300, lambda: Triomphe5emeDialog(self.root, self))
                 else:
                     msg = f"Parcours « {nom} » terminé ! Badge {nb}/{len(CURRICULUM)}."
                     self.reagir_triomphe(f"Optime ! Tu as décroché le badge {nom} !")
@@ -2274,6 +2394,14 @@ class PythonLearnApp:
         lesson = find_lesson(lid)
         if lesson is None:
             return
+        target_classe = find_classe_for_lesson(lesson)
+        if target_classe != self.data.get("classe_active", "5eme"):
+            self.data["classe_active"] = target_classe
+            self._sauvegarder()
+            self._rafraichir_selecteur_classe()
+            self._populate_tree()
+            self._refresh_badges()
+            self._refresh_status()
         for node, lecon in self.item_to_lesson.items():
             if lecon["id"] == lid:
                 if self.tree.selection() != (node,):

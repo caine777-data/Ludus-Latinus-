@@ -20,7 +20,7 @@ from content.cartes_data import (
 class TestCartesCollection(unittest.TestCase):
 
     def test_nombre_de_cartes(self):
-        self.assertEqual(len(CARTES_COLLECTION), 24, "L'album doit contenir exactement 24 cartes")
+        self.assertEqual(len(CARTES_COLLECTION), 32, "L'album doit contenir exactement 32 cartes (Cycle 4 complet)")
 
     def test_categories_valides(self):
         for c in CARTES_COLLECTION:
@@ -34,11 +34,14 @@ class TestCartesCollection(unittest.TestCase):
                 self.assertTrue(c["def"] > 0)
 
     def test_index_cartes(self):
-        self.assertEqual(len(INDEX_CARTES), 24)
+        self.assertEqual(len(INDEX_CARTES), 32)
         self.assertIn("div_jupiter", INDEX_CARTES)
         self.assertIn("mon_cerbere", INDEX_CARTES)
         self.assertIn("her_hercule", INDEX_CARTES)
         self.assertIn("mon_cesar", INDEX_CARTES)
+        self.assertIn("her_vercingetorix", INDEX_CARTES)
+        self.assertIn("mon_auguste", INDEX_CARTES)
+        self.assertIn("her_virgile", INDEX_CARTES)
 
     def test_tirage_booster(self):
         booster = tirage_booster(3)

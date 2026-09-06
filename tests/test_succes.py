@@ -146,6 +146,18 @@ class TestSucces(unittest.TestCase):
         self.assertTrue(any(s["id"] == "invincible" for s in nouveaux))
         self.assertIn("invincible", self.app.data["succes_debloques"])
 
+    def test_deblocage_triomphes(self):
+        """Vérifie le déblocage des trophées de 4ème et Cycle 4."""
+        self.app.data["badges"] = ["triomphe_4eme"]
+        nouveaux = verifier_tous_succes(self.app)
+        self.assertTrue(any(s["id"] == "triomphe_4eme" for s in nouveaux))
+        self.assertIn("triomphe_4eme", self.app.data["succes_debloques"])
+
+        self.app.data["badges"] = ["triomphe_4eme", "triomphe_cycle4"]
+        nouveaux2 = verifier_tous_succes(self.app)
+        self.assertTrue(any(s["id"] == "triomphe_cycle4" for s in nouveaux2))
+        self.assertIn("triomphe_cycle4", self.app.data["succes_debloques"])
+
     def test_succes_window_instantiation(self):
         """Vérifie que la fenêtre SuccesWindow se construit sans erreur."""
         if not self.root:

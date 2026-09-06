@@ -82,6 +82,30 @@ CATALOGUE_SUCCES = {
         "cle_stat": "marche_transactions",
         "unite": "transactions",
     },
+    "triomphe_4eme": {
+        "id": "triomphe_4eme",
+        "titre": "Triomphateur de la République",
+        "icone": "🦅",
+        "desc": "Conquérir l'ensemble du programme de 4ème (Mondes 11 à 18) et débloquer les lauriers républicains.",
+        "desc_secrete": "??? Trophée républicain : Conquiers l'intégralité du programme de 4ème !",
+        "secret": True,
+        "recompense_sesterces": 60,
+        "seuil": 1,
+        "cle_stat": "triomphe_4eme",
+        "unite": "programme 4e conquis",
+    },
+    "triomphe_cycle4": {
+        "id": "triomphe_cycle4",
+        "titre": "Maître du Collège",
+        "icone": "🏆",
+        "desc": "Accomplir l'ensemble du Cycle 4 (26 mondes) de l'entrée en 5ème jusqu'au Brevet en 3ème.",
+        "desc_secrete": "??? Trophée suprême : Triomphe sur l'intégralité du Cycle 4 du Collège !",
+        "secret": True,
+        "recompense_sesterces": 100,
+        "seuil": 1,
+        "cle_stat": "triomphe_cycle4",
+        "unite": "cycle 4 achevé",
+    },
 }
 
 
@@ -98,6 +122,10 @@ def valeur_progression_succes(data, id_succes):
     elif id_succes == "collectionneur":
         cartes = data.get("cartes_collection", [])
         return len(cartes) if isinstance(cartes, (list, set, tuple)) else 0
+    elif id_succes == "triomphe_4eme":
+        return 1 if "triomphe_4eme" in data.get("badges", []) else 0
+    elif id_succes == "triomphe_cycle4":
+        return 1 if "triomphe_cycle4" in data.get("badges", []) else 0
     else:
         stats = data.get("stats_succes", {})
         return int(stats.get(info["cle_stat"], 0))

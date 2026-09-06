@@ -399,6 +399,31 @@ class AccueilWindow(tk.Toplevel):
             tk.Label(case, text=legende, bg=C["panel"], fg=C["muted"],
                      font=("", 8)).pack()
 
+        # --- sélecteur de classe interactif (5e, 4e, 3e) -----------------
+        from content import CLASSES
+        classe_box = tk.Frame(self, bg=C["panel"])
+        classe_box.pack(pady=(4, 8))
+        tk.Label(classe_box, text="Classe ciblée :", bg=C["panel"], fg=C["heading"],
+                 font=("", 9, "bold")).pack(side=tk.LEFT, padx=(0, 6))
+
+        self.btn_acc_classes = {}
+        for cid, cinfo in CLASSES.items():
+            est_active = (cid == app.data.get("classe_active", "5eme"))
+            btn_c = tk.Button(
+                classe_box,
+                text=f"{cinfo['icone']} {cinfo['titre']}",
+                font=("", 9, "bold" if est_active else "normal"),
+                bg=C["accent"] if est_active else C["editor"],
+                fg=C["sel_fg"] if est_active else C["muted"],
+                relief="flat",
+                cursor="hand2",
+                padx=8,
+                pady=2,
+                command=lambda c=cid: self._choisir_classe(c),
+            )
+            btn_c.pack(side=tk.LEFT, padx=3)
+            self.btn_acc_classes[cid] = btn_c
+
         # --- progression -------------------------------------------------
         faits, total = resume["faits"], max(1, resume["total"])
         tk.Label(self, text=app.tr("acc_progression", faits=faits, total=resume["total"]),
@@ -463,6 +488,18 @@ class AccueilWindow(tk.Toplevel):
 
     def _basculer(self):
         prog.set_accueil_au_demarrage(self.app.data, self.au_demarrage.get())
+
+    def _choisir_classe(self, classe):
+        from content import CLASSES
+        if classe in CLASSES and hasattr(self.app, "_changer_classe"):
+            self.app._changer_classe(classe)
+            for cid, btn in self.btn_acc_classes.items():
+                actif = (cid == classe)
+                btn.configure(
+                    bg=self.C["accent"] if actif else self.C["editor"],
+                    fg=self.C["sel_fg"] if actif else self.C["muted"],
+                    font=("", 9, "bold" if actif else "normal"),
+                )
 
 
 class PaletteWindow(tk.Toplevel):

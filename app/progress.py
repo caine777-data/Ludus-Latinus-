@@ -42,7 +42,8 @@ _DEFAULT = {"completed": [], "code": {}, "badges": [], "theme": "rome",
                 "duels_gagnes": 0
             },
             "lupulus_costume": "standard",
-            "lupulus_costumes_debloques": ["standard"]}
+            "lupulus_costumes_debloques": ["standard"],
+            "classe_active": "5eme"}
 
 # Renseigné par load_progress() quand le chargement ne s'est pas passé
 # normalement, pour que l'interface puisse prévenir l'apprenant au lieu

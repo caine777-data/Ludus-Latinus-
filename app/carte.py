@@ -7,7 +7,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from app import audio
-from content import CURRICULUM
+from content import CLASSES, get_curriculum_classe
 
 
 class CarteAventureWindow(tk.Toplevel):
@@ -21,6 +21,10 @@ class CarteAventureWindow(tk.Toplevel):
         self.configure(bg=self.C["panel"])
         self.resizable(True, True)
 
+        self.classe_active = self.app.data.get("classe_active", "5eme")
+        if self.classe_active not in CLASSES:
+            self.classe_active = "5eme"
+
         from app.responsive import adapter_geometrie_fenetre
         w, h = adapter_geometrie_fenetre(self, 820, 640, min_w=680, min_h=480)
 
@@ -28,18 +32,35 @@ class CarteAventureWindow(tk.Toplevel):
         tk.Frame(self, bg=self.C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
 
         # En-tête
-        hdr = tk.Frame(self, bg=self.C["panel"], padx=18, pady=10)
-        hdr.pack(fill=tk.X)
-        tk.Label(hdr, text="🗺️ La Via Appia — Route Impériale des 10 Mondes",
-                 font=(app.title_font.cget("family"), 16, "bold"),
-                 bg=self.C["panel"], fg=self.C["accent"]).pack(side=tk.LEFT)
+        self.hdr = tk.Frame(self, bg=self.C["panel"], padx=18, pady=10)
+        self.hdr.pack(fill=tk.X)
+        self.lbl_titre_carte = tk.Label(self.hdr, text="",
+                 font=(app.title_font.cget("family"), 15, "bold"),
+                 bg=self.C["panel"], fg=self.C["accent"])
+        self.lbl_titre_carte.pack(side=tk.LEFT)
 
-        faits = len(app.data.get("completed", []))
-        total_items = sum(len(lvl["lessons"]) for lvl in CURRICULUM)
-        pct = int(100 * faits / max(1, total_items))
-        tk.Label(hdr, text=f"Progression : {faits}/{total_items} leçons ({pct}%)",
+        self.lbl_progression = tk.Label(self.hdr, text="",
                  font=(app.body.cget("family"), 10, "bold"),
-                 bg=self.C["panel"], fg=self.C["fg"]).pack(side=tk.RIGHT)
+                 bg=self.C["panel"], fg=self.C["fg"])
+        self.lbl_progression.pack(side=tk.RIGHT)
+
+        # Sélecteur de classe à onglets
+        self.tabs_frame = tk.Frame(self, bg=self.C["panel"], padx=18)
+        self.tabs_frame.pack(fill=tk.X, pady=(0, 8))
+        self.btn_tabs = {}
+        for cid, info in CLASSES.items():
+            b = tk.Button(
+                self.tabs_frame,
+                text=f"{info['icone']} {info['titre']} · {info['sous_titre']}",
+                font=(app.body.cget("family"), 9, "bold"),
+                relief="flat",
+                cursor="hand2",
+                padx=10,
+                pady=4,
+                command=lambda c=cid: self._changer_classe(c),
+            )
+            b.pack(side=tk.LEFT, padx=(0, 8))
+            self.btn_tabs[cid] = b
 
         # Zone centrale défilante avec Canvas
         wrap = tk.Frame(self, bg=self.C["bg"])
@@ -54,23 +75,53 @@ class CarteAventureWindow(tk.Toplevel):
 
         self.canvas.bind("<Configure>", lambda e: self._dessiner_carte())
         self.bind("<MouseWheel>", lambda e: self.canvas.yview_scroll(int(-1 * (e.delta / 120)), "units"))
+        self._rafraichir_onglets()
+
+    def _rafraichir_onglets(self):
+        for cid, btn in self.btn_tabs.items():
+            if cid == self.classe_active:
+                btn.configure(bg=self.C["accent"], fg=self.C["sel_fg"])
+            else:
+                btn.configure(bg=self.C["editor"], fg=self.C["fg"])
+
+    def _changer_classe(self, classe):
+        if classe in CLASSES:
+            self.classe_active = classe
+            self.app.data["classe_active"] = classe
+            self.app._sauvegarder()
+            self.app._rafraichir_selecteur_classe()
+            self.app._populate_tree()
+            self.app._refresh_badges()
+            self._rafraichir_onglets()
+            self._dessiner_carte()
 
     def _dessiner_carte(self):
+        mondes = get_curriculum_classe(self.classe_active)
+        info_classe = CLASSES.get(self.classe_active, CLASSES["5eme"])
+        self.lbl_titre_carte.configure(text=f"🗺️ La Via Appia — {info_classe['titre']} : {info_classe['sous_titre']}")
+
+        completed_set = set(self.app.data.get("completed", []))
+        total_items = sum(len(lvl["lessons"]) for lvl in mondes)
+        faits = sum(1 for lvl in mondes for les in lvl["lessons"] if les["id"] in completed_set)
+        pct = int(100 * faits / max(1, total_items))
+        self.lbl_progression.configure(text=f"Progression {info_classe['titre']} : {faits}/{total_items} leçons ({pct}%)")
+
+        self._rafraichir_onglets()
+
         self.canvas.delete("all")
         cw = max(700, self.canvas.winfo_width())
 
-        # Calculer la hauteur totale nécessaire pour les 10 mondes
+        # Calculer la hauteur totale nécessaire
         monde_height = 200
-        total_h = len(CURRICULUM) * monde_height + 120
+        total_h = len(mondes) * monde_height + 120
         self.canvas.configure(scrollregion=(0, 0, cw, total_h))
 
-        completed_set = set(self.app.data.get("completed", []))
         echecs = self.app.data.get("echecs", {})
 
         # Tracé de la route romaine pavée sinueuse
         centre_x = cw // 2
         points_route = []
-        for i in range(len(CURRICULUM)):
+        for i in range(len(mondes)):
             y = 60 + i * monde_height + 80
             # Sinuosité alternée gauche/droite
             offset_x = -80 if (i % 2 == 1) else 80
@@ -85,7 +136,7 @@ class CarteAventureWindow(tk.Toplevel):
             self.canvas.create_line(x1, y1, x2, y2, fill="#f5deb3", width=4, dash=(12, 10))
 
         # Placer chaque Monde
-        for i, lvl in enumerate(CURRICULUM):
+        for i, lvl in enumerate(mondes):
             y_base = 60 + i * monde_height
             x_centre = points_route[i][0]
 

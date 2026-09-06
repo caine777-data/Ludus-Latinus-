@@ -14,9 +14,10 @@ from app import audio
 from app.polices import police_corps, police_titre
 
 QUESTIONS_DUEL = [
+    # --- 5ème : Vocabulaire fondamental & 1re/2e déclinaisons ---
     {"q": "Que signifie « Lupus » ?", "choix": ["Loup", "Lièvre", "Lune"], "rep": 0},
     {"q": "Que signifie « Canis » ?", "choix": ["Chien", "Chat", "Cheval"], "rep": 0},
-    {"q": "Quel est le sujet en latin ?", "choix": ["Le Nominatif", "L'Accusatif", "L'Ablatif"], "rep": 0},
+    {"q": "Quel est le cas du sujet en latin ?", "choix": ["Le Nominatif", "L'Accusatif", "L'Ablatif"], "rep": 0},
     {"q": "Que signifie « Domus » ?", "choix": ["Maison", "Temple", "Jardin"], "rep": 0},
     {"q": "Que signifie « Bellum » ?", "choix": ["Guerre", "Beauté", "Bœuf"], "rep": 0},
     {"q": "Qui est le dieu de la guerre ?", "choix": ["Mars", "Jupiter", "Neptune"], "rep": 0},
@@ -24,16 +25,30 @@ QUESTIONS_DUEL = [
     {"q": "Que signifie « Mater » ?", "choix": ["Mère", "Père", "Frère"], "rep": 0},
     {"q": "Que signifie « Aqua » ?", "choix": ["Eau", "Feu", "Terre"], "rep": 0},
     {"q": "Que signifie « Ignis » ?", "choix": ["Feu", "Glace", "Vent"], "rep": 0},
-    {"q": "Que signifie « Silva » ?", "choix": ["Forêt", "Fleuve", "Montagne"], "rep": 0},
-    {"q": "Que signifie « Schola » ?", "choix": ["École", "Boutique", "Caserne"], "rep": 0},
     {"q": "Quel cas exprime le COD ?", "choix": ["L'Accusatif", "Le Génitif", "Le Datif"], "rep": 0},
     {"q": "Que signifie « Servus » ?", "choix": ["Esclave", "Maître", "Général"], "rep": 0},
     {"q": "Que signifie « Puella » ?", "choix": ["Jeune fille", "Garçon", "Reine"], "rep": 0},
-    {"q": "Que signifie « Arbor » ?", "choix": ["Arbre", "Bateau", "Fleur"], "rep": 0},
-    {"q": "Que signifie « Mare » ?", "choix": ["Mer", "Soleil", "Ciel"], "rep": 0},
     {"q": "Que signifie « Gladius » ?", "choix": ["Glaive", "Bouclier", "Casque"], "rep": 0},
-    {"q": "Que signifie « Scutum » ?", "choix": ["Bouclier", "Flèche", "Char"], "rep": 0},
     {"q": "Que signifie « Auriga » ?", "choix": ["Conducteur de char", "Gladiateur", "Sénateur"], "rep": 0},
+
+    # --- 4ème : 3e déclinaison, temps du passé & République ---
+    {"q": "Que signifie « Rex » (3e déclinaison) ?", "choix": ["Roi", "Loi", "Reine"], "rep": 0},
+    {"q": "Que signifie « Civis » (3e déclinaison) ?", "choix": ["Citoyen", "Cité", "Soldat"], "rep": 0},
+    {"q": "Que signifie « Mare » ?", "choix": ["Mer", "Soleil", "Ciel"], "rep": 0},
+    {"q": "Que signifie « Fortis » (adjectif 2e classe) ?", "choix": ["Courageux / Fort", "Lâche", "Rapide"], "rep": 0},
+    {"q": "Quel suffixe caractérise l'imparfait latin ?", "choix": ["-ba-", "-vi-", "-re-"], "rep": 0},
+    {"q": "Quelle est la désinence du parfait à la 1re personne du singulier ?", "choix": ["-i", "-o", "-m"], "rep": 0},
+    {"q": "Que signifie « Veni, vidi, vici » de César ?", "choix": ["Je suis venu, j'ai vu, j'ai vaincu", "Vivre, aimer, mourir", "Parler, écouter, comprendre"], "rep": 0},
+    {"q": "Que signifie l'abréviation « SPQR » ?", "choix": ["Le Sénat et le Peuple Romain", "Rome Pour Toujours", "Paix et Victoire Romaine"], "rep": 0},
+
+    # --- 3ème : 4e/5e déclinaisons, grammaire avancée & Empire ---
+    {"q": "Que signifie « Manus » (4e déclinaison) ?", "choix": ["La main / La troupe", "Le matin", "La mer"], "rep": 0},
+    {"q": "Que signifie « Dies » (5e déclinaison) ?", "choix": ["Le jour", "Le dieu", "La nuit"], "rep": 0},
+    {"q": "Quelle construction réunit un nom et un participe à l'ablatif sans lien grammatical ?", "choix": ["L'ablatif absolu", "La proposition infinitive", "Le complément du nom"], "rep": 0},
+    {"q": "Dans une proposition infinitive, à quel cas se met le sujet du verbe infinitif ?", "choix": ["À l'Accusatif", "Au Nominatif", "Au Datif"], "rep": 0},
+    {"q": "Qui est l'auteur illustre de l'Énéide ?", "choix": ["Virgile", "César", "Cicéron"], "rep": 0},
+    {"q": "Qui a prononcé le célèbre « O tempora, o mores ! » ?", "choix": ["Cicéron", "Romulus", "Néron"], "rep": 0},
+    {"q": "Quel célèbre historien et naturaliste a péri lors de l'éruption du Vésuve ?", "choix": ["Pline l'Ancien", "Tite-Live", "Sénèque"], "rep": 0},
 ]
 
 

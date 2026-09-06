@@ -93,7 +93,10 @@ class TestRangsEtStats(unittest.TestCase):
 
 class TestCurriculumLatin(unittest.TestCase):
     def test_tous_les_mondes(self):
-        self.assertEqual(len(content.CURRICULUM), 10)
+        self.assertEqual(len(content.CURRICULUM_5EME), 10)
+        self.assertEqual(len(content.CURRICULUM_4EME), 8)
+        self.assertEqual(len(content.CURRICULUM_3EME), 8)
+        self.assertEqual(len(content.CURRICULUM), 26)
         ids = content.ids_utilises()
         self.assertGreater(len(ids), 30)
 
