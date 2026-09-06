@@ -148,24 +148,24 @@ class MascotteWidget(tk.Frame):
             self._photo_ref = photo
         self.bulle_lbl.configure(text="Prêt pour l'épreuve suivante !")
 
-    def reagir_succes(self):
+    def reagir_succes(self, message=None):
         """Réaction joyeuse lors d'une réussite."""
-        citation = random.choice(CITATIONS_SUCCES)
+        citation = message or random.choice(CITATIONS_SUCCES)
         self.set_emotion("joie", citation, duree_ms=4500)
 
-    def reagir_erreur(self):
+    def reagir_erreur(self, message=None):
         """Réaction d'aide et réconfort lors d'une erreur."""
-        citation = random.choice(CITATIONS_ERREUR)
+        citation = message or random.choice(CITATIONS_ERREUR)
         self.set_emotion("aide", citation, duree_ms=5000)
 
-    def reagir_reflexion(self):
+    def reagir_reflexion(self, message=None):
         """Réaction pensive."""
-        citation = random.choice(CITATIONS_REFLEXION)
+        citation = message or random.choice(CITATIONS_REFLEXION)
         self.set_emotion("reflexion", citation, duree_ms=4000)
 
-    def reagir_triomphe(self):
+    def reagir_triomphe(self, message=None):
         """Réaction grandiose de victoire finale."""
-        citation = random.choice(CITATIONS_TRIOMPHE)
+        citation = message or random.choice(CITATIONS_TRIOMPHE)
         self.set_emotion("triomphe", citation, duree_ms=6000)
 
     def _sur_clic_mascotte(self, event=None):
@@ -176,3 +176,12 @@ class MascotteWidget(tk.Frame):
             audio.play_coin()
         except Exception:
             pass
+
+    def destroy(self):
+        if self._reset_timer:
+            try:
+                self.after_cancel(self._reset_timer)
+            except Exception:
+                pass
+            self._reset_timer = None
+        super().destroy()

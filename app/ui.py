@@ -13,10 +13,16 @@ from app import audio, errors, stats
 from app import progress as prog
 from app.avatar import AvatarWindow
 from app.carte import CarteAventureWindow
+from app.cartes_collection import AlbumCartesWindow
+from app.chiffre_cesar import ChiffreCesarWindow
 from app.circus import CircusMaximusWindow
+from app.duel import DuelWindow
 from app.editor import CodeEditor
+from app.export_pdf import FichesExportDialog
 from app.i18n import LANGUES, Translator
 from app.icones import charger_icone, get_icones_toolbar
+from app.marche_trajan import MarcheTrajanWindow
+from app.mascotte import MascotteWidget
 from app.mise_a_jour import MiseAJourDialog
 from app.musee import MuseeWindow
 from app.profils import ProfileDialog
@@ -272,6 +278,11 @@ class PythonLearnApp:
             ("tb_accueil", self._show_accueil),
             ("tb_carte", self._ouvrir_carte),
             ("tb_circus", self._ouvrir_circus),
+            ("tb_cartes", self._ouvrir_album_cartes),
+            ("tb_marche", self._ouvrir_marche_trajan),
+            ("tb_cesar", self._ouvrir_chiffre_cesar),
+            ("tb_duel", self._ouvrir_duel),
+            ("tb_fiches", self._ouvrir_fiches_a4),
             ("tb_profils", self._ouvrir_profils),
             ("tb_maj", self._ouvrir_mise_a_jour),
             ("tb_glossaire", self._show_glossaire),
@@ -361,6 +372,11 @@ class PythonLearnApp:
 
         content_wrap = ttk.Frame(top)
         content_wrap.pack(fill=tk.BOTH, expand=True, padx=12, pady=(0, 4))
+
+        # Mascotte interactive Lupulus le louveteau
+        self.mascotte = MascotteWidget(content_wrap, app=self, taille=90, bg=self.C["panel"])
+        self.mascotte.pack(side=tk.RIGHT, fill=tk.Y, padx=(10, 0))
+
         self.content = tk.Text(content_wrap, wrap="word", relief="flat",
                                font=self.body, padx=8, pady=8, height=11,
                                cursor="arrow")
@@ -500,6 +516,21 @@ class PythonLearnApp:
     def _ouvrir_circus(self):
         CircusMaximusWindow(self.root, self)
 
+    def _ouvrir_album_cartes(self):
+        AlbumCartesWindow(self.root, self)
+
+    def _ouvrir_marche_trajan(self):
+        MarcheTrajanWindow(self.root, self)
+
+    def _ouvrir_chiffre_cesar(self):
+        ChiffreCesarWindow(self.root, self)
+
+    def _ouvrir_duel(self):
+        DuelWindow(self.root, self)
+
+    def _ouvrir_fiches_a4(self):
+        FichesExportDialog(self.root, self)
+
     def _ouvrir_profils(self):
         ProfileDialog(self.root, self)
 
@@ -509,6 +540,23 @@ class PythonLearnApp:
     def _ouvrir_triomphe(self):
         from app.triomphe import Triomphe5emeDialog
         Triomphe5emeDialog(self.root, self)
+
+    # Réactions interactives de la mascotte Lupulus
+    def reagir_succes(self, message=None):
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.reagir_succes(message)
+
+    def reagir_erreur(self, message=None):
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.reagir_erreur(message)
+
+    def reagir_reflexion(self, message=None):
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.reagir_reflexion(message)
+
+    def reagir_triomphe(self, message=None):
+        if hasattr(self, "mascotte") and self.mascotte:
+            self.mascotte.reagir_triomphe(message)
 
     def _prononcer_courant(self):
         if not self.current:
@@ -1195,6 +1243,11 @@ class PythonLearnApp:
         self.lesson_title.configure(text=self.txt(lesson, "title"))
         self._maj_favori_btn()
         self._render_content(self.txt(lesson, "content"))
+        if hasattr(self, "mascotte") and self.mascotte:
+            titre = self.txt(lesson, "title")
+            if "·" in titre:
+                titre = titre.split("·")[-1].strip()
+            self.mascotte.set_emotion("normal", f"Salvete ! Découvrons ensemble : {titre} !")
         self._masquer_cadres()
         type_lecon = lesson.get("type")
         if type_lecon == "quiz":
@@ -1540,16 +1593,11 @@ class PythonLearnApp:
             self.feedback.configure(text=self.tr("fb_fail"), foreground=self.C["err"])
 
     def valider_item(self, item_id, message_banniere=None):
-        """Enregistre la réussite d'un item, quel que soit son type.
-
-        Point d'entrée commun aux exercices classiques et aux vues
-        « prédis la sortie » et « remets dans l'ordre », pour que la
-        progression, la série de jours et la révision espacée soient
-        traitées partout de la même façon.
-        """
+        """Enregistre la réussite d'un item, quel que soit son type."""
         self._echecs_session = 0
         self._mark_done(item_id)
         self._apres_reussite(item_id)
+        self.reagir_succes()
         if message_banniere:
             self._show_banner(message_banniere, self.C["ok"])
         self._animer_confettis()
@@ -1617,6 +1665,7 @@ class PythonLearnApp:
         if choix == self.current.get("answer"):
             audio.play_correct()
             self.ajouter_sesterces(10)
+            self.reagir_succes()
             self.quiz_feedback.configure(
                 text="✨ " + self.tr("quiz_good") + " " + self.txt(self.current, "explanation"),
                 foreground=self.C["ok"])
@@ -1629,10 +1678,12 @@ class PythonLearnApp:
             self._animer_confettis()
         else:
             audio.play_wrong()
+            self.reagir_erreur()
             self.quiz_feedback.configure(text=self.tr("quiz_bad"),
                                          foreground=self.C["err"])
 
     def show_hint(self):
+        self.reagir_reflexion()
         if not self._hints:
             self._write(self.tr("con_no_hint") + "\n", "muted")
             return
@@ -1789,11 +1840,13 @@ class PythonLearnApp:
                     if "triomphe_5eme" not in self.data["badges"]:
                         prog.award_badge(self.data, "triomphe_5eme")
                         self.ajouter_sesterces(200)
+                    self.reagir_triomphe("Triomphe absolu ! Tous les mondes de Rome sont conquis !")
                     self._animer_confettis()
                     from app.triomphe import Triomphe5emeDialog
                     self.root.after(300, lambda: Triomphe5emeDialog(self.root, self))
                 else:
                     msg = f"Parcours « {nom} » terminé ! Badge {nb}/{len(CURRICULUM)}."
+                    self.reagir_triomphe(f"Optime ! Tu as décroché le badge {nom} !")
                     Celebration(self.root, msg, self.C,
                                 on_cert=lambda lid=level["id"]: self._generer_certificat(lid))
                     self._animer_confettis()
