@@ -1,254 +1,114 @@
-name: Construire les installateurs
-
-# Produit un installateur pour chacun des trois systèmes :
-#
-#   Windows      PythonLearn-Setup-<version>.exe        (installateur classique)
-#                PythonLearn-<version>-windows-portable.exe
-#   macOS        PythonLearn-<version>-arm64.dmg        (Mac Apple Silicon)
-#   Linux        python-learn_<version>_amd64.deb       (Debian, Ubuntu, Mint…)
-#                python-learn-<version>-linux-amd64.tar.gz  (toutes distributions)
-#
-# Se déclenche :
-#   - sur un tag « vX.Y.Z » -> construit ET publie une Release ;
-#   - à la main depuis l'onglet Actions -> construit seulement, pour essayer.
+name: Build & Release Ludus Latinus
 
 on:
-  push:
-    tags: ["v*"]
   workflow_dispatch:
     inputs:
-      version:
-        description: "Version à construire (laisser vide pour celle de app/version.py)"
+      confirmation:
+        description: "Tapez 'oui' pour confirmer la génération et la publication :"
+        required: true
+        default: ""
+      version_action:
+        description: "Action sur le numéro de version :"
+        type: choice
+        options:
+          - "patch (+0.0.1  ex: 1.0.0 -> 1.0.1)"
+          - "minor (+0.1.0  ex: 1.0.0 -> 1.1.0)"
+          - "major (+1.0.0  ex: 1.0.0 -> 2.0.0)"
+          - "personnalisée"
+          - "conserver (version actuelle)"
+        default: "patch (+0.0.1  ex: 1.0.0 -> 1.0.1)"
+      custom_version:
+        description: "Si 'personnalisée', entrez la version exacte (ex: 1.0.1) :"
         required: false
         default: ""
+  push:
+    branches: [ "main", "master" ]
+    tags: [ "v*" ]
 
 permissions:
   contents: write
 
 jobs:
-  # ---------------------------------------------------------------------------
-  preparer:
-    name: Vérifier et déterminer la version
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    outputs:
-      version: ${{ steps.calcul.outputs.version }}
-    steps:
-      - name: Récupérer le code
-        uses: actions/checkout@v4
-
-      - name: Installer Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Installer Tk
-        run: sudo apt-get update && sudo apt-get install -y python3-tk
-
-      # On ne publie jamais une version dont les exercices ne passent plus.
-      - name: Lancer les tests
-        run: python -m unittest discover -s tests
-
-      - name: Déterminer la version
-        id: calcul
-        shell: bash
-        run: |
-          declaree=$(python -c "from app.version import __version__; print(__version__)")
-          if [ "${{ github.event_name }}" = "push" ]; then
-            tag="${GITHUB_REF_NAME#v}"
-            if [ "$tag" != "$declaree" ]; then
-              echo "::error::Le tag « ${GITHUB_REF_NAME} » annonce la version $tag, mais app/version.py déclare $declaree. Aligne les deux puis repose le tag."
-              exit 1
-            fi
-            version="$tag"
-          elif [ -n "${{ inputs.version }}" ]; then
-            version="${{ inputs.version }}"
-          else
-            version="$declaree"
-          fi
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "Version retenue : $version"
-
-  # ---------------------------------------------------------------------------
-  construire:
-    name: ${{ matrix.nom }}
-    needs: preparer
-    runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - nom: Windows
-            os: windows-latest
-            arch: x86_64
-          # GitHub a retiré ses runners macOS Intel : il n'existe plus
-          # d'image x86_64 pour produire un .dmg compatible Mac Intel. Ces
-          # machines peuvent lancer l'application depuis les sources.
-          # « macos-latest » plutôt qu'une version figée, pour ne pas se
-          # retrouver bloqué au prochain retrait d'image.
-          - nom: macOS (Apple Silicon)
-            os: macos-latest
-            arch: arm64
-          # Volontairement une version ancienne d'Ubuntu : un binaire compilé
-          # sur une vieille glibc fonctionne sur les distributions récentes,
-          # l'inverse n'est pas vrai.
-          - nom: Linux
-            os: ubuntu-22.04
-            arch: amd64
+  build-and-release:
+    name: Build Windows Executable & Release
+    runs-on: windows-latest
 
     steps:
-      - name: Récupérer le code
-        uses: actions/checkout@v4
-
-      - name: Installer Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Installer Tk (Linux)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y python3-tk
-
-      - name: Installer PyInstaller
-        run: python -m pip install --upgrade pip pyinstaller
-
-      # ------------------------------------------------------------- Windows
-      - name: Construire l'exécutable (Windows)
-        if: runner.os == 'Windows'
-        run: pyinstaller --onefile --windowed --icon assets/icon.ico --name PythonLearn main.py
-
-      - name: Contrôler l'exécutable (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Un exécutable « windowed » n'a pas de sortie console : c'est le
-          # code de retour qui nous dit si l'empaquetage est complet.
-          $p = Start-Process -FilePath "dist\PythonLearn.exe" -ArgumentList "--check" -Wait -PassThru
-          if ($p.ExitCode -ne 0) {
-            throw "Contrôle de santé en échec (code $($p.ExitCode)) : l'exécutable est incomplet."
-          }
-          Write-Host "Exécutable vérifié."
-
-      - name: Construire l'installateur (Windows, Inno Setup)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          choco install innosetup --no-progress -y
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" `
-            /DMaVersion=${{ needs.preparer.outputs.version }} `
-            packaging\installer.iss
-
-      - name: Nommer l'exécutable portable (Windows)
-        if: runner.os == 'Windows'
-        shell: bash
-        run: mv dist/PythonLearn.exe "dist/PythonLearn-${{ needs.preparer.outputs.version }}-windows-portable.exe"
-
-      # --------------------------------------------------------------- macOS
-      - name: Construire l'application (macOS)
-        if: runner.os == 'macOS'
-        run: pyinstaller --windowed --icon assets/icon.icns --name PythonLearn main.py
-
-      - name: Contrôler l'application (macOS)
-        if: runner.os == 'macOS'
-        run: dist/PythonLearn.app/Contents/MacOS/PythonLearn --check
-
-      - name: Construire le disque d'installation (macOS)
-        if: runner.os == 'macOS'
-        run: bash packaging/macos/construire-dmg.sh "${{ needs.preparer.outputs.version }}" "${{ matrix.arch }}"
-
-      # --------------------------------------------------------------- Linux
-      - name: Construire l'exécutable (Linux)
-        if: runner.os == 'Linux'
-        run: pyinstaller --onefile --name PythonLearn main.py
-
-      - name: Contrôler l'exécutable (Linux)
-        if: runner.os == 'Linux'
-        run: ./dist/PythonLearn --check
-
-      - name: Construire le .deb et l'archive (Linux)
-        if: runner.os == 'Linux'
-        run: bash packaging/linux/construire-paquets.sh "${{ needs.preparer.outputs.version }}"
-
-      # ------------------------------------------------------- mise en commun
-      - name: Rassembler les fichiers à livrer
+      - name: Vérifier la confirmation 'oui'
+        if: github.event_name == 'workflow_dispatch'
         shell: bash
         run: |
-          mkdir -p livraison
-          shopt -s nullglob
-          fichiers=(dist/*.exe dist/*.dmg dist/*.deb dist/*.tar.gz Output/*.exe)
-          if [ ${#fichiers[@]} -eq 0 ]; then
-            echo "::error::Aucun fichier d'installation produit sur ${{ matrix.os }}."
+          REPONSE=$(echo "${{ github.event.inputs.confirmation }}" | tr '[:upper:]' '[:lower:]' | xargs)
+          if [ "$REPONSE" != "oui" ]; then
+            echo "::error::Action annulée ! Vous devez taper 'oui' dans le champ de confirmation pour lancer la publication."
             exit 1
           fi
-          cp "${fichiers[@]}" livraison/
-          ls -lh livraison/
+          echo "Confirmation 'oui' validée avec succès !"
 
-      - name: Publier les fichiers comme artefacts
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Gestion du numéro de version
+        shell: bash
+        run: |
+          ACTION="${{ github.event.inputs.version_action || 'conserver' }}"
+          CUSTOM="${{ github.event.inputs.custom_version || '' }}"
+          python packaging/bump_version.py "$ACTION" "$CUSTOM"
+
+      - name: Committer et tagger la nouvelle version
+        if: env.VERSION_CHANGED == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add app/version.py pyproject.toml packaging/installer.iss
+          git commit -m "chore(release): version v${{ env.NEW_VERSION }}"
+          git tag -a "v${{ env.NEW_VERSION }}" -m "Ludus Latinus v${{ env.NEW_VERSION }}"
+          git push origin HEAD:${{ github.ref_name }} --tags
+
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller pillow
+
+      - name: Verify Curriculum and Tests
+        shell: bash
+        run: |
+          python main.py --check
+          python -m unittest discover -s tests -t .
+
+      - name: Build Executable with PyInstaller
+        shell: bash
+        run: |
+          pyinstaller --noconfirm LudusLatinus.spec
+
+      - name: Upload Windows Executable Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: installateurs-${{ matrix.os }}
-          path: livraison/*
+          name: LudusLatinus-Windows
+          path: dist/LudusLatinus.exe
           if-no-files-found: error
-          retention-days: 30
 
-  # ---------------------------------------------------------------------------
-  publier:
-    name: Publier la Release
-    needs: [preparer, construire]
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - name: Récupérer tous les installateurs
-        uses: actions/download-artifact@v4
-        with:
-          path: livraison
-          merge-multiple: true
-
-      - name: Calculer les empreintes SHA-256
+      - name: Publier la Release GitHub
+        if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
         run: |
-          cd livraison
-          sha256sum * > ../SHA256SUMS.txt
-          mv ../SHA256SUMS.txt .
-          cat SHA256SUMS.txt
-
-      - name: Créer la Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: livraison/*
-          generate_release_notes: true
-          body: |
-            ## Installer PythonLearn ${{ needs.preparer.outputs.version }}
-
-            Aucune installation de Python n'est nécessaire : tout est inclus.
-
-            ### Windows
-            Télécharge **`PythonLearn-Setup-${{ needs.preparer.outputs.version }}.exe`** et lance-le.
-            L'application s'installe pour ton compte, sans droits administrateur.
-
-            > Windows affiche un avertissement SmartScreen pour un programme
-            > non signé : *Informations complémentaires* → *Exécuter quand même*.
-
-            Tu préfères ne rien installer ? Prends la version **portable**, qui
-            se lance directement depuis le fichier téléchargé.
-
-            ### macOS (Apple Silicon — M1 et suivants)
-            Ouvre **`PythonLearn-${{ needs.preparer.outputs.version }}-arm64.dmg`**,
-            glisse PythonLearn dans Applications, puis au **premier lancement**
-            fais un clic droit sur l'application → *Ouvrir*. Cette
-            confirmation n'est demandée qu'une fois.
-
-            > **Mac Intel** : aucun `.dmg` n'est fourni, faute de machine de
-            > construction Intel disponible. L'application fonctionne malgré
-            > tout : installe Python depuis [python.org](https://www.python.org/downloads/),
-            > télécharge le code source de cette Release, puis lance
-            > `python main.py`.
-
-            ### Linux
-            - Debian, Ubuntu, Mint : `sudo apt install ./python-learn_${{ needs.preparer.outputs.version }}_amd64.deb`
-            - Autres distributions : décompresse l'archive `.tar.gz`, puis `bash installer.sh`
-              (installe pour ton compte, sans `sudo`).
-
-            ### Vérifier le téléchargement
-            Les empreintes des fichiers sont dans `SHA256SUMS.txt`.
+          TAG="v${{ env.NEW_VERSION }}"
+          if [ -z "${{ env.NEW_VERSION }}" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          echo "Création de la release $TAG sur GitHub..."
+          gh release create "$TAG" "dist/LudusLatinus.exe#LudusLatinus.exe" \
+            --title "Ludus Latinus $TAG" \
+            --notes "🚀 **Ludus Latinus $TAG** est disponible ! Téléchargez le fichier **LudusLatinus.exe** ci-dessous pour jouer directement sous Windows." \
+            --latest

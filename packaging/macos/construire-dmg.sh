@@ -12,8 +12,9 @@ set -euo pipefail
 
 VERSION="${1:?usage: construire-dmg.sh <version> [architecture]}"
 ARCH="${2:-$(uname -m)}"
-APP="dist/PythonLearn.app"
-DMG="dist/PythonLearn-${VERSION}-${ARCH}.dmg"
+APP="dist/LudusLatinus.app"
+[ -d "$APP" ] || APP="dist/PythonLearn.app"
+DMG="dist/LudusLatinus-${VERSION}-${ARCH}.dmg"
 
 if [ ! -d "$APP" ]; then
     echo "Bundle introuvable : $APP (lancer PyInstaller en mode --windowed)" >&2
@@ -34,11 +35,11 @@ cp -R "$APP" "$montage/"
 ln -s /Applications "$montage/Applications"
 
 cat > "$montage/LISEZ-MOI.txt" <<'TXT'
-PythonLearn — installation
-==========================
+Ludus Latinus — installation
+============================
 
-1. Glisse l'icône PythonLearn sur le dossier Applications, à droite.
-2. Au PREMIER lancement, fais un clic droit sur PythonLearn dans le dossier
+1. Glisse l'icône Ludus Latinus sur le dossier Applications, à droite.
+2. Au PREMIER lancement, fais un clic droit sur Ludus Latinus dans le dossier
    Applications, puis choisis « Ouvrir », et confirme.
 
 Pourquoi cette manipulation ? L'application n'est pas signée avec un
@@ -49,15 +50,15 @@ normalement, par un simple double-clic.
 Si macOS annonce que l'application « est endommagée », lance dans le
 Terminal :
 
-    xattr -dr com.apple.quarantine /Applications/PythonLearn.app
+    xattr -dr com.apple.quarantine "/Applications/LudusLatinus.app"
 
-Ta progression est enregistrée dans ~/.python-learn et survit aux mises
+Ta progression est enregistrée dans ~/.latin-learn et survit aux mises
 à jour comme à la désinstallation.
 TXT
 
 rm -f "$DMG"
 hdiutil create \
-    -volname "PythonLearn ${VERSION}" \
+    -volname "Ludus Latinus ${VERSION}" \
     -srcfolder "$montage" \
     -ov -format UDZO \
     "$DMG"

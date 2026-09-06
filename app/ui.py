@@ -9,13 +9,28 @@ import webbrowser
 from datetime import date
 from tkinter import filedialog, font, messagebox, simpledialog, ttk
 
-from app import errors, stats
+from app import audio, errors, stats
 from app import progress as prog
+from app.avatar import AvatarWindow
+from app.carte import CarteAventureWindow
+from app.circus import CircusMaximusWindow
 from app.editor import CodeEditor
 from app.i18n import LANGUES, Translator
+from app.icones import charger_icone, get_icones_toolbar
+from app.mise_a_jour import MiseAJourDialog
+from app.musee import MuseeWindow
+from app.profils import ProfileDialog
 from app.theme import THEME_ORDER, THEMES, assombrir, eclaircir
 from app.version import APP_NAME, AUTEUR, DEPOT, __version__
-from app.vues_exercices import VueOrdre, VuePrediction, VueTurtle
+from app.vues_exercices import (
+    VueArene,
+    VueDecodeur,
+    VueOrdre,
+    VuePrediction,
+    VuePuzzle,
+    VueTrou,
+    VueTurtle,
+)
 from app.windows import (
     AccueilWindow,
     BytecodeWindow,
@@ -46,40 +61,22 @@ except Exception:
     ICON_B64 = None
 
 
-# Délai avant d'écrire le code de l'apprenant sur disque. Sans ce sursis,
-# on réécrirait tout le fichier de progression à CHAQUE touche du clavier.
 DELAI_SAUVEGARDE_MS = 700
-
-# Espace pris par un bouton de la barre en plus de son texte :
-# marges internes, bordures et écart avec le suivant.
 MARGE_BOUTON = 14
-
-# Largeur (en caractères) d'un bouton réduit à son icône. Sans elle, le
-# thème ttk garderait la largeur d'un libellé complet.
 LARGEUR_ICONE = 3
 
-# Types de leçons qui n'utilisent pas l'éditeur de code : les actions
-# « Exécuter », « Indice », « Exporter »… n'ont pas de sens pour elles.
-_SANS_EDITEUR = ("quiz", "predire", "ordre")
-
+_SANS_EDITEUR = ("quiz", "puzzle", "trou", "decodeur", "arene", "predire", "ordre")
 
 LEVEL_BADGE_NAMES = {
-    "debutant": "Débutant", "intermediaire": "Intermédiaire",
-    "avance": "Avancé", "expert": "Expert",
-    "scripts": "Scripts & automatisation", "interfaces": "Interfaces graphiques",
-    "web": "Python & le web", "admin": "Administrer son PC",
-    "sqlite": "Bases de données (SQLite)", "turtle": "Dessiner (turtle)",
-    "algos": "Algorithmes", "donnees": "Manipuler des données",
-    "tests_tdd": "Tests & TDD", "erreurs": "Décoder les erreurs",
-    "projets": "Projets guidés", "entrainement": "Entraînement",
-    "cybersecurite": "Cybersécurité & Cryptographie",
-    "maths_sciences": "Mathématiques & Sciences",
-    "multimedia": "Traitement d'Images & Audio",
-    "ia_ml": "Intelligence Artificielle",
-    "reseaux": "Réseaux & Protocoles",
-    "jeux_video": "Jeux Vidéo 2D",
-    "design_patterns": "Design Patterns",
+    "monde1": "1 · Premiers pas à Rome 🏛️",
+    "monde2": "2 · Dans la maison romaine 🏠",
+    "monde3": "3 · Les Dieux de l'Olympe ⚡",
+    "monde4": "4 · Les Cas & Travaux d'Hercule 🦁",
+    "monde5": "5 · Les Verbes au Présent ⚔️",
+    "monde6": "6 · Les Gladiateurs & le Colisée 🛡️",
+    "monde7": "7 · Détective des Mots & Devises 📜",
 }
+
 
 
 class PythonLearnApp:
@@ -116,7 +113,8 @@ class PythonLearnApp:
             for lesson in level["lessons"]:
                 self.lesson_level[lesson["id"]] = level
 
-        root.title("PythonLearn — apprendre Python pas à pas")
+        audio.set_sound_enabled(self.data.get("sound_enabled", True))
+        root.title("Ludus Latinus — L'Aventure Romaine 🏛️")
         root.geometry("1180x780")
         root.minsize(980, 660)
 
@@ -155,7 +153,7 @@ class PythonLearnApp:
         win.resizable(False, False)
         tk.Frame(win, bg=C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
 
-        tk.Label(win, text="🐍", bg=C["panel"], font=("", 46)).pack(pady=(18, 0))
+        tk.Label(win, text="🏛️", bg=C["panel"], font=("", 46)).pack(pady=(18, 0))
         tk.Label(win, text=APP_NAME, bg=C["panel"], fg=C["accent"],
                  font=("", 22, "bold")).pack()
         tk.Label(win, text=self.tr("ap_version", v=__version__),
@@ -173,6 +171,8 @@ class PythonLearnApp:
 
         barre = ttk.Frame(win, style="Panel.TFrame")
         barre.pack(pady=(6, 18))
+        ttk.Button(barre, text="🔄 Mises à jour",
+                   command=self._ouvrir_mise_a_jour).pack(side=tk.LEFT, padx=4)
         ttk.Button(barre, text=self.tr("ap_depot"),
                    command=lambda: webbrowser.open(DEPOT)).pack(side=tk.LEFT, padx=4)
         ttk.Button(barre, text=self.tr("ap_fermer"),
@@ -222,13 +222,15 @@ class PythonLearnApp:
 
     # --------------------------------------------------------------- polices
     def _init_fonts(self):
+        from app.polices import get_famille_titre, get_famille_corps
+        f_titre = get_famille_titre()
+        f_corps = get_famille_corps()
+
         self.code_font = font.nametofont("TkFixedFont").copy()
         self.code_font.configure(size=self.code_size)
-        self.body = font.nametofont("TkDefaultFont").copy()
-        self.body.configure(size=11)
-        self.title_font = self.body.copy()
-        self.title_font.configure(size=16, weight="bold")
-        self.h2_font = (self.body.cget("family"), 13, "bold")
+        self.body = font.Font(family=f_corps, size=11)
+        self.title_font = font.Font(family=f_titre, size=16, weight="bold")
+        self.h2_font = (f_titre, 13, "bold")
 
     # ---------------------------------------------------------------- layout
     def _tbtn(self, parent, key, command, **kw):
@@ -250,6 +252,11 @@ class PythonLearnApp:
         self._boutons_barre = []      # boutons repliables, dans l'ordre
         self._debordement = []        # ceux qui ne tiennent pas, pour le menu
         self._largeur_barre = 0
+        self._icones_toolbar = {}     # Références d'icônes romaines 3D
+
+        from app.icones import get_icones_toolbar
+        icones_map = get_icones_toolbar()
+
         # Pas de largeur fixe : le nom du thème suffit, et la barre est
         # déjà dense.
         self.theme_btn = ttk.Button(toolbar, text="", command=self.cycle_theme)
@@ -263,16 +270,25 @@ class PythonLearnApp:
                    command=lambda: self._zoom(1)).pack(side=tk.LEFT, padx=(0, 8), pady=4)
         for cle, action in (
             ("tb_accueil", self._show_accueil),
+            ("tb_carte", self._ouvrir_carte),
+            ("tb_circus", self._ouvrir_circus),
+            ("tb_profils", self._ouvrir_profils),
+            ("tb_maj", self._ouvrir_mise_a_jour),
             ("tb_glossaire", self._show_glossaire),
             ("tb_revision", self._revision),
             ("tb_stats", self._show_stats),
-            ("tb_doc", lambda: webbrowser.open("https://docs.python.org/fr/3/")),
+            ("tb_doc", lambda: webbrowser.open("https://fr.wikipedia.org/wiki/Latin")),
             ("tb_brouillon", self._show_sandbox),
             ("tb_reco", self._recommander),
             ("tb_examen", self._mode_examen),
             ("tb_lecons", self._ouvrir_mes_lecons),
         ):
-            bouton = self._tbtn(toolbar, cle, action)
+            btn_kw = {}
+            if cle in icones_map:
+                self._icones_toolbar[cle] = icones_map[cle]
+                btn_kw["image"] = icones_map[cle]
+                btn_kw["compound"] = tk.LEFT
+            bouton = self._tbtn(toolbar, cle, action, **btn_kw)
             self._boutons_barre.append((bouton, cle, action))
             self._infobulle_barre(bouton, cle)
 
@@ -331,8 +347,17 @@ class PythonLearnApp:
 
         top = ttk.Frame(main)
         main.add(top, weight=3)
-        self.lesson_title = ttk.Label(top, text="", style="Title.TLabel")
-        self.lesson_title.pack(fill=tk.X, padx=12, pady=(8, 4))
+        top_title_bar = ttk.Frame(top)
+        top_title_bar.pack(fill=tk.X, padx=12, pady=(8, 4))
+        self.lesson_title = ttk.Label(top_title_bar, text="", style="Title.TLabel")
+        self.lesson_title.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        self.speak_btn = tk.Button(
+            top_title_bar, text="🔊 Écouter", font=(self.body.cget("family"), 9, "bold"),
+            relief="flat", cursor="hand2", padx=8, pady=2,
+            command=self._prononcer_courant
+        )
+        self.speak_btn.pack(side=tk.RIGHT, padx=4)
 
         content_wrap = ttk.Frame(top)
         content_wrap.pack(fill=tk.BOTH, expand=True, padx=12, pady=(0, 4))
@@ -352,7 +377,10 @@ class PythonLearnApp:
         main.add(self.bottom, weight=4)
         self._build_exercise_frame()
         self._build_quiz_frame()
-        # Vues des exercices qui ne s'écrivent pas dans l'éditeur.
+        self.vue_puzzle = VuePuzzle(self.bottom, self)
+        self.vue_trou = VueTrou(self.bottom, self)
+        self.vue_decodeur = VueDecodeur(self.bottom, self)
+        self.vue_arene = VueArene(self.bottom, self)
         self.vue_predire = VuePrediction(self.bottom, self)
         self.vue_ordre = VueOrdre(self.bottom, self)
         self.vue_turtle = VueTurtle(self.bottom, self)
@@ -388,17 +416,33 @@ class PythonLearnApp:
         left = tk.Frame(self.header_strip, bg=C["panel"])
         left.pack(side=tk.LEFT)
 
+        self.hdr_hero_btn = tk.Button(left, text=" 👦 Marcus", font=(self.body.cget("family"), 9, "bold"),
+                                      bg=C["editor"], fg=C["fg"], relief="flat",
+                                      padx=6, pady=2, cursor="hand2", command=self._ouvrir_profils)
+        self.hdr_hero_btn.pack(side=tk.LEFT, padx=(0, 6))
+
         self.hdr_streak_lbl = tk.Label(left, text="🔥 0 j", font=(self.body.cget("family"), 9, "bold"),
                                        bg=C["editor"], fg=C["accent"],
                                        padx=8, pady=2, relief="flat")
         self.hdr_streak_lbl.pack(side=tk.LEFT, padx=(0, 6))
 
-        self.hdr_xp_lbl = tk.Label(left, text="⚡ Niv. 1 · 0 XP", font=(self.body.cget("family"), 9, "bold"),
+        self.hdr_xp_lbl = tk.Label(left, text="🟢 Tiro · Niv. 1 · 0 XP", font=(self.body.cget("family"), 9, "bold"),
                                    bg=C["editor"], fg=C["ok"],
                                    padx=8, pady=2, relief="flat")
         self.hdr_xp_lbl.pack(side=tk.LEFT, padx=(0, 6))
 
-        self.hdr_badges_lbl = tk.Label(left, text="🏆 0/23", font=(self.body.cget("family"), 9),
+        # Sesterces avec icône romaine 3D
+        self._img_sesterce_hdr = charger_icone("icone_sesterce", 20)
+        self.hdr_sesterces_lbl = tk.Label(left, text=" 50 Sesterces", font=(self.body.cget("family"), 9, "bold"),
+                                          image=self._img_sesterce_hdr, compound=tk.LEFT if self._img_sesterce_hdr else None,
+                                          bg=C["editor"], fg="#d4af37",
+                                          padx=8, pady=2, relief="flat")
+        self.hdr_sesterces_lbl.pack(side=tk.LEFT, padx=(0, 6))
+
+        # Badges / Lauriers avec trophée romain 3D
+        self._img_laurier_hdr = charger_icone("icone_laurier", 20)
+        self.hdr_badges_lbl = tk.Label(left, text=" 0/7", font=(self.body.cget("family"), 9),
+                                       image=self._img_laurier_hdr, compound=tk.LEFT if self._img_laurier_hdr else None,
                                        bg=C["editor"], fg=C["code"],
                                        padx=8, pady=2, relief="flat")
         self.hdr_badges_lbl.pack(side=tk.LEFT, padx=(0, 6))
@@ -406,14 +450,92 @@ class PythonLearnApp:
         right = tk.Frame(self.header_strip, bg=C["panel"])
         right.pack(side=tk.RIGHT)
 
-        self.hdr_defi_btn = tk.Button(right, text=self.tr("hdr_defi"), font=(self.body.cget("family"), 9, "bold"),
+        # Défi du jour avec icône arène romaine 3D
+        self._img_arene_hdr = charger_icone("icone_arene", 20)
+        self.hdr_defi_btn = tk.Button(right, text=f" {self.tr('hdr_defi')}", font=(self.body.cget("family"), 9, "bold"),
+                                      image=self._img_arene_hdr, compound=tk.LEFT if self._img_arene_hdr else None,
                                       bg=C["accent"], fg=C["sel_fg"], relief="flat",
                                       padx=10, pady=2, cursor="hand2", command=self._lancer_defi_du_jour)
         self.hdr_defi_btn.pack(side=tk.RIGHT, padx=(6, 0))
 
+        # Avatar avec icône médaillon centurion 3D
+        self._img_avatar_hdr = charger_icone("icone_profils", 20)
+        self.hdr_avatar_btn = tk.Button(right, text=" Mon Avatar", font=(self.body.cget("family"), 9, "bold"),
+                                        image=self._img_avatar_hdr, compound=tk.LEFT if self._img_avatar_hdr else None,
+                                        bg=C["panel"], fg=C["fg"], relief="flat",
+                                        padx=8, pady=2, cursor="hand2", command=self._ouvrir_avatar)
+        self.hdr_avatar_btn.pack(side=tk.RIGHT, padx=4)
+
+        # Musée avec amphore / louve romaine 3D
+        self._img_musee_hdr = charger_icone("icone_musee", 20)
+        self.hdr_musee_btn = tk.Button(right, text=" Musée", font=(self.body.cget("family"), 9, "bold"),
+                                       image=self._img_musee_hdr, compound=tk.LEFT if self._img_musee_hdr else None,
+                                       bg=C["panel"], fg=C["fg"], relief="flat",
+                                       padx=8, pady=2, cursor="hand2", command=self._ouvrir_musee)
+        self.hdr_musee_btn.pack(side=tk.RIGHT, padx=4)
+
+        # Son avec cornu / tuba romain 3D
+        self._img_tuba_hdr = charger_icone("icone_tuba", 20)
+        son_texte = "" if (self._img_tuba_hdr and audio.is_sound_enabled()) else ("🔊" if audio.is_sound_enabled() else "🔇")
+        self.hdr_son_btn = tk.Button(right, text=son_texte, font=("Segoe UI Emoji", 10),
+                                     image=self._img_tuba_hdr if (self._img_tuba_hdr and audio.is_sound_enabled()) else None,
+                                     compound=tk.LEFT,
+                                     bg=C["panel"], fg=C["fg"], relief="flat",
+                                     padx=6, pady=2, cursor="hand2", command=self._toggle_son)
+        self.hdr_son_btn.pack(side=tk.RIGHT, padx=4)
+
         self.hdr_breadcrumbs_lbl = tk.Label(right, text="", font=(self.body.cget("family"), 9),
                                             bg=C["panel"], fg=C["muted"])
         self.hdr_breadcrumbs_lbl.pack(side=tk.RIGHT, padx=4)
+
+    def _ouvrir_avatar(self):
+        AvatarWindow(self.root, self)
+
+    def _ouvrir_musee(self):
+        MuseeWindow(self.root, self)
+
+    def _ouvrir_carte(self):
+        CarteAventureWindow(self.root, self)
+
+    def _ouvrir_circus(self):
+        CircusMaximusWindow(self.root, self)
+
+    def _ouvrir_profils(self):
+        ProfileDialog(self.root, self)
+
+    def _ouvrir_mise_a_jour(self):
+        MiseAJourDialog(self.root, self)
+
+    def _ouvrir_triomphe(self):
+        from app.triomphe import Triomphe5emeDialog
+        Triomphe5emeDialog(self.root, self)
+
+    def _prononcer_courant(self):
+        if not self.current:
+            return
+        texte = self.current.get("latin") or self.current.get("phrase_latine")
+        if not texte:
+            t = self.current.get("title", "")
+            texte = t.split(":")[-1].strip() if ":" in t else t
+        audio.speak_latin(texte)
+
+    def _toggle_son(self):
+        nouveau = not audio.is_sound_enabled()
+        audio.set_sound_enabled(nouveau)
+        self.data["sound_enabled"] = nouveau
+        prog.save_progress(self.data)
+        if nouveau:
+            audio.play_coin()
+        self._refresh_header_stats()
+
+    def ajouter_sesterces(self, montant):
+        self.data["sesterces"] = self.data.get("sesterces", 0) + montant
+        prog.save_progress(self.data)
+        self._refresh_header_stats()
+
+    def donnees_niveau(self):
+        xp = stats.xp_total(self.data.get("completed", []), self.data.get("badges", []))
+        return stats.niveau(xp)
 
     def _lancer_defi_du_jour(self):
         defi = stats.defi_du_jour(CURRICULUM, date.today())
@@ -437,8 +559,11 @@ class PythonLearnApp:
             exo_txt = f" › ⚡ {self.exo_index + 1}/{n_exo}"
         else:
             exo_txt = ""
+        # Écourter les titres longs pour préserver la lisibilité de la barre
+        p_court = parcours_titre if len(parcours_titre) <= 22 else parcours_titre[:20] + "…"
+        l_court = lecon_titre if len(lecon_titre) <= 24 else lecon_titre[:22] + "…"
         self.hdr_breadcrumbs_lbl.configure(
-            text=f"📁 {parcours_titre} › 📄 {lecon_titre}{exo_txt}"
+            text=f"📁 {p_court} › 📄 {l_court}{exo_txt}"
         )
 
     def _refresh_header_stats(self):
@@ -452,22 +577,94 @@ class PythonLearnApp:
         nb_badges = len(self.data["badges"])
         total_parcours = len(CURRICULUM)
 
+        genre = prog.get_genre(self.data)
+        nom = prog.get_nom_heros(self.data)
+        # Préférer le médaillon doré antique 3D
+        img_med_name = "avatar_garcon_medaillon_28.png" if genre == "garcon" else "avatar_fille_medaillon_28.png"
+        img_p = pathlib.Path(__file__).resolve().parent.parent / "assets" / "images" / img_med_name
+        if not img_p.exists():
+            img_name = "avatar_garcon_28.png" if genre == "garcon" else "avatar_fille_28.png"
+            img_p = pathlib.Path(__file__).resolve().parent.parent / "assets" / "images" / img_name
+        if hasattr(self, "hdr_hero_btn"):
+            if img_p.exists():
+                try:
+                    self._hero_hdr_img = tk.PhotoImage(file=str(img_p))
+                    self.hdr_hero_btn.configure(
+                        image=self._hero_hdr_img,
+                        text=f" {nom}",
+                        compound="left",
+                        bg=C["editor"],
+                        fg=C["fg"],
+                    )
+                except Exception:
+                    self.hdr_hero_btn.configure(
+                        image="",
+                        text=f" {'👦' if genre == 'garcon' else '👧'} {nom}",
+                        bg=C["editor"],
+                        fg=C["fg"],
+                    )
+            else:
+                self.hdr_hero_btn.configure(
+                    image="",
+                    text=f" {'👦' if genre == 'garcon' else '👧'} {nom}",
+                    bg=C["editor"],
+                    fg=C["fg"],
+                )
+
         self.hdr_streak_lbl.configure(
             text=self.tr("hdr_streak", n=s),
             bg=C["editor"], fg=C["accent"]
         )
+        rang_titre = niv_info.get("rang_titre", "Tiro")
+        rang_icone = niv_info.get("rang_icone", "🟢")
         self.hdr_xp_lbl.configure(
-            text=self.tr("hdr_xp", niv=niv_info["niveau"], xp=xp),
+            text=f"{rang_icone} {rang_titre} · Niv. {niv_info['niveau']} · {xp} XP",
             bg=C["editor"], fg=C["ok"]
         )
-        self.hdr_badges_lbl.configure(
-            text=self.tr("hdr_badges", n=nb_badges, total=total_parcours),
-            bg=C["editor"], fg=C["code"]
-        )
-        self.hdr_defi_btn.configure(
-            text=self.tr("hdr_defi"),
-            bg=C["accent"], fg=C["sel_fg"], activebackground=assombrir(C["accent"], 0.2)
-        )
+        # Sesterces avec icône romaine 3D
+        if getattr(self, "_img_sesterce_hdr", None):
+            self.hdr_sesterces_lbl.configure(
+                image=self._img_sesterce_hdr, compound=tk.LEFT,
+                text=f" {self.data.get('sesterces', 0)} Sesterces",
+                bg=C["editor"]
+            )
+        else:
+            self.hdr_sesterces_lbl.configure(
+                text=f"🪙 {self.data.get('sesterces', 0)} Sesterces",
+                bg=C["editor"]
+            )
+        # Lauriers avec trophée romain 3D
+        if getattr(self, "_img_laurier_hdr", None):
+            self.hdr_badges_lbl.configure(
+                image=self._img_laurier_hdr, compound=tk.LEFT,
+                text=f" {nb_badges}/{total_parcours}",
+                bg=C["editor"], fg=C["code"]
+            )
+        else:
+            self.hdr_badges_lbl.configure(
+                text=self.tr("hdr_badges", n=nb_badges, total=total_parcours),
+                bg=C["editor"], fg=C["code"]
+            )
+        if getattr(self, "_img_arene_hdr", None):
+            self.hdr_defi_btn.configure(
+                image=self._img_arene_hdr, compound=tk.LEFT,
+                text=f" {self.tr('hdr_defi')}",
+                bg=C["accent"], fg=C["sel_fg"], activebackground=assombrir(C["accent"], 0.2)
+            )
+        else:
+            self.hdr_defi_btn.configure(
+                text=self.tr("hdr_defi"),
+                bg=C["accent"], fg=C["sel_fg"], activebackground=assombrir(C["accent"], 0.2)
+            )
+        self.hdr_avatar_btn.configure(bg=C["panel"], fg=C["fg"])
+        self.hdr_musee_btn.configure(bg=C["panel"], fg=C["fg"])
+        if audio.is_sound_enabled():
+            if getattr(self, "_img_tuba_hdr", None):
+                self.hdr_son_btn.configure(image=self._img_tuba_hdr, text="", bg=C["panel"], fg=C["fg"])
+            else:
+                self.hdr_son_btn.configure(image="", text="🔊", bg=C["panel"], fg=C["fg"])
+        else:
+            self.hdr_son_btn.configure(image="", text="🔇", bg=C["panel"], fg=C["fg"])
         self.header_strip.configure(bg=C["panel"])
         self.hdr_breadcrumbs_lbl.configure(bg=C["panel"], fg=C["muted"])
         self._maj_breadcrumbs()
@@ -576,8 +773,11 @@ class PythonLearnApp:
             # boutons : changer le texte ne suffit pas, il faut aussi fixer
             # « width », exprimé en caractères.
             for bouton, cle, _ in self._boutons_barre:
-                bouton.configure(text=self._icone_de(self.tr(cle)),
-                                 width=LARGEUR_ICONE)
+                if cle in getattr(self, "_icones_toolbar", {}):
+                    bouton.configure(text="", width=0)
+                else:
+                    bouton.configure(text=self._icone_de(self.tr(cle)),
+                                     width=LARGEUR_ICONE)
             self.toolbar.update_idletasks()
 
         self._debordement = []
@@ -764,6 +964,10 @@ class PythonLearnApp:
         self.tree.tag_configure("done", foreground=C["ok"])
         self.tree.tag_configure("level", foreground=C["heading"])
 
+        self.vue_puzzle.appliquer_theme(C)
+        self.vue_trou.appliquer_theme(C)
+        self.vue_decodeur.appliquer_theme(C)
+        self.vue_arene.appliquer_theme(C)
         self.vue_predire.appliquer_theme(C)
         self.vue_ordre.appliquer_theme(C)
         self.vue_turtle.appliquer_theme(C)
@@ -996,6 +1200,18 @@ class PythonLearnApp:
         if type_lecon == "quiz":
             self.quiz_frame.pack(fill=tk.BOTH, expand=True)
             self._load_quiz(lesson)
+        elif type_lecon == "puzzle":
+            self.vue_puzzle.afficher()
+            self.vue_puzzle.charger(lesson)
+        elif type_lecon == "trou":
+            self.vue_trou.afficher()
+            self.vue_trou.charger(lesson)
+        elif type_lecon == "decodeur":
+            self.vue_decodeur.afficher()
+            self.vue_decodeur.charger(lesson)
+        elif type_lecon == "arene":
+            self.vue_arene.afficher()
+            self.vue_arene.charger(lesson)
         elif type_lecon == "predire":
             self.vue_predire.afficher()
             self.vue_predire.charger(lesson)
@@ -1015,6 +1231,10 @@ class PythonLearnApp:
         """Retire de l'affichage toutes les vues, avant d'en montrer une."""
         self.exo_frame.pack_forget()
         self.quiz_frame.pack_forget()
+        self.vue_puzzle.masquer()
+        self.vue_trou.masquer()
+        self.vue_decodeur.masquer()
+        self.vue_arene.masquer()
         self.vue_predire.masquer()
         self.vue_ordre.masquer()
         self.vue_turtle.masquer()
@@ -1332,6 +1552,7 @@ class PythonLearnApp:
         self._apres_reussite(item_id)
         if message_banniere:
             self._show_banner(message_banniere, self.C["ok"])
+        self._animer_confettis()
 
     def _apres_reussite(self, item_id):
         """Enregistre l'activité du jour et planifie la prochaine révision."""
@@ -1394,17 +1615,20 @@ class PythonLearnApp:
                                          foreground=self.C["muted"])
             return
         if choix == self.current.get("answer"):
+            audio.play_correct()
+            self.ajouter_sesterces(10)
             self.quiz_feedback.configure(
-                text=self.tr("quiz_good") + self.txt(self.current, "explanation"),
+                text="✨ " + self.tr("quiz_good") + " " + self.txt(self.current, "explanation"),
                 foreground=self.C["ok"])
             nouveau = self.current["id"] not in self.data["completed"]
             self._mark_done(self.current["id"])
             if nouveau:
                 prog.enregistrer_activite(self.data, date.today().isoformat())
                 self._refresh_status()
-            self._show_banner(self.tr("banner_quiz"), self.C["ok"])
+            self._show_banner(self.tr("banner_quiz") + " +10 Sesterces 🪙", self.C["ok"])
             self._animer_confettis()
         else:
+            audio.play_wrong()
             self.quiz_feedback.configure(text=self.tr("quiz_bad"),
                                          foreground=self.C["err"])
 
@@ -1467,7 +1691,7 @@ class PythonLearnApp:
             title=self.tr("dlg_badge_title"),
             defaultextension=".svg",
             filetypes=[("SVG (*.svg)", "*.svg"), ("All files", "*.*")],
-            initialfile="pythonlearn-badge.svg"
+            initialfile="luduslatinus-badge.svg"
         )
         if chemin:
             try:
@@ -1514,7 +1738,7 @@ class PythonLearnApp:
             title=self.tr("dlg_anki_title"),
             defaultextension=".tsv",
             filetypes=[("TSV (Anki)", "*.tsv"), ("All files", "*.*")],
-            initialfile="pythonlearn_anki.tsv"
+            initialfile="luduslatinus_anki.tsv"
         )
         if chemin:
             try:
@@ -1556,15 +1780,23 @@ class PythonLearnApp:
                 self._refresh_badges()
                 self._refresh_status()
                 nom = LEVEL_BADGE_NAMES.get(level["id"], level["title"])
-                nb = len(self.data["badges"])
-                if nb == len(CURRICULUM):
-                    msg = (f"Badge « {nom} » débloqué — et tu as terminé TOUS "
-                           f"les parcours ! Bravo 👏")
+                nb = len([b for b in self.data["badges"] if not b.startswith("triomphe")])
+                tous_mondes_termines = all(
+                    all(lesson_done(l, self.data["completed"]) for l in lvl["lessons"])
+                    for lvl in CURRICULUM
+                )
+                if tous_mondes_termines:
+                    if "triomphe_5eme" not in self.data["badges"]:
+                        prog.award_badge(self.data, "triomphe_5eme")
+                        self.ajouter_sesterces(200)
+                    self._animer_confettis()
+                    from app.triomphe import Triomphe5emeDialog
+                    self.root.after(300, lambda: Triomphe5emeDialog(self.root, self))
                 else:
                     msg = f"Parcours « {nom} » terminé ! Badge {nb}/{len(CURRICULUM)}."
-                Celebration(self.root, msg, self.C,
-                            on_cert=lambda lid=level["id"]: self._generer_certificat(lid))
-                self._animer_confettis()
+                    Celebration(self.root, msg, self.C,
+                                on_cert=lambda lid=level["id"]: self._generer_certificat(lid))
+                    self._animer_confettis()
 
     def _refresh_status(self):
         done = len(self.data["completed"])
@@ -1604,19 +1836,154 @@ class PythonLearnApp:
             self._refresh_status()
             self._select_first_incomplete()
 
-    # ------------------------------------------------------------- fenêtres
     def _show_welcome(self):
-        prog.marquer_accueil_vu(self.data)
         C = self.C
         win = tk.Toplevel(self.root)
-        win.title(self.tr("wel_title"))
+        win.title("🏛️ Ludus Latinus — Bienvenue Jeune Héros !")
         win.configure(bg=C["panel"])
-        win.geometry("520x380")
-        tk.Label(win, text=self.tr("wel_title"), bg=C["panel"], fg=C["accent"],
-                 font=self.title_font).pack(pady=(20, 8))
-        tk.Label(win, text=self.tr("wel_body"), bg=C["panel"], fg=C["fg"], justify="left",
-                 wraplength=470).pack(padx=20)
-        tk.Button(win, text=self.tr("wel_start"), command=win.destroy).pack(pady=14)
+        win.resizable(False, False)
+
+        # Centrage à l'écran
+        w, h = 640, 580
+        sw = win.winfo_screenwidth()
+        sh = win.winfo_screenheight()
+        win.geometry(f"{w}x{h}+{(sw - w) // 2}+{(sh - h) // 2}")
+
+        # Liseré supérieur
+        tk.Frame(win, bg=C["accent"], height=6).pack(fill=tk.X, side=tk.TOP)
+
+        # En-tête avec logo centurion
+        hdr_frame = tk.Frame(win, bg=C["panel"])
+        hdr_frame.pack(fill=tk.X, padx=20, pady=(14, 6))
+
+        logo_path = pathlib.Path(__file__).resolve().parent.parent / "assets" / "images" / "logo_centurion_64.png"
+        if logo_path.exists():
+            try:
+                win._logo_img = tk.PhotoImage(file=str(logo_path))
+                tk.Label(hdr_frame, image=win._logo_img, bg=C["panel"]).pack(side=tk.LEFT, padx=(0, 14))
+            except Exception:
+                tk.Label(hdr_frame, text="🏛️", font=("", 32), bg=C["panel"]).pack(side=tk.LEFT, padx=(0, 14))
+        else:
+            tk.Label(hdr_frame, text="🏛️", font=("", 32), bg=C["panel"]).pack(side=tk.LEFT, padx=(0, 14))
+
+        title_box = tk.Frame(hdr_frame, bg=C["panel"])
+        title_box.pack(side=tk.LEFT, fill=tk.BOTH)
+        tk.Label(title_box, text=self.tr("wel_title"), font=(self.title_font.cget("family"), 17, "bold"),
+                 bg=C["panel"], fg=C["accent"]).pack(anchor="w")
+        tk.Label(title_box, text="L'Aventure Romaine · Choisis ton Héros pour commencer",
+                 font=(self.body.cget("family"), 10), bg=C["panel"], fg=C["muted"]).pack(anchor="w")
+
+        # Présentation
+        tk.Label(
+            win,
+            text="Tu t'apprêtes à explorer 7 Mondes fabuleux de la Rome Antique et affronter les légendes du Colisée !\n"
+                 "Avant de débuter ta quête, choisis le héros que tu souhaites incarner :",
+            font=(self.body.cget("family"), 10),
+            bg=C["panel"], fg=C["fg"], justify="center"
+        ).pack(padx=20, pady=(4, 12))
+
+        # Cartes Marcus / Julia
+        cards_frame = tk.Frame(win, bg=C["panel"])
+        cards_frame.pack(fill=tk.X, padx=30, pady=4)
+        cards_frame.columnconfigure(0, weight=1)
+        cards_frame.columnconfigure(1, weight=1)
+
+        current_genre = [prog.get_genre(self.data)]
+
+        card_boy = tk.Frame(cards_frame, bg=C["editor"], padx=14, pady=10, highlightthickness=3)
+        card_boy.grid(row=0, column=0, padx=10, sticky="nsew")
+
+        card_girl = tk.Frame(cards_frame, bg=C["editor"], padx=14, pady=10, highlightthickness=3)
+        card_girl.grid(row=0, column=1, padx=10, sticky="nsew")
+
+        img_dir = pathlib.Path(__file__).resolve().parent.parent / "assets" / "images"
+        p_boy = img_dir / "avatar_garcon_140.png"
+        p_girl = img_dir / "avatar_fille_140.png"
+
+        if p_boy.exists():
+            try:
+                win._boy_img = tk.PhotoImage(file=str(p_boy))
+                tk.Label(card_boy, image=win._boy_img, bg=C["editor"]).pack(pady=4)
+            except Exception:
+                tk.Label(card_boy, text="👦", font=("", 48), bg=C["editor"]).pack(pady=4)
+        else:
+            tk.Label(card_boy, text="👦", font=("", 48), bg=C["editor"]).pack(pady=4)
+
+        if p_girl.exists():
+            try:
+                win._girl_img = tk.PhotoImage(file=str(p_girl))
+                tk.Label(card_girl, image=win._girl_img, bg=C["editor"]).pack(pady=4)
+            except Exception:
+                tk.Label(card_girl, text="👧", font=("", 48), bg=C["editor"]).pack(pady=4)
+        else:
+            tk.Label(card_girl, text="👧", font=("", 48), bg=C["editor"]).pack(pady=4)
+
+        tk.Label(card_boy, text="👦 Marcus", font=(self.body.cget("family"), 13, "bold"),
+                 bg=C["editor"], fg=C["accent"]).pack(pady=(4, 1))
+        tk.Label(card_boy, text="Le Jeune Centurion", font=(self.body.cget("family"), 9, "italic"),
+                 bg=C["editor"], fg=C["muted"]).pack()
+        tk.Label(card_boy, text="Brave et déterminé au Colisée !", font=(self.body.cget("family"), 8),
+                 bg=C["editor"], fg=C["fg"]).pack(pady=(2, 6))
+
+        btn_boy = tk.Button(card_boy, text="Choisir Marcus", font=(self.body.cget("family"), 10, "bold"),
+                            relief="flat", padx=10, pady=4, cursor="hand2")
+        btn_boy.pack(fill=tk.X)
+
+        tk.Label(card_girl, text="👧 Julia", font=(self.body.cget("family"), 13, "bold"),
+                 bg=C["editor"], fg=C["accent"]).pack(pady=(4, 1))
+        tk.Label(card_girl, text="L'Intrépide Gladiatrice", font=(self.body.cget("family"), 9, "italic"),
+                 bg=C["editor"], fg=C["muted"]).pack()
+        tk.Label(card_girl, text="Vive, agile et perspicace !", font=(self.body.cget("family"), 8),
+                 bg=C["editor"], fg=C["fg"]).pack(pady=(2, 6))
+
+        btn_girl = tk.Button(card_girl, text="Choisir Julia", font=(self.body.cget("family"), 10, "bold"),
+                             relief="flat", padx=10, pady=4, cursor="hand2")
+        btn_girl.pack(fill=tk.X)
+
+        def maj_selection(nouveau_genre, play_sfx=True):
+            current_genre[0] = nouveau_genre
+            if nouveau_genre == "garcon":
+                prog.set_genre(self.data, "garcon")
+                prog.set_nom_heros(self.data, "Marcus")
+                card_boy.configure(highlightbackground=C["accent"], highlightcolor=C["accent"])
+                card_girl.configure(highlightbackground=C["panel"], highlightcolor=C["panel"])
+                btn_boy.configure(text="✓ Marcus sélectionné", bg=C["accent"], fg=C["sel_fg"])
+                btn_girl.configure(text="Choisir Julia", bg=C["panel"], fg=C["fg"])
+            else:
+                prog.set_genre(self.data, "fille")
+                prog.set_nom_heros(self.data, "Julia")
+                card_girl.configure(highlightbackground=C["accent"], highlightcolor=C["accent"])
+                card_boy.configure(highlightbackground=C["panel"], highlightcolor=C["panel"])
+                btn_girl.configure(text="✓ Julia sélectionnée", bg=C["accent"], fg=C["sel_fg"])
+                btn_boy.configure(text="Choisir Marcus", bg=C["panel"], fg=C["fg"])
+            if play_sfx:
+                audio.play_coin()
+
+        btn_boy.configure(command=lambda: maj_selection("garcon"))
+        btn_girl.configure(command=lambda: maj_selection("fille"))
+        card_boy.bind("<Button-1>", lambda e: maj_selection("garcon"))
+        card_girl.bind("<Button-1>", lambda e: maj_selection("fille"))
+        maj_selection(current_genre[0], play_sfx=False)
+
+        def demarrer():
+            prog.marquer_accueil_vu(self.data)
+            prog.save_progress(self.data)
+            self._refresh_header_stats()
+            audio.play_fanfare()
+            win.destroy()
+            if self.data.get("accueil_au_demarrage", True):
+                self._show_accueil()
+
+        start_btn = tk.Button(
+            win,
+            text=f"⚔️ {self.tr('wel_start')} !",
+            font=(self.body.cget("family"), 12, "bold"),
+            bg="#d4af37", fg="#1a1409",
+            activebackground="#f3e5ab", activeforeground="#1a1409",
+            padx=22, pady=8, relief="flat", cursor="hand2",
+            command=demarrer
+        )
+        start_btn.pack(pady=(16, 8))
 
     def _show_accueil(self):
         """Ouvre le tableau de bord : où j'en suis, par quoi je reprends."""
@@ -1898,6 +2265,12 @@ class PythonLearnApp:
             cert = tk.Frame(win, bg=C["bg"])
             cert.pack(fill=tk.X, padx=28)
             for lid in self.data["badges"]:
+                if lid == "triomphe_5eme":
+                    tk.Button(cert, text="👑 Grand Triomphe de Rome (Programme 5ème)", anchor="w",
+                              bg="#c59b27", fg="#ffffff", font=(self.body.cget("family"), 9, "bold"),
+                              relief="flat", padx=6, pady=3,
+                              command=self._ouvrir_triomphe).pack(fill=tk.X, pady=3)
+                    continue
                 nom = LEVEL_BADGE_NAMES.get(lid, lid)
                 tk.Button(cert, text=f"🎓 {nom}", anchor="w",
                           command=lambda parcours=lid:
@@ -1986,19 +2359,29 @@ def _splash(root):
     C = THEMES["dark"]
     sp = tk.Toplevel(root)
     sp.overrideredirect(True)
-    w, h = 440, 260
+    w, h = 460, 300
     sw, sh = sp.winfo_screenwidth(), sp.winfo_screenheight()
     sp.geometry(f"{w}x{h}+{(sw - w) // 2}+{(sh - h) // 2}")
     sp.configure(bg=C["panel"])
     # liseré d'accent en haut
     tk.Frame(sp, bg=C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
-    tk.Label(sp, text="🐍", bg=C["panel"], font=("", 60)).pack(pady=(34, 2))
-    tk.Label(sp, text="PythonLearn", bg=C["panel"], fg=C["accent"],
-             font=("", 25, "bold")).pack()
-    tk.Label(sp, text="Apprendre Python, pas à pas", bg=C["panel"],
-             fg=C["muted"]).pack(pady=(2, 0))
+
+    logo_path = pathlib.Path(__file__).resolve().parent.parent / "assets" / "images" / "logo_centurion_120.png"
+    if logo_path.exists():
+        try:
+            sp._logo_img = tk.PhotoImage(file=str(logo_path))
+            tk.Label(sp, image=sp._logo_img, bg=C["panel"]).pack(pady=(20, 4))
+        except Exception:
+            tk.Label(sp, text="🏛️", bg=C["panel"], font=("", 50)).pack(pady=(24, 2))
+    else:
+        tk.Label(sp, text="🏛️", bg=C["panel"], font=("", 50)).pack(pady=(24, 2))
+
+    tk.Label(sp, text=APP_NAME, bg=C["panel"], fg=C["accent"],
+             font=("", 24, "bold")).pack()
+    tk.Label(sp, text="L'Aventure Romaine pour collégiens", bg=C["panel"],
+             fg=C["muted"], font=("", 11)).pack(pady=(2, 0))
     tk.Label(sp, text="par " + AUTEUR, bg=C["panel"], fg=C["muted"],
-             font=("", 9)).pack(pady=(10, 0))
+             font=("", 9)).pack(pady=(8, 0))
     try:
         sp.attributes("-topmost", True)
         sp.attributes("-alpha", 0.0)
@@ -2023,7 +2406,25 @@ def launch():
 
     root = tk.Tk()
     root.withdraw()
-    if ICON_B64:
+
+    assets_dir = pathlib.Path(__file__).resolve().parent.parent / "assets"
+    ico_path = assets_dir / "icon.ico"
+    png_path = assets_dir / "images" / "logo_centurion_64.png"
+
+    if sys.platform == "win32" and ico_path.exists():
+        try:
+            root.iconbitmap(str(ico_path))
+        except Exception:
+            pass
+
+    if png_path.exists():
+        try:
+            icon = tk.PhotoImage(file=str(png_path))
+            root.iconphoto(True, icon)
+            root._icon_ref = icon
+        except Exception:
+            pass
+    elif ICON_B64:
         try:
             icon = tk.PhotoImage(data=ICON_B64)
             root.iconphoto(True, icon)
@@ -2052,3 +2453,7 @@ def launch():
         _sortie()
     root.after(1100, _demarrer)
     root.mainloop()
+
+
+LudusLatinusApp = PythonLearnApp
+

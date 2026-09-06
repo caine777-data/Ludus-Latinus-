@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Ludus Latinus
+GenericName=Apprendre le Latin
+GenericName[en]=Learn Latin
+Comment=Apprendre le latin pas à pas — L'Aventure Romaine pour collégiens
+Comment[en]=Learn Latin step by step — Roman Adventure
+Exec=ludus-latinus
+Icon=ludus-latinus
+Terminal=false
+Categories=Education;Languages;
+Keywords=latin;langue;antiquité;rome;collège;exercices;
+Keywords[en]=latin;language;rome;education;exercises;
+StartupWMClass=LudusLatinus

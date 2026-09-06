@@ -174,8 +174,8 @@ class TestResumeAccueil(unittest.TestCase):
         curr = [{"id": "t1", "lessons": [{"id": "qz", "type": "quiz", "question": "Q ?", "options": ["R1", "R2"], "answer": 0, "explanation": "Exp"}]}]
         tsv = stats.export_anki_tsv(gloss, curr, lang="fr")
         self.assertIn("#separator:tab", tsv)
-        self.assertIn("mot\tdéfinition\tpythonlearn::vocabulaire", tsv)
-        self.assertIn("Q ?\tR1<br><small style='color:gray'>Exp</small>\tpythonlearn::t1", tsv)
+        self.assertIn("mot\tdéfinition\tluduslatinus::vocabulaire", tsv)
+        self.assertIn("Q ?\tR1<br><small style='color:gray'>Exp</small>\tluduslatinus::t1", tsv)
 
 
 if __name__ == "__main__":

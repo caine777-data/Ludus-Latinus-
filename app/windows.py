@@ -350,17 +350,18 @@ class AccueilWindow(tk.Toplevel):
         niv = resume["niveau"]
         cases = [
             ("🔥", str(resume["serie"]), app.tr("acc_serie")),
-            ("⭐", str(niv["niveau"]), app.tr("acc_niveau")),
+            (niv.get("rang_icone", "🟢"), niv.get("rang_titre", "Tiro"), f"Niveau {niv['niveau']}"),
+            ("🪙", str(app.data.get("sesterces", 0)), "Sesterces"),
             ("🎯", f"{resume['aujourdhui']}/{resume['objectif']}", app.tr("acc_jour")),
         ]
         if resume["revisions"]:
             cases.append(("🔁", str(resume["revisions"]), app.tr("acc_revisions")))
         for icone, valeur, legende in cases:
             case = tk.Frame(chiffres, bg=C["panel"])
-            case.pack(side=tk.LEFT, padx=14)
-            tk.Label(case, text=icone, bg=C["panel"], font=("", 17)).pack()
+            case.pack(side=tk.LEFT, padx=10)
+            tk.Label(case, text=icone, bg=C["panel"], font=("Segoe UI Emoji", 16)).pack()
             tk.Label(case, text=valeur, bg=C["panel"], fg=C["fg"],
-                     font=("", 15, "bold")).pack()
+                     font=("", 13, "bold")).pack()
             tk.Label(case, text=legende, bg=C["panel"], fg=C["muted"],
                      font=("", 8)).pack()
 

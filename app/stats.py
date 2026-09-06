@@ -14,19 +14,49 @@ XP_PAR_BADGE = 50     # chaque parcours terminé
 XP_PAR_NIVEAU = 100   # paliers réguliers
 
 
+RANGS_ROMAINS = [
+    (1, "Tiro", "🟢", "Jeune recrue — Premiers pas à Rome"),
+    (3, "Discipulus", "📜", "Élève appliqué — Tu maîtrises les mots"),
+    (6, "Explorator", "🧭", "Explorateur — Les mythes n'ont plus de secret"),
+    (10, "Legionarius", "🛡️", "Légionnaire — Tu déchiffres les cas"),
+    (15, "Centurio", "⚔️", "Centurion — Triomphe dans l'Arène"),
+    (20, "Senator", "🏛️", "Sénateur — Sage de la Cité de Rome"),
+    (25, "Triumphator", "👑", "Grand Triomphateur — Maître absolu du Latin"),
+]
+
+
+def rang_romain(niv):
+    """Détermine le rang romain selon le niveau actuel."""
+    actuel = RANGS_ROMAINS[0]
+    for palier, titre, icone, desc in RANGS_ROMAINS:
+        if niv >= palier:
+            actuel = (palier, titre, icone, desc)
+    return {"titre": actuel[1], "icone": actuel[2], "desc": actuel[3]}
+
+
 def xp_total(completed, badges):
     """Expérience accumulée : items réussis + bonus de badges."""
     return XP_PAR_ITEM * len(completed) + XP_PAR_BADGE * len(badges)
 
 
 def niveau(xp):
-    """Traduit l'XP en (niveau, progression dans le niveau, palier).
+    """Traduit l'XP en (niveau, progression dans le niveau, palier et rang romain).
 
     Niveau 1 dès 0 XP ; chaque niveau demande XP_PAR_NIVEAU points.
     """
     niv = xp // XP_PAR_NIVEAU + 1
     dans = xp % XP_PAR_NIVEAU
-    return {"niveau": niv, "dans_niveau": dans, "pour_suivant": XP_PAR_NIVEAU, "xp": xp}
+    rang = rang_romain(niv)
+    return {
+        "niveau": niv,
+        "dans_niveau": dans,
+        "pour_suivant": XP_PAR_NIVEAU,
+        "xp": xp,
+        "rang_titre": rang["titre"],
+        "rang_icone": rang["icone"],
+        "rang_desc": rang["desc"],
+    }
+
 
 
 def cette_semaine(historique, today):
@@ -202,14 +232,14 @@ def certificat_html(nom, parcours, date_str, auteur=None, lang="fr"):
   .badge {{ font-size:54px; }}
 </style></head>
 <body><div class="cert">
-  <div class="badge">🏅</div>
+  <div class="badge">🏛️</div>
   <h1>{titre_h1}</h1>
-  <div class="sub">PythonLearn</div>
+  <div class="sub">Ludus Latinus</div>
   <div class="nom">{nom}</div>
   <div class="ligne"></div>
   <p>{phrase}</p>
   <div class="parcours">{parcours}</div>
-  <div class="pied"><span>PythonLearn 🐍{signature}</span><span>{date_str}</span></div>
+  <div class="pied"><span>Ludus Latinus 🏛️{signature}</span><span>{date_str}</span></div>
 </div>
 <script>window.onload = () => {{ /* imprimable via Ctrl+P */ }};</script>
 </body></html>"""
@@ -223,8 +253,8 @@ def cheatsheet_html(titre, sections, auteur=None, lang="fr"):
     import html as _html
 
     pied = f" — par {auteur}" if auteur else ""
-    sub_title = "PythonLearn — printable cheat sheet (Ctrl+P)" if lang == "en" else "PythonLearn — mémo imprimable (Ctrl+P)"
-    footer_text = f"PythonLearn 🐍 — essential syntax{_html.escape(pied)}" if lang == "en" else f"PythonLearn 🐍 — la syntaxe essentielle{_html.escape(pied)}"
+    sub_title = "Ludus Latinus — printable cheat sheet (Ctrl+P)" if lang == "en" else "Ludus Latinus — mémo imprimable (Ctrl+P)"
+    footer_text = f"Ludus Latinus 🏛️ — essential Latin{_html.escape(pied)}" if lang == "en" else f"Ludus Latinus 🏛️ — l'essentiel du latin{_html.escape(pied)}"
     blocs = []
     for nom_section, lignes in sections:
         items = "\n".join(
@@ -233,52 +263,57 @@ def cheatsheet_html(titre, sections, auteur=None, lang="fr"):
             for code, desc in lignes
         )
         blocs.append(
-            f'  <section>\n    <h2>{_html.escape(nom_section)}</h2>\n'
-            f'    <table>\n{items}\n    </table>\n  </section>'
+            f'  <section><h2>{_html.escape(nom_section)}</h2>'
+            f'<table>\n{items}\n  </table></section>'
         )
     corps = "\n".join(blocs)
+
     return f"""<!DOCTYPE html>
 <html lang="{lang}"><head><meta charset="utf-8">
-<title>{_html.escape(titre)}</title>
+<title>{_html.escape(titre)} — Ludus Latinus</title>
 <style>
-  * {{ box-sizing: border-box; }}
-  body {{ font-family: -apple-system, Segoe UI, Roboto, sans-serif;
-         margin: 24px; color: #1a1a2e; background: #f6f7fb; }}
-  h1 {{ text-align: center; color: #5b4bdb; margin: 0 0 4px; }}
-  .sub {{ text-align: center; color: #777; margin: 0 0 20px; font-size: 14px; }}
-  .grid {{ column-count: 2; column-gap: 20px; }}
-  @media (max-width: 760px) {{ .grid {{ column-count: 1; }} }}
-  section {{ break-inside: avoid; background: #fff; border: 1px solid #e4e4f0;
-            border-radius: 10px; padding: 10px 14px; margin: 0 0 16px; }}
-  h2 {{ font-size: 15px; color: #5b4bdb; margin: 0 0 8px;
-       border-bottom: 2px solid #eceaff; padding-bottom: 4px; }}
-  table {{ width: 100%; border-collapse: collapse; }}
-  td {{ padding: 3px 4px; vertical-align: top; font-size: 13px; }}
-  .code {{ font-family: Consolas, Menlo, monospace; color: #1a1a2e;
-          white-space: nowrap; }}
-  .desc {{ color: #666; text-align: right; }}
-  .pied {{ text-align: center; color: #999; font-size: 12px; margin-top: 8px; }}
-  @media print {{ body {{ background: #fff; margin: 0; }}
-                 section {{ border-color: #ccc; }} }}
-</style></head><body>
-  <h1>🐍 {_html.escape(titre)}</h1>
-  <p class="sub">{sub_title}</p>
-  <div class="grid">
+  body {{ font-family:-apple-system, Segoe UI, Roboto, Helvetica, sans-serif;
+          max-width:960px; margin:24px auto; padding:0 20px; color:#202124; }}
+  h1 {{ font-size:26px; margin:0 0 4px; color:#1a73e8; }}
+  .sub {{ color:#5f6368; font-size:13px; margin-bottom:20px; }}
+  .grille {{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+             gap:16px; }}
+  .sec {{ border:1px solid #dadce0; border-radius:8px; padding:12px 14px;
+          background:#fafafa; break-inside:avoid; }}
+  h2 {{ font-size:15px; margin:0 0 8px; color:#202124;
+        border-bottom:2px solid #1a73e8; padding-bottom:4px; }}
+  table {{ width:100%; border-collapse:collapse; font-size:12px; }}
+  td {{ padding:4px 6px; vertical-align:top; }}
+  td.code {{ font-family:Consolas, Monaco, monospace; color:#d93025;
+             white-space:nowrap; font-weight:600; width:45%; }}
+  td.desc {{ color:#3c4043; }}
+  tr:nth-child(even) {{ background:#f1f3f4; }}
+  .pied {{ margin-top:30px; font-size:11px; color:#70757a; text-align:center; }}
+  @media print {{
+    body {{ max-width:100%; margin:0; padding:10mm; }}
+    .sec {{ border:1px solid #ccc; }}
+    .pied {{ position:fixed; bottom:5mm; left:0; right:0; }}
+  }}
+</style></head>
+<body>
+  <h1>{_html.escape(titre)}</h1>
+  <div class="sub">{sub_title}</div>
+  <div class="grille">
 {corps}
   </div>
-  <p class="pied">{footer_text}</p>
+  <div class="pied">{footer_text}</div>
 </body></html>"""
 
 
-def badge_svg(streak=0, termines=0, total=133, lang="fr"):
+def badge_svg(streak=0, termines=0, total=34, lang="fr"):
     """Génère un badge SVG vectoriel propre et moderne représentant le niveau et les stats."""
     pourcent = round((termines / total) * 100) if total else 0
-    titre_label = "PythonLearn Profile" if lang == "en" else "Profil PythonLearn"
+    titre_label = "Ludus Latinus" if lang == "en" else "Profil Ludus Latinus"
     streak_label = f"🔥 {streak} days" if lang == "en" else f"🔥 {streak} jours"
     prog_label = f"✓ {termines}/{total} ({pourcent}%)"
-    niveau_label = "Advanced" if pourcent >= 75 else ("Intermediate" if pourcent >= 35 else "Beginner")
+    niveau_label = "Senator" if pourcent >= 75 else ("Centurio" if pourcent >= 35 else "Tiro")
     if lang != "en":
-        niveau_label = "Avancé" if pourcent >= 75 else ("Intermédiaire" if pourcent >= 35 else "Débutant")
+        niveau_label = "Sénateur" if pourcent >= 75 else ("Centurion" if pourcent >= 35 else "Tiro (Recrue)")
     bar_width = max(12, int(3.12 * pourcent)) if pourcent > 0 else 0
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="360" height="140" viewBox="0 0 360 140" fill="none">
@@ -288,13 +323,13 @@ def badge_svg(streak=0, termines=0, total=133, lang="fr"):
       <stop offset="100%" stop-color="#272935"/>
     </linearGradient>
     <linearGradient id="barGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#4d8bf0"/>
-      <stop offset="100%" stop-color="#52c97a"/>
+      <stop offset="0%" stop-color="#c99738"/>
+      <stop offset="100%" stop-color="#991b1b"/>
     </linearGradient>
   </defs>
   <rect width="360" height="140" rx="14" fill="url(#bgGrad)" stroke="#3a3d4d" stroke-width="1.5"/>
-  <text x="24" y="34" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">🐍 {titre_label}</text>
-  <text x="336" y="34" text-anchor="end" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#7fb0ff">{niveau_label}</text>
+  <text x="24" y="34" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="16" font-weight="bold" fill="#ffffff">🏛️ {titre_label}</text>
+  <text x="336" y="34" text-anchor="end" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#e8c26f">{niveau_label}</text>
 
   <text x="24" y="68" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="13" fill="#9aa0b4">{streak_label}</text>
   <text x="336" y="68" text-anchor="end" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="13" font-weight="600" fill="#e6e6e6">{prog_label}</text>
@@ -303,7 +338,7 @@ def badge_svg(streak=0, termines=0, total=133, lang="fr"):
   <rect x="24" y="86" width="312" height="12" rx="6" fill="#15161c"/>
   <rect x="24" y="86" width="{bar_width}" height="12" rx="6" fill="url(#barGrad)"/>
 
-  <text x="180" y="122" text-anchor="middle" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#637777">pythonlearn • 100% standard library</text>
+  <text x="180" y="122" text-anchor="middle" font-family="-apple-system, Segoe UI, Roboto, sans-serif" font-size="11" fill="#637777">ludus latinus • 100% standard library</text>
 </svg>"""
 
 
@@ -323,7 +358,7 @@ def defi_du_jour(curriculum, today=None):
                     "title_en": lesson.get("title_en", ""),
                     "level_id": level.get("id", ""),
                     "level_title": level.get("title", ""),
-                    "level_title_en": level.get("title_en", ""),
+                    "level_title_en": level.get("level_title_en", ""),
                     "type": lesson.get("type", "code")
                 })
     if not items:
@@ -341,13 +376,13 @@ def export_anki_tsv(glossaire, curriculum=None, lang="fr"):
     for terme, defn in glossaire:
         t_clean = terme.replace("\t", " ").replace("\n", "<br>")
         d_clean = defn.replace("\t", " ").replace("\n", "<br>")
-        tag = "pythonlearn::vocabulaire" if lang == "fr" else "pythonlearn::vocabulary"
+        tag = "luduslatinus::vocabulaire" if lang == "fr" else "luduslatinus::vocabulary"
         lignes.append(f"{t_clean}\t{d_clean}\t{tag}")
 
     # 2. Questions de quiz du curriculum
     if curriculum:
         for level in curriculum:
-            tag = f"pythonlearn::{level.get('id', 'quiz')}"
+            tag = f"luduslatinus::{level.get('id', 'quiz')}"
             for lesson in level.get("lessons", []):
                 if lesson.get("type") == "quiz":
                     q = lesson.get("question_en" if lang == "en" else "question", "")

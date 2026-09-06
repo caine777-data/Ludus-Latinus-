@@ -1,12 +1,6 @@
 """
-PythonLearn — application de bureau pour apprendre Python,
-du niveau débutant au niveau expert.
-
-Sans argument, lance l'interface graphique. Deux options servent aux
-scripts d'empaquetage et à l'intégration continue :
-
-    python main.py --version    affiche la version et sort
-    python main.py --check      contrôle que l'installation est complète
+Ludus Latinus — L'Aventure Romaine.
+Application d'apprentissage du latin pas à pas pour collégiens.
 """
 
 import argparse
@@ -133,8 +127,8 @@ def creer_exemple_pack():
         _dire(f"Écriture impossible : {exc}")
         return 1
     _dire(f"Pack d'exemple créé :\n  {chemin}")
-    _dire("Ouvre-le dans un éditeur de texte, modifie-le, puis relance "
-          "PythonLearn : ton parcours apparaîtra dans la liste.")
+    _dire(f"Ouvre-le dans un éditeur de texte, modifie-le, puis relance "
+          f"{APP_NAME} : ton parcours apparaîtra dans la liste.")
     return 0
 
 
@@ -170,8 +164,8 @@ def afficher_etat_traduction(langue="en"):
 
 def main(argv=None):
     analyseur = argparse.ArgumentParser(
-        prog="PythonLearn",
-        description="Apprendre Python pas à pas, du débutant à l'expert.")
+        prog="LudusLatinus",
+        description="Ludus Latinus — L'aventure ludique pour apprendre le latin au collège.")
     analyseur.add_argument("--version", action="version",
                            version=f"{APP_NAME} {__version__}")
     analyseur.add_argument("--check", action="store_true",

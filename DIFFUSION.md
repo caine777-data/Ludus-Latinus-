@@ -1,4 +1,4 @@
-# Diffuser PythonLearn
+# Diffuser Ludus Latinus
 
 Ce guide explique comment le code devient des fichiers d'installation
 téléchargeables, et comment les publier proprement. L'application reste
@@ -7,45 +7,41 @@ curriculum sont embarqués dans le fichier livré.
 
 ---
 
-## 1. La voie normale : ne rien construire soi-même
+## 1. La voie normale : ne rien construire soi-même (GitHub Actions)
 
-Tout est automatisé. Pour publier une version :
+Tout est automatisé dans GitHub Actions !
 
-1. Mettre à jour le numéro dans `app/version.py`.
-2. Committer, puis poser le tag correspondant :
+### Option A : Construire à la demande (bouton Action)
+1. Va sur l'onglet **Actions** de ton dépôt GitHub.
+2. Clique sur **Construire les installateurs** à gauche.
+3. Clique sur le bouton **Run workflow** à droite.
+4. Laisse tourner les machines virtuelles (Windows, macOS, Linux).
+5. Une fois terminé, télécharge les artefacts produits directement depuis la page de l'exécution.
 
+### Option B : Publier une Release officielle
+1. Vérifie le numéro de version dans `app/version.py` (ex: `1.0.0`).
+2. Committe et pousse un tag Git :
 ```bash
-git tag v1.1.0
-git push origin v1.1.0
+git tag v1.0.0
+git push origin v1.0.0
 ```
-
 Le workflow `.github/workflows/build.yml` se charge du reste :
 
 | Étape | Ce qui est vérifié ou produit |
 |---|---|
-| Tests | les 132 solutions du curriculum passent leurs propres tests |
-| Version | le tag correspond bien à `app/version.py`, sinon la CI s'arrête |
-| Windows | `PythonLearn-Setup-<version>.exe` + version portable |
-| macOS | `.dmg` pour Apple Silicon |
-| Linux | `.deb` + archive `.tar.gz` autonome |
-| Contrôle | chaque exécutable produit est lancé avec `--check` |
-| Release | les fichiers sont publiés avec leurs empreintes SHA-256 |
-
-Pour **essayer la chaîne sans publier** : onglet *Actions* →
-*Construire les installateurs* → *Run workflow*. Les fichiers sont déposés
-en artefacts téléchargeables, sans créer de Release.
-
-> Le contrôle `--check` est le garde-fou le plus utile de la chaîne : il
-> lance réellement le binaire fabriqué et vérifie que tkinter, le curriculum
-> et le moteur d'exécution sont bien présents dedans. C'est ce qui attrape
-> le classique « l'exe se construit mais ne s'ouvre pas ».
+| Tests | Tous les tests unitaires et leçons passent |
+| Version | Le tag correspond bien à `app/version.py` |
+| Windows | `LudusLatinus-Setup-<version>.exe` + version portable |
+| macOS | `LudusLatinus-<version>-arm64.dmg` pour Apple Silicon |
+| Linux | `ludus-latinus_<version>_amd64.deb` + archive `.tar.gz` |
+| Contrôle | Chaque exécutable produit est lancé avec `--check` |
+| Release | Les fichiers sont publiés automatiquement sur GitHub avec SHA-256 |
 
 ---
 
-## 2. Construire en local (mise au point)
+## 2. Construire en local (mise au point optionnelle)
 
-Utile seulement pour déboguer l'empaquetage. Chaque système ne peut
-construire que pour lui-même.
+Chaque système ne peut construire que pour lui-même :
 
 ```bash
 pip install -r requirements-dev.txt        # pyinstaller + ruff
@@ -54,32 +50,25 @@ pip install -r requirements-dev.txt        # pyinstaller + ruff
 **Windows**
 
 ```bat
-pyinstaller --onefile --windowed --icon assets/icon.ico --name PythonLearn main.py
-dist\PythonLearn.exe --check
+pyinstaller --onefile --windowed --icon assets/icon.ico --name LudusLatinus main.py
+dist\LudusLatinus.exe --check
 ```
 
 **macOS** — sans `--onefile`, pour obtenir un vrai bundle `.app` :
 
 ```bash
-pyinstaller --windowed --icon assets/icon.icns --name PythonLearn main.py
-dist/PythonLearn.app/Contents/MacOS/PythonLearn --check
-bash packaging/macos/construire-dmg.sh 1.1.0 arm64
+pyinstaller --windowed --icon assets/icon.icns --name LudusLatinus main.py
+dist/LudusLatinus.app/Contents/MacOS/LudusLatinus --check
+bash packaging/macos/construire-dmg.sh 1.0.0 arm64
 ```
 
 **Linux**
 
 ```bash
-pyinstaller --onefile --name PythonLearn main.py
-./dist/PythonLearn --check
-bash packaging/linux/construire-paquets.sh 1.1.0
+pyinstaller --onefile --name LudusLatinus main.py
+./dist/LudusLatinus --check
+bash packaging/linux/construire-paquets.sh 1.0.0
 ```
-
-- `--onefile` : un seul fichier, plus simple à distribuer.
-- `--windowed` : pas de console noire au lancement.
-
-> Sur Linux, le binaire est construit par la CI sur **Ubuntu 22.04** à
-> dessein : un exécutable compilé avec une vieille glibc fonctionne sur les
-> distributions récentes, alors que l'inverse échoue.
 
 ---
 
@@ -88,18 +77,18 @@ bash packaging/linux/construire-paquets.sh 1.1.0
 Le script `packaging/installer.iss` est prêt à l'emploi. Il installe
 **sans droits administrateur** (`PrivilegesRequired=lowest`), crée les
 raccourcis, et propose une désinstallation propre — qui **ne supprime pas**
-la progression de l'apprenant (`%USERPROFILE%\.python-learn`).
+la progression de l'apprenant (`%USERPROFILE%\.latin-learn`).
 
 1. Installer [Inno Setup 6](https://jrsoftware.org/isdl.php) (gratuit).
-2. Générer d'abord `dist\PythonLearn.exe` (étape 2).
+2. Générer d'abord `dist\LudusLatinus.exe` (étape 2).
 3. Compiler :
 
 ```bat
 iscc packaging\installer.iss
-iscc /DMaVersion=1.1.0 packaging\installer.iss     :: version imposée
+iscc /DMaVersion=1.0.0 packaging\installer.iss     :: version imposée
 ```
 
-Le résultat est déposé dans `Output\PythonLearn-Setup-<version>.exe`.
+Le résultat est déposé dans `Output\LudusLatinus-Setup-<version>.exe`.
 
 > `AppId` est l'identifiant qui permet à Windows de reconnaître une **mise à
 > jour** plutôt que d'installer un second exemplaire côte à côte. Ne jamais

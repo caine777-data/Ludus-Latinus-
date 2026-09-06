@@ -9,11 +9,13 @@ venv/
 build/
 dist/
 *.spec
+!LudusLatinus.spec
 Output/
 livraison/
 
 # Données locales de progression (ne pas committer)
 .python-learn/
+.ludus-latinus/
 
 # Outils de développement
 .ruff_cache/

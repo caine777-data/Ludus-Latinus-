@@ -11,6 +11,36 @@ quatrième sans toucher au reste de l'application.
 """
 
 THEMES = {
+    "rome": {
+        "label": "rome impériale", "label_en": "imperial rome",
+        "bg": "#faf6ee", "panel": "#efe6d5", "editor": "#ffffff",
+        "console": "#f5ede0", "fg": "#2c2621", "accent": "#a82020",
+        "ok": "#2d8a4e", "err": "#c93b2b", "muted": "#7a7062",
+        "heading": "#8c1d1d", "code": "#b87314", "code_bg": "#f3ecde",
+        "sel_fg": "#ffffff", "curline": "#f2ebdc",
+        "kw": "#9c27b0", "builtin": "#a82020", "num": "#b87314",
+        "deff": "#2d8a4e", "str": "#2e7d32", "com": "#8d8577",
+    },
+    "colisee": {
+        "label": "nuit au colisée", "label_en": "colosseum night",
+        "bg": "#181922", "panel": "#222430", "editor": "#14151c",
+        "console": "#0f1016", "fg": "#eae8f2", "accent": "#e5a93c",
+        "ok": "#4ecc7a", "err": "#f45858", "muted": "#9193a8",
+        "heading": "#f3c267", "code": "#ffd700", "code_bg": "#14151c",
+        "sel_fg": "#14151c", "curline": "#282a3a",
+        "kw": "#ba68c8", "builtin": "#e5a93c", "num": "#ffb74d",
+        "deff": "#4ecc7a", "str": "#81c784", "com": "#6f7287",
+    },
+    "mediterranee": {
+        "label": "méditerranée & pompéi", "label_en": "mediterranean",
+        "bg": "#f7f5f0", "panel": "#e8eef0", "editor": "#ffffff",
+        "console": "#eef4f5", "fg": "#223035", "accent": "#1b7d87",
+        "ok": "#2e8540", "err": "#d64527", "muted": "#687a82",
+        "heading": "#bd4b2b", "code": "#d65a31", "code_bg": "#edf3f4",
+        "sel_fg": "#ffffff", "curline": "#e2ecef",
+        "kw": "#8e44ad", "builtin": "#1b7d87", "num": "#d65a31",
+        "deff": "#27ae60", "str": "#16a085", "com": "#7f8c8d",
+    },
     "dark": {
         "label": "sombre", "label_en": "dark",
         "bg": "#1e1f26", "panel": "#272935", "editor": "#15161c",
@@ -92,7 +122,7 @@ THEMES = {
         "deff": "#d2a8ff", "str": "#a5d6ff", "com": "#8b949e",
     },
 }
-THEME_ORDER = ["dark", "tokyo_night", "catppuccin", "github_dark", "dracula", "nord", "light", "contrast"]
+THEME_ORDER = ["rome", "colisee", "mediterranee", "light", "dark", "contrast", "tokyo_night", "catppuccin", "github_dark", "dracula", "nord"]
 
 
 def melange(hex1, hex2, t):

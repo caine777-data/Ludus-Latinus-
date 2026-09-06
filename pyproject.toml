@@ -1,7 +1,7 @@
 [project]
-name = "python-learn"
-version = "1.3.0"
-description = "Apprendre Python pas à pas, du débutant à l'expert — application de bureau."
+name = "ludus-latinus"
+version = "1.0.0"
+description = "Apprendre le latin pas à pas — L'Aventure Romaine pour collégiens."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }

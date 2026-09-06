@@ -13,13 +13,13 @@
 ; à partir du tag Git). Sans cela, on retombe sur la valeur ci-dessous, qui
 ; doit rester alignée sur app/version.py.
 #ifndef MaVersion
-  #define MaVersion "1.3.0"
+  #define MaVersion "1.0.0"
 #endif
 
-#define MonApp "PythonLearn"
+#define MonApp "LudusLatinus"
 #define MonAuteur "Cédric Monna"
-#define MonExe "PythonLearn.exe"
-#define MonSite "https://github.com/cedricmonna/python-learn"
+#define MonExe "LudusLatinus.exe"
+#define MonSite "https://github.com/caine777-data/ludus-latinus"
 
 [Setup]
 ; Identifiant stable de l'application : c'est lui qui permet à Windows de

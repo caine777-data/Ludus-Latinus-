@@ -14,8 +14,9 @@
 set -euo pipefail
 
 VERSION="${1:?usage: construire-paquets.sh <version>}"
-NOM="python-learn"
-BINAIRE="dist/PythonLearn"
+NOM="ludus-latinus"
+BINAIRE="dist/LudusLatinus"
+[ -x "$BINAIRE" ] || BINAIRE="dist/PythonLearn"
 ARCH="$(dpkg --print-architecture 2>/dev/null || echo amd64)"
 
 if [ ! -x "$BINAIRE" ]; then
@@ -38,8 +39,8 @@ mkdir -p "$deb/DEBIAN" \
          "$deb/usr/share/icons/hicolor/256x256/apps" \
          "$deb/usr/share/doc/$NOM"
 
-install -m 755 "$BINAIRE" "$deb/usr/lib/$NOM/PythonLearn"
-ln -s "/usr/lib/$NOM/PythonLearn" "$deb/usr/bin/$NOM"
+install -m 755 "$BINAIRE" "$deb/usr/lib/$NOM/LudusLatinus"
+ln -s "/usr/lib/$NOM/LudusLatinus" "$deb/usr/bin/$NOM"
 install -m 644 packaging/linux/$NOM.desktop "$deb/usr/share/applications/$NOM.desktop"
 install -m 644 assets/icon.png "$deb/usr/share/icons/hicolor/256x256/apps/$NOM.png"
 install -m 644 LICENSE "$deb/usr/share/doc/$NOM/copyright"
@@ -53,14 +54,14 @@ Section: education
 Priority: optional
 Architecture: $ARCH
 Maintainer: Cédric Monna <cedricmonna@gmail.com>
-Homepage: https://github.com/cedricmonna/python-learn
-Description: Apprendre Python pas à pas, du débutant à l'expert
- PythonLearn est une application de bureau qui enseigne Python à travers
- 15 parcours et 132 exercices corrigés automatiquement. Chaque leçon
- associe une explication et un exercice résolu dans un éditeur intégré :
- le code s'exécute réellement et la réussite est vérifiée.
+Homepage: https://github.com/caine777-data/latin-learn
+Description: Ludus Latinus — L'aventure ludique pour apprendre le latin au collège
+ Ludus Latinus est une application de bureau ludo-éducative spécialement conçue
+ pour les collégiens (classe de 5ème). L'apprentissage du latin se fait pas à pas
+ à travers 7 mondes thématiques, 34 leçons et défis interactifs (puzzles de phrases,
+ textes à trous, décodage grammatical en couleur, et combats d'arène épiques).
  .
- L'application fonctionne hors ligne et n'a besoin d'aucune installation
+ L'application fonctionne 100% hors ligne et n'a besoin d'aucune installation
  de Python : tout est embarqué dans l'exécutable.
 CONTROL
 
@@ -71,7 +72,7 @@ dpkg-deb --build --root-owner-group "$deb" "$racine/dist/${NOM}_${VERSION}_${ARC
 # d'installation qui ne demande pas les droits administrateur.
 tgz="$travail/${NOM}-${VERSION}"
 mkdir -p "$tgz"
-install -m 755 "$BINAIRE" "$tgz/PythonLearn"
+install -m 755 "$BINAIRE" "$tgz/LudusLatinus"
 install -m 644 packaging/linux/$NOM.desktop "$tgz/$NOM.desktop"
 install -m 644 assets/icon.png "$tgz/$NOM.png"
 install -m 644 LICENSE "$tgz/LICENSE"
@@ -79,7 +80,7 @@ install -m 644 README.md "$tgz/README.md"
 
 cat > "$tgz/installer.sh" <<'INSTALL'
 #!/usr/bin/env bash
-# Installe PythonLearn pour l'utilisateur courant (aucun droit root requis).
+# Installe Ludus Latinus pour l'utilisateur courant (aucun droit root requis).
 # Pour désinstaller : bash installer.sh --desinstaller
 set -euo pipefail
 
@@ -89,22 +90,22 @@ apps="$HOME/.local/share/applications"
 icones="$HOME/.local/share/icons/hicolor/256x256/apps"
 
 if [ "${1:-}" = "--desinstaller" ]; then
-    rm -f "$bin/python-learn" "$apps/python-learn.desktop" "$icones/python-learn.png"
-    echo "PythonLearn a été retiré. Ta progression (~/.python-learn) est conservée."
+    rm -f "$bin/ludus-latinus" "$apps/ludus-latinus.desktop" "$icones/ludus-latinus.png"
+    echo "Ludus Latinus a été retiré. Ta progression (~/.latin-learn) est conservée."
     exit 0
 fi
 
 mkdir -p "$bin" "$apps" "$icones"
-install -m 755 "$ici/PythonLearn" "$bin/python-learn"
-install -m 644 "$ici/python-learn.png" "$icones/python-learn.png"
-install -m 644 "$ici/python-learn.desktop" "$apps/python-learn.desktop"
+install -m 755 "$ici/LudusLatinus" "$bin/ludus-latinus"
+install -m 644 "$ici/ludus-latinus.png" "$icones/ludus-latinus.png"
+install -m 644 "$ici/ludus-latinus.desktop" "$apps/ludus-latinus.desktop"
 command -v update-desktop-database >/dev/null 2>&1 && \
     update-desktop-database "$apps" 2>/dev/null || true
 
-echo "PythonLearn est installé."
+echo "Ludus Latinus est installé."
 case ":$PATH:" in
-    *":$bin:"*) echo "Lance-le avec : python-learn" ;;
-    *) echo "Ajoute $bin à ton PATH, ou lance directement : $bin/python-learn" ;;
+    *":$bin:"*) echo "Lance-le avec : ludus-latinus" ;;
+    *) echo "Ajoute $bin à ton PATH, ou lance directement : $bin/ludus-latinus" ;;
 esac
 INSTALL
 chmod 755 "$tgz/installer.sh"

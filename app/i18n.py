@@ -11,13 +11,13 @@ NOMS_LANGUES = {"fr": "Français", "en": "English"}
 STRINGS = {
     "fr": {
         # Barre d'outils
-        "tb_theme": "🎨 {label}",
-        "tb_glossaire": "📖 Glossaire",
-        "tb_revision": "🎲 Révision",
-        "tb_stats": "📊 Stats",
-        "tb_doc": "🐍 Doc Python",
-        "tb_brouillon": "✎ Brouillon",
-        "tb_reset": "↻ Réinitialiser",
+        "tb_theme": "🏛️ {label}",
+        "tb_glossaire": "Glossaire",
+        "tb_revision": "Révision",
+        "tb_stats": "Stats",
+        "tb_doc": "Rome antique",
+        "tb_brouillon": "Brouillon",
+        "tb_reset": "Réinitialiser",
         "tb_lang": "🌐 EN",
         # Barre latérale
         "side_parcours": "  Parcours",
@@ -134,26 +134,25 @@ STRINGS = {
         "step_no_out": "(pas encore de sortie)",
         "step_nothing": "Rien à exécuter ligne par ligne.",
         # Glossaire
-        "gl_title": "📖 Glossaire Python",
+        "gl_title": "📖 Glossaire Latin",
         # Accueil
-        "wel_title": "🐍  Bienvenue !",
-        "wel_start": "Commencer",
+        "wel_title": "🏛️  Bienvenue dans Ludus Latinus !",
+        "wel_start": "Commencer l'Aventure",
         "wel_body": (
-            "PythonLearn t'accompagne du tout début jusqu'aux projets concrets.\n\n"
-            "• À gauche : les parcours et leurs leçons. Une coche verte = réussi.\n"
-            "• Lis l'explication en haut, puis code dans l'éditeur.\n"
-            "• « Exécuter » lance ton code ; « Vérifier » valide l'exercice.\n"
-            "• Bloqué ? Clique « Indice » (plusieurs niveaux), puis « Solution ».\n"
-            "• Termine un parcours entier pour décrocher son badge 🏅.\n\n"
-            "Astuces : Ctrl+Entrée exécute, Ctrl+/ commente, A-/A+ zoome,\n"
-            "et tu peux changer de thème ou de langue en haut.\n\n"
-            "Aucune pression : essaie, observe, recommence. Bon code !"),
+            "Ludus Latinus t'accompagne pas à pas dans l'apprentissage du latin et de la Rome antique.\n\n"
+            "• À gauche : les 7 Mondes et leurs leçons. Débloque-les au fil de ton voyage !\n"
+            "• Lis l'explication en haut, puis résous les exercices (puzzles, textes à trous, décodage).\n"
+            "• Écoute la prononciation romaine avec le bouton audio 🔊.\n"
+            "• Gagne des Sesterces 🪙 et personnalise ton avatar romain dans la Boutique 🏛️.\n"
+            "• Découvre les anecdotes de la Rome antique dans le Musée des Curiosités 📜.\n"
+            "• Triomphe des monstres mythologiques dans les combats d'arène ⚔️ !\n\n"
+            "Valete discipuli ! Bonne découverte du latin !"),
         # Dialogues
         "dlg_reset_title": "Réinitialiser",
-        "dlg_reset_msg": "Effacer toute ta progression et le code sauvegardé ?",
+        "dlg_reset_msg": "Effacer toute ta progression et tes sesterces ?",
         "dlg_cert_title": "Certificat",
-        "dlg_cert_prompt": "Ton nom (pour le certificat) :",
-        "dlg_cert_default": "Apprenti(e) Python",
+        "dlg_cert_prompt": "Ton nom de citoyen romain :",
+        "dlg_cert_default": "Discipulus",
         "dlg_cert_fail": "Impossible d'enregistrer le certificat.",
         "dlg_revision_title": "Révision",
         "dlg_revision_none": "Termine d'abord quelques exercices pour réviser.",
@@ -161,35 +160,34 @@ STRINGS = {
         "fb_revision_random": "Aucune révision due : exercice au hasard",
         "dlg_solution_title": "Solution",
         "dlg_solution_none": "Pas de solution prédéfinie ici.",
-        "dlg_solution_confirm": "Remplacer ton code par la solution ?",
+        "dlg_solution_confirm": "Remplacer ta réponse par la solution ?",
         "dlg_step_title": "Pas à pas",
         "con_zombie": ("⚠ {n} exécution(s) précédente(s) tourne(nt) "
-                       "encore en arrière-plan : une boucle refuse de "
-                       "s'arrêter. Ferme et rouvre l'application si "
-                       "elle ralentit."),
-        "err_timeout": ("TimeoutError : exécution interrompue, le "
-                        "programme a tourné trop longtemps "
-                        "(boucle infinie ?)."),
-        "pred_titre": "Que va afficher ce programme ?",
-        "pred_saisie": ("Écris ta prédiction avant d'exécuter "
-                        "(une ligne par ligne affichée) :"),
-        "pred_verifier": "✓ Vérifier ma prédiction",
-        "pred_juste": "Exact — c'est bien ce que le programme affiche.",
+                       "encore en arrière-plan. Ferme et rouvre "
+                       "l'application si elle ralentit."),
+        "err_timeout": ("TimeoutError : exécution interrompue."),
+        "pred_titre": "Que signifie cette phrase ?",
+        "pred_saisie": ("Écris ta traduction avant de vérifier :"),
+        "pred_verifier": "✓ Vérifier ma réponse",
+        "pred_juste": "Exact — bravo !",
         "pred_faux": "Pas tout à fait. Compare ci-dessous.",
-        "pred_tienne": "Ta prédiction :",
-        "pred_reelle": "Sortie réelle :",
-        "pred_diff": "Première différence à la ligne {n}.",
-        "pred_erreur": "Le programme s'arrête sur une erreur :",
-        "ord_titre": "Remets les lignes dans le bon ordre",
-        "ord_aide": ("Sélectionne une ligne, puis déplace-la "
-                     "(ou Ctrl + ↑ / Ctrl + ↓)."),
+        "pred_tienne": "Ta réponse :",
+        "pred_reelle": "Réponse attendue :",
+        "pred_diff": "Première différence au mot {n}.",
+        "pred_erreur": "Une erreur est survenue :",
+        "ord_titre": "Remets les mots dans le bon ordre",
+        "ord_aide": ("Sélectionne un mot, puis déplace-le."),
         "ord_monter": "▲ Monter",
         "ord_descendre": "▼ Descendre",
         "ord_verifier": "✓ Vérifier l'ordre",
         "ord_juste": "Bon ordre, bravo !",
         "ord_faux": "Ce n'est pas encore le bon ordre.",
-        "ord_indice": "La ligne {n} n'est pas à sa place.",
-        "tb_accueil": "🏠 Accueil",
+        "tb_accueil": "Accueil",
+        "tb_carte": "Carte de Rome",
+        "tb_circus": "Circus Maximus",
+        "tb_profils": "Profils",
+        "tb_maj": "Mises à jour",
+        "btn_prononcer": "🔊 Écouter",
         "acc_titre": "Accueil",
         "acc_bienvenue": "Bienvenue !",
         "acc_retour": "Bon retour !",
@@ -197,21 +195,21 @@ STRINGS = {
         "acc_niveau": "niveau",
         "acc_jour": "aujourd'hui",
         "acc_revisions": "à réviser",
-        "acc_progression": "{faits} exercices terminés sur {total}",
+        "acc_progression": "{faits} leçons terminées sur {total}",
         "acc_reprendre": "▶ Reprendre où j'en étais",
         "acc_revision": "🔁 Commencer par une révision",
-        "acc_termine": ("Tu as terminé tous les exercices. Bravo ! "
+        "acc_termine": ("Tu as terminé tous les parcours. Triomphe et gloire ! "
                         "Reviens quand tu veux pour réviser."),
         "acc_difficiles": "Ce qui t'a donné du fil à retordre :",
         "acc_refaire": "↻ {titre}  ({n} essais)",
         "acc_au_demarrage": "Afficher au démarrage",
         "acc_fermer": "Fermer",
         "tb_apropos": "ℹ À propos",
-        "ap_title": "À propos de PythonLearn",
+        "ap_title": "À propos de Ludus Latinus",
         "ap_version": "Version {v}",
         "ap_par": "Conçu et réalisé par",
-        "ap_desc": ("Une application pour apprendre Python pas à pas, "
-                    "du tout débutant aux projets concrets."),
+        "ap_desc": ("Une aventure ludo-éducative pour apprendre le latin au collège, "
+                    "spécialement conçue pour la classe de 5ème."),
         "ap_licence": "Licence MIT — logiciel libre et gratuit",
         "ap_depot": "Code source",
         "ap_fermer": "Fermer",
@@ -219,8 +217,7 @@ STRINGS = {
         "dlg_lecons_title": "Mes leçons",
         "dlg_lecons_msg": ("Dépose tes fichiers de leçons (.json) dans "
                            "ce dossier :\n{dossier}\n\n"
-                           "Un exemple à modifier s'y trouve déjà. "
-                           "Relance PythonLearn pour voir apparaître "
+                           "Relance Ludus Latinus pour voir apparaître "
                            "ton parcours."),
         "dlg_packs_title": "Packs de leçons",
         "dlg_packs_msg": ("Certaines leçons ajoutées n'ont pas pu être "
@@ -276,7 +273,7 @@ STRINGS = {
         "hdr_streak": "🔥 {n} j",
         "hdr_xp": "⚡ Niv. {niv} · {xp} XP",
         "hdr_badges": "🏆 {n}/{total}",
-        "hdr_defi": "🎯 Défi du jour",
+        "hdr_defi": "Défi du jour",
         "crumb_parcours": "Parcours",
         "crumb_lecon": "Leçon",
         "crumb_exo": "Exercice",
@@ -285,13 +282,14 @@ STRINGS = {
         "callout_note": "📌 À RETENIR",
     },
     "en": {
-        "tb_theme": "🎨 {label}",
-        "tb_glossaire": "📖 Glossary",
-        "tb_revision": "🎲 Review",
-        "tb_stats": "📊 Stats",
-        "tb_doc": "🐍 Python Docs",
-        "tb_brouillon": "✎ Scratchpad",
-        "tb_reset": "↻ Reset",
+        # Barre d'outils
+        "tb_theme": "🏛️ {label}",
+        "tb_glossaire": "Glossary",
+        "tb_revision": "Review",
+        "tb_stats": "Stats",
+        "tb_doc": "Ancient Rome",
+        "tb_brouillon": "Scratchpad",
+        "tb_reset": "Reset",
         "tb_lang": "🌐 FR",
         "side_parcours": "  Tracks",
         "side_badges": "  Badges",
@@ -397,24 +395,23 @@ STRINGS = {
         "step_no_vars": "(no variables yet)",
         "step_no_out": "(no output yet)",
         "step_nothing": "Nothing to run line by line.",
-        "gl_title": "📖 Python glossary",
-        "wel_title": "🐍  Welcome!",
-        "wel_start": "Start",
+        "gl_title": "📖 Latin glossary",
+        "wel_title": "🏛️  Welcome to Ludus Latinus!",
+        "wel_start": "Start Adventure",
         "wel_body": (
-            "PythonLearn takes you from the very basics to real projects.\n\n"
-            "• On the left: the tracks and their lessons. A green check = solved.\n"
-            "• Read the explanation at the top, then code in the editor.\n"
-            "• “Run” executes your code; “Check” validates the exercise.\n"
-            "• Stuck? Click “Hint” (several levels), then “Solution”.\n"
-            "• Finish a whole track to earn its badge 🏅.\n\n"
-            "Tips: Ctrl+Enter runs, Ctrl+/ comments, A-/A+ zooms,\n"
-            "and you can switch theme or language at the top.\n\n"
-            "No pressure: try, observe, repeat. Happy coding!"),
+            "Ludus Latinus guides you step by step into Latin and ancient Rome.\n\n"
+            "• On the left: 7 Roman worlds and their lessons.\n"
+            "• Read explanations, then solve interactive puzzles, cloze and decoding exercises.\n"
+            "• Hear authentic pronunciation with the audio button 🔊.\n"
+            "• Earn Sesterces 🪙 to customize your Roman avatar in the boutique 🏛️.\n"
+            "• Unlock secret curiosities in the Museum 📜.\n"
+            "• Face mythological bosses in arena battles ⚔️!\n\n"
+            "Valete discipuli! Enjoy learning Latin!"),
         "dlg_reset_title": "Reset",
-        "dlg_reset_msg": "Erase all your progress and saved code?",
+        "dlg_reset_msg": "Erase all your progress and sesterces?",
         "dlg_cert_title": "Certificate",
-        "dlg_cert_prompt": "Your name (for the certificate):",
-        "dlg_cert_default": "Python Learner",
+        "dlg_cert_prompt": "Your Roman citizen name:",
+        "dlg_cert_default": "Discipulus",
         "dlg_cert_fail": "Could not save the certificate.",
         "dlg_revision_title": "Review",
         "dlg_revision_none": "Solve a few exercises first to be able to review.",
@@ -422,33 +419,33 @@ STRINGS = {
         "fb_revision_random": "No review due: random exercise",
         "dlg_solution_title": "Solution",
         "dlg_solution_none": "No predefined solution here.",
-        "dlg_solution_confirm": "Replace your code with the solution?",
+        "dlg_solution_confirm": "Replace your answer with the solution?",
         "dlg_step_title": "Step-by-step",
-        "con_zombie": ("⚠ {n} earlier run(s) still going in the "
-                       "background: a loop refuses to stop. Close and "
-                       "reopen the application if it slows down."),
-        "err_timeout": ("TimeoutError: execution stopped, the program "
-                        "ran for too long (infinite loop?)."),
-        "pred_titre": "What will this program print?",
-        "pred_saisie": ("Write your prediction before running it "
-                        "(one line per printed line):"),
-        "pred_verifier": "✓ Check my prediction",
-        "pred_juste": "Correct — that is what the program prints.",
+        "con_zombie": ("⚠ {n} background tasks still running. "
+                       "Close and reopen the application if it slows down."),
+        "err_timeout": ("TimeoutError: execution stopped."),
+        "pred_titre": "What does this sentence mean?",
+        "pred_saisie": ("Write your translation before checking:"),
+        "pred_verifier": "✓ Check my translation",
+        "pred_juste": "Correct — well done!",
         "pred_faux": "Not quite. Compare below.",
-        "pred_tienne": "Your prediction:",
-        "pred_reelle": "Actual output:",
-        "pred_diff": "First difference on line {n}.",
-        "pred_erreur": "The program stops with an error:",
-        "ord_titre": "Put the lines back in the right order",
-        "ord_aide": ("Select a line, then move it "
-                     "(or Ctrl + ↑ / Ctrl + ↓)."),
+        "pred_tienne": "Your translation:",
+        "pred_reelle": "Expected translation:",
+        "pred_diff": "First difference on word {n}.",
+        "pred_erreur": "An error occurred:",
+        "ord_titre": "Put the words back in the right order",
+        "ord_aide": ("Select a word, then move it."),
         "ord_monter": "▲ Up",
         "ord_descendre": "▼ Down",
         "ord_verifier": "✓ Check the order",
         "ord_juste": "Right order, well done!",
         "ord_faux": "Not the right order yet.",
-        "ord_indice": "Line {n} is not in the right place.",
-        "tb_accueil": "🏠 Home",
+        "tb_accueil": "Home",
+        "tb_carte": "Map of Rome",
+        "tb_circus": "Circus Maximus",
+        "tb_profils": "Profiles",
+        "tb_maj": "Updates",
+        "btn_prononcer": "🔊 Listen",
         "acc_titre": "Home",
         "acc_bienvenue": "Welcome!",
         "acc_retour": "Welcome back!",
@@ -456,21 +453,21 @@ STRINGS = {
         "acc_niveau": "level",
         "acc_jour": "today",
         "acc_revisions": "to review",
-        "acc_progression": "{faits} exercises done out of {total}",
+        "acc_progression": "{faits} lessons finished out of {total}",
         "acc_reprendre": "▶ Pick up where I left off",
         "acc_revision": "🔁 Start with a review",
-        "acc_termine": ("You have finished every exercise. Well done! "
+        "acc_termine": ("You have completed every world. Triumph and glory! "
                         "Come back any time to review."),
         "acc_difficiles": "What gave you a hard time:",
         "acc_refaire": "↻ {titre}  ({n} tries)",
         "acc_au_demarrage": "Show at startup",
         "acc_fermer": "Close",
         "tb_apropos": "ℹ About",
-        "ap_title": "About PythonLearn",
+        "ap_title": "About Ludus Latinus",
         "ap_version": "Version {v}",
         "ap_par": "Designed and built by",
-        "ap_desc": ("An application to learn Python step by step, from "
-                    "complete beginner to real projects."),
+        "ap_desc": ("An educational adventure to learn Latin in middle school, "
+                    "designed for 5ème students."),
         "ap_licence": "MIT License — free and open source",
         "ap_depot": "Source code",
         "ap_fermer": "Close",
@@ -478,8 +475,7 @@ STRINGS = {
         "dlg_lecons_title": "My lessons",
         "dlg_lecons_msg": ("Put your lesson files (.json) in this "
                            "folder:\n{dossier}\n\n"
-                           "An example to edit is already there. "
-                           "Restart PythonLearn to see your track "
+                           "Restart Ludus Latinus to see your track "
                            "appear."),
         "dlg_packs_title": "Lesson packs",
         "dlg_packs_msg": ("Some added lessons could not be "
@@ -534,7 +530,7 @@ STRINGS = {
         "hdr_streak": "🔥 {n} d",
         "hdr_xp": "⚡ Lvl. {niv} · {xp} XP",
         "hdr_badges": "🏆 {n}/{total}",
-        "hdr_defi": "🎯 Daily challenge",
+        "hdr_defi": "Daily challenge",
         "crumb_parcours": "Track",
         "crumb_lecon": "Lesson",
         "crumb_exo": "Exercise",
