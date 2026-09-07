@@ -37,22 +37,25 @@ class CarteWidget(tk.Frame):
         self.debloquee = debloquee
         self.command = command
 
+        from app.responsive import obtenir_facteur_echelle
+        scale = obtenir_facteur_echelle(master)
+
         rarete = RARETES.get(self.carte["rarete"], RARETES["commune"])
         couleur_rarete = rarete["couleur"] if self.debloquee else "#555555"
         bg_card = "#1f2335" if self.debloquee else "#181a24"
 
-        w = 140 if taille_reduite else 260
-        h = 210 if taille_reduite else 380
+        w = int((140 if taille_reduite else 260) * scale)
+        h = int((210 if taille_reduite else 380) * scale)
         self.configure(bg=bg_card, highlightbackground=couleur_rarete, highlightthickness=2, width=w, height=h)
 
         # Titre de la carte
         titre_txt = self.carte["nom"] if self.debloquee else "Mystère"
-        titre_font = ("Palatino Linotype", 9, "bold") if taille_reduite else ("Palatino Linotype", 14, "bold")
+        titre_font = police_titre(9 if taille_reduite else 14)
         self.lbl_titre = tk.Label(self, text=titre_txt, font=titre_font, bg=bg_card, fg="#ffd700" if self.debloquee else "#777777")
         self.lbl_titre.pack(fill=tk.X, pady=(4, 2))
 
         # Illustration
-        img_h = 80 if taille_reduite else 140
+        img_h = int((80 if taille_reduite else 140) * scale)
         self.img_lbl = tk.Label(self, bg=bg_card)
         self.img_lbl.pack(pady=2)
 
@@ -156,6 +159,7 @@ class BoosterOpeningDialog(tk.Toplevel):
     def _reveler_carte(self, carte):
         for idx, (w, c, f) in enumerate(self.widgets_cartes):
             if c["id"] == carte["id"] and not w.debloquee:
+                audio.play_carte_flip()
                 w.destroy()
                 nouv_w = CarteWidget(f, c, debloquee=True, taille_reduite=True)
                 nouv_w.pack()
@@ -206,6 +210,7 @@ class AlbumCartesWindow(tk.Toplevel):
 
         self.categorie_filtre = "toutes"
         self._build_ui()
+        audio.play_parchemin()
 
     def _build_ui(self):
         # 1. En-tête avec compteur et bouton d'achat
@@ -277,6 +282,7 @@ class AlbumCartesWindow(tk.Toplevel):
         self._rafraichir_album()
 
     def _filtrer_categorie(self, cat):
+        audio.play_click()
         self.categorie_filtre = cat
         for c, b in self.btn_tabs.items():
             b.configure(bg=self.C["accent"] if c == cat else self.C["editor"],
@@ -295,6 +301,18 @@ class AlbumCartesWindow(tk.Toplevel):
         self.lbl_compteur.configure(
             text=f"Collection : {nb_debloquees} / {total_cartes} cartes trouvées ({pct}%)"
         )
+
+        # Mettre à jour les compteurs des onglets de catégories
+        for cat_id, btn in self.btn_tabs.items():
+            if cat_id == "toutes":
+                nom_base = "🌟 Toutes"
+                cnt = nb_debloquees
+                tot = total_cartes
+            else:
+                nom_base = CATEGORIES.get(cat_id, cat_id)
+                tot = sum(1 for c in CARTES_COLLECTION if c["categorie"] == cat_id)
+                cnt = sum(1 for c in CARTES_COLLECTION if c["categorie"] == cat_id and c["id"] in debloquees)
+            btn.configure(text=f"{nom_base} ({cnt}/{tot})")
 
         cartes_affichees = [
             c for c in CARTES_COLLECTION
@@ -318,6 +336,7 @@ class AlbumCartesWindow(tk.Toplevel):
             self._inspecter_carte(premiere)
 
     def _inspecter_carte(self, carte):
+        audio.play_click()
         for w in self.inspect_conteneur.winfo_children():
             w.destroy()
 
@@ -326,6 +345,7 @@ class AlbumCartesWindow(tk.Toplevel):
         CarteWidget(self.inspect_conteneur, carte, debloquee=est_debloquee, taille_reduite=False).pack(fill=tk.BOTH, expand=True)
 
     def _acheter_booster(self):
+        audio.play_click()
         sesterces = self.app.data.get("sesterces", 0)
         if sesterces < PRIX_BOOSTER:
             messagebox.showwarning(

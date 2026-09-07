@@ -158,7 +158,9 @@ class MascotteWidget(tk.Frame):
     def __init__(self, master, app=None, taille=100, **kw):
         super().__init__(master, **kw)
         self.app = app
-        self.taille = taille
+        from app.responsive import obtenir_facteur_echelle
+        scale = obtenir_facteur_echelle(master)
+        self.taille = max(60, int(round(taille * scale)))
         self.emotion_actuelle = "normal"
         self._images_cache = {}
         self._reset_timer = None

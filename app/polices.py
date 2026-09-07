@@ -29,6 +29,24 @@ CANDIDATS_CORPS = [
 
 _FAMILLE_TITRE = None
 _FAMILLE_CORPS = None
+_FACTEUR_ZOOM = 1.0
+
+
+def definir_zoom(zoom: float) -> float:
+    """Définit le facteur de zoom typographique global (ex: 1.0 = 100%, 1.2 = 120%)."""
+    global _FACTEUR_ZOOM
+    _FACTEUR_ZOOM = max(0.75, min(2.5, round(zoom, 2)))
+    return _FACTEUR_ZOOM
+
+
+def get_zoom() -> float:
+    """Retourne le facteur de zoom typographique global actuel."""
+    return _FACTEUR_ZOOM
+
+
+def ajuster_zoom(delta: float) -> float:
+    """Incrémente ou décrémente le facteur de zoom global."""
+    return definir_zoom(_FACTEUR_ZOOM + delta)
 
 
 def detecter_famille(candidats, fallback="Palatino Linotype"):
@@ -59,7 +77,8 @@ def get_famille_corps():
 def police_titre(taille=16, gras=True):
     """Retourne la police romaine pour les grands titres et en-têtes."""
     poids = "bold" if gras else "normal"
-    return (get_famille_titre(), taille, poids)
+    t_effective = max(9, int(round(taille * _FACTEUR_ZOOM)))
+    return (get_famille_titre(), t_effective, poids)
 
 
 def police_corps(taille=11, gras=False, italique=False):
@@ -72,9 +91,18 @@ def police_corps(taille=11, gras=False, italique=False):
         style = "italic"
     else:
         style = "normal"
-    return (get_famille_corps(), taille, style)
+    t_effective = max(8, int(round(taille * _FACTEUR_ZOOM)))
+    return (get_famille_corps(), t_effective, style)
+
+
+def police_bouton(taille=10, gras=False):
+    """Retourne la police pour les boutons, onglets et commandes."""
+    poids = "bold" if gras else "normal"
+    t_effective = max(8, int(round(taille * _FACTEUR_ZOOM)))
+    return (get_famille_corps(), t_effective, poids)
 
 
 def police_monument(taille=20):
     """Pour les grandes bannières SPQR, titres du Colisée et médailles."""
-    return (get_famille_titre(), taille, "bold")
+    t_effective = max(11, int(round(taille * _FACTEUR_ZOOM)))
+    return (get_famille_titre(), t_effective, "bold")

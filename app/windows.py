@@ -15,7 +15,9 @@ import random
 import tkinter as tk
 from tkinter import ttk
 
+from app import audio
 from app import progress as prog
+from app.polices import police_corps, police_titre
 
 
 class Celebration(tk.Toplevel):
@@ -376,7 +378,7 @@ class AccueilWindow(tk.Toplevel):
 
         premiere_fois = resume["faits"] == 0
         tk.Label(self, text=app.tr("acc_bienvenue" if premiere_fois else "acc_retour"),
-                 bg=C["panel"], fg=C["accent"], font=("", 19, "bold")).pack(pady=(16, 2))
+                 bg=C["panel"], fg=C["accent"], font=police_titre(18)).pack(pady=(16, 2))
 
         # --- la ligne de chiffres : série, niveau, révisions dues ---------
         chiffres = tk.Frame(self, bg=C["panel"])
@@ -395,16 +397,16 @@ class AccueilWindow(tk.Toplevel):
             case.pack(side=tk.LEFT, padx=10)
             tk.Label(case, text=icone, bg=C["panel"], font=("Segoe UI Emoji", 16)).pack()
             tk.Label(case, text=valeur, bg=C["panel"], fg=C["fg"],
-                     font=("", 13, "bold")).pack()
+                     font=police_corps(13, gras=True)).pack()
             tk.Label(case, text=legende, bg=C["panel"], fg=C["muted"],
-                     font=("", 8)).pack()
+                     font=police_corps(8)).pack()
 
         # --- sélecteur de classe interactif (5e, 4e, 3e) -----------------
         from content import CLASSES
         classe_box = tk.Frame(self, bg=C["panel"])
         classe_box.pack(pady=(4, 8))
         tk.Label(classe_box, text="Classe ciblée :", bg=C["panel"], fg=C["heading"],
-                 font=("", 9, "bold")).pack(side=tk.LEFT, padx=(0, 6))
+                 font=police_corps(9, gras=True)).pack(side=tk.LEFT, padx=(0, 6))
 
         self.btn_acc_classes = {}
         for cid, cinfo in CLASSES.items():
@@ -412,7 +414,7 @@ class AccueilWindow(tk.Toplevel):
             btn_c = tk.Button(
                 classe_box,
                 text=f"{cinfo['icone']} {cinfo['titre']}",
-                font=("", 9, "bold" if est_active else "normal"),
+                font=police_corps(9, gras=est_active),
                 bg=C["accent"] if est_active else C["editor"],
                 fg=C["sel_fg"] if est_active else C["muted"],
                 relief="flat",
@@ -427,9 +429,10 @@ class AccueilWindow(tk.Toplevel):
         # --- progression -------------------------------------------------
         faits, total = resume["faits"], max(1, resume["total"])
         tk.Label(self, text=app.tr("acc_progression", faits=faits, total=resume["total"]),
-                 bg=C["panel"], fg=C["muted"], font=("", 9)).pack()
+                 bg=C["panel"], fg=C["muted"], font=police_corps(9)).pack()
         barre = ttk.Progressbar(self, length=380, maximum=total, value=faits)
         barre.pack(pady=(4, 14), padx=24)
+        audio.play_cloche()
 
         # --- reprendre ---------------------------------------------------
         quoi, item = resume["prochaine"]
@@ -492,13 +495,14 @@ class AccueilWindow(tk.Toplevel):
     def _choisir_classe(self, classe):
         from content import CLASSES
         if classe in CLASSES and hasattr(self.app, "_changer_classe"):
+            audio.play_click()
             self.app._changer_classe(classe)
             for cid, btn in self.btn_acc_classes.items():
                 actif = (cid == classe)
                 btn.configure(
                     bg=self.C["accent"] if actif else self.C["editor"],
                     fg=self.C["sel_fg"] if actif else self.C["muted"],
-                    font=("", 9, "bold" if actif else "normal"),
+                    font=police_corps(9, gras=actif),
                 )
 
 

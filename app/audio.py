@@ -145,6 +145,16 @@ def _init_cache():
         _CACHED_SOUNDS["cloche_temple"] = _generer_wav_tones([
             (880, 0.10), (1320, 0.40), (1760, 0.30)
         ], volume=0.45)
+
+        # Clic boisé doux d'interaction (bouton, onglet)
+        _CACHED_SOUNDS["click"] = _generer_wav_tones([
+            (1400, 0.015), (700, 0.025)
+        ], volume=0.28)
+
+        # Retournement de carte 3D
+        _CACHED_SOUNDS["carte_flip"] = _generer_wav_tones([
+            (400, 0.02), (750, 0.03), (1100, 0.04)
+        ], volume=0.35)
     except Exception:
         pass
 
@@ -252,6 +262,22 @@ def play_cloche():
         return
     _init_cache()
     _play_bytes_async(_CACHED_SOUNDS.get("cloche_temple"))
+
+
+def play_click():
+    """Clic boisé doux d'interaction (bouton, onglet, navigation)."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("click"))
+
+
+def play_carte_flip():
+    """Bruit aérien de carte retournée."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("carte_flip"))
 
 
 _SPEAK_LISTENERS = []

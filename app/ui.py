@@ -117,6 +117,10 @@ class PythonLearnApp:
             for lesson in level["lessons"]:
                 self.lesson_level[lesson["id"]] = level
 
+        from app.responsive import mettre_a_l_echelle_tk, obtenir_facteur_echelle
+        mettre_a_l_echelle_tk(root)
+        self.dpi_scale = obtenir_facteur_echelle(root)
+
         audio.set_sound_enabled(self.data.get("sound_enabled", True))
         root.title("Ludus Latinus — L'Aventure Romaine 🏛️")
         sw = root.winfo_screenwidth()
@@ -233,15 +237,16 @@ class PythonLearnApp:
 
     # --------------------------------------------------------------- polices
     def _init_fonts(self):
-        from app.polices import get_famille_corps, get_famille_titre
+        from app.polices import get_famille_corps, get_famille_titre, get_zoom
         f_titre = get_famille_titre()
         f_corps = get_famille_corps()
+        z = get_zoom()
 
         self.code_font = font.nametofont("TkFixedFont").copy()
-        self.code_font.configure(size=self.code_size)
-        self.body = font.Font(family=f_corps, size=11)
-        self.title_font = font.Font(family=f_titre, size=16, weight="bold")
-        self.h2_font = (f_titre, 13, "bold")
+        self.code_font.configure(size=int(round(self.code_size * z)))
+        self.body = font.Font(family=f_corps, size=int(round(11 * z)))
+        self.title_font = font.Font(family=f_titre, size=int(round(16 * z)), weight="bold")
+        self.h2_font = (f_titre, int(round(13 * z)), "bold")
 
     # ---------------------------------------------------------------- layout
     def _tbtn(self, parent, key, command, **kw):
@@ -274,38 +279,53 @@ class PythonLearnApp:
         self.lang_btn = ttk.Button(toolbar, text=self.tr("tb_lang"), width=6,
                                    command=self.cycle_langue)
         self.lang_btn.pack(side=tk.LEFT, pady=4)
+        def _zoom_avec_son(delta):
+            audio.play_click()
+            self._zoom(delta)
+
         ttk.Button(toolbar, text="A-", width=3,
-                   command=lambda: self._zoom(-1)).pack(side=tk.LEFT, padx=(6, 0), pady=4)
+                   command=lambda: _zoom_avec_son(-1)).pack(side=tk.LEFT, padx=(6, 0), pady=4)
         ttk.Button(toolbar, text="A+", width=3,
-                   command=lambda: self._zoom(1)).pack(side=tk.LEFT, padx=(0, 8), pady=4)
+                   command=lambda: _zoom_avec_son(1)).pack(side=tk.LEFT, padx=(0, 8), pady=4)
+
+        # Boutons de la barre d'outils groupés logiquement
         for cle, action in (
+            # 1. Parcours & Carte d'aventure
             ("tb_accueil", self._show_accueil),
             ("tb_carte", self._ouvrir_carte),
-            ("tb_circus", self._ouvrir_circus),
+            # 2. Forum, Activités & Jeux
             ("tb_cartes", self._ouvrir_album_cartes),
+            ("tb_circus", self._ouvrir_circus),
             ("tb_marche", self._ouvrir_marche_trajan),
             ("tb_cesar", self._ouvrir_chiffre_cesar),
             ("tb_duel", self._ouvrir_duel),
-            ("tb_fiches", self._ouvrir_fiches_a4),
-            ("tb_profils", self._ouvrir_profils),
-            ("tb_maj", self._ouvrir_mise_a_jour),
-            ("tb_succes", self._ouvrir_succes),
+            # 3. Pédagogie, Savoirs & Outils
             ("tb_glossaire", self._show_glossaire),
             ("tb_revision", self._revision),
+            ("tb_fiches", self._ouvrir_fiches_a4),
+            ("tb_examen", self._mode_examen),
             ("tb_stats", self._show_stats),
-            ("tb_doc", lambda: webbrowser.open("https://fr.wikipedia.org/wiki/Latin")),
+            # 4. Profil, Récompenses & Système
+            ("tb_succes", self._ouvrir_succes),
+            ("tb_profils", self._ouvrir_profils),
+            ("tb_maj", self._ouvrir_mise_a_jour),
             ("tb_brouillon", self._show_sandbox),
             ("tb_reco", self._recommander),
-            ("tb_examen", self._mode_examen),
             ("tb_lecons", self._ouvrir_mes_lecons),
+            ("tb_doc", lambda: webbrowser.open("https://fr.wikipedia.org/wiki/Latin")),
         ):
             btn_kw = {}
             if cle in icones_map:
                 self._icones_toolbar[cle] = icones_map[cle]
                 btn_kw["image"] = icones_map[cle]
                 btn_kw["compound"] = tk.LEFT
-            bouton = self._tbtn(toolbar, cle, action, **btn_kw)
-            self._boutons_barre.append((bouton, cle, action))
+
+            def _action_avec_clic(act=action):
+                audio.play_click()
+                act()
+
+            bouton = self._tbtn(toolbar, cle, _action_avec_clic, **btn_kw)
+            self._boutons_barre.append((bouton, cle, _action_avec_clic))
             self._infobulle_barre(bouton, cle)
 
         self._tbtn(toolbar, "tb_reset", self._reset_progress).pack(side=tk.RIGHT, padx=4, pady=4)
@@ -409,6 +429,11 @@ class PythonLearnApp:
         )
         self.speak_btn.pack(side=tk.RIGHT, padx=4)
 
+        from app.polices import police_corps
+        self.hdr_breadcrumbs_lbl = tk.Label(top, text="", font=police_corps(9, italique=True),
+                                            bg=self.C["bg"], fg=self.C["muted"], anchor="w")
+        self.hdr_breadcrumbs_lbl.pack(fill=tk.X, padx=14, pady=(0, 4))
+
         content_wrap = ttk.Frame(top)
         content_wrap.pack(fill=tk.BOTH, expand=True, padx=12, pady=(0, 4))
 
@@ -461,6 +486,9 @@ class PythonLearnApp:
         self.root.bind("<Control-minus>", lambda e: self._zoom(-1))
         self.root.bind("<Control-KP_Subtract>", lambda e: self._zoom(-1))
         self.root.bind("<Control-0>", lambda e: self._zoom(0))
+        self.root.bind("<Control-MouseWheel>", lambda e: self._zoom(1 if getattr(e, "delta", 0) > 0 else -1))
+        self.root.bind("<Control-Button-4>", lambda e: self._zoom(1))
+        self.root.bind("<Control-Button-5>", lambda e: self._zoom(-1))
 
     def _build_header_stats(self):
         """Ruban moderne de gamification & profil en dessous de la barre d'outils."""
@@ -539,10 +567,6 @@ class PythonLearnApp:
                                      padx=6, pady=2, cursor="hand2", command=self._toggle_son)
         self.hdr_son_btn.pack(side=tk.RIGHT, padx=4)
 
-        self.hdr_breadcrumbs_lbl = tk.Label(right, text="", font=(self.body.cget("family"), 9),
-                                            bg=C["panel"], fg=C["muted"])
-        self.hdr_breadcrumbs_lbl.pack(side=tk.RIGHT, padx=4)
-
     def _ouvrir_avatar(self):
         AvatarWindow(self.root, self)
 
@@ -598,6 +622,7 @@ class PythonLearnApp:
 
     def _toggle_sidebar(self):
         """Replie ou déploie la barre latérale pour maximiser l'espace de lecture."""
+        audio.play_click()
         if getattr(self, "side_visible", True):
             self.outer_paned.forget(self.side)
             self.side_visible = False
@@ -730,11 +755,8 @@ class PythonLearnApp:
             exo_txt = f" › ⚡ {self.exo_index + 1}/{n_exo}"
         else:
             exo_txt = ""
-        # Écourter les titres longs pour préserver la lisibilité de la barre
-        p_court = parcours_titre if len(parcours_titre) <= 22 else parcours_titre[:20] + "…"
-        l_court = lecon_titre if len(lecon_titre) <= 24 else lecon_titre[:22] + "…"
         self.hdr_breadcrumbs_lbl.configure(
-            text=f"📁 {p_court} › 📄 {l_court}{exo_txt}"
+            text=f"🏛️ {parcours_titre}  ›  📄 {lecon_titre}{exo_txt}"
         )
 
     def _refresh_header_stats(self):
@@ -837,7 +859,7 @@ class PythonLearnApp:
         else:
             self.hdr_son_btn.configure(image="", text="🔇", bg=C["panel"], fg=C["fg"])
         self.header_strip.configure(bg=C["panel"])
-        self.hdr_breadcrumbs_lbl.configure(bg=C["panel"], fg=C["muted"])
+        self.hdr_breadcrumbs_lbl.configure(bg=C["bg"], fg=C["muted"])
         self._maj_breadcrumbs()
 
     def _animer_confettis(self):
@@ -1116,10 +1138,13 @@ class PythonLearnApp:
         s.map("Primary.TButton",
               background=[("pressed", assombrir(C["accent"], 0.22)),
                           ("active", assombrir(C["accent"], 0.10))])
-        s.configure("TButton", font=self.body)
-        s.configure("TEntry", fieldbackground=C["editor"], foreground=C["fg"])
+        from app.polices import get_zoom
+        z = get_zoom()
+        b_size = self.body.cget("size")
         s.configure("Treeview", background=C["panel"], fieldbackground=C["panel"],
-                    foreground=C["fg"], rowheight=29, borderwidth=0)
+                    foreground=C["fg"], rowheight=max(22, int(round(29 * z))),
+                    font=(self.body.cget("family"), b_size), borderwidth=0)
+        s.configure("Treeview.Heading", font=(self.title_font.cget("family"), b_size, "bold"))
         s.map("Treeview", background=[("selected", C["accent"])],
               foreground=[("selected", C["sel_fg"])])
         s.configure("TProgressbar", background=C["accent"], troughcolor=C["bg"],
@@ -1236,23 +1261,45 @@ class PythonLearnApp:
         self.apply_theme()
 
     def _zoom(self, delta):
+        from app.polices import ajuster_zoom, definir_zoom
         if delta == 0:
+            z = definir_zoom(1.0)
             self.code_size = 11
             body_size = 11
         else:
-            self.code_size = max(8, min(24, self.code_size + delta))
-            actuelle = self.body.cget("size")
-            body_size = max(9, min(20, actuelle + delta))
+            z = ajuster_zoom(delta * 0.1)
+            self.code_size = max(8, min(24, int(round(11 * z))))
+            body_size = max(9, min(22, int(round(11 * z))))
         self.code_font.configure(size=self.code_size)
         self.body.configure(size=body_size)
+        f_titre = self.title_font.cget("family")
+        self.title_font.configure(size=max(12, int(round(16 * z))))
+        self.h2_font = (f_titre, max(10, int(round(13 * z))), "bold")
+        try:
+            self.style.configure(
+                "Treeview",
+                rowheight=max(22, int(round(29 * z))),
+                font=(self.body.cget("family"), body_size),
+            )
+            self.style.configure(
+                "Treeview.Heading",
+                font=(f_titre, body_size, "bold"),
+            )
+        except Exception:
+            pass
         self._configure_text_tags()
-        self.editor.refresh_font()
-        self.editor.highlight()
+        if hasattr(self, "editor"):
+            self.editor.refresh_font()
+            self.editor.highlight()
         if self.current:
             self._render_content(self.txt(self.current, "content"))
 
     def _configure_text_tags(self):
         C = self.C
+        f_fam = self.body.cget("family")
+        b_size = self.body.cget("size")
+        t_sub_size = max(8, b_size - 1)
+
         self.content.tag_configure("h2", foreground=C["heading"], font=self.h2_font,
                                    spacing1=8, spacing3=4)
         self.content.tag_configure("body", foreground=C["fg"], spacing3=4, font=self.body)
@@ -1261,12 +1308,12 @@ class PythonLearnApp:
                                    spacing1=2, spacing3=2)
         self.content.tag_configure("inline", foreground=C["code"], font=self.code_font)
         self.content.tag_configure("bullet", foreground=C["fg"], lmargin1=16, lmargin2=30)
-        self.content.tag_configure("bold", font=(self.body.cget("family"), 11, "bold"))
-        self.content.tag_configure("tip_title", foreground=C["accent"], font=(self.body.cget("family"), 10, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
+        self.content.tag_configure("bold", font=(f_fam, b_size, "bold"))
+        self.content.tag_configure("tip_title", foreground=C["accent"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
         self.content.tag_configure("tip_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
-        self.content.tag_configure("warn_title", foreground=C["err"], font=(self.body.cget("family"), 10, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
+        self.content.tag_configure("warn_title", foreground=C["err"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
         self.content.tag_configure("warn_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
-        self.content.tag_configure("note_title", foreground=C["ok"], font=(self.body.cget("family"), 10, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
+        self.content.tag_configure("note_title", foreground=C["ok"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
         self.content.tag_configure("note_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
 
     # ---------------------------------------------------------------- arbre
@@ -1330,6 +1377,7 @@ class PythonLearnApp:
     def _changer_classe(self, classe):
         if classe not in CLASSES:
             return
+        audio.play_click()
         self.data["classe_active"] = classe
         self._sauvegarder()
         self._rafraichir_selecteur_classe()
@@ -1883,6 +1931,16 @@ class PythonLearnApp:
         if premiere:
             self._write(self.tr("con_first_diff", n=premiere) + "\n", "muted")
 
+    def _animer_flash_feedback(self, widget, couleur, texte=None):
+        """Anime une transition douce d'apparition du résultat."""
+        try:
+            if texte:
+                widget.configure(text=texte)
+            widget.configure(foreground="#ffffff")
+            self.root.after(120, lambda: widget.configure(foreground=couleur))
+        except Exception:
+            pass
+
     def check_quiz(self):
         if not self.current or self.current.get("type") != "quiz":
             return
@@ -1895,9 +1953,11 @@ class PythonLearnApp:
             audio.play_correct()
             self.ajouter_sesterces(10)
             self.reagir_succes()
-            self.quiz_feedback.configure(
-                text="✨ " + self.tr("quiz_good") + " " + self.txt(self.current, "explanation"),
-                foreground=self.C["ok"])
+            self._animer_flash_feedback(
+                self.quiz_feedback,
+                self.C["ok"],
+                "✨ " + self.tr("quiz_good") + " " + self.txt(self.current, "explanation")
+            )
             nouveau = self.current["id"] not in self.data["completed"]
             self._mark_done(self.current["id"])
             if nouveau:
@@ -1908,8 +1968,11 @@ class PythonLearnApp:
         else:
             audio.play_wrong()
             self.reagir_erreur()
-            self.quiz_feedback.configure(text=self.tr("quiz_bad"),
-                                         foreground=self.C["err"])
+            self._animer_flash_feedback(
+                self.quiz_feedback,
+                self.C["err"],
+                "❌ " + self.tr("quiz_bad")
+            )
 
     def show_hint(self):
         self.reagir_reflexion()

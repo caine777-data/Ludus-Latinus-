@@ -7,6 +7,8 @@ en temps réel avec attribution de sesterces, et l'interface du Panthéon.
 import tkinter as tk
 from tkinter import ttk
 
+from app import audio
+from app.polices import police_corps, police_titre
 from app.responsive import adapter_geometrie_fenetre
 
 CATALOGUE_SUCCES = {
@@ -232,7 +234,7 @@ class SuccesWindow(tk.Toplevel):
         tk.Label(
             hdr,
             text="🏛️ LE PANTHÉON DES TROPHÉES",
-            font=("Georgia", 16, "bold"),
+            font=police_titre(16),
             bg="#24283b",
             fg="#ffd700",
         ).pack(anchor="w")
@@ -240,7 +242,7 @@ class SuccesWindow(tk.Toplevel):
         tk.Label(
             hdr,
             text="Accomplis des exploits antiques pour gagner gloire, lauriers et sesterces !",
-            font=("Georgia", 10, "italic"),
+            font=police_corps(10, italique=True),
             bg="#24283b",
             fg="#a9b1d6",
         ).pack(anchor="w", pady=(2, 0))
@@ -263,7 +265,7 @@ class SuccesWindow(tk.Toplevel):
         tk.Label(
             barre_resume,
             text=f"🏆 Progression : {nb_debloques} / {total} ({pct}%)",
-            font=("Georgia", 10, "bold"),
+            font=police_corps(10, gras=True),
             bg="#1f2335",
             fg="#e0af68",
         ).pack(side=tk.LEFT)
@@ -271,7 +273,7 @@ class SuccesWindow(tk.Toplevel):
         tk.Label(
             barre_resume,
             text=f"🪙 Butin récolté : +{sesterces_gagnes} Sesterces",
-            font=("Georgia", 10, "bold"),
+            font=police_corps(10, gras=True),
             bg="#1f2335",
             fg="#ffd700",
         ).pack(side=tk.RIGHT)
@@ -300,10 +302,12 @@ class SuccesWindow(tk.Toplevel):
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
         def _on_mousewheel(e):
-            canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
-        canvas.bind_all("<MouseWheel>", _on_mousewheel)
+            if canvas.winfo_exists():
+                canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
+        self.bind("<MouseWheel>", _on_mousewheel)
 
         self._afficher_cartes_succes()
+        audio.play_cloche()
 
         # Bouton bas
         btn_barre = tk.Frame(self, bg="#24283b", padx=12, pady=8)
@@ -312,7 +316,7 @@ class SuccesWindow(tk.Toplevel):
         tk.Button(
             btn_barre,
             text="Fermer (Échap)",
-            font=("Georgia", 10, "bold"),
+            font=police_corps(10, gras=True),
             bg="#414868",
             fg="#ffffff",
             activebackground="#565f89",
@@ -375,14 +379,14 @@ class SuccesWindow(tk.Toplevel):
                 tk.Label(
                     f_statut,
                     text="✓ DÉBLOQUÉ",
-                    font=("Georgia", 9, "bold"),
+                    font=police_corps(9, gras=True),
                     bg=bg_carte,
                     fg="#2ecc71"
                 ).pack(anchor="e")
                 tk.Label(
                     f_statut,
                     text=f"+{item['recompense_sesterces']} 🪙",
-                    font=("Georgia", 9, "bold"),
+                    font=police_corps(9, gras=True),
                     bg=bg_carte,
                     fg="#ffd700"
                 ).pack(anchor="e")
@@ -390,7 +394,7 @@ class SuccesWindow(tk.Toplevel):
                 tk.Label(
                     f_statut,
                     text=f"🪙 +{item['recompense_sesterces']}",
-                    font=("Georgia", 10, "bold"),
+                    font=police_corps(10, gras=True),
                     bg="#2e3440",
                     fg="#ffd700",
                     padx=6,
@@ -416,7 +420,7 @@ class SuccesWindow(tk.Toplevel):
             tk.Label(
                 f_txt,
                 text=titre_txt,
-                font=("Georgia", 11, "bold"),
+                font=police_titre(11),
                 bg=bg_carte,
                 fg=fg_titre,
                 anchor="w"
@@ -425,7 +429,7 @@ class SuccesWindow(tk.Toplevel):
             tk.Label(
                 f_txt,
                 text=desc_txt,
-                font=("Georgia", 9),
+                font=police_corps(9),
                 bg=bg_carte,
                 fg=fg_desc,
                 wraplength=340,

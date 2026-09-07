@@ -7,7 +7,66 @@ du texte (wraplength) au redimensionnement des conteneurs.
 
 from __future__ import annotations
 
+import sys
 import tkinter as tk
+
+
+def activer_haute_resolution_dpi():
+    """Active la haute résolution DPI sous Windows pour éliminer tout flou ou pixelisation."""
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            # Per-Monitor DPI aware V2 (-4)
+            ctypes.windll.user32.SetProcessDpiAwarenessContext(ctypes.c_void_p(-4))
+            return
+        except Exception:
+            pass
+        try:
+            import ctypes
+            # PROCESS_PER_MONITOR_DPI_AWARE (2)
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+            return
+        except Exception:
+            pass
+        try:
+            import ctypes
+            ctypes.windll.user32.SetProcessDPIAware()
+        except Exception:
+            pass
+
+
+def obtenir_facteur_echelle(widget=None) -> float:
+    """Retourne le facteur d'échelle DPI (1.0 = 100%, 1.5 = 150%, 2.0 = 4K/200%)."""
+    try:
+        if widget is not None:
+            fp = widget.winfo_fpixels("1i")
+            if fp > 0:
+                return max(1.0, round(fp / 96.0, 2))
+    except Exception:
+        pass
+    return 1.0
+
+
+def mettre_a_l_echelle_tk(root: tk.Tk):
+    """Ajuste le scaling interne de Tkinter selon la résolution physique réelle."""
+    try:
+        activer_haute_resolution_dpi()
+        root.update_idletasks()
+        pixels_per_inch = root.winfo_fpixels("1i")
+        if pixels_per_inch > 0:
+            ratio = pixels_per_inch / 72.0
+            root.tk.call("tk", "scaling", ratio)
+    except Exception:
+        pass
+
+
+def redimensionner_image_hd(image_pil, w_cible: int, h_cible: int, echelle_dpi: float = 1.0):
+    """Redimensionne une image PIL avec rééchantillonnage LANCZOS haute précision adapté au DPI."""
+    from PIL import Image
+    w_physique = max(1, int(round(w_cible * echelle_dpi)))
+    h_physique = max(1, int(round(h_cible * echelle_dpi)))
+    resample_filter = getattr(Image, "Resampling", Image).LANCZOS
+    return image_pil.resize((w_physique, h_physique), resample=resample_filter)
 
 
 def adapter_geometrie_fenetre(

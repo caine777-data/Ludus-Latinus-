@@ -167,6 +167,9 @@ def afficher_etat_traduction(langue="en"):
 
 
 def main(argv=None):
+    from app.responsive import activer_haute_resolution_dpi
+    activer_haute_resolution_dpi()
+
     analyseur = argparse.ArgumentParser(
         prog="LudusLatinus",
         description="Ludus Latinus — L'aventure ludique pour apprendre le latin au collège.")
