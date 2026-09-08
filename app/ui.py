@@ -341,8 +341,8 @@ class PythonLearnApp:
         self.outer_paned = outer
         outer.pack(fill=tk.BOTH, expand=True, padx=8, pady=(4, 0))
 
-        # --- barre latérale responsive ---
-        side = ttk.Frame(outer, style="Panel.TFrame", width=300)
+        # --- barre latérale responsive (largeur accrue pour éviter les troncatures) ---
+        side = ttk.Frame(outer, style="Panel.TFrame", width=360)
         self.side = side
         self.side_visible = True
         outer.add(side, weight=0)
@@ -388,7 +388,7 @@ class PythonLearnApp:
         tree_wrap = ttk.Frame(side, style="Panel.TFrame")
         tree_wrap.pack(fill=tk.BOTH, expand=True, padx=6, pady=4)
         self.tree = ttk.Treeview(tree_wrap, show="tree", selectmode="browse")
-        self.tree.column("#0", width=280, minwidth=180, stretch=True)
+        self.tree.column("#0", width=340, minwidth=240, stretch=True)
         sb = ttk.Scrollbar(tree_wrap, orient="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=sb.set)
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -443,7 +443,7 @@ class PythonLearnApp:
         self.mascotte.pack(side=tk.RIGHT, fill=tk.Y, padx=(10, 0))
 
         self.content = tk.Text(content_wrap, wrap="word", relief="flat",
-                               font=self.body, padx=8, pady=8, height=11,
+                               font=self.body, padx=8, pady=8, height=8,
                                cursor="arrow")
         csb = ttk.Scrollbar(content_wrap, orient="vertical", command=self.content.yview)
         self.content.configure(yscrollcommand=csb.set)
@@ -490,6 +490,25 @@ class PythonLearnApp:
         self.root.bind("<Control-MouseWheel>", lambda e: self._zoom(1 if getattr(e, "delta", 0) > 0 else -1))
         self.root.bind("<Control-Button-4>", lambda e: self._zoom(1))
         self.root.bind("<Control-Button-5>", lambda e: self._zoom(-1))
+
+        # Raccourcis clavier pour les Quiz / QCM interactifs (1, 2, 3, 4 et AZERTY & é " ')
+        def _sur_touche_qcm(idx):
+            if self.current and self.current.get("type") == "quiz":
+                w_f = self.root.focus_get()
+                if isinstance(w_f, (tk.Entry, tk.Text)):
+                    return
+                self._selectionner_carte_qcm(idx)
+
+        def _sur_entree_qcm(_e=None):
+            if self.current and self.current.get("type") == "quiz":
+                w_f = self.root.focus_get()
+                if not isinstance(w_f, (tk.Entry, tk.Text, tk.Button)):
+                    self.check_quiz()
+
+        for k, idx in [("1", 0), ("2", 1), ("3", 2), ("4", 3),
+                       ("ampersand", 0), ("eacute", 1), ("quotedbl", 2), ("apostrophe", 3)]:
+            self.root.bind(f"<Key-{k}>", lambda _e, i=idx: _sur_touche_qcm(i))
+        self.root.bind("<Return>", _sur_entree_qcm)
 
     def _build_header_stats(self):
         """Ruban moderne de gamification & profil en dessous de la barre d'outils."""
@@ -1081,16 +1100,22 @@ class PythonLearnApp:
     def _build_quiz_frame(self):
         self.quiz_frame = ttk.Frame(self.bottom)
         self.quiz_question = ttk.Label(self.quiz_frame, text="", style="Title.TLabel",
-                                       wraplength=720, justify="left")
+                                       wraplength=760, justify="left")
         self.quiz_question.pack(anchor="w", padx=16, pady=(16, 10))
         self.quiz_var = tk.IntVar(value=-1)
         self.quiz_options = ttk.Frame(self.quiz_frame)
-        self.quiz_options.pack(anchor="w", padx=24)
+        self.quiz_options.pack(anchor="w", padx=16, fill=tk.X, expand=True)
         self.quiz_radios = []
-        self._tbtn(self.quiz_frame, "quiz_validate", self.check_quiz).pack(
-            anchor="w", padx=16, pady=12)
+        self.quiz_cards = []
+        self._quiz_bloque = False
+
+        self.quiz_btn_box = ttk.Frame(self.quiz_frame)
+        self.quiz_btn_box.pack(anchor="w", padx=16, pady=12)
+        self.btn_quiz_valider = self._tbtn(self.quiz_btn_box, "quiz_validate", self.check_quiz, style="Primary.TButton")
+        self.btn_quiz_valider.pack(side=tk.LEFT)
+
         self.quiz_feedback = ttk.Label(self.quiz_frame, text="", style="TLabel",
-                                       wraplength=720, justify="left")
+                                       wraplength=760, justify="left")
         self.quiz_feedback.pack(anchor="w", padx=16)
 
         # Adaptation dynamique du saut de ligne lors du redimensionnement d'écran
@@ -1683,16 +1708,151 @@ class PythonLearnApp:
 
     def _load_quiz(self, lesson):
         self.quiz_var.set(-1)
+        self._quiz_bloque = False
         self.quiz_question.configure(text=self.txt(lesson, "question"))
-        for r in self.quiz_radios:
-            r.destroy()
+        for r in getattr(self, "quiz_radios", []):
+            try:
+                r.destroy()
+            except Exception:
+                pass
         self.quiz_radios = []
-        for i, opt in enumerate(self.txt(lesson, "options", [])):
-            r = ttk.Radiobutton(self.quiz_options, text=opt, value=i,
-                                variable=self.quiz_var)
-            r.pack(anchor="w", pady=3)
-            self.quiz_radios.append(r)
+        self.quiz_cards = []
+        options = self.txt(lesson, "options", [])
+        use_grid = (len(options) == 4 and max((len(opt) for opt in options), default=0) <= 50)
+
+        if use_grid:
+            self.quiz_options.columnconfigure(0, weight=1)
+            self.quiz_options.columnconfigure(1, weight=1)
+
+        for i, opt in enumerate(options):
+            card = self._creer_carte_qcm(i, opt)
+            if use_grid:
+                card.grid(row=i // 2, column=i % 2, sticky="nsew", padx=6, pady=3)
+            else:
+                card.pack(fill=tk.X, expand=True, pady=3, anchor="w")
+            self.quiz_radios.append(card)
+            self.quiz_cards.append(card)
         self.quiz_feedback.configure(text="")
+
+    def _creer_carte_qcm(self, index, texte):
+        from app.polices import police_corps
+        C = self.C
+        card = tk.Frame(
+            self.quiz_options,
+            bg=C["editor"],
+            highlightthickness=2,
+            highlightbackground=C.get("panel", "#374151"),
+            highlightcolor="#d4af37",
+            padx=12,
+            pady=6,
+            cursor="hand2",
+            relief="flat",
+        )
+        badge_lettres = ["I", "II", "III", "IV", "V", "VI"]
+        badge_txt = badge_lettres[index] if index < len(badge_lettres) else str(index + 1)
+        lbl_badge = tk.Label(
+            card,
+            text=f" {badge_txt} ",
+            font=police_corps(9, gras=True),
+            bg=C["panel"],
+            fg=C["heading"],
+            relief="flat",
+            padx=4,
+            pady=2,
+            cursor="hand2",
+        )
+        lbl_badge.pack(side=tk.LEFT, padx=(0, 12))
+
+        lbl_txt = tk.Label(
+            card,
+            text=texte,
+            font=police_corps(11, gras=True),
+            bg=C["editor"],
+            fg=C["fg"],
+            anchor="w",
+            justify="left",
+            wraplength=640,
+            cursor="hand2",
+        )
+        lbl_txt.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        lbl_status = tk.Label(
+            card,
+            text="○",
+            font=police_corps(13),
+            bg=C["editor"],
+            fg=C["muted"],
+            cursor="hand2",
+        )
+        lbl_status.pack(side=tk.RIGHT, padx=(8, 0))
+
+        card._qcm_widgets = {
+            "badge": lbl_badge,
+            "txt": lbl_txt,
+            "status": lbl_status,
+            "idx": index,
+        }
+
+        def _sur_clic(_e=None):
+            self._selectionner_carte_qcm(index)
+
+        def _sur_enter(_e=None):
+            if not getattr(self, "_quiz_bloque", False) and self.quiz_var.get() != index:
+                card.configure(highlightbackground="#d4af37")
+
+        def _sur_leave(_e=None):
+            if not getattr(self, "_quiz_bloque", False) and self.quiz_var.get() != index:
+                card.configure(highlightbackground=C.get("panel", "#374151"))
+
+        for w in (card, lbl_badge, lbl_txt, lbl_status):
+            w.bind("<Button-1>", _sur_clic)
+            w.bind("<Enter>", _sur_enter)
+            w.bind("<Leave>", _sur_leave)
+
+        return card
+
+    def _selectionner_carte_qcm(self, index):
+        if getattr(self, "_quiz_bloque", False):
+            self._quiz_bloque = False
+            self.quiz_feedback.configure(text="")
+
+        if 0 <= index < len(self.quiz_cards):
+            self.quiz_var.set(index)
+            audio.play_click()
+            self._maj_style_cartes_qcm()
+
+    def _maj_style_cartes_qcm(self):
+        C = self.C
+        sel = self.quiz_var.get()
+        for i, card in enumerate(getattr(self, "quiz_cards", [])):
+            w = getattr(card, "_qcm_widgets", {})
+            lbl_badge = w.get("badge")
+            lbl_txt = w.get("txt")
+            lbl_status = w.get("status")
+            if i == sel:
+                card.configure(
+                    highlightbackground="#d4af37",
+                    bg=C["editor"],
+                    highlightthickness=2,
+                )
+                if lbl_badge:
+                    lbl_badge.configure(bg="#d4af37", fg="#1a1409")
+                if lbl_txt:
+                    lbl_txt.configure(fg=C["heading"], bg=C["editor"])
+                if lbl_status:
+                    lbl_status.configure(text="●", fg="#d4af37", bg=C["editor"])
+            else:
+                card.configure(
+                    highlightbackground=C.get("panel", "#374151"),
+                    bg=C["editor"],
+                    highlightthickness=2,
+                )
+                if lbl_badge:
+                    lbl_badge.configure(bg=C["panel"], fg=C["heading"])
+                if lbl_txt:
+                    lbl_txt.configure(fg=C["fg"], bg=C["editor"])
+                if lbl_status:
+                    lbl_status.configure(text="○", fg=C["muted"], bg=C["editor"])
 
     def _render_content(self, text):
         self.content.configure(state="normal")
@@ -1952,7 +2112,35 @@ class PythonLearnApp:
             self.quiz_feedback.configure(text=self.tr("quiz_choose"),
                                          foreground=self.C["muted"])
             return
-        if choix == self.current.get("answer"):
+        rep_correcte = self.current.get("answer")
+        self._quiz_bloque = True
+
+        # Mise en valeur visuelle immédiate des cartes QCM
+        for i, card in enumerate(getattr(self, "quiz_cards", [])):
+            w = getattr(card, "_qcm_widgets", {})
+            lbl_badge = w.get("badge")
+            lbl_txt = w.get("txt")
+            lbl_status = w.get("status")
+            if i == rep_correcte:
+                # Carte gagnante : vert émeraude triomphant
+                card.configure(highlightbackground="#10b981")
+                if lbl_badge:
+                    lbl_badge.configure(bg="#10b981", fg="#ffffff")
+                if lbl_status:
+                    lbl_status.configure(text="✔", fg="#10b981")
+            elif i == choix:
+                # Mauvais choix sélectionné : rouge pourpre
+                card.configure(highlightbackground="#ef4444")
+                if lbl_badge:
+                    lbl_badge.configure(bg="#ef4444", fg="#ffffff")
+                if lbl_status:
+                    lbl_status.configure(text="✖", fg="#ef4444")
+            else:
+                card.configure(highlightbackground=self.C.get("panel", "#374151"))
+                if lbl_txt:
+                    lbl_txt.configure(fg=self.C["muted"])
+
+        if choix == rep_correcte:
             audio.play_correct()
             self.ajouter_sesterces(10)
             self.reagir_succes()

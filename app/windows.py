@@ -221,10 +221,27 @@ class ExamWindow(tk.Toplevel):
         for w in self.opts_frame.winfo_children():
             w.destroy()
         for idx, opt in enumerate(q["options"]):
-            tk.Radiobutton(self.opts_frame, text=opt, variable=self.var, value=idx,
-                           bg=self.C["bg"], fg=self.C["fg"], selectcolor=self.C["panel"],
-                           activebackground=self.C["bg"], anchor="w",
-                           font=self.app.body).pack(fill=tk.X, anchor="w")
+            card = tk.Frame(self.opts_frame, bg=self.C["editor"], highlightthickness=1,
+                            highlightbackground=self.C.get("panel", "#3a3d4d"), padx=10, pady=8, cursor="hand2")
+            card.pack(fill=tk.X, pady=3)
+            lbl_b = tk.Label(card, text=f"[{idx + 1}]", font=police_corps(9, gras=True),
+                             bg=self.C["panel"], fg=self.C["heading"], padx=4, pady=1)
+            lbl_b.pack(side=tk.LEFT, padx=(0, 8))
+            lbl_t = tk.Label(card, text=opt, font=police_corps(10, gras=True),
+                             bg=self.C["editor"], fg=self.C["fg"], anchor="w")
+            lbl_t.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+            def _click_opt(i=idx, c=card):
+                if not self.valide:
+                    self.var.set(i)
+                    audio.play_click()
+                    for f in self.opts_frame.winfo_children():
+                        f.configure(highlightbackground=self.C.get("panel", "#3a3d4d"))
+                    c.configure(highlightbackground="#d4af37")
+
+            for w in (card, lbl_b, lbl_t):
+                w.bind("<Button-1>", lambda _e, i=idx, c=card: _click_opt(i, c))
+
         self.btn_suivant.pack_forget()
         self.btn_valider.pack(side=tk.LEFT, padx=4)
 
@@ -233,6 +250,14 @@ class ExamWindow(tk.Toplevel):
             return
         self.valide = True
         q = self.questions[self.i]
+        bonne_idx = q["answer"]
+        children = self.opts_frame.winfo_children()
+        for idx, f in enumerate(children):
+            if idx == bonne_idx:
+                f.configure(highlightbackground="#10b981")
+            elif idx == self.var.get():
+                f.configure(highlightbackground="#ef4444")
+
         if self.var.get() == q["answer"]:
             self.bons += 1
             self.retour.configure(text=self.tr("quiz_good") + q.get("explanation", ""),
@@ -374,37 +399,102 @@ class AccueilWindow(tk.Toplevel):
         self.title(app.tr("acc_titre"))
         self.configure(bg=C["panel"])
         self.resizable(False, False)
+
+        from pathlib import Path
+
+        from app.icones import charger_icone
+        try:
+            from PIL import Image, ImageTk
+            has_pil = True
+        except ImportError:
+            has_pil = False
+
+        # Ruban doré supérieur romain
         tk.Frame(self, bg=C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
 
-        premiere_fois = resume["faits"] == 0
-        tk.Label(self, text=app.tr("acc_bienvenue" if premiere_fois else "acc_retour"),
-                 bg=C["panel"], fg=C["accent"], font=police_titre(18)).pack(pady=(16, 2))
+        # --- 1. Bandeau de Bienvenue avec la Mascotte Lupulus et bulle de dialogue ---
+        bandeau_lupulus = tk.Frame(self, bg=C["panel"], padx=18, pady=10)
+        bandeau_lupulus.pack(fill=tk.X, pady=(6, 2))
 
-        # --- la ligne de chiffres : série, niveau, révisions dues ---------
+        costume_id = app.data.get("costume_lupulus_actif", "standard")
+        assets_dir = Path(__file__).resolve().parent.parent / "assets" / "images" / "lupulus"
+        p_img = assets_dir / f"lupulus_{costume_id}.png"
+        if not p_img.exists():
+            p_img = assets_dir / "lupulus_standard.png"
+        if not p_img.exists():
+            p_img = assets_dir / "lupulus_normal.png"
+
+        self._img_lupulus_acc = None
+        if has_pil and p_img.exists():
+            try:
+                im = Image.open(p_img).convert("RGBA")
+                im.thumbnail((68, 68), Image.Resampling.LANCZOS)
+                self._img_lupulus_acc = ImageTk.PhotoImage(im)
+            except Exception:
+                pass
+
+        vignette_box = tk.Frame(bandeau_lupulus, bg=C["editor"], highlightthickness=2,
+                                highlightbackground="#d4af37", padx=4, pady=4)
+        vignette_box.pack(side=tk.LEFT, padx=(0, 14))
+
+        if self._img_lupulus_acc:
+            lbl_lup = tk.Label(vignette_box, image=self._img_lupulus_acc, bg=C["editor"], cursor="hand2")
+            lbl_lup.pack()
+            lbl_lup.bind("<Button-1>", lambda _e: (audio.play_click(), app._ouvrir_penderie()))
+        else:
+            lbl_lup = tk.Label(vignette_box, text="🐺", font=("Segoe UI Emoji", 28), bg=C["editor"], cursor="hand2")
+            lbl_lup.pack()
+            lbl_lup.bind("<Button-1>", lambda _e: (audio.play_click(), app._ouvrir_penderie()))
+
+        premiere_fois = resume["faits"] == 0
+        bulle = tk.Frame(bandeau_lupulus, bg=C["editor"], highlightthickness=1,
+                         highlightbackground=C.get("border", "#3a3d4d"), padx=12, pady=8)
+        bulle.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        nom_heros = prog.get_nom_heros(app.data)
+        titre_salut = f"Salve {nom_heros} !" if not premiere_fois else "Salve discipule !"
+        tk.Label(bulle, text=titre_salut, bg=C["editor"], fg=C["accent"],
+                 font=police_titre(13)).pack(anchor="w")
+
+        msg_lup = (
+            "Bienvenue à Rome ! Prépare ton glaive et tes tablettes pour conquérir le latin !"
+            if premiere_fois else
+            "Ravi de te revoir ! Rome t'attend pour poursuivre ta glorieuse aventure."
+        )
+        tk.Label(bulle, text=msg_lup, bg=C["editor"], fg=C["fg"],
+                 font=police_corps(9), wraplength=340, justify="left").pack(anchor="w", pady=(2, 0))
+
+        # --- 2. 4 Médaillons Romains de Statistiques 3D ---
         chiffres = tk.Frame(self, bg=C["panel"])
-        chiffres.pack(pady=(6, 12))
+        chiffres.pack(fill=tk.X, padx=16, pady=(4, 10))
+
         niv = resume["niveau"]
-        cases = [
-            ("🔥", str(resume["serie"]), app.tr("acc_serie")),
-            (niv.get("rang_icone", "🟢"), niv.get("rang_titre", "Tiro"), f"Niveau {niv['niveau']}"),
-            ("🪙", str(app.data.get("sesterces", 0)), "Sesterces"),
-            ("🎯", f"{resume['aujourdhui']}/{resume['objectif']}", app.tr("acc_jour")),
+        self._icones_stats_acc = [
+            ("🔥", None, str(resume["serie"]), app.tr("acc_serie")),
+            ("laurier", charger_icone("icone_laurier", 24), niv.get("rang_titre", "Tiro"), f"Niv. {niv['niveau']}"),
+            ("sesterce", charger_icone("icone_sesterce", 24), str(app.data.get("sesterces", 0)), "Sesterces 🪙"),
+            ("arene", charger_icone("icone_arene", 24), f"{resume['aujourdhui']}/{resume['objectif']}", app.tr("acc_jour")),
         ]
-        if resume["revisions"]:
-            cases.append(("🔁", str(resume["revisions"]), app.tr("acc_revisions")))
-        for icone, valeur, legende in cases:
-            case = tk.Frame(chiffres, bg=C["panel"])
-            case.pack(side=tk.LEFT, padx=10)
-            tk.Label(case, text=icone, bg=C["panel"], font=("Segoe UI Emoji", 16)).pack()
-            tk.Label(case, text=valeur, bg=C["panel"], fg=C["fg"],
-                     font=police_corps(13, gras=True)).pack()
-            tk.Label(case, text=legende, bg=C["panel"], fg=C["muted"],
+
+        for cle, img, valeur, legende in self._icones_stats_acc:
+            case = tk.Frame(chiffres, bg=C["editor"], highlightthickness=1,
+                            highlightbackground=C.get("border", "#3a3d4d"), padx=8, pady=8)
+            case.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=4)
+
+            if img:
+                tk.Label(case, image=img, bg=C["editor"]).pack(pady=(0, 2))
+            else:
+                tk.Label(case, text=cle, bg=C["editor"], font=("Segoe UI Emoji", 16)).pack(pady=(0, 2))
+
+            tk.Label(case, text=valeur, bg=C["editor"], fg=C["fg"],
+                     font=police_corps(11, gras=True)).pack()
+            tk.Label(case, text=legende, bg=C["editor"], fg=C["muted"],
                      font=police_corps(8)).pack()
 
-        # --- sélecteur de classe interactif (5e, 4e, 3e) -----------------
+        # --- 3. Sélecteur de classe interactif (5e, 4e, 3e) ---
         from content import CLASSES
         classe_box = tk.Frame(self, bg=C["panel"])
-        classe_box.pack(pady=(4, 8))
+        classe_box.pack(pady=(2, 8))
         tk.Label(classe_box, text="Classe ciblée :", bg=C["panel"], fg=C["heading"],
                  font=police_corps(9, gras=True)).pack(side=tk.LEFT, padx=(0, 6))
 
@@ -426,51 +516,73 @@ class AccueilWindow(tk.Toplevel):
             btn_c.pack(side=tk.LEFT, padx=3)
             self.btn_acc_classes[cid] = btn_c
 
-        # --- progression -------------------------------------------------
+        # --- 4. Progression globale ---
         faits, total = resume["faits"], max(1, resume["total"])
-        tk.Label(self, text=app.tr("acc_progression", faits=faits, total=resume["total"]),
-                 bg=C["panel"], fg=C["muted"], font=police_corps(9)).pack()
-        barre = ttk.Progressbar(self, length=380, maximum=total, value=faits)
-        barre.pack(pady=(4, 14), padx=24)
+        pct = int(round((faits / total) * 100))
+        tk.Label(self, text=f"🏛️ Conquête du latin : {faits}/{resume['total']} leçons terminées ({pct}%)",
+                 bg=C["panel"], fg=C["muted"], font=police_corps(9, gras=True)).pack()
+        barre = ttk.Progressbar(self, length=460, maximum=total, value=faits)
+        barre.pack(pady=(4, 12), padx=24)
         audio.play_cloche()
 
-        # --- reprendre ---------------------------------------------------
-        quoi, item = resume["prochaine"]
-        principal = ttk.Frame(self, style="Panel.TFrame")
-        principal.pack(pady=(0, 8))
-        if item is not None:
-            cle = "acc_revision" if quoi == "revision" else "acc_reprendre"
-            ttk.Button(principal, text=app.tr(cle),
-                       style="Primary.TButton",
-                       command=lambda i=item: self._aller(i)).pack()
-        else:
-            tk.Label(self, text=app.tr("acc_termine"), bg=C["panel"], fg=C["ok"],
-                     wraplength=380, justify="center").pack(pady=4)
-
+        # --- 5. Carte Parchemin : Défi du Jour Quotidien ---
         from app.stats import defi_du_jour
         from content import CURRICULUM
         defi = defi_du_jour(CURRICULUM)
         if defi:
             fait = defi["id"] in app.data.get("completed", [])
-            symb = "✓ " if fait else "⚡ "
-            title = defi["title_en"] if getattr(app, "lang", "fr") == "en" else defi["title"]
-            lbl_btn = f"{symb}{app.tr('acc_defi')} : {title}"
-            ttk.Button(principal, text=lbl_btn,
-                       command=lambda i=defi["id"]: self._aller(i)).pack(pady=(6, 0))
+            carte_defi = tk.Frame(self, bg=C["editor"], highlightthickness=2,
+                                  highlightbackground="#d4af37", padx=14, pady=10)
+            carte_defi.pack(fill=tk.X, padx=20, pady=(0, 10))
 
-        # --- rattrapage ciblé --------------------------------------------
+            defi_top = tk.Frame(carte_defi, bg=C["editor"])
+            defi_top.pack(fill=tk.X)
+            tk.Label(defi_top, text="⚡ DÉFI DU JOUR QUOTIDIEN", bg=C["editor"], fg="#d4af37",
+                     font=police_corps(9, gras=True)).pack(side=tk.LEFT)
+            tk.Label(defi_top, text="+25 Sesterces 🪙",
+                     bg="#78350f" if "dark" in getattr(app, "theme_actuel", "") or C["bg"] < "#777777" else "#fef3c7",
+                     fg="#f59e0b" if "dark" in getattr(app, "theme_actuel", "") or C["bg"] < "#777777" else "#92400e",
+                     font=police_corps(8, gras=True), padx=6, pady=1).pack(side=tk.RIGHT)
+
+            title = defi["title_en"] if getattr(app, "lang", "fr") == "en" else defi["title"]
+            lbl_title = f"{'✔ ' if fait else '⚔ '}{title}"
+            tk.Label(carte_defi, text=lbl_title, bg=C["editor"], fg=C["fg"],
+                     font=police_corps(11, gras=True), anchor="w").pack(fill=tk.X, pady=(4, 2))
+
+            sous_titre = f"Parcours : {defi.get('level_title', 'Rome')}"
+            tk.Label(carte_defi, text=sous_titre, bg=C["editor"], fg=C["muted"],
+                     font=police_corps(8, italique=True), anchor="w").pack(fill=tk.X, pady=(0, 6))
+
+            btn_defi_txt = "✔ Défi relevé avec brio ! (Revoir)" if fait else "⚡ Relever le Défi maintenant !"
+            ttk.Button(carte_defi, text=btn_defi_txt,
+                       command=lambda i=defi["id"]: self._aller(i)).pack(anchor="e")
+
+        # --- 6. Bouton principal d'action : Reprendre la quête ---
+        quoi, item = resume["prochaine"]
+        principal = ttk.Frame(self, style="Panel.TFrame")
+        principal.pack(pady=(0, 6))
+        if item is not None:
+            cle = "acc_revision" if quoi == "revision" else "acc_reprendre"
+            ttk.Button(principal, text=f"🏛️ {app.tr(cle)}",
+                       style="Primary.TButton",
+                       command=lambda i=item: self._aller(i)).pack()
+        else:
+            tk.Label(self, text=app.tr("acc_termine"), bg=C["panel"], fg=C["ok"],
+                     wraplength=420, justify="center").pack(pady=4)
+
+        # --- 7. Rattrapage ciblé si échecs ---
         if resume["difficiles"]:
             tk.Label(self, text=app.tr("acc_difficiles"), bg=C["panel"],
-                     fg=C["muted"], font=("", 9)).pack(pady=(12, 4))
+                     fg=C["muted"], font=("", 9)).pack(pady=(8, 2))
             for item_id, echecs in resume["difficiles"]:
                 titre = app.titre_de_item(item_id)
                 ttk.Button(self, text=app.tr("acc_refaire", titre=titre, n=echecs),
                            command=lambda i=item_id: self._aller(i)).pack(
                     fill=tk.X, padx=40, pady=2)
 
-        # --- pied --------------------------------------------------------
+        # --- 8. Pied de page ---
         pied = tk.Frame(self, bg=C["panel"])
-        pied.pack(pady=(16, 14))
+        pied.pack(pady=(10, 12))
         self.au_demarrage = tk.BooleanVar(
             value=app.data.get("accueil_au_demarrage", True))
         tk.Checkbutton(pied, text=app.tr("acc_au_demarrage"),
