@@ -58,12 +58,33 @@ class DuelWindow(tk.Toplevel):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
-        self.C = app.C
+        from app.theme import THEMES, est_sombre
+        self.C = getattr(app, "C", None) or THEMES["Nuit au Colisée"]
 
         self.title("⚔️ Colosseum Duellum — Duel à 2 Joueurs — Ludus Latinus")
         from app.responsive import adapter_geometrie_fenetre
         adapter_geometrie_fenetre(self, 960, 680, min_w=780, min_h=520)
-        self.configure(bg="#15161e")
+
+        bg_def = self.C.get("bg", "#15161e")
+        self.configure(bg=bg_def)
+
+        self.sombre = est_sombre(bg_def)
+        self.c_bg_arene = bg_def
+        self.c_panel = self.C.get("panel", self.C.get("card_bg", "#1a1b26"))
+        self.c_heading = self.C.get("heading", "#ffd700")
+        self.c_muted = self.C.get("muted", "#a9b1d6")
+        self.c_editor = self.C.get("editor", "#24283b")
+        self.c_q_bg = "#24283b" if self.sombre else "#ffffff"
+        self.c_q_fg = "#ffffff" if self.sombre else self.c_heading
+
+        # Camps J1 (Bleu) et J2 (Rouge)
+        self.c_camp_j1_bg = "#1a233a" if self.sombre else "#edf5fd"
+        self.c_btn_j1_bg = "#243050" if self.sombre else "#d0e4f7"
+        self.c_btn_j1_fg = "#ffffff" if self.sombre else "#1a365d"
+
+        self.c_camp_j2_bg = "#3a1a23" if self.sombre else "#fdedec"
+        self.c_btn_j2_bg = "#502430" if self.sombre else "#fadbd8"
+        self.c_btn_j2_fg = "#ffffff" if self.sombre else "#78281f"
 
         self.score_j1 = 0
         self.score_j2 = 0
@@ -87,84 +108,84 @@ class DuelWindow(tk.Toplevel):
 
     def _build_ui(self):
         # En-tête
-        hdr = tk.Frame(self, bg="#1a1b26", padx=16, pady=10)
+        hdr = tk.Frame(self, bg=self.c_panel, padx=16, pady=10)
         hdr.pack(fill=tk.X)
 
         tk.Label(hdr, text="⚔️ COLOSSEUM DUELLUM — DUEL SUR LE MÊME CLAVIER ⚔️",
-                 font=police_titre(14), bg="#1a1b26", fg="#ffd700").pack()
+                 font=police_titre(14), bg=self.c_panel, fg="#ffd700" if self.sombre else self.c_heading).pack()
         tk.Label(hdr, text="Le premier qui répond repousse son adversaire hors de l'arène !",
-                 font=police_corps(10, italique=True), bg="#1a1b26", fg="#dcd6cd").pack()
+                 font=police_corps(10, italique=True), bg=self.c_panel, fg=self.c_muted).pack()
 
         # Jauge de tir à la corde gladiateur au centre
-        jauge_box = tk.Frame(self, bg="#15161e", pady=12)
+        jauge_box = tk.Frame(self, bg=self.c_bg_arene, pady=12)
         jauge_box.pack(fill=tk.X, padx=40)
 
         # Labels noms des combattants
-        noms_frame = tk.Frame(jauge_box, bg="#15161e")
+        noms_frame = tk.Frame(jauge_box, bg=self.c_bg_arene)
         noms_frame.pack(fill=tk.X, pady=(0, 4))
 
         self.lbl_score_j1 = tk.Label(
             noms_frame, text="🟦 JOUEUR 1 : MARCUS (0)", font=police_titre(12),
-            bg="#15161e", fg="#3498db"
+            bg=self.c_bg_arene, fg="#2980b9" if not self.sombre else "#3498db"
         )
         self.lbl_score_j1.pack(side=tk.LEFT)
 
         self.lbl_score_j2 = tk.Label(
             noms_frame, text="(0) JULIA : JOUEUR 2 🟥", font=police_titre(12),
-            bg="#15161e", fg="#e74c3c"
+            bg=self.c_bg_arene, fg="#c0392b" if not self.sombre else "#e74c3c"
         )
         self.lbl_score_j2.pack(side=tk.RIGHT)
 
         # Canvas de la barre de combat
-        self.canvas_jauge = tk.Canvas(jauge_box, height=36, bg="#1a1b26", highlightthickness=2, highlightbackground="#d4af37")
+        self.canvas_jauge = tk.Canvas(jauge_box, height=36, bg=self.c_panel, highlightthickness=2, highlightbackground="#d4af37")
         self.canvas_jauge.pack(fill=tk.X)
 
         # Zone de la question centrale
-        q_frame = tk.Frame(self, bg="#24283b", bd=2, relief="groove", padx=20, pady=14)
+        q_frame = tk.Frame(self, bg=self.c_q_bg, bd=2, relief="ridge", padx=20, pady=14)
         q_frame.pack(fill=tk.X, padx=40, pady=10)
 
         self.lbl_question = tk.Label(
             q_frame, text="Question...", font=police_titre(16),
-            bg="#24283b", fg="#ffffff", wraplength=700
+            bg=self.c_q_bg, fg=self.c_q_fg, wraplength=700
         )
         self.lbl_question.pack()
 
         # Les deux camps (Joueur 1 à gauche, Joueur 2 à droite)
-        camps_frame = tk.Frame(self, bg="#15161e", padx=20)
+        camps_frame = tk.Frame(self, bg=self.c_bg_arene, padx=20)
         camps_frame.pack(fill=tk.BOTH, expand=True, pady=10)
 
         # Camp Joueur 1 (Touches A, Z, E)
-        camp_j1 = tk.Frame(camps_frame, bg="#1a233a", bd=2, relief="ridge", padx=16, pady=12)
+        camp_j1 = tk.Frame(camps_frame, bg=self.c_camp_j1_bg, bd=2, relief="ridge", padx=16, pady=12)
         camp_j1.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 10))
 
-        tk.Label(camp_j1, text="🟦 MARCUS (Gauche)", font=police_titre(13), bg="#1a233a", fg="#3498db").pack(pady=(0, 8))
-        tk.Label(camp_j1, text="Touches de jeu : [A] [Z] [E]", font=police_corps(10, gras=True), bg="#1a233a", fg="#ffd700").pack(pady=(0, 8))
+        tk.Label(camp_j1, text="🟦 MARCUS (Gauche)", font=police_titre(13), bg=self.c_camp_j1_bg, fg="#2980b9" if not self.sombre else "#3498db").pack(pady=(0, 8))
+        tk.Label(camp_j1, text="Touches : [A] [Z] [E]", font=police_corps(10, gras=True), bg=self.c_camp_j1_bg, fg="#d4af37" if self.sombre else "#8c1d1d").pack(pady=(0, 8))
 
         self.btn_j1 = []
         for let in ["A", "Z", "E"]:
             b = tk.Label(camp_j1, text=f"[{let}] Option", font=police_corps(11, gras=True),
-                         bg="#243050", fg="#ffffff", bd=1, relief="raised", padx=10, pady=8)
+                         bg=self.c_btn_j1_bg, fg=self.c_btn_j1_fg, bd=1, relief="raised", padx=10, pady=8)
             b.pack(fill=tk.X, pady=4)
             self.btn_j1.append(b)
 
-        self.lbl_statut_j1 = tk.Label(camp_j1, text="Prêt !", font=police_corps(10, gras=True), bg="#1a233a", fg="#2ecc71")
+        self.lbl_statut_j1 = tk.Label(camp_j1, text="Prêt !", font=police_corps(10, gras=True), bg=self.c_camp_j1_bg, fg="#2ecc71")
         self.lbl_statut_j1.pack(pady=8)
 
         # Camp Joueur 2 (Touches 1, 2, 3 ou J, K, L)
-        camp_j2 = tk.Frame(camps_frame, bg="#3a1a23", bd=2, relief="ridge", padx=16, pady=12)
+        camp_j2 = tk.Frame(camps_frame, bg=self.c_camp_j2_bg, bd=2, relief="ridge", padx=16, pady=12)
         camp_j2.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(10, 0))
 
-        tk.Label(camp_j2, text="🟥 JULIA (Droite)", font=police_titre(13), bg="#3a1a23", fg="#e74c3c").pack(pady=(0, 8))
-        tk.Label(camp_j2, text="Touches de jeu : [1] [2] [3] ou [J] [K] [L]", font=police_corps(10, gras=True), bg="#3a1a23", fg="#ffd700").pack(pady=(0, 8))
+        tk.Label(camp_j2, text="🟥 JULIA (Droite)", font=police_titre(13), bg=self.c_camp_j2_bg, fg="#c0392b" if not self.sombre else "#e74c3c").pack(pady=(0, 8))
+        tk.Label(camp_j2, text="Touches : [1] [2] [3] ou [J] [K] [L]", font=police_corps(10, gras=True), bg=self.c_camp_j2_bg, fg="#d4af37" if self.sombre else "#8c1d1d").pack(pady=(0, 8))
 
         self.btn_j2 = []
         for let in ["1 / J", "2 / K", "3 / L"]:
             b = tk.Label(camp_j2, text=f"[{let}] Option", font=police_corps(11, gras=True),
-                         bg="#502430", fg="#ffffff", bd=1, relief="raised", padx=10, pady=8)
+                         bg=self.c_btn_j2_bg, fg=self.c_btn_j2_fg, bd=1, relief="raised", padx=10, pady=8)
             b.pack(fill=tk.X, pady=4)
             self.btn_j2.append(b)
 
-        self.lbl_statut_j2 = tk.Label(camp_j2, text="Prêt !", font=police_corps(10, gras=True), bg="#3a1a23", fg="#2ecc71")
+        self.lbl_statut_j2 = tk.Label(camp_j2, text="Prêt !", font=police_corps(10, gras=True), bg=self.c_camp_j2_bg, fg="#2ecc71")
         self.lbl_statut_j2.pack(pady=8)
 
         self._actualiser_jauge()
@@ -207,7 +228,6 @@ class DuelWindow(tk.Toplevel):
 
         # Mélanger les propositions tout en retenant la bonne
         propositions = list(enumerate(self.question_en_cours["choix"]))
-        # propositions = [(0, "Loup"), (1, "Lièvre"), (2, "Lune")]
         bonne_reponse_str = self.question_en_cours["choix"][self.question_en_cours["rep"]]
 
         random.shuffle(propositions)
@@ -217,8 +237,14 @@ class DuelWindow(tk.Toplevel):
         touches_j1 = ["A", "Z", "E"]
         touches_j2 = ["1/J", "2/K", "3/L"]
         for i in range(3):
-            self.btn_j1[i].configure(text=f"[{touches_j1[i]}]  {self.ordre_options[i]}", bg="#243050")
-            self.btn_j2[i].configure(text=f"[{touches_j2[i]}]  {self.ordre_options[i]}", bg="#502430")
+            self.btn_j1[i].configure(
+                text=f"[{touches_j1[i]}]  {self.ordre_options[i]}",
+                bg=self.c_btn_j1_bg, fg=self.c_btn_j1_fg
+            )
+            self.btn_j2[i].configure(
+                text=f"[{touches_j2[i]}]  {self.ordre_options[i]}",
+                bg=self.c_btn_j2_bg, fg=self.c_btn_j2_fg
+            )
 
         self._actualiser_jauge()
 
@@ -250,11 +276,13 @@ class DuelWindow(tk.Toplevel):
                 self.position_corde = min(self.max_points, self.position_corde + 1)
                 self.lbl_statut_j1.configure(text="🎯 TOUCHÉ ! Point pour Marcus !", fg="#2ecc71")
                 self.lbl_score_j1.configure(text=f"🟦 JOUEUR 1 : MARCUS ({self.score_j1})")
+                self.btn_j1[choix_idx].configure(bg="#27ae60", fg="#ffffff")
             else:
                 self.score_j2 += 1
                 self.position_corde = max(-self.max_points, self.position_corde - 1)
                 self.lbl_statut_j2.configure(text="🎯 TOUCHÉ ! Point pour Julia !", fg="#2ecc71")
                 self.lbl_score_j2.configure(text=f"({self.score_j2}) JULIA : JOUEUR 2 🟥")
+                self.btn_j2[choix_idx].configure(bg="#27ae60", fg="#ffffff")
 
             self._actualiser_jauge()
 
@@ -266,22 +294,30 @@ class DuelWindow(tk.Toplevel):
             else:
                 self._timer_manche = self.after(1100, self._nouvelle_manche)
         else:
+            audio.play_bouclier()
             audio.play_wrong()
             if joueur == 1:
                 self.bloque_j1 = True
-                self.lbl_statut_j1.configure(text="❌ ERREUR ! Bloqué !", fg="#e74c3c")
+                self.lbl_statut_j1.configure(text="🛡️ BLOQUÉ PAR LE SCUTUM !", fg="#e74c3c")
+                self.btn_j1[choix_idx].configure(bg="#c0392b", fg="#ffffff")
             else:
                 self.bloque_j2 = True
-                self.lbl_statut_j2.configure(text="❌ ERREUR ! Bloqué !", fg="#e74c3c")
+                self.lbl_statut_j2.configure(text="🛡️ BLOQUÉ PAR LE SCUTUM !", fg="#e74c3c")
+                self.btn_j2[choix_idx].configure(bg="#c0392b", fg="#ffffff")
 
             # Si les deux ont échoué, manche suivante
             if self.bloque_j1 and self.bloque_j2:
                 self._timer_manche = self.after(1200, self._nouvelle_manche)
 
     def _fin_duel(self, vainqueur):
-        audio.play_fanfare()
+        if hasattr(audio, "play_triumph_grand"):
+            audio.play_triumph_grand()
+        else:
+            audio.play_fanfare()
         audio.play_foule()
         self.app.ajouter_sesterces(15)
+        if hasattr(self.app, "_animer_confettis"):
+            self.app._animer_confettis()
 
         try:
             from app.succes import incrementer_stat_succes

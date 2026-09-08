@@ -70,12 +70,23 @@ class ChiffreCesarWindow(tk.Toplevel):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
-        self.C = app.C
+        from app.theme import THEMES, est_sombre
+        self.C = getattr(app, "C", None) or THEMES["Rome Impériale"]
 
         self.title("📜 L'Atelier Secret : Le Chiffre de César — Ludus Latinus")
         from app.responsive import adapter_geometrie_fenetre
         adapter_geometrie_fenetre(self, 900, 720, min_w=720, min_h=520)
-        self.configure(bg=self.C["bg"])
+
+        bg_def = self.C.get("bg", "#faf4e8")
+        self.configure(bg=bg_def)
+
+        self.sombre = est_sombre(bg_def)
+        self.c_panel = self.C.get("panel", "#ffffff")
+        self.c_editor = self.C.get("editor", "#f8f5ee")
+        self.c_card = "#1a1b26" if self.sombre else "#ffffff"
+        self.c_saisie = "#181a24" if self.sombre else "#fcf8f0"
+        self.c_fg_primary = "#ffffff" if self.sombre else self.C.get("fg", "#222222")
+        self.c_fg_accent = "#ffd700" if self.sombre else self.C.get("heading", "#7c1d1d")
 
         self.cle_actuelle = 3
         self.mission_idx = 0
@@ -93,7 +104,7 @@ class ChiffreCesarWindow(tk.Toplevel):
         left_hdr.pack(side=tk.LEFT)
 
         tk.Label(left_hdr, text="📜 L'ATELIER DU CHIFFRE DE CÉSAR", font=police_titre(15),
-                 bg=self.C["panel"], fg="#ffd700").pack(anchor=tk.W)
+                 bg=self.C["panel"], fg=self.c_fg_accent).pack(anchor=tk.W)
         tk.Label(left_hdr, text="Décrypte les ordres secrets de Jules César à ses légions !",
                  font=police_corps(10, italique=True), bg=self.C["panel"], fg=self.C["muted"]).pack(anchor=tk.W)
 
@@ -124,9 +135,9 @@ class ChiffreCesarWindow(tk.Toplevel):
         roue_box.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 10))
 
         tk.Label(roue_box, text="ROUE CRYPTOGRAPHIQUE", font=police_titre(11),
-                 bg=self.C["panel"], fg="#ffd700").pack(pady=(0, 6))
+                 bg=self.C["panel"], fg=self.c_fg_accent).pack(pady=(0, 6))
 
-        self.canvas_roue = tk.Canvas(roue_box, width=280, height=280, bg="#1a1b26", highlightthickness=0)
+        self.canvas_roue = tk.Canvas(roue_box, width=280, height=280, bg=self.C["panel"], highlightthickness=0)
         self.canvas_roue.pack(pady=4)
 
         # Contrôles de la clé de décalage
@@ -137,7 +148,7 @@ class ChiffreCesarWindow(tk.Toplevel):
                   bg=self.C["editor"], fg=self.C["fg"], padx=8, command=lambda: self._changer_cle(-1)).pack(side=tk.LEFT, padx=4)
 
         self.lbl_cle = tk.Label(ctrl_cle, text=f"Décalage : Clé +{self.cle_actuelle}",
-                                font=police_titre(12), bg=self.C["panel"], fg="#ffd700")
+                                font=police_titre(12), bg=self.C["panel"], fg=self.c_fg_accent)
         self.lbl_cle.pack(side=tk.LEFT, expand=True)
 
         tk.Button(ctrl_cle, text="+1 ▶", font=police_corps(10, gras=True),
@@ -154,25 +165,28 @@ class ChiffreCesarWindow(tk.Toplevel):
         self.mission_box = tk.Frame(self.droite_frame, bg=self.C["panel"])
         self.mission_box.pack(fill=tk.BOTH, expand=True)
 
-        self.lbl_mis_titre = tk.Label(self.mission_box, text="", font=police_titre(13), bg=self.C["panel"], fg="#ffd700")
+        self.lbl_mis_titre = tk.Label(self.mission_box, text="", font=police_titre(13), bg=self.C["panel"], fg=self.c_fg_accent)
         self.lbl_mis_titre.pack(anchor=tk.W)
 
         self.lbl_mis_contexte = tk.Label(self.mission_box, text="", font=police_corps(9, italique=True),
-                                         bg=self.C["panel"], fg="#dcd6cd", wraplength=440, justify=tk.LEFT)
+                                         bg=self.C["panel"], fg=self.C["fg"], wraplength=440, justify=tk.LEFT)
         self.lbl_mis_contexte.pack(anchor=tk.W, pady=4)
 
         tk.Label(self.mission_box, text="📜 Message intercepté (Chiffré) :", font=police_corps(10, gras=True),
-                 bg=self.C["panel"], fg="#e74c3c").pack(anchor=tk.W, pady=(8, 2))
+                 bg=self.C["panel"], fg="#e74c3c" if self.sombre else "#c0392b").pack(anchor=tk.W, pady=(8, 2))
 
         self.txt_chiffre = tk.Label(self.mission_box, text="", font=("Palatino Linotype", 12, "bold"),
-                                    bg="#181a24", fg="#f1c40f", bd=2, relief="sunken", padx=10, pady=8,
+                                    bg=self.c_saisie, fg="#ffd700" if self.sombre else "#8c1d1d",
+                                    bd=2, relief="sunken", padx=10, pady=8,
                                     wraplength=440, justify=tk.LEFT)
         self.txt_chiffre.pack(fill=tk.X, pady=4)
 
         tk.Label(self.mission_box, text="✏️ Ta traduction / Déchiffrement :", font=police_corps(10, gras=True),
                  bg=self.C["panel"], fg=self.C["fg"]).pack(anchor=tk.W, pady=(8, 2))
 
-        self.entree_dechiffre = tk.Entry(self.mission_box, font=("Palatino Linotype", 11), bg="#1f2335", fg="#ffffff")
+        self.entree_dechiffre = tk.Entry(self.mission_box, font=("Palatino Linotype", 11),
+                                         bg=self.c_card, fg=self.c_fg_primary,
+                                         insertbackground=self.c_fg_primary, relief="groove", bd=2)
         self.entree_dechiffre.pack(fill=tk.X, pady=4)
 
         # Bouton appliquer automatiquement la clé de la roue
@@ -195,12 +209,14 @@ class ChiffreCesarWindow(tk.Toplevel):
         self.bac_box = tk.Frame(self.droite_frame, bg=self.C["panel"])
 
         tk.Label(self.bac_box, text="🛠️ ATELIER LIBRE DE CRYPTOGRAPHIE", font=police_titre(13),
-                 bg=self.C["panel"], fg="#ffd700").pack(anchor=tk.W, pady=(0, 6))
+                 bg=self.C["panel"], fg=self.c_fg_accent).pack(anchor=tk.W, pady=(0, 6))
 
         tk.Label(self.bac_box, text="Tape ton texte clair en latin ou en français :", font=police_corps(10),
                  bg=self.C["panel"], fg=self.C["fg"]).pack(anchor=tk.W)
 
-        self.txt_bac_clair = tk.Text(self.bac_box, height=4, font=("Georgia", 11), bg="#1f2335", fg="#ffffff")
+        self.txt_bac_clair = tk.Text(self.bac_box, height=4, font=("Georgia", 11),
+                                     bg=self.c_card, fg=self.c_fg_primary,
+                                     insertbackground=self.c_fg_primary, relief="groove", bd=2)
         self.txt_bac_clair.insert(tk.END, "AVE CAESAR MORITURI TE SALUTANT")
         self.txt_bac_clair.pack(fill=tk.X, pady=4)
 
@@ -209,30 +225,54 @@ class ChiffreCesarWindow(tk.Toplevel):
         btn_chiffrer.pack(anchor=tk.W, pady=4)
 
         tk.Label(self.bac_box, text="Message Chiffré généré :", font=police_corps(10, gras=True),
-                 bg=self.C["panel"], fg="#ffd700").pack(anchor=tk.W, pady=(6, 2))
+                 bg=self.C["panel"], fg=self.c_fg_accent).pack(anchor=tk.W, pady=(6, 2))
 
-        self.txt_bac_chiffre = tk.Text(self.bac_box, height=4, font=("Palatino Linotype", 11, "bold"), bg="#181a24", fg="#f1c40f")
+        self.txt_bac_chiffre = tk.Text(self.bac_box, height=4, font=("Palatino Linotype", 11, "bold"),
+                                       bg=self.c_saisie, fg="#ffd700" if self.sombre else "#8c1d1d",
+                                       relief="sunken", bd=2)
         self.txt_bac_chiffre.pack(fill=tk.X, pady=4)
 
         self._dessiner_roue()
 
     def _dessiner_roue(self):
-        """Dessine les deux anneaux concentriques de la roue de César."""
+        """Dessine les deux anneaux concentriques de la roue de César avec rendu antique patiné."""
         cv = self.canvas_roue
         cv.delete("all")
 
         cx, cy = 140, 140
         r_ext = 125
-        r_int = 85
-        r_centre = 45
+        r_int = 86
+        r_centre = 46
 
-        # Anneau externe bronze
-        cv.create_oval(cx - r_ext, cy - r_ext, cx + r_ext, cy + r_ext, fill="#4a2c11", outline="#d4af37", width=3)
-        # Anneau interne or
-        cv.create_oval(cx - r_int, cy - r_int, cx + r_int, cy + r_int, fill="#d4af37", outline="#241405", width=2)
-        # Moyeu central
-        cv.create_oval(cx - r_centre, cy - r_centre, cx + r_centre, cy + r_centre, fill="#241405", outline="#ffd700", width=2)
-        cv.create_text(cx, cy, text="SPQR", fill="#ffd700", font=("Palatino Linotype", 10, "bold"))
+        # Ombre portée de la roue
+        cv.create_oval(cx - r_ext + 4, cy - r_ext + 4, cx + r_ext + 4, cy + r_ext + 4,
+                       fill="#0c0d12" if self.sombre else "#d0c5b4", outline="")
+
+        # Anneau externe bronze patiné
+        c_bronze = "#3b2210" if self.sombre else "#5c3a1e"
+        cv.create_oval(cx - r_ext, cy - r_ext, cx + r_ext, cy + r_ext, fill=c_bronze, outline="#c59b27", width=3)
+
+        # Filet gravé sur anneau externe
+        cv.create_oval(cx - r_ext + 6, cy - r_ext + 6, cx + r_ext - 6, cy + r_ext - 6, fill="", outline="#e6c35c", width=1)
+
+        # Anneau interne laiton/or patiné
+        c_laiton = "#c59b27" if self.sombre else "#dfb94a"
+        cv.create_oval(cx - r_int, cy - r_int, cx + r_int, cy + r_int, fill=c_laiton, outline="#2b180a", width=2)
+        cv.create_oval(cx - r_int + 4, cy - r_int + 4, cx + r_int - 4, cy + r_int - 4, fill="", outline="#8a6b16", width=1)
+
+        # Repères / rayons subtils entre les anneaux
+        for i in range(26):
+            ang = (i * (2 * math.pi / 26)) - (math.pi / 2) - (math.pi / 26)
+            x1 = cx + math.cos(ang) * (r_int)
+            y1 = cy + math.sin(ang) * (r_int)
+            x2 = cx + math.cos(ang) * (r_ext)
+            y2 = cy + math.sin(ang) * (r_ext)
+            cv.create_line(x1, y1, x2, y2, fill="#7d4b24" if self.sombre else "#8a5830", width=1)
+
+        # Moyeu central impérial
+        cv.create_oval(cx - r_centre, cy - r_centre, cx + r_centre, cy + r_centre, fill="#1c0f06", outline="#ffd700", width=2)
+        cv.create_text(cx, cy - 6, text="SPQR", fill="#ffd700", font=("Palatino Linotype", 10, "bold"))
+        cv.create_text(cx, cy + 8, text="🦅", font=("Segoe UI Emoji", 10))
 
         # Lettres anneau extérieur (Clair : A-Z fixe)
         for i, lettre in enumerate(ALPHABET):
@@ -245,15 +285,15 @@ class ChiffreCesarWindow(tk.Toplevel):
         for i in range(26):
             lettre_chiffree = ALPHABET[(i + self.cle_actuelle) % 26]
             angle = (i * (2 * math.pi / 26)) - (math.pi / 2)
-            lx = cx + math.cos(angle) * (r_int - 16)
-            ly = cy + math.sin(angle) * (r_int - 16)
-            cv.create_text(lx, ly, text=lettre_chiffree, fill="#1a1b26", font=("Palatino Linotype", 8, "bold"))
+            lx = cx + math.cos(angle) * (r_int - 17)
+            ly = cy + math.sin(angle) * (r_int - 17)
+            cv.create_text(lx, ly, text=lettre_chiffree, fill="#1c0f06", font=("Palatino Linotype", 8, "bold"))
 
     def _changer_cle(self, delta):
         self.cle_actuelle = (self.cle_actuelle + delta - 1) % 25 + 1
         self.lbl_cle.configure(text=f"Décalage : Clé +{self.cle_actuelle}")
         self._dessiner_roue()
-        audio.play_coin()
+        audio.play_stylet()
 
     def _basculer_mode(self, mode):
         self.mode = mode

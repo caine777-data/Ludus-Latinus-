@@ -4,11 +4,21 @@ Permet aux élèves de maîtriser les chiffres romains (I, V, X, L, C, D, M)
 et le calcul mental à travers des transactions au cœur du Forum romain.
 """
 
+from pathlib import Path
 import random
 import tkinter as tk
 
+try:
+    from PIL import Image, ImageTk
+    HAS_PIL = True
+except ImportError:
+    HAS_PIL = False
+
 from app import audio
 from app.polices import police_corps, police_titre
+from app.theme import est_sombre
+
+ASSETS_IMAGES = Path(__file__).resolve().parent.parent / "assets" / "images"
 
 # Valeurs des chiffres romains
 VALEURS_ROMAINES = [
@@ -67,12 +77,37 @@ class MarcheTrajanWindow(tk.Toplevel):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
-        self.C = app.C
+        from app.theme import THEMES, est_sombre
+        self.C = getattr(app, "C", None) or THEMES["Rome Impériale"]
 
         self.title("🏺 Le Marché de Trajan — Chiffres Romains & Sesterces")
         from app.responsive import adapter_geometrie_fenetre
-        adapter_geometrie_fenetre(self, 860, 650, min_w=680, min_h=480)
-        self.configure(bg=self.C["bg"])
+        adapter_geometrie_fenetre(self, 880, 680, min_w=720, min_h=500)
+
+        bg_def = self.C.get("bg", "#faf4e8")
+        self.configure(bg=bg_def)
+
+        self.sombre = est_sombre(bg_def)
+        self.c_etal = "#24283b" if self.sombre else "#faf4e8"
+        self.c_card = "#1a1b26" if self.sombre else "#ffffff"
+        self.c_saisie = "#181a24" if self.sombre else "#fcf8f0"
+        self.c_fg_primary = "#ffffff" if self.sombre else self.C.get("fg", "#222222")
+        self.c_fg_accent = "#ffd700" if self.sombre else self.C.get("heading", "#7c1d1d")
+        self.c_tile_bg = "#d4af37" if self.sombre else "#fbf7ed"
+        self.c_tile_fg = "#1a1b26" if self.sombre else "#8c1d1d"
+
+        self._photo_mercator = None
+        if HAS_PIL:
+            p = ASSETS_IMAGES / "lupulus" / "lupulus_savant.png"
+            if not p.exists():
+                p = ASSETS_IMAGES / "lupulus_savant_180.png"
+            if p.exists():
+                try:
+                    im = Image.open(p).convert("RGBA")
+                    im = im.resize((54, 54), Image.Resampling.LANCZOS)
+                    self._photo_mercator = ImageTk.PhotoImage(im)
+                except Exception:
+                    self._photo_mercator = None
 
         self.score_session = 0
         self.article_courant = None
@@ -80,7 +115,15 @@ class MarcheTrajanWindow(tk.Toplevel):
         self.proposition_romaine = ""
 
         self._build_ui()
+        self._bind_raccourcis()
         self._nouveau_defi()
+
+    def _bind_raccourcis(self):
+        for lettre in ["I", "V", "X", "L", "C", "D", "M"]:
+            self.bind(f"<Key-{lettre.lower()}>", lambda e, let=lettre: self._ajouter_lettre(let))
+            self.bind(f"<Key-{lettre.upper()}>", lambda e, let=lettre: self._ajouter_lettre(let))
+        self.bind("<BackSpace>", lambda e: self._effacer_lettre())
+        self.bind("<Return>", lambda e: self._verifier_reponse())
 
     def _build_ui(self):
         # En-tête
@@ -91,7 +134,7 @@ class MarcheTrajanWindow(tk.Toplevel):
         left_hdr.pack(side=tk.LEFT)
 
         tk.Label(left_hdr, text="🏺 LE MARCHÉ DE TRAJAN", font=police_titre(16),
-                 bg=self.C["panel"], fg="#ffd700").pack(anchor=tk.W)
+                 bg=self.C["panel"], fg=self.c_fg_accent).pack(anchor=tk.W)
         self.lbl_soustitre = tk.Label(
             left_hdr,
             text="Gaius Mercator t'attend à son étal du Forum ! Maîtrise les chiffres romains.",
@@ -104,7 +147,8 @@ class MarcheTrajanWindow(tk.Toplevel):
 
         self.lbl_score = tk.Label(
             right_hdr, text=f"Score : {self.score_session} pts | 🪙 {self.app.data.get('sesterces', 0)} Sesterces",
-            font=police_corps(10, gras=True), bg="#1f2335", fg="#d4af37", padx=8, pady=4, relief="ridge"
+            font=police_corps(10, gras=True), bg=self.c_card, fg="#d4af37" if self.sombre else self.C["code"],
+            padx=10, pady=5, relief="ridge"
         )
         self.lbl_score.pack(side=tk.RIGHT)
 
@@ -134,87 +178,109 @@ class MarcheTrajanWindow(tk.Toplevel):
         self.btn_mode_eclair.pack(side=tk.LEFT, padx=4)
 
         # Étal du marchand
-        self.etal_frame = tk.Frame(self, bg="#24283b", bd=2, relief="ridge", padx=20, pady=16)
-        self.etal_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=16)
+        self.etal_frame = tk.Frame(self, bg=self.c_etal, bd=2, relief="groove", padx=20, pady=16)
+        self.etal_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=14)
+
+        # En-tête du marchand avec vignette Lupulus / Gaius Mercator
+        bandeau_marchand = tk.Frame(self.etal_frame, bg=self.c_etal)
+        bandeau_marchand.pack(fill=tk.X, pady=(0, 10))
+
+        if self._photo_mercator:
+            lbl_pic = tk.Label(bandeau_marchand, image=self._photo_mercator, bg=self.c_etal, bd=2, relief="ridge")
+            lbl_pic.pack(side=tk.LEFT, padx=(0, 12))
 
         self.lbl_marchand = tk.Label(
-            self.etal_frame,
-            text="🧔 Gaius Mercator : « Salve, jeune citoyen ! Que désires-tu aujourd'hui ? »",
-            font=police_corps(11, gras=True), bg="#24283b", fg="#ffd700"
+            bandeau_marchand,
+            text="Gaius Mercator : « Salve, jeune citoyen ! Que désires-tu aujourd'hui ? »",
+            font=police_corps(11, gras=True), bg=self.c_etal, fg=self.c_fg_accent,
+            wraplength=640, justify=tk.LEFT
         )
-        self.lbl_marchand.pack(pady=(0, 10))
+        self.lbl_marchand.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         # Carte de l'article en vente
-        self.article_box = tk.Frame(self.etal_frame, bg="#1a1b26", bd=2, relief="groove", padx=16, pady=12)
-        self.article_box.pack(fill=tk.X, padx=40, pady=10)
+        self.article_box = tk.Frame(self.etal_frame, bg=self.c_card, bd=2, relief="groove", padx=16, pady=12)
+        self.article_box.pack(fill=tk.X, padx=30, pady=10)
 
-        self.lbl_art_emoji = tk.Label(self.article_box, text="🏺", font=("Segoe UI Emoji", 36), bg="#1a1b26")
-        self.lbl_art_emoji.pack(side=tk.LEFT, padx=(0, 16))
+        # Médaillon de l'article avec cadre
+        box_med = tk.Frame(self.article_box, bg=self.c_card, bd=2, relief="ridge", padx=8, pady=4)
+        box_med.pack(side=tk.LEFT, padx=(0, 16))
 
-        info_art = tk.Frame(self.article_box, bg="#1a1b26")
+        self.lbl_art_emoji = tk.Label(box_med, text="🏺", font=("Segoe UI Emoji", 34), bg=self.c_card)
+        self.lbl_art_emoji.pack()
+
+        info_art = tk.Frame(self.article_box, bg=self.c_card)
         info_art.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        self.lbl_art_nom = tk.Label(info_art, text="Article", font=police_titre(13), bg="#1a1b26", fg="#ffffff")
+        self.lbl_art_nom = tk.Label(info_art, text="Article", font=police_titre(13), bg=self.c_card, fg=self.c_fg_primary)
         self.lbl_art_nom.pack(anchor=tk.W)
 
-        row_latin = tk.Frame(info_art, bg="#1a1b26")
+        row_latin = tk.Frame(info_art, bg=self.c_card)
         row_latin.pack(anchor=tk.W, pady=(2, 0))
-        self.lbl_art_latin = tk.Label(row_latin, text="Nom latin", font=police_corps(10, italique=True), bg="#1a1b26", fg="#2ecc71")
+        self.lbl_art_latin = tk.Label(row_latin, text="Nom latin", font=police_corps(10, italique=True),
+                                      bg=self.c_card, fg="#10b981" if self.sombre else "#2d8a4e")
         self.lbl_art_latin.pack(side=tk.LEFT)
         self.btn_art_audio = tk.Button(
-            row_latin, text="🔊 Écouter", font=police_corps(8),
-            bg="#24283b", fg="#ffd700", activebackground="#2a2e45", activeforeground="#ffd700",
+            row_latin, text="🔊 Écouter", font=police_corps(8, gras=True),
+            bg=self.c_etal, fg=self.c_fg_accent, activebackground=self.C["accent"], activeforeground=self.C["sel_fg"],
             relief="flat", padx=6, pady=1, cursor="hand2",
             command=self._ecouter_latin
         )
         self.btn_art_audio.pack(side=tk.LEFT, padx=(8, 0))
 
-        self.lbl_art_consigne = tk.Label(info_art, text="Consigne", font=police_corps(10), bg="#1a1b26", fg="#dcd6cd")
+        self.lbl_art_consigne = tk.Label(info_art, text="Consigne", font=police_corps(10), bg=self.c_card, fg=self.c_fg_primary)
         self.lbl_art_consigne.pack(anchor=tk.W, pady=(4, 0))
 
         # Zone de réponse
-        self.reponse_frame = tk.Frame(self.etal_frame, bg="#24283b")
-        self.reponse_frame.pack(fill=tk.X, pady=10)
+        self.reponse_frame = tk.Frame(self.etal_frame, bg=self.c_etal)
+        self.reponse_frame.pack(fill=tk.X, pady=6)
 
         # Affichage saisie chiffres romains
         self.zone_saisie = tk.Label(
             self.reponse_frame, text="", font=("Palatino Linotype", 22, "bold"),
-            bg="#181a24", fg="#ffd700", width=16, bd=2, relief="sunken"
+            bg=self.c_saisie, fg=self.c_fg_accent, width=16, bd=2, relief="sunken"
         )
         self.zone_saisie.pack(pady=6)
 
-        # Boutons tuiles romaines (I, V, X, L, C, D, M)
-        self.tuiles_frame = tk.Frame(self.reponse_frame, bg="#24283b")
+        # Boutons tuiles romaines (I, V, X, L, C, D, M) avec valeur décimale
+        self.tuiles_frame = tk.Frame(self.reponse_frame, bg=self.c_etal)
         self.tuiles_frame.pack(pady=6)
 
+        TUILES_INFO = [
+            ("I", "1"), ("V", "5"), ("X", "10"), ("L", "50"),
+            ("C", "100"), ("D", "500"), ("M", "1000")
+        ]
+
         self.btn_tuiles = []
-        for lettre in ["I", "V", "X", "L", "C", "D", "M"]:
+        for lettre, val_dec in TUILES_INFO:
             b = tk.Button(
-                self.tuiles_frame, text=lettre, font=("Palatino Linotype", 14, "bold"),
-                bg="#d4af37", fg="#1a1b26", width=3, cursor="hand2",
+                self.tuiles_frame, text=f"{lettre}\n{val_dec}", font=("Palatino Linotype", 11, "bold"),
+                bg=self.c_tile_bg, fg=self.c_tile_fg, activebackground="#f59e0b",
+                width=4, height=2, cursor="hand2", relief="raised", bd=2,
                 command=lambda let=lettre: self._ajouter_lettre(let)
             )
-            b.pack(side=tk.LEFT, padx=4)
+            b.pack(side=tk.LEFT, padx=3)
             self.btn_tuiles.append(b)
 
         btn_effacer = tk.Button(
-            self.tuiles_frame, text="⌫ Effacer", font=police_corps(10),
-            bg="#e74c3c", fg="#ffffff", padx=8, command=self._effacer_lettre
+            self.tuiles_frame, text="⌫\nEffacer", font=police_corps(9, gras=True),
+            bg="#e74c3c", fg="#ffffff", activebackground="#c0392b",
+            height=2, padx=8, relief="raised", bd=2, cursor="hand2",
+            command=self._effacer_lettre
         )
-        btn_effacer.pack(side=tk.LEFT, padx=8)
+        btn_effacer.pack(side=tk.LEFT, padx=6)
 
         # Entrée numérique pour le mode rendu
         self.entree_num = tk.Entry(self.reponse_frame, font=("Georgia", 14), width=10, justify="center")
 
         # Bouton Valider
         self.btn_valider = tk.Button(
-            self.etal_frame, text="✓ Valider la Transaction", font=police_titre(12),
+            self.etal_frame, text="✓ Valider la Transaction (Entrée)", font=police_titre(12),
             bg="#27ae60", fg="#ffffff", padx=20, pady=6, cursor="hand2",
             command=self._verifier_reponse
         )
         self.btn_valider.pack(pady=10)
 
-        self.lbl_feedback = tk.Label(self.etal_frame, text="", font=police_corps(11, gras=True), bg="#24283b")
+        self.lbl_feedback = tk.Label(self.etal_frame, text="", font=police_corps(11, gras=True), bg=self.c_etal)
         self.lbl_feedback.pack()
 
     def _ecouter_latin(self):

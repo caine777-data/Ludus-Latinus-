@@ -303,9 +303,9 @@ class MascotteWidget(tk.Frame):
                     # Si c'est l'image standard et qu'on a un ancien costume sans fichier dédié
                     if cid and not (ASSETS_LUPULUS / f"lupulus_{cid}.png").exists() and cid != "standard":
                         im = _dessiner_accessoire_costume(im, cid)
-                    photo = ImageTk.PhotoImage(im)
+                    photo = ImageTk.PhotoImage(im, master=self)
                 else:
-                    photo = tk.PhotoImage(file=str(fichier))
+                    photo = tk.PhotoImage(file=str(fichier), master=self)
                 self._images_cache[cle_cache] = photo
                 return photo
             except Exception:
@@ -317,8 +317,11 @@ class MascotteWidget(tk.Frame):
         self.emotion_actuelle = emotion
         photo = self._charger_image(emotion)
         if photo:
-            self.img_lbl.configure(image=photo)
-            self._photo_ref = photo
+            try:
+                self.img_lbl.configure(image=photo)
+                self._photo_ref = photo
+            except Exception:
+                pass
 
         if texte:
             self.dire(texte, duree_ms)

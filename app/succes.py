@@ -221,30 +221,40 @@ class SuccesWindow(tk.Toplevel):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
+        from app.theme import THEMES, est_sombre
+        self.C = getattr(app, "C", None) or THEMES["colisee"]
         self.title("🏛️ Panthéon des Trophées Romains — Ludus Latinus")
-        self.configure(bg="#1a1b26")
-        adapter_geometrie_fenetre(self, 650, 540)
+
+        bg_def = self.C.get("bg", "#181922")
+        self.sombre = est_sombre(bg_def)
+
+        self.configure(bg=bg_def)
+        adapter_geometrie_fenetre(self, 680, 560)
         self.minsize(480, 400)
         self.transient(master)
 
+        c_panel = self.C.get("panel", "#222430")
+        c_heading = self.C.get("heading", "#ffd700")
+        c_muted = self.C.get("muted", "#9193a8")
+
         # En-tête antique
-        hdr = tk.Frame(self, bg="#24283b", padx=16, pady=12)
+        hdr = tk.Frame(self, bg=c_panel, padx=16, pady=12)
         hdr.pack(fill=tk.X)
 
         tk.Label(
             hdr,
             text="🏛️ LE PANTHÉON DES TROPHÉES",
             font=police_titre(16),
-            bg="#24283b",
-            fg="#ffd700",
+            bg=c_panel,
+            fg="#ffd700" if self.sombre else c_heading,
         ).pack(anchor="w")
 
         tk.Label(
             hdr,
             text="Accomplis des exploits antiques pour gagner gloire, lauriers et sesterces !",
             font=police_corps(10, italique=True),
-            bg="#24283b",
-            fg="#a9b1d6",
+            bg=c_panel,
+            fg=c_muted,
         ).pack(anchor="w", pady=(2, 0))
 
         # Barre de résumé
@@ -259,32 +269,34 @@ class SuccesWindow(tk.Toplevel):
             if sid in CATALOGUE_SUCCES
         )
 
-        barre_resume = tk.Frame(self, bg="#1f2335", padx=16, pady=8)
+        c_resume_bg = "#1f2335" if self.sombre else "#faf4e8"
+        barre_resume = tk.Frame(self, bg=c_resume_bg, padx=16, pady=8)
         barre_resume.pack(fill=tk.X)
 
         tk.Label(
             barre_resume,
             text=f"🏆 Progression : {nb_debloques} / {total} ({pct}%)",
             font=police_corps(10, gras=True),
-            bg="#1f2335",
-            fg="#e0af68",
+            bg=c_resume_bg,
+            fg="#e0af68" if self.sombre else "#8c1d1d",
         ).pack(side=tk.LEFT)
 
         tk.Label(
             barre_resume,
             text=f"🪙 Butin récolté : +{sesterces_gagnes} Sesterces",
             font=police_corps(10, gras=True),
-            bg="#1f2335",
-            fg="#ffd700",
+            bg=c_resume_bg,
+            fg="#ffd700" if self.sombre else "#b8860b",
         ).pack(side=tk.RIGHT)
 
         # Zone déroulante des trophées
-        conteneur = tk.Frame(self, bg="#1a1b26")
+        c_bg = self.C.get("bg", "#181922")
+        conteneur = tk.Frame(self, bg=c_bg)
         conteneur.pack(fill=tk.BOTH, expand=True, padx=12, pady=10)
 
-        canvas = tk.Canvas(conteneur, bg="#1a1b26", highlightthickness=0)
+        canvas = tk.Canvas(conteneur, bg=c_bg, highlightthickness=0)
         scrollbar = ttk.Scrollbar(conteneur, orient="vertical", command=canvas.yview)
-        self.scroll_frame = tk.Frame(canvas, bg="#1a1b26")
+        self.scroll_frame = tk.Frame(canvas, bg=c_bg)
 
         self.scroll_frame.bind(
             "<Configure>",
@@ -310,16 +322,17 @@ class SuccesWindow(tk.Toplevel):
         audio.play_cloche()
 
         # Bouton bas
-        btn_barre = tk.Frame(self, bg="#24283b", padx=12, pady=8)
+        btn_barre = tk.Frame(self, bg=c_panel, padx=12, pady=8)
         btn_barre.pack(fill=tk.X)
 
         tk.Button(
             btn_barre,
             text="Fermer (Échap)",
             font=police_corps(10, gras=True),
-            bg="#414868",
-            fg="#ffffff",
-            activebackground="#565f89",
+            bg=self.C.get("editor", "#14151c"),
+            fg=self.C.get("fg", "#eae8f2"),
+            activebackground=self.C.get("accent", "#e5a93c"),
+            activeforeground=self.C.get("sel_fg", "#14151c"),
             relief="flat",
             cursor="hand2",
             padx=16,
@@ -345,14 +358,18 @@ class SuccesWindow(tk.Toplevel):
             val = valeur_progression_succes(self.app.data, sid)
             seuil = item["seuil"]
 
-            # Carte
-            bg_carte = "#24283b" if est_debloque else ("#19182b" if est_secret_verrouille else "#1f2335")
-            bd_col = "#d4af37" if est_debloque else ("#565f89" if est_secret_verrouille else "#3b4261")
+            # Carte avec theme adaptatif
+            if self.sombre:
+                bg_carte = "#24283b" if est_debloque else ("#19182b" if est_secret_verrouille else "#1f2335")
+                bd_col = "#d4af37" if est_debloque else ("#565f89" if est_secret_verrouille else "#3b4261")
+            else:
+                bg_carte = "#ffffff" if est_debloque else ("#f8f4fc" if est_secret_verrouille else "#faf6ee")
+                bd_col = "#c59b27" if est_debloque else ("#b8a4cc" if est_secret_verrouille else "#ded3bf")
 
             f_carte = tk.Frame(
                 self.scroll_frame,
                 bg=bg_carte,
-                highlightthickness=1,
+                highlightthickness=2 if est_debloque else 1,
                 highlightbackground=bd_col,
                 padx=12,
                 pady=10
@@ -366,9 +383,8 @@ class SuccesWindow(tk.Toplevel):
             tk.Label(
                 f_ico,
                 text=icone_txt,
-                font=("", 26),
+                font=("Segoe UI Emoji", 24),
                 bg=bg_carte,
-                fg="#ffd700" if est_debloque else "#7aa2f7"
             ).pack(anchor="center")
 
             # Colonne 2 : Statut / Récompense (à droite en priorité)
@@ -381,22 +397,22 @@ class SuccesWindow(tk.Toplevel):
                     text="✓ DÉBLOQUÉ",
                     font=police_corps(9, gras=True),
                     bg=bg_carte,
-                    fg="#2ecc71"
+                    fg="#27ae60"
                 ).pack(anchor="e")
                 tk.Label(
                     f_statut,
                     text=f"+{item['recompense_sesterces']} 🪙",
                     font=police_corps(9, gras=True),
                     bg=bg_carte,
-                    fg="#ffd700"
+                    fg="#ffd700" if self.sombre else "#b8860b"
                 ).pack(anchor="e")
             else:
                 tk.Label(
                     f_statut,
                     text=f"🪙 +{item['recompense_sesterces']}",
-                    font=police_corps(10, gras=True),
-                    bg="#2e3440",
-                    fg="#ffd700",
+                    font=police_corps(9, gras=True),
+                    bg="#181a24" if self.sombre else "#efe6d5",
+                    fg="#ffd700" if self.sombre else "#8c1d1d",
                     padx=6,
                     pady=2,
                     relief="groove"
@@ -409,13 +425,13 @@ class SuccesWindow(tk.Toplevel):
             if est_secret_verrouille:
                 titre_txt = "??? Trophée Secret"
                 desc_txt = item["desc_secrete"]
-                fg_titre = "#bb9af7"
-                fg_desc = "#9aa5ce"
+                fg_titre = "#bb9af7" if self.sombre else "#6c5ce7"
+                fg_desc = "#9aa5ce" if self.sombre else "#666666"
             else:
                 titre_txt = item["titre"]
                 desc_txt = item["desc"]
-                fg_titre = "#ffd700" if est_debloque else "#c0caf5"
-                fg_desc = "#c0caf5" if est_debloque else "#9aa5ce"
+                fg_titre = "#ffd700" if (est_debloque and self.sombre) else (self.C.get("heading", "#8c1d1d") if not self.sombre else "#c0caf5")
+                fg_desc = ("#c0caf5" if est_debloque else "#9aa5ce") if self.sombre else self.C.get("fg", "#2c2621")
 
             tk.Label(
                 f_txt,
@@ -444,23 +460,25 @@ class SuccesWindow(tk.Toplevel):
             val_affichee = min(val, seuil)
             ratio = min(1.0, max(0.0, val_affichee / max(1, seuil)))
 
-            # Canvas barre de progression
-            canvas_barre = tk.Canvas(f_jauge, height=10, bg="#16161e", highlightthickness=0)
-            canvas_barre.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 8))
-
-            def _dessiner_barre(event, c=canvas_barre, r=ratio, deb=est_debloque):
-                w = event.width
-                c.delete("all")
-                couleur = "#2ecc71" if deb else "#e0af68"
-                c.create_rectangle(0, 0, int(w * r), 10, fill=couleur, width=0)
-
-            canvas_barre.bind("<Configure>", _dessiner_barre)
-
+            # Label ratio d'abord à droite pour garantir sa visibilité intégrale
             lbl_ratio = tk.Label(
                 f_jauge,
                 text=f"{val_affichee} / {seuil} {item['unite']}" if not est_secret_verrouille else "Mystère",
                 font=("Georgia", 8, "italic"),
                 bg=bg_carte,
-                fg="#a9b1d6"
+                fg="#a9b1d6" if self.sombre else "#777777"
             )
-            lbl_ratio.pack(side=tk.RIGHT)
+            lbl_ratio.pack(side=tk.RIGHT, padx=(8, 0))
+
+            # Canvas barre de progression
+            c_barre_bg = "#16161e" if self.sombre else "#e8dfce"
+            canvas_barre = tk.Canvas(f_jauge, height=10, bg=c_barre_bg, highlightthickness=0)
+            canvas_barre.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+            def _dessiner_barre(event, c=canvas_barre, r=ratio, deb=est_debloque):
+                w = event.width
+                c.delete("all")
+                couleur = "#2ecc71" if deb else ("#ffd700" if self.sombre else "#b8860b")
+                c.create_rectangle(0, 0, int(w * r), 10, fill=couleur, width=0)
+
+            canvas_barre.bind("<Configure>", _dessiner_barre)

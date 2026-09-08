@@ -137,7 +137,7 @@ class MuseeWindow(tk.Toplevel):
         self.app = app
         self.title("Le Musée des Curiosités et Secrets de Rome 📜")
         from app.responsive import adapter_geometrie_fenetre
-        adapter_geometrie_fenetre(self, 880, 640, min_w=720, min_h=480)
+        adapter_geometrie_fenetre(self, 920, 660, min_w=740, min_h=500)
         self.configure(bg=app.C["bg"])
         self.transient(parent)
 
@@ -146,72 +146,92 @@ class MuseeWindow(tk.Toplevel):
 
     def _build_ui(self):
         C = self.app.C
+        from app import audio
+        from app.theme import est_sombre
+        self.sombre = est_sombre(C["bg"])
+
         hdr = tk.Frame(self, bg=C["panel"], padx=16, pady=12)
         hdr.pack(fill=tk.X)
 
-        tk.Label(hdr, text="📜 Musée des Curiosités Romaines", font=(self.app.title_font.cget("family"), 14, "bold"),
-                 bg=C["panel"], fg=C["heading"]).pack(side=tk.LEFT)
+        tk.Label(hdr, text="📜 MUSÉE DES CURIOSITÉS ROMAINES", font=police_titre(14),
+                 bg=C["panel"], fg="#ffd700" if self.sombre else C["heading"]).pack(side=tk.LEFT)
 
-        tk.Label(hdr, text="Fiches richement illustrées et secrets de l'Antiquité !", font=(self.app.body.cget("family"), 10),
+        tk.Label(hdr, text="Fiches richement illustrées et secrets de l'Antiquité !",
+                 font=police_corps(10, italique=True),
                  bg=C["panel"], fg=C["muted"]).pack(side=tk.RIGHT)
 
-        paned = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
-        paned.pack(fill=tk.BOTH, expand=True, padx=16, pady=12)
+        paned = tk.Frame(self, bg=C["bg"], padx=14, pady=12)
+        paned.pack(fill=tk.BOTH, expand=True)
 
         # Liste de gauche
-        cadre_liste = ttk.Frame(paned, width=320)
-        paned.add(cadre_liste, weight=1)
+        cadre_liste = tk.Frame(paned, bg=C["panel"], bd=2, relief="ridge", padx=8, pady=8, width=280)
+        cadre_liste.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 12))
+        cadre_liste.pack_propagate(False)
 
-        self.listbox = tk.Listbox(cadre_liste, font=(self.app.body.cget("family"), 10),
-                                  width=36,
-                                  bg=C["editor"], fg=C["fg"], selectbackground=C["accent"],
-                                  selectforeground=C["sel_fg"], relief="flat", bd=1)
-        self.listbox.pack(fill=tk.BOTH, expand=True)
+        tk.Label(cadre_liste, text="🏛️ EXPOSITIONS", font=police_titre(11),
+                 bg=C["panel"], fg=C["heading"]).pack(anchor=tk.W, pady=(0, 6))
+
+        scroll_list = ttk.Scrollbar(cadre_liste, orient=tk.VERTICAL)
+        self.listbox = tk.Listbox(
+            cadre_liste, font=police_corps(10),
+            bg=C["editor"], fg=C["fg"], selectbackground=C["accent"],
+            selectforeground=C["sel_fg"], relief="flat", bd=0,
+            activestyle="none", yscrollcommand=scroll_list.set
+        )
+        scroll_list.configure(command=self.listbox.yview)
+        scroll_list.pack(side=tk.RIGHT, fill=tk.Y)
+        self.listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         self.listbox.bind("<<ListboxSelect>>", self._on_select)
 
         for carte in CARTES_MUSEE:
             self.listbox.insert(tk.END, f"{carte['icone']}  {carte['titre']}")
 
-        # Panneau de droite : fiche détaillée
-        self.cadre_detail = ttk.Frame(paned)
-        paned.add(self.cadre_detail, weight=3)
+        # Panneau de droite : fiche détaillée en plaque antique
+        self.cadre_detail = tk.Frame(paned, bg=C["panel"], bd=2, relief="groove", padx=18, pady=14)
+        self.cadre_detail.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        self.detail_titre = tk.Label(self.cadre_detail, text="", font=(self.app.title_font.cget("family"), 13, "bold"),
-                                     bg=C["bg"], fg=C["heading"], wraplength=480, justify="left")
-        self.detail_titre.pack(anchor="w", padx=14, pady=(8, 2))
+        self.detail_titre = tk.Label(self.cadre_detail, text="", font=police_titre(14),
+                                     bg=C["panel"], fg="#ffd700" if self.sombre else C["heading"],
+                                     wraplength=540, justify=tk.LEFT)
+        self.detail_titre.pack(anchor=tk.W, pady=(0, 2))
 
-        self.detail_epoque = tk.Label(self.cadre_detail, text="", font=(self.app.body.cget("family"), 9, "italic"),
-                                      bg=C["bg"], fg=C["muted"])
-        self.detail_epoque.pack(anchor="w", padx=14, pady=(0, 6))
+        self.detail_epoque = tk.Label(self.cadre_detail, text="", font=police_corps(9, italique=True),
+                                      bg=C["panel"], fg="#2ecc71" if self.sombre else "#2d8a4e")
+        self.detail_epoque.pack(anchor=tk.W, pady=(0, 8))
 
         # Illustration avec cadre romain
-        self.detail_image_lbl = tk.Label(self.cadre_detail, bg=C["bg"])
-        self.detail_image_lbl.pack(padx=14, pady=(0, 6))
+        self.cadre_img_wrap = tk.Frame(self.cadre_detail, bg=C["panel"], bd=2, relief="ridge")
+        self.detail_image_lbl = tk.Label(self.cadre_img_wrap, bg=C["panel"])
+        self.detail_image_lbl.pack(padx=4, pady=4)
 
-        self.detail_texte = tk.Text(self.cadre_detail, wrap="word", relief="flat", height=7,
-                                    font=(self.app.body.cget("family"), 10),
-                                    bg=C["editor"], fg=C["fg"], padx=12, pady=10)
-        self.detail_texte.pack(fill=tk.BOTH, expand=True, padx=14, pady=(0, 8))
+        self.detail_texte = tk.Text(self.cadre_detail, wrap="word", relief="sunken", bd=1, height=7,
+                                    font=police_corps(10),
+                                    bg=C["editor"], fg=C["fg"], padx=14, pady=12)
+        self.detail_texte.pack(fill=tk.BOTH, expand=True, pady=(8, 8))
 
         self.btn_ceremonie = tk.Button(
             self.cadre_detail, text="🎆 Revivre la Cérémonie du Triomphe de 5ème",
-            font=(self.app.body.cget("family"), 10, "bold"),
+            font=police_corps(10, gras=True),
             bg="#c59b27", fg="#ffffff", activebackground="#a6801a",
-            relief="flat", padx=12, pady=6, cursor="hand2",
+            relief="raised", bd=2, padx=14, pady=6, cursor="hand2",
             command=self._lancer_triomphe
         )
 
         if CARTES_MUSEE:
             self.listbox.selection_set(0)
-            self._afficher_carte(0)
+            self._afficher_carte(0, play_sound=False)
 
     def _on_select(self, event):
         sel = self.listbox.curselection()
         if sel:
-            self._afficher_carte(sel[0])
+            self._afficher_carte(sel[0], play_sound=True)
 
-    def _afficher_carte(self, idx):
+    def _afficher_carte(self, idx, play_sound=True):
+        from app import audio
         from app.cadres import charger_photo_romaine
+
+        if play_sound:
+            audio.play_parchemin()
 
         carte = CARTES_MUSEE[idx]
         self.detail_titre.configure(text=f"{carte['icone']} {carte['titre']}")
@@ -224,11 +244,11 @@ class MuseeWindow(tk.Toplevel):
             if photo:
                 self._img_ref = photo
                 self.detail_image_lbl.configure(image=self._img_ref)
-                self.detail_image_lbl.pack(before=self.detail_texte, padx=14, pady=(0, 6))
+                self.cadre_img_wrap.pack(before=self.detail_texte, pady=(0, 6))
             else:
-                self.detail_image_lbl.pack_forget()
+                self.cadre_img_wrap.pack_forget()
         else:
-            self.detail_image_lbl.pack_forget()
+            self.cadre_img_wrap.pack_forget()
 
         self.detail_texte.configure(state="normal")
         self.detail_texte.delete("1.0", tk.END)
@@ -236,7 +256,7 @@ class MuseeWindow(tk.Toplevel):
         self.detail_texte.configure(state="disabled")
 
         if carte.get("id") == "laurier_or_5eme":
-            self.btn_ceremonie.pack(pady=(0, 8))
+            self.btn_ceremonie.pack(pady=(0, 6))
         else:
             self.btn_ceremonie.pack_forget()
 
