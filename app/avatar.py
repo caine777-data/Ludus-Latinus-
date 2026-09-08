@@ -152,28 +152,41 @@ class AvatarWindow(tk.Toplevel):
         avatar = self.app.data.get("avatar", {})
         possedes = self.app.data.setdefault("avatar_possedes", ["lin_blanc", "aucune", "stylet"])
         equipe = avatar.get(cat_key)
+        C = self.app.C
+        from app.theme import est_sombre
+        sombre = est_sombre(C.get("bg", "#faf6ee"))
+
+        c_card = C.get("editor", "#ffffff")
+        c_bd = "#d4af37" if sombre else "#ded3bf"
+        c_fg = C.get("fg", "#2c2621")
+        c_desc = "#a9b1d6" if sombre else "#666666"
 
         for item in items:
-            frame = tk.Frame(parent, bd=1, relief="solid", padx=10, pady=5)
-            frame.pack(fill=tk.X, padx=8, pady=3)
+            is_equipped = (item["id"] == equipe)
+            bd_highlight = "#2ecc71" if is_equipped else c_bd
 
-            tk.Label(frame, text=item["icone"], font=("Segoe UI Emoji", 18)).pack(side=tk.LEFT, padx=(0, 10))
+            frame = tk.Frame(parent, bg=c_card, bd=1, relief="solid",
+                             highlightthickness=2 if is_equipped else 1,
+                             highlightbackground=bd_highlight, padx=10, pady=6)
+            frame.pack(fill=tk.X, padx=8, pady=4)
 
-            info = tk.Frame(frame)
+            tk.Label(frame, text=item["icone"], font=("Segoe UI Emoji", 20), bg=c_card).pack(side=tk.LEFT, padx=(0, 10))
+
+            info = tk.Frame(frame, bg=c_card)
             info.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
             tk.Label(info, text=item["nom"], font=(self.app.body.cget("family"), 10, "bold"),
-                     anchor="w").pack(anchor="w")
+                     bg=c_card, fg=c_fg, anchor="w").pack(anchor="w")
             tk.Label(info, text=item["desc"], font=(self.app.body.cget("family"), 9),
-                     fg="#666666", anchor="w").pack(anchor="w")
+                     bg=c_card, fg=c_desc, anchor="w").pack(anchor="w")
 
-            btn_zone = tk.Frame(frame)
+            btn_zone = tk.Frame(frame, bg=c_card)
             btn_zone.pack(side=tk.RIGHT)
 
             item_id = item["id"]
-            if item_id == equipe:
-                lbl = tk.Label(btn_zone, text="Équipé ✓", font=(self.app.body.cget("family"), 9, "bold"),
-                               fg="#2e7d32")
+            if is_equipped:
+                lbl = tk.Label(btn_zone, text="✓ Équipé", font=(self.app.body.cget("family"), 10, "bold"),
+                               bg=c_card, fg="#27ae60")
                 lbl.pack()
             elif item_id in possedes or item["prix"] == 0:
                 b = ttk.Button(btn_zone, text="Équiper",
