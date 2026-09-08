@@ -295,6 +295,7 @@ class PythonLearnApp:
             ("tb_carte", self._ouvrir_carte),
             # 2. Forum, Activités & Jeux
             ("tb_cartes", self._ouvrir_album_cartes),
+            ("tb_penderie", self._ouvrir_penderie),
             ("tb_circus", self._ouvrir_circus),
             ("tb_marche", self._ouvrir_marche_trajan),
             ("tb_cesar", self._ouvrir_chiffre_cesar),
@@ -514,21 +515,23 @@ class PythonLearnApp:
                                    padx=8, pady=2, relief="flat")
         self.hdr_xp_lbl.pack(side=tk.LEFT, padx=(0, 6))
 
-        # Sesterces avec icône romaine 3D
+        # Sesterces avec icône romaine 3D (cliquable -> ouvre la Penderie / Boutique)
         self._img_sesterce_hdr = charger_icone("icone_sesterce", 20)
         self.hdr_sesterces_lbl = tk.Label(left, text=" 50 Sesterces", font=(self.body.cget("family"), 9, "bold"),
                                           image=self._img_sesterce_hdr, compound=tk.LEFT if self._img_sesterce_hdr else None,
                                           bg=C["editor"], fg="#d4af37",
-                                          padx=8, pady=2, relief="flat")
+                                          padx=8, pady=2, relief="flat", cursor="hand2")
         self.hdr_sesterces_lbl.pack(side=tk.LEFT, padx=(0, 6))
+        self.hdr_sesterces_lbl.bind("<Button-1>", lambda _e: self._ouvrir_penderie())
 
-        # Badges / Lauriers avec trophée romain 3D
+        # Badges / Lauriers avec trophée romain 3D (cliquable -> ouvre les Succès)
         self._img_laurier_hdr = charger_icone("icone_laurier", 20)
         self.hdr_badges_lbl = tk.Label(left, text=" 0/7", font=(self.body.cget("family"), 9),
                                        image=self._img_laurier_hdr, compound=tk.LEFT if self._img_laurier_hdr else None,
                                        bg=C["editor"], fg=C["code"],
-                                       padx=8, pady=2, relief="flat")
+                                       padx=8, pady=2, relief="flat", cursor="hand2")
         self.hdr_badges_lbl.pack(side=tk.LEFT, padx=(0, 6))
+        self.hdr_badges_lbl.bind("<Button-1>", lambda _e: self._ouvrir_succes())
 
         right = tk.Frame(self.header_strip, bg=C["panel"])
         right.pack(side=tk.RIGHT)

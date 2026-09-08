@@ -83,6 +83,7 @@ def get_icones_toolbar():
         "tb_carte": "icone_carte",
         "tb_circus": "icone_circus",
         "tb_cartes": "icone_trophee",
+        "tb_penderie": "icone_sesterce",
         "tb_marche": "icone_sesterce",
         "tb_cesar": "icone_laurier",
         "tb_duel": "icone_arene",

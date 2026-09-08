@@ -59,43 +59,67 @@ COSTUMES_LUPULUS = {
         "id": "standard",
         "nom": "Toge Classique",
         "prix": 0,
+        "categorie": "toge",
         "icone": "🏛️",
         "badge": "🥋 Toge Blanche",
         "desc": "La noble toge blanche ornée d'une écharpe rouge du jeune citoyen.",
-        "replique": "Je porte ma fière toge romaine ! Prêt pour le Sénat !",
+        "replique": "Je porte ma fière toge romaine ! Prêt pour le Forum !",
+    },
+    "centurion": {
+        "id": "centurion",
+        "nom": "Centurion de la Légion",
+        "prix": 200,
+        "categorie": "armure",
+        "icone": "⚔️",
+        "badge": "⚔️ Centurion Romain",
+        "desc": "Casque étincelant à fière crête rouge, cuirasse dorée et glaive de parade.",
+        "replique": "Par Mars ! Avec cette armure et mon casque à crête, les légions nous saluent !",
     },
     "mercure": {
         "id": "mercure",
         "nom": "Ailes de Mercure",
         "prix": 150,
+        "categorie": "divinite",
         "icone": "🪽",
         "badge": "🪽 Ailes Divines",
-        "desc": "Les sandales et le casque ailés du messager des dieux.",
+        "desc": "Casque ailé d'or massif, ailes divines et sandales du messager des dieux.",
         "replique": "Grâce aux ailes de Mercure, j'apprends à la vitesse de l'éclair !",
     },
     "imperator": {
         "id": "imperator",
         "nom": "Couronne Impériale",
         "prix": 250,
+        "categorie": "toge",
         "icone": "👑",
         "badge": "👑 Lauriers d'Or",
-        "desc": "La couronne de laurier d'or massif des illustres Césars.",
+        "desc": "Toge pourpre impériale brodée de fils d'or et couronne de laurier des Césars.",
         "replique": "Ave Caesar ! Tous les lauriers de Rome pour ton savoir !",
     },
     "savant": {
         "id": "savant",
         "nom": "Lunettes de Philosophe",
         "prix": 100,
+        "categorie": "savoir",
         "icone": "👓",
         "badge": "👓 Savant Romain",
-        "desc": "De fines besicles antiques pour lire tous les parchemins anciens sans fatiguer.",
+        "desc": "De fines besicles antiques dorées, toge d'orateur et rouleau de papyrus antique.",
         "replique": "Sapientia et scientia ! Aucun mystère latin ne nous résiste !",
+    },
+    "gladiateur": {
+        "id": "gladiateur",
+        "nom": "Gladiateur Mirmillon",
+        "prix": 180,
+        "categorie": "armure",
+        "icone": "🛡️",
+        "badge": "🛡️ Champion de l'Arène",
+        "desc": "Casque d'arène à visière ornée d'un poisson, manica en cuir et bouclier rond.",
+        "replique": "Ave Caesar, morituri te salutant ! Prêt pour le Colisée !",
     },
 }
 
 
 def _dessiner_accessoire_costume(im, costume_id):
-    """Dessine un ornement visuel adapté sur le portrait de Lupulus selon le costume."""
+    """Dessine un ornement visuel de repli si aucune illustration dédiée n'est disponible."""
     if costume_id == "standard" or not HAS_PIL:
         return im
     try:
@@ -251,21 +275,34 @@ class MascotteWidget(tk.Frame):
 
     def _charger_image(self, emotion, costume_id=None):
         cid = costume_id or self.costume_actuel
-        cle_cache = (emotion, cid)
+        cle_cache = (emotion, cid, self.taille)
         if cle_cache in self._images_cache:
             return self._images_cache[cle_cache]
 
-        fichier = ASSETS_LUPULUS / f"lupulus_{emotion}.png"
-        if not fichier.exists():
-            fichier = ASSETS_LUPULUS / "lupulus_normal.png"
+        fichier = None
+        # 1. Si costume spécifique équipé, chercher l'illustration haute définition dédiée
+        if cid and cid != "standard":
+            f_costume = ASSETS_LUPULUS / f"lupulus_{cid}.png"
+            if not f_costume.exists() and cid == "savant":
+                f_costume = ASSETS_LUPULUS / "lupulus_philosophe.png"
+            if f_costume.exists():
+                fichier = f_costume
 
-        if fichier.exists():
+        # 2. Sinon, utiliser l'image de l'émotion demandée
+        if not fichier or not fichier.exists():
+            fichier = ASSETS_LUPULUS / f"lupulus_{emotion}.png"
+            if not fichier.exists():
+                fichier = ASSETS_LUPULUS / "lupulus_normal.png"
+
+        if fichier and fichier.exists():
             try:
                 if HAS_PIL:
                     im = Image.open(fichier).convert("RGBA")
                     if im.size != (self.taille, self.taille):
                         im = im.resize((self.taille, self.taille), Image.Resampling.LANCZOS)
-                    im = _dessiner_accessoire_costume(im, cid)
+                    # Si c'est l'image standard et qu'on a un ancien costume sans fichier dédié
+                    if cid and not (ASSETS_LUPULUS / f"lupulus_{cid}.png").exists() and cid != "standard":
+                        im = _dessiner_accessoire_costume(im, cid)
                     photo = ImageTk.PhotoImage(im)
                 else:
                     photo = tk.PhotoImage(file=str(fichier))
@@ -342,7 +379,7 @@ class MascotteWidget(tk.Frame):
 
 
 class PenderieLupulusDialog(tk.Toplevel):
-    """Fenêtre interactive de la Penderie de Lupulus (Boutique de Costumes)."""
+    """Fenêtre interactive de la Penderie de Lupulus (Boutique de Costumes & Atelier Romain)."""
 
     def __init__(self, master, app, on_change=None):
         super().__init__(master)
@@ -352,11 +389,16 @@ class PenderieLupulusDialog(tk.Toplevel):
         self.configure(bg="#1a1b26")
 
         from app.responsive import adapter_geometrie_fenetre
-        adapter_geometrie_fenetre(self, 680, 520)
-        self.minsize(500, 420)
+        adapter_geometrie_fenetre(self, 760, 560)
+        self.minsize(620, 460)
         self.transient(master)
 
         self._apercu_photo = None
+        self.costume_selectionne = self._get_costume_actuel()
+        self.filtre_cat = "tous"
+
+        from app import audio
+        audio.play_click()
 
         # 1. En-tête antique
         hdr = tk.Frame(self, bg="#24283b", padx=16, pady=12)
@@ -370,66 +412,113 @@ class PenderieLupulusDialog(tk.Toplevel):
             fg="#ffd700",
         ).pack(side=tk.LEFT)
 
+        f_solde = tk.Frame(hdr, bg="#24283b")
+        f_solde.pack(side=tk.RIGHT)
+
         self.lbl_sesterces = tk.Label(
-            hdr,
+            f_solde,
             text=f"🪙 Solde : {self._get_sesterces()} Sesterces",
             font=("Georgia", 11, "bold"),
-            bg="#24283b",
+            bg="#1f2335",
             fg="#ffd700",
+            bd=1,
+            relief="solid",
+            padx=8,
+            pady=3
         )
         self.lbl_sesterces.pack(side=tk.RIGHT)
 
-        # 2. Corps principal (Aperçu à gauche, Liste des costumes à droite)
-        corps = tk.Frame(self, bg="#1a1b26", padx=12, pady=10)
+        # 2. Corps principal (Podium à gauche, Catalogue à droite)
+        corps = tk.Frame(self, bg="#1a1b26", padx=14, pady=10)
         corps.pack(fill=tk.BOTH, expand=True)
 
-        # Panneau gauche : Aperçu
-        panneau_g = tk.Frame(corps, bg="#1f2335", bd=1, relief="solid", padx=12, pady=12, width=230)
-        panneau_g.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 10))
-        panneau_g.pack_propagate(False)
+        # Panneau gauche : Podium d'essayage en direct
+        self.panneau_g = tk.Frame(corps, bg="#1f2335", bd=2, relief="solid", padx=14, pady=12, width=260)
+        self.panneau_g.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 12))
+        self.panneau_g.pack_propagate(False)
 
         tk.Label(
-            panneau_g,
-            text="🐺 Aperçu en direct",
+            self.panneau_g,
+            text="🐺 PODIUM D'ESSAYAGE",
             font=("Georgia", 11, "bold"),
             bg="#1f2335",
-            fg="#e0af68"
+            fg="#ffd700"
         ).pack(pady=(0, 6))
 
-        self.lbl_apercu_img = tk.Label(panneau_g, bg="#1f2335")
+        self.lbl_apercu_img = tk.Label(self.panneau_g, bg="#1f2335")
         self.lbl_apercu_img.pack(pady=4)
 
         self.lbl_apercu_badge = tk.Label(
-            panneau_g,
+            self.panneau_g,
             text="",
-            font=("Georgia", 9, "bold"),
+            font=("Georgia", 10, "bold"),
             bg="#24283b",
             fg="#ffd700",
             bd=1,
             relief="solid",
-            padx=6,
-            pady=2
+            padx=8,
+            pady=3
         )
         self.lbl_apercu_badge.pack(fill=tk.X, pady=4)
 
         self.bulle_apercu = tk.Label(
-            panneau_g,
+            self.panneau_g,
             text="",
             font=("Georgia", 9, "italic"),
             bg="#fff8dc",
             fg="#4a2c11",
-            wraplength=190,
+            wraplength=220,
             justify=tk.CENTER,
             bd=1,
             relief="solid",
-            padx=6,
+            padx=8,
+            pady=8
+        )
+        self.bulle_apercu.pack(fill=tk.X, pady=4)
+
+        # Bouton d'action principal sous l'aperçu
+        self.btn_action_podium = tk.Button(
+            self.panneau_g,
+            text="",
+            font=("Georgia", 10, "bold"),
+            relief="flat",
+            cursor="hand2",
+            padx=12,
             pady=6
         )
-        self.bulle_apercu.pack(fill=tk.BOTH, expand=True, pady=(6, 0))
+        self.btn_action_podium.pack(side=tk.BOTTOM, fill=tk.X, pady=(6, 0))
 
-        # Panneau droit : Liste déroulante des costumes
+        # Panneau droit : Filtres de catégories + Liste de costumes
         panneau_d = tk.Frame(corps, bg="#1a1b26")
         panneau_d.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        # Barre de filtres
+        filtres_frame = tk.Frame(panneau_d, bg="#1a1b26")
+        filtres_frame.pack(fill=tk.X, pady=(0, 8))
+
+        self._btn_filtres = {}
+        categories = [
+            ("tous", "🏛️ Tous"),
+            ("armure", "⚔️ Armures"),
+            ("toge", "🥋 Toges"),
+            ("savoir", "📜 Savoirs"),
+        ]
+        for cat_id, cat_nom in categories:
+            b = tk.Button(
+                filtres_frame,
+                text=cat_nom,
+                font=("Georgia", 9, "bold"),
+                bg="#24283b" if cat_id != "tous" else "#ffd700",
+                fg="#c0caf5" if cat_id != "tous" else "#1a1b26",
+                activebackground="#ffd700",
+                relief="flat",
+                cursor="hand2",
+                padx=8,
+                pady=3,
+                command=lambda c=cat_id: self._filtrer_categorie(c)
+            )
+            b.pack(side=tk.LEFT, padx=(0, 6))
+            self._btn_filtres[cat_id] = b
 
         canvas = tk.Canvas(panneau_d, bg="#1a1b26", highlightthickness=0)
         from tkinter import ttk
@@ -443,7 +532,7 @@ class PenderieLupulusDialog(tk.Toplevel):
         win_id = canvas.create_window((0, 0), window=self.scroll_frame, anchor="nw")
 
         def _config_canvas(event):
-            canvas.itemconfig(win_id, width=max(100, event.width - 24))
+            canvas.itemconfig(win_id, width=max(100, event.width - 16))
         canvas.bind("<Configure>", _config_canvas)
 
         canvas.configure(yscrollcommand=scrollbar.set)
@@ -452,11 +541,20 @@ class PenderieLupulusDialog(tk.Toplevel):
 
         def _on_wheel(e):
             canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
-        canvas.bind_all("<MouseWheel>", _on_wheel)
+        self.bind("<MouseWheel>", _on_wheel)
 
-        # 3. Bouton bas
-        btn_barre = tk.Frame(self, bg="#24283b", padx=12, pady=8)
+        # 3. Barre inférieure
+        btn_barre = tk.Frame(self, bg="#24283b", padx=16, pady=8)
         btn_barre.pack(fill=tk.X)
+
+        self.lbl_stats_costumes = tk.Label(
+            btn_barre,
+            text="",
+            font=("Georgia", 9, "bold"),
+            bg="#24283b",
+            fg="#9aa5ce"
+        )
+        self.lbl_stats_costumes.pack(side=tk.LEFT)
 
         tk.Button(
             btn_barre,
@@ -474,6 +572,29 @@ class PenderieLupulusDialog(tk.Toplevel):
 
         self.bind("<Escape>", lambda e: self.destroy())
 
+        self._rafraichir_tout()
+
+    def _filtrer_categorie(self, cat_id):
+        self.filtre_cat = cat_id
+        for cid, btn in self._btn_filtres.items():
+            if cid == cat_id:
+                btn.configure(bg="#ffd700", fg="#1a1b26")
+            else:
+                btn.configure(bg="#24283b", fg="#c0caf5")
+        try:
+            from app import audio
+            audio.play_click()
+        except Exception:
+            pass
+        self._rafraichir_tout()
+
+    def _selectionner_costume(self, cid):
+        self.costume_selectionne = cid
+        try:
+            from app import audio
+            audio.play_click()
+        except Exception:
+            pass
         self._rafraichir_tout()
 
     def _get_sesterces(self):
@@ -500,21 +621,36 @@ class PenderieLupulusDialog(tk.Toplevel):
         debloques = self._get_costumes_debloques()
 
         self.lbl_sesterces.configure(text=f"🪙 Solde : {solde} Sesterces")
+        self.lbl_stats_costumes.configure(
+            text=f"🥋 Collection : {len(debloques)}/{len(COSTUMES_LUPULUS)} costumes acquis"
+        )
 
-        # 1. Mettre à jour l'aperçu
-        c_info = COSTUMES_LUPULUS.get(costume_actuel, COSTUMES_LUPULUS["standard"])
-        self.lbl_apercu_badge.configure(text=f"Porté : {c_info.get('badge', c_info['nom'])}")
-        self.bulle_apercu.configure(text=f"« {c_info.get('replique', 'Salvete !')} »")
+        # 1. Mettre à jour le podium avec le costume sélectionné
+        sel_id = self.costume_selectionne or costume_actuel
+        sel_info = COSTUMES_LUPULUS.get(sel_id, COSTUMES_LUPULUS["standard"])
 
-        fichier = ASSETS_LUPULUS / "lupulus_joie.png"
+        est_porte = (sel_id == costume_actuel)
+        est_possede = (sel_id in debloques)
+        prix = sel_info["prix"]
+
+        prefixe = "Porté : " if est_porte else "Essayage : "
+        self.lbl_apercu_badge.configure(text=f"{prefixe}{sel_info.get('badge', sel_info['nom'])}")
+        self.bulle_apercu.configure(text=f"« {sel_info.get('replique', 'Salvete !')} »")
+
+        # Chargement de l'illustration HD du costume
+        fichier = ASSETS_LUPULUS / f"lupulus_{sel_id}_180.png"
         if not fichier.exists():
-            fichier = ASSETS_LUPULUS / "lupulus_normal.png"
+            fichier = ASSETS_LUPULUS / f"lupulus_{sel_id}.png"
+        if not fichier.exists() and sel_id == "savant":
+            fichier = ASSETS_LUPULUS / "lupulus_philosophe_180.png"
+        if not fichier.exists():
+            fichier = ASSETS_LUPULUS / "lupulus_normal_180.png"
+
         if fichier.exists():
             try:
                 if HAS_PIL:
                     im = Image.open(fichier).convert("RGBA")
-                    im = im.resize((120, 120), Image.Resampling.LANCZOS)
-                    im = _dessiner_accessoire_costume(im, costume_actuel)
+                    im = im.resize((150, 150), Image.Resampling.LANCZOS)
                     self._apercu_photo = ImageTk.PhotoImage(im)
                 else:
                     self._apercu_photo = tk.PhotoImage(file=str(fichier))
@@ -522,64 +658,119 @@ class PenderieLupulusDialog(tk.Toplevel):
             except Exception:
                 pass
 
-        # 2. Régénérer les cartes de costumes
+        # Configuration du bouton d'action principal sous l'aperçu
+        if est_porte:
+            self.btn_action_podium.configure(
+                text="✔ Déjà porté sur Lupulus",
+                bg="#1f2335",
+                fg="#2ecc71",
+                state="disabled"
+            )
+        elif est_possede:
+            self.btn_action_podium.configure(
+                text="✨ Enfiler ce costume",
+                bg="#ffd700",
+                fg="#1a1b26",
+                state="normal",
+                command=lambda: self._equiper(sel_id)
+            )
+        else:
+            peut_acheter = (solde >= prix)
+            txt = f"🪙 Acheter pour {prix} HS" if peut_acheter else f"🪙 {prix} HS requis"
+            self.btn_action_podium.configure(
+                text=txt,
+                bg="#e0af68" if peut_acheter else "#414868",
+                fg="#1a1b26" if peut_acheter else "#9aa5ce",
+                state="normal" if peut_acheter else "disabled",
+                command=lambda: self._acheter(sel_id)
+            )
+
+        # 2. Régénérer les cartes de costumes dans le catalogue
         for w in self.scroll_frame.winfo_children():
             w.destroy()
 
         for cid, info in COSTUMES_LUPULUS.items():
-            est_porte = (cid == costume_actuel)
-            est_possede = (cid in debloques)
-            prix = info["prix"]
+            cat = info.get("categorie", "tous")
+            if self.filtre_cat != "tous" and cat != self.filtre_cat and not (self.filtre_cat == "savoir" and cat == "divinite"):
+                continue
 
-            bd_col = "#ffd700" if est_porte else ("#2ecc71" if est_possede else "#3b4261")
+            est_carte_portee = (cid == costume_actuel)
+            est_carte_selectionnee = (cid == sel_id)
+            est_carte_possedee = (cid in debloques)
+            prix_c = info["prix"]
+
+            # Bordure dynamique
+            if est_carte_selectionnee:
+                bd_col = "#38bdf8"
+                bg_carte = "#2a324b"
+            elif est_carte_portee:
+                bd_col = "#ffd700"
+                bg_carte = "#24283b"
+            elif est_carte_possedee:
+                bd_col = "#2ecc71"
+                bg_carte = "#24283b"
+            else:
+                bd_col = "#3b4261"
+                bg_carte = "#1f2335"
+
             carte = tk.Frame(
                 self.scroll_frame,
-                bg="#24283b",
-                highlightthickness=1,
+                bg=bg_carte,
+                highlightthickness=2 if est_carte_selectionnee else 1,
                 highlightbackground=bd_col,
                 padx=10,
-                pady=8
+                pady=8,
+                cursor="hand2"
             )
             carte.pack(fill=tk.X, pady=4, padx=2)
+            carte.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
             # Icône
-            tk.Label(
+            lbl_ico = tk.Label(
                 carte,
                 text=info.get("icone", "👕"),
                 font=("", 24),
-                bg="#24283b",
+                bg=bg_carte,
                 fg="#ffd700"
-            ).pack(side=tk.LEFT, padx=(0, 10))
+            )
+            lbl_ico.pack(side=tk.LEFT, padx=(0, 10))
+            lbl_ico.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
             # Détails
-            f_mid = tk.Frame(carte, bg="#24283b")
+            f_mid = tk.Frame(carte, bg=bg_carte)
             f_mid.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            f_mid.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
-            tk.Label(
+            lbl_titre = tk.Label(
                 f_mid,
                 text=info["nom"],
                 font=("Georgia", 11, "bold"),
-                bg="#24283b",
-                fg="#ffd700" if est_porte else "#c0caf5",
+                bg=bg_carte,
+                fg="#ffd700" if (est_carte_portee or est_carte_selectionnee) else "#c0caf5",
                 anchor="w"
-            ).pack(fill=tk.X)
+            )
+            lbl_titre.pack(fill=tk.X)
+            lbl_titre.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
-            tk.Label(
+            lbl_desc = tk.Label(
                 f_mid,
                 text=info["desc"],
                 font=("Georgia", 9),
-                bg="#24283b",
+                bg=bg_carte,
                 fg="#9aa5ce",
-                wraplength=180,
+                wraplength=210,
                 justify=tk.LEFT,
                 anchor="w"
-            ).pack(fill=tk.X, pady=(2, 0))
+            )
+            lbl_desc.pack(fill=tk.X, pady=(2, 0))
+            lbl_desc.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
             # Actions & Prix
-            f_act = tk.Frame(carte, bg="#24283b")
+            f_act = tk.Frame(carte, bg=bg_carte)
             f_act.pack(side=tk.RIGHT, padx=(6, 4))
+            f_act.bind("<Button-1>", lambda e, c=cid: self._selectionner_costume(c))
 
-            if est_porte:
+            if est_carte_portee:
                 tk.Label(
                     f_act,
                     text="✔ Porté",
@@ -591,7 +782,7 @@ class PenderieLupulusDialog(tk.Toplevel):
                     padx=8,
                     pady=3
                 ).pack(anchor="e")
-            elif est_possede:
+            elif est_carte_possedee:
                 tk.Button(
                     f_act,
                     text="🥋 Porter",
@@ -606,14 +797,14 @@ class PenderieLupulusDialog(tk.Toplevel):
                     command=lambda c=cid: self._equiper(c)
                 ).pack(anchor="e")
             else:
-                peut_acheter = (solde >= prix)
+                peut_acheter = (solde >= prix_c)
                 btn_bg = "#e0af68" if peut_acheter else "#414868"
                 btn_fg = "#1a1b26" if peut_acheter else "#7a88cf"
                 cur = "hand2" if peut_acheter else "arrow"
 
                 tk.Button(
                     f_act,
-                    text=f"🪙 Acheter ({prix})",
+                    text=f"🪙 {prix_c} HS",
                     font=("Georgia", 9, "bold"),
                     bg=btn_bg,
                     fg=btn_fg,
@@ -634,6 +825,8 @@ class PenderieLupulusDialog(tk.Toplevel):
                 prog.save_progress(self.app.data)
             except Exception:
                 pass
+
+        self.costume_selectionne = costume_id
 
         try:
             from app import audio
@@ -676,4 +869,5 @@ class PenderieLupulusDialog(tk.Toplevel):
             audio.play_fanfare()
         except Exception:
             pass
+
 
