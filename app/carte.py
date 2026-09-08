@@ -5,13 +5,23 @@ halo pulsant sur la prochaine leçon et infobulles riches.
 """
 
 import math
+from pathlib import Path
+import textwrap
 import tkinter as tk
 from tkinter import ttk
+
+try:
+    from PIL import Image, ImageTk
+    HAS_PIL = True
+except ImportError:
+    HAS_PIL = False
 
 from app import audio
 from app.polices import police_corps, police_titre
 from app.responsive import adapter_geometrie_fenetre, obtenir_facteur_echelle
 from content import CLASSES, get_curriculum_classe
+
+ASSETS_IMAGES = Path(__file__).resolve().parent.parent / "assets" / "images"
 
 
 class CarteAventureWindow(tk.Toplevel):
@@ -29,12 +39,14 @@ class CarteAventureWindow(tk.Toplevel):
         if self.classe_active not in CLASSES:
             self.classe_active = "5eme"
 
-        adapter_geometrie_fenetre(self, 860, 680, min_w=700, min_h=500)
+        adapter_geometrie_fenetre(self, 930, 700, min_w=840, min_h=520)
 
         self._pulse_job = None
         self._pulse_frame = 0
         self._active_milestone = None  # (lx, ly, rayon)
         self._tooltip_window = None
+        self._photo_avatar = None
+        self._load_avatar_image()
 
         # Liseré supérieur impérial
         tk.Frame(self, bg=self.C["accent"], height=5).pack(fill=tk.X, side=tk.TOP)
@@ -120,6 +132,113 @@ class CarteAventureWindow(tk.Toplevel):
             self._rafraichir_onglets()
             self._dessiner_carte()
 
+    def _load_avatar_image(self):
+        """Charge la vignette du héros pour matérialiser sa position sur la Via Appia."""
+        if not HAS_PIL:
+            return
+        sexe = self.app.data.get("avatar", "garcon")
+        fname = f"avatar_{sexe}_medaillon_48.png"
+        p = ASSETS_IMAGES / fname
+        if not p.exists():
+            p = ASSETS_IMAGES / "avatar_garcon_medaillon_48.png"
+        if p.exists():
+            try:
+                im = Image.open(p).convert("RGBA")
+                self._photo_avatar = ImageTk.PhotoImage(im)
+            except Exception:
+                self._photo_avatar = None
+
+    def _dessiner_decor_arriere_plan(self, cw, total_h, scale):
+        """Dessine le paysage panoramique de la campagne romaine (ciel, collines, aqueduc, cyprès)."""
+        ciel_h = int(120 * scale)
+        self.canvas.create_rectangle(0, 0, cw, ciel_h, fill="#cce5f4", outline="")
+        self.canvas.create_rectangle(0, ciel_h, cw, int(180 * scale), fill="#faebd7", outline="")
+        self.canvas.create_rectangle(0, int(180 * scale), cw, total_h, fill="#eedec7", outline="")
+
+        # Chaîne de montagnes lointaines (Monts Albains / Apennins)
+        pts_montagnes = [
+            0, int(115 * scale),
+            int(90 * scale), int(75 * scale),
+            int(190 * scale), int(95 * scale),
+            int(310 * scale), int(65 * scale),
+            int(460 * scale), int(90 * scale),
+            int(620 * scale), int(70 * scale),
+            int(780 * scale), int(105 * scale),
+            cw, int(80 * scale),
+            cw, int(160 * scale),
+            0, int(160 * scale)
+        ]
+        self.canvas.create_polygon(pts_montagnes, fill="#b5c8d6", outline="")
+
+        # Collines verdoyantes du Latium
+        pts_collines_1 = [
+            0, int(145 * scale),
+            int(140 * scale), int(120 * scale),
+            int(290 * scale), int(140 * scale),
+            int(450 * scale), int(115 * scale),
+            int(610 * scale), int(142 * scale),
+            int(750 * scale), int(125 * scale),
+            cw, int(135 * scale),
+            cw, int(210 * scale),
+            0, int(210 * scale)
+        ]
+        self.canvas.create_polygon(pts_collines_1, fill="#c0d8ac", outline="")
+
+        pts_collines_2 = [
+            0, int(180 * scale),
+            int(180 * scale), int(155 * scale),
+            int(370 * scale), int(185 * scale),
+            int(540 * scale), int(160 * scale),
+            cw, int(185 * scale),
+            cw, int(250 * scale),
+            0, int(250 * scale)
+        ]
+        self.canvas.create_polygon(pts_collines_2, fill="#acc798", outline="")
+
+        # Aqueduc romain antique enjambant la vallée à l'horizon
+        aq_y = int(142 * scale)
+        aq_h = int(28 * scale)
+        aq_w = int(18 * scale)
+        self.canvas.create_line(
+            int(20 * scale), aq_y, cw - int(20 * scale), aq_y,
+            fill="#8d7256", width=max(2, int(4 * scale))
+        )
+        pas_aq = int(36 * scale)
+        for px in range(int(30 * scale), cw - int(30 * scale), pas_aq):
+            self.canvas.create_rectangle(
+                px, aq_y, px + aq_w, aq_y + aq_h,
+                fill="#bfa383", outline="#8d7256"
+            )
+            self.canvas.create_arc(
+                px + int(2 * scale), aq_y + int(8 * scale),
+                px + aq_w - int(2 * scale), aq_y + aq_h,
+                start=0, extent=180, fill="#acc798", outline="#8d7256"
+            )
+
+        # Arbres méditerranéens (Cyprès toscans et Pins parasols) le long de la route
+        step_arbres = int(140 * scale)
+        for y_a in range(int(220 * scale), total_h - int(60 * scale), step_arbres):
+            cx_g = int(35 * scale) + ((y_a // 40) % 20)
+            self._dessiner_cypres(cx_g, y_a, scale)
+            px_d = cw - int(40 * scale) - ((y_a // 30) % 25)
+            self._dessiner_pin(px_d, y_a + int(50 * scale), scale)
+
+    def _dessiner_cypres(self, x, y, scale):
+        h = int(36 * scale)
+        w = int(7 * scale)
+        self.canvas.create_line(x, y, x, y + int(6 * scale), fill="#4a3018", width=max(1, int(2 * scale)))
+        self.canvas.create_polygon([x, y - h, x - w, y, x + w, y], fill="#1e3818", outline="#13260f")
+
+    def _dessiner_pin(self, x, y, scale):
+        h = int(30 * scale)
+        r = int(14 * scale)
+        self.canvas.create_line(x, y, x - int(3 * scale), y - h, fill="#52391e", width=max(1, int(3 * scale)))
+        self.canvas.create_oval(
+            x - r - int(3 * scale), y - h - int(10 * scale),
+            x + r - int(3 * scale), y - h + int(4 * scale),
+            fill="#2c4d22", outline="#1a3314"
+        )
+
     def _dessiner_carte(self):
         if self._pulse_job:
             try:
@@ -150,6 +269,9 @@ class CarteAventureWindow(tk.Toplevel):
         monde_height = int(210 * scale)
         total_h = len(mondes) * monde_height + int(140 * scale)
         self.canvas.configure(scrollregion=(0, 0, cw, total_h))
+
+        # 0. Décor panoramique en arrière-plan
+        self._dessiner_decor_arriere_plan(cw, total_h, scale)
 
         echecs = self.app.data.get("echecs", {})
 
@@ -207,11 +329,21 @@ class CarteAventureWindow(tk.Toplevel):
             x_centre = points_route[i][0]
 
             # Bannière du Monde en marbre & bronze impérial
-            b_w = int(220 * scale)
+            b_w = int(230 * scale)
             b_h = int(38 * scale)
+            # Ombre portée de la bannière
+            self.canvas.create_rectangle(
+                x_centre - b_w + 3, y_base + 3, x_centre + b_w + 3, y_base + b_h + 3,
+                fill="#2b1a10", outline=""
+            )
+            # Fond pourpre impérial avec double liseré doré
             self.canvas.create_rectangle(
                 x_centre - b_w, y_base, x_centre + b_w, y_base + b_h,
-                fill="#361a0d", outline="#ffd700", width=max(2, int(2 * scale))
+                fill="#4a151b", outline="#ffd700", width=max(2, int(2 * scale))
+            )
+            self.canvas.create_rectangle(
+                x_centre - b_w + 3, y_base + 3, x_centre + b_w - 3, y_base + b_h - 3,
+                fill="#380d12", outline="#c9a13b", width=1
             )
             self.canvas.create_text(
                 x_centre, y_base + b_h // 2,
@@ -223,13 +355,13 @@ class CarteAventureWindow(tk.Toplevel):
             # Placer les leçons de ce monde
             lecons = lvl["lessons"]
             n_lecons = len(lecons)
-            largeur_bloc = min(int(560 * scale), cw - int(80 * scale))
+            largeur_bloc = min(int(680 * scale), cw - int(80 * scale))
             pas_x = largeur_bloc // max(1, n_lecons)
             start_x = centre_x - (largeur_bloc // 2) + (pas_x // 2)
 
             for j, les in enumerate(lecons):
                 lx = start_x + j * pas_x
-                ly = y_base + int(82 * scale) + ((j % 2) * int(22 * scale))
+                ly = y_base + int(80 * scale) + ((j % 2) * int(36 * scale))
 
                 lid = les["id"]
                 est_fait = (lid in completed_set)
@@ -244,28 +376,47 @@ class CarteAventureWindow(tk.Toplevel):
                         etoiles = "⭐⭐"
                     else:
                         etoiles = "⭐"
-                    fill_c = "#388e3c" if not is_boss else "#d4af37"
+                    fill_c = "#2e7d32" if not is_boss else "#d4af37"
                     symb = "🏆" if not is_boss else "👑"
                 else:
                     etoiles = ""
-                    fill_c = "#795548" if not is_boss else "#b71c1c"
-                    symb = "⚡" if not is_boss else "⚔️"
-
                     if not premiere_inachevee_trouvee:
                         premiere_inachevee_trouvee = True
                         self._active_milestone = (lx, ly, int((22 if not is_boss else 28) * scale))
+                        fill_c = "#e67e22" if not is_boss else "#c0392b"
+                        symb = "⚡" if not is_boss else "⚔️"
+                    else:
+                        fill_c = "#5d4037"
+                        symb = "🔒"
 
                 # Pointeur / Borne milliaire romaine
                 rayon = int((22 if not is_boss else 28) * scale)
 
+                # Piédestal en pierre taillée sous la borne
+                self.canvas.create_rectangle(
+                    lx - rayon - int(4 * scale), ly + rayon - int(4 * scale),
+                    lx + rayon + int(4 * scale), ly + rayon + int(6 * scale),
+                    fill="#6e5641", outline="#3e2d1d", width=1, tags=("milestone", lid)
+                )
+
                 # Ombre portée de la borne
                 self.canvas.create_oval(
                     lx - rayon + 2, ly - rayon + 4, lx + rayon + 2, ly + rayon + 4,
-                    fill="#4a2e15", outline="", tags=("milestone", lid)
+                    fill="#3b2310", outline="", tags=("milestone", lid)
                 )
+
+                # Couronne de laurier dorée pour les étapes accomplies
+                if est_fait:
+                    self.canvas.create_oval(
+                        lx - rayon - int(4 * scale), ly - rayon - int(4 * scale),
+                        lx + rayon + int(4 * scale), ly + rayon + int(4 * scale),
+                        outline="#ffd700", width=max(2, int(2 * scale)), tags=("milestone", lid)
+                    )
+
                 self.canvas.create_oval(
                     lx - rayon, ly - rayon, lx + rayon, ly + rayon,
-                    fill=fill_c, outline="#ffffff", width=max(2, int(2 * scale)),
+                    fill=fill_c, outline="#ffffff" if est_fait or lid == (self._active_milestone and lid) else "#a6855b",
+                    width=max(2, int(2 * scale)),
                     tags=("milestone", lid)
                 )
                 self.canvas.create_text(
@@ -281,13 +432,30 @@ class CarteAventureWindow(tk.Toplevel):
                         text=etoiles, font=("Segoe UI Emoji", int(8 * scale))
                     )
 
-                # Titre court sous la borne
-                titre_court = les["title"].replace("⚔️ Défi de l'Arène : ", "").replace("⚔️ Combat d'Arène Ultime : ", "")
-                if len(titre_court) > 17:
-                    titre_court = titre_court[:15] + "…"
+                # Titre propre sous la borne (sans coupure brute)
+                titre_net = les["title"].replace("⚔️ Défi de l'Arène : ", "").replace("⚔️ Combat d'Arène Ultime : ", "")
+                mots = textwrap.wrap(titre_net, width=17)
+                if len(mots) > 2:
+                    mots = [mots[0], mots[1][:14] + "…"]
+                titre_affiche = "\n".join(mots)
+
+                th = len(mots) * int(12 * scale) + int(8 * scale)
+                tw = int(54 * scale)
+                ty_pos = ly + rayon + int(10 * scale)
+
+                # Cartouche en pierre/parchemin avec ombre douce
+                self.canvas.create_rectangle(
+                    lx - tw + 2, ty_pos, lx + tw + 2, ty_pos + th + 2,
+                    fill="#3b2310", outline="", tags=("milestone", lid)
+                )
+                self.canvas.create_rectangle(
+                    lx - tw, ty_pos - int(2 * scale), lx + tw, ty_pos + th,
+                    fill="#fcf8f0", outline="#cbb592", width=1, tags=("milestone", lid)
+                )
                 self.canvas.create_text(
-                    lx, ly + rayon + int(14 * scale), text=titre_court,
-                    font=police_corps(8, gras=True), fill="#2e1a0b"
+                    lx, ty_pos + th // 2 - int(1 * scale), text=titre_affiche,
+                    font=police_corps(7, gras=True), fill="#2e1a0b", justify=tk.CENTER,
+                    tags=("milestone", lid)
                 )
 
                 # Interaction au clic & survol
@@ -309,12 +477,12 @@ class CarteAventureWindow(tk.Toplevel):
                 self.canvas.tag_bind(lid, "<Enter>", _survol_borne)
                 self.canvas.tag_bind(lid, "<Leave>", _quitter_borne)
 
-        # Lancer le halo pulsant sur la borne active
+        # Lancer le halo pulsant et l'avatar du héros sur la borne active
         if self._active_milestone:
             self._animer_halo()
 
     def _animer_halo(self):
-        """Anime un halo lumineux ondulant autour de la prochaine étape à conquérir."""
+        """Anime un halo lumineux ondulant et le marqueur avatar du héros sur la prochaine étape."""
         if not self._active_milestone or not self.canvas.winfo_exists():
             return
 
@@ -331,7 +499,31 @@ class CarteAventureWindow(tk.Toplevel):
             lx - r, ly - r, lx + r, ly + r,
             outline=couleur, width=3, tags=("halo_actif",)
         )
-        self._pulse_job = self.after(100, self._animer_halo)
+        self.canvas.create_oval(
+            lx - r - 4, ly - r - 4, lx + r + 4, ly + r + 4,
+            outline="#d4af37", width=1, tags=("halo_actif",)
+        )
+
+        # Flottement doux de l'avatar du joueur au-dessus de la borne
+        bob = int(math.sin(self._pulse_frame * (math.pi / 8)) * 3)
+        avatar_y = ly - r_base - 32 + bob
+
+        if self._photo_avatar:
+            self.canvas.create_image(lx, avatar_y, image=self._photo_avatar, tags=("halo_actif",))
+
+        # Bulle dorée "Tu es ici !"
+        b_w, b_h = 42, 11
+        by = avatar_y - 28
+        self.canvas.create_rectangle(
+            lx - b_w, by - b_h, lx + b_w, by + b_h,
+            fill="#d4af37", outline="#1a1409", width=1, tags=("halo_actif",)
+        )
+        self.canvas.create_text(
+            lx, by, text="📍 Tu es ici !",
+            font=police_corps(8, gras=True), fill="#1a1409", tags=("halo_actif",)
+        )
+
+        self._pulse_job = self.after(90, self._animer_halo)
 
     def _montrer_tooltip(self, lecon, lx, ly):
         """Affiche une infobulle flottante élégante au survol d'une borne."""

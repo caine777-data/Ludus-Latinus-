@@ -17,6 +17,7 @@ except ImportError:
 from app import audio
 from app import progress as prog
 from app.polices import police_corps, police_titre
+from app.theme import est_sombre
 from content.cartes_data import (
     CARTES_COLLECTION,
     CATEGORIES,
@@ -42,7 +43,19 @@ class CarteWidget(tk.Frame):
 
         rarete = RARETES.get(self.carte["rarete"], RARETES["commune"])
         couleur_rarete = rarete["couleur"] if self.debloquee else "#555555"
-        bg_card = "#1f2335" if self.debloquee else "#181a24"
+
+        sombre = True
+        try:
+            sombre = est_sombre(master.cget("bg"))
+        except Exception:
+            pass
+
+        if sombre:
+            bg_card = "#1f2335" if self.debloquee else "#181a24"
+            fg_titre = "#ffd700" if self.debloquee else "#9aa0b4"
+        else:
+            bg_card = "#ffffff" if self.debloquee else "#f5ece1"
+            fg_titre = "#8c1d1d" if self.debloquee else "#6e5d4a"
 
         w = int((140 if taille_reduite else 260) * scale)
         h = int((210 if taille_reduite else 380) * scale)
@@ -51,7 +64,7 @@ class CarteWidget(tk.Frame):
         # Titre de la carte
         titre_txt = self.carte["nom"] if self.debloquee else "Mystère"
         titre_font = police_titre(9 if taille_reduite else 14)
-        self.lbl_titre = tk.Label(self, text=titre_txt, font=titre_font, bg=bg_card, fg="#ffd700" if self.debloquee else "#777777")
+        self.lbl_titre = tk.Label(self, text=titre_txt, font=titre_font, bg=bg_card, fg=fg_titre)
         self.lbl_titre.pack(fill=tk.X, pady=(4, 2))
 
         # Illustration
@@ -62,15 +75,16 @@ class CarteWidget(tk.Frame):
         if self.debloquee:
             self._charger_image(img_h)
         else:
-            self.img_lbl.configure(text="❓", font=("Segoe UI Emoji", 28), fg="#444444")
+            self._charger_dos(img_h if taille_reduite else int(img_h * 1.25))
 
         # Rareté & Stats
         stats_frame = tk.Frame(self, bg=bg_card)
         stats_frame.pack(fill=tk.X, padx=4, pady=2)
 
-        badge_txt = rarete["nom"] if self.debloquee else "Inconnue"
+        badge_txt = rarete["nom"] if self.debloquee else "Scellée"
         badge_lbl = tk.Label(stats_frame, text=badge_txt, font=("Georgia", 8, "bold"),
-                             bg=couleur_rarete, fg="#ffffff" if self.debloquee else "#888888", padx=4)
+                             bg=couleur_rarete if self.debloquee else "#3d1f24",
+                             fg="#ffffff" if self.debloquee else "#d4af37", padx=4)
         badge_lbl.pack(side=tk.LEFT)
 
         if self.debloquee:
@@ -82,18 +96,42 @@ class CarteWidget(tk.Frame):
             def_lbl.pack(side=tk.RIGHT, padx=2)
 
         # Citation si mode agrandi
-        if not taille_reduite and self.debloquee:
-            lbl_latin = tk.Label(self, text=f"« {self.carte['citation']} »", font=("Georgia", 10, "italic"),
-                                 bg=bg_card, fg="#2ecc71", wraplength=240)
-            lbl_latin.pack(pady=6)
-            lbl_desc = tk.Label(self, text=self.carte["anecdote"], font=("Georgia", 9),
-                                bg=bg_card, fg="#dcd6cd", wraplength=240, justify=tk.LEFT)
-            lbl_desc.pack(padx=8, pady=4)
+        if not taille_reduite:
+            if self.debloquee:
+                lbl_latin = tk.Label(self, text=f"« {self.carte['citation']} »", font=("Georgia", 10, "italic"),
+                                     bg=bg_card, fg="#2ecc71", wraplength=240)
+                lbl_latin.pack(pady=6)
+                lbl_desc = tk.Label(self, text=self.carte["anecdote"], font=("Georgia", 9),
+                                    bg=bg_card, fg="#dcd6cd", wraplength=240, justify=tk.LEFT)
+                lbl_desc.pack(padx=8, pady=4)
+            else:
+                lbl_mystere = tk.Label(
+                    self,
+                    text="📜 Relique Antique Scellée\n\nCette carte sommeille encore dans les archives du Sénat.\nOuvre des Boosters Mythologiques pour la révéler !",
+                    font=("Georgia", 9, "italic"),
+                    bg=bg_card, fg="#a9b1d6", wraplength=240, justify=tk.CENTER
+                )
+                lbl_mystere.pack(padx=8, pady=16)
 
         if self.command:
             self.bind("<Button-1>", lambda e: self.command(self.carte))
             for child in self.winfo_children():
                 child.bind("<Button-1>", lambda e: self.command(self.carte))
+
+    def _charger_dos(self, h_cible):
+        dos_path = ASSETS_IMAGES / "dos_carte_collector.png"
+        if dos_path.exists() and HAS_PIL:
+            try:
+                im = Image.open(dos_path).convert("RGBA")
+                aspect = im.width / max(1, im.height)
+                w_cible = int(h_cible * aspect)
+                im_res = im.resize((w_cible, h_cible), Image.Resampling.LANCZOS)
+                self._photo = ImageTk.PhotoImage(im_res)
+                self.img_lbl.configure(image=self._photo)
+                return
+            except Exception:
+                pass
+        self.img_lbl.configure(text="🏛️", font=("Segoe UI Emoji", 28), fg="#d4af37")
 
     def _charger_image(self, h_cible):
         img_name = self.carte.get("img", "boss_mercure_cadre_140.png")
@@ -169,8 +207,12 @@ class BoosterOpeningDialog(tk.Toplevel):
                 # SFX selon rareté
                 if c["rarete"] == "legendaire":
                     audio.play_fanfare()
+                    audio.play_booster_reveal()
+                    if hasattr(self.app, "_animer_confettis"):
+                        self.app._animer_confettis()
                 elif c["rarete"] in ("epique", "rare"):
                     audio.play_coin_cascade()
+                    audio.play_booster_reveal()
                 else:
                     audio.play_coin()
 
@@ -256,11 +298,11 @@ class AlbumCartesWindow(tk.Toplevel):
         corps.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Panneau Inspecteur agrandi à droite
-        self.inspect_frame = tk.Frame(corps, bg=self.C["panel"], width=280, bd=1, relief="ridge")
+        self.inspect_frame = tk.Frame(corps, bg=self.C["panel"], width=290, bd=1, relief="ridge")
         self.inspect_frame.pack(side=tk.RIGHT, fill=tk.Y, padx=(10, 0))
 
         tk.Label(self.inspect_frame, text="🔍 DÉTAILS DE LA CARTE", font=police_titre(12),
-                 bg=self.C["panel"], fg="#ffd700").pack(pady=10)
+                 bg=self.C["panel"], fg=self.C["heading"]).pack(pady=10)
         self.inspect_conteneur = tk.Frame(self.inspect_frame, bg=self.C["panel"])
         self.inspect_conteneur.pack(expand=True, fill=tk.BOTH, padx=10, pady=5)
 
@@ -278,8 +320,25 @@ class AlbumCartesWindow(tk.Toplevel):
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.grid_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+        self.canvas.bind("<Configure>", self._on_canvas_configure)
 
         self._rafraichir_album()
+
+    def _on_canvas_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        cols = max(3, min(5, (event.width - 24) // 150))
+        if getattr(self, "_derniere_cols", None) != cols:
+            self._derniere_cols = cols
+            self._reorganiser_grille(cols)
+
+    def _reorganiser_grille(self, cols):
+        for c in range(cols):
+            self.grid_frame.columnconfigure(c, weight=1)
+        children = self.grid_frame.winfo_children()
+        for idx, w in enumerate(children):
+            r = idx // cols
+            c = idx % cols
+            w.grid(row=r, column=c, padx=8, pady=8)
 
     def _filtrer_categorie(self, cat):
         audio.play_click()
@@ -319,7 +378,13 @@ class AlbumCartesWindow(tk.Toplevel):
             if self.categorie_filtre == "toutes" or c["categorie"] == self.categorie_filtre
         ]
 
-        cols = 4
+        cw = max(580, self.canvas.winfo_width())
+        cols = max(3, min(5, (cw - 24) // 150))
+        self._derniere_cols = cols
+
+        for c_idx in range(cols):
+            self.grid_frame.columnconfigure(c_idx, weight=1)
+
         for idx, c in enumerate(cartes_affichees):
             r = idx // cols
             col = idx % cols

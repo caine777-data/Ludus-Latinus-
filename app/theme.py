@@ -141,3 +141,14 @@ def eclaircir(hexc, t=0.12):
 
 def assombrir(hexc, t=0.15):
     return melange(hexc, "#000000", t)
+
+
+def est_sombre(hexc):
+    """Détermine si une couleur hexadécimale est sombre (luminance relative < 0.5)."""
+    try:
+        h = hexc.lstrip("#")
+        r, g, b = [int(h[i:i + 2], 16) for i in (0, 2, 4)]
+        lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255.0
+        return lum < 0.5
+    except Exception:
+        return False
