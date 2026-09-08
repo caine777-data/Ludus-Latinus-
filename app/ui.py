@@ -703,9 +703,52 @@ class PythonLearnApp:
         self.data["sesterces"] = self.data.get("sesterces", 0) + montant
         prog.save_progress(self.data)
         self._refresh_header_stats()
+        if montant > 0:
+            if montant >= 25:
+                audio.play_coin_cascade()
+            else:
+                audio.play_coin()
+            self._animer_gain_sesterces(montant)
         try:
             from app.succes import verifier_tous_succes
             verifier_tous_succes(self)
+        except Exception:
+            pass
+
+    def _animer_gain_sesterces(self, montant):
+        """Anime une bulle dorée flottante '+X 🪙' montant vers le compteur de sesterces."""
+        try:
+            if not hasattr(self, "hdr_sesterces_lbl") or not self.hdr_sesterces_lbl.winfo_exists():
+                return
+            lbl = tk.Label(
+                self.root,
+                text=f"+{montant} 🪙",
+                font=(self.body.cget("family"), 10, "bold"),
+                bg="#f59e0b",
+                fg="#1a1409",
+                relief="flat",
+                padx=8,
+                pady=2,
+            )
+            rx = self.hdr_sesterces_lbl.winfo_rootx() - self.root.winfo_rootx()
+            ry = self.hdr_sesterces_lbl.winfo_rooty() - self.root.winfo_rooty() + 24
+            rx = max(20, min(self.root.winfo_width() - 80, rx))
+            lbl.place(x=rx, y=ry)
+
+            self.hdr_sesterces_lbl.configure(fg="#ffffff")
+            self.root.after(250, lambda: self.hdr_sesterces_lbl.configure(fg="#d4af37"))
+
+            def _step_float(frame=0, cy=ry):
+                if frame >= 18 or not lbl.winfo_exists():
+                    try:
+                        lbl.destroy()
+                    except Exception:
+                        pass
+                    return
+                lbl.place(x=rx, y=cy - frame * 2)
+                self.root.after(30, lambda: _step_float(frame + 1, cy))
+
+            _step_float(0, ry)
         except Exception:
             pass
 
@@ -885,40 +928,49 @@ class PythonLearnApp:
         self._maj_breadcrumbs()
 
     def _animer_confettis(self):
-        """Anime une cascade de confettis vectoriels sur l'interface lors d'une réussite."""
+        """Anime une pluie festive de symboles romains, étoiles et étincelles dorées sur l'interface."""
         try:
-            cv = tk.Canvas(self.root, bg=self.C["panel"], highlightthickness=0)
-            cv.place(relx=0, rely=0, relwidth=1, relheight=1)
-            couleurs = [self.C["accent"], self.C["ok"], self.C["code"], self.C["heading"],
-                        "#ff5555", "#50fa7b", "#ffb86c", "#8be9fd", "#bd93f9"]
+            symboles = ["✨", "⭐", "🪙", "🌿", "🎉", "🏛️", "🏅"]
+            couleurs = ["#d4af37", "#f59e0b", "#10b981", "#3b82f6", "#ec4899", "#8b5cf6"]
+            w = self.root.winfo_width() or 900
             particules = []
-            w = self.root.winfo_width() or 800
-            for _ in range(45):
-                px = random.randint(20, max(40, w - 20))
-                py = random.randint(-80, 20)
-                vx = random.uniform(-1.5, 1.5)
-                vy = random.uniform(3.5, 7.5)
-                taille = random.randint(6, 11)
+
+            for _ in range(24):
+                symb = random.choice(symboles)
                 c = random.choice(couleurs)
-                pid = cv.create_rectangle(px, py, px + taille, py + taille, fill=c, outline="")
-                particules.append({"id": pid, "x": px, "y": py, "vx": vx, "vy": vy, "w": taille})
+                px = random.randint(30, max(60, w - 60))
+                py = random.randint(5, 70)
+                vy = random.uniform(3.0, 6.5)
+                vx = random.uniform(-1.0, 1.0)
+                sz = random.randint(9, 14)
+                lbl = tk.Label(
+                    self.root,
+                    text=symb,
+                    font=("Segoe UI Emoji", sz),
+                    bg=self.C["panel"],
+                    fg=c,
+                    relief="flat"
+                )
+                lbl.place(x=px, y=py)
+                particules.append({"lbl": lbl, "x": px, "y": py, "vx": vx, "vy": vy})
 
             def step(frame=0):
-                if frame > 45 or not cv.winfo_exists():
-                    try:
-                        cv.destroy()
-                    except Exception:
-                        pass
+                if frame > 25:
+                    for p in particules:
+                        try:
+                            p["lbl"].destroy()
+                        except Exception:
+                            pass
                     return
                 for p in particules:
                     p["x"] += p["vx"]
                     p["y"] += p["vy"]
-                    p["vy"] += 0.15
+                    p["vy"] += 0.2
                     try:
-                        cv.coords(p["id"], p["x"], p["y"], p["x"] + p["w"], p["y"] + p["w"])
+                        p["lbl"].place(x=int(p["x"]), y=int(p["y"]))
                     except Exception:
                         pass
-                self.root.after(25, lambda: step(frame + 1))
+                self.root.after(30, lambda: step(frame + 1))
 
             step(0)
         except Exception:
@@ -2310,6 +2362,7 @@ class PythonLearnApp:
         if all(lesson_done(lecon, self.data["completed"])
                for lecon in level["lessons"]):
             if prog.award_badge(self.data, level["id"]):
+                audio.play_tuba_fanfare()
                 self._populate_tree()
                 self._refresh_badges()
                 self._refresh_status()
@@ -2324,6 +2377,7 @@ class PythonLearnApp:
                     prog.award_badge(self.data, "triomphe_5eme")
                     self.ajouter_sesterces(200)
                     self.reagir_triomphe("Triomphe de 5ème ! Tu as conquis tout le programme des Origines !")
+                    audio.play_triumph_grand()
                     self._animer_confettis()
                     from app.triomphe import Triomphe5emeDialog
                     self.root.after(300, lambda: Triomphe5emeDialog(self.root, self))
@@ -2337,6 +2391,7 @@ class PythonLearnApp:
                     prog.award_badge(self.data, "triomphe_4eme")
                     self.ajouter_sesterces(250)
                     self.reagir_triomphe("Triomphe de 4ème ! Tu as maîtrisé la République et ses héros !")
+                    audio.play_triumph_grand()
                     self._animer_confettis()
 
                 tous_mondes_termines = all(
@@ -2348,6 +2403,7 @@ class PythonLearnApp:
                         prog.award_badge(self.data, "triomphe_cycle4")
                         self.ajouter_sesterces(500)
                     self.reagir_triomphe("Triomphe absolu du Cycle 4 ! Tout le collège est conquis !")
+                    audio.play_triumph_grand()
                     self._animer_confettis()
                 else:
                     msg = f"Parcours « {nom} » terminé ! Badge {nb}/{len(CURRICULUM)}."

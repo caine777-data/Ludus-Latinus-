@@ -289,11 +289,14 @@ class ChiffreCesarWindow(tk.Toplevel):
         saisie = self.entree_dechiffre.get().strip().upper()
         if saisie == m["clair_attendu"]:
             audio.play_fanfare()
+            audio.speak_latin(m["clair_attendu"])
             self.lbl_feedback_mission.configure(
                 text=f"✓ Décodage Parfait ! Traduction : « {m['traduction']} »\n+ {m['gain']} Sesterces !",
                 fg="#2ecc71"
             )
             self.app.ajouter_sesterces(m["gain"])
+            if hasattr(self.app, "_animer_confettis"):
+                self.app._animer_confettis()
             try:
                 from app.succes import incrementer_stat_succes
                 incrementer_stat_succes(self.app, "cesar_resolus")
@@ -322,4 +325,4 @@ class ChiffreCesarWindow(tk.Toplevel):
         chiffre = chiffrer_cesar(texte, self.cle_actuelle)
         self.txt_bac_chiffre.delete("1.0", tk.END)
         self.txt_bac_chiffre.insert(tk.END, chiffre)
-        audio.play_parchemin()
+        audio.play_stylet()

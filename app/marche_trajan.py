@@ -156,8 +156,19 @@ class MarcheTrajanWindow(tk.Toplevel):
 
         self.lbl_art_nom = tk.Label(info_art, text="Article", font=police_titre(13), bg="#1a1b26", fg="#ffffff")
         self.lbl_art_nom.pack(anchor=tk.W)
-        self.lbl_art_latin = tk.Label(info_art, text="Nom latin", font=police_corps(10, italique=True), bg="#1a1b26", fg="#2ecc71")
-        self.lbl_art_latin.pack(anchor=tk.W)
+
+        row_latin = tk.Frame(info_art, bg="#1a1b26")
+        row_latin.pack(anchor=tk.W, pady=(2, 0))
+        self.lbl_art_latin = tk.Label(row_latin, text="Nom latin", font=police_corps(10, italique=True), bg="#1a1b26", fg="#2ecc71")
+        self.lbl_art_latin.pack(side=tk.LEFT)
+        self.btn_art_audio = tk.Button(
+            row_latin, text="🔊 Écouter", font=police_corps(8),
+            bg="#24283b", fg="#ffd700", activebackground="#2a2e45", activeforeground="#ffd700",
+            relief="flat", padx=6, pady=1, cursor="hand2",
+            command=self._ecouter_latin
+        )
+        self.btn_art_audio.pack(side=tk.LEFT, padx=(8, 0))
+
         self.lbl_art_consigne = tk.Label(info_art, text="Consigne", font=police_corps(10), bg="#1a1b26", fg="#dcd6cd")
         self.lbl_art_consigne.pack(anchor=tk.W, pady=(4, 0))
 
@@ -206,7 +217,13 @@ class MarcheTrajanWindow(tk.Toplevel):
         self.lbl_feedback = tk.Label(self.etal_frame, text="", font=police_corps(11, gras=True), bg="#24283b")
         self.lbl_feedback.pack()
 
+    def _ecouter_latin(self):
+        """Prononce le terme latin de l'article en vente."""
+        if self.article_courant and "latin" in self.article_courant:
+            audio.speak_latin(self.article_courant["latin"])
+
     def _changer_mode(self, mode):
+        audio.play_parchemin()
         self.mode = mode
         self.btn_mode_composer.configure(bg=self.C["accent"] if mode == "composer" else self.C["editor"],
                                         fg=self.C["sel_fg"] if mode == "composer" else self.C["fg"])
@@ -217,10 +234,12 @@ class MarcheTrajanWindow(tk.Toplevel):
         self._nouveau_defi()
 
     def _ajouter_lettre(self, lettre):
+        audio.play_click()
         self.proposition_romaine += lettre
         self.zone_saisie.configure(text=self.proposition_romaine)
 
     def _effacer_lettre(self):
+        audio.play_click()
         self.proposition_romaine = self.proposition_romaine[:-1]
         self.zone_saisie.configure(text=self.proposition_romaine)
 
@@ -308,7 +327,10 @@ class MarcheTrajanWindow(tk.Toplevel):
                 incrementer_stat_succes(self.app, "marche_transactions")
             except Exception:
                 pass
-            audio.play_coin()
+            if self.score_session in (50, 100):
+                audio.play_fanfare()
+            else:
+                audio.play_coin()
             self.lbl_score.configure(
                 text=f"Score : {self.score_session} pts | 🪙 {self.app.data.get('sesterces', 0)} Sesterces"
             )

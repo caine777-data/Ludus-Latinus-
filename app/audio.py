@@ -155,6 +155,27 @@ def _init_cache():
         _CACHED_SOUNDS["carte_flip"] = _generer_wav_tones([
             (400, 0.02), (750, 0.03), (1100, 0.04)
         ], volume=0.35)
+
+        # Gravure au stylet / calamus sur tablette de cire
+        _CACHED_SOUNDS["stylet"] = _generer_wav_tones([
+            (2200, 0.015), (1700, 0.02), (2800, 0.015)
+        ], volume=0.30)
+
+        # Révélation magique de carte mythologique rare / légendaire
+        _CACHED_SOUNDS["booster_reveal"] = _generer_wav_tones([
+            (523, 0.05), (659, 0.05), (784, 0.05), (1046, 0.06), (1318, 0.08), (1568, 0.22)
+        ], volume=0.50)
+
+        # Heurt de bouclier romain en bronze / scutum
+        _CACHED_SOUNDS["bouclier"] = _generer_wav_tones([
+            (180, 0.06), (140, 0.08), (95, 0.14)
+        ], volume=0.45)
+
+        # Grand Triomphe Impérial : fanfare héroïque étendue
+        _CACHED_SOUNDS["triumph_grand"] = _generer_wav_tones([
+            (392, 0.10), (523, 0.10), (659, 0.12), (784, 0.18),
+            (1046, 0.30), (784, 0.12), (1046, 0.45)
+        ], volume=0.60)
     except Exception:
         pass
 
@@ -278,6 +299,38 @@ def play_carte_flip():
         return
     _init_cache()
     _play_bytes_async(_CACHED_SOUNDS.get("carte_flip"))
+
+
+def play_stylet():
+    """Gravure au stylet / écriture sur tablette de cire antique."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("stylet"))
+
+
+def play_booster_reveal():
+    """Arpège magique d'apparition d'une carte mythologique rare."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("booster_reveal"))
+
+
+def play_bouclier():
+    """Heurt de bouclier romain en bronze."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("bouclier"))
+
+
+def play_triumph_grand():
+    """Grand Triomphe : fanfare impériale étendue avec cuivres romains."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("triumph_grand"))
 
 
 _SPEAK_LISTENERS = []
