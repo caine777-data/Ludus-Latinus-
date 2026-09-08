@@ -5,9 +5,9 @@ halo pulsant sur la prochaine leçon et infobulles riches.
 """
 
 import math
-from pathlib import Path
 import textwrap
 import tkinter as tk
+from pathlib import Path
 from tkinter import ttk
 
 try:

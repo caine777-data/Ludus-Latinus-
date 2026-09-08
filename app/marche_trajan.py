@@ -4,9 +4,9 @@ Permet aux élèves de maîtriser les chiffres romains (I, V, X, L, C, D, M)
 et le calcul mental à travers des transactions au cœur du Forum romain.
 """
 
-from pathlib import Path
 import random
 import tkinter as tk
+from pathlib import Path
 
 try:
     from PIL import Image, ImageTk
@@ -16,7 +16,7 @@ except ImportError:
 
 from app import audio
 from app.polices import police_corps, police_titre
-from app.theme import est_sombre
+from app.theme import THEMES, est_sombre
 
 ASSETS_IMAGES = Path(__file__).resolve().parent.parent / "assets" / "images"
 
@@ -77,8 +77,7 @@ class MarcheTrajanWindow(tk.Toplevel):
     def __init__(self, master, app):
         super().__init__(master)
         self.app = app
-        from app.theme import THEMES, est_sombre
-        self.C = getattr(app, "C", None) or THEMES["Rome Impériale"]
+        self.C = getattr(app, "C", None) or THEMES["rome"]
 
         self.title("🏺 Le Marché de Trajan — Chiffres Romains & Sesterces")
         from app.responsive import adapter_geometrie_fenetre

@@ -6,6 +6,10 @@ Fiches illustrées et anecdotes insolites débloquées au fil de la progression.
 import tkinter as tk
 from tkinter import ttk
 
+from app import audio
+from app.polices import police_corps, police_titre
+from app.theme import THEMES, est_sombre
+
 CARTES_MUSEE = [
     {
         "id": "rome_fondation",
@@ -145,10 +149,8 @@ class MuseeWindow(tk.Toplevel):
         self._build_ui()
 
     def _build_ui(self):
-        C = self.app.C
-        from app import audio
-        from app.theme import est_sombre
-        self.sombre = est_sombre(C["bg"])
+        C = getattr(self.app, "C", None) or THEMES["rome"]
+        self.sombre = est_sombre(C.get("bg", "#faf6ee"))
 
         hdr = tk.Frame(self, bg=C["panel"], padx=16, pady=12)
         hdr.pack(fill=tk.X)
@@ -227,7 +229,6 @@ class MuseeWindow(tk.Toplevel):
             self._afficher_carte(sel[0], play_sound=True)
 
     def _afficher_carte(self, idx, play_sound=True):
-        from app import audio
         from app.cadres import charger_photo_romaine
 
         if play_sound:
