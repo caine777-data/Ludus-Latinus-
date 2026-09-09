@@ -1,4 +1,4 @@
-name: ludus_latinus_mobile
+﻿name: ludus_latinus_mobile
 description: "Ludus Latinus — L'épopée de la langue latine pour le Collège et les passionnés de Rome."
 publish_to: 'none'
 version: 1.0.0+1
@@ -21,3 +21,6 @@ flutter:
 
   assets:
     - assets/data/ludus_latinus_dataset.json
+    - assets/images/
+    - assets/images/lupulus/
+    - assets/images/circus/

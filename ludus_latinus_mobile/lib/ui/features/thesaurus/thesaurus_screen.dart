@@ -1,10 +1,11 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../../data/models/thesaurus_entry.dart';
 import '../../../data/repositories/game_repository.dart';
 
-/// Dictionnaire bilingue latin-français et tables grammaticales tactiles.
+/// Dictionnaire bilingue latin-français et tables grammaticales colorées.
 class ThesaurusScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -25,7 +26,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -52,15 +53,16 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('📖 THESAURUS'),
+        title: const Text('THESAURUS'),
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: RomanColors.imperialGold,
           labelColor: RomanColors.imperialPurple,
           unselectedLabelColor: Colors.black54,
           tabs: const [
-            Tab(icon: Icon(Icons.menu_book), text: 'Dictionnaire'),
-            Tab(icon: Icon(Icons.table_chart), text: 'Déclinaisons'),
+            Tab(icon: Icon(Icons.menu_book_outlined, size: 20), text: 'Dictionnaire'),
+            Tab(icon: Icon(Icons.table_rows_outlined, size: 20), text: 'Déclinaisons'),
+            Tab(icon: Icon(Icons.auto_stories_outlined, size: 20), text: 'Conjugaisons'),
           ],
         ),
       ),
@@ -69,6 +71,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
         children: [
           _buildDictionaryTab(),
           _buildDeclensionsTab(),
+          _buildConjugationsTab(),
         ],
       ),
     );
@@ -110,13 +113,11 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFFD4AF37)),
+                    borderSide: const BorderSide(color: RomanColors.marbleBorder),
                   ),
                 ),
                 onChanged: (val) {
-                  setState(() {
-                    _searchQuery = val;
-                  });
+                  setState(() => _searchQuery = val);
                 },
               ),
               const SizedBox(height: 8),
@@ -135,17 +136,16 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         labelStyle: TextStyle(
                           color: isSel ? Colors.white : RomanColors.charcoal,
                           fontWeight: isSel ? FontWeight.bold : FontWeight.normal,
-                          fontSize: 12,
+                          fontSize: 11.5,
                         ),
-                        backgroundColor: RomanColors.travertinWhite,
+                        backgroundColor: Colors.white,
                         side: BorderSide(
-                          color: isSel ? RomanColors.imperialPurple : Colors.black26,
+                          color: isSel ? RomanColors.imperialPurple : const Color(0xFFE2D6C5),
                         ),
                         onSelected: (selected) {
                           if (selected) {
-                            setState(() {
-                              _selectedCategory = cat;
-                            });
+                            HapticFeedback.selectionClick();
+                            setState(() => _selectedCategory = cat);
                           }
                         },
                       ),
@@ -157,7 +157,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           ),
         ),
 
-        // Résumé du nombre
+        // Résumé
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           child: Row(
@@ -168,22 +168,22 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                 style: const TextStyle(fontSize: 12, color: Colors.black54, fontStyle: FontStyle.italic),
               ),
               const Text(
-                'Vocabulaire Collège & Lycée',
+                'Vocabulaire Cycle 4',
                 style: TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
               ),
             ],
           ),
         ),
 
-        // Liste des entrées
+        // Liste des termes
         Expanded(
           child: entries.isEmpty
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('📜', style: TextStyle(fontSize: 48)),
-                      const SizedBox(height: 12),
+                      const Text('📜', style: TextStyle(fontSize: 44)),
+                      const SizedBox(height: 10),
                       Text(
                         'Aucun mot trouvé pour «  »',
                         style: const TextStyle(color: Colors.black54),
@@ -201,13 +201,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: const Color(0xFFE8DFC8), width: 1.2),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
                         boxShadow: const [
                           BoxShadow(
-                            color: Colors.black12,
-                            offset: Offset(0, 1),
-                            blurRadius: 3,
+                            color: Color(0x0A000000),
+                            offset: Offset(0, 2),
+                            blurRadius: 4,
                           )
                         ],
                       ),
@@ -219,12 +219,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                               Text(
                                 item.latin,
                                 style: const TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'serif',
                                   color: RomanColors.imperialPurple,
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 8),
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                 decoration: BoxDecoration(
@@ -235,11 +236,25 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                 child: Text(
                                   ' '.trim(),
                                   style: const TextStyle(
-                                    fontSize: 11,
+                                    fontSize: 10.5,
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF7A5901),
                                   ),
                                 ),
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
+                                tooltip: 'Prononciation',
+                                onPressed: () {
+                                  HapticFeedback.lightImpact();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('🔊 Prononciation : ""'),
+                                      duration: const Duration(seconds: 1),
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -249,7 +264,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black87,
+                              color: RomanColors.charcoal,
                             ),
                           ),
                           if (item.etym.isNotEmpty) ...[
@@ -263,7 +278,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                     style: const TextStyle(
                                       fontSize: 12,
                                       fontStyle: FontStyle.italic,
-                                      color: Color(0xFF2E6F40),
+                                      color: Color(0xFF1E5E3A),
                                     ),
                                   ),
                                 ),
@@ -316,13 +331,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           title: '1ère Déclinaison (Rosa, ae, f.)',
           type: 'Noms féminins en -a',
           cases: const [
-            ['Cas', 'Singulier', 'Pluriel', 'Fonction principale'],
-            ['Nominatif', 'ros-a', 'ros-ae', 'Sujet / Attribut'],
-            ['Vocatif', 'ros-a', 'ros-ae', 'Apostrophe / Appel'],
-            ['Accusatif', 'ros-am', 'ros-as', 'Complément d’Objet Direct'],
-            ['Génitif', 'ros-ae', 'ros-arum', 'Complément du Nom (possession)'],
-            ['Datif', 'ros-ae', 'ros-is', 'Complément d’Objet Indirect'],
-            ['Ablatif', 'ros-a', 'ros-is', 'Complément Circonstanciel'],
+            ['Cas', 'Singulier', 'Pluriel', 'Fonction'],
+            ['Nominatif', 'ros-a', 'ros-ae', 'Sujet'],
+            ['Vocatif', 'ros-a', 'ros-ae', 'Appel'],
+            ['Accusatif', 'ros-am', 'ros-as', 'COD'],
+            ['Génitif', 'ros-ae', 'ros-arum', 'Complément du Nom'],
+            ['Datif', 'ros-ae', 'ros-is', 'Attribution / COI'],
+            ['Ablatif', 'ros-a', 'ros-is', 'Circonstanciel'],
           ],
         ),
         const SizedBox(height: 16),
@@ -357,6 +372,41 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
     );
   }
 
+  Widget _buildConjugationsTab() {
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        _buildDeclensionCard(
+          title: 'Verbe ÊTRE (Esse) — Présent & Imparfait',
+          type: 'Verbe irrégulier fondamental',
+          cases: const [
+            ['Personne', 'Présent', 'Imparfait', 'Sens'],
+            ['1re Sg. (ego)', 'sum', 'eram', 'je suis / j''étais'],
+            ['2e Sg. (tu)', 'es', 'eras', 'tu es / tu étais'],
+            ['3e Sg. (is/ea)', 'est', 'erat', 'il est / il était'],
+            ['1re Pl. (nos)', 'sumus', 'eramus', 'nous sommes / étions'],
+            ['2e Pl. (vos)', 'estis', 'eratis', 'vous êtes / étiez'],
+            ['3e Pl. (ii/eae)', 'sunt', 'erant', 'ils sont / étaient'],
+          ],
+        ),
+        const SizedBox(height: 16),
+        _buildDeclensionCard(
+          title: '1ère Conjugaison (Amare — aimer)',
+          type: 'Verbes en -are (Présent de l''indicatif)',
+          cases: const [
+            ['Personne', 'Forme Latine', 'Traduction'],
+            ['1re Sg.', 'am-o', 'j''aime'],
+            ['2e Sg.', 'am-as', 'tu aimes'],
+            ['3e Sg.', 'am-at', 'il / elle aime'],
+            ['1re Pl.', 'am-amus', 'nous aimons'],
+            ['2e Pl.', 'am-atis', 'vous aimez'],
+            ['3e Pl.', 'am-ant', 'ils / elles aiment'],
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildDeclensionCard({
     required String title,
     required String type,
@@ -365,13 +415,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: RomanColors.imperialGold, width: 1.2),
         boxShadow: const [
           BoxShadow(
-            color: Colors.black12,
-            offset: Offset(0, 2),
-            blurRadius: 4,
+            color: Color(0x0F000000),
+            offset: Offset(0, 3),
+            blurRadius: 8,
           )
         ],
       ),
@@ -383,8 +433,8 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
             decoration: const BoxDecoration(
               color: RomanColors.imperialPurple,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+                topLeft: Radius.circular(14),
+                topRight: Radius.circular(14),
               ),
             ),
             child: Column(
@@ -395,7 +445,8 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 13.5,
+                    fontFamily: 'serif',
                   ),
                 ),
                 Text(
@@ -414,22 +465,22 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
               headingRowHeight: 36,
               dataRowMinHeight: 32,
               dataRowMaxHeight: 38,
-              columnSpacing: 20,
+              columnSpacing: 22,
               headingTextStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 12,
+                fontSize: 11.5,
                 color: RomanColors.charcoal,
               ),
               columns: cases.first.map((col) => DataColumn(label: Text(col))).toList(),
               rows: cases.skip(1).map((row) {
                 final caseName = row.first;
                 Color caseColor = Colors.transparent;
-                if (caseName.contains('Nominatif')) caseColor = CaseColors.nominative.withOpacity(0.12);
-                if (caseName.contains('Vocatif')) caseColor = CaseColors.vocative.withOpacity(0.12);
-                if (caseName.contains('Accusatif')) caseColor = CaseColors.accusative.withOpacity(0.12);
-                if (caseName.contains('Génitif')) caseColor = CaseColors.genitive.withOpacity(0.12);
-                if (caseName.contains('Datif')) caseColor = CaseColors.dative.withOpacity(0.12);
-                if (caseName.contains('Ablatif')) caseColor = CaseColors.ablative.withOpacity(0.12);
+                if (caseName.contains('Nominatif')) caseColor = CaseColors.nominative.withOpacity(0.08);
+                if (caseName.contains('Vocatif')) caseColor = CaseColors.vocative.withOpacity(0.08);
+                if (caseName.contains('Accusatif')) caseColor = CaseColors.accusative.withOpacity(0.08);
+                if (caseName.contains('Génitif')) caseColor = CaseColors.genitive.withOpacity(0.08);
+                if (caseName.contains('Datif')) caseColor = CaseColors.dative.withOpacity(0.08);
+                if (caseName.contains('Ablatif')) caseColor = CaseColors.ablative.withOpacity(0.08);
 
                 return DataRow(
                   color: MaterialStateProperty.all(caseColor),
@@ -441,7 +492,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         style: TextStyle(
                           fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
                           fontSize: 12,
-                          color: isHeader ? RomanColors.imperialPurple : Colors.black87,
+                          color: isHeader ? RomanColors.imperialPurple : RomanColors.charcoal,
                         ),
                       ),
                     );

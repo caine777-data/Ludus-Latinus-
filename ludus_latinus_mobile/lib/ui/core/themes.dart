@@ -1,67 +1,87 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
-/// Palette chromatique authentique de la Rome Antique pour Ludus Latinus Mobile.
+/// Palette impériale et esthétique géométrique épurée inspirée de Monument Valley.
 class RomanColors {
-  // Couleurs majeures
-  static const Color imperialPurple = Color(0xFF8B2500);
+  // Fonds architecturaux
+  static const Color travertinWhite = Color(0xFFFBF8F2);
+  static const Color palatinCream = Color(0xFFF5EFEB);
+  static const Color cardSurface = Color(0xFFFFFFFF);
+
+  // Couleurs majeures de Rome
+  static const Color imperialPurple = Color(0xFF56101D);
+  static const Color imperialPurpleLight = Color(0xFF7A1B2D);
   static const Color imperialGold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFF3E5AB);
-  static const Color laurelGreen = Color(0xFF2E6F40);
-  static const Color marbleTravertine = Color(0xFFF8F5EE);
-  static const Color cardLight = Color(0xFFFFFDF9);
+  static const Color goldLight = Color(0xFFFFF7DB);
+  static const Color goldDark = Color(0xFF8B7018);
 
-  // Thème sombre (Nox Romana)
-  static const Color nightDark = Color(0xFF16120E);
-  static const Color nightCard = Color(0xFF241D16);
-  static const Color nightAccent = Color(0xFFE5A759);
+  // Couleurs de triomphe & nature
+  static const Color laurelGreen = Color(0xFF1E5E3A);
+  static const Color laurelLight = Color(0xFFE8F5EE);
+  static const Color skyMediterranean = Color(0xFF7BAFD4);
+  static const Color skySoft = Color(0xFFE8F1F8);
 
-  // Cas grammaticaux (Harmonisés avec le Décrypteur Visuel)
-  static const Color caseNominatif = Color(0xFF1E5AA0); // Bleu royal
-  static const Color caseVocatif = Color(0xFF008B8B);   // Cyan
-  static const Color caseAccusatif = Color(0xFFA82020); // Rouge vermillon
-  static const Color caseGenitif = Color(0xFF2E7D32);   // Émeraude
-  static const Color caseDatif = Color(0xFFC59B27);     // Or ambré
-  static const Color caseAblatif = Color(0xFF7B1FA2);   // Pourpre
+  // Typographie & contrastes
+  static const Color charcoal = Color(0xFF221A16);
+  static const Color terracotta = Color(0xFFB84A39);
+  static const Color marbleBorder = Color(0xFFE5DCCF);
+
+  // Mode sombre impérial
+  static const Color darkBackground = Color(0xFF161214);
+  static const Color darkSurface = Color(0xFF221C20);
+  static const Color darkCard = Color(0xFF2C242A);
 }
 
-/// Thème visuel complet pour l'application Flutter Ludus Latinus.
+/// Couleurs officielles des cas de déclinaisons latines (Anatomia Sententiae)
+class CaseColors {
+  static const Color nominative = Color(0xFF1E88E5); // Bleu Sujet
+  static const Color vocative = Color(0xFF00ACC1);   // Cyan Appel
+  static const Color accusative = Color(0xFFE53935); // Rouge COD
+  static const Color genitive = Color(0xFF43A047);   // Vert Complément du Nom
+  static const Color dative = Color(0xFFFB8C00);     // Orange Attribution / COI
+  static const Color ablative = Color(0xFF8E24AA);   // Pourpre Circonstanciel
+}
+
 class RomanTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      scaffoldBackgroundColor: RomanColors.travertinWhite,
       primaryColor: RomanColors.imperialPurple,
-      scaffoldBackgroundColor: RomanColors.marbleTravertine,
+      cardColor: RomanColors.cardSurface,
       colorScheme: const ColorScheme.light(
         primary: RomanColors.imperialPurple,
         secondary: RomanColors.imperialGold,
-        surface: RomanColors.cardLight,
-        background: RomanColors.marbleTravertine,
+        surface: RomanColors.travertinWhite,
+        background: RomanColors.travertinWhite,
         onPrimary: Colors.white,
         onSecondary: Color(0xFF1A1409),
+        onSurface: RomanColors.charcoal,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: RomanColors.marbleTravertine,
+        backgroundColor: RomanColors.travertinWhite,
         foregroundColor: RomanColors.imperialPurple,
         elevation: 0,
+        scrolledUnderElevation: 1.5,
         centerTitle: true,
         titleTextStyle: TextStyle(
+          color: RomanColors.imperialPurple,
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: RomanColors.imperialPurple,
-          letterSpacing: 0.5,
+          letterSpacing: 1.2,
+          fontFamily: 'serif',
         ),
       ),
-      cardTheme: CardTheme(
-        color: RomanColors.cardLight,
-        elevation: 2,
-        shadowColor: Colors.black12,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFFE2D6C0), width: 1),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: RomanColors.imperialGold,
+          foregroundColor: const Color(0xFF1A1409),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
-      fontFamily: 'Georgia',
     );
   }
 
@@ -69,38 +89,31 @@ class RomanTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      primaryColor: RomanColors.nightAccent,
-      scaffoldBackgroundColor: RomanColors.nightDark,
+      scaffoldBackgroundColor: RomanColors.darkBackground,
+      primaryColor: RomanColors.imperialGold,
+      cardColor: RomanColors.darkCard,
       colorScheme: const ColorScheme.dark(
-        primary: RomanColors.nightAccent,
-        secondary: RomanColors.imperialGold,
-        surface: RomanColors.nightCard,
-        background: RomanColors.nightDark,
-        onPrimary: Colors.black,
-        onSecondary: Color(0xFF1A1409),
+        primary: RomanColors.imperialGold,
+        secondary: RomanColors.terracotta,
+        surface: RomanColors.darkSurface,
+        background: RomanColors.darkBackground,
+        onPrimary: Color(0xFF1A1409),
+        onSecondary: Colors.white,
+        onSurface: Colors.white70,
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: RomanColors.nightDark,
-        foregroundColor: RomanColors.nightAccent,
+        backgroundColor: RomanColors.darkBackground,
+        foregroundColor: RomanColors.imperialGold,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
+          color: RomanColors.imperialGold,
           fontSize: 18,
           fontWeight: FontWeight.bold,
-          color: RomanColors.nightAccent,
-          letterSpacing: 0.5,
+          letterSpacing: 1.2,
+          fontFamily: 'serif',
         ),
       ),
-      cardTheme: CardTheme(
-        color: RomanColors.nightCard,
-        elevation: 2,
-        shadowColor: Colors.black54,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: Color(0xFF3D3024), width: 1),
-        ),
-      ),
-      fontFamily: 'Georgia',
     );
   }
 }

@@ -4,7 +4,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
 
-/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l''élève.
+/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l''élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -34,16 +34,18 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _syncNow() async {
+    HapticFeedback.mediumImpact();
     setState(() => _isSyncing = true);
     await Future.delayed(const Duration(milliseconds: 1200));
     widget.repo.profile.lastSyncDate = DateTime.now().toString().substring(0, 16);
     widget.repo.storageService.saveProfile(widget.repo.profile);
     if (mounted) {
       setState(() => _isSyncing = false);
+      HapticFeedback.heavyImpact();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: RomanColors.laurelGreen,
-          content: Text('⚡ Parchemins synchronisés avec le Tabularium Cloud !'),
+          content: Text('⚡ Parchemins synchronisés avec les archives du Tabularium !'),
         ),
       );
     }
@@ -63,6 +65,7 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void _toggleGender() {
+    HapticFeedback.selectionClick();
     final newGender = widget.repo.profile.genre == 'garcon' ? 'fille' : 'garcon';
     final defaultName = newGender == 'garcon' ? 'Marcus' : 'Julia';
     widget.repo.updateProfileName(defaultName, newGender);
@@ -75,23 +78,30 @@ class _AccountScreenState extends State<AccountScreen> {
       animation: widget.repo,
       builder: (context, _) {
         final profile = widget.repo.profile;
+        final avatarImg = profile.genre == 'fille'
+            ? 'assets/images/avatar_fille_medaillon_140.png'
+            : 'assets/images/avatar_garcon_medaillon_140.png';
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('🏛️ TABULARIUM'),
+            title: const Text('TABULARIUM'),
           ),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              // 1. Identité du Citoyen
+              // 1. Tablette de Cire Antique (Tabula Cerata)
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: RomanColors.travertinWhite,
-                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18),
                   border: Border.all(color: RomanColors.imperialGold, width: 1.5),
                   boxShadow: const [
-                    BoxShadow(color: Colors.black12, offset: Offset(0, 2), blurRadius: 4),
+                    BoxShadow(
+                      color: Color(0x143D1A10),
+                      offset: Offset(0, 4),
+                      blurRadius: 10,
+                    ),
                   ],
                 ),
                 child: Column(
@@ -103,28 +113,18 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Stack(
                             alignment: Alignment.bottomRight,
                             children: [
-                              Container(
-                                width: 68,
-                                height: 68,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: RomanColors.goldLight,
-                                  border: Border.all(color: RomanColors.imperialGold, width: 2),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    profile.genre == 'fille' ? '👸' : '🤴',
-                                    style: const TextStyle(fontSize: 36),
-                                  ),
-                                ),
+                              RomanMedallion(
+                                imagePath: avatarImg,
+                                size: 70,
+                                fallbackEmoji: profile.genre == 'fille' ? '👸' : '🤴',
                               ),
                               Container(
-                                padding: const EdgeInsets.all(3),
+                                padding: const EdgeInsets.all(4),
                                 decoration: const BoxDecoration(
                                   color: RomanColors.imperialPurple,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.sync, size: 14, color: Colors.white),
+                                child: const Icon(Icons.cached_rounded, size: 14, color: Colors.white),
                               ),
                             ],
                           ),
@@ -139,6 +139,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: 'serif',
                                   color: RomanColors.imperialPurple,
                                 ),
                                 decoration: const InputDecoration(
@@ -151,17 +152,19 @@ class _AccountScreenState extends State<AccountScreen> {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                profile.genre == 'fille' ? 'Élève Julia (Fille)' : 'Élève Marcus (Garçon)',
-                                style: const TextStyle(fontSize: 12, color: Colors.black54),
+                                profile.genre == 'fille'
+                                    ? 'Élève Julia • Touche l''avatar pour changer'
+                                    : 'Élève Marcus • Touche l''avatar pour changer',
+                                style: const TextStyle(fontSize: 11, color: Colors.black54),
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 16),
                     const Divider(),
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -177,25 +180,155 @@ class _AccountScreenState extends State<AccountScreen> {
 
               const SizedBox(height: 16),
 
-              // 2. Compte Tabularium Cloud (Mail & Sync)
+              // 2. Vitrine des Trophées & Médaillons Débloqués
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFD4AF37), width: 1.2),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
-                        const Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
-                        const SizedBox(width: 8),
-                        const Text(
+                        Text('🏆 ', style: TextStyle(fontSize: 18)),
+                        Text(
+                          'Panthéon des Trophées',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'serif',
+                            color: RomanColors.charcoal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildTrophyItem(
+                          iconPath: 'assets/images/trophee_triomphe_medaillon_130.png',
+                          title: 'Premier Pas',
+                          unlocked: profile.completedLessons.isNotEmpty,
+                        ),
+                        _buildTrophyItem(
+                          iconPath: 'assets/images/logo_centurion_64.png',
+                          title: 'Centurion',
+                          unlocked: profile.completedLessons.length >= 5,
+                        ),
+                        _buildTrophyItem(
+                          iconPath: 'assets/images/musee_circus.png',
+                          title: 'Aurige',
+                          unlocked: profile.streakDays >= 3,
+                        ),
+                        _buildTrophyItem(
+                          iconPath: 'assets/images/musee_louve.png',
+                          title: 'Bâtisseur',
+                          unlocked: profile.restoredMonuments.isNotEmpty,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // 3. Tessera Hospitalis (Jeton de Transfert Express)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFFBF0),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Text('🏛️ ', style: TextStyle(fontSize: 18)),
+                        Text(
+                          'Tessera Hospitalis (Jeton d’Hospitalité)',
+                          style: TextStyle(
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF7A5901),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    const Text(
+                      'Ce jeton secret permet de transférer immédiatement tous tes progrès vers un smartphone, une tablette ou ton ordinateur en classe.',
+                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
+                    ),
+                    const SizedBox(height: 10),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: RomanColors.imperialGold),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            profile.tesseraCode,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2,
+                              color: RomanColors.charcoal,
+                              fontFamily: 'monospace',
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.copy_rounded, color: RomanColors.imperialPurple, size: 20),
+                            tooltip: 'Copier la Tessera',
+                            onPressed: () {
+                              HapticFeedback.lightImpact();
+                              Clipboard.setData(ClipboardData(text: profile.tesseraCode));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  backgroundColor: RomanColors.imperialPurple,
+                                  content: Text('Tessera Hospitalis copiée dans le presse-papier !'),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // 4. Compte Tabularium Cloud (Mail & Sync)
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
+                        SizedBox(width: 8),
+                        Text(
                           'Sauvegarde & Compte Cloud',
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: RomanColors.charcoal,
                           ),
@@ -204,7 +337,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Associez votre adresse email pour sauvegarder votre progression sur les serveurs du Tabularium et jouer sur plusieurs appareils.',
+                      'Associe ton adresse courriel pour sauvegarder ta progression sur les serveurs du Tabularium.',
                       style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
                     ),
                     const SizedBox(height: 12),
@@ -214,6 +347,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       decoration: InputDecoration(
                         labelText: 'Adresse courriel (email)',
                         hintText: 'eleve@latin.ac-paris.fr',
+                        isDense: true,
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                         prefixIcon: const Icon(Icons.email_outlined),
                       ),
@@ -227,15 +361,15 @@ class _AccountScreenState extends State<AccountScreen> {
                               backgroundColor: RomanColors.imperialPurple,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 11),
                             ),
                             icon: _isSyncing
                                 ? const SizedBox(
-                                    width: 18,
-                                    height: 18,
+                                    width: 16,
+                                    height: 16,
                                     child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                   )
-                                : const Icon(Icons.cloud_upload_outlined),
+                                : const Icon(Icons.cloud_upload_outlined, size: 18),
                             label: Text(_isSyncing ? 'Synchronisation...' : 'Enregistrer & Synchroniser'),
                             onPressed: _isSyncing
                                 ? null
@@ -269,78 +403,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 ),
               ),
-
-              const SizedBox(height: 16),
-
-              // 3. Tessera Hospitalis (Transfert instantané)
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFFBEA),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFC59B27), width: 1.2),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Text('🏛️ ', style: TextStyle(fontSize: 18)),
-                        Text(
-                          'Tessera Hospitalis (Jeton d’Hospitalité)',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF7A5901),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    const Text(
-                      'Ce code secret permet de transférer immédiatement tous vos progrès vers un téléphone Android, une tablette ou votre ordinateur de classe.',
-                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.3),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: RomanColors.imperialGold),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            profile.tesseraCode,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2,
-                              color: RomanColors.charcoal,
-                              fontFamily: 'monospace',
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.copy, color: RomanColors.imperialPurple, size: 20),
-                            tooltip: 'Copier la Tessera',
-                            onPressed: () {
-                              Clipboard.setData(ClipboardData(text: profile.tesseraCode));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: RomanColors.imperialPurple,
-                                  content: Text('Tessera Hospitalis copiée dans le presse-papier !'),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
         );
@@ -356,14 +419,56 @@ class _AccountScreenState extends State<AccountScreen> {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 15,
+            fontSize: 14,
             fontWeight: FontWeight.bold,
             color: RomanColors.imperialPurple,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: Colors.black54),
+          style: const TextStyle(fontSize: 10.5, color: Colors.black54),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTrophyItem({
+    required String iconPath,
+    required String title,
+    required bool unlocked,
+  }) {
+    return Column(
+      children: [
+        Container(
+          width: 44,
+          height: 44,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: unlocked ? RomanColors.goldLight : Colors.black12,
+            border: Border.all(
+              color: unlocked ? RomanColors.imperialGold : Colors.black26,
+              width: 1.5,
+            ),
+          ),
+          child: ClipOval(
+            child: Opacity(
+              opacity: unlocked ? 1.0 : 0.35,
+              child: Image.asset(
+                iconPath,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => const Center(child: Text('🏆')),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 10.5,
+            fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
+            color: unlocked ? RomanColors.charcoal : Colors.black38,
+          ),
         ),
       ],
     );
