@@ -64,8 +64,23 @@ class ProfileDialog(tk.Toplevel):
         )
         btn_new.pack(side=tk.LEFT)
 
+        btn_cloud = tk.Button(
+            bottom_bar,
+            text="🏛️ Compte & Cloud",
+            font=(app.body.cget("family"), 10, "bold"),
+            bg="#2e6f40", fg="#ffffff",
+            activebackground="#3e8f54",
+            padx=12, pady=5, relief="flat", cursor="hand2",
+            command=self._ouvrir_compte
+        )
+        btn_cloud.pack(side=tk.LEFT, padx=(10, 0))
+
         btn_close = ttk.Button(bottom_bar, text="Fermer", command=self.destroy)
         btn_close.pack(side=tk.RIGHT)
+
+    def _ouvrir_compte(self):
+        from app.compte import CompteDialog
+        CompteDialog(self, self.app)
 
     def _refresh_profiles_list(self):
         for w in self.list_frame.winfo_children():

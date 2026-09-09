@@ -16,19 +16,23 @@ from app.carte import CarteAventureWindow
 from app.cartes_collection import AlbumCartesWindow
 from app.chiffre_cesar import ChiffreCesarWindow
 from app.circus import CircusMaximusWindow
+from app.compte import CompteDialog
 from app.decrypteur_visuel import DecrypteurVisuelWindow
 from app.duel import DuelWindow
 from app.editor import CodeEditor
 from app.export_pdf import FichesExportDialog
+from app.forum_imperiale import ForumImperialeDialog
 from app.i18n import LANGUES, Translator
 from app.icones import charger_icone, get_icones_toolbar
 from app.marche_trajan import MarcheTrajanWindow
 from app.mascotte import MascotteWidget
+from app.memoria_velox import MemoriaVeloxDialog
 from app.mise_a_jour import MiseAJourDialog
 from app.musee import MuseeWindow
 from app.profils import ProfileDialog
 from app.taverne_alea import TaverneAleaWindow
 from app.theme import THEME_ORDER, THEMES, assombrir, eclaircir, est_sombre
+from app.thesaurus import ThesaurusDialog
 from app.version import APP_NAME, AUTEUR, DEPOT, __version__
 from app.vues_exercices import (
     VueArene,
@@ -296,6 +300,8 @@ class PythonLearnApp:
             ("tb_accueil", self._show_accueil),
             ("tb_carte", self._ouvrir_carte),
             # 2. Forum, Activités & Jeux
+            ("tb_forum", self._ouvrir_forum_imperiale),
+            ("tb_memoria", self._ouvrir_memoria_velox),
             ("tb_cartes", self._ouvrir_album_cartes),
             ("tb_taverne", self._ouvrir_taverne_alea),
             ("tb_penderie", self._ouvrir_penderie),
@@ -304,6 +310,7 @@ class PythonLearnApp:
             ("tb_cesar", self._ouvrir_chiffre_cesar),
             ("tb_duel", self._ouvrir_duel),
             # 3. Pédagogie, Savoirs & Outils
+            ("tb_thesaurus", self._ouvrir_thesaurus),
             ("tb_decrypteur", self._ouvrir_decrypteur),
             ("tb_glossaire", self._show_glossaire),
             ("tb_revision", self._revision),
@@ -311,6 +318,7 @@ class PythonLearnApp:
             ("tb_examen", self._mode_examen),
             ("tb_stats", self._show_stats),
             # 4. Profil, Récompenses & Système
+            ("tb_compte", self._ouvrir_compte),
             ("tb_succes", self._ouvrir_succes),
             ("tb_profils", self._ouvrir_profils),
             ("tb_maj", self._ouvrir_mise_a_jour),
@@ -648,6 +656,22 @@ class PythonLearnApp:
         """Ouvre la Taverne des Dés Romains (« Alea Iacta Est »)."""
         TaverneAleaWindow(self.root, self)
 
+    def _ouvrir_compte(self):
+        """Ouvre le Tabularium (Compte Citoyen & Sauvegarde Cloud)."""
+        CompteDialog(self.root, self)
+
+    def _ouvrir_forum_imperiale(self):
+        """Ouvre le Forum Imperiale (Reconstruction de Rome)."""
+        ForumImperialeDialog(self.root, self)
+
+    def _ouvrir_memoria_velox(self):
+        """Ouvre le Dojo de Révision Éclair (Flashcards 3D & SRS)."""
+        MemoriaVeloxDialog(self.root, self)
+
+    def _ouvrir_thesaurus(self):
+        """Ouvre le Thesaurus Linguae Latinae & Déclinaisons."""
+        ThesaurusDialog(self.root, self)
+
     def _ouvrir_fiches_a4(self):
         FichesExportDialog(self.root, self)
 
@@ -722,6 +746,9 @@ class PythonLearnApp:
         self._refresh_header_stats()
 
     def ajouter_sesterces(self, montant):
+        if montant > 0:
+            bonus = int(montant * prog.bonus_forum_sesterces(self.data))
+            montant += bonus
         self.data["sesterces"] = self.data.get("sesterces", 0) + montant
         prog.save_progress(self.data)
         self._refresh_header_stats()

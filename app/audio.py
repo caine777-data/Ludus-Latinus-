@@ -182,6 +182,11 @@ def _init_cache():
             (320, 0.02), (480, 0.03), (260, 0.02), (540, 0.03),
             (380, 0.03), (620, 0.04), (300, 0.04), (450, 0.07)
         ], volume=0.45)
+
+        # Construction / Rénovation de monument antique (marteau & ciseau sur marbre)
+        _CACHED_SOUNDS["build"] = _generer_wav_tones([
+            (1100, 0.02), (550, 0.04), (1650, 0.02), (880, 0.06), (1320, 0.12)
+        ], volume=0.45)
     except Exception:
         pass
 
@@ -345,6 +350,22 @@ def play_dice():
         return
     _init_cache()
     _play_bytes_async(_CACHED_SOUNDS.get("dice_roll"))
+
+
+def play_card_flip():
+    """Bruit de carte ou flashcard qui tourne et révèle son verso."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("carte_flip"))
+
+
+def play_build():
+    """Bruit d'inauguration et de taille de pierre sur le Forum Romain."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("build"))
 
 
 

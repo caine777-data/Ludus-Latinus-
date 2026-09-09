@@ -95,6 +95,10 @@ def get_icones_toolbar():
         "tb_succes": "icone_trophee",
         "tb_decrypteur": "icone_laurier",
         "tb_taverne": "icone_arene",
+        "tb_compte": "icone_profils",
+        "tb_memoria": "icone_revision",
+        "tb_forum": "icone_temple",
+        "tb_thesaurus": "icone_glossaire",
         "tb_stats": "icone_stats",
     }
     resultat = {}

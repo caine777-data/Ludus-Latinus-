@@ -12,9 +12,12 @@ progress.json tronqué. L'ancienne version est conservée en .bak et sert
 de filet de secours au chargement.
 """
 
+import hashlib
 import json
 import os
+import secrets
 import tempfile
+from datetime import datetime
 from pathlib import Path
 
 DATA_DIR = Path.home() / ".latin-learn"
@@ -43,7 +46,18 @@ _DEFAULT = {"completed": [], "code": {}, "badges": [], "theme": "rome",
             },
             "lupulus_costume": "standard",
             "lupulus_costumes_debloques": ["standard"],
-            "classe_active": "5eme"}
+            "classe_active": "5eme",
+            "compte": {
+                "email": "",
+                "pseudo": "",
+                "hash": "",
+                "sel": "",
+                "sync_token": "",
+                "derniere_sync": None,
+                "tessera": ""
+            },
+            "forum_monuments": [],
+            "srs_vocabulaire": {}}
 
 # Renseigné par load_progress() quand le chargement ne s'est pas passé
 # normalement, pour que l'interface puisse prévenir l'apprenant au lieu
@@ -396,4 +410,153 @@ def set_nom_heros(data, nom):
     if nom:
         data["nom_heros"] = nom
         save_progress(data)
+
+
+# ---------------------------------------------------------------------------
+# GESTION DU COMPTE CITOYEN & SAUVEGARDE CLOUD (TABULARIUM)
+# ---------------------------------------------------------------------------
+
+def _hacher_mdp(mdp: str, sel: str) -> str:
+    return hashlib.pbkdf2_hmac("sha256", mdp.encode("utf-8"), sel.encode("utf-8"), 100000).hex()
+
+
+def get_compte(data) -> dict:
+    return data.get("compte") or _DEFAULT["compte"].copy()
+
+
+def est_compte_enregistre(data) -> bool:
+    compte = get_compte(data)
+    return bool(compte.get("email") and compte.get("hash"))
+
+
+def enregistrer_compte(data, email: str, pseudo: str, mdp: str):
+    email = (email or "").strip().lower()
+    pseudo = (pseudo or "").strip()
+    mdp = (mdp or "").strip()
+
+    if not email or "@" not in email or "." not in email:
+        return False, "Adresse email invalide (ex: marcus@rome.org)."
+    if len(mdp) < 4:
+        return False, "Le mot de passe doit contenir au moins 4 caractères."
+
+    sel = secrets.token_hex(16)
+    h_mdp = _hacher_mdp(mdp, sel)
+    token = f"spqr_{secrets.token_hex(20)}"
+    tessera = f"SPQR-{secrets.token_hex(2).upper()}-{secrets.token_hex(2).upper()}"
+
+    data["compte"] = {
+        "email": email,
+        "pseudo": pseudo or data.get("nom_heros", "Marcus"),
+        "hash": h_mdp,
+        "sel": sel,
+        "sync_token": token,
+        "derniere_sync": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "tessera": tessera
+    }
+    if pseudo:
+        data["nom"] = pseudo
+    save_progress(data)
+    return True, "Compte Citoyen créé avec succès !"
+
+
+def valider_connexion_compte(data, email: str, mdp: str):
+    compte = get_compte(data)
+    if not compte.get("email") or not compte.get("hash"):
+        return False, "Aucun compte enregistré sur cet appareil."
+
+    if compte.get("email") != email.strip().lower():
+        return False, "Adresse email inconnue."
+
+    sel = compte.get("sel", "")
+    h_test = _hacher_mdp(mdp.strip(), sel)
+    if h_test != compte.get("hash"):
+        return False, "Mot de passe incorrect."
+
+    compte["derniere_sync"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+    save_progress(data)
+    return True, f"Bienvenue, {compte.get('pseudo', 'Citoyen')} !"
+
+
+def deconnecter_compte(data):
+    data["compte"] = _DEFAULT["compte"].copy()
+    save_progress(data)
+    return True
+
+
+def generer_tessera_hospitalis(data) -> str:
+    compte = data.setdefault("compte", _DEFAULT["compte"].copy())
+    tessera = f"SPQR-{secrets.token_hex(2).upper()}-{secrets.token_hex(2).upper()}"
+    compte["tessera"] = tessera
+    save_progress(data)
+    return tessera
+
+
+def synchroniser_cloud_simule(data):
+    compte = data.setdefault("compte", _DEFAULT["compte"].copy())
+    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    compte["derniere_sync"] = now_str
+    save_progress(data)
+    return True, f"Synchronisation réussie aux archives impériales ({now_str}) !"
+
+
+# ---------------------------------------------------------------------------
+# FORUM IMPERIALE (RECONSTRUCTION DE ROME)
+# ---------------------------------------------------------------------------
+
+def get_monuments_forum(data) -> list:
+    return data.get("forum_monuments", [])
+
+
+def debloquer_monument_forum(data, monument_id: str, cout: int):
+    if "forum_monuments" not in data:
+        data["forum_monuments"] = []
+    if monument_id in data["forum_monuments"]:
+        return False, "Ce monument est déjà restauré !"
+    sesterces = data.get("sesterces", 0)
+    if sesterces < cout:
+        return False, f"Il te manque {cout - sesterces} sesterces."
+    data["sesterces"] = sesterces - cout
+    data["forum_monuments"].append(monument_id)
+    save_progress(data)
+    return True, "Monument restauré avec succès !"
+
+
+def bonus_forum_sesterces(data) -> float:
+    """Bonus sesterces du Temple de Saturne (+20%)."""
+    return 0.20 if "templum_saturni" in data.get("forum_monuments", []) else 0.0
+
+
+def bonus_forum_xp(data) -> float:
+    """Bonus XP de la Curie Julia (+10%)."""
+    return 0.10 if "curia_iulia" in data.get("forum_monuments", []) else 0.0
+
+
+def bonus_forum_indices(data) -> bool:
+    """Indice gratuit offert par le Temple de Minerve."""
+    return "aedes_minervae" in data.get("forum_monuments", [])
+
+
+# ---------------------------------------------------------------------------
+# MEMORIA VELOX (RÉPÉTITION ESPACÉE SRS)
+# ---------------------------------------------------------------------------
+
+def get_srs_vocabulaire(data) -> dict:
+    return data.get("srs_vocabulaire", {})
+
+
+def enregistrer_revision_srs(data, mot_id: str, niveau: int):
+    """
+    Enregistre le résultat d'une carte SRS :
+    niveau 1 = à revoir (intervalle 1 jour)
+    niveau 2 = hésitant (intervalle 3 jours)
+    niveau 3 = maîtrisé (intervalle 7 jours)
+    """
+    srs = data.setdefault("srs_vocabulaire", {})
+    entry = srs.get(mot_id, {"reps": 0, "niveau": 1, "last_rev": ""})
+    entry["reps"] = entry.get("reps", 0) + 1
+    entry["niveau"] = niveau
+    entry["last_rev"] = datetime.now().strftime("%Y-%m-%d")
+    srs[mot_id] = entry
+    save_progress(data)
+
 
