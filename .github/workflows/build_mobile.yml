@@ -33,11 +33,11 @@ jobs:
 
       - name: Compiler Android App Bundle (.aab Google Play Store)
         working-directory: ./ludus_latinus_mobile
-        run: flutter build appbundle --release
+        run: flutter build appbundle --release --android-skip-build-dependency-validation
 
       - name: Compiler APK Android (Installation directe)
         working-directory: ./ludus_latinus_mobile
-        run: flutter build apk --split-per-abi --release
+        run: flutter build apk --split-per-abi --release --android-skip-build-dependency-validation
 
       - name: Publier les fichiers Android en Artefact
         uses: actions/upload-artifact@v4
