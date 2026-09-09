@@ -5,7 +5,7 @@ import 'themes.dart';
 /// Bouton tactile impérial romain avec liseré d''or et retour haptique.
 class RomanButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color backgroundColor;
   final Color textColor;
   final IconData? icon;
@@ -14,7 +14,7 @@ class RomanButton extends StatelessWidget {
   const RomanButton({
     super.key,
     required this.text,
-    required this.onPressed,
+    this.onPressed,
     this.backgroundColor = RomanColors.imperialGold,
     this.textColor = const Color(0xFF1A1409),
     this.icon,
@@ -48,10 +48,12 @@ class RomanButton extends StatelessWidget {
             side: const BorderSide(color: Color(0xFFE5C158), width: 1.5),
           ),
         ),
-        onPressed: () {
-          HapticFeedback.lightImpact();
-          onPressed();
-        },
+        onPressed: onPressed == null
+            ? null
+            : () {
+                HapticFeedback.lightImpact();
+                onPressed!();
+              },
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,

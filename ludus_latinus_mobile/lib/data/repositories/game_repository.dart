@@ -41,6 +41,11 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addSesterces(int amount) {
+    storageService.addSesterces(amount);
+    notifyListeners();
+  }
+
   bool isLessonCompleted(String lessonId) {
     return profile.completedLessons.contains(lessonId);
   }

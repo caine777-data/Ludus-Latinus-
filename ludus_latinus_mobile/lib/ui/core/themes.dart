@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class RomanColors {
   // Fonds architecturaux
   static const Color travertinWhite = Color(0xFFFBF8F2);
+  static const Color travertine = travertinWhite;
   static const Color palatinCream = Color(0xFFF5EFEB);
   static const Color cardSurface = Color(0xFFFFFFFF);
 

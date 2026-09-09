@@ -565,7 +565,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                     ),
                     const SizedBox(height: 8),
                     Container(
-                      constraints: const BoxMinConstraints(minHeight: 48),
+                      constraints: const BoxConstraints(minHeight: 48),
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
