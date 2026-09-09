@@ -198,7 +198,6 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       widget.repo.addSesterces(15);
       setState(() {
         _feedbackSucces = true;
-        _articlesAchetes++;
         _messageFeedback = 'Optime ! Tu as composé $attenduRomain ($prixAttendu HS). Gaius t\'offre +15 HS !';
       });
 
