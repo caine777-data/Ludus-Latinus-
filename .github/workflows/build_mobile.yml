@@ -57,6 +57,8 @@ jobs:
           path: |
             ludus_latinus_mobile/build/app/outputs/bundle/release/*.aab
             ludus_latinus_mobile/build/app/outputs/flutter-apk/*.apk
+            ludus_latinus_mobile/android/build/app/outputs/bundle/release/*.aab
+            ludus_latinus_mobile/android/build/app/outputs/flutter-apk/*.apk
 
   build-windows:
     name: Build Windows Desktop (.exe natif)
