@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
@@ -236,6 +236,27 @@ class _LessonScreenState extends State<LessonScreen> {
                     content: "À Rome, les élèves écrivaient sur des tablettes de cire (tabulae) à l''aide d''un poinçon de bronze appelé stilus !",
                     isTip: true,
                   ),
+                  const SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton.icon(
+                      style: TextButton.styleFrom(
+                        foregroundColor: RomanColors.imperialPurple,
+                        backgroundColor: RomanColors.goldLight,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      ),
+                      icon: const Icon(Icons.biotech_outlined, size: 18),
+                      label: const Text(
+                        '🔬 Anatomia Sententiae • Décrypteur',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () => _showDecrypterSheet(context),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -381,6 +402,190 @@ class _LessonScreenState extends State<LessonScreen> {
             const SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showDecrypterSheet(BuildContext context) {
+    HapticFeedback.mediumImpact();
+    final latinSentence = widget.lesson.latin ?? 'Senatus Populusque Romanus urbem aedificat';
+    final words = latinSentence.split(' ');
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            int selectedWordIdx = 0;
+            return Container(
+              padding: const EdgeInsets.all(20),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    children: [
+                      const Text('🔬 ', style: TextStyle(fontSize: 22)),
+                      const Expanded(
+                        child: Text(
+                          'ANATOMIA SENTENTIAE',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'serif',
+                            letterSpacing: 1,
+                            color: RomanColors.imperialPurple,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(ctx),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
+                  const Text(
+                    'Radiographie syntaxique : touche chaque mot latin pour analyser son cas grammatical et sa fonction.',
+                    style: TextStyle(fontSize: 12, color: Colors.black54),
+                  ),
+                  const SizedBox(height: 16),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: List.generate(words.length, (idx) {
+                      final word = words[idx];
+                      final isSel = selectedWordIdx == idx;
+                      Color caseCol = _guessCaseColor(word);
+
+                      return GestureDetector(
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          setSheetState(() => selectedWordIdx = idx);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: isSel ? caseCol : caseCol.withOpacity(0.12),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: caseCol, width: isSel ? 2 : 1.2),
+                          ),
+                          child: Text(
+                            word,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'serif',
+                              color: isSel ? Colors.white : caseCol,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 18),
+                  _buildWordAnatomyCard(words[selectedWordIdx.clamp(0, words.length - 1)]),
+                  const SizedBox(height: 16),
+                  RomanButton(
+                    text: 'Fermer le Décrypteur',
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Color _guessCaseColor(String word) {
+    final w = word.toLowerCase().replaceAll(RegExp(r'[^\w\s]+'), '');
+    if (w.endsWith('am') || w.endsWith('um') || w.endsWith('as') || w.endsWith('os') || w.endsWith('em') || w.endsWith('es')) {
+      return CaseColors.accusative;
+    } else if (w.endsWith('ae') || w.endsWith('i') || w.endsWith('is') || w.endsWith('us') || w.endsWith('ei')) {
+      return CaseColors.genitive;
+    } else if (w.endsWith('t') || w.endsWith('nt') || w.endsWith('at') || w.endsWith('et') || w.endsWith('it') || w.endsWith('est') || w.endsWith('sunt')) {
+      return RomanColors.imperialGold;
+    } else if (w.endsWith('o') || w.endsWith('e') || w.endsWith('u') || w.endsWith('ibus')) {
+      return CaseColors.ablative;
+    }
+    return CaseColors.nominative;
+  }
+
+  Widget _buildWordAnatomyCard(String rawWord) {
+    final word = rawWord.replaceAll(RegExp(r'[^\w\s]+'), '');
+    final color = _guessCaseColor(word);
+    String cas = 'Nominatif (Sujet)';
+    String desinence = 'Terminaison en -a ou -us';
+    String role = 'Indique qui accomplit l''action ou de qui l''on parle.';
+
+    if (color == CaseColors.accusative) {
+      cas = 'Accusatif (Complément d''Objet Direct)';
+      desinence = 'Terminaison en -m ou -s';
+      role = 'Désigne l''être ou la chose qui subit directement l''action du verbe.';
+    } else if (color == CaseColors.genitive) {
+      cas = 'Génitif (Complément du Nom)';
+      desinence = 'Terminaison en -ae, -i ou -is';
+      role = 'Marque l''appartenance, la possession ou l''origine.';
+    } else if (color == RomanColors.imperialGold) {
+      cas = 'Verbe (Action / État)';
+      desinence = 'Désinence verbale personnelle';
+      role = 'Noyau prédicatif qui exprime ce qui se passe dans la proposition.';
+    } else if (color == CaseColors.ablative) {
+      cas = 'Ablatif (Complément Circonstanciel)';
+      desinence = 'Terminaison en -o, -e, -u ou -ibus';
+      role = 'Précise le lieu, le temps, le moyen ou la manière.';
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: RomanColors.palatinCream,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withOpacity(0.6), width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                word,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'serif',
+                  color: color,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  cas,
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text('• Désinence : $desinence', style: const TextStyle(fontSize: 12, color: Colors.black87)),
+          const SizedBox(height: 2),
+          Text('• Rôle : $role', style: const TextStyle(fontSize: 12, color: Colors.black54)),
+        ],
       ),
     );
   }

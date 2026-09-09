@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
@@ -7,6 +7,7 @@ import '../map/map_screen.dart';
 import '../memoria/memoria_screen.dart';
 import '../forum/forum_screen.dart';
 import '../thesaurus/thesaurus_screen.dart';
+import '../taverne/taverne_screen.dart';
 import '../account/account_screen.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
@@ -34,6 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('LUDUS LATINUS'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.casino_outlined, color: RomanColors.imperialPurple, size: 26),
+            tooltip: 'Taverne des Dés Romains (Alea Iacta Est)',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.account_circle_outlined, color: RomanColors.imperialPurple, size: 28),
             onPressed: () {
