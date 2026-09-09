@@ -28,11 +28,35 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Initialiser wrappers de plateforme Android
-        working-directory: ./ludus_latinus_mobile
+      - name: Configurer miroir Maven Central anti-403
         run: |
-          flutter create . --platforms=android --org com.luduslatinus
-          flutter pub get
+          mkdir -p ~/.gradle
+          cat << 'EOF' > ~/.gradle/init.gradle
+          allprojects {
+              buildscript {
+                  repositories {
+                      maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
+                      maven { url "https://repo1.maven.org/maven2/" }
+                  }
+              }
+              repositories {
+                  maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
+                  maven { url "https://repo1.maven.org/maven2/" }
+              }
+          }
+          gradle.settingsEvaluated { settings ->
+              settings.pluginManagement {
+                  repositories {
+                      maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
+                      maven { url "https://repo1.maven.org/maven2/" }
+                  }
+              }
+          }
+          EOF
+
+      - name: Installer les dépendances Flutter
+        working-directory: ./ludus_latinus_mobile
+        run: flutter pub get
 
       - name: Compiler Android App Bundle (.aab Google Play Store)
         working-directory: ./ludus_latinus_mobile
