@@ -27,33 +27,6 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-
-      - name: Configurer miroir Maven Central anti-403
-        run: |
-          mkdir -p ~/.gradle
-          cat << 'EOF' > ~/.gradle/init.gradle
-          allprojects {
-              buildscript {
-                  repositories {
-                      maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
-                      maven { url "https://repo1.maven.org/maven2/" }
-                  }
-              }
-              repositories {
-                  maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
-                  maven { url "https://repo1.maven.org/maven2/" }
-              }
-          }
-          gradle.settingsEvaluated { settings ->
-              settings.pluginManagement {
-                  repositories {
-                      maven { url "https://maven-central.storage-download.googleapis.com/maven2/" }
-                      maven { url "https://repo1.maven.org/maven2/" }
-                  }
-              }
-          }
-          EOF
-
       - name: Installer les dépendances Flutter
         working-directory: ./ludus_latinus_mobile
         run: flutter pub get
@@ -108,8 +81,15 @@ jobs:
         run: flutter build windows --release
 
       - name: Compresser le dossier Windows Release
-        working-directory: ./ludus_latinus_mobile/build/windows/x64/runner/Release
-        run: Compress-Archive -Path * -DestinationPath ../../../../../LudusLatinus-Windows-Flutter.zip
+        working-directory: ./ludus_latinus_mobile
+        shell: pwsh
+        run: |
+          $releaseDir = Get-ChildItem -Path "build/windows" -Recurse -Directory -Filter "Release" | Select-Object -First 1
+          if (-not $releaseDir) {
+            Write-Error "Dossier Release introuvable sous build/windows"
+            exit 1
+          }
+          Compress-Archive -Path "$($releaseDir.FullName)/*" -DestinationPath "../LudusLatinus-Windows-Flutter.zip" -Force
 
       - name: Publier l'archive Windows en Artefact
         uses: actions/upload-artifact@v4

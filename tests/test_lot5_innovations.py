@@ -66,15 +66,19 @@ class TestDecrypteurVisuel(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.root = tk.Tk()
-        cls.root.withdraw()
+        try:
+            cls.root = tk.Tk()
+            cls.root.withdraw()
+        except Exception:
+            cls.root = None
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            cls.root.destroy()
-        except Exception:
-            pass
+        if cls.root:
+            try:
+                cls.root.destroy()
+            except Exception:
+                pass
 
     def test_phrases_predefinies_conformite(self):
         """Vérifie que chaque phrase du corpus est intègre et complète."""
@@ -108,6 +112,8 @@ class TestDecrypteurVisuel(unittest.TestCase):
 
     def test_decrypteur_window_gui_and_puzzle(self):
         """Teste l'initialisation de l'IHM et les étapes du puzzle de traduction."""
+        if not self.root:
+            self.skipTest("Tkinter display non disponible")
         app = MockApp()
         win = DecrypteurVisuelWindow(self.root, app, phrase_initiale="Romulus Romam condidit")
         self.root.update_idletasks()
@@ -156,18 +162,24 @@ class TestTaverneAlea(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.root = tk.Tk()
-        cls.root.withdraw()
+        try:
+            cls.root = tk.Tk()
+            cls.root.withdraw()
+        except Exception:
+            cls.root = None
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            cls.root.destroy()
-        except Exception:
-            pass
+        if cls.root:
+            try:
+                cls.root.destroy()
+            except Exception:
+                pass
 
     def test_combinaisons_romaines(self):
         """Teste la détection des tirages antiques (Vénus, Chien, Sénateur, Plébéien)."""
+        if not self.root:
+            self.skipTest("Tkinter display non disponible")
         app = MockApp()
         win = TaverneAleaWindow(self.root, app)
         self.root.update_idletasks()
@@ -195,6 +207,8 @@ class TestTaverneAlea(unittest.TestCase):
 
     def test_lancer_gratuit_et_payant(self):
         """Teste le contrôle du rituel quotidien (Bonus Diurnum)."""
+        if not self.root:
+            self.skipTest("Tkinter display non disponible")
         app = MockApp()
         win = TaverneAleaWindow(self.root, app)
         self.root.update_idletasks()
@@ -232,8 +246,11 @@ class TestAudioAndCoursSublime(unittest.TestCase):
 
     def test_callouts_rendu_markdown(self):
         """Vérifie que le moteur de cours formate correctement les sections callouts."""
-        root = tk.Tk()
-        root.withdraw()
+        try:
+            root = tk.Tk()
+            root.withdraw()
+        except Exception:
+            self.skipTest("Tkinter display non disponible")
         try:
             from app.ui import PythonLearnApp
             # Instanciation de test
