@@ -181,8 +181,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             ),
             const SizedBox(height: 12),
             Text(
-              'Session de révision achevée avec brio !\nTu as remporté +$sessionEarnings Sesterces (HS) !' +
-                  (_maxStreak >= 3 ? '\n🔥 Furor Latinus Max : $_maxStreak d\'affilée !' : ''),
+              'Session de révision achevée avec brio !\nTu as remporté +$sessionEarnings Sesterces (HS) !${_maxStreak >= 3 ? '\n🔥 Furor Latinus Max : $_maxStreak d\'affilée !' : ''}',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13, height: 1.4),
             ),

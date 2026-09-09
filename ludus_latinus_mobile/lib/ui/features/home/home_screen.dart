@@ -721,7 +721,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _showCursusHonorumModal(BuildContext context, Profile profile) {
+  void _showCursusHonorumModal(BuildContext context, UserProfile profile) {
     AudioService().playCardFlip();
     showModalBottomSheet(
       context: context,
@@ -734,7 +734,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return Container(
           height: MediaQuery.of(ctx).size.height * 0.85,
           decoration: const BoxDecoration(
-            color: RomanColors.marbleBackground,
+            color: RomanColors.palatinCream,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
             boxShadow: [
               BoxShadow(color: Colors.black45, blurRadius: 20, offset: Offset(0, -4)),

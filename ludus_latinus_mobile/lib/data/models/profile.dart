@@ -37,6 +37,13 @@ class UserProfile {
 
   bool get isRegistered => email.isNotEmpty;
 
+  bool get isDailyQuestCompletedToday {
+    if (lastDailyQuestDate == null) return false;
+    final now = DateTime.now();
+    final todayStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    return lastDailyQuestDate == todayStr;
+  }
+
   CursusHonorum get cursusRank => CursusHonorum.getRank(
         completedLessons.length,
         restoredMonuments.length,
