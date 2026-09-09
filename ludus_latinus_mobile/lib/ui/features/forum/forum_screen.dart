@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/latin_epigraph_modal.dart';
 import '../../../data/models/monument.dart';
+import '../../../data/models/latin_epigraph.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -272,7 +274,7 @@ class ForumScreen extends StatelessWidget {
                     children: [
                       const Text('🪙 ', style: TextStyle(fontSize: 12)),
                       Text(
-                        ' HS',
+                        '${monument.cout} HS',
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -309,7 +311,7 @@ class ForumScreen extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    'Bonus permanent : ',
+                    'Bonus permanent : ${monument.bonus}',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -320,6 +322,40 @@ class ForumScreen extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 10),
+          if (LatinEpigraph.catalogue.containsKey(monument.id)) ...[
+            Builder(builder: (context) {
+              final isDecoded = repo.isEpigraphDecoded(monument.id);
+              return SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: isDecoded ? RomanColors.laurelGreen : RomanColors.imperialPurple,
+                    side: BorderSide(
+                      color: isDecoded ? RomanColors.laurelGreen : RomanColors.imperialPurple,
+                      width: 1.2,
+                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  ),
+                  icon: Icon(isDecoded ? Icons.check_circle_outline : Icons.history_edu_outlined, size: 17),
+                  label: Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        isDecoded ? 'Épigraphe Déchiffrée (Revoir la Pierre)' : 'Déchiffrer l\'Épigraphe Gravée (+15 HS)',
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    final epigraph = LatinEpigraph.catalogue[monument.id]!;
+                    LatinEpigraphModal.show(context, epigraph: epigraph, repo: repo);
+                  },
+                ),
+              );
+            }),
+          ],
           if (!isRestored) ...[
             const SizedBox(height: 12),
             Align(

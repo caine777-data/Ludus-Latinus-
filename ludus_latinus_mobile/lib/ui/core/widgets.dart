@@ -62,12 +62,17 @@ class RomanButton extends StatelessWidget {
               Icon(icon, size: isLarge ? 20 : 16, color: textColor),
               const SizedBox(width: 8),
             ],
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: isLarge ? 15 : 13,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.6,
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: isLarge ? 15 : 13,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.6,
+                  ),
+                ),
               ),
             ),
           ],
@@ -188,7 +193,21 @@ class LupulusDialogue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageFile = 'assets/images/lupulus/lupulus__180.png';
+    const validEmotions = [
+      'aide',
+      'centurion',
+      'gladiateur',
+      'imperator',
+      'joie',
+      'mercure',
+      'normal',
+      'philosophe',
+      'reflexion',
+      'savant',
+      'triomphe',
+    ];
+    final safeEmotion = validEmotions.contains(emotion) ? emotion : 'normal';
+    final imageFile = 'assets/images/lupulus/lupulus_${safeEmotion}_180.png';
 
     return GestureDetector(
       onTap: () {
@@ -364,7 +383,7 @@ class CaseRibbon extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            '()',
+            '($fonction)',
             style: TextStyle(fontSize: 10, color: color.withOpacity(0.85)),
           ),
         ],

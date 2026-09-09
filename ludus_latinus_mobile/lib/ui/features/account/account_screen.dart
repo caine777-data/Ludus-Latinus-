@@ -174,10 +174,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildStatCol('Leçons', '', '📜'),
-                        _buildStatCol('Sesterces', ' HS', '🪙'),
-                        _buildStatCol('Série', ' j', '🔥'),
-                        _buildStatCol('Monuments', '', '🏛️'),
+                        _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜'),
+                        _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙'),
+                        _buildStatCol('Série', '${profile.streakDays} j', '🔥'),
+                        _buildStatCol('Monuments', '${profile.unlockedMonuments.length}/6', '🏛️'),
                       ],
                     ),
                   ],
@@ -402,7 +402,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       const SizedBox(height: 8),
                       Center(
                         child: Text(
-                          'Dernière synchronisation : ',
+                          'Dernière synchronisation : ${profile.lastSyncDate != null && profile.lastSyncDate!.length >= 16 ? profile.lastSyncDate!.substring(0, 16).replaceAll('T', ' à ') : (profile.lastSyncDate ?? 'Jamais')}',
                           style: const TextStyle(fontSize: 11, color: Colors.black54, fontStyle: FontStyle.italic),
                         ),
                       ),
@@ -478,12 +478,17 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
           const SizedBox(height: 4),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 10.5,
-              fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
-              color: unlocked ? RomanColors.charcoal : Colors.black38,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              title,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 10.5,
+                fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
+                color: unlocked ? RomanColors.charcoal : Colors.black38,
+              ),
             ),
           ),
         ],

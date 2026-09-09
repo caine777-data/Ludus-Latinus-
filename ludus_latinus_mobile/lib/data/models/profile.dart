@@ -1,3 +1,5 @@
+import 'cursus_honorum.dart';
+
 /// Profil du joueur et sauvegarde de sa progression.
 class UserProfile {
   String id;
@@ -11,6 +13,8 @@ class UserProfile {
   String email;
   String tesseraCode;
   String? lastSyncDate;
+  String? lastDailyQuestDate;
+  List<String> decodedEpigraphs;
 
   UserProfile({
     this.id = 'defaut',
@@ -24,16 +28,26 @@ class UserProfile {
     this.email = '',
     this.tesseraCode = 'SPQR-7A2B-9C1D',
     this.lastSyncDate,
+    this.lastDailyQuestDate,
+    List<String>? decodedEpigraphs,
   })  : completedLessons = completedLessons ?? [],
         restoredMonuments = restoredMonuments ?? [],
-        srsScores = srsScores ?? {};
+        srsScores = srsScores ?? {},
+        decodedEpigraphs = decodedEpigraphs ?? [];
 
   bool get isRegistered => email.isNotEmpty;
+
+  CursusHonorum get cursusRank => CursusHonorum.getRank(
+        completedLessons.length,
+        restoredMonuments.length,
+        sesterces,
+      );
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     var rawCompte = json['compte'] as Map<String, dynamic>? ?? {};
     var rawCompleted = json['completed'] as List<dynamic>? ?? [];
     var rawMonuments = json['forum_monuments'] as List<dynamic>? ?? [];
+    var rawEpigraphs = json['decoded_epigraphs'] as List<dynamic>? ?? [];
 
     return UserProfile(
       id: json['id'] as String? ?? 'defaut',
@@ -46,6 +60,8 @@ class UserProfile {
       email: rawCompte['email'] as String? ?? '',
       tesseraCode: rawCompte['tessera'] as String? ?? 'SPQR-1001-A2B3',
       lastSyncDate: rawCompte['derniere_sync'] as String?,
+      lastDailyQuestDate: json['last_daily_quest_date'] as String?,
+      decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
     );
   }
 
@@ -58,6 +74,8 @@ class UserProfile {
       'streak': streakDays,
       'completed': completedLessons,
       'forum_monuments': restoredMonuments,
+      'last_daily_quest_date': lastDailyQuestDate,
+      'decoded_epigraphs': decodedEpigraphs,
       'compte': {
         'email': email,
         'tessera': tesseraCode,

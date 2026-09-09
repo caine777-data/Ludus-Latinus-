@@ -173,12 +173,7 @@ class _LessonScreenState extends State<LessonScreen> {
             tooltip: 'Prononciation Latine',
             onPressed: () {
               HapticFeedback.lightImpact();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('🔊 Prononciation : ""'),
-                  duration: const Duration(seconds: 2),
-                ),
-              );
+              LatinPronunciationModal.show(context, lesson.latin ?? lesson.title);
             },
           ),
         ],
@@ -324,7 +319,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 2.1,
+                        childAspectRatio: 2.25,
                       ),
                       itemCount: lesson.options.length,
                       itemBuilder: (context, optIndex) {
@@ -352,7 +347,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           onTap: isAnswered ? null : () => _submitAnswer(optIndex),
                           borderRadius: BorderRadius.circular(12),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
                               color: btnColor,
                               borderRadius: BorderRadius.circular(12),
@@ -376,14 +371,18 @@ class _LessonScreenState extends State<LessonScreen> {
                                 ),
                                 const SizedBox(width: 6),
                                 Expanded(
-                                  child: Text(
-                                    optionText,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: textColor,
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      optionText,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: textColor,
+                                      ),
                                     ),
                                   ),
                                 ),

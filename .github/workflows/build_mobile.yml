@@ -201,12 +201,19 @@ jobs:
         working-directory: ./ludus_latinus_mobile
         shell: pwsh
         run: |
-          $exeFile = Get-ChildItem -Path "build/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
+          $exeFile = Get-ChildItem -Path "build/windows" -Recurse -Filter "ludus_latinus_mobile.exe" | Select-Object -First 1
           if (-not $exeFile) {
-            Write-Error "Fichier .exe introuvable sous build/windows"
-            exit 1
+            # Fallback : chercher le dossier runner/Release
+            $releaseFolder = Get-ChildItem -Path "build/windows" -Recurse -Directory | Where-Object { $_.FullName -like "*runner*Release*" } | Select-Object -First 1
+            if ($releaseFolder) {
+              $releaseDir = $releaseFolder
+            } else {
+              Write-Error "Fichier ludus_latinus_mobile.exe introuvable sous build/windows"
+              exit 1
+            }
+          } else {
+            $releaseDir = $exeFile.Directory
           }
-          $releaseDir = $exeFile.Directory
           Write-Host "Dossier Windows Release trouve : $($releaseDir.FullName)"
           Get-ChildItem -Path $releaseDir.FullName | ForEach-Object { Write-Host "  - $($_.Name)" }
           Compress-Archive -Path "$($releaseDir.FullName)/*" -DestinationPath "../LudusLatinus-Windows-Flutter.zip" -Force

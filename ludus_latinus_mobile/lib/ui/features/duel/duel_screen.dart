@@ -607,20 +607,30 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          '${stance.emoji} ${stance.latin}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: isSelected ? Colors.white : RomanColors.imperialPurple,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            '${stance.emoji} ${stance.latin}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: isSelected ? Colors.white : RomanColors.imperialPurple,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 1),
-                        Text(
-                          stance.francais,
-                          style: TextStyle(
-                            fontSize: 8.5,
-                            color: isSelected ? RomanColors.goldLight : Colors.black54,
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            stance.francais,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 8.5,
+                              color: isSelected ? RomanColors.goldLight : Colors.black54,
+                            ),
                           ),
                         ),
                       ],

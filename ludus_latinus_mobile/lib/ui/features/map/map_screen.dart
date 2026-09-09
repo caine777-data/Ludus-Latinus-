@@ -70,7 +70,7 @@ class _MapScreenState extends State<MapScreen> {
                 const Text('🪙', style: TextStyle(fontSize: 13)),
                 const SizedBox(width: 4),
                 Text(
-                  ' HS',
+                  '${profile.sesterces} HS',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12.5,
@@ -103,7 +103,7 @@ class _MapScreenState extends State<MapScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Épopée Romaine :  /  étapes',
+                      'Épopée Romaine : $completedCount / $totalLessons étapes',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class _MapScreenState extends State<MapScreen> {
                       ),
                     ),
                     Text(
-                      '%',
+                      '${(progressRatio * 100).toInt()}%',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -241,7 +241,7 @@ class _MapScreenState extends State<MapScreen> {
                   children: [
                     const Text('🌿 ', style: TextStyle(fontSize: 12)),
                     Text(
-                      'S • P • Q • R  •  PARCOURS ',
+                      'S • P • Q • R  •  PARCOURS ${world.id.toUpperCase()}',
                       style: const TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
@@ -449,7 +449,7 @@ class _MapScreenState extends State<MapScreen> {
           const SizedBox(height: 6),
           // Titre de l''étape
           Container(
-            constraints: const BoxConstraints(maxWidth: 150),
+            constraints: const BoxConstraints(maxWidth: 125),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.92),

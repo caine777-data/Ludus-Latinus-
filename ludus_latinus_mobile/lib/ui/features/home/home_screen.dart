@@ -16,6 +16,9 @@ import '../cesar/cesar_screen.dart';
 import '../pantheon/pantheon_screen.dart';
 import '../circus/circus_screen.dart';
 import '../duel/duel_screen.dart';
+import '../../../data/models/cursus_honorum.dart';
+import '../../../data/models/daily_quest.dart';
+import '../../../data/models/profile.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -110,8 +113,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            InkWell(
+                              onTap: () => _showCursusHonorumModal(context, profile),
+                              borderRadius: BorderRadius.circular(8),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: RomanColors.goldLight,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(color: RomanColors.imperialGold, width: 1),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(profile.cursusRank.badge, style: const TextStyle(fontSize: 12)),
+                                        const SizedBox(width: 3),
+                                        Text(
+                                          profile.cursusRank.titre,
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFF684900),
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(Icons.info_outline, size: 14, color: RomanColors.imperialGold),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 3),
                             Text(
-                              'Citoyen ',
+                              profile.nomHeros,
                               style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -121,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              ' leçons conquises sur la Via Appia',
+                              '${profile.completedLessons.length} / 26 leçons conquises',
                               style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                             ),
                           ],
@@ -143,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const Text('🪙', style: TextStyle(fontSize: 13)),
                                 const SizedBox(width: 4),
                                 Text(
-                                  ' HS',
+                                  '${profile.sesterces} HS',
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
@@ -166,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const Text('🔥', style: TextStyle(fontSize: 12)),
                                 const SizedBox(width: 3),
                                 Text(
-                                  ' jours',
+                                  '${profile.streakDays} jours',
                                   style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
@@ -187,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // 2. Mascotte Lupulus vivante avec bulle de dialogue
                 LupulusDialogue(
                   emotion: 'joie',
-                  message: '« Salve  ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »',
+                  message: '« Salve ${profile.nomHeros} ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »',
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -319,57 +358,85 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 16),
 
-                // 5. Carte « Défi du Jour » (+25 HS)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFFBF0),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                  ),
-                  child: Row(
-                    children: [
-                      const Text('🎯', style: TextStyle(fontSize: 24)),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Défi du Jour : Memoria Velox',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF7A4E0B),
+                // 5. Carte « Défi du Jour » dynamique (+25 HS)
+                Builder(
+                  builder: (context) {
+                    final dailyQuest = DailyQuest.getTodayQuest();
+                    final isDone = profile.isDailyQuestCompletedToday;
+
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: isDone ? const Color(0xFFF2FBF5) : const Color(0xFFFFFBF0),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: isDone ? RomanColors.laurelGreen : RomanColors.imperialGold,
+                          width: 1.2,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(isDone ? '🌿' : dailyQuest.icone, style: const TextStyle(fontSize: 24)),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  dailyQuest.titre,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: isDone ? const Color(0xFF166534) : const Color(0xFF7A4E0B),
+                                  ),
+                                ),
+                                Text(
+                                  isDone
+                                      ? 'Défi accompli ! Reviens demain pour une nouvelle quête.'
+                                      : dailyQuest.description,
+                                  style: const TextStyle(fontSize: 11.5, color: Colors.black87),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          if (isDone)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: RomanColors.laurelGreen.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: RomanColors.laurelGreen),
                               ),
+                              child: const Text(
+                                '✓ REÇU',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: RomanColors.laurelGreen,
+                                ),
+                              ),
+                            )
+                          else
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: RomanColors.imperialPurple,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: () {
+                                AudioService().playSesterces();
+                                RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
+                                _navigateToQuestTarget(context, dailyQuest.routeCible);
+                              },
+                              child: Text('+${dailyQuest.recompense} HS'),
                             ),
-                            Text(
-                              'Révise 5 flashcards au dojo pour remporter 25 sesterces !',
-                              style: TextStyle(fontSize: 11.5, color: Colors.black87),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: RomanColors.imperialPurple,
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        onPressed: () {
-                          AudioService().playSesterces();
-                          RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)),
-                          );
-                        },
-                        child: const Text('Relever'),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 18),
@@ -623,6 +690,263 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _navigateToQuestTarget(BuildContext context, String target) {
+    switch (target) {
+      case 'memoria':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)));
+        break;
+      case 'circus':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)));
+        break;
+      case 'cesar':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)));
+        break;
+      case 'duel':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)));
+        break;
+      case 'marche':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)));
+        break;
+      case 'taverne':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)));
+        break;
+      case 'forum':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => ForumScreen(repo: widget.repo)));
+        break;
+      default:
+        Navigator.push(context, MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)));
+    }
+  }
+
+  void _showCursusHonorumModal(BuildContext context, Profile profile) {
+    AudioService().playCardFlip();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        final currentRank = profile.cursusRank;
+        final nextRank = CursusHonorum.getNextRank(currentRank);
+
+        return Container(
+          height: MediaQuery.of(ctx).size.height * 0.85,
+          decoration: const BoxDecoration(
+            color: RomanColors.marbleBackground,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            boxShadow: [
+              BoxShadow(color: Colors.black45, blurRadius: 20, offset: Offset(0, -4)),
+            ],
+          ),
+          child: Column(
+            children: [
+              // Barre de tirage
+              Container(
+                margin: const EdgeInsets.only(top: 10, bottom: 6),
+                width: 44,
+                height: 4.5,
+                decoration: BoxDecoration(
+                  color: RomanColors.marbleBorder,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
+
+              // En-tête
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: RomanColors.goldLight,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: RomanColors.imperialGold),
+                      ),
+                      child: const Text('🦅', style: TextStyle(fontSize: 22)),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'CURSUS HONORUM',
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.5,
+                              color: RomanColors.imperialGold,
+                            ),
+                          ),
+                          Text(
+                            'Carrière des Honneurs Romains',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'serif',
+                              color: RomanColors.imperialPurple,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const Divider(height: 1, color: RomanColors.marbleBorder),
+
+              // Carte du Rang Actuel
+              Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF5A121E), Color(0xFF2C070F)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                ),
+                child: Row(
+                  children: [
+                    Text(currentRank.badge, style: const TextStyle(fontSize: 32)),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'TON RANG ACTUEL : ${currentRank.titre.toUpperCase()}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.2,
+                              color: RomanColors.imperialGold,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            currentRank.sousTitre,
+                            style: const TextStyle(fontSize: 12, color: Colors.white70),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            nextRank != null
+                                ? 'Prochain rang : ${nextRank.titre} (${nextRank.leconsRequises} leçons, ${nextRank.monumentsRequis} édifice(s), ${nextRank.sestercesRequis} HS)'
+                                : '👑 Tu as atteint le sommet du Cursus Honorum !',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFFFFD54F), fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Liste des 7 échelons
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: CursusHonorum.echelons.length,
+                  itemBuilder: (context, index) {
+                    final rank = CursusHonorum.echelons[index];
+                    final isCurrent = (rank.titre == currentRank.titre);
+                    final isUnlocked = profile.completedLessons.length >= rank.leconsRequises &&
+                        profile.restoredMonuments.length >= rank.monumentsRequis &&
+                        profile.sesterces >= rank.sestercesRequis;
+
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isCurrent
+                            ? const Color(0xFFFFF9E6)
+                            : isUnlocked
+                                ? Colors.white
+                                : const Color(0xFFF5F2EC),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: isCurrent
+                              ? RomanColors.imperialGold
+                              : isUnlocked
+                                  ? RomanColors.marbleBorder
+                                  : Colors.transparent,
+                          width: isCurrent ? 1.8 : 1.0,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 42,
+                            height: 42,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isUnlocked ? RomanColors.goldLight : Colors.grey.shade300,
+                              border: Border.all(
+                                color: isUnlocked ? RomanColors.imperialGold : Colors.grey.shade400,
+                              ),
+                            ),
+                            child: Text(isUnlocked ? rank.badge : '🔒', style: const TextStyle(fontSize: 20)),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      rank.titre,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: isUnlocked ? RomanColors.charcoal : Colors.grey,
+                                      ),
+                                    ),
+                                    if (isCurrent) ...[
+                                      const SizedBox(width: 6),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                                        decoration: BoxDecoration(
+                                          color: RomanColors.imperialPurple,
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: const Text(
+                                          'TOI',
+                                          style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                                Text(
+                                  rank.sousTitre,
+                                  style: TextStyle(fontSize: 11, color: isUnlocked ? RomanColors.imperialPurple : Colors.grey),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  'Requis : ${rank.leconsRequises} leçons • ${rank.monumentsRequis} édifice(s) • ${rank.sestercesRequis} HS',
+                                  style: const TextStyle(fontSize: 10, color: Colors.black54),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

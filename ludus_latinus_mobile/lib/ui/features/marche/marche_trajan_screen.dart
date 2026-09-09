@@ -973,15 +973,15 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(
-                    flex: 2,
-                    child: RomanButton(
-                      text: _modeRenduMonnaie
-                          ? '✓ RENDRE MONNAIE (${_clientActuel.renduAttendu} HS)'
-                          : '✓ PAYER (${article.prix} HS)',
-                      onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
+                    Expanded(
+                      flex: 2,
+                      child: RomanButton(
+                        text: _modeRenduMonnaie
+                            ? '✓ RENDRE (${_clientActuel.renduAttendu} HS)'
+                            : '✓ PAYER (${article.prix} HS)',
+                        onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
+                      ),
                     ),
-                  ),
                 ],
               ),
               const SizedBox(height: 16),

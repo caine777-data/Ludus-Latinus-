@@ -478,7 +478,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     style: ElevatedButton.styleFrom(
                       backgroundColor: RomanColors.imperialGold,
                       foregroundColor: const Color(0xFF1E1408),
-                      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: const BorderSide(color: Color(0xFFE2B842), width: 1.5),
@@ -486,11 +486,16 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                       elevation: 4,
                     ),
                     icon: Icon(_isRolling ? Icons.refresh : Icons.casino_outlined, size: 22),
-                    label: Text(
-                      _isRolling
-                          ? 'ROULEMENT DES DÉS...'
-                          : (_modeDuelGaius ? 'LANCER CONTRE GAIUS ($_miseDuel HS)' : 'SECOUER LE FRITILLUS (GRATUIT)'),
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, letterSpacing: 0.8),
+                    label: Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          _isRolling
+                              ? 'ROULEMENT DES DÉS...'
+                              : (_modeDuelGaius ? 'LANCER CONTRE GAIUS ($_miseDuel HS)' : 'SECOUER LE FRITILLUS (GRATUIT)'),
+                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, letterSpacing: 0.8),
+                        ),
+                      ),
                     ),
                     onPressed: _isRolling ? null : _rollDice,
                   ),

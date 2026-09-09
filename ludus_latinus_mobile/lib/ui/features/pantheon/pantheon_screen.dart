@@ -401,45 +401,51 @@ class _PantheonScreenState extends State<PantheonScreen> {
                     BoxShadow(color: Color(0x1F000000), offset: Offset(0, 4), blurRadius: 8),
                   ],
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          carte.sousTitreLatin,
-                          style: TextStyle(
-                            fontFamily: 'serif',
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: rareteColor,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            carte.sousTitreLatin,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'serif',
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: rareteColor,
+                            ),
                           ),
-                        ),
-                        const Divider(height: 12),
-                        Text(
-                          carte.description,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 11, color: RomanColors.charcoal, height: 1.3),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          carte.devise,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 10.5,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF5A121E),
+                          const Divider(height: 12),
+                          Text(
+                            carte.description,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 11, color: RomanColors.charcoal, height: 1.3),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text('Toucher pour retourner', style: TextStyle(fontSize: 9, color: Colors.black38)),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Column(
+                        children: [
+                          Text(
+                            carte.devise,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontSize: 10.5,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF5A121E),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text('Toucher pour retourner', style: TextStyle(fontSize: 9, color: Colors.black38)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               )
             // Recto : Illustration Antique
@@ -514,6 +520,8 @@ class _PantheonScreenState extends State<PantheonScreen> {
                           ),
                           Text(
                             carte.sousTitreLatin,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               fontFamily: 'serif',
                               fontSize: 10.5,

@@ -216,13 +216,17 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         children: [
                           Row(
                             children: [
-                              Text(
-                                item.latin,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'serif',
-                                  color: RomanColors.imperialPurple,
+                              Flexible(
+                                child: Text(
+                                  item.latin,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'serif',
+                                    color: RomanColors.imperialPurple,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 8),

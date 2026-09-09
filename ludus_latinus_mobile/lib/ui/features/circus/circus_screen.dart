@@ -919,7 +919,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 2.1,
+              childAspectRatio: 2.25,
               physics: const NeverScrollableScrollPhysics(),
               children: _shuffledAnswers.map((answer) {
                 final isSelected = (_selectedAnswer == answer);
@@ -960,13 +960,16 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                         ),
                       ],
                     ),
-                    child: Text(
-                      answer,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        color: btnText,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        answer,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: btnText,
+                        ),
                       ),
                     ),
                   ),

@@ -73,4 +73,29 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
     notifyListeners();
   }
+
+  bool isDailyQuestCompletedToday() {
+    final today = DateTime.now().toIso8601String().substring(0, 10);
+    return profile.lastDailyQuestDate == today;
+  }
+
+  void completeDailyQuest(int reward) {
+    if (isDailyQuestCompletedToday()) return;
+    profile.lastDailyQuestDate = DateTime.now().toIso8601String().substring(0, 10);
+    storageService.addSesterces(reward);
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  bool isEpigraphDecoded(String monumentId) {
+    return profile.decodedEpigraphs.contains(monumentId);
+  }
+
+  void decodeEpigraph(String monumentId, int reward) {
+    if (isEpigraphDecoded(monumentId)) return;
+    profile.decodedEpigraphs.add(monumentId);
+    storageService.addSesterces(reward);
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
 }
