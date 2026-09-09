@@ -34,7 +34,7 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
   final List<String> _latinQuotes = [
     '« Festina lente » • Hâte-toi lentement',
     '« Per aspera ad astra » • Par des chemins ardus vers les étoiles',
-    '« Veni, vidi, vici » • Je suis venu, j''ai vu, j''ai vaincu',
+    '« Veni, vidi, vici » • Je suis venu, j\'ai vu, j\'ai vaincu',
     '« Repetitio est mater studiorum » • La répétition est la mère des études',
   ];
   late String _randomQuote;

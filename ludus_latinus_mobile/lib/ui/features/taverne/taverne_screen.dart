@@ -156,7 +156,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               Navigator.pop(context);
               AudioService().playTriumph();
               RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-              widget.repo.storageService.addSesterces(20);
+              widget.repo.addSesterces(20);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   backgroundColor: RomanColors.laurelGreen,
