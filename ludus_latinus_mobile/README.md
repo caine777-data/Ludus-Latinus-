@@ -1,4 +1,4 @@
-﻿# 🏛️ Ludus Latinus Mobile (Android & Windows Multiplateforme)
+# 🏛️ Ludus Latinus Mobile (Android & Windows Multiplateforme)
 
 Application mobile et desktop native d'apprentissage du latin pour le Collège et le Lycée, développée avec **Flutter & Dart**, propulsée par le moteur pédagogique et le dataset universel de **Ludus Latinus**.
 

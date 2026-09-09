@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 /// Palette impériale et esthétique géométrique épurée inspirée de Monument Valley.
 class RomanColors {

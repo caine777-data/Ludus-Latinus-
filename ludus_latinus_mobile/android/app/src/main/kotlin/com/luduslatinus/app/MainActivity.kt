@@ -1,4 +1,4 @@
-﻿package com.luduslatinus.app
+package com.luduslatinus.app
 
 import io.flutter.embedding.android.FlutterActivity
 
