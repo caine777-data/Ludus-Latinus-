@@ -1,0 +1,800 @@
+import 'dart:async';
+import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../core/themes.dart';
+import '../../core/widgets.dart';
+import '../../../data/repositories/game_repository.dart';
+
+class CircusMaximusScreen extends StatefulWidget {
+  final GameRepository repo;
+
+  const CircusMaximusScreen({super.key, required this.repo});
+
+  @override
+  State<CircusMaximusScreen> createState() => _CircusMaximusScreenState();
+}
+
+class _CircusMaximusScreenState extends State<CircusMaximusScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animController;
+
+  // Progression de la course (0.0 à 100.0%)
+  double _playerProgress = 0.0;
+  double _rivalProgress = 0.0;
+  double _playerSpeed = 0.035;
+  double _rivalSpeed = 0.032;
+
+  int _currentLap = 1;
+  static const int _totalLaps = 3;
+  bool _raceFinished = false;
+  bool _playerWon = false;
+  int _scoreSesterces = 0;
+  int _comboCount = 0;
+  int _turboRemainingFrames = 0;
+
+  // Questions de vocabulaire et culture du Circus Maximus
+  final List<Map<String, dynamic>> _questions = [
+    {
+      'q': 'Que signifie « equus » qui tire ton quadrige ?',
+      'rep': 'Le cheval',
+      'fausses': ['Le loup', 'L\'aigle', 'Le taureau'],
+      'explication': 'Equus (m.) désigne le cheval ; eques désigne le cavalier.',
+    },
+    {
+      'q': 'Que signifie « celeriter » pour accélérer ?',
+      'rep': 'Rapidement',
+      'fausses': ['Lentement', 'Toujours', 'Jamais'],
+      'explication': 'Celeriter est l\'adverbe de celer (rapide) -> célérité.',
+    },
+    {
+      'q': 'Que signifie « victoria » à l\'arrivée ?',
+      'rep': 'La victoire',
+      'fausses': ['La défaite', 'Le départ', 'La route'],
+      'explication': 'Victoria donne victoire en français.',
+    },
+    {
+      'q': 'Que signifie « auriga » ?',
+      'rep': 'Le cocher de char',
+      'fausses': ['Le légionnaire', 'Le sénateur', 'Le forgeron'],
+      'explication': 'L\'aurige était le champion adulé conduisant le char.',
+    },
+    {
+      'q': 'Comment dit-on « quatre » en latin (quadrige) ?',
+      'rep': 'Quattuor',
+      'fausses': ['Tres', 'Quinque', 'Duo'],
+      'explication': 'Quattuor = 4 -> quadrige (char à 4 chevaux).',
+    },
+    {
+      'q': 'Que signifie « arena » à l\'origine ?',
+      'rep': 'Le sable',
+      'fausses': ['L\'eau', 'La pierre', 'L\'or'],
+      'explication': 'Harena désignait le sable fin qui couvrait la piste.',
+    },
+    {
+      'q': 'Que crie la foule pour encourager : « Curre » ?',
+      'rep': 'Cours !',
+      'fausses': ['Arrête !', 'Regarde !', 'Écoute !'],
+      'explication': 'Curre est l\'impératif présent du verbe currere (courir).',
+    },
+    {
+      'q': 'Quelle faction porte la couleur bleue au cirque ?',
+      'rep': 'Veneti',
+      'fausses': ['Russati', 'Prasini', 'Albati'],
+      'explication': 'Les Veneti (Bleus) et Prasini (Verts) étaient les favoris.',
+    },
+    {
+      'q': 'Quel animal en bronze servait à compter les tours ?',
+      'rep': 'Le dauphin',
+      'fausses': ['Le lion', 'L\'aigle', 'Le cygne'],
+      'explication': 'Sept dauphins en bronze s\'abaissaient à chaque tour.',
+    },
+    {
+      'q': 'Comment appelle-t-on le terre-plein central du cirque ?',
+      'rep': 'La Spina',
+      'fausses': ['Le Cardo', 'L\'Atrium', 'La Cavea'],
+      'explication': 'La spina est l\'épine dorsale ornée d\'obélisques.',
+    },
+  ];
+
+  late Map<String, dynamic> _currentQuestion;
+  late List<String> _shuffledAnswers;
+  String? _selectedAnswer;
+  bool _answeredCorrectly = false;
+  Timer? _gameLoopTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
+
+    _loadNewQuestion();
+    _startGameLoop();
+  }
+
+  @override
+  void dispose() {
+    _gameLoopTimer?.cancel();
+    _animController.dispose();
+    super.dispose();
+  }
+
+  void _loadNewQuestion() {
+    final random = math.Random();
+    _currentQuestion = _questions[random.nextInt(_questions.length)];
+    final options = <String>[
+      _currentQuestion['rep'] as String,
+      ...(_currentQuestion['fausses'] as List<String>),
+    ];
+    options.shuffle();
+    _shuffledAnswers = options;
+    _selectedAnswer = null;
+    _answeredCorrectly = false;
+  }
+
+  void _startGameLoop() {
+    _gameLoopTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      if (_raceFinished) return;
+
+      setState(() {
+        // Avancement du joueur avec boost ou vitesse de croisière
+        double speed = _playerSpeed;
+        if (_turboRemainingFrames > 0) {
+          speed *= 2.2;
+          _turboRemainingFrames--;
+        }
+        _playerProgress += speed;
+
+        // Vitesse du rival avec légères variations réalistes
+        final rivalFluctuation = (math.sin(timer.tick * 0.1) * 0.005);
+        _rivalProgress += (_rivalSpeed + rivalFluctuation);
+
+        // Détection de tour terminé
+        if (_playerProgress >= 100.0) {
+          if (_currentLap < _totalLaps) {
+            _currentLap++;
+            _playerProgress = 0.0;
+            _rivalProgress = math.max(0.0, _rivalProgress - 95.0);
+            HapticFeedback.mediumImpact();
+          } else {
+            _finishRace(won: true);
+          }
+        } else if (_rivalProgress >= 100.0 && _currentLap >= _totalLaps) {
+          _finishRace(won: false);
+        }
+      });
+    });
+  }
+
+  void _onAnswerSelected(String answer) {
+    if (_selectedAnswer != null || _raceFinished) return;
+
+    final isCorrect = (answer == _currentQuestion['rep']);
+    setState(() {
+      _selectedAnswer = answer;
+      _answeredCorrectly = isCorrect;
+    });
+
+    if (isCorrect) {
+      HapticFeedback.heavyImpact();
+      _comboCount++;
+      _turboRemainingFrames = 28; // ~1.4s de turbo
+      _scoreSesterces += (10 * _comboCount);
+    } else {
+      HapticFeedback.vibrate();
+      _comboCount = 0;
+      _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
+    }
+
+    Future.delayed(const Duration(milliseconds: 900), () {
+      if (mounted && !_raceFinished) {
+        setState(() {
+          _loadNewQuestion();
+        });
+      }
+    });
+  }
+
+  void _finishRace({required bool won}) {
+    _gameLoopTimer?.cancel();
+    _raceFinished = true;
+    _playerWon = won;
+
+    if (won) {
+      final finalReward = _scoreSesterces + 50;
+      widget.repo.addSesterces(finalReward);
+      HapticFeedback.heavyImpact();
+    } else {
+      widget.repo.addSesterces(10);
+    }
+  }
+
+  void _restartRace() {
+    setState(() {
+      _playerProgress = 0.0;
+      _rivalProgress = 0.0;
+      _currentLap = 1;
+      _raceFinished = false;
+      _playerWon = false;
+      _scoreSesterces = 0;
+      _comboCount = 0;
+      _turboRemainingFrames = 0;
+      _loadNewQuestion();
+    });
+    _startGameLoop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9F6F0),
+      appBar: AppBar(
+        title: const Text(
+          'CIRCUS MAXIMUS',
+          style: TextStyle(
+            letterSpacing: 1.5,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: RomanColors.imperialPurple,
+        foregroundColor: Colors.white,
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: RomanColors.imperialGold),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('🪙', style: TextStyle(fontSize: 13)),
+                const SizedBox(width: 4),
+                Text(
+                  '+$_scoreSesterces',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
+            _buildDolphinLapCounter(),
+
+            // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                child: _buildRacetrackView(),
+              ),
+            ),
+
+            // 3. Panneau Turbo & Combo
+            _buildTurboComboHeader(),
+
+            // 4. Console Quiz Question & Choix de Vocabulaire
+            Expanded(
+              flex: 5,
+              child: _raceFinished ? _buildVictoryScreen() : _buildQuizPanel(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDolphinLapCounter() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(bottom: BorderSide(color: RomanColors.marbleBorder)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              const Text(
+                'TOURS : ',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.8,
+                  color: RomanColors.imperialPurple,
+                ),
+              ),
+              ...List.generate(_totalLaps, (index) {
+                final isCompleted = index < _currentLap;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 3),
+                  child: AnimatedScale(
+                    duration: const Duration(milliseconds: 300),
+                    scale: isCompleted ? 1.15 : 0.85,
+                    child: Text(
+                      isCompleted ? '🐬' : '⚪',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: isCompleted ? Colors.blueAccent : Colors.grey,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ],
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              color: _turboRemainingFrames > 0
+                  ? Colors.orange.withOpacity(0.2)
+                  : Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: _turboRemainingFrames > 0 ? Colors.orange : Colors.blue,
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _turboRemainingFrames > 0 ? '🔥 TURBO' : '🐎 ÉCURIE VENETI',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: _turboRemainingFrames > 0 ? Colors.deepOrange : Colors.blue.shade800,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRacetrackView() {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFDFCAAC), // Sable de l'arène
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFC0A080), width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x22000000),
+            offset: Offset(0, 4),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Stack(
+          children: [
+            // Fond animé du sable et des gradins
+            CustomPaint(
+              size: Size.infinite,
+              painter: _CircusTrackPainter(
+                playerProgress: _playerProgress / 100.0,
+                rivalProgress: _rivalProgress / 100.0,
+                isTurbo: _turboRemainingFrames > 0,
+              ),
+            ),
+
+            // Ligne de départ / arrivée dorée
+            Positioned(
+              left: 40,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: Container(
+                  width: 3,
+                  color: Colors.white.withOpacity(0.6),
+                ),
+              ),
+            ),
+
+            // Spina centrale ornée d'obélisques et statues
+            Center(
+              child: Container(
+                width: 140,
+                height: 32,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0E6D2),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.imperialGold, width: 2),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x33000000),
+                      offset: Offset(0, 3),
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Text('🏛️', style: TextStyle(fontSize: 14)),
+                    Text('SPINA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.2, color: Color(0xFF7A5901))),
+                    Text('🏺', style: TextStyle(fontSize: 14)),
+                  ],
+                ),
+              ),
+            ),
+
+            // Char Bleu (Joueur - Veneti)
+            _buildChariotWidget(
+              progress: _playerProgress / 100.0,
+              laneY: 0.28,
+              isPlayer: true,
+              isTurbo: _turboRemainingFrames > 0,
+            ),
+
+            // Char Rouge (Rival - Russati)
+            _buildChariotWidget(
+              progress: _rivalProgress / 100.0,
+              laneY: 0.72,
+              isPlayer: false,
+              isTurbo: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChariotWidget({
+    required double progress,
+    required double laneY,
+    required bool isPlayer,
+    required bool isTurbo,
+  }) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final trackWidth = constraints.maxWidth - 70;
+        final x = 20 + (progress.clamp(0.0, 1.0) * trackWidth);
+        final y = constraints.maxHeight * laneY - 24;
+
+        return Positioned(
+          left: x,
+          top: y,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (isTurbo)
+                    const Text('💨', style: TextStyle(fontSize: 16)),
+                  Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: isPlayer ? Colors.blue.shade700 : Colors.red.shade700,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: isPlayer ? Colors.blue.withOpacity(0.4) : Colors.red.withOpacity(0.4),
+                          blurRadius: 8,
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      isPlayer ? '🏇' : '🏎️',
+                      style: const TextStyle(fontSize: 22),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  isPlayer ? 'Veneti' : 'Maximus',
+                  style: const TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTurboComboHeader() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              const Text('COMBO : ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.black54)),
+              Text(
+                'x$_comboCount',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: _comboCount > 1 ? Colors.deepOrange : RomanColors.imperialPurple,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            _turboRemainingFrames > 0 ? '⚡ ACCÉLÉRATION MAXIMALE !' : 'Réponds vite pour doubler ton rival !',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: _turboRemainingFrames > 0 ? Colors.deepOrange : Colors.black54,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuizPanel() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border.all(color: RomanColors.marbleBorder),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x11000000),
+            offset: Offset(0, -3),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Énoncé de la question
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+            ),
+            child: Text(
+              _currentQuestion['q'] as String,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: RomanColors.imperialPurple,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // Grille 2x2 des réponses
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 2.1,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _shuffledAnswers.map((answer) {
+                final isSelected = (_selectedAnswer == answer);
+                final isCorrect = (answer == _currentQuestion['rep']);
+
+                Color btnBg = Colors.white;
+                Color btnBorder = RomanColors.marbleBorder;
+                Color btnText = RomanColors.imperialPurple;
+
+                if (_selectedAnswer != null) {
+                  if (isCorrect) {
+                    btnBg = Colors.green.shade50;
+                    btnBorder = Colors.green.shade600;
+                    btnText = Colors.green.shade800;
+                  } else if (isSelected) {
+                    btnBg = Colors.red.shade50;
+                    btnBorder = Colors.red.shade600;
+                    btnText = Colors.red.shade800;
+                  }
+                }
+
+                return InkWell(
+                  onTap: () => _onAnswerSelected(answer),
+                  borderRadius: BorderRadius.circular(14),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: btnBg,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: btnBorder, width: isSelected ? 2.0 : 1.2),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0A000000),
+                          offset: Offset(0, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      answer,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: btnText,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVictoryScreen() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border.all(color: RomanColors.marbleBorder),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _playerWon ? '🏆 VICTORIA !' : '💨 COURSE DISPUTÉE !',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: _playerWon ? Colors.green.shade800 : Colors.red.shade800,
+              letterSpacing: 1.2,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            _playerWon
+                ? 'Ton quadrige franchit la ligne en triomphateur ! Rome t\'acclame !'
+                : 'Le rival Maximus a été le plus rapide cette fois-ci. Réessaie pour la gloire !',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 13, color: Colors.black87),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: RomanColors.imperialGold),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('🪙', style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 8),
+                Text(
+                  '+${_playerWon ? _scoreSesterces + 50 : 10} Sesterces remportés',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: RomanColors.imperialPurple,
+                  side: BorderSide(color: RomanColors.imperialPurple),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+                child: const Text('Quitter'),
+              ),
+              const SizedBox(width: 16),
+              ElevatedButton.icon(
+                onPressed: _restartRace,
+                icon: const Icon(Icons.replay),
+                label: const Text('Nouvelle Course'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: RomanColors.imperialPurple,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CircusTrackPainter extends CustomPainter {
+  final double playerProgress;
+  final double rivalProgress;
+  final bool isTurbo;
+
+  _CircusTrackPainter({
+    required this.playerProgress,
+    required this.rivalProgress,
+    required this.isTurbo,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final sandPaint = Paint()..color = const Color(0xFFE8D3B4);
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), sandPaint);
+
+    // Lignes de séparation de couloirs en pointillés
+    final dashPaint = Paint()
+      ..color = Colors.white.withOpacity(0.35)
+      ..strokeWidth = 2.0
+      ..style = PaintingStyle.stroke;
+
+    const double dashWidth = 8;
+    const double dashSpace = 8;
+    double startX = 0;
+    final double yMiddle = size.height * 0.5;
+
+    while (startX < size.width) {
+      canvas.drawLine(
+        Offset(startX, yMiddle),
+        Offset(startX + dashWidth, yMiddle),
+        dashPaint,
+      );
+      startX += dashWidth + dashSpace;
+    }
+
+    // Effet de trainée de poussière si turbo
+    if (isTurbo) {
+      final turboTrail = Paint()
+        ..color = Colors.orange.withOpacity(0.3)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
+      canvas.drawCircle(Offset(size.width * 0.4, size.height * 0.28), 16, turboTrail);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _CircusTrackPainter oldDelegate) {
+    return oldDelegate.playerProgress != playerProgress ||
+        oldDelegate.rivalProgress != rivalProgress ||
+        oldDelegate.isTurbo != isTurbo;
+  }
+}

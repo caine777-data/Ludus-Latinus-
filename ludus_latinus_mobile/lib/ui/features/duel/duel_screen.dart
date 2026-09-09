@@ -1,0 +1,611 @@
+import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../../core/themes.dart';
+import '../../core/widgets.dart';
+import '../../../data/repositories/game_repository.dart';
+
+class DuelScreen extends StatefulWidget {
+  final GameRepository repo;
+
+  const DuelScreen({super.key, required this.repo});
+
+  @override
+  State<DuelScreen> createState() => _DuelScreenState();
+}
+
+class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+
+  int _currentBossIndex = 0;
+  final List<Map<String, dynamic>> _bosses = [
+    {
+      'nom': 'Marcus le Rétiaire',
+      'titre': 'Gladiateur Vétéran',
+      'image': 'assets/images/boss_gladiateur_140.png',
+      'maxHp': 100,
+      'attaque': 20,
+      'citation': '« Mors aut gloria in harena ! »',
+    },
+    {
+      'nom': 'Le Lion de Némée',
+      'titre': 'Fauve Légendaire',
+      'image': 'assets/images/boss_lion_140.png',
+      'maxHp': 120,
+      'attaque': 25,
+      'citation': '« Rugitus leonis terram commovet ! »',
+    },
+    {
+      'nom': 'Le Minotaure',
+      'titre': 'Gardien du Labyrinthe',
+      'image': 'assets/images/boss_minotaure_140.png',
+      'maxHp': 140,
+      'attaque': 30,
+      'citation': '« Nullus exitus e labyrintho patet ! »',
+    },
+    {
+      'nom': 'Le Sphinx de Thèbes',
+      'titre': 'Maître des Énigmes',
+      'image': 'assets/images/boss_sphinx_140.png',
+      'maxHp': 160,
+      'attaque': 35,
+      'citation': '« Solve aenigma aut peri ! »',
+    },
+    {
+      'nom': 'Mercure Céleste',
+      'titre': 'Messager des Dieux',
+      'image': 'assets/images/boss_mercure_140.png',
+      'maxHp': 180,
+      'attaque': 40,
+      'citation': '« Celeritas deorum vincit omnia ! »',
+    },
+  ];
+
+  final List<Map<String, dynamic>> _duelQuestions = [
+    {
+      'q': 'Que signifie « Lupus » ?',
+      'rep': 'Le loup',
+      'fausses': ['Le lièvre', 'La lune', 'Le lynx'],
+    },
+    {
+      'q': 'Quel est le cas du sujet en latin ?',
+      'rep': 'Le Nominatif',
+      'fausses': ['L\'Accusatif', 'L\'Ablatif', 'Le Datif'],
+    },
+    {
+      'q': 'Que signifie « Bellum » ?',
+      'rep': 'La guerre',
+      'fausses': ['La beauté', 'Le bœuf', 'La boisson'],
+    },
+    {
+      'q': 'Qui est le dieu romain de la guerre ?',
+      'rep': 'Mars',
+      'fausses': ['Jupiter', 'Neptune', 'Vulcain'],
+    },
+    {
+      'q': 'Quel cas latin exprime le COD ?',
+      'rep': 'L\'Accusatif',
+      'fausses': ['Le Génitif', 'Le Datif', 'L\'Ablatif'],
+    },
+    {
+      'q': 'Que signifie « Gladius » ?',
+      'rep': 'Le glaive',
+      'fausses': ['Le bouclier', 'Le casque', 'La lance'],
+    },
+    {
+      'q': 'Que signifie « Rex » (3e déclinaison) ?',
+      'rep': 'Le roi',
+      'fausses': ['La loi', 'La reine', 'Le chef'],
+    },
+    {
+      'q': 'Quel suffixe caractérise l\'imparfait latin ?',
+      'rep': '-ba-',
+      'fausses': ['-vi-', '-re-', '-isse-'],
+    },
+    {
+      'q': 'Que signifie « Veni, vidi, vici » de César ?',
+      'rep': 'Je suis venu, j\'ai vu, j\'ai vaincu',
+      'fausses': ['Vivre, aimer, mourir', 'Parler, écouter, comprendre', 'Courir, sauter, gagner'],
+    },
+    {
+      'q': 'Que signifie l\'abréviation « SPQR » ?',
+      'rep': 'Le Sénat et le Peuple Romain',
+      'fausses': ['Rome Pour Toujours', 'Paix et Victoire Romaine', 'Gloire à l\'Empire'],
+    },
+  ];
+
+  int _playerHp = 100;
+  int _bossHp = 100;
+  bool _combatFini = false;
+  bool _victoire = false;
+  int _gainsSesterces = 0;
+
+  late Map<String, dynamic> _currentQ;
+  late List<String> _shuffledChoices;
+  String? _chosenAnswer;
+  bool _animatingHit = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+
+    _initBoss();
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  void _initBoss() {
+    final boss = _bosses[_currentBossIndex];
+    setState(() {
+      _playerHp = 100;
+      _bossHp = boss['maxHp'] as int;
+      _combatFini = false;
+      _victoire = false;
+      _gainsSesterces = 0;
+      _nextQuestion();
+    });
+  }
+
+  void _nextQuestion() {
+    final random = math.Random();
+    _currentQ = _duelQuestions[random.nextInt(_duelQuestions.length)];
+    final options = <String>[
+      _currentQ['rep'] as String,
+      ...(_currentQ['fausses'] as List<String>),
+    ];
+    options.shuffle();
+    _shuffledChoices = options;
+    _chosenAnswer = null;
+    _animatingHit = false;
+  }
+
+  void _onOptionTapped(String answer) {
+    if (_chosenAnswer != null || _combatFini) return;
+
+    final isCorrect = (answer == _currentQ['rep']);
+    final boss = _bosses[_currentBossIndex];
+
+    setState(() {
+      _chosenAnswer = answer;
+      _animatingHit = true;
+    });
+
+    if (isCorrect) {
+      HapticFeedback.heavyImpact();
+      final degats = 35;
+      setState(() {
+        _bossHp = math.max(0, _bossHp - degats);
+        _gainsSesterces += 15;
+      });
+      if (_bossHp <= 0) {
+        _terminerCombat(victoire: true);
+        return;
+      }
+    } else {
+      HapticFeedback.vibrate();
+      final riposte = boss['attaque'] as int;
+      setState(() {
+        _playerHp = math.max(0, _playerHp - riposte);
+      });
+      if (_playerHp <= 0) {
+        _terminerCombat(victoire: false);
+        return;
+      }
+    }
+
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted && !_combatFini) {
+        setState(() {
+          _nextQuestion();
+        });
+      }
+    });
+  }
+
+  void _terminerCombat({required bool victoire}) {
+    setState(() {
+      _combatFini = true;
+      _victoire = victoire;
+    });
+
+    if (victoire) {
+      final total = _gainsSesterces + 50;
+      widget.repo.addSesterces(total);
+      HapticFeedback.heavyImpact();
+    } else {
+      widget.repo.addSesterces(5);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final boss = _bosses[_currentBossIndex];
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF1B1622), // Ambiance nocturne au Colisée
+      appBar: AppBar(
+        title: const Text(
+          'COLOSSEUM DUELLUM',
+          style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFF2D1E3A),
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Règles de l\'Arène'),
+                  content: const Text(
+                    'Affronte les champions antiques du Colisée !\n\n'
+                    'Chaque bonne réponse porte un coup critique à l\'adversaire.\n'
+                    'Une erreur te fait subir la riposte du gladiateur.\n\n'
+                    'Vaincs les 5 colosses pour graver ton nom au Panthéon !',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: const Text('Compris'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // 1. Arène & Jauges de Vie
+            Expanded(
+              flex: 5,
+              child: _buildArenaView(boss),
+            ),
+
+            // 2. Panneau Question / Énigme ou Victoire
+            Expanded(
+              flex: 5,
+              child: _combatFini ? _buildVictoryPanel(boss) : _buildQuizPanel(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildArenaView(Map<String, dynamic> boss) {
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF2D1E3A), Color(0xFF18101E)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Barres de Vie (Joueur vs Boss)
+          Row(
+            children: [
+              // Jauge Joueur
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '🛡️ TOI (Tiro)',
+                      style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 12),
+                    ),
+                    const SizedBox(height: 4),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: LinearProgressIndicator(
+                        value: _playerHp / 100.0,
+                        backgroundColor: Colors.white24,
+                        color: _playerHp > 30 ? Colors.greenAccent : Colors.redAccent,
+                        minHeight: 10,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text('$_playerHp / 100 HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 20),
+              // Jauge Boss
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      '⚔️ ${boss['nom']}',
+                      style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold, fontSize: 12),
+                    ),
+                    const SizedBox(height: 4),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(6),
+                      child: LinearProgressIndicator(
+                        value: _bossHp / (boss['maxHp'] as int),
+                        backgroundColor: Colors.white24,
+                        color: Colors.deepOrangeAccent,
+                        minHeight: 10,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text('$_bossHp / ${boss['maxHp']} HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          // Portrait du Boss dans son Médaillon Antique
+          AnimatedBuilder(
+            animation: _pulseController,
+            builder: (context, child) {
+              final scale = _animatingHit ? 0.92 : 1.0 + (_pulseController.value * 0.04);
+              return Transform.scale(
+                scale: scale,
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: _animatingHit ? Colors.redAccent : RomanColors.imperialGold,
+                      width: 3,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: (_animatingHit ? Colors.redAccent : RomanColors.imperialGold).withOpacity(0.35),
+                        blurRadius: 16,
+                        spreadRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      boss['image'] as String,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Center(
+                        child: Text('⚔️', style: TextStyle(fontSize: 48)),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          // Titre et citation antique du boss
+          Column(
+            children: [
+              Text(
+                boss['titre'] as String,
+                style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.8),
+              ),
+              const SizedBox(height: 3),
+              Text(
+                boss['citation'] as String,
+                style: const TextStyle(color: Colors.white60, fontStyle: FontStyle.italic, fontSize: 11),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuizPanel() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Color(0xFFF9F6F0),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+            ),
+            child: Text(
+              _currentQ['q'] as String,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: RomanColors.imperialPurple,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 2.1,
+              physics: const NeverScrollableScrollPhysics(),
+              children: _shuffledChoices.map((choice) {
+                final isSelected = (_chosenAnswer == choice);
+                final isCorrect = (choice == _currentQ['rep']);
+
+                Color btnBg = Colors.white;
+                Color btnBorder = RomanColors.marbleBorder;
+                Color btnText = RomanColors.imperialPurple;
+
+                if (_chosenAnswer != null) {
+                  if (isCorrect) {
+                    btnBg = Colors.green.shade50;
+                    btnBorder = Colors.green.shade600;
+                    btnText = Colors.green.shade800;
+                  } else if (isSelected) {
+                    btnBg = Colors.red.shade50;
+                    btnBorder = Colors.red.shade600;
+                    btnText = Colors.red.shade800;
+                  }
+                }
+
+                return InkWell(
+                  onTap: () => _onOptionTapped(choice),
+                  borderRadius: BorderRadius.circular(14),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: btnBg,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: btnBorder, width: isSelected ? 2.0 : 1.2),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x0A000000),
+                          offset: Offset(0, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      choice,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: btnText,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVictoryPanel(Map<String, dynamic> boss) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: const BoxDecoration(
+        color: Color(0xFFF9F6F0),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            _victoire ? '⚔️ TRIOMPHE DANS L\'ARÈNE !' : '☠️ DÉFAITE AU COMBAT !',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: _victoire ? Colors.green.shade800 : Colors.red.shade800,
+              letterSpacing: 1.1,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            _victoire
+                ? 'Tu as terrassé ${boss['nom']} ! Le peuple romain scande ton nom.'
+                : '${boss['nom']} a triomphé dans le sable. Retrempe ton glaive et retente ta chance !',
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 13, color: Colors.black87),
+          ),
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: RomanColors.imperialGold),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('🪙', style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 8),
+                Text(
+                  '+${_victoire ? _gainsSesterces + 50 : 5} Sesterces remportés',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: RomanColors.imperialPurple,
+                  side: BorderSide(color: RomanColors.imperialPurple),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+                child: const Text('Quitter'),
+              ),
+              const SizedBox(width: 16),
+              if (_victoire && _currentBossIndex < _bosses.length - 1)
+                ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _currentBossIndex++;
+                      _initBoss();
+                    });
+                  },
+                  icon: const Icon(Icons.arrow_forward),
+                  label: const Text('Boss Suivant'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: RomanColors.imperialPurple,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                )
+              else
+                ElevatedButton.icon(
+                  onPressed: _initBoss,
+                  icon: const Icon(Icons.replay),
+                  label: const Text('Rejouer'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: RomanColors.imperialPurple,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

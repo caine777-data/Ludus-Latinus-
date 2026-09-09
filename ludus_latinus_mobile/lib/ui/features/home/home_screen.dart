@@ -12,6 +12,8 @@ import '../account/account_screen.dart';
 import '../marche/marche_trajan_screen.dart';
 import '../cesar/cesar_screen.dart';
 import '../pantheon/pantheon_screen.dart';
+import '../circus/circus_screen.dart';
+import '../duel/duel_screen.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -484,6 +486,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/circus/chariot_bleu.png',
+                      fallbackIcon: '🏎️',
+                      title: 'Circus Maximus',
+                      subtitle: 'Course de Chars & Turbo',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/boss_gladiateur_140.png',
+                      fallbackIcon: '⚔️',
+                      title: 'Colosseum Duellum',
+                      subtitle: 'Arène des Champions',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)),
                         );
                       },
                     ),
