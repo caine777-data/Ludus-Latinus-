@@ -977,7 +977,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                     flex: 2,
                     child: RomanButton(
                       text: _modeRenduMonnaie
-                          ? '✓ RENDRE MONNAIE (${kClientsMarche[_currentClientIndex].sommeDonnee - kClientsMarche[_currentClientIndex].prixArticle} HS)'
+                          ? '✓ RENDRE MONNAIE (${_clientActuel.renduAttendu} HS)'
                           : '✓ PAYER (${article.prix} HS)',
                       onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
                     ),
