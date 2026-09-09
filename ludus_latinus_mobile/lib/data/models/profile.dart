@@ -50,6 +50,8 @@ class UserProfile {
         sesterces,
       );
 
+  List<String> get unlockedMonuments => restoredMonuments;
+
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     var rawCompte = json['compte'] as Map<String, dynamic>? ?? {};
     var rawCompleted = json['completed'] as List<dynamic>? ?? [];

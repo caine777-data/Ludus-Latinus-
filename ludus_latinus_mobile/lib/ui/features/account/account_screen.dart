@@ -177,7 +177,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜'),
                         _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙'),
                         _buildStatCol('Série', '${profile.streakDays} j', '🔥'),
-                        _buildStatCol('Monuments', '${profile.unlockedMonuments.length}/6', '🏛️'),
+                        _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️'),
                       ],
                     ),
                   ],

@@ -42,7 +42,7 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
         maxHeight: MediaQuery.of(context).size.height * 0.88,
       ),
       decoration: const BoxDecoration(
-        color: RomanColors.marbleBackground,
+        color: RomanColors.palatinCream,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         boxShadow: [
           BoxShadow(
