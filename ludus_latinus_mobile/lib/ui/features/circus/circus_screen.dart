@@ -132,7 +132,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     options.shuffle();
     _shuffledAnswers = options;
     _selectedAnswer = null;
-    _answeredCorrectly = false;
   }
 
   void _startGameLoop() {
@@ -176,7 +175,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     final isCorrect = (answer == _currentQuestion['rep']);
     setState(() {
       _selectedAnswer = answer;
-      _answeredCorrectly = isCorrect;
     });
 
     if (isCorrect) {

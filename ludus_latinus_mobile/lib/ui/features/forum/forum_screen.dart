@@ -147,7 +147,7 @@ class ForumScreen extends StatelessWidget {
                                 const Text('🏛️ ', style: TextStyle(fontSize: 18)),
                                 Expanded(
                                   child: Text(
-                                    '${monument.nom} restauré avec gloire ! Bonus actif : ${monument.bonusDescription}',
+                                    '${monument.nom} restauré avec gloire ! Bonus actif : ${monument.bonus}',
                                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                 ),
