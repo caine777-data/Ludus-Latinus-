@@ -201,11 +201,14 @@ jobs:
         working-directory: ./ludus_latinus_mobile
         shell: pwsh
         run: |
-          $releaseDir = Get-ChildItem -Path "build/windows" -Recurse -Directory -Filter "Release" | Select-Object -First 1
-          if (-not $releaseDir) {
-            Write-Error "Dossier Release introuvable sous build/windows"
+          $exeFile = Get-ChildItem -Path "build/windows" -Recurse -Filter "*.exe" | Select-Object -First 1
+          if (-not $exeFile) {
+            Write-Error "Fichier .exe introuvable sous build/windows"
             exit 1
           }
+          $releaseDir = $exeFile.Directory
+          Write-Host "Dossier Windows Release trouve : $($releaseDir.FullName)"
+          Get-ChildItem -Path $releaseDir.FullName | ForEach-Object { Write-Host "  - $($_.Name)" }
           Compress-Archive -Path "$($releaseDir.FullName)/*" -DestinationPath "../LudusLatinus-Windows-Flutter.zip" -Force
 
       - name: Publier l'archive Windows en Artefact
