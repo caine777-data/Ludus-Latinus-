@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
-import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -40,7 +39,7 @@ class ForumScreen extends StatelessWidget {
                     const Text('🪙', style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 4),
                     Text(
-                      ' HS',
+                      '${profile.sesterces} HS',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12.5,
@@ -97,7 +96,7 @@ class ForumScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            ' /  Édifices',
+                            '$restoredCount / ${monuments.length} Édifices',
                             style: const TextStyle(
                               color: Color(0xFF241505),
                               fontWeight: FontWeight.bold,

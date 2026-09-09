@@ -95,7 +95,6 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   String _saisieRomaine = '';
   String? _messageFeedback;
   bool _feedbackSucces = false;
-  int _articlesAchetes = 0;
 
   static const Map<String, int> _valeurs = {
     'I': 1,

@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
-import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -19,7 +18,6 @@ class TaverneScreen extends StatefulWidget {
 
 class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProviderStateMixin {
   late AnimationController _rollController;
-  late Animation<double> _rollAnimation;
 
   List<int> _diceValues = [1, 2, 3, 4];
   bool _isRolling = false;
@@ -43,7 +41,6 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    _rollAnimation = CurvedAnimation(parent: _rollController, curve: Curves.easeInOutBack);
   }
 
   @override

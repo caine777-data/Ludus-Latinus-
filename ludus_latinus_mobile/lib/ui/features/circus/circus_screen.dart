@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
-import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -102,7 +101,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   late Map<String, dynamic> _currentQuestion;
   late List<String> _shuffledAnswers;
   String? _selectedAnswer;
-  bool _answeredCorrectly = false;
   Timer? _gameLoopTimer;
 
   @override

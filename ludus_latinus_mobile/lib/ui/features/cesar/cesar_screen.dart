@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
-import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 
 class MissionCesar {
@@ -77,10 +76,8 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
   bool _modeBacASable = false;
   final TextEditingController _saisieControleur = TextEditingController(text: "VENI VIDI VICI");
   final Set<int> _missionsReussies = {};
-
-  static const String _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
   MissionCesar get _missionActuelle => kMissionsCesar[_missionIndex % kMissionsCesar.length];
+
 
   String _appliquerDecalage(String texte, int decalage) {
     final buffer = StringBuffer();

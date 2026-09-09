@@ -33,7 +33,26 @@ jobs:
 
       - name: Analyse statique Dart (Android)
         working-directory: ./ludus_latinus_mobile
-        run: flutter analyze
+        run: |
+          set -o pipefail
+          flutter analyze 2>&1 | tee analyze.log
+
+      - name: Rapport d'erreur d'analyse en cas d'échec
+        if: failure()
+        working-directory: ./ludus_latinus_mobile
+        run: |
+          echo "## ❌ Erreur Analyse Statique Dart Android" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat analyze.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Publier les logs d'analyse Android
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-Analyze-Log
+          path: ludus_latinus_mobile/analyze.log
+          if-no-files-found: ignore
 
       - name: Compiler Android App Bundle (.aab Google Play Store)
         working-directory: ./ludus_latinus_mobile
@@ -47,7 +66,7 @@ jobs:
         run: |
           echo "## ❌ Erreur Compilation Android" >> $GITHUB_STEP_SUMMARY
           echo '```text' >> $GITHUB_STEP_SUMMARY
-          tail -n 100 android_build.log >> $GITHUB_STEP_SUMMARY
+          tail -n 120 android_build.log >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Publier les logs d'erreur Android
@@ -56,6 +75,7 @@ jobs:
         with:
           name: Android-Error-Log
           path: ludus_latinus_mobile/android_build.log
+          if-no-files-found: ignore
 
       - name: Compiler APK Android (Installation directe)
         working-directory: ./ludus_latinus_mobile
@@ -96,7 +116,29 @@ jobs:
 
       - name: Analyse statique Dart (Windows)
         working-directory: ./ludus_latinus_mobile
-        run: flutter analyze
+        shell: pwsh
+        run: |
+          flutter analyze 2>&1 | Tee-Object -FilePath analyze.log
+
+      - name: Rapport d'erreur d'analyse Windows en cas d'échec
+        if: failure()
+        working-directory: ./ludus_latinus_mobile
+        shell: pwsh
+        run: |
+          "## ❌ Erreur Analyse Statique Dart Windows" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          '```text' | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          if (Test-Path analyze.log) {
+            Get-Content analyze.log | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+          }
+          '```' | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+
+      - name: Publier les logs d'analyse Windows
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-Analyze-Log
+          path: ludus_latinus_mobile/analyze.log
+          if-no-files-found: ignore
 
       - name: Compiler Windows .exe natif
         working-directory: ./ludus_latinus_mobile
@@ -112,7 +154,7 @@ jobs:
           "## ❌ Erreur Compilation Windows" | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
           '```text' | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
           if (Test-Path windows_build.log) {
-            Get-Content windows_build.log -Tail 100 | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
+            Get-Content windows_build.log -Tail 120 | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
           }
           '```' | Out-File -Append -FilePath $env:GITHUB_STEP_SUMMARY
 
@@ -122,6 +164,7 @@ jobs:
         with:
           name: Windows-Error-Log
           path: ludus_latinus_mobile/windows_build.log
+          if-no-files-found: ignore
 
       - name: Compresser le dossier Windows Release
         working-directory: ./ludus_latinus_mobile
