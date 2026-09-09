@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/thesaurus_entry.dart';

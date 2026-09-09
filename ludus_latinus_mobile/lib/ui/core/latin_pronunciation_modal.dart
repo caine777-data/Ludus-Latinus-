@@ -257,7 +257,7 @@ class _LatinPronunciationModalState extends State<LatinPronunciationModal> {
 
                     // Découpage syllabique et indicateur de la tonique
                     Wrap(
-                      alignment: WrapWrapAlignment.center,
+                      alignment: WrapAlignment.center,
                       spacing: 6,
                       runSpacing: 6,
                       children: List.generate(currentWord.syllables.length, (sIdx) {
