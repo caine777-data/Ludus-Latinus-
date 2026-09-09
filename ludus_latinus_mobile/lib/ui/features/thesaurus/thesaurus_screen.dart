@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
+import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/thesaurus_entry.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -164,7 +165,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                ' terme(s) trouvé(s)',
+                '${entries.length} terme(s) trouvé(s)',
                 style: const TextStyle(fontSize: 12, color: Colors.black54, fontStyle: FontStyle.italic),
               ),
               const Text(
@@ -185,7 +186,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                       const Text('📜', style: TextStyle(fontSize: 44)),
                       const SizedBox(height: 10),
                       Text(
-                        'Aucun mot trouvé pour «  »',
+                        'Aucun mot trouvé pour « $_searchQuery »',
                         style: const TextStyle(color: Colors.black54),
                       ),
                     ],
@@ -234,7 +235,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                   border: Border.all(color: RomanColors.imperialGold, width: 0.8),
                                 ),
                                 child: Text(
-                                  ' '.trim(),
+                                  item.genre.isNotEmpty ? item.genre.trim() : item.cat,
                                   style: const TextStyle(
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.bold,
@@ -245,15 +246,10 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                               const Spacer(),
                               IconButton(
                                 icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
-                                tooltip: 'Prononciation',
+                                tooltip: 'Prononciation latine certifiée',
                                 onPressed: () {
                                   AudioService().playWheelClick();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('🔊 Prononciation latine : "${item.latin}"'),
-                                      duration: const Duration(seconds: 1),
-                                    ),
-                                  );
+                                  LatinPronunciationModal.show(context, item.latin);
                                 },
                               ),
                             ],
@@ -296,13 +292,34 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    '«  »',
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontStyle: FontStyle.italic,
-                                      color: RomanColors.charcoal,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '« ${item.ex} »',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontStyle: FontStyle.italic,
+                                            color: RomanColors.charcoal,
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        borderRadius: BorderRadius.circular(4),
+                                        onTap: () {
+                                          AudioService().playWheelClick();
+                                          LatinPronunciationModal.show(context, item.ex);
+                                        },
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(2),
+                                          child: Icon(
+                                            Icons.volume_up_outlined,
+                                            size: 16,
+                                            color: RomanColors.imperialPurple,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   if (item.exFr.isNotEmpty)
                                     Text(

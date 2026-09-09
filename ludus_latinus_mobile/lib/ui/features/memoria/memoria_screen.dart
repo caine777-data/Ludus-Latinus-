@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/srs_card.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -490,7 +491,38 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic, color: Colors.black54),
           ),
         ],
-        const SizedBox(height: 32),
+        const SizedBox(height: 12),
+        InkWell(
+          onTap: () {
+            AudioService().playWheelClick();
+            LatinPronunciationModal.show(context, card.latin);
+          },
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: RomanColors.goldLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: RomanColors.imperialGold, width: 0.8),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.volume_up_outlined, size: 15, color: RomanColors.imperialPurple),
+                SizedBox(width: 4),
+                Text(
+                  'Prononciation & API',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: RomanColors.imperialPurple,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 24),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
@@ -559,6 +591,26 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     color: RomanColors.imperialPurple,
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    AudioService().playWheelClick();
+                    LatinPronunciationModal.show(context, card.exemple);
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.volume_up_outlined, size: 14, color: RomanColors.imperialPurple),
+                        SizedBox(width: 4),
+                        Text(
+                          'Écouter la phrase',
+                          style: TextStyle(fontSize: 10.5, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 if (card.exempleFr.isNotEmpty) ...[

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -242,25 +243,49 @@ class _LessonScreenState extends State<LessonScreen> {
                     isTip: true,
                   ),
                   const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton.icon(
-                      style: TextButton.styleFrom(
-                        foregroundColor: RomanColors.imperialPurple,
-                        backgroundColor: RomanColors.goldLight,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    alignment: WrapAlignment.end,
+                    children: [
+                      TextButton.icon(
+                        style: TextButton.styleFrom(
+                          foregroundColor: RomanColors.imperialPurple,
+                          backgroundColor: RomanColors.goldLight,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        icon: const Icon(Icons.record_voice_over_outlined, size: 16),
+                        label: const Text(
+                          '🗣️ Prononciation',
+                          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () {
+                          final phrase = lesson.latin ?? lesson.title;
+                          LatinPronunciationModal.show(context, phrase);
+                        },
                       ),
-                      icon: const Icon(Icons.biotech_outlined, size: 18),
-                      label: const Text(
-                        '🔬 Anatomia Sententiae • Décrypteur',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                      TextButton.icon(
+                        style: TextButton.styleFrom(
+                          foregroundColor: RomanColors.imperialPurple,
+                          backgroundColor: RomanColors.goldLight,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        ),
+                        icon: const Icon(Icons.biotech_outlined, size: 16),
+                        label: const Text(
+                          '🔬 Anatomia • Décrypteur',
+                          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: () => _showDecrypterSheet(context),
                       ),
-                      onPressed: () => _showDecrypterSheet(context),
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -369,37 +394,8 @@ class _LessonScreenState extends State<LessonScreen> {
                       },
                     ),
 
-                    if (isAnswered && !isCorrect) ...[
-                      const SizedBox(height: 14),
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFF0F0),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.redAccent),
-                        ),
-                        child: Row(
-                          children: [
-                            const Text('🤔 ', style: TextStyle(fontSize: 18)),
-                            const Expanded(
-                              child: Text(
-                                'Erreur antique. Relis le parchemin et retente ta chance !',
-                                style: TextStyle(fontSize: 12, color: Color(0xFF991B1B)),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  isAnswered = false;
-                                  selectedOption = null;
-                                });
-                              },
-                              child: const Text('Réessayer'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    if (isAnswered && !isCorrect)
+                      _buildMagisterPedagogicalFeedback(context),
                   ],
                 ),
               ),
@@ -584,12 +580,209 @@ class _LessonScreenState extends State<LessonScreen> {
                   style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color),
                 ),
               ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
+                tooltip: 'Prononciation latine certifiée',
+                onPressed: () => LatinPronunciationModal.show(context, word),
+              ),
             ],
           ),
           const SizedBox(height: 6),
           Text('• Désinence : $desinence', style: const TextStyle(fontSize: 12, color: Colors.black87)),
           const SizedBox(height: 2),
           Text('• Rôle : $role', style: const TextStyle(fontSize: 12, color: Colors.black54)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMagisterPedagogicalFeedback(BuildContext context) {
+    final chosenOptText = (selectedOption != null && selectedOption! < widget.lesson.options.length)
+        ? widget.lesson.options[selectedOption!]
+        : 'Réponse sélectionnée';
+
+    // Analyse pédagogique contextuelle du piège
+    String distractorAnalysis = 'Cette option semblait tentante, mais elle ne correspond pas à la règle antique énoncée ci-dessus.';
+    final lowerChosen = chosenOptText.toLowerCase();
+    if (lowerChosen.contains('[k]') || lowerChosen.contains('[s]') || lowerChosen.contains('ou') || lowerChosen.contains('pronon')) {
+      distractorAnalysis = 'Attention à la prononciation classique restituée : à l\'époque de Cicéron, le C claquait toujours [K] et le V sonnait [OU] / [W] !';
+    } else if (lowerChosen.contains('accusatif') || lowerChosen.contains('nominatif') || lowerChosen.contains('ablatif')) {
+      distractorAnalysis = 'Piège de cas classique : vérifie bien qui fait l\'action (nominatif) et qui la subit (accusatif en -m/-s).';
+    } else if (lowerChosen.contains('singulier') || lowerChosen.contains('pluriel')) {
+      distractorAnalysis = 'Vérifie bien le nombre (singulier vs pluriel) en observant attentivement la désinence finale.';
+    }
+
+    final explanation = widget.lesson.explanation;
+
+    return Container(
+      margin: const EdgeInsets.only(top: 14),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF7F2),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFE28B68), width: 1.5),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x11E28B68),
+            offset: Offset(0, 4),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: RomanColors.goldLight,
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                ),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/lupulus/lupulus_reflexion_180.png',
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Center(
+                      child: Text('🏛️', style: TextStyle(fontSize: 20)),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'CONSEIL DU MAGISTER LUPULUS',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'serif',
+                        letterSpacing: 0.8,
+                        color: Color(0xFF94381E),
+                      ),
+                    ),
+                    Text(
+                      'Échec instructif • Analyse de l\'erreur',
+                      style: TextStyle(fontSize: 10.5, color: Colors.black54),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFE5DA),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Text(
+                  'Piège antique',
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFFB71C1C)),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          // Choix de l'élève
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 12, color: RomanColors.charcoal),
+              children: [
+                const TextSpan(text: 'Tu as choisi : ', style: TextStyle(fontWeight: FontWeight.w600)),
+                TextSpan(
+                  text: '« $chosenOptText »',
+                  style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFB71C1C)),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+
+          // Décryptage
+          Text(
+            distractorAnalysis,
+            style: const TextStyle(fontSize: 12, color: Color(0xFF66301D), height: 1.35),
+          ),
+
+          if (explanation != null && explanation.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: RomanColors.marbleBorder),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('💡 ', style: TextStyle(fontSize: 14)),
+                  Expanded(
+                    child: Text(
+                      'Indice du parchemin : $explanation',
+                      style: const TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        fontStyle: FontStyle.italic,
+                        color: RomanColors.imperialPurple,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+
+          const SizedBox(height: 12),
+
+          // Boutons d'action : Réessayer + Écouter la prononciation
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    HapticFeedback.lightImpact();
+                    setState(() {
+                      isAnswered = false;
+                      selectedOption = null;
+                    });
+                  },
+                  icon: const Icon(Icons.refresh, size: 16),
+                  label: const Text('Réessayer avec l\'indice'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF94381E),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    textStyle: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              OutlinedButton.icon(
+                onPressed: () {
+                  final phrase = widget.lesson.latin ?? widget.lesson.title;
+                  LatinPronunciationModal.show(context, phrase);
+                },
+                icon: const Icon(Icons.volume_up_outlined, size: 16),
+                label: const Text('Écouter'),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: RomanColors.imperialPurple,
+                  side: const BorderSide(color: RomanColors.imperialPurple),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  textStyle: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
