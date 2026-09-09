@@ -6,6 +6,49 @@ import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
+enum CombatStance {
+  gravis(
+    'Ictus Gravis',
+    'Attaque Lourde',
+    '⚔️',
+    'Dégâts infligés +45%, riposte subie +50%',
+    1.45,
+    1.50,
+  ),
+  scutum(
+    'Scuti Paratio',
+    'Parade au Scutum',
+    '🛡️',
+    'Riposte subie réduite de 50%, dégâts normaux',
+    0.90,
+    0.50,
+  ),
+  celox(
+    'Fuga Celox',
+    'Esquive Agile',
+    '💨',
+    '+10 HS et Coup Critique si réponse < 4s',
+    1.15,
+    1.00,
+  );
+
+  final String latin;
+  final String francais;
+  final String emoji;
+  final String description;
+  final double damageMult;
+  final double riposteMult;
+
+  const CombatStance(
+    this.latin,
+    this.francais,
+    this.emoji,
+    this.description,
+    this.damageMult,
+    this.riposteMult,
+  );
+}
+
 class DuelScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -19,6 +62,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   late AnimationController _pulseController;
 
   int _currentBossIndex = 0;
+  CombatStance _currentStance = CombatStance.gravis;
+  String? _currentBossSpeech;
+  DateTime _questionStartTime = DateTime.now();
+
   final List<Map<String, dynamic>> _bosses = [
     {
       'nom': 'Marcus le Rétiaire',
@@ -27,6 +74,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'maxHp': 100,
       'attaque': 20,
       'citation': '« Mors aut gloria in harena ! »',
+      'tauntBlesse': '« Bene pugnas, tiro ! Sed reticulum meum manet ! » (Bien battu ! Mais mon filet t\'attend !)',
+      'tauntAttaque': '« Reticulum meum te capit ! Vae victis ! » (Mon filet te capture ! Malheur aux vaincus !)',
     },
     {
       'nom': 'Le Lion de Némée',
@@ -35,6 +84,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'maxHp': 120,
       'attaque': 25,
       'citation': '« Rugitus leonis terram commovet ! »',
+      'tauntBlesse': '« Grrr ! Pellis mea invulnerabilis est ! » (Ma peau est invulnérable !)',
+      'tauntAttaque': '« Ungues mei ferrum penetrant ! » (Mes griffes percent le fer !)',
     },
     {
       'nom': 'Le Minotaure',
@@ -43,6 +94,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'maxHp': 140,
       'attaque': 30,
       'citation': '« Nullus exitus e labyrintho patet ! »',
+      'tauntBlesse': '« Dolor me fortem reddit ! » (La douleur me rend plus fort !)',
+      'tauntAttaque': '« Cornua mea te prosternent ! » (Mes cornes vont te terrasser !)',
     },
     {
       'nom': 'Le Sphinx de Thèbes',
@@ -51,6 +104,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'maxHp': 160,
       'attaque': 35,
       'citation': '« Solve aenigma aut peri ! »',
+      'tauntBlesse': '« Ingenium tuum me miratur... » (Ton esprit m\'étonne...)',
+      'tauntAttaque': '« Ignorantia tua te damnat ! » (Ton ignorance te condamne !)',
     },
     {
       'nom': 'Mercure Céleste',
@@ -59,6 +114,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'maxHp': 180,
       'attaque': 40,
       'citation': '« Celeritas deorum vincit omnia ! »',
+      'tauntBlesse': '« Fulgur Iovis te adiuvat ! » (L\'éclair de Jupiter t\'assiste !)',
+      'tauntAttaque': '« Tardus es sicut testudo ! » (Tu es lent comme une tortue !)',
     },
   ];
 
@@ -151,6 +208,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       _combatFini = false;
       _victoire = false;
       _gainsSesterces = 0;
+      _currentBossSpeech = null;
       _nextQuestion();
     });
   }
@@ -166,6 +224,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     _shuffledChoices = options;
     _chosenAnswer = null;
     _animatingHit = false;
+    _questionStartTime = DateTime.now();
   }
 
   void _onOptionTapped(String answer) {
@@ -173,6 +232,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
     final isCorrect = (answer == _currentQ['rep']);
     final boss = _bosses[_currentBossIndex];
+    final elapsedSec = DateTime.now().difference(_questionStartTime).inSeconds;
 
     setState(() {
       _chosenAnswer = answer;
@@ -184,11 +244,29 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       AudioService().playSwordClash();
       AudioService().playSesterces();
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
-      final degats = 35;
+
+      int degats = (35 * _currentStance.damageMult).round();
+      int sestercesEarned = 15;
+
+      // Bonus de célérité si Fuga Celox et réponse ultra-rapide
+      if (_currentStance == CombatStance.celox && elapsedSec <= 4) {
+        degats = (degats * 1.25).round();
+        sestercesEarned += 10;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: RomanColors.laurelGreen,
+            duration: Duration(seconds: 1),
+            content: Text('⚡ Coup Critique & Célérité ! (+10 HS)'),
+          ),
+        );
+      }
+
       setState(() {
         _bossHp = math.max(0, _bossHp - degats);
-        _gainsSesterces += 15;
+        _gainsSesterces += sestercesEarned;
+        _currentBossSpeech = boss['tauntBlesse'] as String?;
       });
+
       if (_bossHp <= 0) {
         _terminerCombat(victoire: true);
         return;
@@ -196,17 +274,31 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     } else {
       HapticFeedback.vibrate();
       AudioService().playError();
-      final riposte = boss['attaque'] as int;
+      final baseRiposte = boss['attaque'] as int;
+      final riposte = (baseRiposte * _currentStance.riposteMult).round();
+
       setState(() {
         _playerHp = math.max(0, _playerHp - riposte);
+        _currentBossSpeech = boss['tauntAttaque'] as String?;
       });
+
+      if (_currentStance == CombatStance.scutum) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            duration: Duration(seconds: 1),
+            content: Text('🛡️ Parade au Scutum : Dégâts réduits de moitié !'),
+          ),
+        );
+      }
+
       if (_playerHp <= 0) {
         _terminerCombat(victoire: false);
         return;
       }
     }
 
-    Future.delayed(const Duration(milliseconds: 800), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       if (mounted && !_combatFini) {
         setState(() {
           _nextQuestion();
@@ -435,10 +527,31 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                 style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.8),
               ),
               const SizedBox(height: 3),
-              Text(
-                boss['citation'] as String,
-                style: const TextStyle(color: Colors.white60, fontStyle: FontStyle.italic, fontSize: 11),
-              ),
+              if (_currentBossSpeech != null)
+                Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF4A1F3D),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                  ),
+                  child: Text(
+                    _currentBossSpeech!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.amberAccent,
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                )
+              else
+                Text(
+                  boss['citation'] as String,
+                  style: const TextStyle(color: Colors.white60, fontStyle: FontStyle.italic, fontSize: 11),
+                ),
             ],
           ),
         ],
@@ -457,6 +570,68 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Sélecteur de Posture de Combat (Stance)
+          Row(
+            children: CombatStance.values.map((stance) {
+              final isSelected = (stance == _currentStance);
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _currentStance = stance;
+                    });
+                    AudioService().playWheelClick();
+                    HapticFeedback.selectionClick();
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    margin: const EdgeInsets.symmetric(horizontal: 3),
+                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                    decoration: BoxDecoration(
+                      color: isSelected ? RomanColors.imperialPurple : Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: isSelected ? RomanColors.imperialGold : RomanColors.marbleBorder,
+                        width: isSelected ? 1.6 : 1.0,
+                      ),
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: RomanColors.imperialPurple.withOpacity(0.3),
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              )
+                            ]
+                          : null,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '${stance.emoji} ${stance.latin}',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: isSelected ? Colors.white : RomanColors.imperialPurple,
+                          ),
+                        ),
+                        const SizedBox(height: 1),
+                        Text(
+                          stance.francais,
+                          style: TextStyle(
+                            fontSize: 8.5,
+                            color: isSelected ? RomanColors.goldLight : Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 10),
+
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(

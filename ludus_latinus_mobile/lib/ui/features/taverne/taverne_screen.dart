@@ -20,7 +20,11 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   late AnimationController _rollController;
 
   List<int> _diceValues = [1, 2, 3, 4];
+  List<int> _gaiusDiceValues = [3, 4, 5, 6];
   bool _isRolling = false;
+  bool _modeDuelGaius = false;
+  int _miseDuel = 10;
+  String? _gaiusReplique;
   String _resultTitle = 'Lance le cornet (Fritillus)';
   String _resultDesc = 'Tente le Coup de Vénus (Iactus Venereus) pour remporter 50 HS !';
   int _lastGain = 0;
@@ -52,10 +56,25 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   void _rollDice() async {
     if (_isRolling) return;
 
+    if (_modeDuelGaius) {
+      if (widget.repo.profile.sesterces < _miseDuel) {
+        AudioService().playError();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Text('Sesterces insuffisants pour défier Gaius ! Gagne des HS en leçon !'),
+          ),
+        );
+        return;
+      }
+      widget.repo.addSesterces(-_miseDuel);
+    }
+
     HapticFeedback.heavyImpact();
     AudioService().playDiceRoll();
     setState(() {
       _isRolling = true;
+      _gaiusReplique = null;
     });
 
     _rollController.forward(from: 0.0);
@@ -67,6 +86,9 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       if (mounted) {
         setState(() {
           _diceValues = List.generate(4, (_) => math.Random().nextInt(6) + 1);
+          if (_modeDuelGaius) {
+            _gaiusDiceValues = List.generate(4, (_) => math.Random().nextInt(6) + 1);
+          }
         });
       }
     }
@@ -80,7 +102,56 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     }
   }
 
+  int _scoreCombo(List<int> dice) {
+    final counts = <int, int>{};
+    for (var d in dice) {
+      counts[d] = (counts[d] ?? 0) + 1;
+    }
+    if (counts.keys.length == 4) return 1000 + dice.reduce((a, b) => a + b); // Venereus
+    if (counts.values.any((c) => c >= 4)) return 800; // Carré
+    if (counts.values.any((c) => c == 3)) return 600; // Brelan
+    if (counts.values.any((c) => c == 2)) return 400 + dice.reduce((a, b) => a + b); // Paire
+    return dice.reduce((a, b) => a + b);
+  }
+
   void _evaluateResult() {
+    if (_modeDuelGaius) {
+      final playerScore = _scoreCombo(_diceValues);
+      final gaiusScore = _scoreCombo(_gaiusDiceValues);
+
+      if (playerScore > gaiusScore) {
+        final gain = _miseDuel * 2;
+        widget.repo.addSesterces(gain);
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+        setState(() {
+          _lastGain = gain;
+          _resultTitle = '🏆 Victoire contre Gaius l\'Aubergiste !';
+          _resultDesc = 'Tu bats le tavernier sur le marbre ! Gain : +$gain HS !';
+          _gaiusReplique = '« Par Bacchus, quelle chance insolente ! Tiens ta bourse ! »';
+        });
+      } else if (playerScore < gaiusScore) {
+        AudioService().playError();
+        HapticFeedback.vibrate();
+        setState(() {
+          _lastGain = 0;
+          _resultTitle = '❌ Gaius remporte la manche !';
+          _resultDesc = 'Les dés de l\'aubergiste ont été plus forts cette fois-ci.';
+          _gaiusReplique = '« Les dés de la taverne ne mentent jamais ! Merci pour le pourboire ! »';
+        });
+      } else {
+        widget.repo.addSesterces(_miseDuel);
+        AudioService().playSesterces();
+        setState(() {
+          _lastGain = _miseDuel;
+          _resultTitle = '⚖️ Égalité parfaite !';
+          _resultDesc = 'Vos figures sont de même valeur. Ta mise de $_miseDuel HS t\'est rendue.';
+          _gaiusReplique = '« Bacchus partage la coupe ! On remet ça quand tu veux ! »';
+        });
+      }
+      return;
+    }
+
     final counts = <int, int>{};
     for (var d in _diceValues) {
       counts[d] = (counts[d] ?? 0) + 1;
@@ -127,7 +198,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     }
 
     if (gain > 0) {
-      widget.repo.storageService.addSesterces(gain);
+      widget.repo.addSesterces(gain);
     }
 
     setState(() {
@@ -259,11 +330,103 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
+
+            // Sélecteur de Mode : Solo Quotidien vs Duel de Comptoir contre Gaius
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _modeDuelGaius = false;
+                        _gaiusReplique = null;
+                      });
+                      AudioService().playWheelClick();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: !_modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
+                      foregroundColor: !_modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
+                      side: BorderSide(color: RomanColors.imperialPurple),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      elevation: !_modeDuelGaius ? 3 : 0,
+                    ),
+                    child: const Text('🎲 Solo Quotidien', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _modeDuelGaius = true;
+                      });
+                      AudioService().playWheelClick();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
+                      foregroundColor: _modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
+                      side: BorderSide(color: RomanColors.imperialPurple),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      elevation: _modeDuelGaius ? 3 : 0,
+                    ),
+                    child: const Text('🧔 Défier Gaius', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  ),
+                ),
+              ],
+            ),
+
+            if (_modeDuelGaius) ...[
+              const SizedBox(height: 12),
+              // Sélecteur de mise
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Mise : ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: RomanColors.imperialPurple)),
+                  ...[5, 10, 25].map((mise) {
+                    final isSel = (_miseDuel == mise);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      child: ChoiceChip(
+                        label: Text('$mise HS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: isSel ? Colors.white : RomanColors.imperialPurple)),
+                        selected: isSel,
+                        selectedColor: RomanColors.imperialPurple,
+                        backgroundColor: RomanColors.goldLight,
+                        onSelected: (val) {
+                          if (val) {
+                            setState(() { _miseDuel = mise; });
+                            AudioService().playWheelClick();
+                          }
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              ),
+              if (_gaiusReplique != null)
+                Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3E1F16),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: RomanColors.imperialGold),
+                  ),
+                  child: Text(
+                    '🧔 Gaius : $_gaiusReplique',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.amberAccent, fontStyle: FontStyle.italic, fontSize: 11.5, fontWeight: FontWeight.bold),
+                  ),
+                ),
+            ],
+
+            const SizedBox(height: 16),
 
             // 2. Plateau en Marbre des 4 Dés Romains
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(24),
@@ -278,13 +441,38 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               ),
               child: Column(
                 children: [
+                  if (_modeDuelGaius) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text('🧔 DÉS DE GAIUS L\'AUBERGISTE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black54)),
+                        Text('FACTION TABERNA', style: TextStyle(fontSize: 9, color: Colors.orange, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(4, (index) {
+                        return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true);
+                      }),
+                    ),
+                    const Divider(height: 24, thickness: 1),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Text('🛡️ TES DÉS (TIRO)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
+                        Text('TON CORNET', style: TextStyle(fontSize: 9, color: RomanColors.laurelGreen, fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: List.generate(4, (index) {
                       return _build3DRomanDie(_diceValues[index]);
                     }),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   // Bouton Lancer
                   ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -299,8 +487,10 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     ),
                     icon: Icon(_isRolling ? Icons.refresh : Icons.casino_outlined, size: 22),
                     label: Text(
-                      _isRolling ? 'ROULEMENT DES DÉS...' : 'SECOUER LE FRITILLUS',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.8),
+                      _isRolling
+                          ? 'ROULEMENT DES DÉS...'
+                          : (_modeDuelGaius ? 'LANCER CONTRE GAIUS ($_miseDuel HS)' : 'SECOUER LE FRITILLUS (GRATUIT)'),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, letterSpacing: 0.8),
                     ),
                     onPressed: _isRolling ? null : _rollDice,
                   ),
@@ -386,19 +576,22 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     );
   }
 
-  Widget _build3DRomanDie(int val) {
+  Widget _build3DRomanDie(int val, {bool isGaius = false}) {
     return Container(
-      width: 60,
-      height: 60,
+      width: isGaius ? 52 : 60,
+      height: isGaius ? 52 : 60,
       decoration: BoxDecoration(
-        color: const Color(0xFFFBF8EE),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFC59B27), width: 2),
+        color: isGaius ? const Color(0xFF5C3317) : const Color(0xFFFBF8EE),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isGaius ? const Color(0xFF8B5A2B) : const Color(0xFFC59B27),
+          width: 2,
+        ),
         boxShadow: const [
           BoxShadow(
             color: Color(0x33000000),
-            offset: Offset(0, 5),
-            blurRadius: 8,
+            offset: Offset(0, 4),
+            blurRadius: 6,
           ),
           BoxShadow(
             color: Color(0x22FFFFFF),
@@ -410,11 +603,11 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       child: Center(
         child: Text(
           _romanDice[val] ?? '',
-          style: const TextStyle(
-            fontSize: 22,
+          style: TextStyle(
+            fontSize: isGaius ? 18 : 22,
             fontWeight: FontWeight.bold,
             fontFamily: 'serif',
-            color: RomanColors.imperialPurple,
+            color: isGaius ? const Color(0xFFFFE4C4) : RomanColors.imperialPurple,
           ),
         ),
       ),

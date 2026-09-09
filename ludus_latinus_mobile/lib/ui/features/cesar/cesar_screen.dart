@@ -4,7 +4,14 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
+import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+
+enum ModeCesar {
+  missions,
+  generateur,
+  decodeur,
+}
 
 class MissionCesar {
   final String titre;
@@ -73,11 +80,52 @@ class CesarScreen extends StatefulWidget {
 class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStateMixin {
   int _cleActuelle = 1;
   int _missionIndex = 0;
-  bool _modeBacASable = false;
+  ModeCesar _modeActuel = ModeCesar.missions;
   final TextEditingController _saisieControleur = TextEditingController(text: "VENI VIDI VICI");
+  final TextEditingController _decodeurControleur = TextEditingController(text: "PHGLFRV VXQW FDHVDU");
   final Set<int> _missionsReussies = {};
+  final Set<String> _messagesAmiDechiffres = {};
   MissionCesar get _missionActuelle => kMissionsCesar[_missionIndex % kMissionsCesar.length];
 
+  @override
+  void dispose() {
+    _saisieControleur.dispose();
+    _decodeurControleur.dispose();
+    super.dispose();
+  }
+
+  int? _calculerCleFrequence(String texte) {
+    final counts = <int, int>{};
+    final upper = texte.toUpperCase();
+    for (int i = 0; i < upper.length; i++) {
+      final code = upper.codeUnitAt(i);
+      if (code >= 65 && code <= 90) {
+        counts[code] = (counts[code] ?? 0) + 1;
+      }
+    }
+    if (counts.isEmpty) return null;
+    var maxChar = 65;
+    var maxCount = -1;
+    counts.forEach((c, cnt) {
+      if (cnt > maxCount) {
+        maxCount = cnt;
+        maxChar = c;
+      }
+    });
+    // Lettre la plus fréquente en Latin / Français = E (code ASCII 69)
+    return (maxChar - 69 + 26) % 26;
+  }
+
+  String _genererEpitreFormatee(String texteChiffre, int cle) {
+    return '''
+🏛️ *EPISTVLA SECRETA SPQR* 🏛️
+Ad amicos scriptum sub sigillo Caesaris.
+══════════════════════════════
+$texteChiffre
+══════════════════════════════
+🗝️ Clavis Caesaris : +$cle
+🛑 Sigillum Imperatoris C. Ivlivs Caesar''';
+  }
 
   String _appliquerDecalage(String texte, int decalage) {
     final buffer = StringBuffer();
@@ -118,7 +166,7 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
   }
 
   void _verifierMission() {
-    if (_modeBacASable) return;
+    if (_modeActuel != ModeCesar.missions) return;
     final mission = _missionActuelle;
     if (_cleActuelle == mission.cle && !_missionsReussies.contains(_missionIndex)) {
       HapticFeedback.mediumImpact();
@@ -225,12 +273,20 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
       animation: widget.repo,
       builder: (context, _) {
         final mission = _missionActuelle;
-        // Déchiffrement du message en fonction du décalage inverse (-cle)
-        final texteDechiffre = _modeBacASable
-            ? _appliquerDecalage(_saisieControleur.text, _cleActuelle)
-            : _appliquerDecalage(mission.messageChiffre, -_cleActuelle);
+        final String texteDechiffre;
+        switch (_modeActuel) {
+          case ModeCesar.missions:
+            texteDechiffre = _appliquerDecalage(mission.messageChiffre, -_cleActuelle);
+            break;
+          case ModeCesar.generateur:
+            texteDechiffre = _appliquerDecalage(_saisieControleur.text, _cleActuelle);
+            break;
+          case ModeCesar.decodeur:
+            texteDechiffre = _appliquerDecalage(_decodeurControleur.text, -_cleActuelle);
+            break;
+        }
 
-        final estCleValide = !_modeBacASable && _cleActuelle == mission.cle;
+        final estCleValide = _modeActuel == ModeCesar.missions && _cleActuelle == mission.cle;
 
         return Scaffold(
           appBar: AppBar(
@@ -257,13 +313,13 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                 ),
               ),
               IconButton(
-                icon: Icon(_modeBacASable ? Icons.military_tech : Icons.edit_note),
-                tooltip: _modeBacASable ? 'Mode Missions' : 'Atelier Libre',
+                icon: const Icon(Icons.swap_horiz),
+                tooltip: 'Changer de mode',
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   AudioService().playCardFlip();
                   setState(() {
-                    _modeBacASable = !_modeBacASable;
+                    _modeActuel = ModeCesar.values[(_modeActuel.index + 1) % ModeCesar.values.length];
                   });
                 },
               ),
@@ -329,9 +385,11 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            _modeBacASable
-                                ? '« Compose tes propres messages secrets et transmets-les à tes alliés ! »'
-                                : '« Tourne la roue pour trouver la clé secrète et décoder mes ordres de bataille ! »',
+                            _modeActuel == ModeCesar.missions
+                                ? '« Tourne la roue pour trouver la clé secrète et décoder mes ordres de bataille ! »'
+                                : _modeActuel == ModeCesar.generateur
+                                    ? '« Compose tes messages secrets, scelle le parchemin et transmets-le à tes alliés ! »'
+                                    : '« Colle une missive reçue d\'un camarade, étudie sa fréquence et révèle ses secrets ! »',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
@@ -347,41 +405,54 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
 
               const SizedBox(height: 14),
 
-              // 2. Sélecteur de Mode (Missions vs Atelier Libre)
-              Row(
-                children: [
-                  Expanded(
-                    child: ChoiceChip(
-                      label: const Center(child: Text('Missions de Guerre')),
-                      selected: !_modeBacASable,
+              // 2. Sélecteur de Mode (3 modes interactifs)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ChoiceChip(
+                      label: const Text('⚔️ Missions'),
+                      selected: _modeActuel == ModeCesar.missions,
                       selectedColor: RomanColors.imperialPurple,
                       labelStyle: TextStyle(
-                        color: !_modeBacASable ? Colors.white : RomanColors.charcoal,
+                        color: _modeActuel == ModeCesar.missions ? Colors.white : RomanColors.charcoal,
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
                       onSelected: (val) {
-                        if (val) setState(() => _modeBacASable = false);
+                        if (val) setState(() => _modeActuel = ModeCesar.missions);
                       },
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: ChoiceChip(
-                      label: const Center(child: Text('Atelier Libre (Cryptoir)')),
-                      selected: _modeBacASable,
+                    const SizedBox(width: 8),
+                    ChoiceChip(
+                      label: const Text('📜 Parchemin Secret'),
+                      selected: _modeActuel == ModeCesar.generateur,
                       selectedColor: RomanColors.imperialPurple,
                       labelStyle: TextStyle(
-                        color: _modeBacASable ? Colors.white : RomanColors.charcoal,
+                        color: _modeActuel == ModeCesar.generateur ? Colors.white : RomanColors.charcoal,
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
                       ),
                       onSelected: (val) {
-                        if (val) setState(() => _modeBacASable = true);
+                        if (val) setState(() => _modeActuel = ModeCesar.generateur);
                       },
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    ChoiceChip(
+                      label: const Text('🔍 Décodeur Camarade'),
+                      selected: _modeActuel == ModeCesar.decodeur,
+                      selectedColor: RomanColors.imperialPurple,
+                      labelStyle: TextStyle(
+                        color: _modeActuel == ModeCesar.decodeur ? Colors.white : RomanColors.charcoal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                      onSelected: (val) {
+                        if (val) setState(() => _modeActuel = ModeCesar.decodeur);
+                      },
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(height: 14),
@@ -475,8 +546,8 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
 
               const SizedBox(height: 10),
 
-              // 5. Zone de Contenu : Missions vs Atelier Libre
-              if (!_modeBacASable) ...[
+              // 5. Zone de Contenu : Missions vs Parchemin Secret vs Décodeur Camarade
+              if (_modeActuel == ModeCesar.missions) ...[
                 // Onglets de missions
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
@@ -612,8 +683,8 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                     ],
                   ),
                 ),
-              ] else ...[
-                // Mode Atelier Libre
+              ] else if (_modeActuel == ModeCesar.generateur) ...[
+                // Mode Générateur de Parchemin Secret
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -641,50 +712,256 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                         onChanged: (val) => setState(() {}),
                       ),
                       const SizedBox(height: 14),
-                      Text(
-                        'RÉSULTAT CHIFFRÉ (CLÉ +$_cleActuelle) :',
-                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+                      const Text(
+                        'PARCHEMIN IMPÉRIAL SCELLÉ :',
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
                       ),
                       const SizedBox(height: 6),
+                      // Parchemin antique stylisé
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF6EFE6),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: RomanColors.imperialGold),
-                        ),
-                        child: SelectableText(
-                          texteDechiffre,
-                          style: const TextStyle(
-                            fontFamily: 'monospace',
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: RomanColors.imperialPurple,
-                            letterSpacing: 1.2,
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFFFFBF0), Color(0xFFF3E7CF)],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
                           ),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: RomanColors.imperialGold, width: 1.8),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x1F523415),
+                              offset: Offset(0, 3),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text('🏛️', style: TextStyle(fontSize: 14)),
+                                SizedBox(width: 6),
+                                Text(
+                                  'EPISTVLA SECRETA SPQR',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: RomanColors.imperialPurple,
+                                    letterSpacing: 1.5,
+                                    fontFamily: 'serif',
+                                  ),
+                                ),
+                                SizedBox(width: 6),
+                                Text('🏛️', style: TextStyle(fontSize: 14)),
+                              ],
+                            ),
+                            const Divider(color: RomanColors.imperialGold, height: 16),
+                            SelectableText(
+                              texteDechiffre,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: 'monospace',
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF4A101A),
+                                letterSpacing: 1.4,
+                              ),
+                            ),
+                            const Divider(color: RomanColors.imperialGold, height: 16),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '🗝️ Clavis : +$_cleActuelle',
+                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFB71C1C),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('🛑', style: TextStyle(fontSize: 10)),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        'SIGILLVM CAESARIS',
+                                        style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
                       Row(
                         children: [
                           Expanded(
                             child: OutlinedButton.icon(
                               icon: const Icon(Icons.copy, size: 16),
-                              label: const Text('COPIER LE MESSAGE'),
+                              label: const Text('TEXTE SEUL'),
                               onPressed: () {
                                 AudioService().playWheelClick();
                                 Clipboard.setData(ClipboardData(text: texteDechiffre));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Message crypté copié dans le presse-papiers !'),
+                                    content: Text('Texte crypté copié dans le presse-papiers !'),
                                     duration: Duration(seconds: 2),
                                   ),
                                 );
                               },
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            flex: 2,
+                            child: RomanButton(
+                              text: '📜 EXPORTER LE PARCHEMIN',
+                              onPressed: () {
+                                HapticFeedback.mediumImpact();
+                                AudioService().playTriumph();
+                                final epitre = _genererEpitreFormatee(texteDechiffre, _cleActuelle);
+                                Clipboard.setData(ClipboardData(text: epitre));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Parchemin antique avec sceau copié ! Partage-le à tes alliés !'),
+                                    duration: Duration(seconds: 3),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ],
+                      ),
+                    ],
+                  ),
+                ),
+              ] else ...[
+                // Mode Décodeur de Camarade
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'MISSIVE SECRÈTE REÇUE :',
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+                      ),
+                      const SizedBox(height: 6),
+                      TextField(
+                        controller: _decodeurControleur,
+                        textCapitalization: TextCapitalization.characters,
+                        decoration: InputDecoration(
+                          hintText: 'Colle ici le message codé reçu...',
+                          prefixIcon: const Icon(Icons.paste),
+                          filled: true,
+                          fillColor: const Color(0xFFFAF7F0),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        onChanged: (val) => setState(() {}),
+                      ),
+                      const SizedBox(height: 10),
+                      // Analyse fréquentielle
+                      Builder(
+                        builder: (context) {
+                          final cleSugg = _calculerCleFrequence(_decodeurControleur.text);
+                          if (cleSugg == null) return const SizedBox.shrink();
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFF8E7),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: RomanColors.imperialGold),
+                            ),
+                            child: Row(
+                              children: [
+                                const Text('💡', style: TextStyle(fontSize: 16)),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Analyse de l\'Érudit : La lettre dominante suggère la clé +$cleSugg (basée sur le E).',
+                                    style: const TextStyle(fontSize: 11, color: Color(0xFF7A5901)),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () => _setCle(cleSugg),
+                                  child: const Text('Tester', style: TextStyle(fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      const Text(
+                        'DÉCHIFFREMENT DU MESSAGE :',
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+                      ),
+                      const SizedBox(height: 6),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF9F7F3),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: RomanColors.imperialPurple.withOpacity(0.4)),
+                        ),
+                        child: SelectableText(
+                          texteDechiffre.isEmpty ? '(Message vide)' : texteDechiffre,
+                          style: const TextStyle(
+                            fontFamily: 'serif',
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: RomanColors.imperialPurple,
+                            letterSpacing: 1.1,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      RomanButton(
+                        text: '✓ VALIDER LE DÉCHIFFREMENT (+10 HS)',
+                        onPressed: _decodeurControleur.text.trim().isEmpty
+                            ? null
+                            : () {
+                                final textKey = '${_decodeurControleur.text}_$_cleActuelle';
+                                if (!_messagesAmiDechiffres.contains(textKey)) {
+                                  HapticFeedback.mediumImpact();
+                                  AudioService().playTriumph();
+                                  AudioService().playSesterces();
+                                  RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                                  widget.repo.addSesterces(10);
+                                  setState(() {
+                                    _messagesAmiDechiffres.add(textKey);
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Missive déchiffrée ! +10 Sesterces remportés ! 🪙'),
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Missive déjà validée pour cette clé !'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              },
                       ),
                     ],
                   ),

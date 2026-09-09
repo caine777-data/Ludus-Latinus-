@@ -8,6 +8,30 @@ import '../../../data/models/srs_card.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
+enum NiveauMemoria {
+  tous('Tous', 'Toutes les cartes'),
+  cinquieme('5ème', 'Maison, Famille & Nature'),
+  quatrieme('4ème', 'Mythes, Dieux & Légions'),
+  troisieme('3ème', 'Citoyenneté & Verbes');
+
+  final String label;
+  final String description;
+  const NiveauMemoria(this.label, this.description);
+
+  bool matches(String categorie) {
+    switch (this) {
+      case NiveauMemoria.tous:
+        return true;
+      case NiveauMemoria.cinquieme:
+        return categorie.contains('Famille') || categorie.contains('Nature') || categorie.contains('Animaux');
+      case NiveauMemoria.quatrieme:
+        return categorie.contains('Dieux') || categorie.contains('Mythes') || categorie.contains('Armée') || categorie.contains('Légions');
+      case NiveauMemoria.troisieme:
+        return categorie.contains('Citoyenneté') || categorie.contains('Valeurs') || categorie.contains('Verbes');
+    }
+  }
+}
+
 /// Dojo de Révision Éclair — Flashcards 3D Matrix4 avec esthétique de marbre sculpté.
 class MemoriaScreen extends StatefulWidget {
   final GameRepository repo;
@@ -25,6 +49,16 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   int currentIndex = 0;
   int sessionEarnings = 0;
   bool isFront = true;
+  NiveauMemoria selectedNiveau = NiveauMemoria.tous;
+  int _streak = 0;
+  int _maxStreak = 0;
+
+  List<SrsCard> get _filteredCards {
+    final all = widget.repo.srsCards;
+    if (selectedNiveau == NiveauMemoria.tous) return all;
+    final filtered = all.where((c) => selectedNiveau.matches(c.categorie)).toList();
+    return filtered.isNotEmpty ? filtered : all;
+  }
 
   @override
   void initState() {
@@ -57,16 +91,39 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _rateCard(int rating) {
-    if (rating >= 2) {
+    int baseGain = 0;
+    if (rating == 3) {
+      _streak++;
+      if (_streak > _maxStreak) _maxStreak = _streak;
+
+      // Multiplicateurs Furor Latinus
+      if (_streak >= 5) {
+        baseGain = 20; // x2.0
+        HapticFeedback.heavyImpact();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      } else if (_streak >= 3) {
+        baseGain = 15; // x1.5
+        HapticFeedback.mediumImpact();
+      } else {
+        baseGain = 10;
+        HapticFeedback.selectionClick();
+      }
+      AudioService().playSesterces();
+    } else if (rating == 2) {
+      _streak = 0;
+      baseGain = 5;
       AudioService().playSesterces();
     } else {
+      _streak = 0;
+      baseGain = 0;
       AudioService().playError();
     }
-    int gain = (rating == 3) ? 10 : (rating == 2) ? 5 : 0;
-    sessionEarnings += gain;
-    widget.repo.addSesterces(gain);
 
-    if (currentIndex < widget.repo.srsCards.length - 1) {
+    sessionEarnings += baseGain;
+    widget.repo.addSesterces(baseGain);
+
+    final cards = _filteredCards;
+    if (currentIndex < cards.length - 1) {
       if (!isFront) {
         _flipController.reverse();
         isFront = true;
@@ -123,7 +180,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             ),
             const SizedBox(height: 12),
             Text(
-              'Session de révision achevée avec brio !\nTu as remporté + Sesterces (HS) !',
+              'Session de révision achevée avec brio !\nTu as remporté +$sessionEarnings Sesterces (HS) !' +
+                  (_maxStreak >= 3 ? '\n🔥 Furor Latinus Max : $_maxStreak d\'affilée !' : ''),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13, height: 1.4),
             ),
@@ -144,7 +202,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final cards = widget.repo.srsCards;
+    final cards = _filteredCards;
     if (cards.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: const Text('MEMORIA VELOX')),
@@ -152,7 +210,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
       );
     }
 
-    final card = cards[currentIndex];
+    final safeIndex = currentIndex.clamp(0, cards.length - 1);
+    final card = cards[safeIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -172,7 +231,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 const Text('🪙', style: TextStyle(fontSize: 13)),
                 const SizedBox(width: 4),
                 Text(
-                  '+ HS',
+                  '+$sessionEarnings HS',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                 ),
               ],
@@ -181,15 +240,104 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           children: [
-            // Barre de progression
+            // 1. Filtre par niveau scolaire
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: NiveauMemoria.values.map((lvl) {
+                  final isSelected = selectedNiveau == lvl;
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ChoiceChip(
+                      label: Text(lvl.label),
+                      selected: isSelected,
+                      selectedColor: RomanColors.imperialPurple,
+                      labelStyle: TextStyle(
+                        color: isSelected ? Colors.white : RomanColors.charcoal,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11.5,
+                      ),
+                      onSelected: (val) {
+                        if (val && selectedNiveau != lvl) {
+                          HapticFeedback.selectionClick();
+                          AudioService().playCardFlip();
+                          setState(() {
+                            selectedNiveau = lvl;
+                            currentIndex = 0;
+                            if (!isFront) {
+                              _flipController.reverse();
+                              isFront = true;
+                            }
+                          });
+                        }
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            // 2. Bannière Furor Latinus Streak (si streak >= 3)
+            if (_streak >= 3) ...[
+              Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: _streak >= 5
+                        ? [const Color(0xFFB71C1C), const Color(0xFFE65100)]
+                        : [const Color(0xFF7A1B28), const Color(0xFFD4AF37)],
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x33B71C1C),
+                      blurRadius: 8,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('🔥', style: TextStyle(fontSize: 16)),
+                    const SizedBox(width: 6),
+                    Text(
+                      _streak >= 5
+                          ? 'FUROR LATINUS MAXIMUS (x2.0 HS) !'
+                          : 'FUROR LATINUS (x1.5 HS) !',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '($_streak d\'affilée)',
+                      style: const TextStyle(
+                        color: Color(0xFFFFE082),
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+
+            // 3. Barre de progression
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Carte  / ',
+                  'Carte ${safeIndex + 1} / ${cards.length}',
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                 ),
                 Text(
@@ -202,16 +350,16 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             ClipRRect(
               borderRadius: BorderRadius.circular(6),
               child: LinearProgressIndicator(
-                value: (currentIndex + 1) / cards.length,
+                value: (safeIndex + 1) / cards.length,
                 minHeight: 6,
                 backgroundColor: const Color(0xFFE5DDD0),
                 valueColor: const AlwaysStoppedAnimation<Color>(RomanColors.imperialGold),
               ),
             ),
 
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
 
-            // 🃏 Flashcard avec vraie rotation 3D Matrix4
+            // 4. Flashcard 3D Matrix4
             Expanded(
               child: GestureDetector(
                 onTap: _flipCard,
@@ -223,7 +371,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
                     return Transform(
                       transform: Matrix4.identity()
-                        ..setEntry(3, 2, 0.0012) // Perspective 3D
+                        ..setEntry(3, 2, 0.0012)
                         ..rotateY(angle),
                       alignment: Alignment.center,
                       child: isFrontVisible
@@ -245,9 +393,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               ),
             ),
 
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
 
-            // 3 Boutons d'Évaluation Leitner SRS
+            // 5. Boutons Leitner SRS avec multiplicateurs
             Row(
               children: [
                 Expanded(
@@ -271,7 +419,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 Expanded(
                   child: _buildLeitnerButton(
                     label: '🟢 Maîtrisé !',
-                    sub: '+10 HS',
+                    sub: _streak >= 5 ? '+20 HS (x2)' : _streak >= 3 ? '+15 HS (x1.5)' : '+10 HS',
                     color: RomanColors.laurelGreen,
                     onTap: () => _rateCard(3),
                   ),
@@ -404,7 +552,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             child: Column(
               children: [
                 Text(
-                  '«  »',
+                  '« ${card.exemple} »',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 13,
@@ -416,7 +564,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 if (card.exempleFr.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
-                    '= ',
+                    '= ${card.exempleFr}',
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                   ),

@@ -7,6 +7,33 @@ import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
+enum CircusFaction {
+  veneti('Veneti', 'Bleus Impériaux', Color(0xFF1E5B94), 'Vitesse +15%', 1.15, 1.0, 1.0, '💙'),
+  russati('Russati', 'Rouges Guerriers', Color(0xFFB3261E), 'Turbo +25%', 1.0, 1.25, 1.0, '❤️'),
+  prasini('Prasini', 'Verts Populaires', Color(0xFF2E6F40), 'Sesterces +30%', 1.0, 1.0, 1.30, '💚'),
+  albati('Albati', 'Blancs Vétérans', Color(0xFF616161), 'Seconde Chance', 1.0, 1.0, 1.0, '🤍');
+
+  final String nom;
+  final String description;
+  final Color couleur;
+  final String bonusLabel;
+  final double speedMult;
+  final double turboMult;
+  final double sestercesMult;
+  final String icon;
+
+  const CircusFaction(
+    this.nom,
+    this.description,
+    this.couleur,
+    this.bonusLabel,
+    this.speedMult,
+    this.turboMult,
+    this.sestercesMult,
+    this.icon,
+  );
+}
+
 class CircusMaximusScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -19,6 +46,17 @@ class CircusMaximusScreen extends StatefulWidget {
 class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animController;
+
+  // Faction impériale et bonus
+  CircusFaction _selectedFaction = CircusFaction.veneti;
+  bool _shieldAvailable = false;
+
+  // Événement d'incident de virage (Meta)
+  bool _incidentActive = false;
+  int _incidentLap = 0;
+  Map<String, dynamic>? _currentIncident;
+  int _incidentCountdown = 4;
+  Timer? _incidentCountdownTimer;
 
   // Progression de la course (0.0 à 100.0%)
   double _playerProgress = 0.0;
@@ -111,12 +149,14 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       duration: const Duration(seconds: 2),
     )..repeat();
 
+    _shieldAvailable = (_selectedFaction == CircusFaction.albati);
     _loadNewQuestion();
     _startGameLoop();
   }
 
   @override
   void dispose() {
+    _incidentCountdownTimer?.cancel();
     _gameLoopTimer?.cancel();
     _animController.dispose();
     super.dispose();
@@ -139,10 +179,10 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       if (_raceFinished) return;
 
       setState(() {
-        // Avancement du joueur avec boost ou vitesse de croisière
-        double speed = _playerSpeed;
+        // Avancement du joueur avec boost ou vitesse de croisière selon faction
+        double speed = _playerSpeed * _selectedFaction.speedMult;
         if (_turboRemainingFrames > 0) {
-          speed *= 2.2;
+          speed *= (2.2 * _selectedFaction.turboMult);
           _turboRemainingFrames--;
         }
         _playerProgress += speed;
@@ -151,11 +191,18 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         final rivalFluctuation = (math.sin(timer.tick * 0.1) * 0.005);
         _rivalProgress += (_rivalSpeed + rivalFluctuation);
 
+        // Déclenchement de l'incident de virage serré à la Meta (vers 50% du tour)
+        if (_playerProgress >= 48.0 && _incidentLap < _currentLap && !_incidentActive) {
+          _triggerTurnIncident();
+        }
+
         // Détection de tour terminé
         if (_playerProgress >= 100.0) {
           if (_currentLap < _totalLaps) {
             _currentLap++;
             _playerProgress = 0.0;
+            _incidentActive = false;
+            _incidentCountdownTimer?.cancel();
             _rivalProgress = math.max(0.0, _rivalProgress - 95.0);
             HapticFeedback.mediumImpact();
             AudioService().playCrowdCheer();
@@ -167,6 +214,109 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         }
       });
     });
+  }
+
+  void _triggerTurnIncident() {
+    _incidentLap = _currentLap;
+    _incidentActive = true;
+    _incidentCountdown = 4;
+    final incidents = [
+      {
+        'titre': '⚠️ Incident à la Meta !',
+        'desc': 'Le quadrige dérape sur le sable fin au ras de l\'obélisque !',
+        'bonne': 'Frena stringere (Serrer les rênes fermement)',
+        'mauvaise': 'Equos flagellare (Fouetter sans regarder)',
+      },
+      {
+        'titre': '⚠️ Bourrasque de sable sur la Spina !',
+        'desc': 'La poussière aveugle les chevaux à l\'entrée du virage !',
+        'bonne': 'Cursum moderari (Contrôler la trajectoire)',
+        'mauvaise': 'Oculos claudere (Fermer les yeux)',
+      },
+      {
+        'titre': '⚠️ Tentative de dépassement agressif !',
+        'desc': 'Un char rival tente de te serrer contre la bordure en marbre !',
+        'bonne': 'Spatium defendere (Défendre sa ligne)',
+        'mauvaise': 'Laxare habenas (Lâcher prise)',
+      },
+    ];
+    final inc = incidents[math.Random().nextInt(incidents.length)];
+    final options = [inc['bonne']!, inc['mauvaise']!]..shuffle();
+    _currentIncident = {
+      'titre': inc['titre'],
+      'desc': inc['desc'],
+      'bonne': inc['bonne'],
+      'options': options,
+    };
+    AudioService().playCrowdCheer();
+    HapticFeedback.mediumImpact();
+
+    _incidentCountdownTimer?.cancel();
+    _incidentCountdownTimer = Timer.periodic(const Duration(seconds: 1), (t) {
+      if (!mounted) {
+        t.cancel();
+        return;
+      }
+      setState(() {
+        _incidentCountdown--;
+      });
+      if (_incidentCountdown <= 0) {
+        t.cancel();
+        if (_incidentActive) {
+          _resolveIncident(false, timeout: true);
+        }
+      }
+    });
+  }
+
+  void _resolveIncident(bool success, {bool timeout = false}) {
+    _incidentCountdownTimer?.cancel();
+    setState(() {
+      _incidentActive = false;
+    });
+
+    if (success) {
+      HapticFeedback.heavyImpact();
+      AudioService().playTriumph();
+      AudioService().playCrowdCheer();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      setState(() {
+        _turboRemainingFrames = 30; // Gros boost
+        _scoreSesterces += 15;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: RomanColors.laurelGreen,
+          duration: Duration(seconds: 2),
+          content: Text('✓ Virage magistral ! Turbo impérial activé ! (+15 HS)'),
+        ),
+      );
+    } else {
+      if (_shieldAvailable) {
+        _shieldAvailable = false;
+        AudioService().playSwordClash();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            duration: Duration(seconds: 2),
+            content: Text('🛡️ Bouclier des Albati : Crash évité de justesse !'),
+          ),
+        );
+      } else {
+        AudioService().playError();
+        HapticFeedback.vibrate();
+        setState(() {
+          _playerProgress = math.max(0.0, _playerProgress - 6.0);
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red.shade800,
+            duration: const Duration(seconds: 2),
+            content: Text(timeout ? '⏱️ Temps écoulé ! Dérapage à la borne !' : '❌ Mauvaise manœuvre ! Tête-à-queue léger !'),
+          ),
+        );
+      }
+    }
   }
 
   void _onAnswerSelected(String answer) {
@@ -183,13 +333,25 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       AudioService().playSesterces();
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       _comboCount++;
-      _turboRemainingFrames = 28; // ~1.4s de turbo
+      _turboRemainingFrames = (28 * _selectedFaction.turboMult).round();
       _scoreSesterces += (10 * _comboCount);
     } else {
-      HapticFeedback.vibrate();
-      AudioService().playError();
-      _comboCount = 0;
-      _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
+      if (_shieldAvailable) {
+        _shieldAvailable = false;
+        AudioService().playSwordClash();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.blueGrey,
+            duration: Duration(seconds: 2),
+            content: Text('🛡️ Seconde Chance des Albati : Erreur amortie sans ralentissement !'),
+          ),
+        );
+      } else {
+        HapticFeedback.vibrate();
+        AudioService().playError();
+        _comboCount = 0;
+        _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
+      }
     }
 
     Future.delayed(const Duration(milliseconds: 900), () {
@@ -202,12 +364,14 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   }
 
   void _finishRace({required bool won}) {
+    _incidentCountdownTimer?.cancel();
     _gameLoopTimer?.cancel();
     _raceFinished = true;
     _playerWon = won;
 
     if (won) {
-      final finalReward = _scoreSesterces + 50;
+      final baseReward = _scoreSesterces + 50;
+      final finalReward = (baseReward * _selectedFaction.sestercesMult).round();
       widget.repo.addSesterces(finalReward);
       HapticFeedback.heavyImpact();
       AudioService().playCrowdCheer();
@@ -221,6 +385,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
   void _restartRace() {
     AudioService().playWheelClick();
+    _incidentCountdownTimer?.cancel();
     setState(() {
       _playerProgress = 0.0;
       _rivalProgress = 0.0;
@@ -230,6 +395,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       _scoreSesterces = 0;
       _comboCount = 0;
       _turboRemainingFrames = 0;
+      _incidentActive = false;
+      _incidentLap = 0;
+      _shieldAvailable = (_selectedFaction == CircusFaction.albati);
       _loadNewQuestion();
     });
     _startGameLoop();
@@ -312,6 +480,47 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     );
   }
 
+  void _showFactionSelectionDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('🐎 Choisis ton Écurie Impériale'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: CircusFaction.values.map((f) {
+            final isSelected = (f == _selectedFaction);
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 4),
+              decoration: BoxDecoration(
+                color: isSelected ? f.couleur.withOpacity(0.12) : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isSelected ? f.couleur : Colors.grey.shade300,
+                  width: isSelected ? 2 : 1,
+                ),
+              ),
+              child: ListTile(
+                leading: Text(f.icon, style: const TextStyle(fontSize: 22)),
+                title: Text(f.nom, style: TextStyle(fontWeight: FontWeight.bold, color: f.couleur)),
+                subtitle: Text('${f.description} • Bonus : ${f.bonusLabel}', style: const TextStyle(fontSize: 11)),
+                trailing: isSelected ? Icon(Icons.check_circle, color: f.couleur) : null,
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _selectedFaction = f;
+                    _shieldAvailable = (f == CircusFaction.albati);
+                  });
+                  AudioService().playWheelClick();
+                },
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
   Widget _buildDolphinLapCounter() {
     return Container(
       width: double.infinity,
@@ -353,29 +562,35 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               }),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: _turboRemainingFrames > 0
-                  ? Colors.orange.withOpacity(0.2)
-                  : Colors.blue.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: _turboRemainingFrames > 0 ? Colors.orange : Colors.blue,
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  _turboRemainingFrames > 0 ? '🔥 TURBO' : '🐎 ÉCURIE VENETI',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: _turboRemainingFrames > 0 ? Colors.deepOrange : Colors.blue.shade800,
-                  ),
+          InkWell(
+            onTap: _showFactionSelectionDialog,
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: _turboRemainingFrames > 0
+                    ? Colors.orange.withOpacity(0.2)
+                    : _selectedFaction.couleur.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: _turboRemainingFrames > 0 ? Colors.orange : _selectedFaction.couleur,
                 ),
-              ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    _turboRemainingFrames > 0
+                        ? '🔥 TURBO'
+                        : '${_selectedFaction.icon} ${_selectedFaction.nom.toUpperCase()} ▼',
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: _turboRemainingFrames > 0 ? Colors.deepOrange : _selectedFaction.couleur,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -499,11 +714,11 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                   Container(
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                      color: isPlayer ? Colors.blue.shade700 : Colors.red.shade700,
+                      color: isPlayer ? _selectedFaction.couleur : Colors.red.shade700,
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: isPlayer ? Colors.blue.withOpacity(0.4) : Colors.red.withOpacity(0.4),
+                          color: isPlayer ? _selectedFaction.couleur.withOpacity(0.4) : Colors.red.withOpacity(0.4),
                           blurRadius: 8,
                           spreadRadius: 2,
                         ),
@@ -524,7 +739,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  isPlayer ? 'Veneti' : 'Maximus',
+                  isPlayer ? _selectedFaction.nom : 'Maximus',
                   style: const TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -567,7 +782,99 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     );
   }
 
+  Widget _buildIncidentPanel() {
+    final inc = _currentIncident!;
+    final options = inc['options'] as List<String>;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF7EB),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border.all(color: Colors.deepOrange, width: 2),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x22FF5722),
+            offset: Offset(0, -3),
+            blurRadius: 12,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                inc['titre'] as String,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepOrange,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.deepOrange,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '⏱️ ${_incidentCountdown}s',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            inc['desc'] as String,
+            style: const TextStyle(fontSize: 12, color: Colors.black87),
+          ),
+          const SizedBox(height: 10),
+          Expanded(
+            child: Column(
+              children: options.map((opt) {
+                final isGood = (opt == inc['bonne']);
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 44,
+                    child: ElevatedButton(
+                      onPressed: () => _resolveIncident(isGood),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: RomanColors.goldLight,
+                        foregroundColor: RomanColors.imperialPurple,
+                        side: const BorderSide(color: RomanColors.imperialGold, width: 1.5),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      child: Text(
+                        opt,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildQuizPanel() {
+    if (_incidentActive && _currentIncident != null) {
+      return _buildIncidentPanel();
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),

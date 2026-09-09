@@ -81,6 +81,76 @@ const List<ArticleMarche> kArticlesMarche = [
   ),
 ];
 
+class ClientMarche {
+  final String nom;
+  final String titre;
+  final String emoji;
+  final String articleNom;
+  final int prixArticle;
+  final int sommeDonnee;
+  final String repliqueSucces;
+
+  int get renduAttendu => sommeDonnee - prixArticle;
+
+  const ClientMarche({
+    required this.nom,
+    required this.titre,
+    required this.emoji,
+    required this.articleNom,
+    required this.prixArticle,
+    required this.sommeDonnee,
+    required this.repliqueSucces,
+  });
+}
+
+const List<ClientMarche> kClientsMarche = [
+  ClientMarche(
+    nom: 'Centurio Lucius',
+    titre: 'Officier de la Legio I',
+    emoji: '⚔️',
+    articleNom: 'Rudis lignea (Glaive)',
+    prixArticle: 18,
+    sommeDonnee: 25,
+    repliqueSucces: '« Optime ! Monnaie exacte, jeune marchand. Que Mars te garde ! »',
+  ),
+  ClientMarche(
+    nom: 'Senator Valerius',
+    titre: 'Membre du Sénat Impérial',
+    emoji: '🏛️',
+    articleNom: 'Toga lanea (Toge en laine)',
+    prixArticle: 40,
+    sommeDonnee: 50,
+    repliqueSucces: '« Recte factum ! Tu mérites ta place au Forum de Trajan ! »',
+  ),
+  ClientMarche(
+    nom: 'Sacerdos Claudia',
+    titre: 'Prêtresse de Vesta',
+    emoji: '🕯️',
+    articleNom: 'Statua Minervae (Statuette)',
+    prixArticle: 85,
+    sommeDonnee: 100,
+    repliqueSucces: '« Gratias tibi ago ! Minerve bénisse ton étal ! »',
+  ),
+  ClientMarche(
+    nom: 'Agricola Titus',
+    titre: 'Fermier des Collines d\'Albe',
+    emoji: '🌾',
+    articleNom: 'Ficus et dactyli (Panier de fruits)',
+    prixArticle: 14,
+    sommeDonnee: 20,
+    repliqueSucces: '« Parfaitement compté ! Mes bêtes en seront bien nourries ! »',
+  ),
+  ClientMarche(
+    nom: 'Mercatrix Flavia',
+    titre: 'Négociante d\'Antioche',
+    emoji: '🧳',
+    articleNom: 'Aromata orientalia (Épices)',
+    prixArticle: 50,
+    sommeDonnee: 75,
+    repliqueSucces: '« Bene computatum ! Rendez-vous à la prochaine caravane ! »',
+  ),
+];
+
 class MarcheTrajanScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -92,6 +162,8 @@ class MarcheTrajanScreen extends StatefulWidget {
 
 class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   int _articleIndex = 0;
+  int _clientIndex = 0;
+  bool _modeRenduMonnaie = false;
   String _saisieRomaine = '';
   String? _messageFeedback;
   bool _feedbackSucces = false;
@@ -107,6 +179,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   };
 
   ArticleMarche get _articleActuel => kArticlesMarche[_articleIndex % kArticlesMarche.length];
+  ClientMarche get _clientActuel => kClientsMarche[_clientIndex % kClientsMarche.length];
 
   int _convertirRomainEnArabe(String romain) {
     if (romain.isEmpty) return 0;
@@ -187,6 +260,50 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
   void _validerPaiement() {
     final valeurSaisie = _convertirRomainEnArabe(_saisieRomaine);
+
+    if (_modeRenduMonnaie) {
+      final client = _clientActuel;
+      final attendu = client.renduAttendu;
+      final attenduRomain = _convertirArabeEnRomain(attendu);
+
+      if (valeurSaisie == attendu && _saisieRomaine == attenduRomain) {
+        HapticFeedback.heavyImpact();
+        AudioService().playSesterces();
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+        widget.repo.addSesterces(15);
+        setState(() {
+          _feedbackSucces = true;
+          _messageFeedback = '${client.nom} : ${client.repliqueSucces} (+15 HS de pourboire !)';
+        });
+
+        Future.delayed(const Duration(milliseconds: 1800), () {
+          if (!mounted) return;
+          setState(() {
+            _clientIndex = (_clientIndex + 1) % kClientsMarche.length;
+            _saisieRomaine = '';
+            _messageFeedback = null;
+            _feedbackSucces = false;
+          });
+        });
+      } else if (valeurSaisie == attendu) {
+        HapticFeedback.vibrate();
+        AudioService().playError();
+        setState(() {
+          _feedbackSucces = false;
+          _messageFeedback = 'La somme est exacte ($attendu HS), mais en chiffres romains canoniques on écrit $attenduRomain !';
+        });
+      } else {
+        HapticFeedback.vibrate();
+        AudioService().playError();
+        setState(() {
+          _feedbackSucces = false;
+          _messageFeedback = 'Calcul incorrect : ${client.sommeDonnee} HS donnés - ${client.prixArticle} HS = $attendu HS ($attenduRomain) à rendre !';
+        });
+      }
+      return;
+    }
+
     final prixAttendu = _articleActuel.prix;
     final attenduRomain = _convertirArabeEnRomain(prixAttendu);
 
@@ -407,77 +524,191 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 1. Étal de Gaius Mercator
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF5A121E), Color(0xFF330811)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x3344101A),
-                      offset: Offset(0, 4),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 58,
-                      height: 58,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFFFFF0D0),
+              // Sélecteur de Mode : Achats à l'étal vs Rendu de Monnaie (Calculus)
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _modeRenduMonnaie = false;
+                          _saisieRomaine = '';
+                          _messageFeedback = null;
+                        });
+                        AudioService().playWheelClick();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: !_modeRenduMonnaie ? RomanColors.imperialPurple : Colors.white,
+                        foregroundColor: !_modeRenduMonnaie ? Colors.white : RomanColors.imperialPurple,
+                        side: BorderSide(color: RomanColors.imperialPurple),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/lupulus/lupulus_savant.png',
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Center(
-                            child: Text('👨‍💼', style: TextStyle(fontSize: 28)),
+                      child: const Text('🛍️ Étal de Gaius', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _modeRenduMonnaie = true;
+                          _saisieRomaine = '';
+                          _messageFeedback = null;
+                        });
+                        AudioService().playWheelClick();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _modeRenduMonnaie ? RomanColors.imperialPurple : Colors.white,
+                        foregroundColor: _modeRenduMonnaie ? Colors.white : RomanColors.imperialPurple,
+                        side: BorderSide(color: RomanColors.imperialPurple),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      child: const Text('⚖️ Rendu de Monnaie', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 12),
+
+              // 1. Bannière Marchande ou Client Romains
+              if (!_modeRenduMonnaie)
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF5A121E), Color(0xFF330811)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x3344101A),
+                        offset: Offset(0, 4),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 58,
+                        height: 58,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFFFFF0D0),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/lupulus/lupulus_savant.png',
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => const Center(
+                              child: Text('👨‍💼', style: TextStyle(fontSize: 28)),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'GAIUS MERCATOR',
-                            style: TextStyle(
-                              color: RomanColors.imperialGold,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'GAIUS MERCATOR',
+                              style: TextStyle(
+                                color: RomanColors.imperialGold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            '« Salve citoyen ! Paye le juste prix en chiffres romains pour emporter ta marchandise ! »',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.5,
-                              fontStyle: FontStyle.italic,
+                            SizedBox(height: 2),
+                            Text(
+                              '« Salve citoyen ! Paye le juste prix en chiffres romains pour emporter ta marchandise ! »',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.5,
+                                fontStyle: FontStyle.italic,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
+                    ],
+                  ),
+                )
+              else
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF1E3A5F), Color(0xFF0F1E33)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ],
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x331E3A5F),
+                        offset: Offset(0, 4),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 54,
+                        height: 54,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(0xFFD6E4F0),
+                        ),
+                        child: Text(_clientActuel.emoji, style: const TextStyle(fontSize: 28)),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _clientActuel.nom.toUpperCase(),
+                              style: const TextStyle(
+                                color: RomanColors.imperialGold,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            Text(
+                              _clientActuel.titre,
+                              style: const TextStyle(color: Colors.white70, fontSize: 11),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              '« J\'achète ${_clientActuel.articleNom} (${_clientActuel.prixArticle} HS). Voici ${_clientActuel.sommeDonnee} HS, rends-moi la monnaie ! »',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
               const SizedBox(height: 14),
 
-              // 2. Fiche de l'Article en Vente
+              // 2. Fiche de Transaction (Article ou Rendu)
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -494,82 +725,110 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 54,
-                          height: 54,
-                          decoration: BoxDecoration(
-                            color: RomanColors.goldLight,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: RomanColors.imperialGold),
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            article.emoji,
-                            style: const TextStyle(fontSize: 30),
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                article.latin,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: RomanColors.imperialPurple,
-                                  fontFamily: 'serif',
-                                ),
-                              ),
-                              Text(
-                                article.nom,
-                                style: const TextStyle(fontSize: 12, color: Colors.black87),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                article.description,
-                                style: const TextStyle(fontSize: 11, color: Colors.black54),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Divider(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'PRIX DEMANDÉ :',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1,
-                            color: RomanColors.charcoal,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: RomanColors.goldLight,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: RomanColors.imperialGold),
-                          ),
-                          child: Text(
-                            '${article.prix} SESTERCES',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF7A5901),
+                    if (!_modeRenduMonnaie) ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 54,
+                            height: 54,
+                            decoration: BoxDecoration(
+                              color: RomanColors.goldLight,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: RomanColors.imperialGold),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              article.emoji,
+                              style: const TextStyle(fontSize: 30),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  article.latin,
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: RomanColors.imperialPurple,
+                                    fontFamily: 'serif',
+                                  ),
+                                ),
+                                Text(
+                                  article.nom,
+                                  style: const TextStyle(fontSize: 12, color: Colors.black87),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  article.description,
+                                  style: const TextStyle(fontSize: 11, color: Colors.black54),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'PRIX DEMANDÉ :',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1,
+                              color: RomanColors.charcoal,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: RomanColors.goldLight,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: RomanColors.imperialGold),
+                            ),
+                            child: Text(
+                              '${article.prix} SESTERCES',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF7A5901),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ] else ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Article : ${_clientActuel.articleNom}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: RomanColors.imperialPurple)),
+                              const SizedBox(height: 2),
+                              Text('Prix : ${_clientActuel.prixArticle} HS • Donné : ${_clientActuel.sommeDonnee} HS', style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                            ],
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: RomanColors.laurelGreen.withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: RomanColors.laurelGreen),
+                            ),
+                            child: Text(
+                              'À RENDRE : ${_clientActuel.renduAttendu} HS',
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: RomanColors.laurelGreen),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -717,7 +976,9 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                   Expanded(
                     flex: 2,
                     child: RomanButton(
-                      text: '✓ PAYER (${article.prix} HS)',
+                      text: _modeRenduMonnaie
+                          ? '✓ RENDRE MONNAIE (${kClientsMarche[_currentClientIndex].sommeDonnee - kClientsMarche[_currentClientIndex].prixArticle} HS)'
+                          : '✓ PAYER (${article.prix} HS)',
                       onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
                     ),
                   ),
