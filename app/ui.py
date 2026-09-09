@@ -16,6 +16,7 @@ from app.carte import CarteAventureWindow
 from app.cartes_collection import AlbumCartesWindow
 from app.chiffre_cesar import ChiffreCesarWindow
 from app.circus import CircusMaximusWindow
+from app.decrypteur_visuel import DecrypteurVisuelWindow
 from app.duel import DuelWindow
 from app.editor import CodeEditor
 from app.export_pdf import FichesExportDialog
@@ -26,7 +27,8 @@ from app.mascotte import MascotteWidget
 from app.mise_a_jour import MiseAJourDialog
 from app.musee import MuseeWindow
 from app.profils import ProfileDialog
-from app.theme import THEME_ORDER, THEMES, assombrir, eclaircir
+from app.taverne_alea import TaverneAleaWindow
+from app.theme import THEME_ORDER, THEMES, assombrir, eclaircir, est_sombre
 from app.version import APP_NAME, AUTEUR, DEPOT, __version__
 from app.vues_exercices import (
     VueArene,
@@ -295,12 +297,14 @@ class PythonLearnApp:
             ("tb_carte", self._ouvrir_carte),
             # 2. Forum, Activités & Jeux
             ("tb_cartes", self._ouvrir_album_cartes),
+            ("tb_taverne", self._ouvrir_taverne_alea),
             ("tb_penderie", self._ouvrir_penderie),
             ("tb_circus", self._ouvrir_circus),
             ("tb_marche", self._ouvrir_marche_trajan),
             ("tb_cesar", self._ouvrir_chiffre_cesar),
             ("tb_duel", self._ouvrir_duel),
             # 3. Pédagogie, Savoirs & Outils
+            ("tb_decrypteur", self._ouvrir_decrypteur),
             ("tb_glossaire", self._show_glossaire),
             ("tb_revision", self._revision),
             ("tb_fiches", self._ouvrir_fiches_a4),
@@ -422,6 +426,13 @@ class PythonLearnApp:
 
         self.lesson_title = ttk.Label(top_title_bar, text="", style="Title.TLabel")
         self.lesson_title.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        self.btn_decrypteur = tk.Button(
+            top_title_bar, text="🔬 Décrypteur", font=(self.body.cget("family"), 9, "bold"),
+            bg="#d4af37", fg="#1a1409", relief="flat", cursor="hand2", padx=8, pady=2,
+            command=self._ouvrir_decrypteur
+        )
+        self.btn_decrypteur.pack(side=tk.RIGHT, padx=4)
 
         self.speak_btn = tk.Button(
             top_title_bar, text="🔊 Écouter", font=(self.body.cget("family"), 9, "bold"),
@@ -625,6 +636,17 @@ class PythonLearnApp:
 
     def _ouvrir_duel(self):
         DuelWindow(self.root, self)
+
+    def _ouvrir_decrypteur(self):
+        """Ouvre le Décrypteur Visuel de Phrases (Anatomia Sententiae)."""
+        phrase = None
+        if self.current:
+            phrase = self.current.get("latin") or self.current.get("phrase_latine")
+        DecrypteurVisuelWindow(self.root, self, phrase_initiale=phrase)
+
+    def _ouvrir_taverne_alea(self):
+        """Ouvre la Taverne des Dés Romains (« Alea Iacta Est »)."""
+        TaverneAleaWindow(self.root, self)
 
     def _ouvrir_fiches_a4(self):
         FichesExportDialog(self.root, self)
@@ -1233,6 +1255,15 @@ class PythonLearnApp:
         s.configure("Niv.Horizontal.TProgressbar", background=C["ok"],
                     troughcolor=C["panel"], borderwidth=0, thickness=12,
                     lightcolor=C["ok"], darkcolor=C["ok"])
+        s.configure(
+            "Vertical.TScrollbar",
+            troughcolor=C["panel"],
+            background=assombrir(C["panel"], 0.14) if not est_sombre(self.theme_name) else eclaircir(C["panel"], 0.16),
+            bordercolor=C["panel"],
+            arrowcolor=C["muted"],
+            relief="flat",
+            borderwidth=0,
+        )
 
         self.content.configure(bg=C["bg"], fg=C["fg"], insertbackground=C["fg"])
         self.console.configure(bg=C["console"], fg=C["fg"], insertbackground=C["fg"])
@@ -1380,21 +1411,47 @@ class PythonLearnApp:
         b_size = self.body.cget("size")
         t_sub_size = max(8, b_size - 1)
 
+        sombre = est_sombre(self.theme_name)
+        bg_tip = "#252115" if sombre else "#fffdf0"
+        fg_tip = "#f59e0b" if sombre else "#92400e"
+        bg_warn = "#2d161a" if sombre else "#fef2f2"
+        fg_warn = "#ef4444" if sombre else "#991b1b"
+        bg_note = "#14281c" if sombre else "#f0fdf4"
+        fg_note = "#10b981" if sombre else "#166534"
+
         self.content.tag_configure("h2", foreground=C["heading"], font=self.h2_font,
-                                   spacing1=8, spacing3=4)
+                                   spacing1=12, spacing3=6)
         self.content.tag_configure("body", foreground=C["fg"], spacing3=4, font=self.body)
         self.content.tag_configure("code", foreground=C["code"], background=C["code_bg"],
                                    font=self.code_font, lmargin1=16, lmargin2=16,
                                    spacing1=2, spacing3=2)
         self.content.tag_configure("inline", foreground=C["code"], font=self.code_font)
-        self.content.tag_configure("bullet", foreground=C["fg"], lmargin1=16, lmargin2=30)
+        self.content.tag_configure("bullet", foreground=C["fg"], lmargin1=18, lmargin2=32, spacing3=3)
         self.content.tag_configure("bold", font=(f_fam, b_size, "bold"))
-        self.content.tag_configure("tip_title", foreground=C["accent"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
-        self.content.tag_configure("tip_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
-        self.content.tag_configure("warn_title", foreground=C["err"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
-        self.content.tag_configure("warn_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
-        self.content.tag_configure("note_title", foreground=C["ok"], font=(f_fam, t_sub_size, "bold"), spacing1=8, lmargin1=12, lmargin2=12)
-        self.content.tag_configure("note_body", foreground=C["fg"], lmargin1=16, lmargin2=16, spacing3=4, font=self.body)
+        self.content.tag_configure(
+            "tip_title", foreground=fg_tip, background=bg_tip,
+            font=(f_fam, t_sub_size, "bold"), spacing1=10, lmargin1=16, lmargin2=16, rmargin=16
+        )
+        self.content.tag_configure(
+            "tip_body", foreground=C["fg"], background=bg_tip,
+            lmargin1=18, lmargin2=18, rmargin=16, spacing3=6, font=self.body
+        )
+        self.content.tag_configure(
+            "warn_title", foreground=fg_warn, background=bg_warn,
+            font=(f_fam, t_sub_size, "bold"), spacing1=10, lmargin1=16, lmargin2=16, rmargin=16
+        )
+        self.content.tag_configure(
+            "warn_body", foreground=C["fg"], background=bg_warn,
+            lmargin1=18, lmargin2=18, rmargin=16, spacing3=6, font=self.body
+        )
+        self.content.tag_configure(
+            "note_title", foreground=fg_note, background=bg_note,
+            font=(f_fam, t_sub_size, "bold"), spacing1=10, lmargin1=16, lmargin2=16, rmargin=16
+        )
+        self.content.tag_configure(
+            "note_body", foreground=C["fg"], background=bg_note,
+            lmargin1=18, lmargin2=18, rmargin=16, spacing3=6, font=self.body
+        )
 
     # ---------------------------------------------------------------- arbre
     def _on_search(self, _e):
@@ -1910,6 +1967,8 @@ class PythonLearnApp:
         self.content.configure(state="normal")
         self.content.delete("1.0", tk.END)
         in_code = False
+        in_callout_mode = None  # None, "tip", "warn", "note"
+
         for line in text.splitlines():
             sline = line.strip()
             if sline == "```" or sline.startswith("```"):
@@ -1917,28 +1976,85 @@ class PythonLearnApp:
                 continue
             if in_code:
                 self.content.insert(tk.END, line + "\n", "code")
-            elif line.startswith("## "):
-                self.content.insert(tk.END, line[3:] + "\n", "h2")
-            elif line.startswith("> [!TIP]") or line.startswith("💡 ") or line.startswith("💡"):
-                titre = self.tr("callout_tip")
-                corps = line.replace("> [!TIP]", "").replace("💡", "").strip()
-                self.content.insert(tk.END, f"{titre}\n", "tip_title")
+                continue
+
+            # 1. Détection des encadrés "Le savais-tu ?" (Tip / Curiosité)
+            if (
+                sline.startswith("> [!TIP]")
+                or sline.startswith("💡")
+                or "le savais-tu" in sline.lower()
+                or sline.startswith("## Le savais-tu")
+            ):
+                titre = "💡 LE SAVAIS-TU ? · Secret d'Histoire Romaine"
+                corps = (
+                    sline.replace("> [!TIP]", "")
+                    .replace("💡", "")
+                    .replace("## Le savais-tu ?", "")
+                    .replace("## Le savais-tu", "")
+                    .replace("**Le savais-tu ?**", "")
+                    .strip()
+                )
+                self.content.insert(tk.END, f"\n  {titre}\n", "tip_title")
                 if corps:
+                    self.content.insert(tk.END, "  ", "tip_body")
                     self._insert_inline(corps + "\n", "tip_body")
-            elif line.startswith("> [!WARNING]") or line.startswith("⚠️ ") or line.startswith("⚠️"):
-                titre = self.tr("callout_warn")
-                corps = line.replace("> [!WARNING]", "").replace("⚠️", "").strip()
-                self.content.insert(tk.END, f"{titre}\n", "warn_title")
+                in_callout_mode = "tip"
+                continue
+
+            # 2. Détection des encadrés "À retenir" (Warning / Règle d'or)
+            elif (
+                sline.startswith("> [!WARNING]")
+                or sline.startswith("⚠️")
+                or sline.startswith("📌")
+                or "à retenir" in sline.lower()
+                or "attention" in sline.lower()
+            ):
+                titre = "📌 À RETENIR · Règle d'or de la Grammaire"
+                corps = (
+                    sline.replace("> [!WARNING]", "")
+                    .replace("⚠️", "")
+                    .replace("📌", "")
+                    .replace("**À retenir** :", "")
+                    .replace("**À retenir**", "")
+                    .strip()
+                )
+                self.content.insert(tk.END, f"\n  {titre}\n", "warn_title")
                 if corps:
+                    self.content.insert(tk.END, "  ", "warn_body")
                     self._insert_inline(corps + "\n", "warn_body")
-            elif line.startswith("> [!NOTE]") or line.startswith("📌 ") or line.startswith("📌"):
-                titre = self.tr("callout_note")
-                corps = line.replace("> [!NOTE]", "").replace("📌", "").strip()
-                self.content.insert(tk.END, f"{titre}\n", "note_title")
+                in_callout_mode = "warn"
+                continue
+
+            # 3. Détection des notes ou vocabulaires
+            elif sline.startswith("> [!NOTE]") or sline.startswith("🏛️"):
+                titre = "🏛️ NOTE ROMAINE"
+                corps = sline.replace("> [!NOTE]", "").replace("🏛️", "").strip()
+                self.content.insert(tk.END, f"\n  {titre}\n", "note_title")
                 if corps:
+                    self.content.insert(tk.END, "  ", "note_body")
                     self._insert_inline(corps + "\n", "note_body")
+                in_callout_mode = "note"
+                continue
+
+            # Ligne vide réinitialise le bloc callout
+            if not sline:
+                in_callout_mode = None
+                self.content.insert(tk.END, "\n", "body")
+                continue
+
+            # Continuation de paragraphe dans l'encadré actif
+            if in_callout_mode:
+                tag_body = f"{in_callout_mode}_body"
+                self.content.insert(tk.END, "  ", tag_body)
+                self._insert_inline(line + "\n", tag_body)
+                continue
+
+            # Titres de leçons H2 avec icône antique
+            if line.startswith("## "):
+                titre_h2 = line[3:].strip()
+                self.content.insert(tk.END, f"\n🏛️ {titre_h2}\n", "h2")
             elif line.startswith("- "):
-                self.content.insert(tk.END, "•  ", "bullet")
+                self.content.insert(tk.END, "  • ", "bullet")
                 self._insert_inline(line[2:] + "\n", "bullet")
             else:
                 self._insert_inline(line + "\n", "body")

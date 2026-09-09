@@ -93,6 +93,8 @@ def get_icones_toolbar():
         "tb_glossaire": "icone_glossaire",
         "tb_revision": "icone_revision",
         "tb_succes": "icone_trophee",
+        "tb_decrypteur": "icone_laurier",
+        "tb_taverne": "icone_arene",
         "tb_stats": "icone_stats",
     }
     resultat = {}

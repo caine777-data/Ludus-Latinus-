@@ -176,6 +176,12 @@ def _init_cache():
             (392, 0.10), (523, 0.10), (659, 0.12), (784, 0.18),
             (1046, 0.30), (784, 0.12), (1046, 0.45)
         ], volume=0.60)
+
+        # Roulement de dés / osselets dans le cornet en cuir (fritillus)
+        _CACHED_SOUNDS["dice_roll"] = _generer_wav_tones([
+            (320, 0.02), (480, 0.03), (260, 0.02), (540, 0.03),
+            (380, 0.03), (620, 0.04), (300, 0.04), (450, 0.07)
+        ], volume=0.45)
     except Exception:
         pass
 
@@ -331,6 +337,15 @@ def play_triumph_grand():
         return
     _init_cache()
     _play_bytes_async(_CACHED_SOUNDS.get("triumph_grand"))
+
+
+def play_dice():
+    """Bruit d'osselets ou de dés secoués et roulant sur la table de taverne."""
+    if not _SOUND_ENABLED:
+        return
+    _init_cache()
+    _play_bytes_async(_CACHED_SOUNDS.get("dice_roll"))
+
 
 
 _SPEAK_LISTENERS = []
