@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/models/srs_card.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// Dojo de Révision Éclair — Flashcards 3D Matrix4 avec esthétique de marbre sculpté.
 class MemoriaScreen extends StatefulWidget {
@@ -43,7 +45,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _flipCard() {
-    HapticFeedback.lightImpact();
+    AudioService().playCardFlip();
     if (isFront) {
       _flipController.forward();
     } else {
@@ -55,10 +57,14 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _rateCard(int rating) {
-    HapticFeedback.mediumImpact();
+    if (rating >= 2) {
+      AudioService().playSesterces();
+    } else {
+      AudioService().playError();
+    }
     int gain = (rating == 3) ? 10 : (rating == 2) ? 5 : 0;
     sessionEarnings += gain;
-    widget.repo.storageService.addSesterces(gain);
+    widget.repo.addSesterces(gain);
 
     if (currentIndex < widget.repo.srsCards.length - 1) {
       if (!isFront) {
@@ -74,6 +80,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _showVictoryDialog() {
+    AudioService().playTriumph();
+    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     showDialog(
       context: context,
       barrierDismissible: false,

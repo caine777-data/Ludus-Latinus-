@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// Écran de cours et d''exercice QCM 2x2 tactile au style épuré Monument Valley.
 class LessonScreen extends StatefulWidget {
@@ -38,10 +40,13 @@ class _LessonScreenState extends State<LessonScreen> {
     });
 
     if (isCorrect) {
+      AudioService().playTriumph();
+      AudioService().playSesterces();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       widget.repo.completeLesson(widget.lesson.id, 10);
       _showTriumphModal();
     } else {
-      HapticFeedback.vibrate();
+      AudioService().playError();
     }
   }
 

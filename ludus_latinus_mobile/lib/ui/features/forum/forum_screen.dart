@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// Écran de reconstruction impériale du Forum Romanum (Style Monument Valley).
 class ForumScreen extends StatelessWidget {
@@ -133,9 +135,11 @@ class ForumScreen extends StatelessWidget {
                     isRestored: isRestored,
                     canAfford: canAfford,
                     onRestore: () {
-                      HapticFeedback.heavyImpact();
                       final success = repo.restoreMonument(monument.id, monument.cout);
                       if (success) {
+                        AudioService().playTriumph();
+                        AudioService().playSesterces();
+                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: RomanColors.laurelGreen,
@@ -144,7 +148,7 @@ class ForumScreen extends StatelessWidget {
                                 const Text('🏛️ ', style: TextStyle(fontSize: 18)),
                                 Expanded(
                                   child: Text(
-                                    ' restauré avec gloire ! Bonus actif : ',
+                                    '${monument.nom} restauré avec gloire ! Bonus actif : ${monument.bonusDescription}',
                                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -152,6 +156,8 @@ class ForumScreen extends StatelessWidget {
                             ),
                           ),
                         );
+                      } else {
+                        AudioService().playError();
                       }
                     },
                   ),

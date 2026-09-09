@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
 import '../memoria/memoria_screen.dart';
 import '../forum/forum_screen.dart';
@@ -41,9 +43,26 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('LUDUS LATINUS'),
         actions: [
           IconButton(
+            icon: Icon(
+              AudioService().isMuted ? Icons.volume_off_outlined : Icons.volume_up_outlined,
+              color: RomanColors.imperialPurple,
+              size: 24,
+            ),
+            tooltip: AudioService().isMuted ? 'Activer le son antique' : 'Couper le son',
+            onPressed: () {
+              setState(() {
+                AudioService().toggleMute();
+              });
+              if (!AudioService().isMuted) {
+                AudioService().playSesterces();
+              }
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.casino_outlined, color: RomanColors.imperialPurple, size: 26),
             tooltip: 'Taverne des Dés Romains (Alea Iacta Est)',
             onPressed: () {
+              AudioService().playDiceRoll();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
@@ -52,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.account_circle_outlined, color: RomanColors.imperialPurple, size: 28),
+            tooltip: 'Tabularium & Profil',
             onPressed: () {
+              AudioService().playCardFlip();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
@@ -279,6 +300,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         text: '▶ AVANCER SUR LA ROUTE',
                         isLarge: true,
                         onPressed: () {
+                          AudioService().playTriumph();
+                          RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -336,6 +359,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         onPressed: () {
+                          AudioService().playSesterces();
+                          RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)),
@@ -447,6 +472,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Alea Iacta Est',
                       subtitle: 'Taverne & Dés Romains',
                       onTap: () {
+                        AudioService().playDiceRoll();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
@@ -459,6 +485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Marché de Trajan',
                       subtitle: 'Chiffres Romains & Étal',
                       onTap: () {
+                        AudioService().playSesterces();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)),
@@ -471,6 +498,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Atelier de César',
                       subtitle: 'Cryptographie Militaire',
                       onTap: () {
+                        AudioService().playWheelClick();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)),
@@ -483,6 +511,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Le Panthéon',
                       subtitle: 'Album des Reliques',
                       onTap: () {
+                        AudioService().playTriumph();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
@@ -495,6 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Circus Maximus',
                       subtitle: 'Course de Chars & Turbo',
                       onTap: () {
+                        AudioService().playCrowdCheer();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)),
@@ -507,6 +537,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: 'Colosseum Duellum',
                       subtitle: 'Arène des Champions',
                       onTap: () {
+                        AudioService().playSwordClash();
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)),

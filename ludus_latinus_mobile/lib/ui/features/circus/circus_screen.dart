@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 class CircusMaximusScreen extends StatefulWidget {
   final GameRepository repo;
@@ -159,6 +161,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             _playerProgress = 0.0;
             _rivalProgress = math.max(0.0, _rivalProgress - 95.0);
             HapticFeedback.mediumImpact();
+            AudioService().playCrowdCheer();
           } else {
             _finishRace(won: true);
           }
@@ -180,11 +183,15 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
     if (isCorrect) {
       HapticFeedback.heavyImpact();
+      AudioService().playCrowdCheer();
+      AudioService().playSesterces();
+      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       _comboCount++;
       _turboRemainingFrames = 28; // ~1.4s de turbo
       _scoreSesterces += (10 * _comboCount);
     } else {
       HapticFeedback.vibrate();
+      AudioService().playError();
       _comboCount = 0;
       _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
     }
@@ -207,12 +214,17 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       final finalReward = _scoreSesterces + 50;
       widget.repo.addSesterces(finalReward);
       HapticFeedback.heavyImpact();
+      AudioService().playCrowdCheer();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
       widget.repo.addSesterces(10);
+      AudioService().playError();
     }
   }
 
   void _restartRace() {
+    AudioService().playWheelClick();
     setState(() {
       _playerProgress = 0.0;
       _rivalProgress = 0.0;
@@ -229,47 +241,50 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF9F6F0),
-      appBar: AppBar(
-        title: const Text(
-          'CIRCUS MAXIMUS',
-          style: TextStyle(
-            letterSpacing: 1.5,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: RomanColors.imperialPurple,
-        foregroundColor: Colors.white,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 12),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: RomanColors.goldLight,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: RomanColors.imperialGold),
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        return Scaffold(
+          backgroundColor: const Color(0xFFF9F6F0),
+          appBar: AppBar(
+            title: const Text(
+              'CIRCUS MAXIMUS',
+              style: TextStyle(
+                letterSpacing: 1.5,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('🪙', style: TextStyle(fontSize: 13)),
-                const SizedBox(width: 4),
-                Text(
-                  '+$_scoreSesterces',
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
-                  ),
+            centerTitle: true,
+            backgroundColor: RomanColors.imperialPurple,
+            foregroundColor: Colors.white,
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.imperialGold),
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '+$_scoreSesterces (${widget.repo.profile.sesterces} HS)',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF7A5901),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -296,6 +311,8 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
           ],
         ),
       ),
+    );
+      },
     );
   }
 

@@ -4,6 +4,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../../data/models/thesaurus_entry.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// Dictionnaire bilingue latin-français et tables grammaticales colorées.
 class ThesaurusScreen extends StatefulWidget {
@@ -144,7 +145,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         ),
                         onSelected: (selected) {
                           if (selected) {
-                            HapticFeedback.selectionClick();
+                            AudioService().playCardFlip();
                             setState(() => _selectedCategory = cat);
                           }
                         },
@@ -247,10 +248,10 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                 icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
                                 tooltip: 'Prononciation',
                                 onPressed: () {
-                                  HapticFeedback.lightImpact();
+                                  AudioService().playWheelClick();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('🔊 Prononciation : ""'),
+                                      content: Text('🔊 Prononciation latine : "${item.latin}"'),
                                       duration: const Duration(seconds: 1),
                                     ),
                                   );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 
 class ArticleMarche {
   final String nom;
@@ -156,6 +158,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
   void _ajouterChiffre(String chiffre) {
     HapticFeedback.lightImpact();
+    AudioService().playWheelClick();
     if (_saisieRomaine.length >= 15) return;
     setState(() {
       _saisieRomaine += chiffre;
@@ -165,6 +168,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
   void _effacerDernier() {
     HapticFeedback.selectionClick();
+    AudioService().playCardFlip();
     if (_saisieRomaine.isNotEmpty) {
       setState(() {
         _saisieRomaine = _saisieRomaine.substring(0, _saisieRomaine.length - 1);
@@ -175,6 +179,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
   void _reinitialiser() {
     HapticFeedback.selectionClick();
+    AudioService().playCardFlip();
     setState(() {
       _saisieRomaine = '';
       _messageFeedback = null;
@@ -188,6 +193,9 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
     if (valeurSaisie == prixAttendu && _saisieRomaine == attenduRomain) {
       HapticFeedback.mediumImpact();
+      AudioService().playSesterces();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       widget.repo.addSesterces(15);
       setState(() {
         _feedbackSucces = true;
@@ -207,12 +215,14 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
     } else if (valeurSaisie == prixAttendu) {
       // Valeur mathématique bonne mais écriture non canonique (ex: IIII au lieu de IV)
       HapticFeedback.vibrate();
+      AudioService().playError();
       setState(() {
         _feedbackSucces = false;
         _messageFeedback = 'La valeur est bonne ($prixAttendu), mais en latin canonique on écrit $attenduRomain !';
       });
     } else {
       HapticFeedback.vibrate();
+      AudioService().playError();
       setState(() {
         _feedbackSucces = false;
         _messageFeedback = 'Tu as composé $_saisieRomaine ($valeurSaisie HS). Il faut $attenduRomain ($prixAttendu HS) !';
@@ -221,6 +231,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   }
 
   void _ouvrirLexique() {
+    AudioService().playCardFlip();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -355,20 +366,43 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final valeurSaisie = _convertirRomainEnArabe(_saisieRomaine);
-    final article = _articleActuel;
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        final valeurSaisie = _convertirRomainEnArabe(_saisieRomaine);
+        final article = _articleActuel;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('🏺 Marché de Trajan'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.help_outline),
-            tooltip: 'Aide & Lexique',
-            onPressed: _ouvrirLexique,
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('🏺 Marché de Trajan'),
+            actions: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${widget.repo.profile.sesterces} HS',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.help_outline),
+                tooltip: 'Aide & Lexique',
+                onPressed: _ouvrirLexique,
+              ),
+            ],
           ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -696,6 +730,8 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
           ),
         ),
       ),
+    );
+      },
     );
   }
 

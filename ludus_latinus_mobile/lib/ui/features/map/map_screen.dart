@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/models/world.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
 
 /// La Carte d''Aventure de la Via Appia inspirée de l''esthétique de Monument Valley.
@@ -336,7 +338,8 @@ class _MapScreenState extends State<MapScreen> {
     return GestureDetector(
       onTap: isUnlocked
           ? () {
-              HapticFeedback.mediumImpact();
+              AudioService().playTriumph();
+              RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -345,10 +348,10 @@ class _MapScreenState extends State<MapScreen> {
               );
             }
           : () {
-              HapticFeedback.lightImpact();
+              AudioService().playError();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text('🔒 Complète l''étape précédente pour débloquer cette borne !'),
+                  content: Text('🔒 Complète l\'étape précédente pour débloquer cette borne !'),
                   duration: Duration(seconds: 1),
                 ),
               );

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 class DuelScreen extends StatefulWidget {
   final GameRepository repo;
@@ -180,6 +182,9 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
     if (isCorrect) {
       HapticFeedback.heavyImpact();
+      AudioService().playSwordClash();
+      AudioService().playSesterces();
+      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       final degats = 35;
       setState(() {
         _bossHp = math.max(0, _bossHp - degats);
@@ -191,6 +196,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       }
     } else {
       HapticFeedback.vibrate();
+      AudioService().playError();
       final riposte = boss['attaque'] as int;
       setState(() {
         _playerHp = math.max(0, _playerHp - riposte);
@@ -220,51 +226,79 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       final total = _gainsSesterces + 50;
       widget.repo.addSesterces(total);
       HapticFeedback.heavyImpact();
+      AudioService().playSwordClash();
+      AudioService().playCrowdCheer();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
       widget.repo.addSesterces(5);
+      AudioService().playError();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final boss = _bosses[_currentBossIndex];
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        final boss = _bosses[_currentBossIndex];
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF1B1622), // Ambiance nocturne au Colisée
-      appBar: AppBar(
-        title: const Text(
-          'COLOSSEUM DUELLUM',
-          style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF2D1E3A),
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: const Text('Règles de l\'Arène'),
-                  content: const Text(
-                    'Affronte les champions antiques du Colisée !\n\n'
-                    'Chaque bonne réponse porte un coup critique à l\'adversaire.\n'
-                    'Une erreur te fait subir la riposte du gladiateur.\n\n'
-                    'Vaincs les 5 colosses pour graver ton nom au Panthéon !',
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(ctx),
-                      child: const Text('Compris'),
+        return Scaffold(
+          backgroundColor: const Color(0xFF1B1622), // Ambiance nocturne au Colisée
+          appBar: AppBar(
+            title: const Text(
+              'COLOSSEUM DUELLUM',
+              style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            centerTitle: true,
+            backgroundColor: const Color(0xFF2D1E3A),
+            foregroundColor: Colors.white,
+            actions: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '+$_gainsSesterces (${widget.repo.profile.sesterces} HS)',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                     ),
                   ],
                 ),
-              );
-            },
+              ),
+              IconButton(
+                icon: const Icon(Icons.info_outline),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Règles de l\'Arène'),
+                      content: const Text(
+                        'Affronte les champions antiques du Colisée !\n\n'
+                        'Chaque bonne réponse porte un coup critique à l\'adversaire.\n'
+                        'Une erreur te fait subir la riposte du gladiateur.\n\n'
+                        'Vaincs les 5 colosses pour graver ton nom au Panthéon !',
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(ctx),
+                          child: const Text('Compris'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-        ],
-      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -282,6 +316,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
           ],
         ),
       ),
+    );
+      },
     );
   }
 
@@ -576,6 +612,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               if (_victoire && _currentBossIndex < _bosses.length - 1)
                 ElevatedButton.icon(
                   onPressed: () {
+                    AudioService().playWheelClick();
                     setState(() {
                       _currentBossIndex++;
                       _initBoss();
@@ -592,7 +629,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                 )
               else
                 ElevatedButton.icon(
-                  onPressed: _initBoss,
+                  onPressed: () {
+                    AudioService().playWheelClick();
+                    _initBoss();
+                  },
                   icon: const Icon(Icons.replay),
                   label: const Text('Rejouer'),
                   style: ElevatedButton.styleFrom(

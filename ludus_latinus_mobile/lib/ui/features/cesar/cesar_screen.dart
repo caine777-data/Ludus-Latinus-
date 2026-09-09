@@ -2,8 +2,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 
 class MissionCesar {
   final String titre;
@@ -101,6 +103,7 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
 
   void _modifierCle(int delta) {
     HapticFeedback.selectionClick();
+    AudioService().playWheelClick();
     setState(() {
       _cleActuelle = (_cleActuelle + delta) % 26;
       if (_cleActuelle < 0) _cleActuelle += 26;
@@ -110,6 +113,7 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
 
   void _setCle(int valeur) {
     HapticFeedback.selectionClick();
+    AudioService().playWheelClick();
     setState(() {
       _cleActuelle = valeur % 26;
     });
@@ -121,6 +125,9 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
     final mission = _missionActuelle;
     if (_cleActuelle == mission.cle && !_missionsReussies.contains(_missionIndex)) {
       HapticFeedback.mediumImpact();
+      AudioService().playTriumph();
+      AudioService().playSesterces();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       widget.repo.addSesterces(mission.gain);
       setState(() {
         _missionsReussies.add(_missionIndex);
@@ -217,30 +224,54 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final mission = _missionActuelle;
-    // Déchiffrement du message en fonction du décalage inverse (-cle)
-    final texteDechiffre = _modeBacASable
-        ? _appliquerDecalage(_saisieControleur.text, _cleActuelle)
-        : _appliquerDecalage(mission.messageChiffre, -_cleActuelle);
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        final mission = _missionActuelle;
+        // Déchiffrement du message en fonction du décalage inverse (-cle)
+        final texteDechiffre = _modeBacASable
+            ? _appliquerDecalage(_saisieControleur.text, _cleActuelle)
+            : _appliquerDecalage(mission.messageChiffre, -_cleActuelle);
 
-    final estCleValide = !_modeBacASable && _cleActuelle == mission.cle;
+        final estCleValide = !_modeBacASable && _cleActuelle == mission.cle;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('📜 L\'Atelier Secret de César'),
-        actions: [
-          IconButton(
-            icon: Icon(_modeBacASable ? Icons.military_tech : Icons.edit_note),
-            tooltip: _modeBacASable ? 'Mode Missions' : 'Atelier Libre',
-            onPressed: () {
-              HapticFeedback.selectionClick();
-              setState(() {
-                _modeBacASable = !_modeBacASable;
-              });
-            },
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('📜 L\'Atelier Secret de César'),
+            actions: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${widget.repo.profile.sesterces} HS',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: Icon(_modeBacASable ? Icons.military_tech : Icons.edit_note),
+                tooltip: _modeBacASable ? 'Mode Missions' : 'Atelier Libre',
+                onPressed: () {
+                  HapticFeedback.selectionClick();
+                  AudioService().playCardFlip();
+                  setState(() {
+                    _modeBacASable = !_modeBacASable;
+                  });
+                },
+              ),
+            ],
           ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -613,9 +644,9 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                         onChanged: (val) => setState(() {}),
                       ),
                       const SizedBox(height: 14),
-                      const Text(
-                        'RÉSULTAT CHIFFRÉ (CLÉ +ACTUELLE) :',
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+                      Text(
+                        'RÉSULTAT CHIFFRÉ (CLÉ +$_cleActuelle) :',
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
                       ),
                       const SizedBox(height: 6),
                       Container(
@@ -645,6 +676,7 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
                               icon: const Icon(Icons.copy, size: 16),
                               label: const Text('COPIER LE MESSAGE'),
                               onPressed: () {
+                                AudioService().playWheelClick();
                                 Clipboard.setData(ClipboardData(text: texteDechiffre));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -666,6 +698,8 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
           ),
         ),
       ),
+    );
+      },
     );
   }
 }

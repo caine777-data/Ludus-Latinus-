@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l''élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
@@ -42,6 +44,8 @@ class _AccountScreenState extends State<AccountScreen> {
     if (mounted) {
       setState(() => _isSyncing = false);
       HapticFeedback.heavyImpact();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: RomanColors.laurelGreen,
@@ -54,11 +58,12 @@ class _AccountScreenState extends State<AccountScreen> {
   void _saveProfileChanges() {
     final newName = _nameController.text.trim();
     if (newName.isNotEmpty) {
+      AudioService().playSesterces();
       widget.repo.updateProfileName(newName, widget.repo.profile.genre);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: RomanColors.imperialPurple,
-          content: Text('Profil mis à jour : Salve,  !'),
+          content: Text('Profil mis à jour : Salve, $newName !'),
         ),
       );
     }
@@ -66,6 +71,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void _toggleGender() {
     HapticFeedback.selectionClick();
+    AudioService().playCardFlip();
     final newGender = widget.repo.profile.genre == 'garcon' ? 'fille' : 'garcon';
     final defaultName = newGender == 'garcon' ? 'Marcus' : 'Julia';
     widget.repo.updateProfileName(defaultName, newGender);
@@ -292,6 +298,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             tooltip: 'Copier la Tessera',
                             onPressed: () {
                               HapticFeedback.lightImpact();
+                              AudioService().playSesterces();
                               Clipboard.setData(ClipboardData(text: profile.tesseraCode));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -437,40 +444,50 @@ class _AccountScreenState extends State<AccountScreen> {
     required String title,
     required bool unlocked,
   }) {
-    return Column(
-      children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: unlocked ? RomanColors.goldLight : Colors.black12,
-            border: Border.all(
-              color: unlocked ? RomanColors.imperialGold : Colors.black26,
-              width: 1.5,
+    return GestureDetector(
+      onTap: () {
+        if (unlocked) {
+          AudioService().playTriumph();
+          RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
+        } else {
+          AudioService().playError();
+        }
+      },
+      child: Column(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: unlocked ? RomanColors.goldLight : Colors.black12,
+              border: Border.all(
+                color: unlocked ? RomanColors.imperialGold : Colors.black26,
+                width: 1.5,
+              ),
             ),
-          ),
-          child: ClipOval(
-            child: Opacity(
-              opacity: unlocked ? 1.0 : 0.35,
-              child: Image.asset(
-                iconPath,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Center(child: Text('🏆')),
+            child: ClipOval(
+              child: Opacity(
+                opacity: unlocked ? 1.0 : 0.35,
+                child: Image.asset(
+                  iconPath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const Center(child: Text('🏆')),
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 10.5,
-            fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
-            color: unlocked ? RomanColors.charcoal : Colors.black38,
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 10.5,
+              fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
+              color: unlocked ? RomanColors.charcoal : Colors.black38,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

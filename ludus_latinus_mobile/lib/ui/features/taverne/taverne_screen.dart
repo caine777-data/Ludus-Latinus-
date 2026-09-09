@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
+import '../../core/particles_overlay.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 
 /// La Taverne des Dés Romains (« Alea Iacta Est ») — Mini-jeu antique tactile.
 class TaverneScreen extends StatefulWidget {
@@ -54,6 +56,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     if (_isRolling) return;
 
     HapticFeedback.heavyImpact();
+    AudioService().playDiceRoll();
     setState(() {
       _isRolling = true;
     });
@@ -95,6 +98,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       title = 'Iactus Canis (Coup du Chien) !';
       desc = 'Quatre As ! Le coup le plus redouté des tavernes romaines.';
       gain = 0;
+      AudioService().playError();
       _showDogChallenge();
     }
     // Iactus Venereus : 4 faces distinctes
@@ -103,6 +107,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       desc = 'Quatre faces toutes différentes ! La déesse Vénus te sourit : +50 HS et Protection de Série !';
       gain = 50;
       HapticFeedback.heavyImpact();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     }
     // Senatus : Carré ou Brelan (4 ou 3 identiques)
     else if (counts.values.any((c) => c >= 3)) {
@@ -110,12 +116,17 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       desc = 'Trois dés identiques ! Les sénateurs applaudissent : +30 HS !';
       gain = 30;
       HapticFeedback.mediumImpact();
+      AudioService().playSesterces();
+      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
     }
     // Plebeius : Au moins une paire
     else if (counts.values.any((c) => c == 2)) {
       title = '🛡️ Iactus Plebeius (Paire Romaine)';
       desc = 'Une paire de dés identiques. +15 HS remportés !';
       gain = 15;
+      AudioService().playSesterces();
+    } else {
+      AudioService().playSesterces();
     }
 
     if (gain > 0) {
@@ -143,6 +154,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+              AudioService().playTriumph();
+              RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
               widget.repo.storageService.addSesterces(20);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -154,7 +167,10 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
             child: const Text('« Le sort en est jeté »'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+              AudioService().playError();
+            },
             child: const Text('« Rome vaincra »'),
           ),
         ],
@@ -164,34 +180,37 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final profile = widget.repo.profile;
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        final profile = widget.repo.profile;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TAVERNE DES DÉS'),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 14),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-            decoration: BoxDecoration(
-              color: RomanColors.goldLight,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: RomanColors.imperialGold),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('🪙', style: TextStyle(fontSize: 13)),
-                const SizedBox(width: 4),
-                Text(
-                  ' HS',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('TAVERNE DES DÉS'),
+            actions: [
+              Container(
+                margin: const EdgeInsets.only(right: 14),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold),
                 ),
-              ],
-            ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${profile.sesterces} HS',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -327,7 +346,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            '+ HS',
+                            '+$_lastGain HS',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 11,
@@ -365,6 +384,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
           ],
         ),
       ),
+    );
+      },
     );
   }
 
@@ -412,7 +433,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
           Text(combo, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.charcoal)),
           Expanded(
             child: Text(
-              ' • ',
+              ' • $detail',
               style: const TextStyle(fontSize: 11, color: Colors.black54),
               overflow: TextOverflow.ellipsis,
             ),

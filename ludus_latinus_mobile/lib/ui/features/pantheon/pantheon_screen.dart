@@ -2,7 +2,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
+import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
+import '../../core/particles_overlay.dart';
 
 class CarteCollector {
   final String id;
@@ -135,24 +137,52 @@ class _PantheonScreenState extends State<PantheonScreen> {
 
   void _flipCard(String id) {
     HapticFeedback.lightImpact();
+    AudioService().playCardFlip();
     setState(() {
       if (_cartesRetournees.contains(id)) {
         _cartesRetournees.remove(id);
       } else {
         _cartesRetournees.add(id);
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final sesterces = widget.repo.profile.sesterces;
-    final totalCartes = kCartesCollector.length;
+    return AnimatedBuilder(
+      animation: widget.repo,
+      builder: (context, _) {
+        final sesterces = widget.repo.profile.sesterces;
+        final totalCartes = kCartesCollector.length;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('🏛️ Le Panthéon des Trophées'),
-      ),
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('🏛️ Le Panthéon des Trophées'),
+            actions: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${widget.repo.profile.sesterces} HS',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -296,6 +326,8 @@ class _PantheonScreenState extends State<PantheonScreen> {
           ),
         ),
       ),
+    );
+      },
     );
   }
 
