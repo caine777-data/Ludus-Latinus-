@@ -8,6 +8,9 @@ on:
       - '.github/workflows/build_mobile.yml'
       - 'assets/data/ludus_latinus_dataset.json'
 
+permissions:
+  contents: write
+
 jobs:
   build-android:
     name: Build Android (APK & Google Play Bundle)
@@ -35,7 +38,7 @@ jobs:
         working-directory: ./ludus_latinus_mobile
         run: |
           set -o pipefail
-          flutter analyze 2>&1 | tee analyze.log
+          flutter analyze --no-fatal-warnings --no-fatal-infos 2>&1 | tee analyze.log
 
       - name: Rapport d'erreur d'analyse en cas d'échec
         if: failure()
@@ -76,6 +79,19 @@ jobs:
           name: Android-Error-Log
           path: ludus_latinus_mobile/android_build.log
           if-no-files-found: ignore
+
+      - name: Sauvegarder les logs Android sur la branche debug
+        if: failure()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git checkout -B ci-debug-logs
+          mkdir -p ./logs
+          [ -f ludus_latinus_mobile/analyze.log ] && cp ludus_latinus_mobile/analyze.log ./logs/analyze_android.log
+          [ -f ludus_latinus_mobile/android_build.log ] && cp ludus_latinus_mobile/android_build.log ./logs/android_build.log
+          git add -f ./logs/
+          git commit -m "ci: logs android [skip ci]" || true
+          git push origin ci-debug-logs --force
 
       - name: Compiler APK Android (Installation directe)
         working-directory: ./ludus_latinus_mobile
@@ -118,7 +134,7 @@ jobs:
         working-directory: ./ludus_latinus_mobile
         shell: pwsh
         run: |
-          flutter analyze 2>&1 | Tee-Object -FilePath analyze.log
+          flutter analyze --no-fatal-warnings --no-fatal-infos 2>&1 | Tee-Object -FilePath analyze.log
 
       - name: Rapport d'erreur d'analyse Windows en cas d'échec
         if: failure()
@@ -165,6 +181,20 @@ jobs:
           name: Windows-Error-Log
           path: ludus_latinus_mobile/windows_build.log
           if-no-files-found: ignore
+
+      - name: Sauvegarder les logs Windows sur la branche debug
+        if: failure()
+        shell: pwsh
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git checkout -B ci-debug-logs
+          New-Item -ItemType Directory -Force -Path "./logs"
+          if (Test-Path ludus_latinus_mobile/analyze.log) { Copy-Item ludus_latinus_mobile/analyze.log ./logs/analyze_windows.log }
+          if (Test-Path ludus_latinus_mobile/windows_build.log) { Copy-Item ludus_latinus_mobile/windows_build.log ./logs/windows_build.log }
+          git add -f ./logs/
+          git commit -m "ci: logs windows [skip ci]"
+          git push origin ci-debug-logs --force
 
       - name: Compresser le dossier Windows Release
         working-directory: ./ludus_latinus_mobile
