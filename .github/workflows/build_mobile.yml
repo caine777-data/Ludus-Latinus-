@@ -25,7 +25,6 @@ jobs:
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
 
@@ -53,17 +52,25 @@ jobs:
 
   build-windows:
     name: Build Windows Desktop (.exe natif)
-    runs-on: windows-latest
+    runs-on: windows-2022
+    env:
+      CMAKE_GENERATOR: "Visual Studio 17 2022"
+      CMAKE_GENERATOR_PLATFORM: "x64"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Set up MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: Set up Flutter SDK
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
           channel: 'stable'
           cache: true
+
+      - name: Diagnostic Flutter & Visual Studio
+        run: flutter doctor -v
 
       - name: Configurer plateforme Windows Desktop
         working-directory: ./ludus_latinus_mobile

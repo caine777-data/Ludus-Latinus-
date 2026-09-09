@@ -46,7 +46,10 @@ class CodeEditor(tk.Frame):
         self.text.bind("<Return>", self._on_return)
         self.text.bind("<Tab>", self._on_tab)
         self.text.bind("<Shift-Tab>", self._on_shift_tab)
-        self.text.bind("<ISO_Left_Tab>", self._on_shift_tab)
+        try:
+            self.text.bind("<ISO_Left_Tab>", self._on_shift_tab)
+        except Exception:
+            pass
         self.text.bind("<Control-slash>", self._on_comment)
         self.text.bind("<Control-space>", self._autocomplete)
         self.text.bind("<Control-f>", self.toggle_search)
