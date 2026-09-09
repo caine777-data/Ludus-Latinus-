@@ -155,7 +155,7 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        '',
+                        '${snapshot.error}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 12, color: Colors.black54),
                       ),

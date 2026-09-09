@@ -9,6 +9,9 @@ import '../forum/forum_screen.dart';
 import '../thesaurus/thesaurus_screen.dart';
 import '../taverne/taverne_screen.dart';
 import '../account/account_screen.dart';
+import '../marche/marche_trajan_screen.dart';
+import '../cesar/cesar_screen.dart';
+import '../pantheon/pantheon_screen.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -414,7 +417,79 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
+
+                // 7. Grille des Jeux & Défis de l'Empire
+                const Text(
+                  'Jeux & Défis de l\'Empire',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.4,
+                    color: RomanColors.imperialPurple,
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.28,
+                  children: [
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/boss_mercure_140.png',
+                      fallbackIcon: '🎲',
+                      title: 'Alea Iacta Est',
+                      subtitle: 'Taverne & Dés Romains',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/lupulus/lupulus_savant.png',
+                      fallbackIcon: '🏺',
+                      title: 'Marché de Trajan',
+                      subtitle: 'Chiffres Romains & Étal',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/lupulus/lupulus_imperator.png',
+                      fallbackIcon: '📜',
+                      title: 'Atelier de César',
+                      subtitle: 'Cryptographie Militaire',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                    _buildArtworkTile(
+                      imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
+                      fallbackIcon: '🏆',
+                      title: 'Le Panthéon',
+                      subtitle: 'Album des Reliques',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           );
