@@ -80,8 +80,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     _rollController.forward(from: 0.0);
 
     // Simulation de secousse
-    for (int i = 0; i < 5; i++) {
-      await Future.delayed(const Duration(milliseconds: 80));
+    for (int i = 0; i < 7; i++) {
+      await Future.delayed(const Duration(milliseconds: 90));
       HapticFeedback.lightImpact();
       if (mounted) {
         setState(() {
@@ -286,7 +286,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
           children: [
             // 1. Bannière d'Ambiance de la Taberna
             Container(
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [Color(0xFF4A180E), Color(0xFF260A04)],
@@ -303,28 +303,52 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                   )
                 ],
               ),
-              child: Column(
+              child: Row(
                 children: [
-                  const Text(
-                    'Alea Iacta Est',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5,
-                      fontFamily: 'serif',
+                  Image.asset(
+                    'assets/images/animated/flambeau_flamme.webp',
+                    width: 32,
+                    height: 52,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Alea Iacta Est',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.5,
+                            fontFamily: 'serif',
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        const Text(
+                          '« Le sort en est jeté » • Comptoir des 4 Tesserae',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 11.5, color: Color(0xFFE2C4A2)),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Secoue le fritillus et lance les dés gravés. Aligne des faces distinctes pour obtenir le Coup de Vénus !',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.85), height: 1.3),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  const Text(
-                    '« Le sort en est jeté » • Comptoir des 4 Tesserae',
-                    style: TextStyle(fontSize: 12, color: Color(0xFFE2C4A2)),
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    'Secoue le cornet en cuir (fritillus) et lance les dés en os gravés. Aligne des faces distinctes pour obtenir le fabuleux Coup de Vénus !',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.85), height: 1.4),
+                  const SizedBox(width: 8),
+                  Transform.scale(
+                    scaleX: -1,
+                    child: Image.asset(
+                      'assets/images/animated/flambeau_flamme.webp',
+                      width: 32,
+                      height: 52,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ],
               ),
@@ -441,37 +465,63 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               ),
               child: Column(
                 children: [
-                  if (_modeDuelGaius) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('🧔 DÉS DE GAIUS L\'AUBERGISTE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black54)),
-                        Text('FACTION TABERNA', style: TextStyle(fontSize: 9, color: Colors.orange, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
+                  if (_isRolling)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/animated/dice_roll_3d.webp',
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.contain,
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            '🎲 Les tesserae tournoient sur le marbre...',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF8A5515),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else ...[
+                    if (_modeDuelGaius) ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('🧔 DÉS DE GAIUS L\'AUBERGISTE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black54)),
+                          Text('FACTION TABERNA', style: TextStyle(fontSize: 9, color: Colors.orange, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: List.generate(4, (index) {
+                          return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true);
+                        }),
+                      ),
+                      const Divider(height: 24, thickness: 1),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text('🛡️ TES DÉS (TIRO)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
+                          Text('TON CORNET', style: TextStyle(fontSize: 9, color: RomanColors.laurelGreen, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                    ],
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: List.generate(4, (index) {
-                        return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true);
+                        return _build3DRomanDie(_diceValues[index]);
                       }),
                     ),
-                    const Divider(height: 24, thickness: 1),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text('🛡️ TES DÉS (TIRO)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
-                        Text('TON CORNET', style: TextStyle(fontSize: 9, color: RomanColors.laurelGreen, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
                   ],
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(4, (index) {
-                      return _build3DRomanDie(_diceValues[index]);
-                    }),
-                  ),
                   const SizedBox(height: 20),
                   // Bouton Lancer
                   ElevatedButton.icon(

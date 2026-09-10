@@ -226,12 +226,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // 2. Mascotte Lupulus vivante avec bulle de dialogue
                 LupulusDialogue(
-                  emotion: 'joie',
+                  emotion: 'normal',
                   message: '« Salve ${profile.nomHeros} ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »',
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('🐺 Lupulus t''encourage : "Per aspera ad astra !"'),
+                        content: Text('🐺 Lupulus t\'adresse son salut légionnaire : "Per aspera ad astra !"'),
                         duration: Duration(seconds: 2),
                       ),
                     );

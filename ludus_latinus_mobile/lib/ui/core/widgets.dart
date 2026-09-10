@@ -178,6 +178,78 @@ class RomanMedallion extends StatelessWidget {
   }
 }
 
+/// Avatar animé et vivant de Lupulus réagissant au toucher (clignement idle et salut légionnaire).
+class AnimatedLupulusAvatar extends StatefulWidget {
+  final double size;
+  final VoidCallback? onTap;
+
+  const AnimatedLupulusAvatar({
+    super.key,
+    this.size = 54,
+    this.onTap,
+  });
+
+  @override
+  State<AnimatedLupulusAvatar> createState() => _AnimatedLupulusAvatarState();
+}
+
+class _AnimatedLupulusAvatarState extends State<AnimatedLupulusAvatar> {
+  bool _isSaluting = false;
+
+  void _triggerSalute() {
+    if (_isSaluting) return;
+    HapticFeedback.mediumImpact();
+    setState(() => _isSaluting = true);
+    widget.onTap?.call();
+
+    Future.delayed(const Duration(milliseconds: 1400), () {
+      if (mounted) {
+        setState(() => _isSaluting = false);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final assetPath = _isSaluting
+        ? 'assets/images/animated/lupulus_salut.webp'
+        : 'assets/images/animated/lupulus_idle.webp';
+
+    return GestureDetector(
+      onTap: _triggerSalute,
+      child: Container(
+        width: widget.size,
+        height: widget.size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: RomanColors.palatinCream,
+          border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+          boxShadow: [
+            BoxShadow(
+              color: RomanColors.imperialGold.withOpacity(0.3),
+              blurRadius: _isSaluting ? 10 : 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: ClipOval(
+          child: Image.asset(
+            assetPath,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => Image.asset(
+              'assets/images/lupulus/lupulus_normal_180.png',
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => const Center(
+                child: Text('🐺', style: TextStyle(fontSize: 28)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 /// Mascotte Lupulus vivante avec bulle de dialogue réactive.
 class LupulusDialogue extends StatelessWidget {
   final String emotion; // 'normal', 'joie', 'triomphe', 'reflexion', 'centurion', 'aide'
@@ -232,24 +304,26 @@ class LupulusDialogue extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: 54,
-              height: 54,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: RomanColors.palatinCream,
-                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  imageFile,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Center(
-                    child: Text('🐺', style: TextStyle(fontSize: 28)),
+            safeEmotion == 'normal'
+                ? AnimatedLupulusAvatar(size: 54, onTap: onTap)
+                : Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: RomanColors.palatinCream,
+                      border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        imageFile,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Center(
+                          child: Text('🐺', style: TextStyle(fontSize: 28)),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

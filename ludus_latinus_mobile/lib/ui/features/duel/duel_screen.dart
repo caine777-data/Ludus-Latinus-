@@ -484,42 +484,64 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
             ],
           ),
 
-          // Portrait du Boss dans son Médaillon Antique
-          AnimatedBuilder(
-            animation: _pulseController,
-            builder: (context, child) {
-              final scale = _animatingHit ? 0.92 : 1.0 + (_pulseController.value * 0.04);
-              return Transform.scale(
-                scale: scale,
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: _animatingHit ? Colors.redAccent : RomanColors.imperialGold,
-                      width: 3,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: (_animatingHit ? Colors.redAccent : RomanColors.imperialGold).withOpacity(0.35),
-                        blurRadius: 16,
-                        spreadRadius: 3,
+          // Portrait du Boss dans son Médaillon Antique encadré de Flambeaux
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/animated/flambeau_flamme.webp',
+                width: 32,
+                height: 52,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(width: 14),
+              AnimatedBuilder(
+                animation: _pulseController,
+                builder: (context, child) {
+                  final scale = _animatingHit ? 0.92 : 1.0 + (_pulseController.value * 0.04);
+                  return Transform.scale(
+                    scale: scale,
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: _animatingHit ? Colors.redAccent : RomanColors.imperialGold,
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: (_animatingHit ? Colors.redAccent : RomanColors.imperialGold).withOpacity(0.35),
+                            blurRadius: 16,
+                            spreadRadius: 3,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      boss['image'] as String,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Center(
-                        child: Text('⚔️', style: TextStyle(fontSize: 48)),
+                      child: ClipOval(
+                        child: Image.asset(
+                          boss['image'] as String,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Center(
+                            child: Text('⚔️', style: TextStyle(fontSize: 48)),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  );
+                },
+              ),
+              const SizedBox(width: 14),
+              Transform.scale(
+                scaleX: -1,
+                child: Image.asset(
+                  'assets/images/animated/flambeau_flamme.webp',
+                  width: 32,
+                  height: 52,
+                  fit: BoxFit.contain,
                 ),
-              );
-            },
+              ),
+            ],
           ),
 
           // Titre et citation antique du boss
