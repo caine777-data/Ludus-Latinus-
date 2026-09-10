@@ -5,6 +5,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/cinematic_player.dart';
+import '../../core/game_juice.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -184,6 +185,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   late List<String> _shuffledChoices;
   String? _chosenAnswer;
   bool _animatingHit = false;
+  final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
   @override
   void initState() {
@@ -269,6 +271,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       if (_currentStance == CombatStance.celox && elapsedSec <= 4) {
         degats = (degats * 1.25).round();
         sestercesEarned += 10;
+        _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: RomanColors.laurelGreen,
@@ -276,6 +279,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
             content: Text('⚡ Coup Critique & Célérité ! (+10 HS)'),
           ),
         );
+      } else {
+        _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       }
 
       setState(() {
@@ -291,6 +296,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     } else {
       HapticFeedback.vibrate();
       AudioService().playError();
+      _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
       final baseRiposte = boss['attaque'] as int;
       final riposte = (baseRiposte * _currentStance.riposteMult).round();
 
@@ -413,21 +419,24 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               ),
             ],
           ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // 1. Arène & Jauges de Vie
-            Expanded(
-              flex: 5,
-              child: _buildArenaView(boss),
-            ),
+      body: RomanScreenShake(
+        key: _shakeKey,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // 1. Arène & Jauges de Vie
+              Expanded(
+                flex: 5,
+                child: _buildArenaView(boss),
+              ),
 
-            // 2. Panneau Question / Énigme ou Victoire
-            Expanded(
-              flex: 5,
-              child: _combatFini ? _buildVictoryPanel(boss) : _buildQuizPanel(),
-            ),
-          ],
+              // 2. Panneau Question / Énigme ou Victoire
+              Expanded(
+                flex: 5,
+                child: _combatFini ? _buildVictoryPanel(boss) : _buildQuizPanel(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -462,14 +471,12 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                     const SizedBox(height: 4),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: LinearProgressIndicator(
-                        value: _playerHp / 100.0,
-                        backgroundColor: Colors.white24,
-                        color: _playerHp > 30 ? Colors.greenAccent : Colors.redAccent,
-                        minHeight: 10,
-                      ),
+                    RomanElasticProgressBar(
+                      value: _playerHp / 100.0,
+                      color: _playerHp > 30 ? Colors.greenAccent : Colors.redAccent,
+                      ghostColor: Colors.redAccent.withOpacity(0.6),
+                      backgroundColor: Colors.white24,
+                      height: 10,
                     ),
                     const SizedBox(height: 2),
                     Text('$_playerHp / 100 HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
@@ -487,14 +494,12 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold, fontSize: 12),
                     ),
                     const SizedBox(height: 4),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(6),
-                      child: LinearProgressIndicator(
-                        value: _bossHp / (boss['maxHp'] as int),
-                        backgroundColor: Colors.white24,
-                        color: Colors.deepOrangeAccent,
-                        minHeight: 10,
-                      ),
+                    RomanElasticProgressBar(
+                      value: _bossHp / (boss['maxHp'] as int),
+                      color: Colors.deepOrangeAccent,
+                      ghostColor: Colors.amber.withOpacity(0.6),
+                      backgroundColor: Colors.white24,
+                      height: 10,
                     ),
                     const SizedBox(height: 2),
                     Text('$_bossHp / ${boss['maxHp']} HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
@@ -812,9 +817,29 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               children: [
                 const Text('🪙', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 8),
-                Text(
-                  '+${_victoire ? _gainsSesterces + 50 : 5} Sesterces remportés',
+                const Text(
+                  '+',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                  ),
+                ),
+                RollingSestercesCounter(
+                  value: _victoire ? _gainsSesterces + 50 : 5,
+                  initialValue: 0,
+                  showIcon: false,
+                  duration: const Duration(milliseconds: 900),
                   style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Text(
+                  'remportés',
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF7A5901),

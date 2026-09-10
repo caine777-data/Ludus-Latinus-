@@ -31,6 +31,13 @@ class AudioService extends ChangeNotifier {
     SystemSound.play(SystemSoundType.click);
   }
 
+  /// Micro-tintement rapide pour le défilement fluide des pièces
+  Future<void> playCoinTick() async {
+    if (_isMuted) return;
+    HapticFeedback.selectionClick();
+    SystemSound.play(SystemSoundType.click);
+  }
+
   /// Roulement des osselets et dés dans le cornet (fritillus)
   Future<void> playDiceRoll() async {
     if (_isMuted) return;

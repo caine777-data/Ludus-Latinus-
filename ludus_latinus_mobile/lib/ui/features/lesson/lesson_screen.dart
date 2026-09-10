@@ -5,6 +5,7 @@ import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/latin_pronunciation_modal.dart';
+import '../../core/game_juice.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -28,6 +29,7 @@ class _LessonScreenState extends State<LessonScreen> {
   int? selectedOption;
   bool isAnswered = false;
   bool isCorrect = false;
+  final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
   void _submitAnswer(int index) {
     if (isAnswered) return;
@@ -50,6 +52,7 @@ class _LessonScreenState extends State<LessonScreen> {
       _showTriumphModal();
     } else {
       AudioService().playError();
+      _shakeKey.currentState?.shake(intensity: ShakeIntensity.light);
     }
   }
 
@@ -113,17 +116,68 @@ class _LessonScreenState extends State<LessonScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: RomanColors.imperialGold),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('🪙 ', style: TextStyle(fontSize: 16)),
-                  Text(
-                    '+10 Sesterces remportés !',
+                  const Text('🪙 ', style: TextStyle(fontSize: 16)),
+                  const Text(
+                    '+',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 13,
                       color: Color(0xFF7A5901),
                     ),
+                  ),
+                  RollingSestercesCounter(
+                    value: 10,
+                    initialValue: 0,
+                    showIcon: false,
+                    duration: const Duration(milliseconds: 700),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Color(0xFF7A5901),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    'remportés !',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Color(0xFF7A5901),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 14),
+            // Jauge de Progression du Cursus avec physique de ressort élastique
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Progression du Cursus',
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                      ),
+                      Text(
+                        '${widget.repo.profile.completedLessons.length} / 26 leçons',
+                        style: const TextStyle(fontSize: 11, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  RomanElasticProgressBar(
+                    value: (widget.repo.profile.completedLessons.length / 26.0).clamp(0.0, 1.0),
+                    color: RomanColors.imperialGold,
+                    ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
+                    backgroundColor: const Color(0xFFEBE3D7),
+                    height: 8,
                   ),
                 ],
               ),
@@ -180,9 +234,11 @@ class _LessonScreenState extends State<LessonScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+      body: RomanScreenShake(
+        key: _shakeKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 1. Illustration Héroïque Antique
@@ -405,7 +461,8 @@ class _LessonScreenState extends State<LessonScreen> {
           ],
         ),
       ),
-    );
+    ),
+  );
   }
 
   void _showDecrypterSheet(BuildContext context) {

@@ -5,6 +5,7 @@ import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/cinematic_player.dart';
+import '../../core/game_juice.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -178,20 +179,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(color: RomanColors.imperialGold),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Text('🪙', style: TextStyle(fontSize: 13)),
-                                const SizedBox(width: 4),
-                                Text(
-                                  '${profile.sesterces} HS',
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF7A5901),
-                                  ),
-                                ),
-                              ],
+                            child: RollingSestercesCounter(
+                              value: profile.sesterces,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF7A5901),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 6),

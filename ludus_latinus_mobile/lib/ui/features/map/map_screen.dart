@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/game_juice.dart';
 import '../../../data/models/world.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -121,14 +122,12 @@ class _MapScreenState extends State<MapScreen> {
                   ],
                 ),
                 const SizedBox(height: 6),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(6),
-                  child: LinearProgressIndicator(
-                    value: progressRatio,
-                    minHeight: 7,
-                    backgroundColor: const Color(0xFFEBE3D7),
-                    valueColor: const AlwaysStoppedAnimation<Color>(RomanColors.imperialGold),
-                  ),
+                RomanElasticProgressBar(
+                  value: progressRatio,
+                  height: 7,
+                  backgroundColor: const Color(0xFFEBE3D7),
+                  color: RomanColors.imperialGold,
+                  ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
                 ),
                 const SizedBox(height: 10),
                 // Filtres de classes
