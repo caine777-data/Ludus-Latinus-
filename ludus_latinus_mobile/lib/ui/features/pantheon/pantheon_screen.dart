@@ -5,6 +5,7 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/widgets.dart';
 
 class CarteCollector {
   final String id;
@@ -183,21 +184,24 @@ class _PantheonScreenState extends State<PantheonScreen> {
               ),
             ],
           ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // 1. Bannière Panthéon
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF421019), Color(0xFF1F060B)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+      body: RomanOculusBackdrop(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const RomanMeanderDivider(height: 12, color: RomanColors.imperialGold),
+                const SizedBox(height: 8),
+                // 1. Bannière Panthéon
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF421019), Color(0xFF1F060B)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   borderRadius: BorderRadius.circular(18),
                   border: Border.all(color: RomanColors.imperialGold, width: 1.5),
                   boxShadow: const [
@@ -326,10 +330,11 @@ class _PantheonScreenState extends State<PantheonScreen> {
           ),
         ),
       ),
-    );
-      },
-    );
-  }
+    ),
+  );
+},
+);
+}
 
   Widget _buildStatChip({
     required String icon,

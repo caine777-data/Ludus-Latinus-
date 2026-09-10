@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -284,73 +285,55 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // 1. Bannière d'Ambiance de la Taberna
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF4A180E), Color(0xFF260A04)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+            const RomanMeanderDivider(height: 12, color: RomanColors.imperialGold),
+            const SizedBox(height: 12),
+            // 1. Bannière d'Ambiance de la Taberna encadrée de flambeaux
+            RomanTorchPairHeader(
+              torchHeight: 70,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF4A180E), Color(0xFF260A04)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x4DFF6F00),
+                      offset: Offset(0, 4),
+                      blurRadius: 16,
+                    )
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x33331005),
-                    offset: Offset(0, 6),
-                    blurRadius: 12,
-                  )
-                ],
-              ),
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/animated/flambeau_flamme.webp',
-                    width: 32,
-                    height: 52,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const Text(
-                          'Alea Iacta Est',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.5,
-                            fontFamily: 'serif',
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        const Text(
-                          '« Le sort en est jeté » • Comptoir des 4 Tesserae',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 11.5, color: Color(0xFFE2C4A2)),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Secoue le fritillus et lance les dés gravés. Aligne des faces distinctes pour obtenir le Coup de Vénus !',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.85), height: 1.3),
-                        ),
-                      ],
+                child: Column(
+                  children: [
+                    const Text(
+                      'Alea Iacta Est',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                        fontFamily: 'serif',
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Transform.scale(
-                    scaleX: -1,
-                    child: Image.asset(
-                      'assets/images/animated/flambeau_flamme.webp',
-                      width: 32,
-                      height: 52,
-                      fit: BoxFit.contain,
+                    const SizedBox(height: 3),
+                    const Text(
+                      '« Le sort en est jeté » • Comptoir des 4 Tesserae',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 11.5, color: Color(0xFFE2C4A2)),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      'Secoue le fritillus et lance les dés gravés. Aligne des faces distinctes pour obtenir le Coup de Vénus !',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.85), height: 1.3),
+                    ),
+                  ],
+                ),
               ),
             ),
 

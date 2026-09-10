@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -452,6 +453,20 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       body: SafeArea(
         child: Column(
           children: [
+            const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: CircusVelariumHeader(
+                selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
+                onSelectFaction: (idx) {
+                  setState(() {
+                    _selectedFaction = CircusFaction.values[idx];
+                    _shieldAvailable = (_selectedFaction == CircusFaction.albati);
+                  });
+                  AudioService().playWheelClick();
+                },
+              ),
+            ),
             // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
             _buildDolphinLapCounter(),
 

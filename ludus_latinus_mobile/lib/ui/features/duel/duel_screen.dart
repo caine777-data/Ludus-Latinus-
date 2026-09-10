@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
+import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -424,10 +425,13 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         child: SafeArea(
           child: Column(
             children: [
+              const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
               // 1. Arène & Jauges de Vie
               Expanded(
                 flex: 5,
-                child: _buildArenaView(boss),
+                child: ColosseumArenaBackdrop(
+                  child: _buildArenaView(boss),
+                ),
               ),
 
               // 2. Panneau Question / Énigme ou Victoire
@@ -447,13 +451,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   Widget _buildArenaView(Map<String, dynamic> boss) {
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF2D1E3A), Color(0xFF18101E)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      color: Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
