@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/lottie_effects.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -43,6 +44,7 @@ class _LessonScreenState extends State<LessonScreen> {
     if (isCorrect) {
       AudioService().playTriumph();
       AudioService().playSesterces();
+      RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       widget.repo.completeLesson(widget.lesson.id, 10);
       _showTriumphModal();

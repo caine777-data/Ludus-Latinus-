@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/lottie_effects.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -427,11 +428,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
                               onPressed: () {
-                                AudioService().playSesterces();
-                                RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
-                                _navigateToQuestTarget(context, dailyQuest.routeCible);
+                                RomanLottieEffects.showChestReward(
+                                  context,
+                                  sestercesReward: dailyQuest.recompense,
+                                  questTitle: dailyQuest.titre,
+                                  onClaim: () {
+                                    widget.repo.addSesterces(dailyQuest.recompense);
+                                    profile.lastDailyQuestDate =
+                                        '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}';
+                                    widget.repo.saveProfile();
+                                    setState(() {});
+                                    _navigateToQuestTarget(context, dailyQuest.routeCible);
+                                  },
+                                );
                               },
-                              child: Text('+${dailyQuest.recompense} HS'),
+                              child: Text('🎁 +${dailyQuest.recompense} HS'),
                             ),
                         ],
                       ),
@@ -814,7 +825,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Row(
                   children: [
-                    Text(currentRank.badge, style: const TextStyle(fontSize: 32)),
+                    GestureDetector(
+                      onTap: () {
+                        RomanLottieEffects.showLaurelTriumph(
+                          context,
+                          title: currentRank.titre,
+                          subtitle: currentRank.sousTitre,
+                        );
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          const RomanLottieWidget(
+                            assetName: 'laurel_wreath.json',
+                            width: 60,
+                            height: 60,
+                            repeat: true,
+                          ),
+                          Text(currentRank.badge, style: const TextStyle(fontSize: 22)),
+                        ],
+                      ),
+                    ),
                     const SizedBox(width: 14),
                     Expanded(
                       child: Column(

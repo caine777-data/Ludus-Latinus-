@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/lottie_effects.dart';
 import '../../core/latin_epigraph_modal.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/models/latin_epigraph.dart';
@@ -139,6 +140,7 @@ class ForumScreen extends StatelessWidget {
                       if (success) {
                         AudioService().playTriumph();
                         AudioService().playSesterces();
+                        RomanLottieEffects.showMonumentBlessing(context, monumentName: monument.nom);
                         RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

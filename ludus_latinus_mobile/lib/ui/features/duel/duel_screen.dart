@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/lottie_effects.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -243,6 +244,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       HapticFeedback.heavyImpact();
       AudioService().playSwordClash();
       AudioService().playSesterces();
+      RomanLottieEffects.showSwordClash(context);
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
 
       int degats = (35 * _currentStance.damageMult).round();
@@ -320,6 +322,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       AudioService().playSwordClash();
       AudioService().playCrowdCheer();
       AudioService().playTriumph();
+      RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
       widget.repo.addSesterces(5);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'themes.dart';
 import 'particles_overlay.dart';
+import 'lottie_effects.dart';
 import '../../data/models/latin_epigraph.dart';
 import '../../data/repositories/game_repository.dart';
 import '../../data/services/audio_service.dart';
@@ -454,6 +455,7 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                     widget.repo.decodeEpigraph(widget.epigraph.monumentId, widget.epigraph.recompense);
                     AudioService().playSesterces();
                     AudioService().playTriumph();
+                    RomanLottieEffects.showMonumentBlessing(context);
                     RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
                     setState(() {});
                     ScaffoldMessenger.of(context).showSnackBar(
