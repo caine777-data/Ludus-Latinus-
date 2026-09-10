@@ -91,6 +91,13 @@ class _AccountScreenState extends State<AccountScreen> {
         return Scaffold(
           appBar: AppBar(
             title: const Text('TABULARIUM'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.volume_up_outlined, color: RomanColors.imperialPurple),
+                tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
+                onPressed: () => RomanAudioModal.show(context),
+              ),
+            ],
           ),
           body: ListView(
             padding: const EdgeInsets.all(16),

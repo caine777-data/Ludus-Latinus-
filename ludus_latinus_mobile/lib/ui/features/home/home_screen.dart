@@ -54,14 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
               color: RomanColors.imperialPurple,
               size: 24,
             ),
-            tooltip: AudioService().isMuted ? 'Activer le son antique' : 'Couper le son',
+            tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
             onPressed: () {
-              setState(() {
-                AudioService().toggleMute();
-              });
-              if (!AudioService().isMuted) {
-                AudioService().playSesterces();
-              }
+              RomanAudioModal.show(context);
             },
           ),
           IconButton(
