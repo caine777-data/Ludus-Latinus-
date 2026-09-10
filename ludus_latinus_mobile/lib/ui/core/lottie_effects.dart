@@ -13,7 +13,7 @@ class RomanLottieEffects {
     VoidCallback? onFinished,
   }) {
     HapticFeedback.mediumImpact();
-    AudioService().playVictory();
+    AudioService().playTriumph();
 
     final overlay = Overlay.of(context);
     late OverlayEntry entry;
@@ -51,7 +51,7 @@ class RomanLottieEffects {
     Duration duration = const Duration(milliseconds: 2600),
   }) {
     HapticFeedback.heavyImpact();
-    AudioService().playTrophy();
+    AudioService().playTriumph();
 
     showDialog(
       context: context,
@@ -227,7 +227,7 @@ class RomanLottieEffects {
     Duration duration = const Duration(milliseconds: 1400),
   }) {
     HapticFeedback.heavyImpact();
-    AudioService().playWrong();
+    AudioService().playSwordClash();
 
     final overlay = Overlay.of(context);
     late OverlayEntry entry;
@@ -265,7 +265,7 @@ class RomanLottieEffects {
     Duration duration = const Duration(milliseconds: 2400),
   }) {
     HapticFeedback.lightImpact();
-    AudioService().playTrophy();
+    AudioService().playTriumph();
 
     final overlay = Overlay.of(context);
     late OverlayEntry entry;

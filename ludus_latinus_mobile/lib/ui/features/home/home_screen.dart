@@ -433,10 +433,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   sestercesReward: dailyQuest.recompense,
                                   questTitle: dailyQuest.titre,
                                   onClaim: () {
-                                    widget.repo.addSesterces(dailyQuest.recompense);
-                                    profile.lastDailyQuestDate =
-                                        '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}';
-                                    widget.repo.saveProfile();
+                                    widget.repo.completeDailyQuest(dailyQuest.recompense);
                                     setState(() {});
                                     _navigateToQuestTarget(context, dailyQuest.routeCible);
                                   },
