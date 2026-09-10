@@ -3,6 +3,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/latin_epigraph_modal.dart';
+import '../../core/roman_ornaments.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/models/latin_epigraph.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -121,7 +122,9 @@ class ForumScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 18),
+              const SizedBox(height: 12),
+              const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
+              const SizedBox(height: 8),
 
               // 2. Liste des 6 Édifices Historiques
               ...monuments.map((monument) {
@@ -246,21 +249,33 @@ class ForumScreen extends StatelessWidget {
                 ),
               ),
               if (isRestored)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: RomanColors.laurelGreen,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    'RESTAURÉ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const RomanWaxSeal(
+                      size: 34,
+                      label: 'SPQR',
+                      sealColor: RomanColors.laurelGreen,
+                      stampColor: Color(0xFFFFDF85),
                     ),
-                  ),
+                    const SizedBox(width: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: RomanColors.laurelGreen,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'RESTAURÉ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               else
                 Container(

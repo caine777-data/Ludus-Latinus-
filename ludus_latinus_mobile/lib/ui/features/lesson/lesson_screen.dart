@@ -73,23 +73,30 @@ class _LessonScreenState extends State<LessonScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 80,
-              height: 80,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: RomanColors.goldLight,
-                border: Border.all(color: RomanColors.imperialGold, width: 2),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/lupulus/lupulus_triomphe_180.png',
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Center(
-                    child: Text('👑', style: TextStyle(fontSize: 40)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 74,
+                  height: 74,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: RomanColors.goldLight,
+                    border: Border.all(color: RomanColors.imperialGold, width: 2),
+                  ),
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/lupulus/lupulus_triomphe_180.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Center(
+                        child: Text('👑', style: TextStyle(fontSize: 40)),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(width: 16),
+                const RomanWaxSeal(size: 66, label: 'SPQR'),
+              ],
             ),
             const SizedBox(height: 12),
             const Text(
@@ -102,6 +109,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 fontFamily: 'serif',
               ),
             ),
+            const RomanMeanderDivider(height: 10, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 6)),
             const SizedBox(height: 6),
             Text(
               widget.lesson.explanation ?? 'Excellente maîtrise du latin antique !',
@@ -268,10 +276,12 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
             ),
 
-            const SizedBox(height: 14),
+            const SizedBox(height: 10),
+            const RomanMeanderDivider(height: 12, strokeWidth: 1.2),
+            const SizedBox(height: 4),
 
             // 2. Parchemin de Leçon
-            RomanCard(
+            RomanParchmentCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

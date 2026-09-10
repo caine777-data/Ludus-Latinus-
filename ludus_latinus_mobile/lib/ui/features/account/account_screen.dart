@@ -95,21 +95,9 @@ class _AccountScreenState extends State<AccountScreen> {
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              // 1. Tablette de Cire Antique (Tabula Cerata)
-              Container(
+              // 1. Tablette de Cire Antique & Diplôme Impérial (Tabula Cerata)
+              RomanParchmentCard(
                 padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x143D1A10),
-                      offset: Offset(0, 4),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
                 child: Column(
                   children: [
                     Row(
@@ -135,7 +123,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        const SizedBox(width: 14),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,11 +154,13 @@ class _AccountScreenState extends State<AccountScreen> {
                             ],
                           ),
                         ),
+                        const SizedBox(width: 8),
+                        const RomanWaxSeal(size: 54, label: 'SPQR'),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    const Divider(),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
+                    const RomanMeanderDivider(height: 10, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
+                    const SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [

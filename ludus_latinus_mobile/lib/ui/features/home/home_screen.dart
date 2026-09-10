@@ -268,7 +268,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 14),
+                const SizedBox(height: 10),
+                const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
+                const SizedBox(height: 8),
 
                 // 4. Bannière Héroïque « La Via Appia » (Style Monument Valley)
                 Container(
@@ -397,21 +399,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 8),
                           if (isDone)
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: RomanColors.laurelGreen.withOpacity(0.12),
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: RomanColors.laurelGreen),
-                              ),
-                              child: const Text(
-                                '✓ REÇU',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: RomanColors.laurelGreen,
-                                ),
-                              ),
+                            const RomanWaxSeal(
+                              size: 40,
+                              label: 'SPQR',
+                              sealColor: RomanColors.laurelGreen,
+                              stampColor: Color(0xFFFFDF85),
                             )
                           else
                             ElevatedButton(
