@@ -237,6 +237,11 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               ],
             ),
           ),
+          IconButton(
+            icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+            tooltip: 'Harmonia Antiqua (Audio)',
+            onPressed: () => RomanAudioModal.show(context),
+          ),
         ],
       ),
       body: Padding(
@@ -280,6 +285,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               ),
             ),
 
+            const SizedBox(height: 8),
+            const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
             const SizedBox(height: 8),
 
             // 2. Bannière Furor Latinus Streak (si streak >= 3)
@@ -433,24 +440,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   Widget _buildCardSide({required bool isFront, required Widget child}) {
-    return Container(
-      width: double.infinity,
+    return RomanParchmentCard(
       padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: isFront ? Colors.white : const Color(0xFFFBF9F4),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isFront ? RomanColors.imperialGold : RomanColors.laurelGreen,
-          width: 2,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x223E1A0F),
-            offset: Offset(0, 8),
-            blurRadius: 16,
-          ),
-        ],
-      ),
+      borderColor: isFront ? RomanColors.imperialGold : RomanColors.laurelGreen,
       child: Center(child: child),
     );
   }

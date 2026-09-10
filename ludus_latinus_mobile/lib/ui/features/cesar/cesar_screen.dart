@@ -313,6 +313,11 @@ $texteChiffre
                 ),
               ),
               IconButton(
+                icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+                tooltip: 'Harmonia Antiqua (Audio)',
+                onPressed: () => RomanAudioModal.show(context),
+              ),
+              IconButton(
                 icon: const Icon(Icons.swap_horiz),
                 tooltip: 'Changer de mode',
                 onPressed: () {
@@ -331,6 +336,8 @@ $texteChiffre
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
+              const SizedBox(height: 8),
               // 1. En-tête Impérial avec César
               Container(
                 padding: const EdgeInsets.all(14),

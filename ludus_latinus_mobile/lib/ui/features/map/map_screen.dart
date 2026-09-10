@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
+import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
 import '../../../data/models/world.dart';
@@ -81,6 +82,11 @@ class _MapScreenState extends State<MapScreen> {
               ],
             ),
           ),
+          IconButton(
+            icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+            tooltip: 'Harmonia Antiqua (Audio)',
+            onPressed: () => RomanAudioModal.show(context),
+          ),
         ],
       ),
       body: Column(
@@ -148,6 +154,7 @@ class _MapScreenState extends State<MapScreen> {
               ],
             ),
           ),
+          const RomanMeanderDivider(height: 8, color: RomanColors.imperialGold),
 
           // 2. Chaussée Romaine de la Via Appia
           Expanded(

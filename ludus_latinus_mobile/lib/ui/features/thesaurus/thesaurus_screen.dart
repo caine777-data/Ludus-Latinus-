@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/themes.dart';
+import '../../core/widgets.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/thesaurus_entry.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -54,6 +55,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
     return Scaffold(
       appBar: AppBar(
         title: const Text('THESAURUS'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+            tooltip: 'Harmonia Antiqua (Audio)',
+            onPressed: () => RomanAudioModal.show(context),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: RomanColors.imperialGold,
@@ -156,6 +164,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
             ],
           ),
         ),
+        const RomanMeanderDivider(height: 8, color: RomanColors.imperialGold),
 
         // Résumé
         Padding(
@@ -196,24 +205,13 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                   itemCount: entries.length,
                   itemBuilder: (context, index) {
                     final item = entries[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x0A000000),
-                            offset: Offset(0, 2),
-                            blurRadius: 4,
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: RomanParchmentCard(
+                        padding: const EdgeInsets.all(14),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                           Row(
                             children: [
                               Flexible(
@@ -335,8 +333,9 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                           ],
                         ],
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
                 ),
         ),
       ],

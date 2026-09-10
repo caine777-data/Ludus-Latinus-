@@ -512,6 +512,11 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                 ),
               ),
               IconButton(
+                icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+                tooltip: 'Harmonia Antiqua (Audio)',
+                onPressed: () => RomanAudioModal.show(context),
+              ),
+              IconButton(
                 icon: const Icon(Icons.help_outline),
                 tooltip: 'Aide & Lexique',
                 onPressed: _ouvrirLexique,
@@ -524,6 +529,8 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
+              const SizedBox(height: 8),
               // Sélecteur de Mode : Achats à l'étal vs Rendu de Monnaie (Calculus)
               Row(
                 children: [
@@ -708,21 +715,9 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
               const SizedBox(height: 14),
 
-              // 2. Fiche de Transaction (Article ou Rendu)
-              Container(
+              // 2. Fiche de Transaction (Article ou Rendu) sur Parchemin Antique
+              RomanParchmentCard(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x0F000000),
-                      offset: Offset(0, 3),
-                      blurRadius: 8,
-                    ),
-                  ],
-                ),
                 child: Column(
                   children: [
                     if (!_modeRenduMonnaie) ...[
