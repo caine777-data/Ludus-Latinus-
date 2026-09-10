@@ -4,6 +4,7 @@ import 'data/repositories/game_repository.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
 import 'ui/core/themes.dart';
+import 'ui/core/cinematic_player.dart';
 import 'ui/features/home/home_screen.dart';
 
 void main() async {
@@ -31,6 +32,7 @@ class LudusLatinusApp extends StatefulWidget {
 
 class _LudusLatinusAppState extends State<LudusLatinusApp> {
   late Future<void> _initFuture;
+  bool _introShown = false;
   final List<String> _latinQuotes = [
     '« Festina lente » • Hâte-toi lentement',
     '« Per aspera ad astra » • Par des chemins ardus vers les étoiles',
@@ -163,6 +165,19 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
                   ),
                 ),
               ),
+            );
+          }
+
+          if (!_introShown) {
+            return RomanCinematicPlayer(
+              config: CinematicConfig.forType(CinematicType.intro),
+              onCompleted: () {
+                if (mounted) {
+                  setState(() {
+                    _introShown = true;
+                  });
+                }
+              },
             );
           }
 

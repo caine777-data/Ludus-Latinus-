@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -193,6 +194,20 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     )..repeat(reverse: true);
 
     _initBoss();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _showBossEntranceCinematic();
+      }
+    });
+  }
+
+  void _showBossEntranceCinematic() {
+    final boss = _bosses[_currentBossIndex];
+    RomanCinematicOverlay.showBossEntrance(
+      context,
+      bossName: boss['nom'] as String,
+    );
   }
 
   @override
@@ -367,6 +382,11 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.movie_creation_outlined, color: RomanColors.imperialGold),
+                tooltip: 'Cinématique du Boss',
+                onPressed: _showBossEntranceCinematic,
               ),
               IconButton(
                 icon: const Icon(Icons.info_outline),
@@ -826,6 +846,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       _currentBossIndex++;
                       _initBoss();
                     });
+                    _showBossEntranceCinematic();
                   },
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text('Boss Suivant'),

@@ -4,6 +4,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -875,6 +876,63 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+
+              // Boutons Cinématiques Antiques
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: RomanColors.imperialPurple,
+                          side: const BorderSide(color: RomanColors.imperialPurple, width: 1.2),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        icon: const Icon(Icons.movie_creation_outlined, size: 16),
+                        label: const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'TRIOMPHE (ARC)',
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                          ),
+                        ),
+                        onPressed: () {
+                          RomanCinematicOverlay.showTriumph(
+                            context,
+                            rankTitle: currentRank.titre,
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color(0xFF8A5B00),
+                          side: const BorderSide(color: RomanColors.imperialGold, width: 1.2),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        icon: const Icon(Icons.play_circle_outline, size: 16, color: RomanColors.imperialGold),
+                        label: const FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'INTRO (AIGLE)',
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                          ),
+                        ),
+                        onPressed: () {
+                          RomanCinematicOverlay.showIntro(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 8),
 
               // Liste des 7 échelons
               Expanded(
