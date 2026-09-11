@@ -58,7 +58,7 @@ class RomanDiplomaDialog extends StatelessWidget {
     }
 
     final yearRoman = toRoman(aucYear);
-    return 'Die \ mensis \ • Anno \ Urbis Conditae';
+    return 'Die ${now.day} mensis $monthName • Anno $yearRoman Urbis Conditae';
   }
 
   @override
@@ -228,10 +228,10 @@ class RomanDiplomaDialog extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildStatItem('📖 Leçons', ''),
-                          _buildStatItem('🏛️ Forum', ''),
-                          _buildStatItem('🪙 Trésor', '\ HS'),
-                          _buildStatItem('🔥 Ferveur', '\ j'),
+                          _buildStatItem('📖 Leçons', '${profile.completedLessons.length}'),
+                          _buildStatItem('🏛️ Forum', '${profile.restoredMonuments.length}'),
+                          _buildStatItem('🪙 Trésor', '${profile.sesterces} HS'),
+                          _buildStatItem('🔥 Ferveur', '${profile.streakDays} j'),
                         ],
                       ),
                     ),
@@ -313,13 +313,11 @@ class RomanDiplomaDialog extends StatelessWidget {
                             label: const Text('Copier l\'Eloge', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () {
                               final eloge = '🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\n'
-                                  'Proclamé pour : \
-'
-                                  'Rang du Cursus Honorum : \
-'
-                                  'Accomplissements : \ leçons maîtrisées, '
-                                  '\ monuments restaurés au Forum.\n'
-                                  '';
+                                  'Proclamé pour : ${profile.nomHeros}\n'
+                                  'Rang du Cursus Honorum : ${rank.titre}\n'
+                                  'Accomplissements : ${profile.completedLessons.length} leçons maîtrisées, '
+                                  '${profile.restoredMonuments.length} monuments restaurés au Forum.\n'
+                                  '$dateRomaine';
                               Clipboard.setData(ClipboardData(text: eloge));
                               HapticFeedback.lightImpact();
                               ScaffoldMessenger.of(context).showSnackBar(
