@@ -26,10 +26,13 @@ class RomanColors {
   static const Color terracotta = Color(0xFFB84A39);
   static const Color marbleBorder = Color(0xFFE5DCCF);
 
-  // Mode sombre impérial
-  static const Color darkBackground = Color(0xFF161214);
-  static const Color darkSurface = Color(0xFF221C20);
-  static const Color darkCard = Color(0xFF2C242A);
+  // Mode sombre impérial « Noctis Romana »
+  static const Color darkBackground = Color(0xFF110E12); // Marbre noir de Numidie
+  static const Color darkSurface = Color(0xFF1A141D);    // Basalte lissé
+  static const Color darkCard = Color(0xFF241C27);       // Velours impérial de nuit
+  static const Color darkBorder = Color(0xFF3D2F40);     // Veines de marbre nocturne
+  static const Color lunarGold = Color(0xFFE5C158);      // Or lunaire
+  static const Color emberOrange = Color(0xFFFF5722);    // Braises du foyer de Vesta
 }
 
 /// Couleurs officielles des cas de déclinaisons latines (Anatomia Sententiae)
@@ -93,19 +96,21 @@ class RomanTheme {
       scaffoldBackgroundColor: RomanColors.darkBackground,
       primaryColor: RomanColors.imperialGold,
       cardColor: RomanColors.darkCard,
+      dividerColor: RomanColors.darkBorder,
       colorScheme: const ColorScheme.dark(
         primary: RomanColors.imperialGold,
-        secondary: RomanColors.terracotta,
+        secondary: RomanColors.lunarGold,
         surface: RomanColors.darkSurface,
         background: RomanColors.darkBackground,
         onPrimary: Color(0xFF1A1409),
         onSecondary: Colors.white,
-        onSurface: Colors.white70,
+        onSurface: Color(0xFFF5EFEB),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: RomanColors.darkBackground,
         foregroundColor: RomanColors.imperialGold,
         elevation: 0,
+        scrolledUnderElevation: 1.5,
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: RomanColors.imperialGold,
@@ -113,6 +118,16 @@ class RomanTheme {
           fontWeight: FontWeight.bold,
           letterSpacing: 1.2,
           fontFamily: 'serif',
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: RomanColors.imperialGold,
+          foregroundColor: const Color(0xFF1A1409),
+          elevation: 3,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );

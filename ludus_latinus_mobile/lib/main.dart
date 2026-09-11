@@ -50,13 +50,16 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ludus Latinus',
-      debugShowCheckedModeBanner: false,
-      theme: RomanTheme.lightTheme,
-      darkTheme: RomanTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      home: FutureBuilder<void>(
+    return ListenableBuilder(
+      listenable: widget.repository,
+      builder: (context, _) {
+        return MaterialApp(
+          title: 'Ludus Latinus',
+          debugShowCheckedModeBanner: false,
+          theme: RomanTheme.lightTheme,
+          darkTheme: RomanTheme.darkTheme,
+          themeMode: widget.repository.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          home: FutureBuilder<void>(
         future: _initFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -184,6 +187,8 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
           return HomeScreen(repo: widget.repository);
         },
       ),
+    );
+      },
     );
   }
 }

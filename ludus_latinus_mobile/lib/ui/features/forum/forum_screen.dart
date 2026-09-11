@@ -4,6 +4,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/latin_epigraph_modal.dart';
 import '../../core/roman_ornaments.dart';
+import '../../core/roman_audio_modal.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/models/latin_epigraph.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -28,6 +29,11 @@ class ForumScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('FORUM IMPERIALE'),
             actions: [
+              IconButton(
+                icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
+                tooltip: 'Harmonia Antiqua (Audio)',
+                onPressed: () => RomanAudioModal.show(context),
+              ),
               Container(
                 margin: const EdgeInsets.only(right: 14),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -116,6 +122,84 @@ class ForumScreen extends StatelessWidget {
                         color: Color(0xFFEDE0D4),
                         fontSize: 12.5,
                         height: 1.4,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 12),
+              const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
+              const SizedBox(height: 8),
+
+              // 1.5 Atelier d'Épigraphie Lapidaire (Piste A)
+              RomanParchmentCard(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Row(
+                          children: [
+                            Text('🏛️ ', style: TextStyle(fontSize: 20)),
+                            Text(
+                              'Atelier d\'Épigraphie Lapidaire',
+                              style: TextStyle(
+                                fontFamily: 'serif',
+                                fontSize: 14.5,
+                                fontWeight: FontWeight.bold,
+                                color: RomanColors.imperialPurple,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: RomanColors.laurelLight,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: RomanColors.laurelGreen),
+                          ),
+                          child: Text(
+                            '${profile.decodedEpigraphs.length} / ${LatinEpigraph.catalogue.length} Déchiffrées',
+                            style: const TextStyle(
+                              color: RomanColors.laurelGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 11,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Restaure les stèles de travertin et de marbre de Rome. Déchiffre les abréviations impériales au marteau lapidaire pour obtenir la sagesse antique et des sesterces !',
+                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
+                    ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: RomanColors.imperialPurple,
+                          foregroundColor: RomanColors.goldLight,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        ),
+                        icon: const Icon(Icons.history_edu_rounded, color: RomanColors.imperialGold, size: 18),
+                        label: const Text(
+                          'OUVRIR LA RESTAURATION DES 6 STÈLES ANTIQUES',
+                          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                        ),
+                        onPressed: () {
+                          final nextToDecode = LatinEpigraph.catalogue.values.firstWhere(
+                            (e) => !repo.isEpigraphDecoded(e.monumentId),
+                            orElse: () => LatinEpigraph.catalogue.values.first,
+                          );
+                          LatinEpigraphModal.show(context, epigraph: nextToDecode, repo: repo);
+                        },
                       ),
                     ),
                   ],
@@ -383,7 +467,7 @@ class ForumScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 ),
-                icon: const Icon(Icons.handyman_outlined, size: 18),
+                icon: const Icon(Icons.architecture_rounded, size: 18),
                 label: Text(
                   canAfford ? 'Reconstruire ce monument' : 'Fonds insuffisants',
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),

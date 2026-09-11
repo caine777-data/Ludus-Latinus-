@@ -499,7 +499,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.volume_up_outlined, size: 15, color: RomanColors.imperialPurple),
+                Icon(Icons.volume_up_rounded, size: 15, color: RomanColors.imperialPurple),
                 SizedBox(width: 4),
                 Text(
                   'Prononciation & API',
@@ -594,7 +594,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.volume_up_outlined, size: 14, color: RomanColors.imperialPurple),
+                        Icon(Icons.volume_up_rounded, size: 14, color: RomanColors.imperialPurple),
                         SizedBox(width: 4),
                         Text(
                           'Écouter la phrase',

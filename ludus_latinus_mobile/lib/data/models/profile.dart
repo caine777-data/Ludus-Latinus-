@@ -15,6 +15,7 @@ class UserProfile {
   String? lastSyncDate;
   String? lastDailyQuestDate;
   List<String> decodedEpigraphs;
+  bool isDarkMode;
 
   UserProfile({
     this.id = 'defaut',
@@ -30,6 +31,7 @@ class UserProfile {
     this.lastSyncDate,
     this.lastDailyQuestDate,
     List<String>? decodedEpigraphs,
+    this.isDarkMode = false,
   })  : completedLessons = completedLessons ?? [],
         restoredMonuments = restoredMonuments ?? [],
         srsScores = srsScores ?? {},
@@ -71,6 +73,7 @@ class UserProfile {
       lastSyncDate: rawCompte['derniere_sync'] as String?,
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
+      isDarkMode: json['dark_mode'] as bool? ?? false,
     );
   }
 
@@ -85,6 +88,7 @@ class UserProfile {
       'forum_monuments': restoredMonuments,
       'last_daily_quest_date': lastDailyQuestDate,
       'decoded_epigraphs': decodedEpigraphs,
+      'dark_mode': isDarkMode,
       'compte': {
         'email': email,
         'tessera': tesseraCode,

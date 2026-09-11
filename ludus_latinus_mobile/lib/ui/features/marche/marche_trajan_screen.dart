@@ -517,8 +517,8 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                 onPressed: () => RomanAudioModal.show(context),
               ),
               IconButton(
-                icon: const Icon(Icons.help_outline),
-                tooltip: 'Aide & Lexique',
+                icon: const Icon(Icons.auto_stories_rounded, color: RomanColors.imperialGold),
+                tooltip: 'Aide & Lexique Romain',
                 onPressed: _ouvrirLexique,
               ),
             ],

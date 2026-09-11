@@ -318,8 +318,8 @@ $texteChiffre
                 onPressed: () => RomanAudioModal.show(context),
               ),
               IconButton(
-                icon: const Icon(Icons.swap_horiz),
-                tooltip: 'Changer de mode',
+                icon: const Icon(Icons.lock_reset_rounded),
+                tooltip: 'Changer de mode cryptographique',
                 onPressed: () {
                   HapticFeedback.selectionClick();
                   AudioService().playCardFlip();

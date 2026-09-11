@@ -129,6 +129,7 @@ jobs:
           flutter config --enable-windows-desktop
           flutter create . --platforms=windows --org com.luduslatinus
           git checkout test/ || true
+          git checkout windows/runner/resources/app_icon.ico || true
           flutter pub get
 
       - name: Analyse statique Dart (Windows)

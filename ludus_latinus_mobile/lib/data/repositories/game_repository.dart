@@ -98,4 +98,12 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
     notifyListeners();
   }
+
+  bool get isDarkMode => profile.isDarkMode;
+
+  void toggleThemeMode() {
+    profile.isDarkMode = !profile.isDarkMode;
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
 }

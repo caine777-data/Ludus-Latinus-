@@ -391,8 +391,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.movie_creation_outlined, color: RomanColors.imperialGold),
-                tooltip: 'Cinématique du Boss',
+                icon: const Icon(Icons.shield_rounded, color: RomanColors.imperialGold),
+                tooltip: 'Entrée Solennelle du Boss',
                 onPressed: _showBossEntranceCinematic,
               ),
               IconButton(

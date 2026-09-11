@@ -233,7 +233,7 @@ class _LessonScreenState extends State<LessonScreen> {
         title: Text(lesson.title),
         actions: [
           IconButton(
-            icon: const Icon(Icons.volume_up_outlined, color: RomanColors.imperialPurple),
+            icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
             tooltip: 'Prononciation Latine',
             onPressed: () {
               HapticFeedback.lightImpact();
@@ -341,9 +341,9 @@ class _LessonScreenState extends State<LessonScreen> {
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         ),
-                        icon: const Icon(Icons.biotech_outlined, size: 16),
+                        icon: const Icon(Icons.history_edu_rounded, size: 16),
                         label: const Text(
-                          '🔬 Anatomia • Décrypteur',
+                          '📜 Anatomia • Décrypteur',
                           style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () => _showDecrypterSheet(context),
@@ -650,7 +650,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               const Spacer(),
               IconButton(
-                icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
+                icon: const Icon(Icons.volume_up_rounded, size: 20, color: RomanColors.imperialPurple),
                 tooltip: 'Prononciation latine certifiée',
                 onPressed: () => LatinPronunciationModal.show(context, word),
               ),
@@ -839,7 +839,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   final phrase = widget.lesson.latin ?? widget.lesson.title;
                   LatinPronunciationModal.show(context, phrase);
                 },
-                icon: const Icon(Icons.volume_up_outlined, size: 16),
+                icon: const Icon(Icons.volume_up_rounded, size: 16),
                 label: const Text('Écouter'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: RomanColors.imperialPurple,

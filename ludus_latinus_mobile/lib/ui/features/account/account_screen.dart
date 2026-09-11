@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
+import '../../core/roman_ornaments.dart';
+import '../../core/roman_audio_modal.dart';
+import '../../core/roman_diploma_dialog.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -93,7 +96,19 @@ class _AccountScreenState extends State<AccountScreen> {
             title: const Text('TABULARIUM'),
             actions: [
               IconButton(
-                icon: const Icon(Icons.volume_up_outlined, color: RomanColors.imperialPurple),
+                icon: Icon(
+                  widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+                  color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
+                ),
+                tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
+                onPressed: () {
+                  HapticFeedback.lightImpact();
+                  AudioService().playCardFlip();
+                  widget.repo.toggleThemeMode();
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
                 tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
                 onPressed: () => RomanAudioModal.show(context),
               ),
@@ -176,6 +191,32 @@ class _AccountScreenState extends State<AccountScreen> {
                         _buildStatCol('Série', '${profile.streakDays} j', '🔥'),
                         _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️'),
                       ],
+                    ),
+                    const SizedBox(height: 14),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: RomanColors.imperialPurple,
+                          foregroundColor: RomanColors.goldLight,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: const BorderSide(color: RomanColors.imperialGold, width: 1.2),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 11),
+                        ),
+                        icon: const Icon(Icons.workspace_premium_rounded, color: RomanColors.imperialGold, size: 20),
+                        label: const Text(
+                          'DIPLÔME DU SÉNAT • TESTIMONIVM (SPQR)',
+                          style: TextStyle(
+                            fontFamily: 'serif',
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                        onPressed: () => RomanDiplomaDialog.show(context, profile: profile),
+                      ),
                     ),
                   ],
                 ),

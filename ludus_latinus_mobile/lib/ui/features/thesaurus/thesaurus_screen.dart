@@ -246,7 +246,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                               ),
                               const Spacer(),
                               IconButton(
-                                icon: const Icon(Icons.volume_up_outlined, size: 20, color: RomanColors.imperialPurple),
+                                icon: const Icon(Icons.volume_up_rounded, size: 20, color: RomanColors.imperialPurple),
                                 tooltip: 'Prononciation latine certifiée',
                                 onPressed: () {
                                   AudioService().playWheelClick();
@@ -314,7 +314,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                         child: const Padding(
                                           padding: EdgeInsets.all(2),
                                           child: Icon(
-                                            Icons.volume_up_outlined,
+                                            Icons.volume_up_rounded,
                                             size: 16,
                                             color: RomanColors.imperialPurple,
                                           ),

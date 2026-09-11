@@ -50,8 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              AudioService().isMuted ? Icons.volume_off_outlined : Icons.volume_up_outlined,
-              color: RomanColors.imperialPurple,
+              widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
+              color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
+              size: 22,
+            ),
+            tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              AudioService().playCardFlip();
+              widget.repo.toggleThemeMode();
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              AudioService().isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
+              color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
               size: 24,
             ),
             tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
@@ -871,7 +884,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        icon: const Icon(Icons.movie_creation_outlined, size: 16),
+                        icon: const Icon(Icons.play_circle_fill_rounded, size: 16),
                         label: const FittedBox(
                           fit: BoxFit.scaleDown,
                           child: Text(
