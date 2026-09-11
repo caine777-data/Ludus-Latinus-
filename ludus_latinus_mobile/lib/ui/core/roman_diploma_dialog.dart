@@ -14,7 +14,7 @@ class RomanDiplomaDialog extends StatelessWidget {
 
   /// Ouvre le diplome avec fanfare imperiale
   static void show(BuildContext context, {required UserProfile profile}) {
-    AudioService().playTriumphFanfare();
+    AudioService().playTriumph();
     showDialog(
       context: context,
       builder: (_) => RomanDiplomaDialog(profile: profile),
@@ -26,7 +26,7 @@ class RomanDiplomaDialog extends StatelessWidget {
     final now = DateTime.now();
     // 753 av. J.-C. : Fondation de Rome (AUC)
     final aucYear = now.year + 753;
-    final romanMonths = [
+    const romanMonths = [
       'Ianuariis',
       'Februariis',
       'Martiis',
@@ -44,8 +44,8 @@ class RomanDiplomaDialog extends StatelessWidget {
 
     // Chiffres romains pour l annee AUC
     String toRoman(int number) {
-      final values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-      final symbols = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+      const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+      const symbols = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
       var result = '';
       var rem = number;
       for (var i = 0; i < values.length; i++) {
@@ -58,7 +58,7 @@ class RomanDiplomaDialog extends StatelessWidget {
     }
 
     final yearRoman = toRoman(aucYear);
-    return 'Die  mensis  • Anno  Urbis Conditae';
+    return 'Die \ mensis \ • Anno \ Urbis Conditae';
   }
 
   @override
@@ -87,7 +87,7 @@ class RomanDiplomaDialog extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // Frise decorative en filigrane d angle
+              // Frise decorative d angle
               Positioned(
                 top: 0,
                 left: 0,
@@ -152,8 +152,8 @@ class RomanDiplomaDialog extends StatelessWidget {
 
                     const SizedBox(height: 6),
                     Text(
-                      'Par la volonté souveraine du Sénat et du Peuple de Rome,
-il est solennellement attesté et proclamé que :',
+                      'Par la volonte souveraine du Senat et du Peuple de Rome, '
+                      'il est solennellement atteste et proclame que :',
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 11.5,
@@ -192,7 +192,7 @@ il est solennellement attesté et proclamé que :',
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(rank.icone, style: const TextStyle(fontSize: 26)),
+                        Text(rank.badge, style: const TextStyle(fontSize: 26)),
                         const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,8 +230,8 @@ il est solennellement attesté et proclamé que :',
                         children: [
                           _buildStatItem('📖 Leçons', ''),
                           _buildStatItem('🏛️ Forum', ''),
-                          _buildStatItem('🪙 Trésor', ' HS'),
-                          _buildStatItem('🔥 Ferveur', ' j'),
+                          _buildStatItem('🪙 Trésor', '\ HS'),
+                          _buildStatItem('🔥 Ferveur', '\ j'),
                         ],
                       ),
                     ),
@@ -310,13 +310,15 @@ il est solennellement attesté et proclamé que :',
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
                             icon: const Icon(Icons.copy_rounded, size: 16),
-                            label: const Text('Copier l\'Éloge', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            label: const Text('Copier l\'Eloge', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () {
                               final eloge = '🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\n'
-                                  'Proclamé pour : \n'
-                                  'Rang du Cursus Honorum : \n'
-                                  'Accomplissements :  leçons maîtrisées, '
-                                  ' monuments restaurés au Forum.\n'
+                                  'Proclamé pour : \
+'
+                                  'Rang du Cursus Honorum : \
+'
+                                  'Accomplissements : \ leçons maîtrisées, '
+                                  '\ monuments restaurés au Forum.\n'
                                   '';
                               Clipboard.setData(ClipboardData(text: eloge));
                               HapticFeedback.lightImpact();
