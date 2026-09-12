@@ -7,6 +7,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/roman_ornaments.dart';
+import '../../core/game_juice.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
 /// Permet au joueur de dépenser ses sesterces pour acheter et équiper des goodies.
