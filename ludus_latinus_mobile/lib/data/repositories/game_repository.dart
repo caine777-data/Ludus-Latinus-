@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../models/goodie_item.dart';
 import '../models/monument.dart';
 import '../models/profile.dart';
 import '../models/srs_card.dart';
@@ -103,6 +104,43 @@ class GameRepository extends ChangeNotifier {
 
   void toggleThemeMode() {
     profile.isDarkMode = !profile.isDarkMode;
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  // --- BOUTIQUE ET GOODIES ROMAINS ---
+
+  String getEquippedGoodie(GoodieCategory cat) {
+    return profile.getEquippedGoodie(cat.name);
+  }
+
+  bool isGoodieOwned(String goodieId) {
+    return profile.isGoodieOwned(goodieId);
+  }
+
+  bool isGoodieEquipped(GoodieCategory cat, String goodieId) {
+    return profile.isGoodieEquipped(cat.name, goodieId);
+  }
+
+  bool buyGoodie(GoodieItem item) {
+    if (profile.sesterces < item.prix) return false;
+    if (profile.isGoodieOwned(item.id)) return false;
+
+    profile.sesterces -= item.prix;
+    profile.ownedGoodies.add(item.id);
+    // Équipe automatiquement le nouvel objet acheté
+    profile.equippedGoodies[item.categorie.name] = item.id;
+
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return true;
+  }
+
+  void equipGoodie(GoodieCategory cat, String goodieId) {
+    if (!profile.isGoodieOwned(goodieId) && goodieId != 'aucune' && goodieId != 'aucun') {
+      return;
+    }
+    profile.equippedGoodies[cat.name] = goodieId;
     storageService.saveProfile(profile);
     notifyListeners();
   }

@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/roman_ornaments.dart';
 import '../../core/roman_audio_modal.dart';
 import '../../core/roman_diploma_dialog.dart';
+import '../boutique/boutique_modal.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -106,6 +107,11 @@ class _AccountScreenState extends State<AccountScreen> {
                   AudioService().playCardFlip();
                   widget.repo.toggleThemeMode();
                 },
+              ),
+              IconButton(
+                icon: const Icon(Icons.shopping_bag_outlined, color: RomanColors.imperialPurple, size: 24),
+                tooltip: 'Taberna Romana (Boutique de Goodies)',
+                onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
               ),
               IconButton(
                 icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
@@ -217,6 +223,77 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                         onPressed: () => RomanDiplomaDialog.show(context, profile: profile),
                       ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // 1.5 Taberna & Penderie Impériale (Boutique de Goodies)
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                  boxShadow: const [
+                    BoxShadow(color: Color(0x0C000000), blurRadius: 8, offset: Offset(0, 2)),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: RomanColors.goldLight,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: RomanColors.imperialGold, width: 1),
+                      ),
+                      child: const Center(
+                        child: Text('🏛️', style: TextStyle(fontSize: 22)),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Taberna & Penderie Impériale',
+                            style: TextStyle(
+                              fontFamily: RomanFonts.imperial,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: RomanColors.imperialPurple,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          const Text(
+                            'Dépense tes sesterces • Toges, couronnes, armes & animaux',
+                            style: TextStyle(fontSize: 11, color: Colors.black54),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: RomanColors.imperialPurple,
+                        foregroundColor: RomanColors.goldLight,
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                        ),
+                      ),
+                      icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
+                      label: const Text(
+                        'Ouvrir',
+                        style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
                     ),
                   ],
                 ),

@@ -20,6 +20,8 @@ import '../pantheon/pantheon_screen.dart';
 import '../circus/circus_screen.dart';
 import '../duel/duel_screen.dart';
 import '../lesson/lesson_screen.dart';
+import '../boutique/boutique_modal.dart';
+import '../../../data/models/goodie_item.dart';
 import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
@@ -119,10 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 64,
                         fallbackEmoji: profile.genre == 'fille' ? '👸' : '🤴',
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
-                          );
+                          BoutiqueModal.show(context, repo: widget.repo);
                         },
                       ),
                       const SizedBox(width: 14),
@@ -180,25 +179,73 @@ class _HomeScreenState extends State<HomeScreen> {
                               '${profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (sum, w) => sum + w.lessons.length)} leçons conquises',
                               style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                             ),
+                            const SizedBox(height: 5),
+                            Wrap(
+                              spacing: 4,
+                              runSpacing: 3,
+                              children: [
+                                _buildEquippedMiniChip(context, GoodieCategory.toge),
+                                _buildEquippedMiniChip(context, GoodieCategory.couronne),
+                                _buildEquippedMiniChip(context, GoodieCategory.accessoire),
+                                if (widget.repo.getEquippedGoodie(GoodieCategory.compagnon) != 'aucun')
+                                  _buildEquippedMiniChip(context, GoodieCategory.compagnon),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(
-                              color: RomanColors.goldLight,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: RomanColors.imperialGold),
-                            ),
-                            child: RollingSestercesCounter(
-                              value: profile.sesterces,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF7A5901),
+                          InkWell(
+                            onTap: () => BoutiqueModal.show(context, repo: widget.repo),
+                            borderRadius: BorderRadius.circular(12),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: RomanColors.goldLight,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                                boxShadow: const [
+                                  BoxShadow(color: Color(0x14000000), blurRadius: 4, offset: Offset(0, 1)),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  RollingSestercesCounter(
+                                    value: profile.sesterces,
+                                    style: const TextStyle(
+                                      fontSize: 12.5,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF7A5901),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: RomanColors.imperialPurple,
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.shopping_bag_outlined, size: 10, color: RomanColors.goldLight),
+                                        SizedBox(width: 2),
+                                        Text(
+                                          'Boutique',
+                                          style: TextStyle(
+                                            fontSize: 9,
+                                            fontWeight: FontWeight.bold,
+                                            color: RomanColors.goldLight,
+                                            letterSpacing: 0.3,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -1750,6 +1797,47 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildEquippedMiniChip(BuildContext context, GoodieCategory cat) {
+    final goodieId = widget.repo.getEquippedGoodie(cat);
+    final item = kCatalogueBoutique.firstWhere(
+      (it) => it.id == goodieId,
+      orElse: () => kCatalogueBoutique.firstWhere((it) => it.categorie == cat),
+    );
+
+    final isNone = item.id == 'aucune' || item.id == 'aucun';
+
+    return InkWell(
+      onTap: () => BoutiqueModal.show(context, repo: widget.repo, initialCategory: cat),
+      borderRadius: BorderRadius.circular(6),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+        decoration: BoxDecoration(
+          color: isNone ? const Color(0xFFF3EFE7) : RomanColors.goldLight,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(
+            color: isNone ? RomanColors.marbleBorder : RomanColors.imperialGold,
+            width: isNone ? 0.8 : 1.0,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.icone, style: const TextStyle(fontSize: 10)),
+            const SizedBox(width: 3),
+            Text(
+              item.nom,
+              style: TextStyle(
+                fontSize: 9.5,
+                fontWeight: isNone ? FontWeight.normal : FontWeight.bold,
+                color: isNone ? Colors.black45 : const Color(0xFF5A3E00),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

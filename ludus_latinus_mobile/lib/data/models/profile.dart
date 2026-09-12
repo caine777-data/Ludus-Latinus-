@@ -16,6 +16,8 @@ class UserProfile {
   String? lastDailyQuestDate;
   List<String> decodedEpigraphs;
   bool isDarkMode;
+  Map<String, String> equippedGoodies;
+  List<String> ownedGoodies;
 
   UserProfile({
     this.id = 'defaut',
@@ -32,12 +34,45 @@ class UserProfile {
     this.lastDailyQuestDate,
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
+    Map<String, String>? equippedGoodies,
+    List<String>? ownedGoodies,
   })  : completedLessons = completedLessons ?? [],
         restoredMonuments = restoredMonuments ?? [],
         srsScores = srsScores ?? {},
-        decodedEpigraphs = decodedEpigraphs ?? [];
+        decodedEpigraphs = decodedEpigraphs ?? [],
+        equippedGoodies = equippedGoodies ?? {
+          'toge': 'lin_blanc',
+          'couronne': 'aucune',
+          'accessoire': 'stylet',
+          'compagnon': 'aucun',
+        },
+        ownedGoodies = ownedGoodies ?? [
+          'lin_blanc',
+          'aucune',
+          'stylet',
+          'aucun',
+        ];
 
   bool get isRegistered => email.isNotEmpty;
+
+  String getEquippedGoodie(String categoryKey) {
+    return equippedGoodies[categoryKey] ??
+        (categoryKey == 'toge'
+            ? 'lin_blanc'
+            : categoryKey == 'couronne'
+                ? 'aucune'
+                : categoryKey == 'accessoire'
+                    ? 'stylet'
+                    : 'aucun');
+  }
+
+  bool isGoodieOwned(String goodieId) {
+    return ownedGoodies.contains(goodieId);
+  }
+
+  bool isGoodieEquipped(String categoryKey, String goodieId) {
+    return getEquippedGoodie(categoryKey) == goodieId;
+  }
 
   bool get isDailyQuestCompletedToday {
     if (lastDailyQuestDate == null) return false;
@@ -59,6 +94,19 @@ class UserProfile {
     var rawCompleted = json['completed'] as List<dynamic>? ?? [];
     var rawMonuments = json['forum_monuments'] as List<dynamic>? ?? [];
     var rawEpigraphs = json['decoded_epigraphs'] as List<dynamic>? ?? [];
+    var rawEquipped = json['equipped_goodies'] as Map<String, dynamic>? ?? {};
+    var rawOwned = json['owned_goodies'] as List<dynamic>? ?? [];
+
+    Map<String, String> parsedEquipped = {
+      'toge': rawEquipped['toge']?.toString() ?? 'lin_blanc',
+      'couronne': rawEquipped['couronne']?.toString() ?? 'aucune',
+      'accessoire': rawEquipped['accessoire']?.toString() ?? 'stylet',
+      'compagnon': rawEquipped['compagnon']?.toString() ?? 'aucun',
+    };
+
+    List<String> parsedOwned = rawOwned.isNotEmpty
+        ? rawOwned.map((e) => e.toString()).toList()
+        : ['lin_blanc', 'aucune', 'stylet', 'aucun'];
 
     return UserProfile(
       id: json['id'] as String? ?? 'defaut',
@@ -74,6 +122,8 @@ class UserProfile {
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
+      equippedGoodies: parsedEquipped,
+      ownedGoodies: parsedOwned,
     );
   }
 
@@ -89,6 +139,8 @@ class UserProfile {
       'last_daily_quest_date': lastDailyQuestDate,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
+      'equipped_goodies': equippedGoodies,
+      'owned_goodies': ownedGoodies,
       'compte': {
         'email': email,
         'tessera': tesseraCode,
