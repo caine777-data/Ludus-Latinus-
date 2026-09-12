@@ -652,108 +652,113 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18),
-        child: Stack(
-          children: [
-            // Fond animé du sable et des gradins
-            CustomPaint(
-              size: Size.infinite,
-              painter: _CircusTrackPainter(
-                playerProgress: _playerProgress / 100.0,
-                rivalProgress: _rivalProgress / 100.0,
-                isTurbo: _turboRemainingFrames > 0,
-              ),
-            ),
-
-            // Ligne de départ / arrivée dorée
-            Positioned(
-              left: 40,
-              top: 0,
-              bottom: 0,
-              child: Center(
-                child: Container(
-                  width: 3,
-                  color: Colors.white.withOpacity(0.6),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                // Fond animé du sable et des gradins
+                CustomPaint(
+                  size: Size(constraints.maxWidth, constraints.maxHeight),
+                  painter: _CircusTrackPainter(
+                    playerProgress: _playerProgress / 100.0,
+                    rivalProgress: _rivalProgress / 100.0,
+                    isTurbo: _turboRemainingFrames > 0,
+                  ),
                 ),
-              ),
-            ),
 
-            // Spina centrale ornée d'obélisques et statues
-            Center(
-              child: Container(
-                width: 140,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF0E6D2),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.imperialGold, width: 2),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x33000000),
-                      offset: Offset(0, 3),
-                      blurRadius: 6,
+                // Ligne de départ / arrivée dorée
+                Positioned(
+                  left: 40,
+                  top: 0,
+                  bottom: 0,
+                  child: Center(
+                    child: Container(
+                      width: 3,
+                      color: Colors.white.withOpacity(0.6),
                     ),
-                  ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    Text('🏛️', style: TextStyle(fontSize: 14)),
-                    Text('SPINA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.2, color: Color(0xFF7A5901))),
-                    Text('🏺', style: TextStyle(fontSize: 14)),
-                  ],
+
+                // Spina centrale ornée d'obélisques et statues
+                Center(
+                  child: Container(
+                    width: 140,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF0E6D2),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: RomanColors.imperialGold, width: 2),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x33000000),
+                          offset: Offset(0, 3),
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: const [
+                        Text('🏛️', style: TextStyle(fontSize: 14)),
+                        Text('SPINA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.2, color: Color(0xFF7A5901))),
+                        Text('🏺', style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
 
-            // Char Bleu (Joueur - Veneti)
-            _buildChariotWidget(
-              progress: _playerProgress / 100.0,
-              laneY: 0.28,
-              isPlayer: true,
-              isTurbo: _turboRemainingFrames > 0,
-            ),
+                // Char Bleu (Joueur - Veneti)
+                _buildChariotWidget(
+                  constraints: constraints,
+                  progress: _playerProgress / 100.0,
+                  laneY: 0.28,
+                  isPlayer: true,
+                  isTurbo: _turboRemainingFrames > 0,
+                ),
 
-            // Char Rouge (Rival - Russati)
-            _buildChariotWidget(
-              progress: _rivalProgress / 100.0,
-              laneY: 0.72,
-              isPlayer: false,
-              isTurbo: false,
-            ),
-          ],
+                // Char Rouge (Rival - Russati)
+                _buildChariotWidget(
+                  constraints: constraints,
+                  progress: _rivalProgress / 100.0,
+                  laneY: 0.72,
+                  isPlayer: false,
+                  isTurbo: false,
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 
   Widget _buildChariotWidget({
+    required BoxConstraints constraints,
     required double progress,
     required double laneY,
     required bool isPlayer,
     required bool isTurbo,
   }) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        // Largeur du quadrige et de la piste
-        const chariotWidth = 92.0;
-        const chariotHeight = 46.0;
-        final trackWidth = math.max(100.0, constraints.maxWidth - (chariotWidth + 24.0));
-        final x = 10.0 + (progress.clamp(0.0, 1.0) * trackWidth);
-        final y = (constraints.maxHeight * laneY) - (chariotHeight * 0.65);
+    // Largeur du quadrige et de la piste
+    const chariotWidth = 92.0;
+    const chariotHeight = 46.0;
+    final trackWidth = math.max(100.0, constraints.maxWidth - (chariotWidth + 24.0));
+    final x = 10.0 + (progress.clamp(0.0, 1.0) * trackWidth);
+    final y = (constraints.maxHeight * laneY) - (chariotHeight * 0.65);
 
-        final faction = isPlayer ? _selectedFaction : _rivalFaction;
-        final assetPath = _getChariotAsset(faction);
+    final faction = isPlayer ? _selectedFaction : _rivalFaction;
+    final assetPath = _getChariotAsset(faction);
 
-        // Galop physique avec rebond vertical et léger tangage
-        final gallopSpeed = isTurbo ? 9.5 : 4.5;
-        final gallopCycle = (_animController.value * gallopSpeed * 2 * math.pi);
-        final gallopOffsetY = math.sin(gallopCycle) * (isTurbo ? 2.8 : 1.6);
-        final gallopAngle = math.cos(gallopCycle) * (isTurbo ? 0.035 : 0.015);
+    // Galop physique avec rebond vertical et léger tangage
+    final gallopSpeed = isTurbo ? 9.5 : 4.5;
+    final gallopCycle = (_animController.value * gallopSpeed * 2 * math.pi);
+    final gallopOffsetY = math.sin(gallopCycle) * (isTurbo ? 2.8 : 1.6);
+    final gallopAngle = math.cos(gallopCycle) * (isTurbo ? 0.035 : 0.015);
 
-        return Positioned(
-          left: x,
-          top: y + gallopOffsetY,
-          child: Transform.rotate(
+    return Positioned(
+      left: x,
+      top: y + gallopOffsetY,
+      child: Transform.rotate(
             angle: gallopAngle,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -894,8 +899,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             ),
           ),
         );
-      },
-    );
   }
 
   Widget _buildTurboComboHeader() {
