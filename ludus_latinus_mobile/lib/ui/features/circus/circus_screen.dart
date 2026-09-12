@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
+import '../../core/game_juice.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -51,6 +52,23 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   // Faction impériale et bonus
   CircusFaction _selectedFaction = CircusFaction.veneti;
   bool _shieldAvailable = false;
+  final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
+
+  CircusFaction get _rivalFaction =>
+      _selectedFaction == CircusFaction.russati ? CircusFaction.veneti : CircusFaction.russati;
+
+  String _getChariotAsset(CircusFaction faction) {
+    switch (faction) {
+      case CircusFaction.veneti:
+        return 'assets/images/circus/chariot_bleu.png';
+      case CircusFaction.russati:
+        return 'assets/images/circus/chariot_rouge.png';
+      case CircusFaction.prasini:
+        return 'assets/images/circus/chariot_vert.png';
+      case CircusFaction.albati:
+        return 'assets/images/circus/chariot_blanc.png';
+    }
+  }
 
   // Événement d'incident de virage (Meta)
   bool _incidentActive = false;
@@ -306,6 +324,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       } else {
         AudioService().playError();
         HapticFeedback.vibrate();
+        _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
         setState(() {
           _playerProgress = math.max(0.0, _playerProgress - 6.0);
         });
@@ -350,6 +369,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       } else {
         HapticFeedback.vibrate();
         AudioService().playError();
+        _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
         _comboCount = 0;
         _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
       }
@@ -450,44 +470,47 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               ),
             ],
           ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: CircusVelariumHeader(
-                selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
-                onSelectFaction: (idx) {
-                  setState(() {
-                    _selectedFaction = CircusFaction.values[idx];
-                    _shieldAvailable = (_selectedFaction == CircusFaction.albati);
-                  });
-                  AudioService().playWheelClick();
-                },
+      body: RomanScreenShake(
+        key: _shakeKey,
+        child: SafeArea(
+          child: Column(
+            children: [
+              const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: CircusVelariumHeader(
+                  selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
+                  onSelectFaction: (idx) {
+                    setState(() {
+                      _selectedFaction = CircusFaction.values[idx];
+                      _shieldAvailable = (_selectedFaction == CircusFaction.albati);
+                    });
+                    AudioService().playWheelClick();
+                  },
+                ),
               ),
-            ),
-            // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
-            _buildDolphinLapCounter(),
+              // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
+              _buildDolphinLapCounter(),
 
-            // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                child: _buildRacetrackView(),
+              // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  child: _buildRacetrackView(),
+                ),
               ),
-            ),
 
-            // 3. Panneau Turbo & Combo
-            _buildTurboComboHeader(),
+              // 3. Panneau Turbo & Combo
+              _buildTurboComboHeader(),
 
-            // 4. Console Quiz Question & Choix de Vocabulaire
-            Expanded(
-              flex: 5,
-              child: _raceFinished ? _buildVictoryScreen() : _buildQuizPanel(),
-            ),
-          ],
+              // 4. Console Quiz Question & Choix de Vocabulaire
+              Expanded(
+                flex: 5,
+                child: _raceFinished ? _buildVictoryScreen() : _buildQuizPanel(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -711,54 +734,164 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   }) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final trackWidth = constraints.maxWidth - 70;
-        final x = 20 + (progress.clamp(0.0, 1.0) * trackWidth);
-        final y = constraints.maxHeight * laneY - 24;
+        // Largeur du quadrige et de la piste
+        const chariotWidth = 92.0;
+        const chariotHeight = 46.0;
+        final trackWidth = math.max(100.0, constraints.maxWidth - (chariotWidth + 24.0));
+        final x = 10.0 + (progress.clamp(0.0, 1.0) * trackWidth);
+        final y = (constraints.maxHeight * laneY) - (chariotHeight * 0.65);
+
+        final faction = isPlayer ? _selectedFaction : _rivalFaction;
+        final assetPath = _getChariotAsset(faction);
+
+        // Galop physique avec rebond vertical et léger tangage
+        final gallopSpeed = isTurbo ? 9.5 : 4.5;
+        final gallopCycle = (_animController.value * gallopSpeed * 2 * math.pi);
+        final gallopOffsetY = math.sin(gallopCycle) * (isTurbo ? 2.8 : 1.6);
+        final gallopAngle = math.cos(gallopCycle) * (isTurbo ? 0.035 : 0.015);
 
         return Positioned(
           left: x,
-          top: y,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (isTurbo)
-                    const Text('💨', style: TextStyle(fontSize: 16)),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: isPlayer ? _selectedFaction.couleur : Colors.red.shade700,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: isPlayer ? _selectedFaction.couleur.withOpacity(0.4) : Colors.red.withOpacity(0.4),
-                          blurRadius: 8,
-                          spreadRadius: 2,
+          top: y + gallopOffsetY,
+          child: Transform.rotate(
+            angle: gallopAngle,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Badge d'écurie romaine au-dessus du quadrige
+                Container(
+                  margin: const EdgeInsets.only(left: 4, bottom: 2),
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                  decoration: BoxDecoration(
+                    color: faction.couleur.withOpacity(0.92),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: isPlayer ? RomanColors.imperialGold : Colors.white70,
+                      width: 1,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x33000000),
+                        offset: Offset(0, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(faction.icon, style: const TextStyle(fontSize: 8.5)),
+                      const SizedBox(width: 3),
+                      Text(
+                        isPlayer ? 'SPQR • ${faction.nom.toUpperCase()}' : 'RIVAL • ${faction.nom.toUpperCase()}',
+                        style: const TextStyle(
+                          fontSize: 8,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      if (isPlayer && isTurbo) ...[
+                        const SizedBox(width: 3),
+                        const Text('🔥', style: TextStyle(fontSize: 8)),
+                      ],
+                    ],
+                  ),
+                ),
+
+                // Quadrige avec roues, aurige, chevaux, traînée de poussière & turbo
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    // Traînée de poussière et flammes à l'arrière des roues
+                    if (isTurbo)
+                      Container(
+                        margin: const EdgeInsets.only(right: 2, bottom: 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const [
+                            Text('💨', style: TextStyle(fontSize: 12)),
+                            Text('🔥', style: TextStyle(fontSize: 15)),
+                          ],
+                        ),
+                      )
+                    else
+                      Container(
+                        margin: const EdgeInsets.only(right: 2, bottom: 2),
+                        child: Text(
+                          '💨',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white.withOpacity(0.65),
+                          ),
+                        ),
+                      ),
+
+                    // Corps du char (Quadrige antique avec ombre portée et bouclier éventuel)
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        // Halo de turbo ou bouclier céleste Albati
+                        if (isTurbo)
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.orangeAccent.withOpacity(0.6),
+                                    blurRadius: 14,
+                                    spreadRadius: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        if (isPlayer && _shieldAvailable && _selectedFaction == CircusFaction.albati)
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.cyanAccent.withOpacity(0.85), width: 2),
+                                color: Colors.cyanAccent.withOpacity(0.18),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.cyanAccent.withOpacity(0.4),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                        // Image réelle du Quadrige Antique
+                        Image.asset(
+                          assetPath,
+                          width: chariotWidth,
+                          height: chariotHeight,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => Container(
+                            width: chariotWidth,
+                            height: chariotHeight,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: faction.couleur,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Center(
+                              child: Text('🐎 Quadrige', style: TextStyle(color: Colors.white, fontSize: 10)),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    child: Text(
-                      isPlayer ? '🏇' : '🏎️',
-                      style: const TextStyle(fontSize: 22),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 2),
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(6),
+                  ],
                 ),
-                child: Text(
-                  isPlayer ? _selectedFaction.nom : 'Maximus',
-                  style: const TextStyle(fontSize: 9, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

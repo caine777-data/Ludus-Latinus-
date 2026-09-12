@@ -151,6 +151,16 @@ class _MapScreenState extends State<MapScreen> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    _LessonLegendPill(icon: '📜', label: 'Quiz Grammaire'),
+                    _LessonLegendPill(icon: '🧩', label: 'Syntaxe'),
+                    _LessonLegendPill(icon: '✏️', label: 'Déclinaisons'),
+                    _LessonLegendPill(icon: '⚔️', label: 'Boss Arène'),
+                  ],
+                ),
               ],
             ),
           ),
@@ -453,37 +463,136 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           const SizedBox(height: 6),
-          // Titre de l''étape
+          // Carte descriptive et type de la leçon
           Container(
-            constraints: const BoxConstraints(maxWidth: 125),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            constraints: const BoxConstraints(maxWidth: 135),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.92),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: RomanColors.marbleBorder),
-              boxShadow: const [
+              color: isCurrentActive
+                  ? const Color(0xFFFFF9E6)
+                  : Colors.white.withOpacity(0.94),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: isCurrentActive
+                    ? RomanColors.imperialGold
+                    : isCompleted
+                        ? const Color(0xFFB4E3C4)
+                        : RomanColors.marbleBorder,
+                width: isCurrentActive ? 1.5 : 1.0,
+              ),
+              boxShadow: [
                 BoxShadow(
-                  color: Color(0x0A000000),
-                  offset: Offset(0, 2),
-                  blurRadius: 3,
+                  color: isCurrentActive ? const Color(0x22D4AF37) : const Color(0x0A000000),
+                  offset: const Offset(0, 2),
+                  blurRadius: isCurrentActive ? 6 : 3,
                 )
               ],
             ),
-            child: Text(
-              lesson.title,
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isUnlocked ? FontWeight.bold : FontWeight.normal,
-                color: isUnlocked ? RomanColors.charcoal : Colors.black45,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Type badge pill
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(_getLessonTypeIcon(lesson.type), style: const TextStyle(fontSize: 10)),
+                    const SizedBox(width: 3),
+                    Text(
+                      _getLessonTypeShortLabel(lesson.type),
+                      style: TextStyle(
+                        fontSize: 9,
+                        fontWeight: FontWeight.bold,
+                        color: _getLessonTypeColor(lesson.type),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  lesson.title,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: isUnlocked ? FontWeight.bold : FontWeight.normal,
+                    color: isUnlocked ? RomanColors.charcoal : Colors.black45,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                if (isCompleted)
+                  const Text('⭐⭐⭐', style: TextStyle(fontSize: 8))
+                else if (isCurrentActive)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                    decoration: BoxDecoration(
+                      color: RomanColors.goldLight,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Text(
+                      '▶ À JOUER',
+                      style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
+                    ),
+                  )
+                else if (!isUnlocked)
+                  const Icon(Icons.lock_rounded, size: 10, color: Colors.grey),
+              ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  static String _getLessonTypeIcon(String type) {
+    switch (type) {
+      case 'quiz':
+        return '📜';
+      case 'puzzle':
+        return '🧩';
+      case 'trou':
+        return '✏️';
+      case 'arene':
+        return '⚔️';
+      case 'decodeur':
+        return '🔍';
+      default:
+        return '🏛️';
+    }
+  }
+
+  static String _getLessonTypeShortLabel(String type) {
+    switch (type) {
+      case 'quiz':
+        return 'Quiz';
+      case 'puzzle':
+        return 'Syntaxe';
+      case 'trou':
+        return 'Déclinaisons';
+      case 'arene':
+        return 'Boss Arène';
+      case 'decodeur':
+        return 'Épigraphie';
+      default:
+        return 'Leçon';
+    }
+  }
+
+  static Color _getLessonTypeColor(String type) {
+    switch (type) {
+      case 'quiz':
+        return const Color(0xFF1E5B94);
+      case 'puzzle':
+        return const Color(0xFFB37400);
+      case 'trou':
+        return RomanColors.imperialPurple;
+      case 'arene':
+        return const Color(0xFFB3261E);
+      case 'decodeur':
+        return const Color(0xFF0D6E6E);
+      default:
+        return RomanColors.imperialPurple;
+    }
   }
 
   static String _toRoman(int n) {
@@ -504,6 +613,28 @@ class _MapScreenState extends State<MapScreen> {
       }
     }
     return res.isEmpty ? '' : res;
+  }
+}
+
+class _LessonLegendPill extends StatelessWidget {
+  final String icon;
+  final String label;
+
+  const _LessonLegendPill({required this.icon, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(icon, style: const TextStyle(fontSize: 10)),
+        const SizedBox(width: 2),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 9.5, color: Colors.black54, fontWeight: FontWeight.w500),
+        ),
+      ],
+    );
   }
 }
 

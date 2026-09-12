@@ -30,7 +30,7 @@ class DailyQuest {
       id: 'quest_circus',
       titre: 'Défi du Circus Maximus',
       description: 'Prends les rênes d\'un quadrige et triomphe dans l\'arène du Grand Cirque !',
-      icone: '🏎️',
+      icone: '🐎',
       recompense: 25,
       routeCible: 'circus',
     ),

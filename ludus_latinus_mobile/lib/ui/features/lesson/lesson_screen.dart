@@ -223,6 +223,57 @@ class _LessonScreenState extends State<LessonScreen> {
     return 'assets/images/musee_trophee_5eme.png';
   }
 
+  String _getLessonTypeTitle(String type) {
+    switch (type) {
+      case 'quiz':
+        return 'QCM Grammaire & Vocabulaire';
+      case 'puzzle':
+        return 'Syntaxe & Ordre des Mots';
+      case 'trou':
+        return 'Déclinaisons & Cas Latins';
+      case 'arene':
+        return 'Épreuve d\'Arène / Combat';
+      case 'decodeur':
+        return 'Épigraphie & Décodage';
+      default:
+        return 'Leçon & Exercice';
+    }
+  }
+
+  String _getLessonTypeIcon(String type) {
+    switch (type) {
+      case 'quiz':
+        return '📜';
+      case 'puzzle':
+        return '🧩';
+      case 'trou':
+        return '✏️';
+      case 'arene':
+        return '⚔️';
+      case 'decodeur':
+        return '🔍';
+      default:
+        return '🏛️';
+    }
+  }
+
+  Color _getLessonTypeColor(String type) {
+    switch (type) {
+      case 'quiz':
+        return const Color(0xFF1E5B94);
+      case 'puzzle':
+        return const Color(0xFFB37400);
+      case 'trou':
+        return RomanColors.imperialPurple;
+      case 'arene':
+        return const Color(0xFFB3261E);
+      case 'decodeur':
+        return const Color(0xFF0D6E6E);
+      default:
+        return RomanColors.imperialPurple;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final lesson = widget.lesson;
@@ -249,6 +300,77 @@ class _LessonScreenState extends State<LessonScreen> {
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // 0. Bandeau d'Identification Académique Officiel
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x0C000000),
+                    offset: Offset(0, 2),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: _getLessonTypeColor(lesson.type).withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: _getLessonTypeColor(lesson.type), width: 1),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(_getLessonTypeIcon(lesson.type), style: const TextStyle(fontSize: 12)),
+                        const SizedBox(width: 4),
+                        Text(
+                          _getLessonTypeTitle(lesson.type),
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: _getLessonTypeColor(lesson.type),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Text('🪙 +10 HS', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: widget.repo.isLessonCompleted(lesson.id)
+                              ? const Color(0xFFE8F5E9)
+                              : RomanColors.goldLight,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          widget.repo.isLessonCompleted(lesson.id) ? '✓ Validée ⭐⭐⭐' : '🎯 Cycle 4',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: widget.repo.isLessonCompleted(lesson.id)
+                                ? const Color(0xFF2E7D32)
+                                : const Color(0xFF7A5901),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
             // 1. Illustration Héroïque Antique
             Container(
               height: 140,

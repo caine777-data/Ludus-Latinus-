@@ -19,9 +19,12 @@ import '../cesar/cesar_screen.dart';
 import '../pantheon/pantheon_screen.dart';
 import '../circus/circus_screen.dart';
 import '../duel/duel_screen.dart';
+import '../lesson/lesson_screen.dart';
 import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
+import '../../../data/models/lesson.dart';
+import '../../../data/models/world.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -171,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${profile.completedLessons.length} / 26 leçons conquises',
+                              '${profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (sum, w) => sum + w.lessons.length)} leçons conquises',
                               style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                             ),
                           ],
@@ -279,6 +282,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
                 const SizedBox(height: 8),
+
+                // 3.bis Section Pédagogique : Leçons du Programme Officiel du Collège
+                _buildCurriculumLessonsSection(),
+
+                const SizedBox(height: 16),
 
                 // 4. Bannière Héroïque « La Via Appia » (Style Monument Valley)
                 Container(
@@ -446,7 +454,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // 6. Grille des 4 Ateliers du Forum avec vraies illustrations antiques
                 const Text(
-                  'Ateliers du Forum Romanum',
+                  '🏛️ Ateliers du Forum Romanum (Pratique & Outils)',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -518,7 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // 7. Grille des Jeux & Défis de l'Empire
                 const Text(
-                  'Jeux & Défis de l\'Empire',
+                  '⚔️ Jeux & Défis de l\'Empire (Loisirs & Arène)',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -590,7 +598,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     _buildArtworkTile(
                       imagePath: 'assets/images/circus/chariot_bleu.png',
-                      fallbackIcon: '🏎️',
+                      fallbackIcon: '🐎',
                       title: 'Circus Maximus',
                       subtitle: 'Course de Chars & Turbo',
                       onTap: () {
@@ -622,6 +630,417 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  List<Lesson> _getLessonsForClass(int classIndex) {
+    if (widget.repo.classes.isEmpty) return [];
+    final classIdx = classIndex.clamp(0, widget.repo.classes.length - 1);
+    final targetClass = widget.repo.classes[classIdx];
+    final classWorlds = widget.repo.worlds
+        .where((w) => targetClass.mondesIds.contains(w.id))
+        .toList();
+    final lessons = <Lesson>[];
+    for (final w in classWorlds) {
+      lessons.addAll(w.lessons);
+    }
+    return lessons;
+  }
+
+  String _getLessonTypeTitle(String type) {
+    switch (type) {
+      case 'quiz':
+        return 'QCM Grammaire & Vocabulaire';
+      case 'puzzle':
+        return 'Syntaxe & Ordre des Mots';
+      case 'trou':
+        return 'Déclinaisons & Cas Latins';
+      case 'arene':
+        return 'Épreuve d\'Arène';
+      case 'decodeur':
+        return 'Épigraphie & Décodage';
+      default:
+        return 'Leçon & Exercice';
+    }
+  }
+
+  String _getLessonTypeIcon(String type) {
+    switch (type) {
+      case 'quiz':
+        return '📜';
+      case 'puzzle':
+        return '🧩';
+      case 'trou':
+        return '✏️';
+      case 'arene':
+        return '⚔️';
+      case 'decodeur':
+        return '🔍';
+      default:
+        return '🏛️';
+    }
+  }
+
+  Color _getLessonTypeColor(String type) {
+    switch (type) {
+      case 'quiz':
+        return const Color(0xFF1E5B94);
+      case 'puzzle':
+        return const Color(0xFFB37400);
+      case 'trou':
+        return RomanColors.imperialPurple;
+      case 'arene':
+        return const Color(0xFFB3261E);
+      case 'decodeur':
+        return const Color(0xFF0D6E6E);
+      default:
+        return RomanColors.imperialPurple;
+    }
+  }
+
+  Widget _buildCurriculumLessonsSection() {
+    final classLessons = _getLessonsForClass(_selectedClassIndex);
+    if (classLessons.isEmpty) return const SizedBox.shrink();
+
+    final completedInClass = classLessons.where((l) => widget.repo.isLessonCompleted(l.id)).length;
+    final totalInClass = classLessons.length;
+    final ratio = (completedInClass / totalInClass).clamp(0.0, 1.0);
+
+    // Première leçon non complétée (ou dernière si tout est fini)
+    final activeLesson = classLessons.firstWhere(
+      (l) => !widget.repo.isLessonCompleted(l.id),
+      orElse: () => classLessons.last,
+    );
+    final isActiveCompleted = widget.repo.isLessonCompleted(activeLesson.id);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // En-tête de section académique
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const Text('📚 ', style: TextStyle(fontSize: 16)),
+                Text(
+                  'PROGRAMME ${_classTitles[_selectedClassIndex].toUpperCase()}',
+                  style: const TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.8,
+                    color: RomanColors.imperialPurple,
+                    fontFamily: 'serif',
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: RomanColors.goldLight,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: RomanColors.imperialGold, width: 1),
+              ),
+              child: Text(
+                '$completedInClass / $totalInClass terminées',
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF7A5901),
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 6),
+
+        // Jauge de progression du niveau
+        ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: LinearProgressIndicator(
+            value: ratio,
+            minHeight: 6,
+            backgroundColor: const Color(0xFFEADBCE),
+            valueColor: const AlwaysStoppedAnimation<Color>(RomanColors.laurelGreen),
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // Carte V.I.P : Leçon Prioritaire / Suivante
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x14D4AF37),
+                offset: Offset(0, 4),
+                blurRadius: 10,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Type de leçon pill
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: _getLessonTypeColor(activeLesson.type).withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: _getLessonTypeColor(activeLesson.type),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(_getLessonTypeIcon(activeLesson.type), style: const TextStyle(fontSize: 12)),
+                        const SizedBox(width: 4),
+                        Text(
+                          _getLessonTypeTitle(activeLesson.type),
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: _getLessonTypeColor(activeLesson.type),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Statut
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: isActiveCompleted ? const Color(0xFFE8F5E9) : const Color(0xFFFFF8E1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      isActiveCompleted ? '✓ MAÎTRISÉE ⭐⭐⭐' : '▶ LEÇON SUIVANTE',
+                      style: TextStyle(
+                        fontSize: 10.5,
+                        fontWeight: FontWeight.bold,
+                        color: isActiveCompleted ? const Color(0xFF2E7D32) : const Color(0xFFB37400),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
+              // Titre de la leçon
+              Text(
+                activeLesson.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: RomanColors.imperialPurple,
+                  letterSpacing: 0.2,
+                ),
+              ),
+              const SizedBox(height: 4),
+
+              // Extrait ou consigne
+              Text(
+                activeLesson.content.isNotEmpty
+                    ? (activeLesson.content.length > 100
+                        ? '${activeLesson.content.substring(0, 100)}...'
+                        : activeLesson.content)
+                    : (activeLesson.question ?? 'Exercice interactif du collège.'),
+                style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.3),
+              ),
+              const SizedBox(height: 14),
+
+              // Boutons d'action : Commencer la leçon
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        AudioService().playTriumph();
+                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => LessonScreen(repo: widget.repo, lesson: activeLesson),
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        isActiveCompleted ? Icons.replay_rounded : Icons.play_arrow_rounded,
+                        size: 20,
+                      ),
+                      label: Text(
+                        isActiveCompleted ? 'RÉVISER LA LEÇON' : 'COMMENCER LA LEÇON ▶',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: RomanColors.imperialPurple,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MapScreen(
+                            repo: widget.repo,
+                            initialClassFilter: _selectedClassIndex,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.map_outlined, size: 16),
+                    label: const Text('Via Appia', style: TextStyle(fontSize: 11)),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: RomanColors.imperialPurple,
+                      side: const BorderSide(color: RomanColors.imperialPurple),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        // Bandeau de défilement horizontal de TOUTES les leçons du niveau
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Feuilleter toutes les étapes de ce niveau :',
+              style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black54),
+            ),
+            Text(
+              '${classLessons.length} étapes',
+              style: const TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+
+        SizedBox(
+          height: 104,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: classLessons.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 8),
+            itemBuilder: (context, idx) {
+              final l = classLessons[idx];
+              final isDone = widget.repo.isLessonCompleted(l.id);
+              final isCurrent = (l.id == activeLesson.id);
+
+              return InkWell(
+                onTap: () {
+                  AudioService().playCardFlip();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LessonScreen(repo: widget.repo, lesson: l),
+                    ),
+                  );
+                },
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  width: 140,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isCurrent
+                        ? RomanColors.goldLight
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: isCurrent
+                          ? RomanColors.imperialGold
+                          : isDone
+                              ? const Color(0xFFC8E6C9)
+                              : RomanColors.marbleBorder,
+                      width: isCurrent ? 1.8 : 1.0,
+                    ),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: _getLessonTypeColor(l.type).withOpacity(0.12),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Text(
+                              '${_getLessonTypeIcon(l.type)} ${idx + 1}',
+                              style: TextStyle(
+                                fontSize: 9.5,
+                                fontWeight: FontWeight.bold,
+                                color: _getLessonTypeColor(l.type),
+                              ),
+                            ),
+                          ),
+                          if (isDone)
+                            const Text('⭐⭐⭐', style: TextStyle(fontSize: 9))
+                          else if (isCurrent)
+                            const Text('📍 ICI', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
+                        ],
+                      ),
+                      Text(
+                        l.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: RomanColors.charcoal,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            isDone ? Icons.check_circle : Icons.play_circle_outline,
+                            size: 13,
+                            color: isDone ? Colors.green : RomanColors.imperialPurple,
+                          ),
+                          const SizedBox(width: 3),
+                          Text(
+                            isDone ? 'Maîtrisée' : 'Explorer',
+                            style: TextStyle(
+                              fontSize: 9.5,
+                              color: isDone ? Colors.green.shade700 : RomanColors.imperialPurple,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
