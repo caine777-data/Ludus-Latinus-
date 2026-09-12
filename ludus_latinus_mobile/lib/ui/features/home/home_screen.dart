@@ -455,14 +455,61 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 18),
 
-                // 6. Grille des 4 Ateliers du Forum avec vraies illustrations antiques
-                const Text(
-                  '🏛️ Ateliers du Forum Romanum (Pratique & Outils)',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.4,
-                    color: RomanColors.imperialPurple,
+                // 6. Section Ateliers d'Étude & Outils
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1E5B94).withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFF1E5B94).withOpacity(0.25)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF1E5B94),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Text('🏛️', style: TextStyle(fontSize: 12)),
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'ATELIERS DU FORUM • OUTILS & PRATIQUE',
+                                style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                  color: Color(0xFF1E5B94),
+                                ),
+                              ),
+                              Text(
+                                'Dictionnaire, fiches mémorielles et gestion de compte',
+                                style: TextStyle(fontSize: 10.5, color: Colors.black54),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF1E5B94),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Text(
+                          'OUTILS D\'ÉTUDE',
+                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 0.4),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -483,6 +530,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🃏',
                           title: 'Memoria Velox',
                           subtitle: 'Flashcards 3D Leitner',
+                          tagLabel: 'RÉVISION',
+                          tagColor: const Color(0xFF1E5B94),
                           onTap: () {
                             Navigator.push(
                               context,
@@ -495,6 +544,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🏛️',
                           title: 'Forum Imperiale',
                           subtitle: 'Restaure 6 édifices',
+                          tagLabel: 'DÉFI',
+                          tagColor: const Color(0xFF7A5901),
                           onTap: () {
                             Navigator.push(
                               context,
@@ -507,6 +558,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '📖',
                           title: 'Thesaurus',
                           subtitle: 'Dictionnaire & Tables',
+                          tagLabel: 'OUTIL',
+                          tagColor: const Color(0xFF1E5B94),
                           onTap: () {
                             Navigator.push(
                               context,
@@ -519,6 +572,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '📜',
                           title: 'Tabularium',
                           subtitle: 'Compte & Tessera',
+                          tagLabel: 'PROFIL',
+                          tagColor: const Color(0xFF6B4226),
                           onTap: () {
                             Navigator.push(
                               context,
@@ -532,14 +587,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 18),
 
-                // 7. Grille des Jeux & Défis de l'Empire
-                const Text(
-                  '⚔️ Jeux & Défis de l\'Empire (Loisirs & Arène)',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.4,
-                    color: RomanColors.imperialPurple,
+                // 7. Section Mini-Jeux & Détente Antique
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFB3261E).withOpacity(0.06),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFB3261E).withOpacity(0.25)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFB3261E),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Text('⚔️', style: TextStyle(fontSize: 12)),
+                          ),
+                          const SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'JEUX & DÉFIS DE L\'EMPIRE • LOISIRS & ARÈNE',
+                                style: TextStyle(
+                                  fontSize: 12.5,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.5,
+                                  color: Color(0xFFB3261E),
+                                ),
+                              ),
+                              Text(
+                                'Course de chars, arène des gladiateurs, dés et chiffres',
+                                style: TextStyle(fontSize: 10.5, color: Colors.black54),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFB3261E),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Text(
+                          'MINI-JEUX ARCADE',
+                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 0.4),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -560,6 +662,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🎲',
                           title: 'Alea Iacta Est',
                           subtitle: 'Taverne & Dés Romains',
+                          tagLabel: 'JEU',
+                          tagColor: const Color(0xFFB3261E),
                           onTap: () {
                             AudioService().playDiceRoll();
                             Navigator.push(
@@ -573,6 +677,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🏺',
                           title: 'Marché de Trajan',
                           subtitle: 'Chiffres Romains & Étal',
+                          tagLabel: 'JEU',
+                          tagColor: const Color(0xFFB3261E),
                           onTap: () {
                             AudioService().playSesterces();
                             Navigator.push(
@@ -586,6 +692,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '📜',
                           title: 'Atelier de César',
                           subtitle: 'Cryptographie Militaire',
+                          tagLabel: 'ÉNIGME',
+                          tagColor: const Color(0xFF7A5901),
                           onTap: () {
                             AudioService().playWheelClick();
                             Navigator.push(
@@ -599,6 +707,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🏆',
                           title: 'Le Panthéon',
                           subtitle: 'Album des Reliques',
+                          tagLabel: 'RELIC',
+                          tagColor: const Color(0xFF7A5901),
                           onTap: () {
                             AudioService().playTriumph();
                             Navigator.push(
@@ -612,6 +722,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '🐎',
                           title: 'Circus Maximus',
                           subtitle: 'Course de Chars & Turbo',
+                          tagLabel: 'COURSE',
+                          tagColor: const Color(0xFFB3261E),
                           onTap: () {
                             AudioService().playCrowdCheer();
                             Navigator.push(
@@ -625,6 +737,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fallbackIcon: '⚔️',
                           title: 'Colosseum Duellum',
                           subtitle: 'Arène des Champions',
+                          tagLabel: 'ARÈNE',
+                          tagColor: const Color(0xFFB3261E),
                           onTap: () {
                             AudioService().playSwordClash();
                             Navigator.push(
@@ -731,42 +845,89 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // En-tête de section académique
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                const Text('📚 ', style: TextStyle(fontSize: 16)),
-                Text(
-                  'PROGRAMME ${_classTitles[_selectedClassIndex].toUpperCase()}',
+        // En-tête de section académique avec distinction officielle
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: RomanColors.goldLight.withOpacity(0.6),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: RomanColors.imperialGold.withOpacity(0.6)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: const BoxDecoration(
+                      color: RomanColors.imperialPurple,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Text('📖', style: TextStyle(fontSize: 12)),
+                  ),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
+                            style: const TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.8,
+                              color: RomanColors.imperialPurple,
+                              fontFamily: 'serif',
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: RomanColors.imperialPurple,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              'PROGRAMME SCOLAIRE',
+                              style: TextStyle(
+                                fontSize: 8.5,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 0.4,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'Progression officielle collège — Grammaire, textes & exercices',
+                        style: TextStyle(fontSize: 10.5, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1),
+                ),
+                child: Text(
+                  '$completedInClass / $totalInClass terminées',
                   style: const TextStyle(
-                    fontSize: 13.5,
+                    fontSize: 11,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 0.8,
-                    color: RomanColors.imperialPurple,
-                    fontFamily: 'serif',
+                    color: Color(0xFF7A5901),
                   ),
                 ),
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: RomanColors.goldLight,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: RomanColors.imperialGold, width: 1),
               ),
-              child: Text(
-                '$completedInClass / $totalInClass terminées',
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF7A5901),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 6),
 
@@ -1065,6 +1226,8 @@ class _HomeScreenState extends State<HomeScreen> {
     required String title,
     required String subtitle,
     required VoidCallback onTap,
+    String? tagLabel,
+    Color? tagColor,
   }) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -1127,15 +1290,44 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 13.5,
-                                fontWeight: FontWeight.bold,
-                                color: RomanColors.imperialPurple,
-                              ),
+                            Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    title,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 13.5,
+                                      fontWeight: FontWeight.bold,
+                                      color: RomanColors.imperialPurple,
+                                    ),
+                                  ),
+                                ),
+                                if (tagLabel != null) ...[
+                                  const SizedBox(width: 6),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                    decoration: BoxDecoration(
+                                      color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: Border.all(
+                                        color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.4),
+                                        width: 0.8,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      tagLabel,
+                                      style: TextStyle(
+                                        fontSize: 8.5,
+                                        fontWeight: FontWeight.bold,
+                                        color: tagColor ?? RomanColors.imperialPurple,
+                                        letterSpacing: 0.4,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                             const SizedBox(height: 2),
                             Text(
@@ -1176,16 +1368,41 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       const SizedBox(height: 6),
-                      Text(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.bold,
-                          color: RomanColors.imperialPurple,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 12.5,
+                                fontWeight: FontWeight.bold,
+                                color: RomanColors.imperialPurple,
+                              ),
+                            ),
+                          ),
+                          if (tagLabel != null) ...[
+                            const SizedBox(width: 4),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                              decoration: BoxDecoration(
+                                color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                tagLabel,
+                                style: TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold,
+                                  color: tagColor ?? RomanColors.imperialPurple,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                       Text(
                         subtitle,

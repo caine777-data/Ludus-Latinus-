@@ -438,6 +438,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 letterSpacing: 1.5,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
+                color: Colors.white,
               ),
             ),
             centerTitle: true,
@@ -479,25 +480,12 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               child: Column(
                 children: [
                   const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: CircusVelariumHeader(
-                      selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
-                      onSelectFaction: (idx) {
-                        setState(() {
-                          _selectedFaction = CircusFaction.values[idx];
-                          _shieldAvailable = (_selectedFaction == CircusFaction.albati);
-                        });
-                        AudioService().playWheelClick();
-                      },
-                    ),
-                  ),
-                  // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
+                  // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours) & Sélecteur d'Écurie
                   _buildDolphinLapCounter(),
 
                   // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
                   SizedBox(
-                    height: 195,
+                    height: 185,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       child: _buildRacetrackView(),
@@ -1073,14 +1061,14 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final isWide = constraints.maxWidth >= 500;
-                final childAspectRatio = isWide ? 4.2 : 2.3;
+                final childAspectRatio = isWide ? 4.8 : 2.5;
 
                 return GridView.count(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: childAspectRatio,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: List.generate(_shuffledAnswers.length, (index) {
                     final answer = _shuffledAnswers[index];
                     final letterBadge = ['A', 'B', 'C', 'D'][index % 4];
