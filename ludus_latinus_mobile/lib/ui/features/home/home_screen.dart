@@ -104,9 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, _) {
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 860),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
                 // 1. Carte Héros & Statistiques (Marbre Travertin sculpté)
                 RomanCard(
                   child: Row(
@@ -464,63 +467,68 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 10),
 
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.28,
-                  children: [
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/musee_circus.png',
-                      fallbackIcon: '🃏',
-                      title: 'Memoria Velox',
-                      subtitle: 'Flashcards 3D Leitner',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/musee_thermes.png',
-                      fallbackIcon: '🏛️',
-                      title: 'Forum Imperiale',
-                      subtitle: 'Restaure 6 édifices',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => ForumScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/musee_louve.png',
-                      fallbackIcon: '📖',
-                      title: 'Thesaurus',
-                      subtitle: 'Dictionnaire & Tables',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => ThesaurusScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/logo_centurion_64.png',
-                      fallbackIcon: '📜',
-                      title: 'Tabularium',
-                      subtitle: 'Compte & Tessera',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                  ],
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isDesktop = constraints.maxWidth >= 520;
+                    return GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: isDesktop ? 3.4 : 1.32,
+                      children: [
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/musee_circus.png',
+                          fallbackIcon: '🃏',
+                          title: 'Memoria Velox',
+                          subtitle: 'Flashcards 3D Leitner',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/musee_thermes.png',
+                          fallbackIcon: '🏛️',
+                          title: 'Forum Imperiale',
+                          subtitle: 'Restaure 6 édifices',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => ForumScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/musee_louve.png',
+                          fallbackIcon: '📖',
+                          title: 'Thesaurus',
+                          subtitle: 'Dictionnaire & Tables',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => ThesaurusScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/logo_centurion_64.png',
+                          fallbackIcon: '📜',
+                          title: 'Tabularium',
+                          subtitle: 'Compte & Tessera',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 18),
 
@@ -536,98 +544,105 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 10),
 
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 1.28,
-                  children: [
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/boss_mercure_140.png',
-                      fallbackIcon: '🎲',
-                      title: 'Alea Iacta Est',
-                      subtitle: 'Taverne & Dés Romains',
-                      onTap: () {
-                        AudioService().playDiceRoll();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/lupulus/lupulus_savant.png',
-                      fallbackIcon: '🏺',
-                      title: 'Marché de Trajan',
-                      subtitle: 'Chiffres Romains & Étal',
-                      onTap: () {
-                        AudioService().playSesterces();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/lupulus/lupulus_imperator.png',
-                      fallbackIcon: '📜',
-                      title: 'Atelier de César',
-                      subtitle: 'Cryptographie Militaire',
-                      onTap: () {
-                        AudioService().playWheelClick();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
-                      fallbackIcon: '🏆',
-                      title: 'Le Panthéon',
-                      subtitle: 'Album des Reliques',
-                      onTap: () {
-                        AudioService().playTriumph();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/circus/chariot_bleu.png',
-                      fallbackIcon: '🐎',
-                      title: 'Circus Maximus',
-                      subtitle: 'Course de Chars & Turbo',
-                      onTap: () {
-                        AudioService().playCrowdCheer();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                    _buildArtworkTile(
-                      imagePath: 'assets/images/boss_gladiateur_140.png',
-                      fallbackIcon: '⚔️',
-                      title: 'Colosseum Duellum',
-                      subtitle: 'Arène des Champions',
-                      onTap: () {
-                        AudioService().playSwordClash();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)),
-                        );
-                      },
-                    ),
-                  ],
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isDesktop = constraints.maxWidth >= 520;
+                    return GridView.count(
+                      crossAxisCount: 2,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: isDesktop ? 3.4 : 1.32,
+                      children: [
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/boss_mercure_140.png',
+                          fallbackIcon: '🎲',
+                          title: 'Alea Iacta Est',
+                          subtitle: 'Taverne & Dés Romains',
+                          onTap: () {
+                            AudioService().playDiceRoll();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/lupulus/lupulus_savant.png',
+                          fallbackIcon: '🏺',
+                          title: 'Marché de Trajan',
+                          subtitle: 'Chiffres Romains & Étal',
+                          onTap: () {
+                            AudioService().playSesterces();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/lupulus/lupulus_imperator.png',
+                          fallbackIcon: '📜',
+                          title: 'Atelier de César',
+                          subtitle: 'Cryptographie Militaire',
+                          onTap: () {
+                            AudioService().playWheelClick();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
+                          fallbackIcon: '🏆',
+                          title: 'Le Panthéon',
+                          subtitle: 'Album des Reliques',
+                          onTap: () {
+                            AudioService().playTriumph();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/circus/chariot_bleu.png',
+                          fallbackIcon: '🐎',
+                          title: 'Circus Maximus',
+                          subtitle: 'Course de Chars & Turbo',
+                          onTap: () {
+                            AudioService().playCrowdCheer();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                        _buildArtworkTile(
+                          imagePath: 'assets/images/boss_gladiateur_140.png',
+                          fallbackIcon: '⚔️',
+                          title: 'Colosseum Duellum',
+                          subtitle: 'Arène des Champions',
+                          onTap: () {
+                            AudioService().playSwordClash();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 const SizedBox(height: 20),
               ],
             ),
-          );
+          ),
+        ),
+      );
         },
       ),
     );
@@ -1051,67 +1066,139 @@ class _HomeScreenState extends State<HomeScreen> {
     required String subtitle,
     required VoidCallback onTap,
   }) {
-    return InkWell(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isWide = constraints.maxWidth >= 210;
+
+        return InkWell(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            onTap();
+          },
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x0F000000),
-              offset: Offset(0, 3),
-              blurRadius: 8,
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: isWide ? 14 : 10,
+              vertical: isWide ? 10 : 8,
             ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: RomanColors.goldLight,
-                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Center(
-                    child: Text(fallbackIcon, style: const TextStyle(fontSize: 22)),
-                  ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x0F000000),
+                  offset: Offset(0, 3),
+                  blurRadius: 8,
                 ),
-              ),
+              ],
             ),
-            const SizedBox(height: 6),
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: RomanColors.imperialPurple,
-              ),
-            ),
-            Text(
-              subtitle,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 10, color: Colors.black54),
-            ),
-          ],
-        ),
-      ),
+            child: isWide
+                ? Row(
+                    children: [
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: RomanColors.goldLight,
+                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x15000000),
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Center(
+                              child: Text(fallbackIcon, style: const TextStyle(fontSize: 22)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.bold,
+                                color: RomanColors.imperialPurple,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 11, color: Colors.black54),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: RomanColors.imperialGold,
+                        size: 20,
+                      ),
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 42,
+                        height: 42,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: RomanColors.goldLight,
+                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => Center(
+                              child: Text(fallbackIcon, style: const TextStyle(fontSize: 20)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.bold,
+                          color: RomanColors.imperialPurple,
+                        ),
+                      ),
+                      Text(
+                        subtitle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 10, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+          ),
+        );
+      },
     );
   }
 

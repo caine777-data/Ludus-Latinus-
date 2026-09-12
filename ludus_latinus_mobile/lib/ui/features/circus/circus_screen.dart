@@ -473,43 +473,47 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       body: RomanScreenShake(
         key: _shakeKey,
         child: SafeArea(
-          child: Column(
-            children: [
-              const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: CircusVelariumHeader(
-                  selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
-                  onSelectFaction: (idx) {
-                    setState(() {
-                      _selectedFaction = CircusFaction.values[idx];
-                      _shieldAvailable = (_selectedFaction == CircusFaction.albati);
-                    });
-                    AudioService().playWheelClick();
-                  },
-                ),
-              ),
-              // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
-              _buildDolphinLapCounter(),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 860),
+              child: Column(
+                children: [
+                  const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: CircusVelariumHeader(
+                      selectedIndex: CircusFaction.values.indexOf(_selectedFaction),
+                      onSelectFaction: (idx) {
+                        setState(() {
+                          _selectedFaction = CircusFaction.values[idx];
+                          _shieldAvailable = (_selectedFaction == CircusFaction.albati);
+                        });
+                        AudioService().playWheelClick();
+                      },
+                    ),
+                  ),
+                  // 1. Tableau des 3 Dauphins de Bronze (Compteur de Tours)
+                  _buildDolphinLapCounter(),
 
-              // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
-              Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  child: _buildRacetrackView(),
-                ),
-              ),
+                  // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
+                  SizedBox(
+                    height: 195,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      child: _buildRacetrackView(),
+                    ),
+                  ),
 
-              // 3. Panneau Turbo & Combo
-              _buildTurboComboHeader(),
+                  // 3. Panneau Turbo & Combo
+                  _buildTurboComboHeader(),
 
-              // 4. Console Quiz Question & Choix de Vocabulaire
-              Expanded(
-                flex: 5,
-                child: _raceFinished ? _buildVictoryScreen() : _buildQuizPanel(),
+                  // 4. Console Quiz Question & Choix de Vocabulaire
+                  Expanded(
+                    child: _raceFinished ? _buildVictoryScreen() : _buildQuizPanel(),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -1066,66 +1070,111 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
           // Grille 2x2 des réponses
           Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 2.25,
-              physics: const NeverScrollableScrollPhysics(),
-              children: _shuffledAnswers.map((answer) {
-                final isSelected = (_selectedAnswer == answer);
-                final isCorrect = (answer == _currentQuestion['rep']);
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isWide = constraints.maxWidth >= 500;
+                final childAspectRatio = isWide ? 4.2 : 2.3;
 
-                Color btnBg = Colors.white;
-                Color btnBorder = RomanColors.marbleBorder;
-                Color btnText = RomanColors.imperialPurple;
+                return GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: childAspectRatio,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: List.generate(_shuffledAnswers.length, (index) {
+                    final answer = _shuffledAnswers[index];
+                    final letterBadge = ['A', 'B', 'C', 'D'][index % 4];
+                    final isSelected = (_selectedAnswer == answer);
+                    final isCorrect = (answer == _currentQuestion['rep']);
 
-                if (_selectedAnswer != null) {
-                  if (isCorrect) {
-                    btnBg = Colors.green.shade50;
-                    btnBorder = Colors.green.shade600;
-                    btnText = Colors.green.shade800;
-                  } else if (isSelected) {
-                    btnBg = Colors.red.shade50;
-                    btnBorder = Colors.red.shade600;
-                    btnText = Colors.red.shade800;
-                  }
-                }
+                    Color btnBg = Colors.white;
+                    Color btnBorder = RomanColors.marbleBorder;
+                    Color btnText = RomanColors.imperialPurple;
+                    Color badgeBg = RomanColors.goldLight;
+                    Color badgeBorder = RomanColors.imperialGold;
+                    Color badgeText = const Color(0xFF7A5901);
 
-                return InkWell(
-                  onTap: () => _onAnswerSelected(answer),
-                  borderRadius: BorderRadius.circular(14),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: btnBg,
+                    if (_selectedAnswer != null) {
+                      if (isCorrect) {
+                        btnBg = Colors.green.shade50;
+                        btnBorder = Colors.green.shade600;
+                        btnText = Colors.green.shade800;
+                        badgeBg = Colors.green.shade700;
+                        badgeBorder = Colors.green;
+                        badgeText = Colors.white;
+                      } else if (isSelected) {
+                        btnBg = Colors.red.shade50;
+                        btnBorder = Colors.red.shade600;
+                        btnText = Colors.red.shade800;
+                        badgeBg = Colors.red.shade700;
+                        badgeBorder = Colors.red;
+                        badgeText = Colors.white;
+                      }
+                    }
+
+                    return InkWell(
+                      onTap: () => _onAnswerSelected(answer),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: btnBorder, width: isSelected ? 2.0 : 1.2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x0A000000),
-                          offset: Offset(0, 2),
-                          blurRadius: 4,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: btnBg,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: btnBorder, width: isSelected ? 2.0 : 1.2),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0x0A000000),
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        answer,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: btnText,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: badgeBg,
+                                border: Border.all(color: badgeBorder, width: 1),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  letterBadge,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    color: badgeText,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  answer,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                    color: btnText,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 );
-              }).toList(),
+              },
             ),
           ),
         ],
