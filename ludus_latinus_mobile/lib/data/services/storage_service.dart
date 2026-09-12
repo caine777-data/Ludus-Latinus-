@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
 import '../models/profile.dart';
 
 /// Service de persistance locale robuste pour la progression et le profil citoyen.
@@ -7,6 +9,7 @@ import '../models/profile.dart';
 class StorageService {
   UserProfile _currentProfile = UserProfile();
   static const String _saveFileName = 'ludus_latinus_save.json';
+  String? _cachedSaveFilePath;
 
   UserProfile get profile => _currentProfile;
 
@@ -24,36 +27,49 @@ class StorageService {
 
     // 2. Tente de restaurer la sauvegarde locale sur disque si elle existe
     try {
-      final file = File(_getSaveFilePath());
+      final path = await _getSaveFilePath();
+      final file = File(path);
       if (await file.exists()) {
         final content = await file.readAsString();
         final map = json.decode(content) as Map<String, dynamic>;
         _currentProfile = UserProfile.fromJson(map);
       }
-    } catch (_) {
-      // Si la lecture disque échoue (ex: environnement sans permissions), garde le profil par défaut
+    } catch (e) {
+      debugPrint('[StorageService] Restauration locale: profil par défaut ($e)');
     }
   }
 
-  String _getSaveFilePath() {
+  Future<String> _getSaveFilePath() async {
+    if (_cachedSaveFilePath != null) return _cachedSaveFilePath!;
+
     try {
-      // Emplacement utilisateur ou répertoire courant
-      final userHome = Platform.environment['APPDATA'] ??
-          Platform.environment['HOME'] ??
-          Directory.current.path;
-      return '$userHome/$_saveFileName';
+      // 1. Emplacement officiel sécurisé (Android App Documents / iOS Sandbox / Desktop Documents)
+      final docDir = await getApplicationDocumentsDirectory();
+      _cachedSaveFilePath = '${docDir.path}/$_saveFileName';
+      return _cachedSaveFilePath!;
     } catch (_) {
-      return _saveFileName;
+      // 2. Repli défensif en cas d'environnement sans plugins (tests unitaires, CLI)
+      try {
+        final userHome = Platform.environment['APPDATA'] ??
+            Platform.environment['HOME'] ??
+            Directory.current.path;
+        _cachedSaveFilePath = '$userHome/$_saveFileName';
+        return _cachedSaveFilePath!;
+      } catch (_) {
+        _cachedSaveFilePath = _saveFileName;
+        return _cachedSaveFilePath!;
+      }
     }
   }
 
   Future<void> saveProfile(UserProfile profile) async {
     _currentProfile = profile;
     try {
-      final file = File(_getSaveFilePath());
+      final path = await _getSaveFilePath();
+      final file = File(path);
       await file.writeAsString(exportProfileJson(), flush: true);
-    } catch (_) {
-      // Tolérance gracieuse en mémoire
+    } catch (e) {
+      debugPrint('[StorageService] Erreur sauvegarde disque: $e');
     }
   }
 

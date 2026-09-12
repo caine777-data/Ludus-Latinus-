@@ -45,11 +45,21 @@ class CaseColors {
   static const Color ablative = Color(0xFF8E24AA);   // Pourpre Circonstanciel
 }
 
+/// Typographies officielles de Rome antique et de pédagogie moderne
+class RomanFonts {
+  /// Police impériale classique pour les monuments, titres épigraphiques et médaillons
+  static const String imperial = 'Cinzel';
+
+  /// Police géométrique et moderne pour les textes pédagogiques, cours et dialogues
+  static const String body = 'PlusJakartaSans';
+}
+
 class RomanTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      fontFamily: RomanFonts.body,
       scaffoldBackgroundColor: RomanColors.travertinWhite,
       primaryColor: RomanColors.imperialPurple,
       cardColor: RomanColors.cardSurface,
@@ -70,10 +80,10 @@ class RomanTheme {
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: RomanColors.imperialPurple,
-          fontSize: 18,
+          fontSize: 19,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-          fontFamily: 'serif',
+          letterSpacing: 1.5,
+          fontFamily: RomanFonts.imperial,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -81,6 +91,11 @@ class RomanTheme {
           backgroundColor: RomanColors.imperialGold,
           foregroundColor: const Color(0xFF1A1409),
           elevation: 2,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.8,
+            fontFamily: RomanFonts.body,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -93,6 +108,7 @@ class RomanTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
+      fontFamily: RomanFonts.body,
       scaffoldBackgroundColor: RomanColors.darkBackground,
       primaryColor: RomanColors.imperialGold,
       cardColor: RomanColors.darkCard,
@@ -114,10 +130,10 @@ class RomanTheme {
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: RomanColors.imperialGold,
-          fontSize: 18,
+          fontSize: 19,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
-          fontFamily: 'serif',
+          letterSpacing: 1.5,
+          fontFamily: RomanFonts.imperial,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -125,6 +141,11 @@ class RomanTheme {
           backgroundColor: RomanColors.imperialGold,
           foregroundColor: const Color(0xFF1A1409),
           elevation: 3,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.8,
+            fontFamily: RomanFonts.body,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

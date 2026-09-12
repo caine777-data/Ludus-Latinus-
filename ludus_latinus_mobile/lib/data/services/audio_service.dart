@@ -72,6 +72,16 @@ class _WindowsAudioEngine {
       debugPrint('[AudioService] Erreur stopAll Windows: $e');
     }
   }
+
+  static void cleanup() {
+    stopAll();
+    for (final ptr in _cachedPointers.values) {
+      try {
+        calloc.free(ptr);
+      } catch (_) {}
+    }
+    _cachedPointers.clear();
+  }
 }
 
 /// Service audio antique gérant les bruitages immersifs de Rome antique.
@@ -274,6 +284,14 @@ class AudioService extends ChangeNotifier {
         await _androidChannel.invokeMethod('stopAll');
       } catch (_) {}
     }
+  }
+
+  @override
+  void dispose() {
+    if (!kIsWeb && Platform.isWindows) {
+      _WindowsAudioEngine.cleanup();
+    }
+    super.dispose();
   }
 }
 
