@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/lottie_effects.dart';
-import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
 import '../../core/markdown_lite.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text('🔥', style: TextStyle(fontSize: 12)),
                 const SizedBox(width: 3),
                 Text(
-                  '${profile.streakDays} j',
+                  '${profile.currentStreak()} j',
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -400,7 +399,10 @@ class _HomeScreenState extends State<HomeScreen> {
               // 3. Carte « Défi du Jour » dynamique (+25 HS)
               Builder(
                 builder: (context) {
-                  final dailyQuest = DailyQuest.getTodayQuest();
+                  final dailyQuest = DailyQuest.getTodayQuest(
+                    null,
+                    (q) => profile.getUnlockStatusForGame(q.routeCible == 'colosseum' ? 'duel' : q.routeCible).isUnlocked,
+                  );
                   final isDone = profile.isDailyQuestCompletedToday;
 
                   return Container(
@@ -1132,61 +1134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: const TextStyle(fontSize: 11, color: Color(0xFFFFD54F), fontWeight: FontWeight.bold),
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Boutons Cinématiques Antiques
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: RomanColors.imperialPurple,
-                          side: const BorderSide(color: RomanColors.imperialPurple, width: 1.2),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        icon: const Icon(Icons.play_circle_fill_rounded, size: 16),
-                        label: const FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'TRIOMPHE (ARC)',
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                          ),
-                        ),
-                        onPressed: () {
-                          RomanCinematicOverlay.showTriumph(
-                            context,
-                            rankTitle: currentRank.titre,
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF8A5B00),
-                          side: const BorderSide(color: RomanColors.imperialGold, width: 1.2),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        icon: const Icon(Icons.play_circle_outline, size: 16, color: RomanColors.imperialGold),
-                        label: const FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'INTRO (AIGLE)',
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                          ),
-                        ),
-                        onPressed: () {
-                          RomanCinematicOverlay.showIntro(context);
-                        },
                       ),
                     ),
                   ],

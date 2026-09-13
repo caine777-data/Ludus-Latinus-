@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:ludus_latinus_mobile/data/models/daily_quest.dart';
 import 'package:ludus_latinus_mobile/data/models/profile.dart';
 import 'package:ludus_latinus_mobile/data/repositories/game_repository.dart';
 
@@ -25,6 +26,41 @@ void main() {
     test('La récompense baisse avec les aides', () {
       expect(GameRepository.rewardForStars(3), greaterThan(GameRepository.rewardForStars(2)));
       expect(GameRepository.rewardForStars(2), greaterThan(GameRepository.rewardForStars(1)));
+    });
+  });
+
+  group('Série de jours', () {
+    final lundi = DateTime(2026, 9, 14);
+
+    test('Un nouveau profil commence à 0', () {
+      expect(UserProfile().currentStreak(lundi), 0);
+    });
+
+    test('Des jours consécutifs font monter la série, une seule fois par jour', () {
+      final p = UserProfile();
+      p.recordActivity(lundi);
+      p.recordActivity(lundi);
+      expect(p.currentStreak(lundi), 1);
+      p.recordActivity(lundi.add(const Duration(days: 1)));
+      expect(p.currentStreak(lundi.add(const Duration(days: 1))), 2);
+    });
+
+    test('Un jour manqué remet la série à zéro', () {
+      final p = UserProfile();
+      p.recordActivity(lundi);
+      p.recordActivity(lundi.add(const Duration(days: 1)));
+      expect(p.currentStreak(lundi.add(const Duration(days: 3))), 0);
+      p.recordActivity(lundi.add(const Duration(days: 3)));
+      expect(p.currentStreak(lundi.add(const Duration(days: 3))), 1);
+    });
+  });
+
+  group('Défi du jour', () {
+    test('Ne propose jamais une activité verrouillée', () {
+      for (var d = 0; d < 30; d++) {
+        final q = DailyQuest.getTodayQuest(DateTime(2026, 1, 1).add(Duration(days: d)), (q) => q.routeCible != 'duel');
+        expect(q.routeCible, isNot('duel'));
+      }
     });
   });
 

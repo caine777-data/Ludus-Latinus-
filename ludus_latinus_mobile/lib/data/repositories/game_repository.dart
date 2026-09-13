@@ -78,8 +78,9 @@ class GameRepository extends ChangeNotifier {
     }
     if (stars > previousStars) {
       profile.lessonStars[lessonId] = stars;
-      storageService.saveProfile(profile);
     }
+    profile.recordActivity();
+    storageService.saveProfile(profile);
 
     World? world;
     for (final w in worlds) {
@@ -129,6 +130,7 @@ class GameRepository extends ChangeNotifier {
 
   void recordSrsReview(String cardId, {required bool success}) {
     profile.updateCardSrs(cardId, success: success);
+    profile.recordActivity();
     storageService.saveProfile(profile);
     notifyListeners();
   }

@@ -193,7 +193,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜'),
                         _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙'),
-                        _buildStatCol('Série', '${profile.streakDays} j', '🔥'),
+                        _buildStatCol('Série', '${profile.currentStreak()} j', '🔥'),
                         _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️'),
                       ],
                     ),
@@ -377,7 +377,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           title: 'Aurige',
                           romanNum: 'III',
                           condition: 'Atteindre une série de 3 jours consécutifs.',
-                          unlocked: profile.streakDays >= 3,
+                          unlocked: profile.currentStreak() >= 3,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_louve.png',

@@ -100,6 +100,8 @@ class UserProfile {
   String genre; // 'garcon' ou 'fille'
   int sesterces;
   int streakDays;
+  /// Dernier jour (AAAA-MM-JJ) où l'élève a validé une leçon ou révisé.
+  String? lastActivityDate;
   List<String> completedLessons;
   /// Meilleur nombre d'étoiles (1 à 3) obtenu par leçon.
   Map<String, int> lessonStars;
@@ -122,7 +124,8 @@ class UserProfile {
     this.nomHeros = 'Marcus',
     this.genre = 'garcon',
     this.sesterces = 50,
-    this.streakDays = 1,
+    this.streakDays = 0,
+    this.lastActivityDate,
     List<String>? completedLessons,
     Map<String, int>? lessonStars,
     List<String>? restoredMonuments,
@@ -187,9 +190,29 @@ class UserProfile {
     return getEquippedGoodie(categoryKey) == goodieId;
   }
 
-  static String get _todayStr {
-    final now = DateTime.now();
-    return '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+  static String _dateStr(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  static String get _todayStr => _dateStr(DateTime.now());
+
+  /// Série de jours consécutifs d'apprentissage. Elle retombe à 0 si l'élève
+  /// n'a rien fait ni aujourd'hui ni hier.
+  int currentStreak([DateTime? now]) {
+    final today = now ?? DateTime.now();
+    final todayStr = _dateStr(today);
+    final yesterdayStr = _dateStr(today.subtract(const Duration(days: 1)));
+    if (lastActivityDate == todayStr || lastActivityDate == yesterdayStr) return streakDays;
+    return 0;
+  }
+
+  /// À appeler après une leçon validée ou une révision : met à jour la série.
+  void recordActivity([DateTime? now]) {
+    final today = now ?? DateTime.now();
+    final todayStr = _dateStr(today);
+    if (lastActivityDate == todayStr) return;
+    final yesterdayStr = _dateStr(today.subtract(const Duration(days: 1)));
+    streakDays = lastActivityDate == yesterdayStr ? streakDays + 1 : 1;
+    lastActivityDate = todayStr;
   }
 
   bool get isDailyQuestCompletedToday {
@@ -324,7 +347,8 @@ class UserProfile {
       nomHeros: json['nom_heros'] as String? ?? 'Marcus',
       genre: json['genre'] as String? ?? 'garcon',
       sesterces: json['sesterces'] as int? ?? 50,
-      streakDays: json['streak'] as int? ?? 1,
+      streakDays: json['streak'] as int? ?? 0,
+      lastActivityDate: json['last_activity_date'] as String?,
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
       // Les leçons validées avant l'arrivée des étoiles gardent 3 étoiles.
       lessonStars: {
@@ -353,6 +377,7 @@ class UserProfile {
       'genre': genre,
       'sesterces': sesterces,
       'streak': streakDays,
+      'last_activity_date': lastActivityDate,
       'completed': completedLessons,
       'lesson_stars': lessonStars,
       'forum_monuments': restoredMonuments,

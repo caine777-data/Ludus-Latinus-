@@ -433,7 +433,9 @@ class LudiView extends StatelessWidget {
           return Stack(
             fit: StackFit.expand,
             children: [
-              tileContent,
+              // Masqué mais gardé pour la taille : sinon son texte transparaît
+              // sous le voile semi-opaque du cadenas.
+              Opacity(opacity: 0, child: tileContent),
               RomanLockOverlay(
                 title: title,
                 lockReason: status.reason,
