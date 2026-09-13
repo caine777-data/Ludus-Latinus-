@@ -65,7 +65,6 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
     AudioService().playCardFlip();
     setState(() {
       _assignedRoles[_selectedWordIndex] = roleId;
-      _isEvaluated = false;
       _feedbackMessage = null;
 
       // Avance automatiquement au mot suivant s'il n'a pas encore de rôle
@@ -116,7 +115,6 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
     }
 
     setState(() {
-      _isEvaluated = true;
       _isSuccess = allCorrect;
     });
 
