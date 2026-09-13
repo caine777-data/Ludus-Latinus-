@@ -68,6 +68,9 @@ ARTICLES_MARCHE = [
     {"nom": "Rouleau de papyrus", "prix": 32, "latin": "Volumen papyri", "emoji": "📜"},
     {"nom": "Statue de Minerve en bronze", "prix": 85, "latin": "Statua Minervae", "emoji": "🦉"},
     {"nom": "Boîte d'épices d'Orient", "prix": 50, "latin": "Aromata orientalia", "emoji": "🧰"},
+    {"nom": "Perles fines de la Mer Rouge", "prix": 120, "latin": "Margaritae Erythraeae", "emoji": "🦪"},
+    {"nom": "Papyrus de Philosophie Stoïcienne", "prix": 75, "latin": "Volumen Zenonis", "emoji": "📜"},
+    {"nom": "Vinaigre Posca et Rations Militaires", "prix": 22, "latin": "Posca et cibaria", "emoji": "🥣"},
 ]
 
 

@@ -8,6 +8,7 @@ import '../../memoria/memoria_screen.dart';
 import '../../thesaurus/thesaurus_screen.dart';
 import '../../forum/forum_screen.dart';
 import '../../../core/latin_epigraph_modal.dart';
+import 'export_fiches_modal.dart';
 
 /// Onglet 2 : Bibliotheca & Memoria — L'espace d'étude, de révision SRS et de documentation latine.
 class BibliothecaView extends StatelessWidget {
@@ -181,9 +182,74 @@ class BibliothecaView extends StatelessWidget {
                 },
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
-              // 3. Carte de Conseil d'Étude Didactique
+              // 3. Fiches Mémo Imprimables & Export A4 (Professeurs & Élèves)
+              InkWell(
+                onTap: () {
+                  AudioService().playCardFlip();
+                  ExportFichesModal.show(context, repo: repo);
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF5C1320), Color(0xFF3B0B14)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x225C1320),
+                        offset: Offset(0, 4),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          color: RomanColors.goldLight,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Text('🖨️', style: TextStyle(fontSize: 24)),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'TABULAE MEMORIALES (FICHES A4)',
+                              style: TextStyle(
+                                color: RomanColors.imperialGold,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'Exporte la table des 5 déclinaisons et tes flashcards au format papier A4 pour réviser hors-écran.',
+                              style: TextStyle(color: Colors.white, fontSize: 11.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios_rounded, color: RomanColors.imperialGold, size: 16),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // 4. Carte de Conseil d'Étude Didactique
               RomanCard(
                 child: Row(
                   children: [

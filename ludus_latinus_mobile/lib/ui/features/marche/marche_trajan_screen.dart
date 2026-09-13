@@ -79,6 +79,27 @@ const List<ArticleMarche> kArticlesMarche = [
     emoji: "🧰",
     description: "Poivre noir des Indes et cannelle arrivés par la route de la soie.",
   ),
+  ArticleMarche(
+    nom: "Perles fines de la Mer Rouge",
+    latin: "Margaritae Erythraeae",
+    prix: 120,
+    emoji: "🦪",
+    description: "Perles éclatantes importées d'Alexandrie par les routes maritimes de l'Érythrée.",
+  ),
+  ArticleMarche(
+    nom: "Papyrus de Philosophie Stoïcienne",
+    latin: "Volumen Zenonis",
+    prix: 75,
+    emoji: "📜",
+    description: "Maximes manuscrites de Zénon et Marc Aurèle pour élever l'âme citoyenne.",
+  ),
+  ArticleMarche(
+    nom: "Vinaigre Posca et Rations Militaires",
+    latin: "Posca et cibaria",
+    prix: 22,
+    emoji: "🥣",
+    description: "Boisson désaltérante des légionnaires (eau, posca et miel) et galettes de froment.",
+  ),
 ];
 
 class ClientMarche {
@@ -149,6 +170,170 @@ const List<ClientMarche> kClientsMarche = [
     sommeDonnee: 75,
     repliqueSucces: '« Bene computatum ! Rendez-vous à la prochaine caravane ! »',
   ),
+  ClientMarche(
+    nom: 'Legatus Marcus',
+    titre: 'Général des Légions du Danube',
+    emoji: '🪖',
+    articleNom: 'Posca et cibaria (Rations)',
+    prixArticle: 22,
+    sommeDonnee: 30,
+    repliqueSucces: '« Optime ! Mes légionnaires auront de quoi soutenir la marche forcée ! »',
+  ),
+  ClientMarche(
+    nom: 'Matrona Aurelia',
+    titre: 'Patricienne de l\'Aventin',
+    emoji: '🧕',
+    articleNom: 'Margaritae Erythraeae (Perles)',
+    prixArticle: 120,
+    sommeDonnee: 150,
+    repliqueSucces: '« Magnifice ! Ces perles feront sensation lors du banquet des kalendes ! »',
+  ),
+  ClientMarche(
+    nom: 'Philosophus Sextus',
+    titre: 'Érudit de l\'Académie',
+    emoji: '📚',
+    articleNom: 'Volumen Zenonis (Philosophie)',
+    prixArticle: 75,
+    sommeDonnee: 100,
+    repliqueSucces: '« Gratias ago ! La sagesse de Zénon est le plus précieux des trésors ! »',
+  ),
+];
+
+class OptionNegociation {
+  final String texteLatin;
+  final String traduction;
+  final bool estBonChoix;
+  final int sestercesGain;
+  final String reactionClient;
+
+  const OptionNegociation({
+    required this.texteLatin,
+    required this.traduction,
+    required this.estBonChoix,
+    required this.sestercesGain,
+    required this.reactionClient,
+  });
+}
+
+class MissionNegociation {
+  final String nomClient;
+  final String titreClient;
+  final String emoji;
+  final String articleNom;
+  final int prixInitial;
+  final String repliqueClient;
+  final String traductionClient;
+  final List<OptionNegociation> options;
+
+  const MissionNegociation({
+    required this.nomClient,
+    required this.titreClient,
+    required this.emoji,
+    required this.articleNom,
+    required this.prixInitial,
+    required this.repliqueClient,
+    required this.traductionClient,
+    required this.options,
+  });
+}
+
+const List<MissionNegociation> kMissionsNegociation = [
+  MissionNegociation(
+    nomClient: 'Centurio Lucius',
+    titreClient: 'Officier vétéran de la Legio I',
+    emoji: '⚔️',
+    articleNom: 'Rudis lignea (Glaive en bois)',
+    prixInitial: 18,
+    repliqueClient: '« Gladius nimium carus est ! Visne vendere pro XII HS (12 HS) ? »',
+    traductionClient: '« Ce glaive est trop cher ! Veux-tu me le vendre pour 12 sesterces ? »',
+    options: [
+      OptionNegociation(
+        texteLatin: '« Concedo tibi : da mihi XV HS (15 HS) et gladius tuus est ! »',
+        traduction: '« Je te concède : donne-moi 15 HS et ce glaive est à toi ! »',
+        estBonChoix: true,
+        sestercesGain: 25,
+        reactionClient: '« Aequum pactum ! Un bon soldat sait apprécier le juste compromis ! (+25 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« Minime ! Pretium XVIII HS immutabile est, miles ! »',
+        traduction: '« Nullement ! Le prix de 18 HS est immuable, soldat ! »',
+        estBonChoix: false,
+        sestercesGain: 5,
+        reactionClient: '« Tu es dur en affaires... Mais j\'en ai besoin pour l\'arène. (+5 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« Abi statim, avarus miles ! Nihil tibi vendam ! »',
+        traduction: '« Va-t'en sur-le-champ, soldat avare ! Je ne te vendrai rien ! »',
+        estBonChoix: false,
+        sestercesGain: 0,
+        reactionClient: '« Quelle insolence envers la Légion ! Je vais voir un autre marchand ! »',
+      ),
+    ],
+  ),
+  MissionNegociation(
+    nomClient: 'Matrona Aurelia',
+    titreClient: 'Patricienne de l\'Aventin',
+    emoji: '🧕',
+    articleNom: 'Margaritae Erythraeae (Perles)',
+    prixInitial: 120,
+    repliqueClient: '« Hae margaritae fulgent, sed C HS (100 HS) tantum in crumena habeo ! »',
+    traductionClient: '« Ces perles brillent, mais je n\'ai que 100 sesterces dans ma bourse ! »',
+    options: [
+      OptionNegociation(
+        texteLatin: '« Accipio C HS, nobilis matrona : ornamentum dignum est tua venustate ! »',
+        traduction: '« J'accepte 100 HS, noble dame : ce bijou est digne de votre grâce ! »',
+        estBonChoix: true,
+        sestercesGain: 35,
+        reactionClient: '« Urbanitas tua me delectat ! Tu auras toute la clientèle de ma villa ! (+35 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« Si addis anulum argenteum, pactum confectum est ! »',
+        traduction: '« Si vous ajoutez un anneau d'argent, le marché est conclu ! »',
+        estBonChoix: true,
+        sestercesGain: 30,
+        reactionClient: '« Bien négocié ! Voici l'anneau et les 100 sesterces ! (+30 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« C HS nimis exile est ! Vade ad plebeias tabernas ! »',
+        traduction: '« 100 HS c'est trop peu ! Allez donc aux échoppes plébéiennes ! »',
+        estBonChoix: false,
+        sestercesGain: 0,
+        reactionClient: '« Quel outrage ! Mon époux le Sénateur en sera informé ! »',
+      ),
+    ],
+  ),
+  MissionNegociation(
+    nomClient: 'Philosophus Sextus',
+    titreClient: 'Érudit de l\'Académie',
+    emoji: '📚',
+    articleNom: 'Volumen Zenonis (Papyrus de Philosophie)',
+    prixInitial: 75,
+    repliqueClient: '« Sapientia pretio aestimari non potest ! Cur tantum aurum postulas ? »',
+    traductionClient: '« La sagesse ne peut s'estimer par un prix ! Pourquoi exiger tant d'or ? »',
+    options: [
+      OptionNegociation(
+        texteLatin: '« Sapientia inestimabilis est, sed librarius chartam emit ! LX HS (60 HS) sufficit ! »',
+        traduction: '« La sagesse n'a pas de prix, mais le copiste achète le papyrus ! 60 HS suffisent ! »',
+        estBonChoix: true,
+        sestercesGain: 30,
+        reactionClient: '« Logica stoica et iustitia mercatoria ! Voici tes 60 HS avec mes louanges ! (+30 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« Gratis tibi dono si unam sententiam Zenonis mihi doces ! »',
+        traduction: '« Je te le donne gratuitement si tu m'enseignes une maxime de Zénon ! »',
+        estBonChoix: true,
+        sestercesGain: 25,
+        reactionClient: '« Magnanime marchand ! Écoute : "Le bonheur est un flot paisible de vie." (+25 HS) »',
+      ),
+      OptionNegociation(
+        texteLatin: '« Nolo verba Graeca ! Solvis aut relinquis volumen ! »',
+        traduction: '« Je ne veux pas de mots grecs ! Tu payes ou tu laisses le rouleau ! »',
+        estBonChoix: false,
+        sestercesGain: 0,
+        reactionClient: '« Les barbares n'entendent rien à la philosophie... Vale ! »',
+      ),
+    ],
+  ),
 ];
 
 class MarcheTrajanScreen extends StatefulWidget {
@@ -163,10 +348,82 @@ class MarcheTrajanScreen extends StatefulWidget {
 class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   int _articleIndex = 0;
   int _clientIndex = 0;
-  bool _modeRenduMonnaie = false;
+  int _modeActuel = 0; // 0: Étal / Vente, 1: Rendu / Calculus, 2: Négociation / Negotium
+  bool get _modeRenduMonnaie => _modeActuel == 1;
+  bool get _modeNegociation => _modeActuel == 2;
+  int _negociationIndex = 0;
+  int? _optionChoisieIndex;
+  bool _negociationResolue = false;
   String _saisieRomaine = '';
   String? _messageFeedback;
   bool _feedbackSucces = false;
+
+  MissionNegociation get _negociationActuelle =>
+      kMissionsNegociation[_negociationIndex % kMissionsNegociation.length];
+
+  void _selectionnerOptionNegociation(int idx) {
+    if (_negociationResolue) return;
+    HapticFeedback.selectionClick();
+    AudioService().playCardFlip();
+    setState(() {
+      _optionChoisieIndex = idx;
+      _messageFeedback = null;
+    });
+  }
+
+  void _validerNegociation() {
+    if (_optionChoisieIndex == null || _negociationResolue) return;
+    final mission = _negociationActuelle;
+    final option = mission.options[_optionChoisieIndex!];
+
+    setState(() {
+      _negociationResolue = true;
+    });
+
+    if (option.estBonChoix) {
+      HapticFeedback.heavyImpact();
+      AudioService().playSesterces();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      widget.repo.addSesterces(option.sestercesGain);
+      setState(() {
+        _feedbackSucces = true;
+        _messageFeedback = '${mission.nomClient} : ${option.reactionClient}';
+      });
+
+      Future.delayed(const Duration(milliseconds: 2400), () {
+        if (!mounted) return;
+        setState(() {
+          _negociationIndex = (_negociationIndex + 1) % kMissionsNegociation.length;
+          _optionChoisieIndex = null;
+          _negociationResolue = false;
+          _messageFeedback = null;
+          _feedbackSucces = false;
+        });
+      });
+    } else {
+      HapticFeedback.vibrate();
+      AudioService().playError();
+      if (option.sestercesGain > 0) {
+        widget.repo.addSesterces(option.sestercesGain);
+      }
+      setState(() {
+        _feedbackSucces = false;
+        _messageFeedback = '${mission.nomClient} : ${option.reactionClient}';
+      });
+
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        if (!mounted) return;
+        setState(() {
+          _negociationIndex = (_negociationIndex + 1) % kMissionsNegociation.length;
+          _optionChoisieIndex = null;
+          _negociationResolue = false;
+          _messageFeedback = null;
+          _feedbackSucces = false;
+        });
+      });
+    }
+  }
 
   static const Map<String, int> _valeurs = {
     'I': 1,
@@ -531,48 +788,71 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
             children: [
               const RomanMeanderDivider(height: 10, color: RomanColors.imperialGold),
               const SizedBox(height: 8),
-              // Sélecteur de Mode : Achats à l'étal vs Rendu de Monnaie (Calculus)
+              // Sélecteur de Mode : Achats à l'étal vs Rendu de Monnaie vs Négociation en latin
               Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          _modeRenduMonnaie = false;
+                          _modeActuel = 0;
                           _saisieRomaine = '';
                           _messageFeedback = null;
                         });
                         AudioService().playWheelClick();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: !_modeRenduMonnaie ? RomanColors.imperialPurple : Colors.white,
-                        foregroundColor: !_modeRenduMonnaie ? Colors.white : RomanColors.imperialPurple,
-                        side: BorderSide(color: RomanColors.imperialPurple),
+                        backgroundColor: _modeActuel == 0 ? RomanColors.imperialPurple : Colors.white,
+                        foregroundColor: _modeActuel == 0 ? Colors.white : RomanColors.imperialPurple,
+                        side: const BorderSide(color: RomanColors.imperialPurple),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
-                      child: const Text('🛍️ Étal de Gaius', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                      child: const Text('🛍️ Étal', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          _modeRenduMonnaie = true;
+                          _modeActuel = 1;
                           _saisieRomaine = '';
                           _messageFeedback = null;
                         });
                         AudioService().playWheelClick();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: _modeRenduMonnaie ? RomanColors.imperialPurple : Colors.white,
-                        foregroundColor: _modeRenduMonnaie ? Colors.white : RomanColors.imperialPurple,
-                        side: BorderSide(color: RomanColors.imperialPurple),
+                        backgroundColor: _modeActuel == 1 ? RomanColors.imperialPurple : Colors.white,
+                        foregroundColor: _modeActuel == 1 ? Colors.white : RomanColors.imperialPurple,
+                        side: const BorderSide(color: RomanColors.imperialPurple),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         padding: const EdgeInsets.symmetric(vertical: 10),
                       ),
-                      child: const Text('⚖️ Rendu de Monnaie', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                      child: const Text('⚖️ Rendu', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _modeActuel = 2;
+                          _saisieRomaine = '';
+                          _messageFeedback = null;
+                          _optionChoisieIndex = null;
+                          _negociationResolue = false;
+                        });
+                        AudioService().playWheelClick();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _modeActuel == 2 ? RomanColors.imperialPurple : Colors.white,
+                        foregroundColor: _modeActuel == 2 ? Colors.white : RomanColors.imperialPurple,
+                        side: const BorderSide(color: RomanColors.imperialPurple),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      child: const Text('💬 Négociation', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     ),
                   ),
                 ],
@@ -580,8 +860,11 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
               const SizedBox(height: 12),
 
-              // 1. Bannière Marchande ou Client Romains
-              if (!_modeRenduMonnaie)
+              if (_modeNegociation)
+                _buildSectionNegociation()
+              else ...[
+                // 1. Bannière Marchande ou Client Romains
+                if (!_modeRenduMonnaie)
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -981,11 +1264,287 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
               ),
               const SizedBox(height: 16),
             ],
+            ],
           ),
         ),
       ),
     );
       },
+    );
+  }
+
+  Widget _buildSectionNegociation() {
+    final mission = _negociationActuelle;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // 1. Bannière du Client Négociateur
+        Container(
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFF2C1A4D), Color(0xFF160829)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x332C1A4D),
+                offset: Offset(0, 4),
+                blurRadius: 10,
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 56,
+                height: 56,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFEADBFF),
+                ),
+                child: Text(mission.emoji, style: const TextStyle(fontSize: 30)),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      mission.nomClient.toUpperCase(),
+                      style: const TextStyle(
+                        color: RomanColors.imperialGold,
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Text(
+                      mission.titreClient,
+                      style: const TextStyle(color: Colors.white70, fontSize: 11),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      mission.repliqueClient,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.5,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      mission.traductionClient,
+                      style: const TextStyle(
+                        color: Color(0xFFD6C8EC),
+                        fontSize: 11,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 14),
+
+        // 2. Fiche de l'article convoité
+        RomanParchmentCard(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                alignment: Alignment.center,
+                child: const Text('🏺', style: TextStyle(fontSize: 24)),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      mission.articleNom,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: RomanColors.imperialPurple,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      'Prix d\'origine : ${mission.prixInitial} Sesterces (HS)',
+                      style: const TextStyle(fontSize: 12, color: RomanColors.charcoal),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 14),
+
+        const Text(
+          'CHOISIS TA RÉPONSE EN LATIN POUR NÉGOCIER :',
+          style: TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.bold,
+            color: RomanColors.charcoal,
+            letterSpacing: 0.8,
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // 3. Liste des options de négociation
+        ...List.generate(mission.options.length, (i) {
+          final opt = mission.options[i];
+          final isSelected = _optionChoisieIndex == i;
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: InkWell(
+              onTap: _negociationResolue ? null : () => _selectionnerOptionNegociation(i),
+              borderRadius: BorderRadius.circular(14),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: isSelected ? const Color(0xFFF3E8FF) : Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isSelected ? RomanColors.imperialPurple : const Color(0xFFDCCDB7),
+                    width: isSelected ? 2.0 : 1.0,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: isSelected ? const Color(0x225B2C6F) : const Color(0x0A000000),
+                      offset: const Offset(0, 3),
+                      blurRadius: 6,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
+                      color: isSelected ? RomanColors.imperialPurple : Colors.black38,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            opt.texteLatin,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'serif',
+                              color: isSelected ? RomanColors.imperialPurple : RomanColors.charcoal,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            opt.traduction,
+                            style: const TextStyle(
+                              fontSize: 11.5,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }),
+
+        if (_messageFeedback != null) ...[
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: _feedbackSucces ? const Color(0xFFEAF5EA) : const Color(0xFFFFECEC),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: _feedbackSucces ? RomanColors.laurelGreen : Colors.redAccent,
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  _feedbackSucces ? Icons.check_circle : Icons.info_outline,
+                  color: _feedbackSucces ? RomanColors.laurelGreen : Colors.redAccent,
+                  size: 20,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    _messageFeedback!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: _feedbackSucces ? const Color(0xFF144D25) : const Color(0xFF7A1010),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+
+        const SizedBox(height: 14),
+
+        // Boutons de validation et client suivant
+        Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: RomanButton(
+                text: 'PACTUM CONFIRMARE (CONCLURE)',
+                icon: Icons.handshake_rounded,
+                onPressed: (_optionChoisieIndex != null && !_negociationResolue)
+                    ? _validerNegociation
+                    : null,
+              ),
+            ),
+            const SizedBox(width: 10),
+            IconButton(
+              tooltip: 'Client suivant',
+              icon: const Icon(Icons.skip_next_rounded, color: RomanColors.imperialPurple),
+              onPressed: () {
+                HapticFeedback.selectionClick();
+                AudioService().playCardFlip();
+                setState(() {
+                  _negociationIndex = (_negociationIndex + 1) % kMissionsNegociation.length;
+                  _optionChoisieIndex = null;
+                  _negociationResolue = false;
+                  _messageFeedback = null;
+                  _feedbackSucces = false;
+                });
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 
