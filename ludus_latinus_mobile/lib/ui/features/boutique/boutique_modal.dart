@@ -6,7 +6,6 @@ import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
-import '../../core/roman_ornaments.dart';
 import '../../core/game_juice.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
@@ -119,9 +118,6 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final isDesktop = size.width > 700;
-
     return AnimatedBuilder(
       animation: widget.repo,
       builder: (context, _) {

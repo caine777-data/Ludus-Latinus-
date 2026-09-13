@@ -51,7 +51,11 @@ enum CombatStance {
     this.damageMult,
     this.riposteMult,
   );
+
+  String get nom => francais;
+  String get titre => latin;
 }
+
 
 class DuelScreen extends StatefulWidget {
   final GameRepository repo;

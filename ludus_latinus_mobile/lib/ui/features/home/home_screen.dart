@@ -26,7 +26,6 @@ import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
-import '../../../data/models/world.dart';
 
 /// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
