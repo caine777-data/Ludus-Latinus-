@@ -39,6 +39,71 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     6: 'VI',
   };
 
+  static final List<Map<String, dynamic>> _dogQuestions = [
+    {
+      'q': 'Que signifie la célèbre formule de César : « Alea iacta est » ?',
+      'rep': 'Le sort en est jeté',
+      'fausses': ['Rome vaincra', 'Les jeux sont finis'],
+      'explication': 'Prononcé en 49 av. J.-C. lors du franchissement du fleuve Rubicon.',
+    },
+    {
+      'q': 'Comment les Romains appelaient-ils les dés cubiques à 6 faces numérotées ?',
+      'rep': 'Les Tesserae',
+      'fausses': ['Les Tali', 'Les Tabulae'],
+      'explication': 'Les tesserae étaient les dés cubiques réguliers numérotés de 1 à 6.',
+    },
+    {
+      'q': 'Comment s\'appelait le cornet cylindrique pour secouer et lancer les dés ?',
+      'rep': 'Le Fritillus',
+      'fausses': ['Le Calix', 'Le Pilum'],
+      'explication': 'Le fritillus évitait la triche en faisant rouler les dés dans son col étroit.',
+    },
+    {
+      'q': 'Quel dieu romain de la vigne et de la fête présidait aux réjouissances des tavernes ?',
+      'rep': 'Bacchus',
+      'fausses': ['Mars', 'Vulcain'],
+      'explication': 'Bacchus (Dionysos chez les Grecs) protégeait les tavernes et les banquets.',
+    },
+    {
+      'q': 'Quel dieu au casque ailé protégeait les voyageurs, marchands et joueurs de dés ?',
+      'rep': 'Mercure',
+      'fausses': ['Saturne', 'Neptune'],
+      'explication': 'Mercure (Hermès) était le dieu de l\'éloquence, du commerce et de la chance.',
+    },
+    {
+      'q': 'Dans le jeu des 4 osselets (tali), comment nommait-on le lancer parfait aux 4 faces distinctes ?',
+      'rep': 'Le Coup de Vénus (Venus)',
+      'fausses': ['Le Coup de Jupiter', 'Le Triomphe'],
+      'explication': 'Obtenir quatre faces différentes était le tirage royal béni par Vénus.',
+    },
+    {
+      'q': 'Comment se dit « Joue ! » à l\'impératif en latin ?',
+      'rep': 'Lude !',
+      'fausses': ['Dice !', 'Curre !'],
+      'explication': 'Du verbe ludere (jouer), qui a donné « ludique » et « Ludus Latinus » !',
+    },
+    {
+      'q': 'Quel fleuve frontière César a-t-il franchi en disant « Alea iacta est » ?',
+      'rep': 'Le Rubicon',
+      'fausses': ['Le Tibre', 'Le Nil'],
+      'explication': 'Franchir le Rubicon en armes constituait un acte de guerre civile irréversible.',
+    },
+    {
+      'q': 'Quelle monnaie de bronze les Romains pariaient-ils couramment à la taverne ?',
+      'rep': 'Le Sesterce (et l\'As)',
+      'fausses': ['Le Florin', 'Le Drachme'],
+      'explication': 'Le sesterce (HS) et l\'as étaient les monnaies de cuivre/bronze du quotidien.',
+    },
+    {
+      'q': 'Que signifie le mot latin « Taberna » ?',
+      'rep': 'L\'auberge / la boutique',
+      'fausses': ['Le temple', 'Le sénat'],
+      'explication': 'La taberna était l\'échoppe ou taverne ouvrant directement sur la rue romaine.',
+    },
+  ];
+
+  List<Map<String, dynamic>> _dogDeck = [];
+
   @override
   void initState() {
     super.initState();
@@ -210,39 +275,97 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   }
 
   void _showDogChallenge() {
+    if (_dogDeck.isEmpty) {
+      _dogDeck = List<Map<String, dynamic>>.from(_dogQuestions)..shuffle();
+    }
+    final q = _dogDeck.removeAt(0);
+    final choices = <String>[q['rep'] as String, ...(q['fausses'] as List<String>)]..shuffle();
+
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('🐕 Défi de Mercure (Rachat)'),
-        content: const Text(
-          'Tu as obtenu le Coup du Chien ! Pour sauver ton honneur et doubler la mise, que signifie la formule de César : « Alea iacta est » ?',
-          style: TextStyle(fontSize: 13),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              AudioService().playTriumph();
-              RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-              widget.repo.addSesterces(20);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  backgroundColor: RomanColors.laurelGreen,
-                  content: Text('✓ Bonne réponse : "Le sort en est jeté !" +20 HS de rachat !'),
+        title: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: RomanColors.palatinCream,
+                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/lupulus/lupulus_mercure_180.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const Center(
+                    child: Text('🐕', style: TextStyle(fontSize: 20)),
+                  ),
                 ),
-              );
-            },
-            child: const Text('« Le sort en est jeté »'),
-          ),
-          TextButton(
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Expanded(
+              child: Text(
+                '🐕 Défi de Mercure (Rachat)',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+              ),
+            ),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Tu as obtenu le Coup du Chien (Iactus Canis) ! Réponds correctement pour sauver ton honneur et remporter +20 HS de rachat :',
+              style: TextStyle(fontSize: 12, color: Colors.black87),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: RomanColors.goldLight,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: RomanColors.imperialGold),
+              ),
+              child: Text(
+                q['q'] as String,
+                style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+              ),
+            ),
+          ],
+        ),
+        actions: choices.map((choice) {
+          final isRight = (choice == q['rep']);
+          return TextButton(
             onPressed: () {
               Navigator.pop(context);
-              AudioService().playError();
+              if (isRight) {
+                AudioService().playTriumph();
+                RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                widget.repo.addSesterces(20);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: RomanColors.laurelGreen,
+                    content: Text('✓ Optime ! ${q['explication']} (+20 HS)'),
+                  ),
+                );
+              } else {
+                AudioService().playError();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.red.shade800,
+                    content: Text('❌ Manqué ! La réponse était : « ${q['rep']} ». ${q['explication']}'),
+                  ),
+                );
+              }
             },
-            child: const Text('« Rome vaincra »'),
-          ),
-        ],
+            child: Text(choice, style: const TextStyle(fontWeight: FontWeight.bold)),
+          );
+        }).toList(),
       ),
     );
   }

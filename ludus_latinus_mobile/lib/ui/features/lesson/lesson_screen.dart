@@ -29,6 +29,7 @@ class _LessonScreenState extends State<LessonScreen> {
   int? selectedOption;
   bool isAnswered = false;
   bool isCorrect = false;
+  bool _showHint = false;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
   void _submitAnswer(int index) {
@@ -274,6 +275,49 @@ class _LessonScreenState extends State<LessonScreen> {
     }
   }
 
+  String _getLupulusCostumeForLesson(Lesson lesson) {
+    final t = '${lesson.title} ${lesson.latin ?? ''}'.toLowerCase();
+    if (t.contains('gladiat') || t.contains('arène') || t.contains('combat')) {
+      return 'assets/images/lupulus/lupulus_gladiateur_180.png';
+    } else if (t.contains('légion') || t.contains('armée') || t.contains('milit') || t.contains('soldat')) {
+      return 'assets/images/lupulus/lupulus_centurion_180.png';
+    } else if (t.contains('empereur') || t.contains('césar') || t.contains('imperator') || t.contains('triomphe')) {
+      return 'assets/images/lupulus/lupulus_imperator_180.png';
+    } else if (t.contains('dieu') || t.contains('mythe') || t.contains('philosoph') || t.contains('sénat')) {
+      return 'assets/images/lupulus/lupulus_philosophe_180.png';
+    }
+    return 'assets/images/lupulus/lupulus_savant_180.png';
+  }
+
+  String _getLupulusGreetingForLesson(Lesson lesson) {
+    final t = '${lesson.title} ${lesson.latin ?? ''}'.toLowerCase();
+    if (t.contains('gladiat') || t.contains('combat')) {
+      return '« Salve pugnator ! Dans l\'arène, la précision du mot frappe aussi fort que le glaive ! »';
+    } else if (t.contains('légion') || t.contains('armée')) {
+      return '« Salve legionarie ! La discipline grammaticale est le bouclier des légions ! »';
+    } else if (t.contains('dieu') || t.contains('mythe')) {
+      return '« Salve discipule ! Que Minerve et Apollon inspirent ta mémoire mythologique ! »';
+    }
+    return '« Salve discipule ! Observe bien les racines latines, elles éclairent la langue française ! »';
+  }
+
+  String _getHintForLesson(Lesson lesson) {
+    if (lesson.explanation != null && lesson.explanation!.trim().isNotEmpty) {
+      return lesson.explanation!;
+    }
+    final t = '${lesson.title} ${lesson.question ?? ''}'.toLowerCase();
+    if (t.contains('cas') || t.contains('déclinaison') || t.contains('nominatif') || t.contains('accusatif')) {
+      return 'Repère le rôle du mot : le Nominatif est le sujet (qui agit ?), l\'Accusatif est le COD (terminaison en -m au singulier, en -s au pluriel).';
+    }
+    if (t.contains('verbe') || t.contains('temps') || t.contains('parfait') || t.contains('imparfait')) {
+      return 'Regarde bien la désinence du verbe : le suffixe -ba- marque l\'imparfait, tandis que le parfait indique une action achevée.';
+    }
+    if (t.contains('nombre') || t.contains('pluriel') || t.contains('singulier')) {
+      return 'Observe attentivement la désinence finale : le singulier et le pluriel possèdent des terminaisons distinctes dans chaque déclinaison.';
+    }
+    return 'Cherche un mot français de la même famille étymologique pour retrouver la racine latine !';
+  }
+
   @override
   Widget build(BuildContext context) {
     final lesson = widget.lesson;
@@ -407,6 +451,49 @@ class _LessonScreenState extends State<LessonScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: RomanColors.goldLight,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: RomanColors.imperialGold, width: 1),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              _getLupulusCostumeForLesson(lesson),
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Text('🐺', style: TextStyle(fontSize: 18)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            _getLupulusGreetingForLesson(lesson),
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w600,
+                              color: RomanColors.imperialPurple,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Text(
                     lesson.title,
                     style: const TextStyle(
@@ -497,8 +584,110 @@ class _LessonScreenState extends State<LessonScreen> {
                             ),
                           ),
                         ),
+                        if (!isAnswered) ...[
+                          const SizedBox(width: 8),
+                          InkWell(
+                            onTap: () {
+                              HapticFeedback.lightImpact();
+                              setState(() {
+                                _showHint = !_showHint;
+                              });
+                            },
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: _showHint ? const Color(0xFFFFF3E0) : RomanColors.goldLight,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: _showHint ? Colors.orange.shade700 : RomanColors.imperialGold,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text('💡', style: TextStyle(fontSize: 12)),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    _showHint ? 'Masquer' : 'Indice',
+                                    style: TextStyle(
+                                      fontSize: 10.5,
+                                      fontWeight: FontWeight.bold,
+                                      color: _showHint ? Colors.orange.shade900 : const Color(0xFF7A5901),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
+                    if (_showHint && !isAnswered) ...[
+                      const SizedBox(height: 10),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFFBEA),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFFE0C475), width: 1.2),
+                          boxShadow: const [
+                            BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 42,
+                              height: 42,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: RomanColors.palatinCream,
+                                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                              ),
+                              child: ClipOval(
+                                child: Image.asset(
+                                  'assets/images/lupulus/lupulus_aide_180.png',
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, __, ___) => const Center(
+                                    child: Text('🐺', style: TextStyle(fontSize: 20)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'INDICE BIENVEILLANT DE LUPULUS',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
+                                      color: Color(0xFF8A5B00),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    _getHintForLesson(lesson),
+                                    style: const TextStyle(
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 12),
 
                     // Grille 2x2 des options tactiles
@@ -942,6 +1131,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     setState(() {
                       isAnswered = false;
                       selectedOption = null;
+                      _showHint = true;
                     });
                   },
                   icon: const Icon(Icons.refresh, size: 16),

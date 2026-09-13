@@ -123,56 +123,200 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     },
   ];
 
+  List<Map<String, dynamic>> _duelDeck = [];
+
   final List<Map<String, dynamic>> _duelQuestions = [
     {
       'q': 'Que signifie « Lupus » ?',
       'rep': 'Le loup',
       'fausses': ['Le lièvre', 'La lune', 'Le lynx'],
+      'explication': 'Lupus (m.) désigne le loup. La louve (lupa) allaita Romulus et Rémus.',
     },
     {
-      'q': 'Quel est le cas du sujet en latin ?',
+      'q': 'Quel est le cas du sujet et de son attribut en latin ?',
       'rep': 'Le Nominatif',
       'fausses': ['L\'Accusatif', 'L\'Ablatif', 'Le Datif'],
+      'explication': 'Le nominatif est le premier cas de la déclinaison, fonction sujet.',
+    },
+    {
+      'q': 'Quel cas latin exprime le Complément d\'Objet Direct (COD) ?',
+      'rep': 'L\'Accusatif',
+      'fausses': ['Le Génitif', 'Le Datif', 'L\'Ablatif'],
+      'explication': 'L\'accusatif marque le patient ou but de l\'action (terminaison en -m au singulier).',
+    },
+    {
+      'q': 'Quel cas latin exprime la possession (complément du nom) ?',
+      'rep': 'Le Génitif',
+      'fausses': ['Le Datif', 'L\'Ablatif', 'Le Vocatif'],
+      'explication': 'Le génitif indique l\'appartenance (ex: Gladius Caesaris = le glaive de César).',
+    },
+    {
+      'q': 'Quel cas latin correspond au COI et à l\'attribution ?',
+      'rep': 'Le Datif',
+      'fausses': ['L\'Accusatif', 'Le Nominatif', 'L\'Ablatif'],
+      'explication': 'Le datif sert à indiquer à qui ou pour qui l\'action est faite.',
+    },
+    {
+      'q': 'Quel cas exprime les compléments de moyen, de temps et de lieu ?',
+      'rep': 'L\'Ablatif',
+      'fausses': ['Le Vocatif', 'Le Génitif', 'L\'Accusatif'],
+      'explication': 'L\'ablatif synthétise l\'instrumental, le séparatif et le locatif.',
+    },
+    {
+      'q': 'Quel cas sert à interpeller directement quelqu\'un ?',
+      'rep': 'Le Vocatif',
+      'fausses': ['Le Datif', 'Le Nominatif', 'L\'Accusatif'],
+      'explication': 'Exemple célèbre : « Ave, Caesar ! » ou « Tu quoque, mi fili ! ».',
     },
     {
       'q': 'Que signifie « Bellum » ?',
       'rep': 'La guerre',
       'fausses': ['La beauté', 'Le bœuf', 'La boisson'],
+      'explication': 'Bellum (n.) donne « belligérant », « belliqueux » et « rébellion ».',
+    },
+    {
+      'q': 'Que signifie « Pax » ?',
+      'rep': 'La paix',
+      'fausses': ['Le pain', 'Le mur', 'Le pas'],
+      'explication': 'Pax Romana désignait la longue période de paix impériale.',
     },
     {
       'q': 'Qui est le dieu romain de la guerre ?',
       'rep': 'Mars',
       'fausses': ['Jupiter', 'Neptune', 'Vulcain'],
-    },
-    {
-      'q': 'Quel cas latin exprime le COD ?',
-      'rep': 'L\'Accusatif',
-      'fausses': ['Le Génitif', 'Le Datif', 'L\'Ablatif'],
+      'explication': 'Mars, équivalent d\'Arès chez les Grecs, est l\'ancêtre des Romains.',
     },
     {
       'q': 'Que signifie « Gladius » ?',
       'rep': 'Le glaive',
       'fausses': ['Le bouclier', 'Le casque', 'La lance'],
+      'explication': 'L\'épée courte à double tranchant des légionnaires, d\'où « gladiateur ».',
+    },
+    {
+      'q': 'Comment s\'appelle le grand bouclier rectangulaire romain ?',
+      'rep': 'Le Scutum',
+      'fausses': ['La Lorica', 'Le Pilum', 'La Galea'],
+      'explication': 'Le scutum courbé protégeait le corps et formait la fameuse tortue.',
+    },
+    {
+      'q': 'Que désigne le « Pilum » lancé par les légionnaires ?',
+      'rep': 'Le javelot lourd',
+      'fausses': ['La flèche', 'Le bouclier', 'La dague'],
+      'explication': 'Le pilum avait une pointe en fer doux conçue pour se tordre après impact.',
+    },
+    {
+      'q': 'Comment appelle-t-on le casque de bronze du guerrier romain ?',
+      'rep': 'La Galea',
+      'fausses': ['La Caliga', 'Le Sagum', 'La Balteus'],
+      'explication': 'La galea protégeait la tête, les joues et la nuque.',
     },
     {
       'q': 'Que signifie « Rex » (3e déclinaison) ?',
       'rep': 'Le roi',
       'fausses': ['La loi', 'La reine', 'Le chef'],
+      'explication': 'Rex (génitif regis) donne « royal », « régime » et « souverain ».',
+    },
+    {
+      'q': 'Que signifie « Civis » ?',
+      'rep': 'Le citoyen',
+      'fausses': ['Le paysan', 'Le marchand', 'Le marin'],
+      'explication': 'Civis donne citoyen, civil et civilité. « Civis Romanus sum ! ».',
+    },
+    {
+      'q': 'Que signifie « Urbs » ?',
+      'rep': 'La ville',
+      'fausses': ['Le champ', 'La forêt', 'La colline'],
+      'explication': 'Urbs désigne la ville fortifiée, et par excellence la cité de Rome.',
+    },
+    {
+      'q': 'Que signifie « Miles » ?',
+      'rep': 'Le soldat / guerrier',
+      'fausses': ['Le maître', 'Le juge', 'Le médecin'],
+      'explication': 'Miles (génitif militis) a donné le mot « militaire ».',
+    },
+    {
+      'q': 'Que signifie « Dux » ?',
+      'rep': 'Le chef / général',
+      'fausses': ['Le prisonnier', 'L\'artisan', 'L\'esclave'],
+      'explication': 'Dux (génitif ducis) vient de ducere (mener) et a donné « duc ».',
+    },
+    {
+      'q': 'Que signifie « Hostis » ?',
+      'rep': 'L\'ennemi',
+      'fausses': ['L\'ami', 'L\'invité', 'Le voisin'],
+      'explication': 'Hostis désignait l\'ennemi public en temps de guerre (d\'où « hostile »).',
     },
     {
       'q': 'Quel suffixe caractérise l\'imparfait latin ?',
       'rep': '-ba-',
       'fausses': ['-vi-', '-re-', '-isse-'],
+      'explication': 'Exemples : amabam (j\'aimais), legebam (je lisais).',
     },
     {
-      'q': 'Que signifie « Veni, vidi, vici » de César ?',
+      'q': 'Que signifie « Veni, vidi, vici » prononcé par César ?',
       'rep': 'Je suis venu, j\'ai vu, j\'ai vaincu',
       'fausses': ['Vivre, aimer, mourir', 'Parler, écouter, comprendre', 'Courir, sauter, gagner'],
+      'explication': 'Trois parfaits historiques concis annonçant la victoire éclair de Zéla.',
+    },
+    {
+      'q': 'Que signifie « Alea iacta est » ?',
+      'rep': 'Le sort en est jeté',
+      'fausses': ['La guerre commence', 'La paix est signée', 'Les dés sont perdus'],
+      'explication': 'Phrase attribuée à César franchissant le fleuve Rubicon en 49 av. J.-C.',
+    },
+    {
+      'q': 'Que disaient les gladiateurs : « Morituri te salutant » ?',
+      'rep': 'Ceux qui vont mourir te saluent',
+      'fausses': ['Nous combattons pour la gloire', 'Donne-nous la vie', 'Rome est invincible'],
+      'explication': 'Salut traditionnel adressé à l\'empereur avant le combat à mort.',
+    },
+    {
+      'q': 'Qui est le roi de l\'Olympe brandissant la foudre ?',
+      'rep': 'Jupiter',
+      'fausses': ['Pluton', 'Neptune', 'Saturne'],
+      'explication': 'Jupiter (Zeus en grec), dieu suprême de la justice et du ciel.',
+    },
+    {
+      'q': 'Quelle déesse romaine incarne la sagesse et la stratégie ?',
+      'rep': 'Minerve',
+      'fausses': ['Vénus', 'Diane', 'Cérès'],
+      'explication': 'Minerve (Athéna), née tout armée de la tête de Jupiter.',
+    },
+    {
+      'q': 'Comment s\'appelle le corps d\'armée d\'élite de 5000 soldats ?',
+      'rep': 'La Légion (Legio)',
+      'fausses': ['La Cohorte', 'La Centurie', 'Le Manipule'],
+      'explication': 'La légion romaine était l\'unité tactique redoutable de la République et de l\'Empire.',
+    },
+    {
+      'q': 'Quel officier commande une centurie d\'environ 80 hommes ?',
+      'rep': 'Le Centurion',
+      'fausses': ['Le Tribun', 'Le Légat', 'Le Préfet'],
+      'explication': 'Le centurion portait un casque à crête transversale pour être repéré au combat.',
+    },
+    {
+      'q': 'Comment appelle-t-on la célèbre formation sous les boucliers ?',
+      'rep': 'La Tortue (Testudo)',
+      'fausses': ['Le Hérisson', 'L\'Aigle', 'Le Bélier'],
+      'explication': 'Les boucliers imbriqués au-dessus et sur les flancs repoussaient flèches et javelines.',
     },
     {
       'q': 'Que signifie l\'abréviation « SPQR » ?',
       'rep': 'Le Sénat et le Peuple Romain',
       'fausses': ['Rome Pour Toujours', 'Paix et Victoire Romaine', 'Gloire à l\'Empire'],
+      'explication': 'Senatus Populusque Romanus, la formule souveraine de l\'État romain.',
+    },
+    {
+      'q': 'Que signifie « Virtus » chez les Romains ?',
+      'rep': 'Le courage viril et la vaillance',
+      'fausses': ['La faiblesse', 'La fuite', 'L\'argent'],
+      'explication': 'Virtus (de vir, l\'homme) désigne le courage indomptable au combat.',
+    },
+    {
+      'q': 'Que désigne « Castra » en latin ?',
+      'rep': 'Le camp militaire fortifié',
+      'fausses': ['Le château', 'La maison de campagne', 'La prison'],
+      'explication': 'Castra (pluriel neutre) donne « castrum » et les terminaisons de villes (-chester).',
     },
   ];
 
@@ -233,8 +377,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   }
 
   void _nextQuestion() {
-    final random = math.Random();
-    _currentQ = _duelQuestions[random.nextInt(_duelQuestions.length)];
+    if (_duelDeck.isEmpty) {
+      _duelDeck = List<Map<String, dynamic>>.from(_duelQuestions)..shuffle();
+    }
+    _currentQ = _duelDeck.removeAt(0);
     final options = <String>[
       _currentQ['rep'] as String,
       ...(_currentQ['fausses'] as List<String>),
@@ -781,6 +927,52 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               }).toList(),
             ),
           ),
+          if (_chosenAnswer != null) ...[
+            const SizedBox(height: 6),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: (_chosenAnswer == _currentQ['rep'])
+                    ? const Color(0xFFE8F5E9)
+                    : const Color(0xFFFFF3E0),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: (_chosenAnswer == _currentQ['rep'])
+                      ? Colors.green.shade600
+                      : Colors.orange.shade700,
+                  width: 1.5,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    (_chosenAnswer == _currentQ['rep']) ? '⚔️ Frappe réussie !' : '🛡️ Riposte subie !',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: (_chosenAnswer == _currentQ['rep'])
+                          ? Colors.green.shade800
+                          : Colors.orange.shade900,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _currentQ['explication'] as String? ?? 'Réponse attendue : ${_currentQ['rep']}',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: (_chosenAnswer == _currentQ['rep'])
+                            ? Colors.green.shade900
+                            : Colors.brown.shade900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -797,6 +989,16 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          if (_victoire) ...[
+            Image.asset(
+              'assets/images/victoire_320.png',
+              width: 120,
+              height: 120,
+              fit: BoxFit.contain,
+              errorBuilder: (_, __, ___) => const SizedBox(),
+            ),
+            const SizedBox(height: 8),
+          ],
           Text(
             _victoire ? '⚔️ TRIOMPHE DANS L\'ARÈNE !' : '☠️ DÉFAITE AU COMBAT !',
             style: TextStyle(
