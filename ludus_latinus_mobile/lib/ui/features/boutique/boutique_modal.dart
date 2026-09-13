@@ -118,6 +118,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return AnimatedBuilder(
       animation: widget.repo,
       builder: (context, _) {

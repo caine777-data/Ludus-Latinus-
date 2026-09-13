@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../data/models/profile.dart';
-import '../../data/models/cursus_honorum.dart';
 import '../../data/services/audio_service.dart';
 import 'themes.dart';
 import 'roman_ornaments.dart';
