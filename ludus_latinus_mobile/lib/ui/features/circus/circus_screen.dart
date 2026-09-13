@@ -1079,42 +1079,64 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                     // Traînée de poussière et flammes à l'arrière des roues
                     if (isTurbo)
                       Container(
-                        margin: const EdgeInsets.only(right: 2, bottom: 4),
+                        margin: const EdgeInsets.only(right: 3, bottom: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFFF9100), Color(0xFFFF3D00)],
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(color: Color(0x99FF6D00), blurRadius: 8, spreadRadius: 1),
+                          ],
+                        ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: const [
-                            Text('💨', style: TextStyle(fontSize: 12)),
-                            Text('🔥', style: TextStyle(fontSize: 15)),
+                            Text('⚡', style: TextStyle(fontSize: 10)),
+                            Text('🔥', style: TextStyle(fontSize: 13)),
                           ],
                         ),
                       )
                     else
                       Container(
-                        margin: const EdgeInsets.only(right: 2, bottom: 2),
-                        child: Text(
-                          '💨',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white.withOpacity(0.65),
-                          ),
+                        margin: const EdgeInsets.only(right: 3, bottom: 3),
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: const Color(0x33FFFFFF),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        child: const Text('💨', style: TextStyle(fontSize: 9)),
                       ),
 
                     // Corps du char (Quadrige antique avec ombre portée et bouclier éventuel)
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
+                        // Ombre de sol réaliste sous le char
+                        Positioned(
+                          left: 10,
+                          right: 10,
+                          bottom: -3,
+                          child: Container(
+                            height: 6,
+                            decoration: BoxDecoration(
+                              color: const Color(0x403E2723),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
                         // Halo de turbo ou bouclier céleste Albati
                         if (isTurbo)
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
-                                    color: Colors.orangeAccent.withOpacity(0.6),
-                                    blurRadius: 14,
-                                    spreadRadius: 3,
+                                    color: Color(0x99FF6D00),
+                                    blurRadius: 16,
+                                    spreadRadius: 4,
                                   ),
                                 ],
                               ),
@@ -1493,17 +1515,51 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   Widget _buildVictoryScreen() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         border: Border.all(color: RomanColors.marbleBorder),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x33000000),
+            offset: Offset(0, -4),
+            blurRadius: 16,
+          ),
+        ],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Illustration de triomphe romain
+          if (_playerWon)
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: RomanColors.imperialGold.withOpacity(0.4),
+                    blurRadius: 20,
+                    spreadRadius: 4,
+                  ),
+                ],
+              ),
+              child: Image.asset(
+                'assets/images/victoire_320.png',
+                height: 96,
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Text('🏆', style: TextStyle(fontSize: 48)),
+              ),
+            )
+          else
+            const Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: Text('🏁', style: TextStyle(fontSize: 44)),
+            ),
+
           Text(
-            _playerWon ? '🏆 VICTORIA !' : '💨 COURSE DISPUTÉE !',
+            _playerWon ? '🏆 VICTORIA MAGNA !' : '💨 COURSE DISPUTÉE !',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -1511,21 +1567,30 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               letterSpacing: 1.2,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 6),
           Text(
             _playerWon
-                ? 'Ton quadrige franchit la ligne en triomphateur ! Rome t\'acclame !'
-                : 'Le rival Maximus a été le plus rapide cette fois-ci. Réessaie pour la gloire !',
+                ? 'Ton quadrige franchit la ligne en triomphateur ! Le Circus Maximus tout entier acclame ton nom !'
+                : 'Le rival Maximus a franchi la ligne le premier. Reprends les rênes et venge l\'honneur de ton écurie !',
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 13, color: Colors.black87),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 14),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: RomanColors.goldLight,
+              gradient: LinearGradient(
+                colors: [RomanColors.goldLight, const Color(0xFFFFF8E7)],
+              ),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: RomanColors.imperialGold),
+              border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1F000000),
+                  offset: Offset(0, 2),
+                  blurRadius: 4,
+                ),
+              ],
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -1543,7 +1608,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 18),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -1590,16 +1655,68 @@ class _CircusTrackPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final sandPaint = Paint()..color = const Color(0xFFE8D3B4);
-    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), sandPaint);
+    // 1. Dégradé de sable chaud et doré de l'arène
+    final sandRect = Rect.fromLTWH(0, 0, size.width, size.height);
+    final sandPaint = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFFEAD5B5),
+          Color(0xFFDEC39B),
+          Color(0xFFE5CEAA),
+        ],
+      ).createShader(sandRect);
+    canvas.drawRect(sandRect, sandPaint);
 
-    // Lignes de séparation de couloirs en pointillés
+    // 2. Balustrades de marbre de Carrare (Podium wall supérieur et inférieur)
+    final marbleWallUpper = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFFFFFFFF), Color(0xFFE8E0D5)],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, 7));
+    canvas.drawRect(Rect.fromLTWH(0, 0, size.width, 7), marbleWallUpper);
+
+    final goldTrimPaint = Paint()
+      ..color = const Color(0xFFC5A059)
+      ..strokeWidth = 1.5
+      ..style = PaintingStyle.stroke;
+    canvas.drawLine(const Offset(0, 7), Offset(size.width, 7), goldTrimPaint);
+
+    final marbleWallLower = Paint()
+      ..shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFFE8E0D5), Color(0xFFFFFFFF)],
+      ).createShader(Rect.fromLTWH(0, size.height - 7, size.width, 7));
+    canvas.drawRect(Rect.fromLTWH(0, size.height - 7, size.width, 7), marbleWallLower);
+    canvas.drawLine(Offset(0, size.height - 7), Offset(size.width, size.height - 7), goldTrimPaint);
+
+    // 3. Sillons de roues et ornières creusés dans le sable chaud
+    final rutPaint = Paint()
+      ..color = const Color(0x388D6E63)
+      ..strokeWidth = 1.8
+      ..style = PaintingStyle.stroke;
+
+    final playerTrackX = (10.0 + (playerProgress.clamp(0.0, 1.0) * (size.width - 100))).clamp(0.0, size.width);
+    final rivalTrackX = (10.0 + (rivalProgress.clamp(0.0, 1.0) * (size.width - 100))).clamp(0.0, size.width);
+
+    // Ornières du joueur (couloir haut)
+    canvas.drawLine(const Offset(10, 0.26 * 200), Offset(playerTrackX, 0.26 * 200), rutPaint);
+    canvas.drawLine(const Offset(10, 0.30 * 200), Offset(playerTrackX, 0.30 * 200), rutPaint);
+
+    // Ornières du rival (couloir bas)
+    canvas.drawLine(const Offset(10, 0.70 * 200), Offset(rivalTrackX, 0.70 * 200), rutPaint);
+    canvas.drawLine(const Offset(10, 0.74 * 200), Offset(rivalTrackX, 0.74 * 200), rutPaint);
+
+    // 4. Lignes de séparation de couloirs en pointillés blancs et or
     final dashPaint = Paint()
-      ..color = Colors.white.withOpacity(0.35)
+      ..color = Colors.white.withOpacity(0.45)
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
-    const double dashWidth = 8;
+    const double dashWidth = 10;
     const double dashSpace = 8;
     double startX = 0;
     final double yMiddle = size.height * 0.5;
@@ -1613,12 +1730,17 @@ class _CircusTrackPainter extends CustomPainter {
       startX += dashWidth + dashSpace;
     }
 
-    // Effet de trainée de poussière si turbo
+    // 5. Nuages de poussière et traînée cinétique si Turbo activé
     if (isTurbo) {
-      final turboTrail = Paint()
-        ..color = Colors.orange.withOpacity(0.3)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
-      canvas.drawCircle(Offset(size.width * 0.4, size.height * 0.28), 16, turboTrail);
+      final turboGlow = Paint()
+        ..color = const Color(0x55FF9800)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
+      canvas.drawCircle(Offset(playerTrackX - 25, 0.28 * 200), 22, turboGlow);
+
+      final sparkPaint = Paint()
+        ..color = const Color(0xAAFFEB3B)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+      canvas.drawCircle(Offset(playerTrackX - 15, 0.27 * 200), 8, sparkPaint);
     }
   }
 
