@@ -89,6 +89,74 @@ class UserProfile {
 
   List<String> get unlockedMonuments => restoredMonuments;
 
+  // --- Conditions de Déblocage Progressif (Progressive Disclosure) ---
+  bool get isCircusUnlocked => completedLessons.isNotEmpty;
+  int get circusRequiredLessons => 1;
+
+  bool get isColosseumUnlocked => completedLessons.length >= 2;
+  int get colosseumRequiredLessons => 2;
+
+  bool get isTaverneUnlocked => completedLessons.length >= 6;
+  int get taverneRequiredLessons => 6;
+
+  bool get isCesarUnlocked => completedLessons.length >= 12;
+  int get cesarRequiredLessons => 12;
+
+  bool get isMarcheTrajanUnlocked => completedLessons.length >= 18;
+  int get marcheTrajanRequiredLessons => 18;
+
+  bool get isPantheonUnlocked => restoredMonuments.isNotEmpty || completedLessons.length >= 4;
+  int get pantheonRequiredLessons => 4;
+
+  ({bool isUnlocked, String reason, double progress}) getUnlockStatusForGame(String gameKey) {
+    switch (gameKey) {
+      case 'circus':
+        final prog = (completedLessons.length / circusRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isCircusUnlocked,
+          reason: 'Termine 1 étape sur la Via Appia pour harnacher ton char',
+          progress: prog,
+        );
+      case 'duel':
+        final prog = (completedLessons.length / colosseumRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isColosseumUnlocked,
+          reason: 'Termine 2 étapes sur la Via Appia pour entrer dans l\'Arène',
+          progress: prog,
+        );
+      case 'taverne':
+        final prog = (completedLessons.length / taverneRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isTaverneUnlocked,
+          reason: 'Débloqué au Palier II (6 étapes sur la Via Appia)',
+          progress: prog,
+        );
+      case 'cesar':
+        final prog = (completedLessons.length / cesarRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isCesarUnlocked,
+          reason: 'Débloqué au Palier III : L\'Armée (12 étapes sur la Via Appia)',
+          progress: prog,
+        );
+      case 'marche':
+        final prog = (completedLessons.length / marcheTrajanRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isMarcheTrajanUnlocked,
+          reason: 'Débloqué au Palier IV : Vie Quotidienne (18 étapes sur la Via Appia)',
+          progress: prog,
+        );
+      case 'pantheon':
+        final prog = (completedLessons.length / pantheonRequiredLessons).clamp(0.0, 1.0);
+        return (
+          isUnlocked: isPantheonUnlocked,
+          reason: 'Restaure 1 édifice au Forum ou termine 4 étapes',
+          progress: prog,
+        );
+      default:
+        return (isUnlocked: true, reason: '', progress: 1.0);
+    }
+  }
+
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     var rawCompte = json['compte'] as Map<String, dynamic>? ?? {};
     var rawCompleted = json['completed'] as List<dynamic>? ?? [];

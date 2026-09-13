@@ -4,6 +4,7 @@ import 'themes.dart';
 export 'roman_ornaments.dart';
 export 'roman_audio_modal.dart';
 export 'room_decorations.dart';
+export 'roman_lock_badge.dart';
 
 /// Bouton tactile impérial romain avec liseré d''or et retour haptique.
 class RomanButton extends StatelessWidget {

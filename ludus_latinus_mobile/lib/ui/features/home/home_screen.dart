@@ -21,6 +21,8 @@ import '../circus/circus_screen.dart';
 import '../duel/duel_screen.dart';
 import '../lesson/lesson_screen.dart';
 import '../boutique/boutique_modal.dart';
+import 'views/bibliotheca_view.dart';
+import 'views/ludi_view.dart';
 import '../../../data/models/goodie_item.dart';
 import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
@@ -38,8 +40,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _currentTabIndex = 0; // 0 = Cursus, 1 = Bibliotheca, 2 = Ludi
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
   final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
+
+  String get _appBarTitle {
+    switch (_currentTabIndex) {
+      case 1:
+        return 'BIBLIOTHECA ROMANA';
+      case 2:
+        return 'LUDI & ARÈNES';
+      default:
+        return 'LUDUS LATINUS';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('LUDUS LATINUS'),
+        title: Text(_appBarTitle),
         actions: [
           IconButton(
             icon: Icon(
@@ -77,17 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.casino_outlined, color: RomanColors.imperialPurple, size: 26),
-            tooltip: 'Taverne des Dés Romains (Alea Iacta Est)',
-            onPressed: () {
-              AudioService().playDiceRoll();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
-              );
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.account_circle_outlined, color: RomanColors.imperialPurple, size: 28),
             tooltip: 'Tabularium & Profil',
             onPressed: () {
@@ -100,19 +103,65 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentTabIndex,
+        backgroundColor: widget.repo.isDarkMode ? const Color(0xFF1E140E) : RomanColors.palatinCream,
+        indicatorColor: RomanColors.goldLight,
+        elevation: 6,
+        height: 64,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        onDestinationSelected: (index) {
+          if (_currentTabIndex != index) {
+            HapticFeedback.selectionClick();
+            AudioService().playCardFlip();
+            setState(() => _currentTabIndex = index);
+          }
+        },
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.explore_outlined, color: Colors.black54),
+            selectedIcon: Icon(Icons.explore_rounded, color: RomanColors.imperialPurple),
+            label: 'Cursus',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.auto_stories_outlined, color: Colors.black54),
+            selectedIcon: Icon(Icons.auto_stories_rounded, color: RomanColors.imperialPurple),
+            label: 'Bibliotheca',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.shield_outlined, color: Colors.black54),
+            selectedIcon: Icon(Icons.shield_rounded, color: RomanColors.imperialPurple),
+            label: 'Ludi',
+          ),
+        ],
+      ),
       body: AnimatedBuilder(
         animation: widget.repo,
         builder: (context, _) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 860),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                // 1. Carte Héros & Statistiques (Marbre Travertin sculpté)
-                RomanCard(
+          switch (_currentTabIndex) {
+            case 1:
+              return BibliothecaView(repo: widget.repo);
+            case 2:
+              return LudiView(repo: widget.repo);
+            default:
+              return _buildCursusView(context, profile, avatarImg);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildCursusView(BuildContext context, UserProfile profile, String avatarImg) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 860),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // 1. Carte Héros & Statistiques (Marbre Travertin sculpté)
+              RomanCard(
                   child: Row(
                     children: [
                       RomanMedallion(
@@ -293,517 +342,216 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
 
-                const SizedBox(height: 12),
+              const SizedBox(height: 14),
 
-                // 3. Sélecteur de Classe du Collège (Onglets Romains)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(_classTitles.length, (index) {
-                      final isSelected = _selectedClassIndex == index;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: ChoiceChip(
-                          label: Text(_classTitles[index]),
-                          selected: isSelected,
-                          selectedColor: RomanColors.imperialPurple,
-                          labelStyle: TextStyle(
-                            color: isSelected ? Colors.white : RomanColors.charcoal,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                            fontSize: 12,
-                          ),
-                          backgroundColor: Colors.white,
-                          side: BorderSide(
-                            color: isSelected ? RomanColors.imperialPurple : const Color(0xFFE2D6C5),
-                          ),
-                          onSelected: (selected) {
-                            if (selected) {
-                              HapticFeedback.selectionClick();
-                              setState(() => _selectedClassIndex = index);
-                            }
-                          },
-                        ),
-                      );
-                    }),
+              // 2. Bannière Héroïque « La Via Appia » (Style Monument Valley)
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF5A121E), Color(0xFF330811)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x3344101A),
+                      offset: Offset(0, 6),
+                      blurRadius: 14,
+                    )
+                  ],
                 ),
-
-                const SizedBox(height: 10),
-                const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
-                const SizedBox(height: 8),
-
-                // 3.bis Section Pédagogique : Leçons du Programme Officiel du Collège
-                _buildCurriculumLessonsSection(),
-
-                const SizedBox(height: 16),
-
-                // 4. Bannière Héroïque « La Via Appia » (Style Monument Valley)
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF5A121E), Color(0xFF330811)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x3344101A),
-                        offset: Offset(0, 6),
-                        blurRadius: 14,
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(0xFFFFF0D0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFFFF0D0),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/logo_centurion_64.png',
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Text('🏛️', style: TextStyle(fontSize: 18)),
+                              ),
                             ),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/logo_centurion_64.png',
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => const Center(
-                                  child: Text('🏛️', style: TextStyle(fontSize: 18)),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          'LA VIA APPIA',
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 1.5,
+                            fontFamily: 'serif',
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'Chaussée pavée polygonale • 26 étapes milliaires • Cycle 4',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
+                    ),
+                    const SizedBox(height: 16),
+                    RomanButton(
+                      text: '▶ AVANCER SUR LA ROUTE',
+                      isLarge: true,
+                      onPressed: () {
+                        AudioService().playTriumph();
+                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MapScreen(
+                              repo: widget.repo,
+                              initialClassFilter: _selectedClassIndex,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              // 3. Carte « Défi du Jour » dynamique (+25 HS)
+              Builder(
+                builder: (context) {
+                  final dailyQuest = DailyQuest.getTodayQuest();
+                  final isDone = profile.isDailyQuestCompletedToday;
+
+                  return Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: isDone ? const Color(0xFFF2FBF5) : const Color(0xFFFFFBF0),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: isDone ? RomanColors.laurelGreen : RomanColors.imperialGold,
+                        width: 1.2,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(isDone ? '🌿' : dailyQuest.icone, style: const TextStyle(fontSize: 24)),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                dailyQuest.titre,
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDone ? const Color(0xFF166534) : const Color(0xFF7A4E0B),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            'LA VIA APPIA',
-                            style: TextStyle(
-                              fontSize: 19,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              letterSpacing: 1.5,
-                              fontFamily: 'serif',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        'Chaussée pavée polygonale • 26 étapes milliaires • Cycle 4',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
-                      ),
-                      const SizedBox(height: 16),
-                      RomanButton(
-                        text: '▶ AVANCER SUR LA ROUTE',
-                        isLarge: true,
-                        onPressed: () {
-                          AudioService().playTriumph();
-                          RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => MapScreen(
-                                repo: widget.repo,
-                                initialClassFilter: _selectedClassIndex,
+                              Text(
+                                isDone
+                                    ? 'Défi accompli ! Reviens demain pour une nouvelle quête.'
+                                    : dailyQuest.description,
+                                style: const TextStyle(fontSize: 11.5, color: Colors.black87),
                               ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        if (isDone)
+                          const RomanWaxSeal(
+                            size: 40,
+                            label: 'SPQR',
+                            sealColor: RomanColors.laurelGreen,
+                            stampColor: Color(0xFFFFDF85),
+                          )
+                        else
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: RomanColors.imperialPurple,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                          );
+                            onPressed: () {
+                              RomanLottieEffects.showChestReward(
+                                context,
+                                sestercesReward: dailyQuest.recompense,
+                                questTitle: dailyQuest.titre,
+                                onClaim: () {
+                                  widget.repo.completeDailyQuest(dailyQuest.recompense);
+                                  setState(() {});
+                                  _navigateToQuestTarget(context, dailyQuest.routeCible);
+                                },
+                              );
+                            },
+                            child: Text('🎁 +${dailyQuest.recompense} HS'),
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 16),
+
+              // 4. Sélecteur de Classe du Collège (Onglets Romains)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(_classTitles.length, (index) {
+                    final isSelected = _selectedClassIndex == index;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        label: Text(_classTitles[index]),
+                        selected: isSelected,
+                        selectedColor: RomanColors.imperialPurple,
+                        labelStyle: TextStyle(
+                          color: isSelected ? Colors.white : RomanColors.charcoal,
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                          fontSize: 12,
+                        ),
+                        backgroundColor: Colors.white,
+                        side: BorderSide(
+                          color: isSelected ? RomanColors.imperialPurple : const Color(0xFFE2D6C5),
+                        ),
+                        onSelected: (selected) {
+                          if (selected) {
+                            HapticFeedback.selectionClick();
+                            setState(() => _selectedClassIndex = index);
+                          }
                         },
                       ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // 5. Carte « Défi du Jour » dynamique (+25 HS)
-                Builder(
-                  builder: (context) {
-                    final dailyQuest = DailyQuest.getTodayQuest();
-                    final isDone = profile.isDailyQuestCompletedToday;
-
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      decoration: BoxDecoration(
-                        color: isDone ? const Color(0xFFF2FBF5) : const Color(0xFFFFFBF0),
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: isDone ? RomanColors.laurelGreen : RomanColors.imperialGold,
-                          width: 1.2,
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(isDone ? '🌿' : dailyQuest.icone, style: const TextStyle(fontSize: 24)),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  dailyQuest.titre,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                    color: isDone ? const Color(0xFF166534) : const Color(0xFF7A4E0B),
-                                  ),
-                                ),
-                                Text(
-                                  isDone
-                                      ? 'Défi accompli ! Reviens demain pour une nouvelle quête.'
-                                      : dailyQuest.description,
-                                  style: const TextStyle(fontSize: 11.5, color: Colors.black87),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          if (isDone)
-                            const RomanWaxSeal(
-                              size: 40,
-                              label: 'SPQR',
-                              sealColor: RomanColors.laurelGreen,
-                              stampColor: Color(0xFFFFDF85),
-                            )
-                          else
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: RomanColors.imperialPurple,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                              ),
-                              onPressed: () {
-                                RomanLottieEffects.showChestReward(
-                                  context,
-                                  sestercesReward: dailyQuest.recompense,
-                                  questTitle: dailyQuest.titre,
-                                  onClaim: () {
-                                    widget.repo.completeDailyQuest(dailyQuest.recompense);
-                                    setState(() {});
-                                    _navigateToQuestTarget(context, dailyQuest.routeCible);
-                                  },
-                                );
-                              },
-                              child: Text('🎁 +${dailyQuest.recompense} HS'),
-                            ),
-                        ],
-                      ),
                     );
-                  },
+                  }),
                 ),
+              ),
 
-                const SizedBox(height: 18),
+              const SizedBox(height: 10),
+              const RomanMeanderDivider(height: 12, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
+              const SizedBox(height: 8),
 
-                // 6. Section Ateliers d'Étude & Outils
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF1E5B94).withOpacity(0.06),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFF1E5B94).withOpacity(0.25)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF1E5B94),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Text('🏛️', style: TextStyle(fontSize: 12)),
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'ATELIERS DU FORUM • OUTILS & PRATIQUE',
-                                style: TextStyle(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                  color: Color(0xFF1E5B94),
-                                ),
-                              ),
-                              Text(
-                                'Dictionnaire, fiches mémorielles et gestion de compte',
-                                style: TextStyle(fontSize: 10.5, color: Colors.black54),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E5B94),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Text(
-                          'OUTILS D\'ÉTUDE',
-                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 0.4),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
+              // 5. Section Pédagogique : Leçons du Programme Officiel du Collège
+              _buildCurriculumLessonsSection(),
 
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isDesktop = constraints.maxWidth >= 520;
-                    return GridView.count(
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: isDesktop ? 3.4 : 1.32,
-                      children: [
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/musee_circus.png',
-                          fallbackIcon: '🃏',
-                          title: 'Memoria Velox',
-                          subtitle: 'Flashcards 3D Leitner',
-                          tagLabel: 'RÉVISION',
-                          tagColor: const Color(0xFF1E5B94),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => MemoriaScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/musee_thermes.png',
-                          fallbackIcon: '🏛️',
-                          title: 'Forum Imperiale',
-                          subtitle: 'Restaure 6 édifices',
-                          tagLabel: 'DÉFI',
-                          tagColor: const Color(0xFF7A5901),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => ForumScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/musee_louve.png',
-                          fallbackIcon: '📖',
-                          title: 'Thesaurus',
-                          subtitle: 'Dictionnaire & Tables',
-                          tagLabel: 'OUTIL',
-                          tagColor: const Color(0xFF1E5B94),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => ThesaurusScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/logo_centurion_64.png',
-                          fallbackIcon: '📜',
-                          title: 'Tabularium',
-                          subtitle: 'Compte & Tessera',
-                          tagLabel: 'PROFIL',
-                          tagColor: const Color(0xFF6B4226),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(height: 18),
-
-                // 7. Section Mini-Jeux & Détente Antique
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFB3261E).withOpacity(0.06),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFB3261E).withOpacity(0.25)),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFB3261E),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Text('⚔️', style: TextStyle(fontSize: 12)),
-                          ),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'JEUX & DÉFIS DE L\'EMPIRE • LOISIRS & ARÈNE',
-                                style: TextStyle(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                  color: Color(0xFFB3261E),
-                                ),
-                              ),
-                              Text(
-                                'Course de chars, arène des gladiateurs, dés et chiffres',
-                                style: TextStyle(fontSize: 10.5, color: Colors.black54),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFB3261E),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Text(
-                          'MINI-JEUX ARCADE',
-                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 0.4),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final isDesktop = constraints.maxWidth >= 520;
-                    return GridView.count(
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                      childAspectRatio: isDesktop ? 3.4 : 1.32,
-                      children: [
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/boss_mercure_140.png',
-                          fallbackIcon: '🎲',
-                          title: 'Alea Iacta Est',
-                          subtitle: 'Taverne & Dés Romains',
-                          tagLabel: 'JEU',
-                          tagColor: const Color(0xFFB3261E),
-                          onTap: () {
-                            AudioService().playDiceRoll();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/lupulus/lupulus_savant.png',
-                          fallbackIcon: '🏺',
-                          title: 'Marché de Trajan',
-                          subtitle: 'Chiffres Romains & Étal',
-                          tagLabel: 'JEU',
-                          tagColor: const Color(0xFFB3261E),
-                          onTap: () {
-                            AudioService().playSesterces();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/lupulus/lupulus_imperator.png',
-                          fallbackIcon: '📜',
-                          title: 'Atelier de César',
-                          subtitle: 'Cryptographie Militaire',
-                          tagLabel: 'ÉNIGME',
-                          tagColor: const Color(0xFF7A5901),
-                          onTap: () {
-                            AudioService().playWheelClick();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => CesarScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
-                          fallbackIcon: '🏆',
-                          title: 'Le Panthéon',
-                          subtitle: 'Album des Reliques',
-                          tagLabel: 'RELIC',
-                          tagColor: const Color(0xFF7A5901),
-                          onTap: () {
-                            AudioService().playTriumph();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => PantheonScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/circus/chariot_bleu.png',
-                          fallbackIcon: '🐎',
-                          title: 'Circus Maximus',
-                          subtitle: 'Course de Chars & Turbo',
-                          tagLabel: 'COURSE',
-                          tagColor: const Color(0xFFB3261E),
-                          onTap: () {
-                            AudioService().playCrowdCheer();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                        _buildArtworkTile(
-                          imagePath: 'assets/images/boss_gladiateur_140.png',
-                          fallbackIcon: '⚔️',
-                          title: 'Colosseum Duellum',
-                          subtitle: 'Arène des Champions',
-                          tagLabel: 'ARÈNE',
-                          tagColor: const Color(0xFFB3261E),
-                          onTap: () {
-                            AudioService().playSwordClash();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => DuelScreen(repo: widget.repo)),
-                            );
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              const SizedBox(height: 24),
+            ],
           ),
         ),
-      );
-        },
       ),
     );
   }
@@ -1266,204 +1014,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildArtworkTile({
-    required String imagePath,
-    required String fallbackIcon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-    String? tagLabel,
-    Color? tagColor,
-  }) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final isWide = constraints.maxWidth >= 210;
 
-        return InkWell(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            onTap();
-          },
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: isWide ? 14 : 10,
-              vertical: isWide ? 10 : 8,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x0F000000),
-                  offset: Offset(0, 3),
-                  blurRadius: 8,
-                ),
-              ],
-            ),
-            child: isWide
-                ? Row(
-                    children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: RomanColors.goldLight,
-                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0x15000000),
-                              offset: Offset(0, 2),
-                              blurRadius: 4,
-                            ),
-                          ],
-                        ),
-                        child: ClipOval(
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Center(
-                              child: Text(fallbackIcon, style: const TextStyle(fontSize: 22)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 13.5,
-                                      fontWeight: FontWeight.bold,
-                                      color: RomanColors.imperialPurple,
-                                    ),
-                                  ),
-                                ),
-                                if (tagLabel != null) ...[
-                                  const SizedBox(width: 6),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                    decoration: BoxDecoration(
-                                      color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                        color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.4),
-                                        width: 0.8,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      tagLabel,
-                                      style: TextStyle(
-                                        fontSize: 8.5,
-                                        fontWeight: FontWeight.bold,
-                                        color: tagColor ?? RomanColors.imperialPurple,
-                                        letterSpacing: 0.4,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              subtitle,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 11, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Icon(
-                        Icons.chevron_right_rounded,
-                        color: RomanColors.imperialGold,
-                        size: 20,
-                      ),
-                    ],
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: RomanColors.goldLight,
-                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                        ),
-                        child: ClipOval(
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Center(
-                              child: Text(fallbackIcon, style: const TextStyle(fontSize: 20)),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Text(
-                              title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 12.5,
-                                fontWeight: FontWeight.bold,
-                                color: RomanColors.imperialPurple,
-                              ),
-                            ),
-                          ),
-                          if (tagLabel != null) ...[
-                            const SizedBox(width: 4),
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                              decoration: BoxDecoration(
-                                color: (tagColor ?? RomanColors.imperialPurple).withOpacity(0.12),
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                tagLabel,
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  fontWeight: FontWeight.bold,
-                                  color: tagColor ?? RomanColors.imperialPurple,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                      Text(
-                        subtitle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 10, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-          ),
-        );
-      },
-    );
-  }
 
   void _navigateToQuestTarget(BuildContext context, String target) {
     switch (target) {
