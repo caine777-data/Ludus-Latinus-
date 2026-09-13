@@ -554,64 +554,139 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
 
             const SizedBox(height: 16),
 
-            // 2. Plateau en Marbre des 4 Dés Romains
+            // 2. Plateau en Marbre des 4 Dés Romains (Tabula Aleatoria)
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFFFCF9F3), Color(0xFFF3EDE2), Color(0xFFE8E0D2)],
+                ),
                 borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: RomanColors.imperialGold, width: 2),
+                border: Border.all(color: RomanColors.imperialGold, width: 2.2),
                 boxShadow: const [
                   BoxShadow(
-                    color: Color(0x18000000),
+                    color: Color(0x24000000),
                     offset: Offset(0, 8),
-                    blurRadius: 18,
-                  )
+                    blurRadius: 20,
+                  ),
+                  BoxShadow(
+                    color: Color(0x33D4AF37),
+                    offset: Offset(0, 2),
+                    blurRadius: 8,
+                  ),
                 ],
               ),
               child: Column(
                 children: [
                   if (_isRolling)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/animated/dice_roll_3d.webp',
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.contain,
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            '🎲 Les tesserae tournoient sur le marbre...',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF8A5515),
+                    AnimatedBuilder(
+                      animation: _rollController,
+                      builder: (context, child) {
+                        final shakeAngle = math.sin(_rollController.value * math.pi * 8) * 0.12;
+                        final bounceY = (math.sin(_rollController.value * math.pi * 6)).abs() * 5.0;
+                        return Transform.translate(
+                          offset: Offset(0, -bounceY),
+                          child: Transform.rotate(
+                            angle: shakeAngle,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: RomanColors.imperialGold.withOpacity(0.4),
+                                          blurRadius: 20,
+                                          spreadRadius: 4,
+                                        ),
+                                      ],
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/animated/dice_roll_3d.webp',
+                                      width: 86,
+                                      height: 86,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  const Text(
+                                    '🎲 Le fritillus secoue les tesserae...',
+                                    style: TextStyle(
+                                      fontSize: 12.5,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF7A4315),
+                                      letterSpacing: 0.5,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     )
                   else ...[
                     if (_modeDuelGaius) ...[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text('🧔 DÉS DE GAIUS L\'AUBERGISTE', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.black54)),
-                          Text('FACTION TABERNA', style: TextStyle(fontSize: 9, color: Colors.orange, fontWeight: FontWeight.bold)),
-                        ],
+                      // En-tête Gaius avec médaillon
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3E1F16),
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 34,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                              ),
+                              child: ClipOval(
+                                child: Image.asset(
+                                  'assets/images/boss_gladiateur_cadre_140.png',
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, __, ___) => const Text('🧔', style: TextStyle(fontSize: 20)),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'GAIUS L\'AUBERGISTE',
+                                    style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold, color: Colors.amberAccent, letterSpacing: 0.8),
+                                  ),
+                                  Text(
+                                    _gaiusReplique ?? '« Par les dieux ! Que le meilleur cornet l\'emporte ! »',
+                                    style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.white70),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(4, (index) {
-                          return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true);
+                          const angles = [-0.04, 0.05, -0.03, 0.04];
+                          return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true, angle: angles[index]);
                         }),
                       ),
-                      const Divider(height: 24, thickness: 1),
+                      const Divider(height: 24, thickness: 1.2),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -624,7 +699,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: List.generate(4, (index) {
-                        return _build3DRomanDie(_diceValues[index]);
+                        const angles = [-0.05, 0.04, -0.04, 0.06];
+                        return _build3DRomanDie(_diceValues[index], angle: angles[index]);
                       }),
                     ),
                   ],
@@ -737,39 +813,71 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     );
   }
 
-  Widget _build3DRomanDie(int val, {bool isGaius = false}) {
-    return Container(
-      width: isGaius ? 52 : 60,
-      height: isGaius ? 52 : 60,
-      decoration: BoxDecoration(
-        color: isGaius ? const Color(0xFF5C3317) : const Color(0xFFFBF8EE),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isGaius ? const Color(0xFF8B5A2B) : const Color(0xFFC59B27),
-          width: 2,
+  Widget _build3DRomanDie(int val, {bool isGaius = false, double angle = 0.0}) {
+    return Transform.rotate(
+      angle: angle,
+      child: Container(
+        width: isGaius ? 54 : 62,
+        height: isGaius ? 54 : 62,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: isGaius
+                ? const [Color(0xFF7A4320), Color(0xFF4E260E)]
+                : const [Color(0xFFFFFDF8), Color(0xFFF4EAD7), Color(0xFFE5D5B5)],
+          ),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isGaius ? const Color(0xFF9E6534) : const Color(0xFFD4AF37),
+            width: 2.2,
+          ),
+          boxShadow: [
+            const BoxShadow(
+              color: Color(0x38000000),
+              offset: Offset(0, 5),
+              blurRadius: 7,
+            ),
+            BoxShadow(
+              color: isGaius ? const Color(0x22000000) : const Color(0x66FFFFFF),
+              offset: const Offset(0, -2),
+              blurRadius: 3,
+            ),
+          ],
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x33000000),
-            offset: Offset(0, 4),
-            blurRadius: 6,
-          ),
-          BoxShadow(
-            color: Color(0x22FFFFFF),
-            offset: Offset(0, -2),
-            blurRadius: 2,
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          _romanDice[val] ?? '',
-          style: TextStyle(
-            fontSize: isGaius ? 18 : 22,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'serif',
-            color: isGaius ? const Color(0xFFFFE4C4) : RomanColors.imperialPurple,
-          ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            // Liseré intérieur ciselé
+            Container(
+              margin: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(
+                  color: isGaius ? const Color(0x44FFE0B2) : const Color(0x44C5A059),
+                  width: 0.8,
+                ),
+              ),
+            ),
+            // Chiffre Romain gravé
+            Text(
+              _romanDice[val] ?? '',
+              style: TextStyle(
+                fontSize: isGaius ? 19 : 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'serif',
+                letterSpacing: 0.5,
+                color: isGaius ? const Color(0xFFFFE4C4) : RomanColors.imperialPurple,
+                shadows: [
+                  Shadow(
+                    color: isGaius ? Colors.black45 : const Color(0x334A1525),
+                    offset: const Offset(0, 1.5),
+                    blurRadius: 2,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
