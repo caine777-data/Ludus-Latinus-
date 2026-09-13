@@ -9,6 +9,10 @@ import '../../core/game_juice.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import 'widgets/word_puzzle_widget.dart';
+import 'widgets/cloze_fill_widget.dart';
+import 'widgets/case_decoder_widget.dart';
+import 'widgets/arena_challenge_widget.dart';
 
 /// Écran de cours et d''exercice QCM 2x2 tactile au style épuré Monument Valley.
 class LessonScreen extends StatefulWidget {
@@ -45,16 +49,20 @@ class _LessonScreenState extends State<LessonScreen> {
     });
 
     if (isCorrect) {
-      AudioService().playTriumph();
-      AudioService().playSesterces();
-      RomanLottieEffects.showCoinShower(context);
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-      widget.repo.completeLesson(widget.lesson.id, 10);
-      _showTriumphModal();
+      _handleSuccess();
     } else {
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.light);
     }
+  }
+
+  void _handleSuccess() {
+    AudioService().playTriumph();
+    AudioService().playSesterces();
+    RomanLottieEffects.showCoinShower(context);
+    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+    widget.repo.completeLesson(widget.lesson.id, 10);
+    _showTriumphModal();
   }
 
   void _showTriumphModal() {
@@ -602,233 +610,280 @@ class _LessonScreenState extends State<LessonScreen> {
 
             const SizedBox(height: 16),
 
-            // 3. Question et Grille QCM Tactile 2x2
-            if (lesson.options.isNotEmpty) ...[
-              RomanCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+            // 3. Exercice Interactif Pédagogique (adapté selon le type : QCM, Puzzle, Trou, Décodeur, Arène)
+            _buildInteractiveExerciseSection(lesson),
+            const SizedBox(height: 20),
+          ],
+        ),
+      ),
+    ),
+  );
+  }
+
+  Widget _buildInteractiveExerciseSection(Lesson lesson) {
+    if (lesson.type == 'puzzle' && lesson.words.isNotEmpty) {
+      return WordPuzzleWidget(
+        availableWords: lesson.words,
+        targetSolution: lesson.solution ?? lesson.latin ?? lesson.words.join(' '),
+        latinPhrase: lesson.latin,
+        onCompleted: _handleSuccess,
+      );
+    } else if (lesson.type == 'trou') {
+      return ClozeFillWidget(
+        consigne: lesson.consigne,
+        avant: lesson.avant,
+        apres: lesson.apres,
+        solution: lesson.solution ?? '',
+        options: lesson.options,
+        latinComplet: lesson.latinComplet,
+        onCompleted: _handleSuccess,
+      );
+    } else if (lesson.type == 'decodeur' && lesson.words.isNotEmpty) {
+      return CaseDecoderWidget(
+        words: lesson.words,
+        expectedRoles: lesson.roles,
+        latinPhrase: lesson.latin,
+        onCompleted: _handleSuccess,
+      );
+    } else if (lesson.type == 'arene' && lesson.questions.isNotEmpty) {
+      return ArenaChallengeWidget(
+        boss: lesson.boss,
+        questions: lesson.questions,
+        onCompleted: _handleSuccess,
+      );
+    } else if (lesson.options.isNotEmpty) {
+      return _buildQcmExerciseCard(lesson);
+    } else {
+      return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildQcmExerciseCard(Lesson lesson) {
+    return RomanCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Text('📜 ', style: TextStyle(fontSize: 16)),
+              Expanded(
+                child: Text(
+                  lesson.question ?? 'Choisis la bonne réponse :',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: RomanColors.imperialPurple,
+                  ),
+                ),
+              ),
+              if (!isAnswered) ...[
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    setState(() {
+                      _showHint = !_showHint;
+                    });
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _showHint ? const Color(0xFFFFF3E0) : RomanColors.goldLight,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: _showHint ? Colors.orange.shade700 : RomanColors.imperialGold,
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('📜 ', style: TextStyle(fontSize: 16)),
-                        Expanded(
-                          child: Text(
-                            lesson.question ?? 'Choisis la bonne réponse :',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: RomanColors.imperialPurple,
-                            ),
+                        const Text('💡', style: TextStyle(fontSize: 12)),
+                        const SizedBox(width: 4),
+                        Text(
+                          _showHint ? 'Masquer' : 'Indice',
+                          style: TextStyle(
+                            fontSize: 10.5,
+                            fontWeight: FontWeight.bold,
+                            color: _showHint ? Colors.orange.shade900 : const Color(0xFF7A5901),
                           ),
                         ),
-                        if (!isAnswered) ...[
-                          const SizedBox(width: 8),
-                          InkWell(
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              setState(() {
-                                _showHint = !_showHint;
-                              });
-                            },
-                            borderRadius: BorderRadius.circular(10),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: _showHint ? const Color(0xFFFFF3E0) : RomanColors.goldLight,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: _showHint ? Colors.orange.shade700 : RomanColors.imperialGold,
-                                  width: 1,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text('💡', style: TextStyle(fontSize: 12)),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    _showHint ? 'Masquer' : 'Indice',
-                                    style: TextStyle(
-                                      fontSize: 10.5,
-                                      fontWeight: FontWeight.bold,
-                                      color: _showHint ? Colors.orange.shade900 : const Color(0xFF7A5901),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
                       ],
                     ),
-                    if (_showHint && !isAnswered) ...[
-                      const SizedBox(height: 10),
-                      AnimatedContainer(
-                        duration: const Duration(milliseconds: 250),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFFBEA),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFFE0C475), width: 1.2),
-                          boxShadow: const [
-                            BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
-                          ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+          if (_showHint && !isAnswered) ...[
+            const SizedBox(height: 10),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFBEA),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE0C475), width: 1.2),
+                boxShadow: const [
+                  BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: RomanColors.palatinCream,
+                      border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                    ),
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/lupulus/lupulus_aide_180.png',
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Center(
+                          child: Text('🐺', style: TextStyle(fontSize: 20)),
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 42,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: RomanColors.palatinCream,
-                                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                              ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/images/lupulus/lupulus_aide_180.png',
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (_, __, ___) => const Center(
-                                    child: Text('🐺', style: TextStyle(fontSize: 20)),
-                                  ),
-                                ),
-                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'INDICE BIENVEILLANT DE LUPULUS',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                            color: Color(0xFF8A5B00),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          _getHintForLesson(lesson),
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            height: 1.3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          const SizedBox(height: 12),
+
+          // Grille 2x2 des options tactiles
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 2.25,
+            ),
+            itemCount: lesson.options.length,
+            itemBuilder: (context, optIndex) {
+              final optionText = lesson.options[optIndex];
+              final isSelected = (selectedOption == optIndex);
+              const romanNumerals = ['I', 'II', 'III', 'IV'];
+              final numeral = romanNumerals[optIndex.clamp(0, 3)];
+
+              Color btnColor = Colors.white;
+              Color textColor = RomanColors.charcoal;
+              Color borderColor = RomanColors.marbleBorder;
+              Color sealColor = const Color(0xFF8E1724); // Cire rouge impériale
+              Color stampColor = const Color(0xFFFFDF85); // Or estampé
+              String sealLabel = numeral;
+
+              if (isAnswered) {
+                if (optIndex == lesson.answer) {
+                  btnColor = const Color(0xFFE8F5E9);
+                  textColor = const Color(0xFF1B5E20);
+                  borderColor = RomanColors.laurelGreen;
+                  sealColor = const Color(0xFF1B5E20);
+                  sealLabel = '✓';
+                } else if (isSelected) {
+                  btnColor = const Color(0xFFFFEBEE);
+                  textColor = const Color(0xFFB71C1C);
+                  borderColor = const Color(0xFFB71C1C);
+                  sealColor = const Color(0xFF8B2500);
+                  sealLabel = '✗';
+                } else {
+                  sealColor = const Color(0xFF9E8E81);
+                  stampColor = Colors.white70;
+                }
+              }
+
+              return InkWell(
+                onTap: isAnswered ? null : () => _submitAnswer(optIndex),
+                borderRadius: BorderRadius.circular(14),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: btnColor,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: borderColor, width: isSelected ? 2.0 : 1.4),
+                    boxShadow: [
+                      BoxShadow(
+                        color: isAnswered && optIndex == lesson.answer
+                            ? RomanColors.laurelGreen.withOpacity(0.25)
+                            : const Color(0x0F000000),
+                        offset: const Offset(0, 3),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      RomanWaxSeal(
+                        size: 28,
+                        label: sealLabel,
+                        sealColor: sealColor,
+                        stampColor: stampColor,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            optionText,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                              letterSpacing: 0.2,
                             ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'INDICE BIENVEILLANT DE LUPULUS',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 0.5,
-                                      color: Color(0xFF8A5B00),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    _getHintForLesson(lesson),
-                                    style: const TextStyle(
-                                      fontSize: 11.5,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black87,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ],
-                    const SizedBox(height: 12),
-
-                    // Grille 2x2 des options tactiles
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        childAspectRatio: 2.25,
-                      ),
-                      itemCount: lesson.options.length,
-                      itemBuilder: (context, optIndex) {
-                        final optionText = lesson.options[optIndex];
-                        final isSelected = (selectedOption == optIndex);
-                        const romanNumerals = ['I', 'II', 'III', 'IV'];
-                        final numeral = romanNumerals[optIndex.clamp(0, 3)];
-
-                        Color btnColor = Colors.white;
-                        Color textColor = RomanColors.charcoal;
-                        Color borderColor = RomanColors.marbleBorder;
-                        Color sealColor = const Color(0xFF8E1724); // Cire rouge impériale
-                        Color stampColor = const Color(0xFFFFDF85); // Or estampé
-                        String sealLabel = numeral;
-
-                        if (isAnswered) {
-                          if (optIndex == lesson.answer) {
-                            btnColor = const Color(0xFFE8F5E9);
-                            textColor = const Color(0xFF1B5E20);
-                            borderColor = RomanColors.laurelGreen;
-                            sealColor = const Color(0xFF1B5E20);
-                            sealLabel = '✓';
-                          } else if (isSelected) {
-                            btnColor = const Color(0xFFFFEBEE);
-                            textColor = const Color(0xFFB71C1C);
-                            borderColor = const Color(0xFFB71C1C);
-                            sealColor = const Color(0xFF8B2500);
-                            sealLabel = '✗';
-                          } else {
-                            sealColor = const Color(0xFF9E8E81);
-                            stampColor = Colors.white70;
-                          }
-                        }
-
-                        return InkWell(
-                          onTap: isAnswered ? null : () => _submitAnswer(optIndex),
-                          borderRadius: BorderRadius.circular(14),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: btnColor,
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: borderColor, width: isSelected ? 2.0 : 1.4),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: isAnswered && optIndex == lesson.answer
-                                      ? RomanColors.laurelGreen.withOpacity(0.25)
-                                      : const Color(0x0F000000),
-                                  offset: const Offset(0, 3),
-                                  blurRadius: 6,
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                RomanWaxSeal(
-                                  size: 28,
-                                  label: sealLabel,
-                                  sealColor: sealColor,
-                                  stampColor: stampColor,
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      optionText,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: 12.5,
-                                        fontWeight: FontWeight.bold,
-                                        color: textColor,
-                                        letterSpacing: 0.2,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-
-                    if (isAnswered && !isCorrect)
-                      _buildMagisterPedagogicalFeedback(context),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              );
+            },
+          ),
+
+          if (isAnswered && !isCorrect)
+            _buildMagisterPedagogicalFeedback(context),
+        ],
+      ),
+    );
+  }
             const SizedBox(height: 20),
           ],
         ),

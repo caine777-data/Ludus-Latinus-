@@ -1,5 +1,98 @@
 import 'cursus_honorum.dart';
 
+/// Progression d'une carte dans le système de répétition espacée Leitner (SM-2).
+class SrsCardProgress {
+  final int box; // 1 à 5
+  final DateTime nextReviewDate;
+  final int totalReviews;
+  final int lapses;
+
+  const SrsCardProgress({
+    this.box = 1,
+    required this.nextReviewDate,
+    this.totalReviews = 0,
+    this.lapses = 0,
+  });
+
+  bool get isDue =>
+      DateTime.now().isAfter(nextReviewDate) ||
+      DateTime.now().isAtSameMomentAs(nextReviewDate);
+
+  factory SrsCardProgress.initial() {
+    return SrsCardProgress(
+      box: 1,
+      nextReviewDate: DateTime.now(),
+      totalReviews: 0,
+      lapses: 0,
+    );
+  }
+
+  factory SrsCardProgress.fromJson(Map<String, dynamic> json) {
+    return SrsCardProgress(
+      box: (json['box'] as int?) ?? 1,
+      nextReviewDate: json['next_review'] != null
+          ? DateTime.tryParse(json['next_review'].toString()) ?? DateTime.now()
+          : DateTime.now(),
+      totalReviews: (json['total_reviews'] as int?) ?? 0,
+      lapses: (json['lapses'] as int?) ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'box': box,
+      'next_review': nextReviewDate.toIso8601String(),
+      'total_reviews': totalReviews,
+      'lapses': lapses,
+    };
+  }
+
+  /// Calcule la progression suite à une réponse réussie (Leitner box progression)
+  /// Box 1: +1 jour
+  /// Box 2: +3 jours
+  /// Box 3: +7 jours
+  /// Box 4: +14 jours
+  /// Box 5: +30 jours
+  SrsCardProgress onSuccess() {
+    final newBox = (box < 5) ? box + 1 : 5;
+    final Duration interval;
+    switch (newBox) {
+      case 1:
+        interval = const Duration(days: 1);
+        break;
+      case 2:
+        interval = const Duration(days: 3);
+        break;
+      case 3:
+        interval = const Duration(days: 7);
+        break;
+      case 4:
+        interval = const Duration(days: 14);
+        break;
+      case 5:
+      default:
+        interval = const Duration(days: 30);
+        break;
+    }
+    return SrsCardProgress(
+      box: newBox,
+      nextReviewDate: DateTime.now().add(interval),
+      totalReviews: totalReviews + 1,
+      lapses: lapses,
+    );
+  }
+
+  /// Calcule la réinitialisation suite à un échec (retour en Boîte 1)
+  SrsCardProgress onFailure() {
+    return SrsCardProgress(
+      box: 1,
+      nextReviewDate: DateTime.now(),
+      totalReviews: totalReviews + 1,
+      lapses: lapses + 1,
+    );
+  }
+}
+
 /// Profil du joueur et sauvegarde de sa progression.
 class UserProfile {
   String id;
@@ -10,6 +103,7 @@ class UserProfile {
   List<String> completedLessons;
   List<String> restoredMonuments;
   Map<String, int> srsScores;
+  Map<String, SrsCardProgress> srsCards;
   String email;
   String tesseraCode;
   String? lastSyncDate;
@@ -28,6 +122,7 @@ class UserProfile {
     List<String>? completedLessons,
     List<String>? restoredMonuments,
     Map<String, int>? srsScores,
+    Map<String, SrsCardProgress>? srsCards,
     this.email = '',
     this.tesseraCode = 'SPQR-7A2B-9C1D',
     this.lastSyncDate,
@@ -39,6 +134,7 @@ class UserProfile {
   })  : completedLessons = completedLessons ?? [],
         restoredMonuments = restoredMonuments ?? [],
         srsScores = srsScores ?? {},
+        srsCards = srsCards ?? {},
         decodedEpigraphs = decodedEpigraphs ?? [],
         equippedGoodies = equippedGoodies ?? {
           'toge': 'lin_blanc',
@@ -52,6 +148,15 @@ class UserProfile {
           'stylet',
           'aucun',
         ];
+
+  SrsCardProgress getCardProgress(String cardId) {
+    return srsCards[cardId] ?? SrsCardProgress.initial();
+  }
+
+  void updateCardSrs(String cardId, {required bool success}) {
+    final current = getCardProgress(cardId);
+    srsCards[cardId] = success ? current.onSuccess() : current.onFailure();
+  }
 
   bool get isRegistered => email.isNotEmpty;
 
@@ -165,6 +270,7 @@ class UserProfile {
     var rawEpigraphs = json['decoded_epigraphs'] as List<dynamic>? ?? [];
     var rawEquipped = json['equipped_goodies'] as Map<String, dynamic>? ?? {};
     var rawOwned = json['owned_goodies'] as List<dynamic>? ?? [];
+    var rawSrs = json['srs_cards'] as Map<String, dynamic>? ?? {};
 
     Map<String, String> parsedEquipped = {
       'toge': rawEquipped['toge']?.toString() ?? 'lin_blanc',
@@ -177,6 +283,13 @@ class UserProfile {
         ? rawOwned.map((e) => e.toString()).toList()
         : ['lin_blanc', 'aucune', 'stylet', 'aucun'];
 
+    Map<String, SrsCardProgress> parsedSrs = {};
+    rawSrs.forEach((key, val) {
+      if (val is Map<String, dynamic>) {
+        parsedSrs[key] = SrsCardProgress.fromJson(val);
+      }
+    });
+
     return UserProfile(
       id: json['id'] as String? ?? 'defaut',
       nomHeros: json['nom_heros'] as String? ?? 'Marcus',
@@ -185,6 +298,7 @@ class UserProfile {
       streakDays: json['streak'] as int? ?? 1,
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
       restoredMonuments: rawMonuments.map((e) => e.toString()).toList(),
+      srsCards: parsedSrs,
       email: rawCompte['email'] as String? ?? '',
       tesseraCode: rawCompte['tessera'] as String? ?? 'SPQR-1001-A2B3',
       lastSyncDate: rawCompte['derniere_sync'] as String?,
@@ -205,6 +319,7 @@ class UserProfile {
       'streak': streakDays,
       'completed': completedLessons,
       'forum_monuments': restoredMonuments,
+      'srs_cards': srsCards.map((k, v) => MapEntry(k, v.toJson())),
       'last_daily_quest_date': lastDailyQuestDate,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,

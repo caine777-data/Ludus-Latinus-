@@ -61,6 +61,16 @@ class GameRepository extends ChangeNotifier {
     return ok;
   }
 
+  SrsCardProgress getSrsProgress(String cardId) {
+    return profile.getCardProgress(cardId);
+  }
+
+  void recordSrsReview(String cardId, {required bool success}) {
+    profile.updateCardSrs(cardId, success: success);
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
   void updateProfileName(String newName, String genre) {
     profile.nomHeros = newName;
     profile.genre = genre;

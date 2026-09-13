@@ -54,11 +54,81 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   int _streak = 0;
   int _maxStreak = 0;
 
+  String _cardKey(SrsCard card) => card.id.isNotEmpty ? card.id : card.latin;
+
   List<SrsCard> get _filteredCards {
     final all = widget.repo.srsCards;
-    if (selectedNiveau == NiveauMemoria.tous) return all;
-    final filtered = all.where((c) => selectedNiveau.matches(c.categorie)).toList();
-    return filtered.isNotEmpty ? filtered : all;
+    List<SrsCard> cards;
+    if (selectedNiveau == NiveauMemoria.tous) {
+      cards = List.of(all);
+    } else {
+      final filtered = all.where((c) => selectedNiveau.matches(c.categorie)).toList();
+      cards = filtered.isNotEmpty ? filtered : List.of(all);
+    }
+
+    // Trie par priorité didactique : les cartes à réviser (isDue) en tête de file
+    cards.sort((a, b) {
+      final progA = widget.repo.getSrsProgress(_cardKey(a));
+      final progB = widget.repo.getSrsProgress(_cardKey(b));
+      if (progA.isDue && !progB.isDue) return -1;
+      if (!progA.isDue && progB.isDue) return 1;
+      return progA.nextReviewDate.compareTo(progB.nextReviewDate);
+    });
+
+    return cards;
+  }
+
+  int get _dueCount {
+    return _filteredCards.where((c) => widget.repo.getSrsProgress(_cardKey(c)).isDue).length;
+  }
+
+  static String _toRoman(int number) {
+    switch (number) {
+      case 1:
+        return 'I';
+      case 2:
+        return 'II';
+      case 3:
+        return 'III';
+      case 4:
+        return 'IV';
+      case 5:
+        return 'V';
+      default:
+        return '$number';
+    }
+  }
+
+  static int _boxIntervalDays(int box) {
+    switch (box) {
+      case 1:
+        return 1;
+      case 2:
+        return 3;
+      case 3:
+        return 7;
+      case 4:
+        return 14;
+      case 5:
+      default:
+        return 30;
+    }
+  }
+
+  static Color _getBoxColor(int box) {
+    switch (box) {
+      case 1:
+        return const Color(0xFF8B2500); // Terre cuite
+      case 2:
+        return const Color(0xFFB8860B); // Bronze antique
+      case 3:
+        return const Color(0xFF5A738E); // Acier / Argent
+      case 4:
+        return const Color(0xFFC5A059); // Or impérial
+      case 5:
+      default:
+        return RomanColors.laurelGreen; // Laurier de triomphe
+    }
   }
 
   @override
@@ -92,6 +162,35 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _rateCard(int rating) {
+    final cards = _filteredCards;
+    final safeIndex = currentIndex.clamp(0, cards.length - 1);
+    if (safeIndex < cards.length) {
+      final currentCard = cards[safeIndex];
+      final key = _cardKey(currentCard);
+      final isSuccess = rating >= 2;
+      widget.repo.recordSrsReview(key, success: isSuccess);
+
+      final newProg = widget.repo.getSrsProgress(key);
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      if (isSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: RomanColors.laurelGreen,
+            duration: const Duration(milliseconds: 1100),
+            content: Text('📦 Arca ${_toRoman(newProg.box)} (Prochaine révision dans ${_boxIntervalDays(newProg.box)} j)'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xFF8B2500),
+            duration: Duration(milliseconds: 1100),
+            content: Text('📦 Retour en Arca I pour consolidation immédiate'),
+          ),
+        );
+      }
+    }
+
     int baseGain = 0;
     if (rating == 3) {
       _streak++;
@@ -123,7 +222,6 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     sessionEarnings += baseGain;
     widget.repo.addSesterces(baseGain);
 
-    final cards = _filteredCards;
     if (currentIndex < cards.length - 1) {
       if (!isFront) {
         _flipController.reverse();
@@ -339,13 +437,43 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               ),
             ],
 
-            // 3. Barre de progression
+            // 3. Barre de progression & Compteur de révision du jour
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Carte ${safeIndex + 1} / ${cards.length}',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                Row(
+                  children: [
+                    Text(
+                      'Carte ${safeIndex + 1} / ${cards.length}',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: _dueCount > 0 ? const Color(0xFFFDE8E8) : const Color(0xFFE8F5E9),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: _dueCount > 0 ? const Color(0xFFE57373) : const Color(0xFF81C784),
+                          width: 1,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(_dueCount > 0 ? '⏳ ' : '✓ ', style: const TextStyle(fontSize: 9)),
+                          Text(
+                            '$_dueCount à réviser',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: _dueCount > 0 ? const Color(0xFFC62828) : const Color(0xFF2E7D32),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Text(
                   card.categorie.toUpperCase(),
@@ -642,42 +770,73 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
   Widget _buildRecto(SrsCard card) {
     final catIcon = _getCategoryIcon(card.categorie);
+    final prog = widget.repo.getSrsProgress(_cardKey(card));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [RomanColors.goldLight, const Color(0xFFFFF9E8)],
-            ),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x1F000000),
-                offset: Offset(0, 1),
-                blurRadius: 3,
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [RomanColors.goldLight, const Color(0xFFFFF9E8)],
+                ),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x1F000000),
+                    offset: Offset(0, 1),
+                    blurRadius: 3,
+                  ),
+                ],
               ),
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(catIcon, style: const TextStyle(fontSize: 12)),
-              const SizedBox(width: 6),
-              Text(
-                card.categorie.toUpperCase(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(catIcon, style: const TextStyle(fontSize: 12)),
+                  const SizedBox(width: 5),
+                  Text(
+                    card.categorie.toUpperCase(),
+                    style: const TextStyle(
+                      fontSize: 10.5,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.6,
+                      color: Color(0xFF7A5901),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: _getBoxColor(prog.box),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: RomanColors.imperialGold, width: 0.9),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x1F000000),
+                    offset: Offset(0, 1),
+                    blurRadius: 3,
+                  ),
+                ],
+              ),
+              child: Text(
+                'ARCA ${_toRoman(prog.box)}',
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: 10,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                   letterSpacing: 0.8,
-                  color: Color(0xFF7A5901),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(height: 26),
         Text(

@@ -231,28 +231,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: RomanColors.goldLight,
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: RomanColors.imperialGold, width: 1),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(profile.cursusRank.badge, style: const TextStyle(fontSize: 12)),
-                                  const SizedBox(width: 3),
-                                  Text(
-                                    profile.cursusRank.titre,
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF684900),
-                                      letterSpacing: 0.5,
+                            InkWell(
+                              onTap: () {
+                                AudioService().playCardFlip();
+                                _showCursusHonorumModal(context, profile);
+                              },
+                              borderRadius: BorderRadius.circular(8),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                decoration: BoxDecoration(
+                                  color: RomanColors.goldLight,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(profile.cursusRank.badge, style: const TextStyle(fontSize: 12)),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      profile.cursusRank.titre.toUpperCase(),
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF684900),
+                                        letterSpacing: 0.6,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(width: 4),
+                                    const Icon(Icons.info_outline, size: 12, color: Color(0xFF684900)),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -1304,47 +1313,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildEquippedMiniChip(BuildContext context, GoodieCategory cat) {
-    final goodieId = widget.repo.getEquippedGoodie(cat);
-    final item = kCatalogueBoutique.firstWhere(
-      (it) => it.id == goodieId,
-      orElse: () => kCatalogueBoutique.firstWhere((it) => it.categorie == cat),
-    );
-
-    final isNone = item.id == 'aucune' || item.id == 'aucun';
-
-    return InkWell(
-      onTap: () => BoutiqueModal.show(context, repo: widget.repo, initialCategory: cat),
-      borderRadius: BorderRadius.circular(6),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
-        decoration: BoxDecoration(
-          color: isNone ? const Color(0xFFF3EFE7) : RomanColors.goldLight,
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(
-            color: isNone ? RomanColors.marbleBorder : RomanColors.imperialGold,
-            width: isNone ? 0.8 : 1.0,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(item.icone, style: const TextStyle(fontSize: 10)),
-            const SizedBox(width: 3),
-            Text(
-              item.nom,
-              style: TextStyle(
-                fontSize: 9.5,
-                fontWeight: isNone ? FontWeight.normal : FontWeight.bold,
-                color: isNone ? Colors.black45 : const Color(0xFF5A3E00),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

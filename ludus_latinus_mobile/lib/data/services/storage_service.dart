@@ -14,15 +14,15 @@ class StorageService {
   UserProfile get profile => _currentProfile;
 
   Future<void> init() async {
-    // 1. Initialise avec les valeurs par défaut de Marcus
+    // 1. Initialise avec un profil citoyen vierge et équitable
     _currentProfile = UserProfile(
       id: 'defaut',
       nomHeros: 'Marcus',
       genre: 'garcon',
-      sesterces: 120,
-      streakDays: 3,
-      completedLessons: ['m1-01', 'm1-02'],
-      restoredMonuments: ['lacus_iuturnae'],
+      sesterces: 50,
+      streakDays: 1,
+      completedLessons: [],
+      restoredMonuments: [],
     );
 
     // 2. Tente de restaurer la sauvegarde locale sur disque si elle existe
