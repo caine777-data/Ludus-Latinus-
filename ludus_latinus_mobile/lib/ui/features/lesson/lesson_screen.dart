@@ -74,16 +74,53 @@ class _LessonScreenState extends State<LessonScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Arc de Triomphe romain animé en tête de modale
+            Container(
+              margin: const EdgeInsets.only(bottom: 14),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x28000000),
+                    offset: Offset(0, 4),
+                    blurRadius: 12,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14),
+                child: Image.asset(
+                  'assets/cinematics/triumph_arc.webp',
+                  height: 96,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => Image.asset(
+                    'assets/images/victoire_320.png',
+                    height: 80,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 74,
-                  height: 74,
+                  width: 68,
+                  height: 68,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: RomanColors.goldLight,
                     border: Border.all(color: RomanColors.imperialGold, width: 2),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x22000000),
+                        offset: Offset(0, 2),
+                        blurRadius: 6,
+                      ),
+                    ],
                   ),
                   child: ClipOval(
                     child: Image.asset(
@@ -95,8 +132,8 @@ class _LessonScreenState extends State<LessonScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
-                const RomanWaxSeal(size: 66, label: 'SPQR'),
+                const SizedBox(width: 14),
+                const RomanWaxSeal(size: 60, label: 'SPQR'),
               ],
             ),
             const SizedBox(height: 12),
@@ -704,51 +741,64 @@ class _LessonScreenState extends State<LessonScreen> {
                       itemBuilder: (context, optIndex) {
                         final optionText = lesson.options[optIndex];
                         final isSelected = (selectedOption == optIndex);
-                        const romanSeals = ['[I]', '[II]', '[III]', '[IV]'];
+                        const romanNumerals = ['I', 'II', 'III', 'IV'];
+                        final numeral = romanNumerals[optIndex.clamp(0, 3)];
 
                         Color btnColor = Colors.white;
                         Color textColor = RomanColors.charcoal;
                         Color borderColor = RomanColors.marbleBorder;
+                        Color sealColor = const Color(0xFF8E1724); // Cire rouge impériale
+                        Color stampColor = const Color(0xFFFFDF85); // Or estampé
+                        String sealLabel = numeral;
 
                         if (isAnswered) {
                           if (optIndex == lesson.answer) {
-                            btnColor = RomanColors.laurelGreen;
-                            textColor = Colors.white;
+                            btnColor = const Color(0xFFE8F5E9);
+                            textColor = const Color(0xFF1B5E20);
                             borderColor = RomanColors.laurelGreen;
+                            sealColor = const Color(0xFF1B5E20);
+                            sealLabel = '✓';
                           } else if (isSelected) {
-                            btnColor = const Color(0xFF8B2500);
-                            textColor = Colors.white;
-                            borderColor = const Color(0xFF8B2500);
+                            btnColor = const Color(0xFFFFEBEE);
+                            textColor = const Color(0xFFB71C1C);
+                            borderColor = const Color(0xFFB71C1C);
+                            sealColor = const Color(0xFF8B2500);
+                            sealLabel = '✗';
+                          } else {
+                            sealColor = const Color(0xFF9E8E81);
+                            stampColor = Colors.white70;
                           }
                         }
 
                         return InkWell(
                           onTap: isAnswered ? null : () => _submitAnswer(optIndex),
-                          borderRadius: BorderRadius.circular(12),
-                          child: Container(
+                          borderRadius: BorderRadius.circular(14),
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
                               color: btnColor,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: borderColor, width: 1.5),
-                              boxShadow: const [
-                                BoxShadow(color: Color(0x0A000000), offset: Offset(0, 2), blurRadius: 4),
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(color: borderColor, width: isSelected ? 2.0 : 1.4),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: isAnswered && optIndex == lesson.answer
+                                      ? RomanColors.laurelGreen.withOpacity(0.25)
+                                      : const Color(0x0F000000),
+                                  offset: const Offset(0, 3),
+                                  blurRadius: 6,
+                                ),
                               ],
                             ),
                             child: Row(
                               children: [
-                                Text(
-                                  romanSeals[optIndex.clamp(0, 3)],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11,
-                                    fontFamily: 'serif',
-                                    color: isAnswered && (optIndex == lesson.answer || isSelected)
-                                        ? Colors.white70
-                                        : RomanColors.imperialPurple,
-                                  ),
+                                RomanWaxSeal(
+                                  size: 28,
+                                  label: sealLabel,
+                                  sealColor: sealColor,
+                                  stampColor: stampColor,
                                 ),
-                                const SizedBox(width: 6),
+                                const SizedBox(width: 8),
                                 Expanded(
                                   child: FittedBox(
                                     fit: BoxFit.scaleDown,
@@ -758,9 +808,10 @@ class _LessonScreenState extends State<LessonScreen> {
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.5,
+                                        fontWeight: FontWeight.bold,
                                         color: textColor,
+                                        letterSpacing: 0.2,
                                       ),
                                     ),
                                   ),
