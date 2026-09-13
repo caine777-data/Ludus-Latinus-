@@ -346,6 +346,18 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       AudioService().playTriumph();
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+
+      // Cinématique de triomphe impérial lors de la victoire contre le boss ultime
+      if (_currentBossIndex == _bosses.length - 1) {
+        Future.delayed(const Duration(milliseconds: 600), () {
+          if (mounted) {
+            RomanCinematicOverlay.showTriumph(
+              context,
+              rankTitle: 'Grand Vainqueur du Colisée',
+            );
+          }
+        });
+      }
     } else {
       widget.repo.addSesterces(5);
       AudioService().playError();
@@ -371,11 +383,11 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
             foregroundColor: Colors.white,
             actions: [
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.only(right: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: RomanColors.goldLight,
-                  borderRadius: BorderRadius.circular(14),
+                  borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
                 child: Row(
@@ -391,8 +403,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.shield_rounded, color: RomanColors.imperialGold),
-                tooltip: 'Entrée Solennelle du Boss',
+                icon: const Icon(Icons.movie_creation_outlined, color: RomanColors.imperialGold),
+                tooltip: 'Revoir la Cinématique du Boss',
                 onPressed: _showBossEntranceCinematic,
               ),
               IconButton(

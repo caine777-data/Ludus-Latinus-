@@ -6,6 +6,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -80,8 +81,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   // Progression de la course (0.0 à 100.0%)
   double _playerProgress = 0.0;
   double _rivalProgress = 0.0;
-  double _playerSpeed = 0.035;
-  double _rivalSpeed = 0.032;
+  // Calibrage pour enfants 11-15 ans : tour de ~25s, course totale de ~80s
+  double _playerSpeed = 0.115;
+  double _rivalSpeed = 0.102;
 
   int _currentLap = 1;
   static const int _totalLaps = 3;
@@ -91,14 +93,124 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   int _comboCount = 0;
   int _turboRemainingFrames = 0;
 
-  // Questions de vocabulaire et culture du Circus Maximus
-  final List<Map<String, dynamic>> _questions = [
+  // Deck de questions sans remise : impossible d'avoir des doublons dans la même partie
+  List<Map<String, dynamic>> _questionDeck = [];
+
+  // Banque enrichie de 46 questions (Vocabulaire équestre, Culture, Grammaire & Mythologie)
+  static final List<Map<String, dynamic>> _allQuestions = [
+    // --- 1. Vocabulaire du Cirque & Équitation ---
     {
       'q': 'Que signifie « equus » qui tire ton quadrige ?',
       'rep': 'Le cheval',
       'fausses': ['Le loup', 'L\'aigle', 'Le taureau'],
-      'explication': 'Equus (m.) désigne le cheval ; eques désigne le cavalier.',
+      'explication': 'Equus (m.) donne équestre, équitation et écuyer en français.',
     },
+    {
+      'q': 'Que signifie « auriga » ?',
+      'rep': 'Le cocher de char',
+      'fausses': ['Le légionnaire', 'Le sénateur', 'Le forgeron'],
+      'explication': 'L\'aurige était le champion adulé conduisant le char au Cirque.',
+    },
+    {
+      'q': 'Comment appelle-t-on un char tiré par 4 chevaux ?',
+      'rep': 'Quadriga',
+      'fausses': ['Biga', 'Triga', 'Seiuga'],
+      'explication': 'Quadriga vient de quattuor (quatre) et iugum (joug).',
+    },
+    {
+      'q': 'Que désignent les « frena » tenues par l\'aurige ?',
+      'rep': 'Les rênes / le mors',
+      'fausses': ['Le fouet', 'La toge', 'Le casque'],
+      'explication': 'Frena donne le mot « frein » en français.',
+    },
+    {
+      'q': 'Que signifie « flagellum » ?',
+      'rep': 'Le fouet',
+      'fausses': ['L\'épée', 'Le bouclier', 'La lance'],
+      'explication': 'Flagellum désignait le fouet de cuir ; il a donné « flageller ».',
+    },
+    {
+      'q': 'Que signifie « currus » ?',
+      'rep': 'Le char de course',
+      'fausses': ['La route', 'La maison', 'Le bateau'],
+      'explication': 'Currus (m.) dérive du verbe currere (courir).',
+    },
+    {
+      'q': 'Que sont les « metae » marquant les extrémités de la piste ?',
+      'rep': 'Les bornes du virage',
+      'fausses': ['Les portes d\'entrée', 'Les tribunes', 'Les stalles'],
+      'explication': 'Les trois bornes coniques dorées marquaient le virage le plus périlleux.',
+    },
+    {
+      'q': 'Comment appelle-t-on le terre-plein central du cirque ?',
+      'rep': 'La Spina',
+      'fausses': ['Le Cardo', 'L\'Atrium', 'La Cavea'],
+      'explication': 'La spina (« épine dorsale ») portait statues, autels et obélisques.',
+    },
+    {
+      'q': 'Que signifie « arena » (ou harena) à l\'origine ?',
+      'rep': 'Le sable fin',
+      'fausses': ['L\'eau', 'La pierre', 'L\'or'],
+      'explication': 'Harena désignait le sable fin qui couvrait la piste pour amortir les chutes.',
+    },
+    {
+      'q': 'Quel animal en bronze servait à compter les tours ?',
+      'rep': 'Le dauphin',
+      'fausses': ['Le lion', 'L\'aigle', 'Le cygne'],
+      'explication': 'Sept dauphins de bronze basculaient à chaque tour accompli.',
+    },
+    {
+      'q': 'Quels objets géants en bois servaient aussi de compte-tours ?',
+      'rep': 'Les œufs (ova)',
+      'fausses': ['Des boucliers', 'Des couronnes', 'Des glaives'],
+      'explication': 'Sept œufs en bois doré s\'abaissaient aux côtés des dauphins.',
+    },
+    {
+      'q': 'Que sont les « carceres » au départ de la course ?',
+      'rep': 'Les stalles de départ',
+      'fausses': ['Les prisons', 'Les gradins', 'Les écuries royales'],
+      'explication': 'Les carceres étaient les 12 loges fermées par des grilles à ressort.',
+    },
+    {
+      'q': 'Quel linge blanc le magistrat lâchait-il pour donner le départ ?',
+      'rep': 'La mappa',
+      'fausses': ['La stola', 'La fascia', 'La bulla'],
+      'explication': 'Le lâcher de la mappa blanche par l\'empereur ou consul lançait la course.',
+    },
+    {
+      'q': 'Comment s\'appelle la loge impériale reliant le palais au cirque ?',
+      'rep': 'Le Pulvinar',
+      'fausses': ['Le Forum', 'La Curia', 'Le Tabularium'],
+      'explication': 'Le pulvinar permettait à l\'empereur d\'assister aux jeux en majesté.',
+    },
+
+    // --- 2. Factions & Couleurs Romaines ---
+    {
+      'q': 'Quelle faction porte la couleur bleue au cirque ?',
+      'rep': 'Veneti',
+      'fausses': ['Russati', 'Prasini', 'Albati'],
+      'explication': 'Les Veneti (Bleus) et Prasini (Verts) avaient les supporters les plus fervents.',
+    },
+    {
+      'q': 'Quelle faction porte la couleur rouge au cirque ?',
+      'rep': 'Russati',
+      'fausses': ['Veneti', 'Prasini', 'Albati'],
+      'explication': 'Russati vient de russus (rouge vif, écarlate).',
+    },
+    {
+      'q': 'Quelle faction porte la couleur verte au cirque ?',
+      'rep': 'Prasini',
+      'fausses': ['Veneti', 'Russati', 'Albati'],
+      'explication': 'Prasini dérive du poireau (prason en grec), symbole de couleur verte.',
+    },
+    {
+      'q': 'Quelle faction porte la couleur blanche au cirque ?',
+      'rep': 'Albati',
+      'fausses': ['Veneti', 'Russati', 'Prasini'],
+      'explication': 'Albati dérive de albus (blanc mat), faction historique de vétérans.',
+    },
+
+    // --- 3. Verbes d\'Action, Impératifs & Adverbes de Vitesse ---
     {
       'q': 'Que signifie « celeriter » pour accélérer ?',
       'rep': 'Rapidement',
@@ -106,52 +218,170 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       'explication': 'Celeriter est l\'adverbe de celer (rapide) -> célérité.',
     },
     {
-      'q': 'Que signifie « victoria » à l\'arrivée ?',
-      'rep': 'La victoire',
-      'fausses': ['La défaite', 'Le départ', 'La route'],
-      'explication': 'Victoria donne victoire en français.',
-    },
-    {
-      'q': 'Que signifie « auriga » ?',
-      'rep': 'Le cocher de char',
-      'fausses': ['Le légionnaire', 'Le sénateur', 'Le forgeron'],
-      'explication': 'L\'aurige était le champion adulé conduisant le char.',
-    },
-    {
-      'q': 'Comment dit-on « quatre » en latin (quadrige) ?',
-      'rep': 'Quattuor',
-      'fausses': ['Tres', 'Quinque', 'Duo'],
-      'explication': 'Quattuor = 4 -> quadrige (char à 4 chevaux).',
-    },
-    {
-      'q': 'Que signifie « arena » à l\'origine ?',
-      'rep': 'Le sable',
-      'fausses': ['L\'eau', 'La pierre', 'L\'or'],
-      'explication': 'Harena désignait le sable fin qui couvrait la piste.',
-    },
-    {
-      'q': 'Que crie la foule pour encourager : « Curre » ?',
+      'q': 'Que crie la foule pour encourager : « Curre ! » ?',
       'rep': 'Cours !',
       'fausses': ['Arrête !', 'Regarde !', 'Écoute !'],
       'explication': 'Curre est l\'impératif présent du verbe currere (courir).',
     },
     {
-      'q': 'Quelle faction porte la couleur bleue au cirque ?',
-      'rep': 'Veneti',
-      'fausses': ['Russati', 'Prasini', 'Albati'],
-      'explication': 'Les Veneti (Bleus) et Prasini (Verts) étaient les favoris.',
+      'q': 'Que signifie l\'ordre de l\'aurige : « Frena ! » ?',
+      'rep': 'Freine ! / Retiens !',
+      'fausses': ['Accélère !', 'Fouette !', 'Descends !'],
+      'explication': 'Frenare signifie modérer l\'allure avec les rênes à l\'approche de la Meta.',
     },
     {
-      'q': 'Quel animal en bronze servait à compter les tours ?',
-      'rep': 'Le dauphin',
-      'fausses': ['Le lion', 'L\'aigle', 'Le cygne'],
-      'explication': 'Sept dauphins en bronze s\'abaissaient à chaque tour.',
+      'q': 'Que crie le public enthousiaste : « Vince ! » ?',
+      'rep': 'Vaincs ! / Gagne !',
+      'fausses': ['Fuis !', 'Dors !', 'Chante !'],
+      'explication': 'Impératif de vincere (vaincre). Veni, vidi, vici !',
     },
     {
-      'q': 'Comment appelle-t-on le terre-plein central du cirque ?',
-      'rep': 'La Spina',
-      'fausses': ['Le Cardo', 'L\'Atrium', 'La Cavea'],
-      'explication': 'La spina est l\'épine dorsale ornée d\'obélisques.',
+      'q': 'Que signifie « lente » dans la devise impériale « Festina lente » ?',
+      'rep': 'Lentement',
+      'fausses': ['Vite', 'Fortement', 'Secrètement'],
+      'explication': '« Hâte-toi lentement » : aller vite sans précipitation désordonnée.',
+    },
+    {
+      'q': 'Que signifie l\'adverbe « fortiter » ?',
+      'rep': 'Courageusement / Avec force',
+      'fausses': ['Faiblement', 'En tremblant', 'Doucement'],
+      'explication': 'Fortiter est l\'adverbe tiré de fortis (courageux, fort).',
+    },
+    {
+      'q': 'Que signifie « audacter » ?',
+      'rep': 'Avec audace',
+      'fausses': ['Avec peur', 'En cachette', 'Sans bruit'],
+      'explication': 'Audacter provient de audax (audacieux). La fortune sourit aux audacieux !',
+    },
+    {
+      'q': 'Que signifie « statim » sur la piste ?',
+      'rep': 'Immédiatement',
+      'fausses': ['Demain', 'Peut-être', 'Plus tard'],
+      'explication': 'Statim signifie aussitôt, sur-le-champ.',
+    },
+    {
+      'q': 'Que signifie « supera ! » crié au cocher ?',
+      'rep': 'Dépasse ! / Surpasse !',
+      'fausses': ['Abandonne !', 'Tombe !', 'Recule !'],
+      'explication': 'Superare signifie doubler un adversaire sur l\'extérieur de la piste.',
+    },
+    {
+      'q': 'Que signifie le cri de mise en garde : « Cave ! » ?',
+      'rep': 'Prends garde ! / Attention !',
+      'fausses': ['Regarde le ciel', 'Ferme les yeux', 'Tout va bien'],
+      'explication': 'Impératif de cavere. Célèbre dans « Cave canem » (Attention au chien).',
+    },
+
+    // --- 4. Nombres, Victoire & Symboles Romains ---
+    {
+      'q': 'Comment dit-on « quatre » en latin (quadrige) ?',
+      'rep': 'Quattuor',
+      'fausses': ['Tres', 'Quinque', 'Duo'],
+      'explication': 'Quattuor = 4 -> quadrige (char attelé de 4 chevaux).',
+    },
+    {
+      'q': 'Combien de tours comportait traditionnellement une course (septem) ?',
+      'rep': '7 tours',
+      'fausses': ['3 tours', '10 tours', '12 tours'],
+      'explication': 'Septem = 7, décomptés par les 7 dauphins de bronze.',
+    },
+    {
+      'q': 'Comment appelle-t-on un char à deux chevaux ?',
+      'rep': 'Biga',
+      'fausses': ['Quadriga', 'Triga', 'Plaustrum'],
+      'explication': 'De duo (deux) et iugum (joug) -> le bige.',
+    },
+    {
+      'q': 'Comment dit-on « un » en latin ?',
+      'rep': 'Unus',
+      'fausses': ['Tres', 'Duo', 'Mille'],
+      'explication': 'Unus donne un, unique et unité.',
+    },
+    {
+      'q': 'Comment dit-on « dix » en latin ?',
+      'rep': 'Decem',
+      'fausses': ['Centum', 'Quinque', 'Octo'],
+      'explication': 'Decem donne dix, décennie et décembre (dixième mois romain).',
+    },
+    {
+      'q': 'Que signifie « primus » pour le char en tête ?',
+      'rep': 'Le premier',
+      'fausses': ['Le dernier', 'Le deuxième', 'L\'inconnu'],
+      'explication': 'Primus donne premier, priorité et primeur.',
+    },
+    {
+      'q': 'Que signifie « victoria » à l\'arrivée ?',
+      'rep': 'La victoire',
+      'fausses': ['La défaite', 'Le départ', 'La route'],
+      'explication': 'Victoria donne victoire et désignait la déesse ailée.',
+    },
+    {
+      'q': 'Quel végétal symbolique recevait le vainqueur en main ?',
+      'rep': 'La palme (palma)',
+      'fausses': ['Une rose', 'Un épi de blé', 'Un cep de vigne'],
+      'explication': 'La palme du vainqueur récompensait l\'aurige triomphant.',
+    },
+    {
+      'q': 'Que portait l\'aurige victorieux sur sa tête ?',
+      'rep': 'Une couronne de lauriers (corona)',
+      'fausses': ['Un diadème d\'or', 'Un casque en fer', 'Un voile de soie'],
+      'explication': 'La couronne de laurier (corona laurea) honorait les héros.',
+    },
+
+    // --- 5. Dieux, Mythes & Empire ---
+    {
+      'q': 'Quel dieu patron des chevaux protégeait les auriges ?',
+      'rep': 'Neptune (Neptunus Equester)',
+      'fausses': ['Vulcain', 'Bacchus', 'Pluton'],
+      'explication': 'Neptune créa le premier cheval en frappant la terre de son trident.',
+    },
+    {
+      'q': 'Quel dieu de la guerre inspirait la vaillance des coureurs ?',
+      'rep': 'Mars',
+      'fausses': ['Mercure', 'Apollon', 'Jupiter'],
+      'explication': 'Mars était le père légendaire de Romulus et Rémus.',
+    },
+    {
+      'q': 'Quel oiseau sacré représentait la puissance de Rome ?',
+      'rep': 'L\'aigle (aquila)',
+      'fausses': ['La colombe', 'Le corbeau', 'Le paon'],
+      'explication': 'L\'aigle était l\'oiseau de Jupiter et l\'emblème des légions.',
+    },
+    {
+      'q': 'Quel animal légendaire a nourri les fondateurs de Rome ?',
+      'rep': 'La louve (lupa)',
+      'fausses': ['La biche', 'L\'ourse', 'La lionne'],
+      'explication': 'La louve romaine allaita Romulus et Rémus sous le figuier Ruminal.',
+    },
+    {
+      'q': 'À quel dieu de la lumière la course de char était-elle dédiée ?',
+      'rep': 'Sol (Le Soleil)',
+      'fausses': ['Luna', 'Saturne', 'Cérès'],
+      'explication': 'Les 4 chevaux du quadrige représentaient les 4 saisons et la course solaire.',
+    },
+    {
+      'q': 'Que signifie « triumphus » ?',
+      'rep': 'Le triomphe',
+      'fausses': ['Le deuil', 'L\'exil', 'Le traité'],
+      'explication': 'Le triomphe était la plus haute distinction militaire et publique à Rome.',
+    },
+    {
+      'q': 'Que signifie « populus » dans la devise SPQR ?',
+      'rep': 'Le peuple',
+      'fausses': ['L\'armée', 'La noblesse', 'La ville'],
+      'explication': 'Senatus Populusque Romanus : Le Sénat et le Peuple de Rome.',
+    },
+    {
+      'q': 'Que signifie « gloria » célébrée par la foule ?',
+      'rep': 'La gloire',
+      'fausses': ['La richesse', 'La prudence', 'La jeunesse'],
+      'explication': 'Gloria donne gloire et glorieux en français.',
+    },
+    {
+      'q': 'Que signifie « imperator » ?',
+      'rep': 'Le chef victorieux / l\'empereur',
+      'fausses': ['L\'esclave', 'Le marchand', 'L\'artisan'],
+      'explication': 'Titre d\'honneur décerné par les soldats avant de désigner le maître de Rome.',
     },
   ];
 
@@ -182,8 +412,12 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   }
 
   void _loadNewQuestion() {
-    final random = math.Random();
-    _currentQuestion = _questions[random.nextInt(_questions.length)];
+    // Si la pioche est vide, on brasse à nouveau le deck complet de 46 questions
+    if (_questionDeck.isEmpty) {
+      _questionDeck = List<Map<String, dynamic>>.from(_allQuestions)..shuffle();
+    }
+    // Dépilage sans remise : aucune répétition possible durant toute la course
+    _currentQuestion = _questionDeck.removeAt(0);
     final options = <String>[
       _currentQuestion['rep'] as String,
       ...(_currentQuestion['fausses'] as List<String>),
@@ -353,8 +587,10 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       AudioService().playSesterces();
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       _comboCount++;
-      _turboRemainingFrames = (28 * _selectedFaction.turboMult).round();
+      _turboRemainingFrames = (34 * _selectedFaction.turboMult).round();
       _scoreSesterces += (10 * _comboCount);
+      // Bond direct de progression pour gratifier l'enfant
+      _playerProgress = math.min(100.0, _playerProgress + 5.0);
     } else {
       if (_shieldAvailable) {
         _shieldAvailable = false;
@@ -371,11 +607,13 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         AudioService().playError();
         _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
         _comboCount = 0;
-        _playerProgress = math.max(0.0, _playerProgress - 3.5); // tête-à-queue léger
+        _playerProgress = math.max(0.0, _playerProgress - 2.0); // Ralentissement modéré
       }
     }
 
-    Future.delayed(const Duration(milliseconds: 900), () {
+    // Pacing formatif : 1100ms si juste (dynamisme), 2500ms si erreur (temps d'assimilation de l'explication)
+    final delayMs = isCorrect ? 1100 : 2500;
+    Future.delayed(Duration(milliseconds: delayMs), () {
       if (mounted && !_raceFinished) {
         setState(() {
           _loadNewQuestion();
@@ -398,6 +636,16 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       AudioService().playCrowdCheer();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+
+      // Déclenchement de la cinématique de triomphe impérial
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (mounted) {
+          RomanCinematicOverlay.showTriumph(
+            context,
+            rankTitle: 'Aurige Victorieux du Circus Maximus',
+          );
+        }
+      });
     } else {
       widget.repo.addSesterces(10);
       AudioService().playError();
@@ -674,11 +922,11 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 // Spina centrale ornée d'obélisques et statues
                 Center(
                   child: Container(
-                    width: 140,
-                    height: 32,
+                    width: 156,
+                    height: 36,
                     decoration: BoxDecoration(
                       color: const Color(0xFFF0E6D2),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(18),
                       border: Border.all(color: RomanColors.imperialGold, width: 2),
                       boxShadow: const [
                         BoxShadow(
@@ -688,13 +936,39 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                         ),
                       ],
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text('🏛️', style: TextStyle(fontSize: 14)),
-                        Text('SPINA', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1.2, color: Color(0xFF7A5901))),
-                        Text('🏺', style: TextStyle(fontSize: 14)),
-                      ],
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/circus/circus_spina.png',
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            errorBuilder: (_, __, ___) => const SizedBox(),
+                          ),
+                          Container(
+                            color: Colors.black.withOpacity(0.22),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              Text('🏛️', style: TextStyle(fontSize: 13)),
+                              Text(
+                                'SPINA IMPERIALIS',
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.2,
+                                  color: Colors.white,
+                                  shadows: [Shadow(color: Colors.black, blurRadius: 3)],
+                                ),
+                              ),
+                              Text('🏺', style: TextStyle(fontSize: 13)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -1165,6 +1439,52 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               },
             ),
           ),
+          if (_selectedAnswer != null) ...[
+            const SizedBox(height: 8),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: (_selectedAnswer == _currentQuestion['rep'])
+                    ? const Color(0xFFE8F5E9)
+                    : const Color(0xFFFFF3E0),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: (_selectedAnswer == _currentQuestion['rep'])
+                      ? Colors.green.shade600
+                      : Colors.orange.shade700,
+                  width: 1.5,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    (_selectedAnswer == _currentQuestion['rep']) ? '⚡ Optime !' : '💡 Note de Lupulus :',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: (_selectedAnswer == _currentQuestion['rep'])
+                          ? Colors.green.shade800
+                          : Colors.orange.shade900,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      _currentQuestion['explication'] as String,
+                      style: TextStyle(
+                        fontSize: 11.5,
+                        fontWeight: FontWeight.w600,
+                        color: (_selectedAnswer == _currentQuestion['rep'])
+                            ? Colors.green.shade900
+                            : Colors.brown.shade900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
