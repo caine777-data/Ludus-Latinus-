@@ -27,6 +27,19 @@ class LatinEpigraphModal extends StatefulWidget {
     );
   }
 
+  /// Ouvre la première stèle non encore décodée, ou la première du catalogue historique.
+  static void showRandomOrFirst(BuildContext context, {required GameRepository repo}) {
+    LatinEpigraph? target;
+    for (final epi in LatinEpigraph.catalogue.values) {
+      if (!repo.isEpigraphDecoded(epi.monumentId)) {
+        target = epi;
+        break;
+      }
+    }
+    target ??= LatinEpigraph.catalogue.values.first;
+    show(context, epigraph: target, repo: repo);
+  }
+
   @override
   State<LatinEpigraphModal> createState() => _LatinEpigraphModalState();
 }

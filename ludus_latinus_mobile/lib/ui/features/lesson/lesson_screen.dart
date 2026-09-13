@@ -884,13 +884,6 @@ class _LessonScreenState extends State<LessonScreen> {
       ),
     );
   }
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    ),
-  );
-  }
 
   void _showDecrypterSheet(BuildContext context) {
     HapticFeedback.mediumImpact();

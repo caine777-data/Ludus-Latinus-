@@ -28,7 +28,6 @@ class CaseDecoderWidget extends StatefulWidget {
 class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
   late Map<int, String?> _assignedRoles;
   int _selectedWordIndex = 0;
-  bool _isEvaluated = false;
   bool _isSuccess = false;
   String? _feedbackMessage;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
