@@ -364,9 +364,59 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               ),
             ),
 
-            const SizedBox(height: 14),
+            const SizedBox(height: 10),
 
-            // 4. Flashcard 3D Matrix4
+            // 3b. Présence bienveillante de Lupulus (Mentor pédagogique)
+            Container(
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: BoxDecoration(
+                color: RomanColors.palatinCream,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x14000000),
+                    offset: Offset(0, 1),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipOval(
+                    child: Image.asset(
+                      _streak >= 5
+                          ? 'assets/images/lupulus/lupulus_triomphe_180.png'
+                          : _streak >= 3
+                              ? 'assets/images/lupulus/lupulus_joie_180.png'
+                              : 'assets/images/lupulus/lupulus_reflexion_180.png',
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Text('🐺', style: TextStyle(fontSize: 14)),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    _streak >= 5
+                        ? '« Incredibile ! Le feu de Rome brûle en toi ! »'
+                        : _streak >= 3
+                            ? '« Macte animo ! Continue sur cette belle lancée ! »'
+                            : '« Repetitio est mater studiorum : touche la carte ! »',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic,
+                      color: RomanColors.imperialPurple,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // 4. Flashcard 3D Matrix4 avec dynamique de relief et perspective
             Expanded(
               child: GestureDetector(
                 onTap: _flipCard,
@@ -375,15 +425,20 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                   builder: (context, _) {
                     final angle = _flipAnimation.value * math.pi;
                     final isFrontVisible = _flipAnimation.value < 0.5;
+                    // Effet de soulèvement vers l'avant lors du retournement
+                    final flipProgress = (0.5 - (_flipAnimation.value - 0.5).abs()) * 2.0;
+                    final scale = 1.0 + (flipProgress * 0.04);
 
                     return Transform(
                       transform: Matrix4.identity()
                         ..setEntry(3, 2, 0.0012)
+                        ..scale(scale)
                         ..rotateY(angle),
                       alignment: Alignment.center,
                       child: isFrontVisible
                           ? _buildCardSide(
                               isFront: true,
+                              flipProgress: flipProgress,
                               child: _buildRecto(card),
                             )
                           : Transform(
@@ -391,6 +446,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                               alignment: Alignment.center,
                               child: _buildCardSide(
                                 isFront: false,
+                                flipProgress: flipProgress,
                                 child: _buildVerso(card),
                               ),
                             ),
@@ -402,7 +458,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
             const SizedBox(height: 14),
 
-            // 5. Boutons Leitner SRS avec multiplicateurs
+            // 5. Boutons Leitner SRS avec relief tactile et multiplicateurs
             Row(
               children: [
                 Expanded(
@@ -439,50 +495,224 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildCardSide({required bool isFront, required Widget child}) {
-    return RomanParchmentCard(
-      padding: const EdgeInsets.all(24),
-      borderColor: isFront ? RomanColors.imperialGold : RomanColors.laurelGreen,
-      child: Center(child: child),
+  Widget _buildCornerOrnament() {
+    return Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: RomanColors.imperialGold,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x44000000),
+            blurRadius: 2,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
     );
   }
 
+  Widget _buildCardSide({
+    required bool isFront,
+    required Widget child,
+    required double flipProgress,
+  }) {
+    final elevation = 4.0 + (flipProgress * 10.0);
+    final spread = 1.0 + (flipProgress * 3.0);
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          // Halo ardent si Furor Latinus
+          if (_streak >= 5) ...[
+            const BoxShadow(
+              color: Color(0x77D50000),
+              blurRadius: 26,
+              spreadRadius: 4,
+            ),
+            const BoxShadow(
+              color: Color(0x55FF9100),
+              blurRadius: 16,
+              spreadRadius: 2,
+            ),
+          ] else if (_streak >= 3) ...[
+            const BoxShadow(
+              color: Color(0x66FFB300),
+              blurRadius: 20,
+              spreadRadius: 3,
+            ),
+          ],
+          BoxShadow(
+            color: const Color(0x332B1810),
+            blurRadius: elevation * 2,
+            spreadRadius: spread,
+            offset: Offset(0, 4 + flipProgress * 6),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(22),
+        child: Stack(
+          children: [
+            // Fond dégradé marbre de Carrare ou parchemin d'or
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isFront
+                        ? const [Color(0xFFFCF9F3), Color(0xFFF6F0E6), Color(0xFFEFE6D6)]
+                        : const [Color(0xFFF7FCF9), Color(0xFFEFF8F2), Color(0xFFE4F3E9)],
+                  ),
+                ),
+              ),
+            ),
+
+            // Filigrane subtil de la carte collector antique
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.07,
+                child: Image.asset(
+                  'assets/images/dos_carte_collector.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, __, ___) => const SizedBox(),
+                ),
+              ),
+            ),
+
+            // Double cadre ciselé or et marbre
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(
+                    color: isFront ? RomanColors.imperialGold : RomanColors.laurelGreen,
+                    width: 3.5,
+                  ),
+                ),
+              ),
+            ),
+
+            // Liseré intérieur avec coins ouvragés
+            Positioned.fill(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: isFront
+                          ? RomanColors.imperialGold.withOpacity(0.5)
+                          : RomanColors.laurelGreen.withOpacity(0.5),
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+            // Rivets d'angle antiques
+            Positioned(top: 10, left: 10, child: _buildCornerOrnament()),
+            Positioned(top: 10, right: 10, child: _buildCornerOrnament()),
+            Positioned(bottom: 10, left: 10, child: _buildCornerOrnament()),
+            Positioned(bottom: 10, right: 10, child: _buildCornerOrnament()),
+
+            // Contenu de la face de carte
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+              child: Center(child: child),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getCategoryIcon(String cat) {
+    if (cat.contains('Dieux') || cat.contains('Mythes')) return '⚡';
+    if (cat.contains('Armée') || cat.contains('Légions')) return '⚔️';
+    if (cat.contains('Maison') || cat.contains('Famille')) return '🏡';
+    if (cat.contains('Nature') || cat.contains('Animaux')) return '🐾';
+    if (cat.contains('Citoyenneté') || cat.contains('Valeurs')) return '🏛️';
+    return '📜';
+  }
+
   Widget _buildRecto(SrsCard card) {
+    final catIcon = _getCategoryIcon(card.categorie);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
           decoration: BoxDecoration(
-            color: RomanColors.goldLight,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: RomanColors.imperialGold),
+            gradient: LinearGradient(
+              colors: [RomanColors.goldLight, const Color(0xFFFFF9E8)],
+            ),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x1F000000),
+                offset: Offset(0, 1),
+                blurRadius: 3,
+              ),
+            ],
           ),
-          child: Text(
-            card.categorie,
-            style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(catIcon, style: const TextStyle(fontSize: 12)),
+              const SizedBox(width: 6),
+              Text(
+                card.categorie.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.8,
+                  color: Color(0xFF7A5901),
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: 28),
+        const SizedBox(height: 26),
         Text(
           card.latin,
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 34,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1,
+            letterSpacing: 1.2,
             color: RomanColors.imperialPurple,
             fontFamily: 'serif',
+            shadows: [
+              Shadow(
+                color: Color(0x224A1525),
+                offset: Offset(0, 2),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
         if (card.genre.isNotEmpty) ...[
           const SizedBox(height: 8),
-          Text(
-            card.genre,
-            style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic, color: Colors.black54),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            decoration: BoxDecoration(
+              color: const Color(0x1F000000),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              card.genre,
+              style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: Colors.black87),
+            ),
           ),
         ],
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         InkWell(
           onTap: () {
             AudioService().playWheelClick();
@@ -490,17 +720,24 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
             decoration: BoxDecoration(
               color: RomanColors.goldLight,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: RomanColors.imperialGold, width: 0.8),
+              border: Border.all(color: RomanColors.imperialGold, width: 1),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1F000000),
+                  offset: Offset(0, 1),
+                  blurRadius: 3,
+                ),
+              ],
             ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.volume_up_rounded, size: 15, color: RomanColors.imperialPurple),
-                SizedBox(width: 4),
+                Icon(Icons.volume_up_rounded, size: 16, color: RomanColors.imperialPurple),
+                SizedBox(width: 5),
                 Text(
                   'Prononciation & API',
                   style: TextStyle(
@@ -513,12 +750,13 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             ),
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 22),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: RomanColors.palatinCream,
             borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: RomanColors.marbleBorder, width: 0.8),
           ),
           child: const Row(
             mainAxisSize: MainAxisSize.min,
@@ -526,7 +764,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               Text('👆 ', style: TextStyle(fontSize: 12)),
               Text(
                 'Touche pour retourner la carte',
-                style: TextStyle(fontSize: 11, color: Colors.black54),
+                style: TextStyle(fontSize: 11, color: Colors.black54, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -539,6 +777,24 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8F5EE),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: RomanColors.laurelGreen.withOpacity(0.5)),
+          ),
+          child: const Text(
+            'TRADUCTION FRANÇAISE',
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.8,
+              color: Color(0xFF1E5E3A),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
         Text(
           card.francais,
           textAlign: TextAlign.center,
@@ -546,15 +802,23 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             fontSize: 26,
             fontWeight: FontWeight.bold,
             color: RomanColors.laurelGreen,
+            shadows: [
+              Shadow(
+                color: Color(0x221E5E3A),
+                offset: Offset(0, 1.5),
+                blurRadius: 3,
+              ),
+            ],
           ),
         ),
         if (card.etymologie.isNotEmpty) ...[
           const SizedBox(height: 12),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: const Color(0xFFE8F5EE),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: const Color(0xFFC3E6D0)),
             ),
             child: Text(
               card.etymologie,
@@ -564,7 +828,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           ),
         ],
         if (card.exemple.isNotEmpty) ...[
-          const SizedBox(height: 18),
+          const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
@@ -626,21 +890,72 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     required Color color,
     required VoidCallback onTap,
   }) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 2,
-      ),
-      onPressed: onTap,
-      child: Column(
-        children: [
-          Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 2),
-          Text(sub, style: const TextStyle(fontSize: 10, color: Colors.white70)),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.35),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
         ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(14),
+          child: Ink(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  color,
+                  Color.lerp(color, Colors.black, 0.22)!,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.3),
+                width: 1.2,
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.25),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    sub,
+                    style: const TextStyle(
+                      fontSize: 9.5,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFFECB3),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
