@@ -330,6 +330,9 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   late List<String> _shuffledChoices;
   String? _chosenAnswer;
   bool _animatingHit = false;
+  bool _playerRiposteAnim = false;
+  String? _floatingCombatText;
+  bool _floatingCombatIsHero = false;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
   @override
@@ -389,6 +392,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     _shuffledChoices = options;
     _chosenAnswer = null;
     _animatingHit = false;
+    _playerRiposteAnim = false;
+    _floatingCombatText = null;
     _questionStartTime = DateTime.now();
   }
 
@@ -401,7 +406,6 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
     setState(() {
       _chosenAnswer = answer;
-      _animatingHit = true;
     });
 
     if (isCorrect) {
@@ -413,9 +417,9 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
       int degats = (35 * _currentStance.damageMult).round();
       int sestercesEarned = 15;
+      final isCrit = (_currentStance == CombatStance.celox && elapsedSec <= 4);
 
-      // Bonus de célérité si Fuga Celox et réponse ultra-rapide
-      if (_currentStance == CombatStance.celox && elapsedSec <= 4) {
+      if (isCrit) {
         degats = (degats * 1.25).round();
         sestercesEarned += 10;
         _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
@@ -434,6 +438,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         _bossHp = math.max(0, _bossHp - degats);
         _gainsSesterces += sestercesEarned;
         _currentBossSpeech = boss['tauntBlesse'] as String?;
+        _floatingCombatText = isCrit ? '⚡ CRITIQUE -$degats HP !' : '⚔️ -$degats HP !';
+        _floatingCombatIsHero = true;
+        _animatingHit = true;
+        _playerRiposteAnim = false;
       });
 
       if (_bossHp <= 0) {
@@ -450,6 +458,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       setState(() {
         _playerHp = math.max(0, _playerHp - riposte);
         _currentBossSpeech = boss['tauntAttaque'] as String?;
+        _floatingCombatText = '🛡️ RIPOSTE -$riposte HP !';
+        _floatingCombatIsHero = false;
+        _animatingHit = false;
+        _playerRiposteAnim = true;
       });
 
       if (_currentStance == CombatStance.scutum) {
@@ -607,159 +619,476 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   }
 
   Widget _buildArenaView(Map<String, dynamic> boss) {
+    final isGirl = widget.repo.profile.genre == 'fille';
+    final heroAvatar = isGirl
+        ? 'assets/images/avatar_fille_medaillon_140.png'
+        : 'assets/images/avatar_garcon_medaillon_140.png';
+    final heroName = widget.repo.profile.nomHeros.isNotEmpty
+        ? widget.repo.profile.nomHeros
+        : (isGirl ? 'Julia' : 'Marcus');
+
     return Container(
       width: double.infinity,
       color: Colors.transparent,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // Barres de Vie (Joueur vs Boss)
+          // 1. Barres de Vie Épiques en Marbre & Or Antique
           Row(
             children: [
-              // Jauge Joueur
+              // Jauge Héros (Joueur)
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '🛡️ TOI (Tiro)',
-                      style: TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 12),
-                    ),
-                    const SizedBox(height: 4),
-                    RomanElasticProgressBar(
-                      value: _playerHp / 100.0,
-                      color: _playerHp > 30 ? Colors.greenAccent : Colors.redAccent,
-                      ghostColor: Colors.redAccent.withOpacity(0.6),
-                      backgroundColor: Colors.white24,
-                      height: 10,
-                    ),
-                    const SizedBox(height: 2),
-                    Text('$_playerHp / 100 HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 20),
-              // Jauge Boss
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '⚔️ ${boss['nom']}',
-                      style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold, fontSize: 12),
-                    ),
-                    const SizedBox(height: 4),
-                    RomanElasticProgressBar(
-                      value: _bossHp / (boss['maxHp'] as int),
-                      color: Colors.deepOrangeAccent,
-                      ghostColor: Colors.amber.withOpacity(0.6),
-                      backgroundColor: Colors.white24,
-                      height: 10,
-                    ),
-                    const SizedBox(height: 2),
-                    Text('$_bossHp / ${boss['maxHp']} HP', style: const TextStyle(color: Colors.white70, fontSize: 10)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-
-          // Portrait du Boss dans son Médaillon Antique encadré de Flambeaux
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/animated/flambeau_flamme.webp',
-                width: 32,
-                height: 52,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(width: 14),
-              AnimatedBuilder(
-                animation: _pulseController,
-                builder: (context, child) {
-                  final scale = _animatingHit ? 0.92 : 1.0 + (_pulseController.value * 0.04);
-                  return Transform.scale(
-                    scale: scale,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: _animatingHit ? Colors.redAccent : RomanColors.imperialGold,
-                          width: 3,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: (_animatingHit ? Colors.redAccent : RomanColors.imperialGold).withOpacity(0.35),
-                            blurRadius: 16,
-                            spreadRadius: 3,
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xDD0D1B2A),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 2)),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Text('🛡️ ', style: TextStyle(fontSize: 11)),
+                              Text(
+                                heroName.toUpperCase(),
+                                style: const TextStyle(
+                                  color: Color(0xFFFFE082),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.5,
+                                  fontFamily: 'serif',
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '$_playerHp/100',
+                            style: TextStyle(
+                              color: _playerHp > 30 ? Colors.greenAccent : Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
                           ),
                         ],
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          boss['image'] as String,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Center(
-                            child: Text('⚔️', style: TextStyle(fontSize: 48)),
-                          ),
+                      const SizedBox(height: 4),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Stack(
+                          children: [
+                            Container(height: 8, color: const Color(0xFF1B263B)),
+                            AnimatedFractionallySizedBox(
+                              duration: const Duration(milliseconds: 300),
+                              widthFactor: (_playerHp / 100.0).clamp(0.0, 1.0),
+                              child: Container(
+                                height: 8,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: _playerHp > 30
+                                        ? [const Color(0xFF00E676), const Color(0xFF00B0FF)]
+                                        : [const Color(0xFFFF1744), const Color(0xFFFF9100)],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  );
-                },
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(width: 14),
-              Transform.scale(
-                scaleX: -1,
-                child: Image.asset(
-                  'assets/images/animated/flambeau_flamme.webp',
-                  width: 32,
-                  height: 52,
-                  fit: BoxFit.contain,
+
+              const SizedBox(width: 8),
+
+              // Médaillon VS central
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: const Color(0xFF2E0811),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                  boxShadow: const [
+                    BoxShadow(color: Color(0x66FFD700), blurRadius: 8),
+                  ],
+                ),
+                child: const Text(
+                  'VS',
+                  style: TextStyle(
+                    color: RomanColors.imperialGold,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10,
+                    fontFamily: 'serif',
+                  ),
+                ),
+              ),
+
+              const SizedBox(width: 8),
+
+              // Jauge Champion Boss
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: const Color(0xDD2B0E14),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFD43737), width: 1.2),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 2)),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '$_bossHp/${boss['maxHp']}',
+                            style: const TextStyle(
+                              color: Color(0xFFFF8A80),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                (boss['nom'] as String).toUpperCase(),
+                                style: const TextStyle(
+                                  color: Color(0xFFFF8A80),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.5,
+                                  fontFamily: 'serif',
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              const Text(' ⚔️', style: TextStyle(fontSize: 11)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Stack(
+                          children: [
+                            Container(height: 8, color: const Color(0xFF3E151D)),
+                            AnimatedFractionallySizedBox(
+                              duration: const Duration(milliseconds: 300),
+                              widthFactor: (_bossHp / (boss['maxHp'] as int)).clamp(0.0, 1.0),
+                              child: Container(
+                                height: 8,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFFF5252), Color(0xFFFF9100)],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
 
-          // Titre et citation antique du boss
-          Column(
-            children: [
-              Text(
-                boss['titre'] as String,
-                style: const TextStyle(color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 13, letterSpacing: 0.8),
-              ),
-              const SizedBox(height: 3),
-              if (_currentBossSpeech != null)
-                Container(
-                  margin: const EdgeInsets.only(top: 4),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF4A1F3D),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                  ),
-                  child: Text(
-                    _currentBossSpeech!,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.amberAccent,
-                      fontSize: 10.5,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
+          // 2. Face-à-Face des Combattants dans l'Arène
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Héros Joueur (Gauche)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, _) {
+                        final heroScale = _playerRiposteAnim
+                            ? 0.88
+                            : 1.0 + (_pulseController.value * 0.03);
+                        return Transform.scale(
+                          scale: heroScale,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 88,
+                                height: 88,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: _playerRiposteAnim
+                                          ? Colors.redAccent.withOpacity(0.7)
+                                          : const Color(0xFF00B0FF).withOpacity(0.35),
+                                      blurRadius: 16,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 82,
+                                height: 82,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: _playerRiposteAnim ? Colors.redAccent : RomanColors.imperialGold,
+                                    width: 2.5,
+                                  ),
+                                ),
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    heroAvatar,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) => const Center(
+                                      child: Text('🛡️', style: TextStyle(fontSize: 32)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black87,
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: RomanColors.imperialGold, width: 0.8),
+                                  ),
+                                  child: Text(
+                                    _currentStance.nom.toUpperCase(),
+                                    style: const TextStyle(
+                                      color: RomanColors.imperialGold,
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                )
-              else
-                Text(
-                  boss['citation'] as String,
-                  style: const TextStyle(color: Colors.white60, fontStyle: FontStyle.italic, fontSize: 11),
+                    const SizedBox(height: 3),
+                    Text(
+                      '🛡️ $heroName',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10.5,
+                        fontFamily: 'serif',
+                      ),
+                    ),
+                  ],
                 ),
-            ],
+
+                // Centre d'Affrontement avec Dégâts Flottants & Glaives Croisés
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_floatingCombatText != null)
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        margin: const EdgeInsets.only(bottom: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: _floatingCombatIsHero ? const Color(0xFFB71C1C) : const Color(0xFF7F0000),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                          boxShadow: const [
+                            BoxShadow(color: Color(0x66FFD700), blurRadius: 8),
+                          ],
+                        ),
+                        child: Text(
+                          _floatingCombatText!,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox(height: 22),
+
+                    AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, _) {
+                        return Transform.rotate(
+                          angle: (_animatingHit ? 0.3 : 0.0) + (math.sin(_pulseController.value * math.pi) * 0.08),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0x66000000),
+                              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+                            ),
+                            child: const Text('⚔️', style: TextStyle(fontSize: 22)),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'COLOSSEUM',
+                      style: TextStyle(
+                        color: RomanColors.imperialGold,
+                        fontSize: 8.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Champion Boss (Droite) avec Torches Animées
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedBuilder(
+                      animation: _pulseController,
+                      builder: (context, _) {
+                        final bossScale = _animatingHit
+                            ? 0.88
+                            : 1.0 + (_pulseController.value * 0.03);
+                        return Transform.scale(
+                          scale: bossScale,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                right: -14,
+                                top: -6,
+                                child: Image.asset(
+                                  'assets/images/animated/flambeau_flamme.webp',
+                                  width: 22,
+                                  height: 38,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Container(
+                                width: 88,
+                                height: 88,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: _animatingHit
+                                          ? Colors.redAccent.withOpacity(0.8)
+                                          : Colors.deepOrangeAccent.withOpacity(0.4),
+                                      blurRadius: 16,
+                                      spreadRadius: 2,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 82,
+                                height: 82,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: _animatingHit ? Colors.redAccent : const Color(0xFFFF7043),
+                                    width: 2.5,
+                                  ),
+                                ),
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    boss['image'] as String,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) => const Center(
+                                      child: Text('⚔️', style: TextStyle(fontSize: 32)),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF3E151D),
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: const Color(0xFFFF8A80), width: 0.8),
+                                  ),
+                                  child: Text(
+                                    '${boss['titre']}'.toUpperCase(),
+                                    style: const TextStyle(
+                                      color: Color(0xFFFF8A80),
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      '⚔️ ${boss['nom']}',
+                      style: const TextStyle(
+                        color: Colors.amberAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10.5,
+                        fontFamily: 'serif',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
+
+          // 3. Dialogue / Taunt du Boss
+          if (_currentBossSpeech != null)
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xDD3E151D),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+              ),
+              child: Text(
+                _currentBossSpeech!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.amberAccent,
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            )
+          else
+            Text(
+              '« ${boss['citation']} »',
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.white70, fontStyle: FontStyle.italic, fontSize: 10.5),
+            ),
         ],
       ),
     );

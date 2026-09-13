@@ -196,21 +196,37 @@ class DuelWindow(tk.Toplevel):
         w = cv.winfo_width()
         if w <= 1:
             w = 880
-        h = 36
+        h = 42
+
+        # Fond pierre d'arène texturé avec encadrement or
+        cv.create_rectangle(0, 0, w, h, fill="#181926", outline="#d4af37", width=2)
 
         # Ratio de 0 (tout à gauche J2 gagne) à 1 (tout à droite J1 gagne)
-        # position_corde va de -5 à +5
         pos_norm = (self.position_corde + 5) / 10.0
         x_milieu = int(w * pos_norm)
 
-        # Côté gauche (Bleu J1)
-        cv.create_rectangle(0, 0, x_milieu, h, fill="#2980b9", outline="")
-        # Côté droit (Rouge J2)
-        cv.create_rectangle(x_milieu, 0, w, h, fill="#c0392b", outline="")
+        # Côté gauche (Bleu impérial Marcus J1)
+        if x_milieu > 2:
+            cv.create_rectangle(2, 2, x_milieu, h - 2, fill="#1a365d", outline="")
+            cv.create_rectangle(2, 2, x_milieu, h // 2, fill="#2b6cb0", outline="")
 
-        # Curseur glaives au milieu
-        cv.create_rectangle(x_milieu - 4, 0, x_milieu + 4, h, fill="#ffd700", outline="#ffffff")
-        cv.create_text(x_milieu, h // 2, text="⚔️", font=("Segoe UI Emoji", 14))
+        # Côté droit (Pourpre impériale Julia J2)
+        if x_milieu < w - 2:
+            cv.create_rectangle(x_milieu, 2, w - 2, h - 2, fill="#5c1d24", outline="")
+            cv.create_rectangle(x_milieu, 2, w - 2, h // 2, fill="#9b2c3b", outline="")
+
+        # Graduations en chiffres romains (-5 à +5)
+        graduations = ["-V", "-IV", "-III", "-II", "-I", "SPQR", "+I", "+II", "+III", "+IV", "+V"]
+        for i, grad in enumerate(graduations):
+            x_g = int(w * (i / 10.0))
+            cv.create_line(x_g, h - 10, x_g, h - 2, fill="#ffd700", width=1.5)
+            if i in [0, 5, 10]:
+                cv.create_text(x_g, h - 16, text=grad, font=("Cinzel", 8, "bold"), fill="#e2c4a2")
+
+        # Curseur glaives au milieu encadré d'or
+        r = 16
+        cv.create_oval(x_milieu - r, h // 2 - r, x_milieu + r, h // 2 + r, fill="#ffd700", outline="#ffffff", width=2)
+        cv.create_text(x_milieu, h // 2, text="⚔️", font=("Segoe UI Emoji", 12))
 
     def _nouvelle_manche(self):
         if not self.pool_questions:
