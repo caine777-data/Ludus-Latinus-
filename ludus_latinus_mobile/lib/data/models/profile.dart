@@ -101,6 +101,8 @@ class UserProfile {
   int sesterces;
   int streakDays;
   List<String> completedLessons;
+  /// Meilleur nombre d'étoiles (1 à 3) obtenu par leçon.
+  Map<String, int> lessonStars;
   List<String> restoredMonuments;
   Map<String, int> srsScores;
   Map<String, SrsCardProgress> srsCards;
@@ -122,6 +124,7 @@ class UserProfile {
     this.sesterces = 50,
     this.streakDays = 1,
     List<String>? completedLessons,
+    Map<String, int>? lessonStars,
     List<String>? restoredMonuments,
     Map<String, int>? srsScores,
     Map<String, SrsCardProgress>? srsCards,
@@ -136,6 +139,7 @@ class UserProfile {
     Map<String, String>? equippedGoodies,
     List<String>? ownedGoodies,
   })  : completedLessons = completedLessons ?? [],
+        lessonStars = lessonStars ?? {},
         restoredMonuments = restoredMonuments ?? [],
         srsScores = srsScores ?? {},
         srsCards = srsCards ?? {},
@@ -295,6 +299,7 @@ class UserProfile {
     var rawEquipped = json['equipped_goodies'] as Map<String, dynamic>? ?? {};
     var rawOwned = json['owned_goodies'] as List<dynamic>? ?? [];
     var rawSrs = json['srs_cards'] as Map<String, dynamic>? ?? {};
+    var rawStars = json['lesson_stars'] as Map<String, dynamic>? ?? {};
 
     Map<String, String> parsedEquipped = {
       'toge': rawEquipped['toge']?.toString() ?? 'lin_blanc',
@@ -321,6 +326,11 @@ class UserProfile {
       sesterces: json['sesterces'] as int? ?? 50,
       streakDays: json['streak'] as int? ?? 1,
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
+      // Les leçons validées avant l'arrivée des étoiles gardent 3 étoiles.
+      lessonStars: {
+        for (final id in rawCompleted) id.toString(): 3,
+        for (final e in rawStars.entries) e.key: (e.value as num?)?.toInt().clamp(1, 3) ?? 1,
+      },
       restoredMonuments: rawMonuments.map((e) => e.toString()).toList(),
       srsCards: parsedSrs,
       email: rawCompte['email'] as String? ?? '',
@@ -344,6 +354,7 @@ class UserProfile {
       'sesterces': sesterces,
       'streak': streakDays,
       'completed': completedLessons,
+      'lesson_stars': lessonStars,
       'forum_monuments': restoredMonuments,
       'srs_cards': srsCards.map((k, v) => MapEntry(k, v.toJson())),
       'last_daily_quest_date': lastDailyQuestDate,

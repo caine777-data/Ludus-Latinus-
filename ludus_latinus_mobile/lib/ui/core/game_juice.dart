@@ -80,8 +80,11 @@ class RomanScreenShakeState extends State<RomanScreenShake>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
+        // Toujours le même Transform, même au repos : alterner avec
+        // widget.child seul reconstruirait le sous-arbre et ferait perdre
+        // la position de défilement (retour en haut de la leçon).
         if (!_controller.isAnimating) {
-          return widget.child;
+          return Transform.translate(offset: Offset.zero, child: widget.child);
         }
 
         final t = _controller.value;

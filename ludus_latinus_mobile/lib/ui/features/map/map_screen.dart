@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
-import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
 import '../../../data/models/world.dart';
 import '../../../data/models/lesson.dart';
@@ -394,8 +393,7 @@ class _MapScreenState extends State<MapScreen> {
     return GestureDetector(
       onTap: isUnlocked
           ? () {
-              AudioService().playTriumph();
-              RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+              AudioService().playCardFlip();
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -579,7 +577,10 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 const SizedBox(height: 2),
                 if (isCompleted)
-                  const Text('⭐⭐⭐', style: TextStyle(fontSize: 8))
+                  Text(
+                    '★' * widget.repo.starsForLesson(lesson.id).clamp(0, 3) + '☆' * (3 - widget.repo.starsForLesson(lesson.id).clamp(0, 3)),
+                    style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold),
+                  )
                 else if (isCurrentActive)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),

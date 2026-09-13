@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
-import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
@@ -41,6 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTabIndex = 0; // 0 = Cursus, 1 = Bibliotheca, 2 = Ludi
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
   final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
+
+  /// Étoiles obtenues pour une leçon, sous forme ★★☆.
+  String _stars(String lessonId) {
+    final s = widget.repo.starsForLesson(lessonId).clamp(0, 3);
+    return '★' * s + '☆' * (3 - s);
+  }
 
   String get _appBarTitle {
     switch (_currentTabIndex) {
@@ -374,8 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: '▶ AVANCER SUR LA ROUTE',
                       isLarge: true,
                       onPressed: () {
-                        AudioService().playTriumph();
-                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -737,7 +741,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      isActiveCompleted ? '✓ MAÎTRISÉE ⭐⭐⭐' : '▶ LEÇON SUIVANTE',
+                      isActiveCompleted ? '✓ VALIDÉE ${_stars(activeLesson.id)}' : '▶ LEÇON SUIVANTE',
                       style: TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
@@ -778,8 +782,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        AudioService().playTriumph();
-                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -914,7 +917,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           if (isDone)
-                            const Text('⭐⭐⭐', style: TextStyle(fontSize: 9))
+                            Text(_stars(l.id), style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold))
                           else if (isCurrent)
                             const Text('📍 ICI', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
                         ],
@@ -938,7 +941,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 3),
                           Text(
-                            isDone ? 'Maîtrisée' : 'Explorer',
+                            isDone ? 'Validée' : 'Explorer',
                             style: TextStyle(
                               fontSize: 9.5,
                               color: isDone ? Colors.green.shade700 : RomanColors.imperialPurple,
