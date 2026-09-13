@@ -3,10 +3,10 @@ import 'package:ludus_latinus_mobile/data/models/profile.dart';
 
 void main() {
   group('Déblocage Progressif des Mini-Jeux (Progressive Disclosure)', () {
-    test('Nouveau joueur débutant (0 leçon terminée) : jeux verrouillés avec consignes d\'avancement', () {
+    test('Nouveau joueur débutant (0 leçon terminée) : Circus accessible, Duel verrouillé après 2 leçons', () {
       final profile = UserProfile(completedLessons: []);
 
-      expect(profile.isCircusUnlocked, isFalse);
+      expect(profile.isCircusUnlocked, isTrue);
       expect(profile.isColosseumUnlocked, isFalse);
       expect(profile.isTaverneUnlocked, isFalse);
       expect(profile.isCesarUnlocked, isFalse);
@@ -14,9 +14,13 @@ void main() {
       expect(profile.isPantheonUnlocked, isFalse);
 
       final circusStatus = profile.getUnlockStatusForGame('circus');
-      expect(circusStatus.isUnlocked, isFalse);
-      expect(circusStatus.progress, equals(0.0));
-      expect(circusStatus.reason, contains('Via Appia'));
+      expect(circusStatus.isUnlocked, isTrue);
+      expect(circusStatus.progress, equals(1.0));
+
+      final duelStatus = profile.getUnlockStatusForGame('duel');
+      expect(duelStatus.isUnlocked, isFalse);
+      expect(duelStatus.progress, equals(0.0));
+      expect(duelStatus.reason, contains('2 étapes'));
 
       final taverneStatus = profile.getUnlockStatusForGame('taverne');
       expect(taverneStatus.isUnlocked, isFalse);

@@ -90,9 +90,11 @@ class UserProfile {
   List<String> get unlockedMonuments => restoredMonuments;
 
   // --- Conditions de Déblocage Progressif (Progressive Disclosure) ---
-  bool get isCircusUnlocked => completedLessons.isNotEmpty;
-  int get circusRequiredLessons => 1;
+  // 1. Circus Maximus : accessible dès le premier jour
+  bool get isCircusUnlocked => true;
+  int get circusRequiredLessons => 0;
 
+  // 2. Colosseum Duellum : accessible après au moins 2 leçons réussies
   bool get isColosseumUnlocked => completedLessons.length >= 2;
   int get colosseumRequiredLessons => 2;
 
@@ -111,11 +113,10 @@ class UserProfile {
   ({bool isUnlocked, String reason, double progress}) getUnlockStatusForGame(String gameKey) {
     switch (gameKey) {
       case 'circus':
-        final prog = (completedLessons.length / circusRequiredLessons).clamp(0.0, 1.0);
         return (
-          isUnlocked: isCircusUnlocked,
-          reason: 'Termine 1 étape sur la Via Appia pour harnacher ton char',
-          progress: prog,
+          isUnlocked: true,
+          reason: 'Prêt pour la course de chars épiques !',
+          progress: 1.0,
         );
       case 'duel':
         final prog = (completedLessons.length / colosseumRequiredLessons).clamp(0.0, 1.0);

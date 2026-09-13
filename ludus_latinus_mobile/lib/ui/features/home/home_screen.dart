@@ -66,11 +66,69 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(_appBarTitle),
         actions: [
+          // 1. Flamme de régularité (Streak)
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF0EC),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.deepOrange.withOpacity(0.4), width: 0.8),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('🔥', style: TextStyle(fontSize: 12)),
+                const SizedBox(width: 3),
+                Text(
+                  '${profile.streakDays} j',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // 2. Compteur de Sesterces (Ouvre la Boutique)
+          InkWell(
+            onTap: () {
+              AudioService().playSesterces();
+              BoutiqueModal.show(context, repo: widget.repo);
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 3),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+              decoration: BoxDecoration(
+                color: RomanColors.goldLight,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RollingSestercesCounter(
+                    value: profile.sesterces,
+                    style: const TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF7A5901),
+                    ),
+                  ),
+                  const SizedBox(width: 3),
+                  const Icon(Icons.shopping_bag_outlined, size: 12, color: Color(0xFF7A5901)),
+                ],
+              ),
+            ),
+          ),
+          // 3. Bascule Jour / Nuit
           IconButton(
             icon: Icon(
               widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
               color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
-              size: 22,
+              size: 20,
             ),
             tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
             onPressed: () {
@@ -79,26 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
               widget.repo.toggleThemeMode();
             },
           ),
+          // 4. Harmonia Antiqua (Réglages Audio & Bruitages)
           IconButton(
             icon: Icon(
               AudioService().isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
               color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
-              size: 24,
+              size: 22,
             ),
-            tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
+            tooltip: 'Harmonia Antiqua (Réglages Audio)',
             onPressed: () {
               RomanAudioModal.show(context);
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.account_circle_outlined, color: RomanColors.imperialPurple, size: 28),
-            tooltip: 'Tabularium & Profil',
-            onPressed: () {
-              AudioService().playCardFlip();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
-              );
             },
           ),
         ],
@@ -160,59 +208,54 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // 1. Carte Héros & Statistiques (Marbre Travertin sculpté)
-              RomanCard(
+              // 1. Carte Héros Unifiée (Clic unique -> Ouvre Tabularium / Fiche de compte)
+              InkWell(
+                onTap: () {
+                  AudioService().playCardFlip();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
+                  );
+                },
+                borderRadius: BorderRadius.circular(16),
+                child: RomanCard(
                   child: Row(
                     children: [
                       RomanMedallion(
                         imagePath: avatarImg,
                         size: 64,
                         fallbackEmoji: profile.genre == 'fille' ? '👸' : '🤴',
-                        onTap: () {
-                          BoutiqueModal.show(context, repo: widget.repo);
-                        },
                       ),
                       const SizedBox(width: 14),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            InkWell(
-                              onTap: () => _showCursusHonorumModal(context, profile),
-                              borderRadius: BorderRadius.circular(8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: RomanColors.goldLight,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: RomanColors.imperialGold, width: 1),
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: RomanColors.goldLight,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: RomanColors.imperialGold, width: 1),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(profile.cursusRank.badge, style: const TextStyle(fontSize: 12)),
-                                        const SizedBox(width: 3),
-                                        Text(
-                                          profile.cursusRank.titre,
-                                          style: const TextStyle(
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF684900),
-                                            letterSpacing: 0.5,
-                                          ),
-                                        ),
-                                      ],
+                                  Text(profile.cursusRank.badge, style: const TextStyle(fontSize: 12)),
+                                  const SizedBox(width: 3),
+                                  Text(
+                                    profile.cursusRank.titre,
+                                    style: const TextStyle(
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF684900),
+                                      letterSpacing: 0.5,
                                     ),
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Icon(Icons.info_outline, size: 14, color: RomanColors.imperialGold),
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 3),
+                            const SizedBox(height: 4),
                             Text(
                               profile.nomHeros,
                               style: const TextStyle(
@@ -227,104 +270,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               '${profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (sum, w) => sum + w.lessons.length)} leçons conquises',
                               style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                             ),
-                            const SizedBox(height: 5),
-                            Wrap(
-                              spacing: 4,
-                              runSpacing: 3,
-                              children: [
-                                _buildEquippedMiniChip(context, GoodieCategory.toge),
-                                _buildEquippedMiniChip(context, GoodieCategory.couronne),
-                                _buildEquippedMiniChip(context, GoodieCategory.accessoire),
-                                if (widget.repo.getEquippedGoodie(GoodieCategory.compagnon) != 'aucun')
-                                  _buildEquippedMiniChip(context, GoodieCategory.compagnon),
-                              ],
-                            ),
                           ],
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: () => BoutiqueModal.show(context, repo: widget.repo),
-                            borderRadius: BorderRadius.circular(12),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: RomanColors.goldLight,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                                boxShadow: const [
-                                  BoxShadow(color: Color(0x14000000), blurRadius: 4, offset: Offset(0, 1)),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RollingSestercesCounter(
-                                    value: profile.sesterces,
-                                    style: const TextStyle(
-                                      fontSize: 12.5,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF7A5901),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                                    decoration: BoxDecoration(
-                                      color: RomanColors.imperialPurple,
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(Icons.shopping_bag_outlined, size: 10, color: RomanColors.goldLight),
-                                        SizedBox(width: 2),
-                                        Text(
-                                          'Boutique',
-                                          style: TextStyle(
-                                            fontSize: 9,
-                                            fontWeight: FontWeight.bold,
-                                            color: RomanColors.goldLight,
-                                            letterSpacing: 0.3,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFFF0EC),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Text('🔥', style: TextStyle(fontSize: 12)),
-                                const SizedBox(width: 3),
-                                Text(
-                                  '${profile.streakDays} jours',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.deepOrange,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      const Icon(
+                        Icons.chevron_right_rounded,
+                        color: RomanColors.imperialGold,
+                        size: 24,
                       ),
                     ],
                   ),
                 ),
+              ),
 
                 const SizedBox(height: 12),
 

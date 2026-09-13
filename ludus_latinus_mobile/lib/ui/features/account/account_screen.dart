@@ -231,81 +231,88 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(height: 14),
 
               // 1.5 Taberna & Penderie Impériale (Boutique de Goodies)
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFFFFDF8), Color(0xFFFBF4E8)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () => BoutiqueModal.show(context, repo: widget.repo),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.4),
-                  boxShadow: const [
-                    BoxShadow(color: Color(0x0E3D1A10), blurRadius: 8, offset: Offset(0, 3)),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 46,
-                      height: 46,
-                      decoration: BoxDecoration(
-                        color: RomanColors.goldLight,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFFFFDF8), Color(0xFFFBF4E8)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/animated/lupulus_salut.webp',
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Center(
-                            child: Text('🏛️', style: TextStyle(fontSize: 22)),
-                          ),
-                        ),
-                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: RomanColors.imperialGold, width: 1.4),
+                      boxShadow: const [
+                        BoxShadow(color: Color(0x0E3D1A10), blurRadius: 8, offset: Offset(0, 3)),
+                      ],
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Taberna & Penderie Impériale',
-                            style: TextStyle(
-                              fontFamily: RomanFonts.imperial,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              color: RomanColors.imperialPurple,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: RomanColors.goldLight,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/animated/lupulus_salut.webp',
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) => const Center(
+                                child: Text('🏛️', style: TextStyle(fontSize: 22)),
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Toge : ${(profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' ')} • ${profile.sesterces} HS en bourse',
-                            style: const TextStyle(fontSize: 11, color: Color(0xFF7A5901), fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: RomanColors.imperialPurple,
-                        foregroundColor: RomanColors.goldLight,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          side: const BorderSide(color: RomanColors.imperialGold, width: 1),
                         ),
-                      ),
-                      icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
-                      label: const Text(
-                        'Penderie',
-                        style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Taberna & Vestiaire Impérial',
+                                style: TextStyle(
+                                  fontFamily: RomanFonts.imperial,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: RomanColors.imperialPurple,
+                                ),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(
+                                'Toge : ${(profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' ')} • ${profile.sesterces} HS',
+                                style: const TextStyle(fontSize: 11.5, color: Color(0xFF7A5901), fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: RomanColors.imperialPurple,
+                            foregroundColor: RomanColors.goldLight,
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              side: const BorderSide(color: RomanColors.imperialGold, width: 1),
+                            ),
+                          ),
+                          icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
+                          label: const Text(
+                            'Vestiaire',
+                            style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
 
