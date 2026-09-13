@@ -264,8 +264,8 @@ class _ExportFichesModalState extends State<ExportFichesModal>
   </div>
 
   <div class="stats-box">
-    <strong>Élève :</strong> ${profile.name} &nbsp;|&nbsp;
-    <strong>Rang :</strong> ${profile.rank} &nbsp;|&nbsp;
+    <strong>Élève :</strong> ${profile.nomHeros} &nbsp;|&nbsp;
+    <strong>Rang :</strong> ${profile.cursusRank.titre} &nbsp;|&nbsp;
     <strong>Sesterces :</strong> ${profile.sesterces} HS &nbsp;|&nbsp;
     <strong>Monuments restaurés :</strong> ${profile.restoredMonuments.length} / 6 &nbsp;|&nbsp;
     <strong>Stèles décodées :</strong> ${profile.decodedEpigraphs.length}
@@ -644,7 +644,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          profile.name.toUpperCase(),
+                          profile.nomHeros.toUpperCase(),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -653,7 +653,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                           ),
                         ),
                         Text(
-                          'Titre républicain : ${profile.rank}',
+                          'Titre républicain : ${profile.cursusRank.titre}',
                           style: const TextStyle(fontSize: 12, color: RomanColors.charcoal),
                         ),
                       ],

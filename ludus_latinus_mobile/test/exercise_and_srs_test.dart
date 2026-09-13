@@ -59,7 +59,7 @@ void main() {
       expect(lesson.type, equals('decodeur'));
       expect(lesson.latinComplet, equals('Marcus gladium tenet'));
       expect(lesson.roles.length, equals(3));
-      expect(lesson.roles.first['cas'], contains('Nominatif'));
+      expect(lesson.roles['Marcus'], contains('Nominatif'));
     });
 
     test('Type "arene" (Combat Boss didactique) : extrait nom du boss et série de questions', () {
@@ -86,7 +86,7 @@ void main() {
 
       final lesson = Lesson.fromJson(json);
       expect(lesson.type, equals('arene'));
-      expect(lesson.boss, equals('Gladiateur Rétiaire'));
+      expect(lesson.bossName, equals('Gladiateur Rétiaire'));
       expect(lesson.questions.length, equals(2));
       expect(lesson.questions.first['reponse'], equals('Accusatif'));
     });

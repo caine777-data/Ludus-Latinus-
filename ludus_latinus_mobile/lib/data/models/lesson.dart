@@ -40,11 +40,33 @@ class Lesson {
     this.roles = const {},
   });
 
+  String? get bossName => boss?['nom'] as String? ?? boss?['name'] as String?;
+
   factory Lesson.fromJson(Map<String, dynamic> json) {
     var rawOptions = json['options'] as List<dynamic>? ?? [];
     var rawWords = json['mots'] as List<dynamic>? ?? [];
     var rawQuestions = json['questions'] as List<dynamic>? ?? [];
-    var rawRoles = json['roles'] as Map<String, dynamic>? ?? {};
+
+    Map<String, dynamic>? bossMap;
+    if (json['boss'] is Map<String, dynamic>) {
+      bossMap = json['boss'] as Map<String, dynamic>;
+    } else if (json['boss'] is String) {
+      bossMap = {'nom': json['boss'] as String};
+    }
+
+    Map<String, String> parsedRoles = {};
+    final rawRoles = json['roles'];
+    if (rawRoles is Map) {
+      rawRoles.forEach((k, v) => parsedRoles[k.toString()] = v.toString());
+    } else if (rawRoles is List) {
+      for (final item in rawRoles) {
+        if (item is Map) {
+          final mot = item['mot']?.toString() ?? '';
+          final cas = (item['cas'] ?? item['role'])?.toString() ?? '';
+          if (mot.isNotEmpty) parsedRoles[mot] = cas;
+        }
+      }
+    }
 
     return Lesson(
       id: json['id'] as String? ?? '',
@@ -62,11 +84,11 @@ class Lesson {
       avant: json['avant'] as String?,
       apres: json['apres'] as String?,
       latinComplet: json['latin_complet'] as String? ?? json['solution_complete'] as String?,
-      boss: json['boss'] is Map<String, dynamic> ? json['boss'] as Map<String, dynamic> : null,
+      boss: bossMap,
       questions: rawQuestions
           .whereType<Map<String, dynamic>>()
           .toList(),
-      roles: rawRoles.map((k, v) => MapEntry(k, v.toString())),
+      roles: parsedRoles,
     );
   }
 }
