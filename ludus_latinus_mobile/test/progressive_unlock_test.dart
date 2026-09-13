@@ -20,12 +20,12 @@ void main() {
       final duelStatus = profile.getUnlockStatusForGame('duel');
       expect(duelStatus.isUnlocked, isFalse);
       expect(duelStatus.progress, equals(0.0));
-      expect(duelStatus.reason, contains('2 étapes'));
+      expect(duelStatus.reason, contains('2 leçons'));
 
       final taverneStatus = profile.getUnlockStatusForGame('taverne');
       expect(taverneStatus.isUnlocked, isFalse);
       expect(taverneStatus.progress, equals(0.0));
-      expect(taverneStatus.reason, contains('Palier II'));
+      expect(taverneStatus.reason, contains('6 leçons'));
     });
 
     test('Joueur au Palier I (1 à 3 leçons) : Circus et Colosseum débloqués', () {

@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
+import '../../core/markdown_lite.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -26,7 +27,7 @@ import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
 
-/// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
+/// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -44,9 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String get _appBarTitle {
     switch (_currentTabIndex) {
       case 1:
-        return 'BIBLIOTHECA ROMANA';
+        return 'BIBLIOTHECA';
       case 2:
-        return 'LUDI & ARÈNES';
+        return 'LUDI';
       default:
         return 'LUDUS LATINUS';
     }
@@ -121,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           // 3. Bascule Jour / Nuit
+          if (GameRepository.modeSombreDisponible)
           IconButton(
             icon: Icon(
               widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
@@ -363,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Chaussée pavée polygonale • 26 étapes milliaires • Cycle 4',
+                      '26 mondes du collège, de la 5e à la 3e',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
                     ),
@@ -610,77 +612,56 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: RomanColors.imperialGold.withOpacity(0.6)),
           ),
+          // Titre sur toute la largeur, badges en dessous : plus de débordement sur téléphone.
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: RomanColors.imperialPurple,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Text('📖', style: TextStyle(fontSize: 12)),
-                  ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
-                            style: const TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.8,
-                              color: RomanColors.imperialPurple,
-                              fontFamily: 'serif',
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-                            decoration: BoxDecoration(
-                              color: RomanColors.imperialPurple,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: const Text(
-                              'PROGRAMME SCOLAIRE',
-                              style: TextStyle(
-                                fontSize: 8.5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                letterSpacing: 0.4,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      const Text(
-                        'Progression officielle collège — Grammaire, textes & exercices',
-                        style: TextStyle(fontSize: 10.5, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1),
+                padding: const EdgeInsets.all(5),
+                decoration: const BoxDecoration(
+                  color: RomanColors.imperialPurple,
+                  shape: BoxShape.circle,
                 ),
-                child: Text(
-                  '$completedInClass / $totalInClass terminées',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
-                  ),
+                child: const Icon(Icons.menu_book_rounded, size: 14, color: Colors.white),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.6,
+                        color: RomanColors.imperialPurple,
+                        fontFamily: 'serif',
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'Programme du collège : grammaire, textes et exercices',
+                      style: TextStyle(fontSize: 11, color: Colors.black54),
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: RomanColors.imperialGold, width: 1),
+                      ),
+                      child: Text(
+                        '$completedInClass / $totalInClass leçons terminées',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF7A5901),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -783,11 +764,11 @@ class _HomeScreenState extends State<HomeScreen> {
               // Extrait ou consigne
               Text(
                 activeLesson.content.isNotEmpty
-                    ? (activeLesson.content.length > 100
-                        ? '${activeLesson.content.substring(0, 100)}...'
-                        : activeLesson.content)
+                    ? MarkdownLite.plainText(activeLesson.content)
                     : (activeLesson.question ?? 'Exercice interactif du collège.'),
-                style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.3),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 12.5, color: Colors.black54, height: 1.35),
               ),
               const SizedBox(height: 14),
 
@@ -857,11 +838,11 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Feuilleter toutes les étapes de ce niveau :',
+              'Toutes les leçons de ce niveau :',
               style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black54),
             ),
             Text(
-              '${classLessons.length} étapes',
+              '${classLessons.length} leçons',
               style: const TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
             ),
           ],

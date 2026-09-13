@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../core/game_juice.dart';
+import '../../core/markdown_lite.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -14,7 +15,7 @@ import 'widgets/cloze_fill_widget.dart';
 import 'widgets/case_decoder_widget.dart';
 import 'widgets/arena_challenge_widget.dart';
 
-/// Écran de cours et d''exercice QCM 2x2 tactile au style épuré Monument Valley.
+/// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
 class LessonScreen extends StatefulWidget {
   final GameRepository repo;
   final Lesson lesson;
@@ -220,14 +221,14 @@ class _LessonScreenState extends State<LessonScreen> {
                         style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                       ),
                       Text(
-                        '${widget.repo.profile.completedLessons.length} / 26 leçons',
+                        '${widget.repo.profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (s, w) => s + w.lessons.length)} leçons',
                         style: const TextStyle(fontSize: 11, color: Colors.black54),
                       ),
                     ],
                   ),
                   const SizedBox(height: 5),
                   RomanElasticProgressBar(
-                    value: (widget.repo.profile.completedLessons.length / 26.0).clamp(0.0, 1.0),
+                    value: (widget.repo.profile.completedLessons.length / widget.repo.worlds.fold<int>(0, (s, w) => s + w.lessons.length).clamp(1, 100000)).clamp(0.0, 1.0),
                     color: RomanColors.imperialGold,
                     ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
                     backgroundColor: const Color(0xFFEBE3D7),
@@ -238,7 +239,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
             const SizedBox(height: 18),
             RomanButton(
-              text: 'CONTINUER L''AVENTURE ▶',
+              text: 'CONTINUER L\'AVENTURE ▶',
               isLarge: true,
               onPressed: () {
                 Navigator.pop(context); // ferme la modale
@@ -370,7 +371,8 @@ class _LessonScreenState extends State<LessonScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(lesson.title),
+        // Le titre complet est affiché dans la page : la barre reste lisible.
+        title: const Text('LEÇON'),
         actions: [
           IconButton(
             icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
@@ -549,22 +551,15 @@ class _LessonScreenState extends State<LessonScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    lesson.content,
-                    style: const TextStyle(fontSize: 13.5, height: 1.5, color: Colors.black87),
-                  ),
-                  const SizedBox(height: 12),
-                  const ParchmentCallout(
-                    title: "Le Savais-tu ? 💡",
-                    content: "À Rome, les élèves écrivaient sur des tablettes de cire (tabulae) à l''aide d''un poinçon de bronze appelé stilus !",
-                    isTip: true,
-                  ),
+                  MarkdownLite(lesson.content),
                   const SizedBox(height: 10),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     alignment: WrapAlignment.end,
                     children: [
+                      // La prononciation latine n'a de sens que sur une phrase latine.
+                      if (lesson.latin != null && lesson.latin!.trim().isNotEmpty)
                       TextButton.icon(
                         style: TextButton.styleFrom(
                           foregroundColor: RomanColors.imperialPurple,
@@ -577,12 +572,11 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         icon: const Icon(Icons.record_voice_over_outlined, size: 16),
                         label: const Text(
-                          '🗣️ Prononciation',
+                          'Prononciation',
                           style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
-                          final phrase = lesson.latin ?? lesson.title;
-                          LatinPronunciationModal.show(context, phrase);
+                          LatinPronunciationModal.show(context, lesson.latin!);
                         },
                       ),
                       TextButton.icon(
@@ -597,7 +591,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         icon: const Icon(Icons.history_edu_rounded, size: 16),
                         label: const Text(
-                          '📜 Anatomia • Décrypteur',
+                          'Anatomia • Décrypteur',
                           style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () => _showDecrypterSheet(context),
@@ -1005,16 +999,16 @@ class _LessonScreenState extends State<LessonScreen> {
     final color = _guessCaseColor(word);
     String cas = 'Nominatif (Sujet)';
     String desinence = 'Terminaison en -a ou -us';
-    String role = 'Indique qui accomplit l''action ou de qui l''on parle.';
+    String role = 'Indique qui accomplit l\'action ou de qui l\'on parle.';
 
     if (color == CaseColors.accusative) {
-      cas = 'Accusatif (Complément d''Objet Direct)';
+      cas = 'Accusatif (Complément d\'Objet Direct)';
       desinence = 'Terminaison en -m ou -s';
-      role = 'Désigne l''être ou la chose qui subit directement l''action du verbe.';
+      role = 'Désigne l\'être ou la chose qui subit directement l\'action du verbe.';
     } else if (color == CaseColors.genitive) {
       cas = 'Génitif (Complément du Nom)';
       desinence = 'Terminaison en -ae, -i ou -is';
-      role = 'Marque l''appartenance, la possession ou l''origine.';
+      role = 'Marque l\'appartenance, la possession ou l\'origine.';
     } else if (color == RomanColors.imperialGold) {
       cas = 'Verbe (Action / État)';
       desinence = 'Désinence verbale personnelle';

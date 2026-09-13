@@ -98,6 +98,16 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  int get taverneRewardsLeftToday => profile.taverneRewardsLeftToday;
+
+  /// Réserve un lancer récompensé de la Taverne (3 par jour). Renvoie false si épuisé.
+  bool consumeTaverneReward() {
+    final ok = profile.consumeTaverneReward();
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return ok;
+  }
+
   bool isEpigraphDecoded(String monumentId) {
     return profile.decodedEpigraphs.contains(monumentId);
   }
@@ -110,7 +120,11 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isDarkMode => profile.isDarkMode;
+  /// Le mode sombre est masqué tant que les écrans n'utilisent pas les
+  /// couleurs du thème (textes invisibles, cartes restées claires).
+  static const bool modeSombreDisponible = false;
+
+  bool get isDarkMode => modeSombreDisponible && profile.isDarkMode;
 
   void toggleThemeMode() {
     profile.isDarkMode = !profile.isDarkMode;

@@ -8,7 +8,7 @@ import '../boutique/boutique_modal.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
-/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l''élève (Style Monument Valley).
+/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l'élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -94,6 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
           appBar: AppBar(
             title: const Text('TABULARIUM'),
             actions: [
+              if (GameRepository.modeSombreDisponible)
               IconButton(
                 icon: Icon(
                   widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
@@ -173,8 +174,8 @@ class _AccountScreenState extends State<AccountScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 profile.genre == 'fille'
-                                    ? 'Élève Julia • Touche l''avatar pour changer'
-                                    : 'Élève Marcus • Touche l''avatar pour changer',
+                                    ? 'Élève Julia • Touche l\'avatar pour changer'
+                                    : 'Élève Marcus • Touche l\'avatar pour changer',
                                 style: const TextStyle(fontSize: 11, color: Colors.black54),
                               ),
                             ],

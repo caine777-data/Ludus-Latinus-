@@ -11,7 +11,7 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
 
-/// La Carte d''Aventure de la Via Appia inspirée de l''esthétique de Monument Valley.
+/// La Carte d'Aventure de la Via Appia inspirée de l'esthétique de Monument Valley.
 class MapScreen extends StatefulWidget {
   final GameRepository repo;
   final int initialClassFilter;
@@ -57,7 +57,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('VIA APPIA PANORAMIQUE'),
+        title: const Text('VIA APPIA'),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 14),
@@ -111,7 +111,7 @@ class _MapScreenState extends State<MapScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Épopée Romaine : $completedCount / $totalLessons étapes',
+                      'Épopée Romaine : $completedCount / $totalLessons leçons',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -258,7 +258,7 @@ class _MapScreenState extends State<MapScreen> {
                   children: [
                     const Text('🌿 ', style: TextStyle(fontSize: 12)),
                     Text(
-                      'S • P • Q • R  •  PARCOURS ${world.id.toUpperCase()}',
+                      'S • P • Q • R  •  MONDE ${world.id.replaceAll(RegExp(r'\D'), '')}',
                       style: const TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
@@ -322,7 +322,7 @@ class _MapScreenState extends State<MapScreen> {
                     ],
                   ),
                   child: Text(
-                    '« Étape ${world.id.toUpperCase()} : Que ta marche soit triomphale ! »',
+                    '« Monde ${world.id.replaceAll(RegExp(r'\D'), '')} : que ta marche soit triomphale ! »',
                     style: const TextStyle(
                       fontSize: 11,
                       fontStyle: FontStyle.italic,
@@ -354,7 +354,7 @@ class _MapScreenState extends State<MapScreen> {
                       ? 50
                       : 0;
 
-          // Détection si c''est la leçon active où se tient le joueur
+          // Détection si c'est la leçon active où se tient le joueur
           final bool isCurrentActive = isUnlocked && !isCompleted;
 
           return Padding(
@@ -415,7 +415,7 @@ class _MapScreenState extends State<MapScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Pin du Joueur si c''est la leçon active
+          // Pin du Joueur si c'est la leçon active
           if (isCurrentActive) ...[
             Container(
               margin: const EdgeInsets.only(bottom: 4),
