@@ -384,3 +384,148 @@ class RomanWaxSeal extends StatelessWidget {
     );
   }
 }
+
+/// Piédestal antique en marbre de Carrare sculpté (Stylobate & Plinthe).
+/// Utilisé pour surélever les trophées, statues et reliques impériales.
+class RomanPedestal extends StatelessWidget {
+  final Widget child;
+  final double width;
+  final String? inscription;
+  final bool isUnlocked;
+  final Color? glowColor;
+  final VoidCallback? onTap;
+
+  const RomanPedestal({
+    super.key,
+    required this.child,
+    this.width = 76,
+    this.inscription,
+    this.isUnlocked = true,
+    this.glowColor,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final effectiveGlow = glowColor ?? RomanColors.imperialGold;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Objet exposé (Trophée, Médaillon, Carte) avec ombre portée
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              if (isUnlocked)
+                Container(
+                  width: width * 0.72,
+                  height: width * 0.72,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: effectiveGlow.withOpacity(0.38),
+                        blurRadius: 14,
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              child,
+            ],
+          ),
+
+          const SizedBox(height: 3),
+
+          // Base en marbre sculptée à degrés (Corniche + Plinthe + Stylobate)
+          Container(
+            width: width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x1E000000),
+                  offset: Offset(0, 3),
+                  blurRadius: 5,
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 1. Corniche supérieure (Moulure dorée / Torus)
+                Container(
+                  height: 3,
+                  width: width * 0.9,
+                  decoration: BoxDecoration(
+                    color: isUnlocked ? RomanColors.imperialGold : Colors.black26,
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(2)),
+                  ),
+                ),
+
+                // 2. Corps du piédestal (Bloc de marbre veiné)
+                Container(
+                  width: width,
+                  padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 4),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: isUnlocked
+                          ? const [Color(0xFFFFFDF8), Color(0xFFF3EDE2), Color(0xFFE5DDD0)]
+                          : const [Color(0xFFEBEBEB), Color(0xFFD6D6D6), Color(0xFFBDBDBD)],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    border: Border.all(
+                      color: isUnlocked ? const Color(0xFFD6C5AA) : Colors.black12,
+                      width: 1,
+                    ),
+                  ),
+                  child: Center(
+                    child: inscription != null
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                            decoration: BoxDecoration(
+                              color: isUnlocked ? const Color(0xFF4A101A) : Colors.black45,
+                              borderRadius: BorderRadius.circular(3),
+                              border: Border.all(
+                                color: isUnlocked ? RomanColors.imperialGold : Colors.transparent,
+                                width: 0.6,
+                              ),
+                            ),
+                            child: Text(
+                              inscription!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: 'serif',
+                                fontSize: 8.5,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.8,
+                                color: isUnlocked ? RomanColors.goldLight : Colors.white70,
+                              ),
+                            ),
+                          )
+                        : const SizedBox(height: 8),
+                  ),
+                ),
+
+                // 3. Stylobate inférieur élargi
+                Container(
+                  height: 3.5,
+                  width: width,
+                  decoration: BoxDecoration(
+                    color: isUnlocked ? const Color(0xFFCAB395) : Colors.black26,
+                    borderRadius: const BorderRadius.vertical(bottom: Radius.circular(3)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

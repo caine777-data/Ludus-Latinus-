@@ -232,27 +232,37 @@ class _AccountScreenState extends State<AccountScreen> {
 
               // 1.5 Taberna & Penderie Impériale (Boutique de Goodies)
               Container(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFFFDF8), Color(0xFFFBF4E8)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.4),
                   boxShadow: const [
-                    BoxShadow(color: Color(0x0C000000), blurRadius: 8, offset: Offset(0, 2)),
+                    BoxShadow(color: Color(0x0E3D1A10), blurRadius: 8, offset: Offset(0, 3)),
                   ],
                 ),
                 child: Row(
                   children: [
                     Container(
-                      width: 44,
-                      height: 44,
+                      width: 46,
+                      height: 46,
                       decoration: BoxDecoration(
                         color: RomanColors.goldLight,
                         shape: BoxShape.circle,
-                        border: Border.all(color: RomanColors.imperialGold, width: 1),
+                        border: Border.all(color: RomanColors.imperialGold, width: 1.2),
                       ),
-                      child: const Center(
-                        child: Text('🏛️', style: TextStyle(fontSize: 22)),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/images/animated/lupulus_salut.webp',
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Center(
+                            child: Text('🏛️', style: TextStyle(fontSize: 22)),
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -270,9 +280,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                           const SizedBox(height: 2),
-                          const Text(
-                            'Dépense tes sesterces • Toges, couronnes, armes & animaux',
-                            style: TextStyle(fontSize: 11, color: Colors.black54),
+                          Text(
+                            'Toge : ${(profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' ')} • ${profile.sesterces} HS en bourse',
+                            style: const TextStyle(fontSize: 11, color: Color(0xFF7A5901), fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -290,7 +300,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
                       label: const Text(
-                        'Ouvrir',
+                        'Penderie',
                         style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
@@ -301,53 +311,73 @@ class _AccountScreenState extends State<AccountScreen> {
 
               const SizedBox(height: 16),
 
-              // 2. Vitrine des Trophées & Médaillons Débloqués
+              // 2. Vitrine des Trophées & Médaillons Débloqués sur Piédestaux en Marbre
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
+                  boxShadow: const [
+                    BoxShadow(color: Color(0x0C000000), blurRadius: 8, offset: Offset(0, 2)),
+                  ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('🏆 ', style: TextStyle(fontSize: 18)),
+                        Row(
+                          children: [
+                            Text('🏆 ', style: TextStyle(fontSize: 18)),
+                            Text(
+                              'Panthéon des Trophées',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'serif',
+                                color: RomanColors.charcoal,
+                              ),
+                            ),
+                          ],
+                        ),
                         Text(
-                          'Panthéon des Trophées',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'serif',
-                            color: RomanColors.charcoal,
-                          ),
+                          'Touche un piédestal',
+                          style: TextStyle(fontSize: 10, color: Colors.black45, fontStyle: FontStyle.italic),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 14),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _buildTrophyItem(
                           iconPath: 'assets/images/trophee_triomphe_medaillon_130.png',
                           title: 'Premier Pas',
+                          romanNum: 'I',
+                          condition: 'Terminer ta toute première leçon de latin.',
                           unlocked: profile.completedLessons.isNotEmpty,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/logo_centurion_64.png',
                           title: 'Centurion',
+                          romanNum: 'V',
+                          condition: 'Valider 5 leçons complètes du Ludus.',
                           unlocked: profile.completedLessons.length >= 5,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_circus.png',
                           title: 'Aurige',
+                          romanNum: 'III',
+                          condition: 'Atteindre une série de 3 jours consécutifs.',
                           unlocked: profile.streakDays >= 3,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_louve.png',
                           title: 'Bâtisseur',
+                          romanNum: 'X',
+                          condition: 'Restaurer au moins un monument du Forum.',
                           unlocked: profile.restoredMonuments.isNotEmpty,
                         ),
                       ],
@@ -557,42 +587,93 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget _buildTrophyItem({
     required String iconPath,
     required String title,
+    required String romanNum,
+    required String condition,
     required bool unlocked,
   }) {
-    return GestureDetector(
+    return RomanPedestal(
+      width: 68,
+      inscription: romanNum,
+      isUnlocked: unlocked,
+      glowColor: RomanColors.imperialGold,
       onTap: () {
+        HapticFeedback.mediumImpact();
         if (unlocked) {
           AudioService().playTriumph();
-          RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
+          RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+          _showTrophyDialog(
+            title: title,
+            romanNum: romanNum,
+            condition: condition,
+            unlocked: true,
+            iconPath: iconPath,
+          );
         } else {
           AudioService().playError();
+          _showTrophyDialog(
+            title: title,
+            romanNum: romanNum,
+            condition: condition,
+            unlocked: false,
+            iconPath: iconPath,
+          );
         }
       },
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: unlocked ? RomanColors.goldLight : Colors.black12,
-              border: Border.all(
-                color: unlocked ? RomanColors.imperialGold : Colors.black26,
-                width: 1.5,
-              ),
-            ),
-            child: ClipOval(
-              child: Opacity(
-                opacity: unlocked ? 1.0 : 0.35,
-                child: Image.asset(
-                  iconPath,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Center(child: Text('🏆')),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              // Médaillon avec couronne de laurier dorée
+              Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: unlocked ? RomanColors.goldLight : const Color(0xFFE0E0E0),
+                  border: Border.all(
+                    color: unlocked ? RomanColors.imperialGold : Colors.black26,
+                    width: unlocked ? 2.0 : 1.2,
+                  ),
+                  boxShadow: unlocked
+                      ? const [
+                          BoxShadow(
+                            color: Color(0x33B8860B),
+                            offset: Offset(0, 3),
+                            blurRadius: 6,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: ClipOval(
+                  child: Opacity(
+                    opacity: unlocked ? 1.0 : 0.35,
+                    child: Image.asset(
+                      iconPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Center(
+                        child: Text('🏆', style: TextStyle(fontSize: 22)),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              if (!unlocked)
+                Container(
+                  width: 46,
+                  height: 46,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0x44000000),
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.lock_rounded, color: Colors.white70, size: 18),
+                  ),
+                ),
+            ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 3),
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
@@ -600,13 +681,156 @@ class _AccountScreenState extends State<AccountScreen> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 10.5,
+                fontSize: 10,
                 fontWeight: unlocked ? FontWeight.bold : FontWeight.normal,
                 color: unlocked ? RomanColors.charcoal : Colors.black38,
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showTrophyDialog({
+    required String title,
+    required String romanNum,
+    required String condition,
+    required bool unlocked,
+    required String iconPath,
+  }) {
+    showDialog(
+      context: context,
+      builder: (ctx) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFFFFDF8), Color(0xFFF7EEDC), Color(0xFFECE0C9)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: unlocked ? RomanColors.imperialGold : RomanColors.marbleBorder,
+              width: 2,
+            ),
+            boxShadow: const [
+              BoxShadow(color: Color(0x33000000), offset: Offset(0, 8), blurRadius: 20),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const RomanWaxSeal(size: 34, label: 'SPQR'),
+                  const SizedBox(width: 8),
+                  Text(
+                    'TROPHÆVM $romanNum',
+                    style: const TextStyle(
+                      fontFamily: 'serif',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: RomanColors.imperialPurple,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: unlocked ? RomanColors.goldLight : Colors.black12,
+                  border: Border.all(
+                    color: unlocked ? RomanColors.imperialGold : Colors.black26,
+                    width: 2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Opacity(
+                    opacity: unlocked ? 1.0 : 0.35,
+                    child: Image.asset(
+                      iconPath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Center(
+                        child: Text('🏆', style: TextStyle(fontSize: 32)),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'serif',
+                  color: RomanColors.charcoal,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const RomanMeanderDivider(
+                height: 8,
+                strokeWidth: 0.9,
+                color: RomanColors.imperialGold,
+                margin: EdgeInsets.symmetric(vertical: 4),
+              ),
+              const SizedBox(height: 6),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: unlocked ? const Color(0x184CAF50) : const Color(0x18000000),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: unlocked ? Colors.green.shade600 : Colors.black26,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      unlocked ? Icons.check_circle_rounded : Icons.lock_outline_rounded,
+                      color: unlocked ? Colors.green.shade700 : Colors.black54,
+                      size: 18,
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        unlocked ? 'Trophée débloqué et exposé au Panthéon !' : 'Condition : $condition',
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.bold,
+                          color: unlocked ? Colors.green.shade800 : Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 14),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: RomanColors.imperialPurple,
+                  foregroundColor: RomanColors.goldLight,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(color: RomanColors.imperialGold),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text('OPTICAS GRACIAS (Fermer)'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
