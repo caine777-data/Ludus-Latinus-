@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
@@ -295,6 +296,46 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ),
 
+        // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedLupulusAvatar(
+                size: 38,
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  AudioService().playWheelClick();
+                },
+              ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: RomanColors.palatinCream,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x0C000000), offset: Offset(0, 2), blurRadius: 4),
+                    ],
+                  ),
+                  child: Text(
+                    '« Étape ${world.id.toUpperCase()} : Que ta marche soit triomphale ! »',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w600,
+                      color: RomanColors.imperialPurple,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
         // Étapes milliaires en serpentin naturel
         ...List.generate(world.lessons.length, (lessonIndex) {
           final lesson = world.lessons[lessonIndex];
@@ -435,13 +476,30 @@ class _MapScreenState extends State<MapScreen> {
                 width: isCurrentActive ? 3.0 : 2.0,
               ),
               boxShadow: [
-                BoxShadow(
-                  color: isCurrentActive
-                      ? const Color(0x40D4AF37)
-                      : const Color(0x22000000),
-                  offset: const Offset(0, 5),
-                  blurRadius: isCurrentActive ? 10 : 6,
-                ),
+                if (isCurrentActive) ...[
+                  const BoxShadow(
+                    color: Color(0x66FFD54F),
+                    blurRadius: 18,
+                    spreadRadius: 4,
+                  ),
+                  const BoxShadow(
+                    color: Color(0x44FF8F00),
+                    blurRadius: 8,
+                    spreadRadius: 1,
+                  ),
+                ] else if (isCompleted) ...[
+                  const BoxShadow(
+                    color: Color(0x334CAF50),
+                    blurRadius: 8,
+                    offset: Offset(0, 3),
+                  ),
+                ] else ...[
+                  const BoxShadow(
+                    color: Color(0x22000000),
+                    offset: Offset(0, 5),
+                    blurRadius: 6,
+                  ),
+                ],
               ],
             ),
             child: Center(
@@ -638,37 +696,71 @@ class _LessonLegendPill extends StatelessWidget {
   }
 }
 
-/// Peintre personnalisé pour l''arrière-plan de la chaussée romaine et des collines du Latium.
+/// Peintre personnalisé pour l'arrière-plan de la chaussée romaine et des collines du Latium.
 class ViaAppiaBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = const Color(0x06000000)
+    // 1. Collines du Latium sous lumière dorée
+    final hillPaint1 = Paint()
+      ..color = const Color(0x0CA0522D)
       ..style = PaintingStyle.fill;
+    final hillPath1 = Path()
+      ..moveTo(0, size.height * 0.18)
+      ..quadraticBezierTo(size.width * 0.45, size.height * 0.12, size.width, size.height * 0.22)
+      ..lineTo(size.width, size.height)
+      ..lineTo(0, size.height)
+      ..close();
+    canvas.drawPath(hillPath1, hillPaint1);
 
-    // Décor doux géométrique façon Monument Valley
-    final path = Path();
-    path.moveTo(0, size.height * 0.2);
-    path.quadraticBezierTo(size.width * 0.5, size.height * 0.15, size.width, size.height * 0.25);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
-    path.close();
-    canvas.drawPath(path, paint);
-
-    // Ligne centrale en pointillé suggérant la voie romaine
-    final roadPaint = Paint()
-      ..color = const Color(0x18C5B396)
+    // 2. Silhouette d'aqueduc romain à arcades dans le lointain
+    final aqueductPaint = Paint()
+      ..color = const Color(0x167A5901)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 24;
+      ..strokeWidth = 2.0;
+
+    const double archW = 36.0;
+    const double archH = 20.0;
+    final double yAqueduct = size.height * 0.14;
+    double xArch = 12;
+    while (xArch < size.width - 12) {
+      canvas.drawArc(
+        Rect.fromLTWH(xArch, yAqueduct, archW, archH * 2),
+        math.pi,
+        math.pi,
+        false,
+        aqueductPaint,
+      );
+      // Piliers de l'aqueduc
+      canvas.drawLine(Offset(xArch, yAqueduct + archH), Offset(xArch, yAqueduct + archH + 18), aqueductPaint);
+      xArch += archW + 6;
+    }
+    // Ligne supérieure de l'aqueduc
+    canvas.drawLine(Offset(0, yAqueduct), Offset(size.width, yAqueduct), aqueductPaint);
+
+    // 3. Chaussée de la Via Appia (pavés polygonaux en basalte)
+    final roadBorderPaint = Paint()
+      ..color = const Color(0x1CC5B396)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 36;
 
     final roadPath = Path();
     roadPath.moveTo(size.width * 0.5, 0);
     roadPath.cubicTo(
-      size.width * 0.3, size.height * 0.33,
-      size.width * 0.7, size.height * 0.66,
+      size.width * 0.26, size.height * 0.33,
+      size.width * 0.74, size.height * 0.66,
       size.width * 0.5, size.height,
     );
-    canvas.drawPath(roadPath, roadPaint);
+    canvas.drawPath(roadPath, roadBorderPaint);
+
+    // Pavés transversaux de basalte romain
+    final stoneLinePaint = Paint()
+      ..color = const Color(0x1E8D6E63)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+
+    for (double y = 40; y < size.height; y += 60) {
+      canvas.drawLine(Offset(size.width * 0.46, y), Offset(size.width * 0.54, y + 2), stoneLinePaint);
+    }
   }
 
   @override
