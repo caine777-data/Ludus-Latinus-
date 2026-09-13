@@ -66,6 +66,36 @@ const List<MissionCesar> kMissionsCesar = [
     traduction: "« Que chacun ranime son courage ! La victoire rayonne ! »",
     gain: 30,
   ),
+  MissionCesar(
+    titre: "Mission 4 : L'Avertissement des Ides de Mars",
+    dateContexte: "Rome, 15 mars 44 av. J.-C.",
+    explication: "Le devin Artémidore tente d'avertir César en route vers la Curie avec la clé secrète (+6).",
+    cle: 6,
+    messageChiffre: "IGBK OJAY SGXZOGY ! IUTOAXGZOU ZK VKZOZ !",
+    messageClair: "CAVE IDUS MARTIAS ! CONIURATIO TE PETIT !",
+    traduction: "« Prends garde aux ides de Mars ! Le complot te vise ! »",
+    gain: 35,
+  ),
+  MissionCesar(
+    titre: "Mission 5 : La Conjuration de Catilina",
+    dateContexte: "Sénat de Rome, 63 av. J.-C.",
+    explication: "Cicéron démasque la conspiration de Catilina et chiffre sa célèbre harangue avec la clé (+7).",
+    cle: 7,
+    messageChiffre: "XBV BZXBL AHUKLT HIBALYL WHAPLUAPH UVZAYH !",
+    messageClair: "QUO USQUE TANDEM ABUTERE PATIENTIA NOSTRA !",
+    traduction: "« Jusqu'à quand abuseras-tu de notre patience ! »",
+    gain: 40,
+  ),
+  MissionCesar(
+    titre: "Mission 6 : L'Embrasement de Rome",
+    dateContexte: "Rome, 64 ap. J.-C.",
+    explication: "Les flammes ravagent la Subure. Les vigiles romains transmettent l'alerte avec la clé (+8).",
+    cle: 8,
+    messageChiffre: "ZWUI IZLMB MB DQOQTMA WXMU NMZCVB !",
+    messageClair: "ROMA ARDET ET VIGILES OPEM FERUNT !",
+    traduction: "« Rome brûle et les vigiles apportent du secours ! »",
+    gain: 45,
+  ),
 ];
 
 class CesarScreen extends StatefulWidget {

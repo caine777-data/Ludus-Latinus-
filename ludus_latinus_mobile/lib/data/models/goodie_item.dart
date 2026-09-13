@@ -115,6 +115,16 @@ const List<GoodieItem> kCatalogueBoutique = [
     description: 'Toge de pourpre entièrement brodée d’or, réservée aux généraux en plein Triomphe.',
     bonus: 'Aura Impériale Suprême',
   ),
+  GoodieItem(
+    id: 'lorica_squamata',
+    nom: 'Armure d’écailles prétorienne',
+    nomLatin: 'Lorica Squamata',
+    categorie: GoodieCategory.toge,
+    prix: 95,
+    icone: '🛡️',
+    description: 'Armure d’écailles de fer et d’airain portée par les officiers d’élite de l’Empereur.',
+    bonus: '+20% Résistance au Colisée',
+  ),
 
   // 2. COURONNES & CASQUES (Coronae & Galeae)
   GoodieItem(
@@ -167,6 +177,16 @@ const List<GoodieItem> kCatalogueBoutique = [
     description: 'Fin diadème d’argent serti en hommage à la déesse de la sagesse et des arts.',
     bonus: '+10% Sagesse grammaticale',
   ),
+  GoodieItem(
+    id: 'corona_obsidionalis',
+    nom: 'Couronne obsidionale d’herbe',
+    nomLatin: 'Corona Obsidionalis',
+    categorie: GoodieCategory.couronne,
+    prix: 140,
+    icone: '🌾',
+    description: 'La plus sacrée des distinctions militaires romaines, tressée avec l’herbe du camp sauvé.',
+    bonus: 'Gloire Militaire Suprême',
+  ),
 
   // 3. INSIGNES & ARMES (Insignia & Arma)
   GoodieItem(
@@ -208,6 +228,16 @@ const List<GoodieItem> kCatalogueBoutique = [
     icone: '🛡️',
     description: 'Grand bouclier rouge incurvé arborant les foudres d’or de Jupiter Capitolin.',
     bonus: 'Protection inébranlable',
+  ),
+  GoodieItem(
+    id: 'vexillum_spqr',
+    nom: 'Étendard pourpre de la Légion',
+    nomLatin: 'Vexillum Legionis',
+    categorie: GoodieCategory.accessoire,
+    prix: 95,
+    icone: '🚩',
+    description: 'Étendard flottant pourpre aux aigles d’or, guidant les cohortes vers le triomphe.',
+    bonus: '+10% Prestige impérial',
   ),
   GoodieItem(
     id: 'fasces',
@@ -262,6 +292,16 @@ const List<GoodieItem> kCatalogueBoutique = [
     bonus: 'Regard impérial perçant',
   ),
   GoodieItem(
+    id: 'cerberus_pullus',
+    nom: 'Chiot Cerbère loyal',
+    nomLatin: 'Cerberus Pullus',
+    categorie: GoodieCategory.compagnon,
+    prix: 110,
+    icone: '🐕',
+    description: 'Fidèle gardien protecteur veillant jalousement sur tes parchemins et tes sesterces.',
+    bonus: '+5 HS chaque jour',
+  ),
+  GoodieItem(
     id: 'equus',
     nom: 'Quadrige blanc du Circus',
     nomLatin: 'Equus Cursorius',
@@ -270,5 +310,15 @@ const List<GoodieItem> kCatalogueBoutique = [
     icone: '🐎',
     description: 'Fier coursier blanc galopant sur le sable rouge du Circus Maximus.',
     bonus: 'Vitesse de triomphe',
+  ),
+  GoodieItem(
+    id: 'pegasus_aureus',
+    nom: 'Pégase ailé céleste',
+    nomLatin: 'Pegasus Aureus',
+    categorie: GoodieCategory.compagnon,
+    prix: 160,
+    icone: '🦄',
+    description: 'Coursier ailé né des mythes antiques, guidant ton esprit vers les cimes du Savoir.',
+    bonus: 'Ailes de la Victoire',
   ),
 ];
