@@ -15,6 +15,8 @@ class ClozeFillWidget extends StatefulWidget {
   final List<String> options;
   final String? latinComplet;
   final VoidCallback onCompleted;
+  /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
+  final VoidCallback? onMistake;
 
   const ClozeFillWidget({
     super.key,
@@ -25,6 +27,7 @@ class ClozeFillWidget extends StatefulWidget {
     this.options = const [],
     this.latinComplet,
     required this.onCompleted,
+    this.onMistake,
   });
 
   @override
@@ -80,6 +83,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
       widget.onCompleted();
     } else {
       HapticFeedback.mediumImpact();
+      widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {

@@ -11,12 +11,15 @@ class ArenaChallengeWidget extends StatefulWidget {
   final Map<String, dynamic>? boss;
   final List<Map<String, dynamic>> questions;
   final VoidCallback onCompleted;
+  /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
+  final VoidCallback? onMistake;
 
   const ArenaChallengeWidget({
     super.key,
     this.boss,
     required this.questions,
     required this.onCompleted,
+    this.onMistake,
   });
 
   @override
@@ -77,6 +80,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
       });
     } else {
       HapticFeedback.mediumImpact();
+      widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
 

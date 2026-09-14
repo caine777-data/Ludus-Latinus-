@@ -6,7 +6,7 @@ export 'roman_audio_modal.dart';
 export 'room_decorations.dart';
 export 'roman_lock_badge.dart';
 
-/// Bouton tactile impérial romain avec liseré d''or et retour haptique.
+/// Bouton tactile impérial romain avec liseré d'or et retour haptique.
 class RomanButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -86,7 +86,7 @@ class RomanButton extends StatelessWidget {
   }
 }
 
-/// Carte en marbre travertin sculpté inspirée de l''élégance géométrique de Monument Valley.
+/// Carte en marbre travertin sculpté inspirée de l'élégance géométrique de Monument Valley.
 class RomanCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;

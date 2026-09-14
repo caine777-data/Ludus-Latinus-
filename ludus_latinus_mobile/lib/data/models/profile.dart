@@ -100,7 +100,11 @@ class UserProfile {
   String genre; // 'garcon' ou 'fille'
   int sesterces;
   int streakDays;
+  /// Dernier jour (AAAA-MM-JJ) où l'élève a validé une leçon ou révisé.
+  String? lastActivityDate;
   List<String> completedLessons;
+  /// Meilleur nombre d'étoiles (1 à 3) obtenu par leçon.
+  Map<String, int> lessonStars;
   List<String> restoredMonuments;
   Map<String, int> srsScores;
   Map<String, SrsCardProgress> srsCards;
@@ -108,6 +112,8 @@ class UserProfile {
   String tesseraCode;
   String? lastSyncDate;
   String? lastDailyQuestDate;
+  String? taverneRewardDate;
+  int taverneRewardCount;
   List<String> decodedEpigraphs;
   bool isDarkMode;
   Map<String, String> equippedGoodies;
@@ -118,8 +124,10 @@ class UserProfile {
     this.nomHeros = 'Marcus',
     this.genre = 'garcon',
     this.sesterces = 50,
-    this.streakDays = 1,
+    this.streakDays = 0,
+    this.lastActivityDate,
     List<String>? completedLessons,
+    Map<String, int>? lessonStars,
     List<String>? restoredMonuments,
     Map<String, int>? srsScores,
     Map<String, SrsCardProgress>? srsCards,
@@ -127,11 +135,14 @@ class UserProfile {
     this.tesseraCode = 'SPQR-7A2B-9C1D',
     this.lastSyncDate,
     this.lastDailyQuestDate,
+    this.taverneRewardDate,
+    this.taverneRewardCount = 0,
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
     Map<String, String>? equippedGoodies,
     List<String>? ownedGoodies,
   })  : completedLessons = completedLessons ?? [],
+        lessonStars = lessonStars ?? {},
         restoredMonuments = restoredMonuments ?? [],
         srsScores = srsScores ?? {},
         srsCards = srsCards ?? {},
@@ -179,11 +190,51 @@ class UserProfile {
     return getEquippedGoodie(categoryKey) == goodieId;
   }
 
+  static String _dateStr(DateTime d) =>
+      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  static String get _todayStr => _dateStr(DateTime.now());
+
+  /// Série de jours consécutifs d'apprentissage. Elle retombe à 0 si l'élève
+  /// n'a rien fait ni aujourd'hui ni hier.
+  int currentStreak([DateTime? now]) {
+    final today = now ?? DateTime.now();
+    final todayStr = _dateStr(today);
+    final yesterdayStr = _dateStr(today.subtract(const Duration(days: 1)));
+    if (lastActivityDate == todayStr || lastActivityDate == yesterdayStr) return streakDays;
+    return 0;
+  }
+
+  /// À appeler après une leçon validée ou une révision : met à jour la série.
+  void recordActivity([DateTime? now]) {
+    final today = now ?? DateTime.now();
+    final todayStr = _dateStr(today);
+    if (lastActivityDate == todayStr) return;
+    final yesterdayStr = _dateStr(today.subtract(const Duration(days: 1)));
+    streakDays = lastActivityDate == yesterdayStr ? streakDays + 1 : 1;
+    lastActivityDate = todayStr;
+  }
+
   bool get isDailyQuestCompletedToday {
     if (lastDailyQuestDate == null) return false;
-    final now = DateTime.now();
-    final todayStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
-    return lastDailyQuestDate == todayStr;
+    return lastDailyQuestDate == _todayStr;
+  }
+
+  /// Nombre de lancers de la Taverne encore récompensés aujourd'hui.
+  static const int taverneRewardsPerDay = 3;
+
+  int get taverneRewardsLeftToday =>
+      taverneRewardDate == _todayStr ? (taverneRewardsPerDay - taverneRewardCount).clamp(0, taverneRewardsPerDay) : taverneRewardsPerDay;
+
+  /// Consomme un lancer récompensé. Renvoie false si le quota du jour est atteint.
+  bool consumeTaverneReward() {
+    if (taverneRewardDate != _todayStr) {
+      taverneRewardDate = _todayStr;
+      taverneRewardCount = 0;
+    }
+    if (taverneRewardCount >= taverneRewardsPerDay) return false;
+    taverneRewardCount++;
+    return true;
   }
 
   CursusHonorum get cursusRank => CursusHonorum.getRank(
@@ -227,35 +278,35 @@ class UserProfile {
         final prog = (completedLessons.length / colosseumRequiredLessons).clamp(0.0, 1.0);
         return (
           isUnlocked: isColosseumUnlocked,
-          reason: 'Termine 2 étapes sur la Via Appia pour entrer dans l\'Arène',
+          reason: 'Termine 2 leçons pour entrer dans l\'Arène',
           progress: prog,
         );
       case 'taverne':
         final prog = (completedLessons.length / taverneRequiredLessons).clamp(0.0, 1.0);
         return (
           isUnlocked: isTaverneUnlocked,
-          reason: 'Débloqué au Palier II (6 étapes sur la Via Appia)',
+          reason: 'Termine 6 leçons pour ouvrir la Taverne',
           progress: prog,
         );
       case 'cesar':
         final prog = (completedLessons.length / cesarRequiredLessons).clamp(0.0, 1.0);
         return (
           isUnlocked: isCesarUnlocked,
-          reason: 'Débloqué au Palier III : L\'Armée (12 étapes sur la Via Appia)',
+          reason: 'Termine 12 leçons pour ouvrir l\'Atelier de César',
           progress: prog,
         );
       case 'marche':
         final prog = (completedLessons.length / marcheTrajanRequiredLessons).clamp(0.0, 1.0);
         return (
           isUnlocked: isMarcheTrajanUnlocked,
-          reason: 'Débloqué au Palier IV : Vie Quotidienne (18 étapes sur la Via Appia)',
+          reason: 'Termine 18 leçons pour ouvrir le Marché de Trajan',
           progress: prog,
         );
       case 'pantheon':
         final prog = (completedLessons.length / pantheonRequiredLessons).clamp(0.0, 1.0);
         return (
           isUnlocked: isPantheonUnlocked,
-          reason: 'Restaure 1 édifice au Forum ou termine 4 étapes',
+          reason: 'Termine 4 leçons ou restaure 1 édifice du Forum',
           progress: prog,
         );
       default:
@@ -271,6 +322,7 @@ class UserProfile {
     var rawEquipped = json['equipped_goodies'] as Map<String, dynamic>? ?? {};
     var rawOwned = json['owned_goodies'] as List<dynamic>? ?? [];
     var rawSrs = json['srs_cards'] as Map<String, dynamic>? ?? {};
+    var rawStars = json['lesson_stars'] as Map<String, dynamic>? ?? {};
 
     Map<String, String> parsedEquipped = {
       'toge': rawEquipped['toge']?.toString() ?? 'lin_blanc',
@@ -295,14 +347,22 @@ class UserProfile {
       nomHeros: json['nom_heros'] as String? ?? 'Marcus',
       genre: json['genre'] as String? ?? 'garcon',
       sesterces: json['sesterces'] as int? ?? 50,
-      streakDays: json['streak'] as int? ?? 1,
+      streakDays: json['streak'] as int? ?? 0,
+      lastActivityDate: json['last_activity_date'] as String?,
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
+      // Les leçons validées avant l'arrivée des étoiles gardent 3 étoiles.
+      lessonStars: {
+        for (final id in rawCompleted) id.toString(): 3,
+        for (final e in rawStars.entries) e.key: (e.value as num?)?.toInt().clamp(1, 3) ?? 1,
+      },
       restoredMonuments: rawMonuments.map((e) => e.toString()).toList(),
       srsCards: parsedSrs,
       email: rawCompte['email'] as String? ?? '',
       tesseraCode: rawCompte['tessera'] as String? ?? 'SPQR-1001-A2B3',
       lastSyncDate: rawCompte['derniere_sync'] as String?,
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
+      taverneRewardDate: json['taverne_reward_date'] as String?,
+      taverneRewardCount: json['taverne_reward_count'] as int? ?? 0,
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
       equippedGoodies: parsedEquipped,
@@ -317,10 +377,14 @@ class UserProfile {
       'genre': genre,
       'sesterces': sesterces,
       'streak': streakDays,
+      'last_activity_date': lastActivityDate,
       'completed': completedLessons,
+      'lesson_stars': lessonStars,
       'forum_monuments': restoredMonuments,
       'srs_cards': srsCards.map((k, v) => MapEntry(k, v.toJson())),
       'last_daily_quest_date': lastDailyQuestDate,
+      'taverne_reward_date': taverneRewardDate,
+      'taverne_reward_count': taverneRewardCount,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
       'equipped_goodies': equippedGoodies,

@@ -666,7 +666,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
               _buildPalmaresRow('🏛️ Monuments restaurés', '${profile.restoredMonuments.length} / 6 édifices'),
               _buildPalmaresRow('🔍 Stèles lapidaires décodées', '${profile.decodedEpigraphs.length} inscriptions'),
               _buildPalmaresRow('🃏 Cartes ancrées en mémoire SRS', '${profile.srsScores.length} fiches'),
-              _buildPalmaresRow('🔥 Série d\'assiduité quotidienne', '${profile.streakDays} jour(s) consécutif(s)'),
+              _buildPalmaresRow('🔥 Série d\'assiduité quotidienne', '${profile.currentStreak()} jour(s) consécutif(s)'),
             ],
           ),
         ),

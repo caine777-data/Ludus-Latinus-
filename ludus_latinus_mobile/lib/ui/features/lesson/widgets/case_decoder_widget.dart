@@ -12,6 +12,8 @@ class CaseDecoderWidget extends StatefulWidget {
   final Map<String, String> expectedRoles;
   final String? latinPhrase;
   final VoidCallback onCompleted;
+  /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
+  final VoidCallback? onMistake;
 
   const CaseDecoderWidget({
     super.key,
@@ -19,6 +21,7 @@ class CaseDecoderWidget extends StatefulWidget {
     required this.expectedRoles,
     this.latinPhrase,
     required this.onCompleted,
+    this.onMistake,
   });
 
   @override
@@ -123,6 +126,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
       widget.onCompleted();
     } else {
       HapticFeedback.mediumImpact();
+      widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {

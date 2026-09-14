@@ -172,7 +172,7 @@ void main() {
       expect(profile.completedLessons, isEmpty);
       expect(profile.restoredMonuments, isEmpty);
       expect(profile.sesterces, equals(50));
-      expect(profile.streakDays, equals(1));
+      expect(profile.streakDays, equals(0)); // aucune activité : série à zéro
     });
   });
 }

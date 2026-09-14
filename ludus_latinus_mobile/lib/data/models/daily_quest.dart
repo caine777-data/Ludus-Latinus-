@@ -68,12 +68,14 @@ class DailyQuest {
     ),
   ];
 
-  /// Sélectionne la quête du jour de façon déterministe selon la date courante.
-  static DailyQuest getTodayQuest([DateTime? date]) {
+  /// Sélectionne la quête du jour de façon déterministe selon la date courante,
+  /// parmi les activités déjà débloquées : on ne promet pas un jeu verrouillé.
+  static DailyQuest getTodayQuest([DateTime? date, bool Function(DailyQuest quest)? isAvailable]) {
     final now = date ?? DateTime.now();
+    final candidates = isAvailable == null ? pool : pool.where(isAvailable).toList();
+    final choices = candidates.isEmpty ? [pool.first] : candidates;
     // Indexation cyclique sur le jour de l'année
     final dayOfYear = now.difference(DateTime(now.year, 1, 1)).inDays;
-    final index = dayOfYear % pool.length;
-    return pool[index];
+    return choices[dayOfYear % choices.length];
   }
 }
