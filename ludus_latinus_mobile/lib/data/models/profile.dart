@@ -14,9 +14,9 @@ class SrsCardProgress {
     this.lapses = 0,
   });
 
-  bool get isDue =>
-      DateTime.now().isAfter(nextReviewDate) ||
-      DateTime.now().isAtSameMomentAs(nextReviewDate);
+  // Un seul appel à DateTime.now() : deux appels successifs pouvaient tomber
+  // dans la même milliseconde et rendre une carte neuve « pas encore due ».
+  bool get isDue => !DateTime.now().isBefore(nextReviewDate);
 
   factory SrsCardProgress.initial() {
     return SrsCardProgress(
