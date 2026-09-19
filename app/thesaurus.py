@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from app import audio
+from app.thesaurus_complement import VOCABULAIRE_COMPLEMENTAIRE
 
 # Base dictionnairique bilingue du Collège
 DICTIONNAIRE_LATIN = [
@@ -100,7 +101,7 @@ DICTIONNAIRE_LATIN = [
     {"latin": "Carpe diem", "cat": "Devise", "genre": "locution poétique", "fr": "Cueille le jour présent", "etym": "Célèbre vers du poète Horace.", "ex": "Carpe diem, quam minimum credula postero.", "ex_fr": "Cueille le jour, sans te fier au lendemain."},
     {"latin": "Festina lente", "cat": "Devise", "genre": "devise d'Auguste", "fr": "Hâte-toi lentement", "etym": "Devise impériale de prudence et d'efficacité.", "ex": "Festina lente in studiis.", "ex_fr": "Travaille vite mais avec rigueur."},
     {"latin": "Veni, vidi, vici", "cat": "Devise", "genre": "rapport militaire", "fr": "Je suis venu, j'ai vu, j'ai vaincu", "etym": "Message laconique de César après Zéla.", "ex": "Veni, vidi, vici.", "ex_fr": "Victoire fulgurante."}
-]
+] + VOCABULAIRE_COMPLEMENTAIRE
 
 # TABLES DE DÉCLINAISONS MODÈLES
 TABLES_DECLINAISONS = {

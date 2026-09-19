@@ -3,12 +3,12 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-09-09 08:08:48",
+    "date_export": "2026-09-19 16:53:54",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
     "total_cartes_collection": 32,
-    "total_mots_thesaurus": 79,
+    "total_mots_thesaurus": 167,
     "total_monuments_forum": 6,
     "total_flashcards_srs": 29
   },
@@ -2758,7 +2758,8 @@
         "fr": "l'amie",
         "etym": "amical, amitié",
         "ex": "Amica Marcum videt.",
-        "ex_fr": "L'amie voit Marcus."
+        "ex_fr": "L'amie voit Marcus.",
+        "monde": ""
       },
       {
         "latin": "amicus, -i",
@@ -2767,7 +2768,8 @@
         "fr": "l'ami",
         "etym": "ami, amical",
         "ex": "Amicus certus in re incerta cernitur.",
-        "ex_fr": "C'est dans le malheur qu'on reconnaît le véritable ami."
+        "ex_fr": "C'est dans le malheur qu'on reconnaît le véritable ami.",
+        "monde": "monde1"
       },
       {
         "latin": "aqua, -ae",
@@ -2776,7 +2778,8 @@
         "fr": "l'eau",
         "etym": "aquatique, aquarium, aqueduc",
         "ex": "Aqua vitae fons est.",
-        "ex_fr": "L'eau est la source de la vie."
+        "ex_fr": "L'eau est la source de la vie.",
+        "monde": "monde7"
       },
       {
         "latin": "aquila, -ae",
@@ -2785,7 +2788,8 @@
         "fr": "l'aigle (emblème de Rome)",
         "etym": "aquilin",
         "ex": "Aquila non capit muscas.",
-        "ex_fr": "L'aigle ne chasse pas les mouches."
+        "ex_fr": "L'aigle ne chasse pas les mouches.",
+        "monde": "monde9"
       },
       {
         "latin": "arcus, -us",
@@ -2794,7 +2798,8 @@
         "fr": "l'arc / la voûte",
         "etym": "arcade, arceau, arc",
         "ex": "Arcus triumphalis Romae stat.",
-        "ex_fr": "L'arc de triomphe se dresse à Rome."
+        "ex_fr": "L'arc de triomphe se dresse à Rome.",
+        "monde": ""
       },
       {
         "latin": "atrium, -i",
@@ -2803,7 +2808,8 @@
         "fr": "l'atrium (salle centrale)",
         "etym": "atrium",
         "ex": "In atrio ara deorum est.",
-        "ex_fr": "Dans l'atrium se trouve l'autel des dieux."
+        "ex_fr": "Dans l'atrium se trouve l'autel des dieux.",
+        "monde": "monde2"
       },
       {
         "latin": "bellum, -i",
@@ -2812,7 +2818,8 @@
         "fr": "la guerre",
         "etym": "belligérant, belliqueux",
         "ex": "Si vis pacem, para bellum.",
-        "ex_fr": "Si tu veux la paix, prépare la guerre."
+        "ex_fr": "Si tu veux la paix, prépare la guerre.",
+        "monde": "monde14"
       },
       {
         "latin": "canis, -is",
@@ -2821,7 +2828,8 @@
         "fr": "le chien",
         "etym": "canin, canicule",
         "ex": "Cave canem !",
-        "ex_fr": "Prends garde au chien !"
+        "ex_fr": "Prends garde au chien !",
+        "monde": "monde2"
       },
       {
         "latin": "civis, -is",
@@ -2830,7 +2838,8 @@
         "fr": "le citoyen / la citoyenne",
         "etym": "civique, civisme, civil",
         "ex": "Civis Romanus sum.",
-        "ex_fr": "Je suis citoyen romain."
+        "ex_fr": "Je suis citoyen romain.",
+        "monde": "monde11"
       },
       {
         "latin": "corpus, -oris",
@@ -2839,7 +2848,8 @@
         "fr": "le corps",
         "etym": "corporel, corporation, corsage",
         "ex": "Mens sana in corpore sano.",
-        "ex_fr": "Un esprit sain dans un corps sain."
+        "ex_fr": "Un esprit sain dans un corps sain.",
+        "monde": "monde13"
       },
       {
         "latin": "dies, -ei",
@@ -2848,7 +2858,8 @@
         "fr": "le jour",
         "etym": "diurne, méridien, midi",
         "ex": "Carpe diem.",
-        "ex_fr": "Cueille le jour présent."
+        "ex_fr": "Cueille le jour présent.",
+        "monde": "monde19"
       },
       {
         "latin": "dominus, -i",
@@ -2857,7 +2868,8 @@
         "fr": "le maître de maison",
         "etym": "dominer, domination, dame",
         "ex": "Dominus servos iubet.",
-        "ex_fr": "Le maître ordonne aux serviteurs."
+        "ex_fr": "Le maître ordonne aux serviteurs.",
+        "monde": "monde12"
       },
       {
         "latin": "domus, -us",
@@ -2866,7 +2878,8 @@
         "fr": "la maison / la maisonnée",
         "etym": "domicile, domestique",
         "ex": "Domus mea arx mea.",
-        "ex_fr": "Ma maison est ma forteresse."
+        "ex_fr": "Ma maison est ma forteresse.",
+        "monde": "monde2"
       },
       {
         "latin": "dux, ducis",
@@ -2875,7 +2888,8 @@
         "fr": "le chef / le général",
         "etym": "duc, conduire, conducteur",
         "ex": "Dux legiones in proelium ducit.",
-        "ex_fr": "Le général mène les légions au combat."
+        "ex_fr": "Le général mène les légions au combat.",
+        "monde": "monde12"
       },
       {
         "latin": "equus, -i",
@@ -2884,7 +2898,8 @@
         "fr": "le cheval",
         "etym": "équitation, équestre, équidé",
         "ex": "Equus celeriter currit.",
-        "ex_fr": "Le cheval court vite."
+        "ex_fr": "Le cheval court vite.",
+        "monde": "monde2"
       },
       {
         "latin": "exercitus, -us",
@@ -2893,7 +2908,8 @@
         "fr": "l'armée",
         "etym": "exercer, exercice",
         "ex": "Exercitus castra munit.",
-        "ex_fr": "L'armée fortifie le camp."
+        "ex_fr": "L'armée fortifie le camp.",
+        "monde": "monde19"
       },
       {
         "latin": "familia, -ae",
@@ -2902,7 +2918,8 @@
         "fr": "la famille / maisonnée",
         "etym": "familial, famille",
         "ex": "Tota familia convenit.",
-        "ex_fr": "Toute la famille se réunit."
+        "ex_fr": "Toute la famille se réunit.",
+        "monde": "monde2"
       },
       {
         "latin": "flumen, -inis",
@@ -2911,7 +2928,8 @@
         "fr": "le fleuve / la rivière",
         "etym": "fluvial, fleuve",
         "ex": "Tiberis clarum flumen est.",
-        "ex_fr": "Le Tibre est un fleuve célèbre."
+        "ex_fr": "Le Tibre est un fleuve célèbre.",
+        "monde": "monde13"
       },
       {
         "latin": "gladius, -i",
@@ -2920,7 +2938,8 @@
         "fr": "le glaive",
         "etym": "gladiateur, glaive",
         "ex": "Gladius miles armat.",
-        "ex_fr": "Le glaive arme le soldat."
+        "ex_fr": "Le glaive arme le soldat.",
+        "monde": "monde9"
       },
       {
         "latin": "homo, -inis",
@@ -2929,7 +2948,8 @@
         "fr": "l'homme / l'être humain",
         "etym": "homicide, hommage, humanité",
         "ex": "Homo sum, nihil humani a me alienum puto.",
-        "ex_fr": "Je suis homme, et rien d'humain ne m'est étranger."
+        "ex_fr": "Je suis homme, et rien d'humain ne m'est étranger.",
+        "monde": ""
       },
       {
         "latin": "hostis, -is",
@@ -2938,7 +2958,8 @@
         "fr": "l'ennemi",
         "etym": "hostile, hostilité",
         "ex": "Hostes urbem oppugnant.",
-        "ex_fr": "Les ennemis attaquent la ville."
+        "ex_fr": "Les ennemis attaquent la ville.",
+        "monde": "monde13"
       },
       {
         "latin": "insula, -ae",
@@ -2947,7 +2968,8 @@
         "fr": "l'île / l'immeuble romain",
         "etym": "insulaire, isoler, péninsule",
         "ex": "Plebs in insulis habitat.",
-        "ex_fr": "La plèbe habite dans des immeubles."
+        "ex_fr": "La plèbe habite dans des immeubles.",
+        "monde": "monde2"
       },
       {
         "latin": "lex, legis",
@@ -2956,7 +2978,8 @@
         "fr": "la loi",
         "etym": "légal, légitime, légiférer",
         "ex": "Dura lex, sed lex.",
-        "ex_fr": "La loi est dure, mais c'est la loi."
+        "ex_fr": "La loi est dure, mais c'est la loi.",
+        "monde": "monde23"
       },
       {
         "latin": "lupa, -ae",
@@ -2965,7 +2988,8 @@
         "fr": "la louve",
         "etym": "louve, lupanar",
         "ex": "Lupa Romulum et Remum alit.",
-        "ex_fr": "La louve nourrit Romulus et Rémus."
+        "ex_fr": "La louve nourrit Romulus et Rémus.",
+        "monde": "monde1"
       },
       {
         "latin": "lupus, -i",
@@ -2974,7 +2998,8 @@
         "fr": "le loup",
         "etym": "loup, louveteau",
         "ex": "Homo homini lupus est.",
-        "ex_fr": "L'homme est un loup pour l'homme."
+        "ex_fr": "L'homme est un loup pour l'homme.",
+        "monde": "monde4"
       },
       {
         "latin": "manus, -us",
@@ -2983,7 +3008,8 @@
         "fr": "la main / la troupe",
         "etym": "manuel, manucure, manipuler",
         "ex": "Manus manum lavat.",
-        "ex_fr": "Une main lave l'autre."
+        "ex_fr": "Une main lave l'autre.",
+        "monde": "monde7"
       },
       {
         "latin": "mare, -is",
@@ -2992,7 +3018,8 @@
         "fr": "la mer",
         "etym": "marin, maritime",
         "ex": "Mare Nostrum navigamus.",
-        "ex_fr": "Nous voguons sur Notre Mer."
+        "ex_fr": "Nous voguons sur Notre Mer.",
+        "monde": "monde13"
       },
       {
         "latin": "mater, -tris",
@@ -3001,7 +3028,8 @@
         "fr": "la mère",
         "etym": "maternel, maternité",
         "ex": "Mater laeta est.",
-        "ex_fr": "La mère est joyeuse."
+        "ex_fr": "La mère est joyeuse.",
+        "monde": "monde2"
       },
       {
         "latin": "miles, -itis",
@@ -3010,7 +3038,8 @@
         "fr": "le soldat",
         "etym": "militaire, milice",
         "ex": "Miles fortiter pugnat.",
-        "ex_fr": "Le soldat combat avec courage."
+        "ex_fr": "Le soldat combat avec courage.",
+        "monde": "monde5"
       },
       {
         "latin": "mons, montis",
@@ -3019,7 +3048,8 @@
         "fr": "la montagne / colline",
         "etym": "mont, montagne",
         "ex": "Roma in septem montibus est.",
-        "ex_fr": "Rome est assise sur sept collines."
+        "ex_fr": "Rome est assise sur sept collines.",
+        "monde": "monde21"
       },
       {
         "latin": "navis, -is",
@@ -3028,7 +3058,8 @@
         "fr": "le navire",
         "etym": "naval, navigateur, naviguer",
         "ex": "Navis ad portum pervenit.",
-        "ex_fr": "Le navire arrive au port."
+        "ex_fr": "Le navire arrive au port.",
+        "monde": "monde13"
       },
       {
         "latin": "nomen, -inis",
@@ -3037,7 +3068,8 @@
         "fr": "le nom",
         "etym": "nominal, nommer, prénom",
         "ex": "Nomen mihi Marcus est.",
-        "ex_fr": "Mon nom est Marcus."
+        "ex_fr": "Mon nom est Marcus.",
+        "monde": "monde1"
       },
       {
         "latin": "pater, -tris",
@@ -3046,7 +3078,8 @@
         "fr": "le père",
         "etym": "paternel, patrimoine",
         "ex": "Pater filium monet.",
-        "ex_fr": "Le père avertit son fils."
+        "ex_fr": "Le père avertit son fils.",
+        "monde": "monde2"
       },
       {
         "latin": "pax, pacis",
@@ -3055,7 +3088,8 @@
         "fr": "la paix",
         "etym": "paix, pacifique, apaiser",
         "ex": "Pax Romana orbi data est.",
-        "ex_fr": "La paix romaine fut donnée au monde."
+        "ex_fr": "La paix romaine fut donnée au monde.",
+        "monde": "monde19"
       },
       {
         "latin": "pecunia, -ae",
@@ -3064,7 +3098,8 @@
         "fr": "l'argent / la richesse",
         "etym": "pécunier, pécuniaire",
         "ex": "Pecunia non olet.",
-        "ex_fr": "L'argent n'a pas d'odeur."
+        "ex_fr": "L'argent n'a pas d'odeur.",
+        "monde": "monde8"
       },
       {
         "latin": "populus, -i",
@@ -3073,7 +3108,8 @@
         "fr": "le peuple",
         "etym": "populaire, population, peuple",
         "ex": "Senatus Populusque Romanus.",
-        "ex_fr": "Le Sénat et le Peuple Romain (SPQR)."
+        "ex_fr": "Le Sénat et le Peuple Romain (SPQR).",
+        "monde": "monde25"
       },
       {
         "latin": "puella, -ae",
@@ -3082,7 +3118,8 @@
         "fr": "la jeune fille",
         "etym": "pucelle (vieux français)",
         "ex": "Puella flores colligit.",
-        "ex_fr": "La jeune fille cueille des fleurs."
+        "ex_fr": "La jeune fille cueille des fleurs.",
+        "monde": "monde4"
       },
       {
         "latin": "puer, pueri",
@@ -3091,7 +3128,8 @@
         "fr": "l'enfant / le jeune garçon",
         "etym": "puéril, puériculture",
         "ex": "Puer in ludo discit.",
-        "ex_fr": "Le garçon apprend à l'école."
+        "ex_fr": "Le garçon apprend à l'école.",
+        "monde": "monde4"
       },
       {
         "latin": "res, rei",
@@ -3100,7 +3138,8 @@
         "fr": "la chose / l'affaire",
         "etym": "réel, réalité, république",
         "ex": "Res publica.",
-        "ex_fr": "La chose publique (la République)."
+        "ex_fr": "La chose publique (la République).",
+        "monde": "monde11"
       },
       {
         "latin": "rex, regis",
@@ -3109,7 +3148,8 @@
         "fr": "le roi",
         "etym": "royal, régime, régner",
         "ex": "Roma septem reges habuit.",
-        "ex_fr": "Rome a eu sept rois."
+        "ex_fr": "Rome a eu sept rois.",
+        "monde": "monde12"
       },
       {
         "latin": "rosa, -ae",
@@ -3118,7 +3158,8 @@
         "fr": "la rose",
         "etym": "rose, rosier, rosace",
         "ex": "Rosa pulchra est.",
-        "ex_fr": "La rose est belle."
+        "ex_fr": "La rose est belle.",
+        "monde": "monde4"
       },
       {
         "latin": "scutum, -i",
@@ -3127,7 +3168,8 @@
         "fr": "le grand bouclier",
         "etym": "écu, écuyer, écusson",
         "ex": "Scuto se tegit.",
-        "ex_fr": "Il se protège de son bouclier."
+        "ex_fr": "Il se protège de son bouclier.",
+        "monde": "monde6"
       },
       {
         "latin": "senatus, -us",
@@ -3136,7 +3178,8 @@
         "fr": "le sénat",
         "etym": "sénat, sénateur, sénile",
         "ex": "Senatus censuit.",
-        "ex_fr": "Le Sénat a décrété."
+        "ex_fr": "Le Sénat a décrété.",
+        "monde": "monde12"
       },
       {
         "latin": "silva, -ae",
@@ -3145,7 +3188,8 @@
         "fr": "la forêt / le bois",
         "etym": "sylvestre, sylviculture",
         "ex": "In silva arbores altae sunt.",
-        "ex_fr": "Dans la forêt les arbres sont hauts."
+        "ex_fr": "Dans la forêt les arbres sont hauts.",
+        "monde": "monde4"
       },
       {
         "latin": "templum, -i",
@@ -3154,7 +3198,8 @@
         "fr": "le temple",
         "etym": "temple, templier, contempler",
         "ex": "In templo sacrificant.",
-        "ex_fr": "Ils sacrifient dans le temple."
+        "ex_fr": "Ils sacrifient dans le temple.",
+        "monde": "monde26"
       },
       {
         "latin": "urbs, urbis",
@@ -3163,7 +3208,8 @@
         "fr": "la ville (Rome par excellence)",
         "etym": "urbain, urbanisme, urbanité",
         "ex": "Urbs aeterna.",
-        "ex_fr": "La Ville Éternelle."
+        "ex_fr": "La Ville Éternelle.",
+        "monde": "monde20"
       },
       {
         "latin": "verbum, -i",
@@ -3172,7 +3218,8 @@
         "fr": "le mot / la parole",
         "etym": "verbe, verbal, verbiage",
         "ex": "Verba volant, scripta manent.",
-        "ex_fr": "Les paroles s'envolent, les écrits restent."
+        "ex_fr": "Les paroles s'envolent, les écrits restent.",
+        "monde": ""
       },
       {
         "latin": "virtus, -utis",
@@ -3181,7 +3228,8 @@
         "fr": "le courage / la vertu",
         "etym": "vertu, vertueux",
         "ex": "Virtus in arduis.",
-        "ex_fr": "Le courage dans l'adversité."
+        "ex_fr": "Le courage dans l'adversité.",
+        "monde": "monde11"
       },
       {
         "latin": "amare (amo, amavi, amatum)",
@@ -3190,7 +3238,8 @@
         "fr": "aimer",
         "etym": "ami, amour, amitié",
         "ex": "Marcus Iuliam amat.",
-        "ex_fr": "Marcus aime Julia."
+        "ex_fr": "Marcus aime Julia.",
+        "monde": "monde3"
       },
       {
         "latin": "audire (audio, audivi, auditum)",
@@ -3199,7 +3248,8 @@
         "fr": "entendre / écouter",
         "etym": "audible, auditeur, audition",
         "ex": "Discipuli magistrum audiunt.",
-        "ex_fr": "Les élèves écoutent le maître."
+        "ex_fr": "Les élèves écoutent le maître.",
+        "monde": "monde15"
       },
       {
         "latin": "capere (capio, cepi, captum)",
@@ -3208,7 +3258,8 @@
         "fr": "prendre / capturer",
         "etym": "capturer, capture, capter",
         "ex": "Miles hostem capit.",
-        "ex_fr": "Le soldat capture l'ennemi."
+        "ex_fr": "Le soldat capture l'ennemi.",
+        "monde": "monde5"
       },
       {
         "latin": "dicere (dico, dixi, dictum)",
@@ -3217,7 +3268,8 @@
         "fr": "dire / parler",
         "etym": "dictionnaire, diction, prédire",
         "ex": "Veritatem dicit.",
-        "ex_fr": "Il dit la vérité."
+        "ex_fr": "Il dit la vérité.",
+        "monde": "monde24"
       },
       {
         "latin": "docere (doceo, docui, doctum)",
@@ -3226,7 +3278,8 @@
         "fr": "enseigner / instruire",
         "etym": "docteur, doctrine, document",
         "ex": "Magister discipulos docet.",
-        "ex_fr": "Le maître instruit les élèves."
+        "ex_fr": "Le maître instruit les élèves.",
+        "monde": ""
       },
       {
         "latin": "esse (sum, fui)",
@@ -3235,7 +3288,8 @@
         "fr": "être / exister",
         "etym": "essence, essentiel",
         "ex": "Cogito, ergo sum.",
-        "ex_fr": "Je pense, donc je suis."
+        "ex_fr": "Je pense, donc je suis.",
+        "monde": "monde1"
       },
       {
         "latin": "habere (habeo, habui, habitum)",
@@ -3244,7 +3298,8 @@
         "fr": "avoir / posséder",
         "etym": "habile, habitude, avoir",
         "ex": "Pecuniam habet.",
-        "ex_fr": "Il a de l'argent."
+        "ex_fr": "Il a de l'argent.",
+        "monde": ""
       },
       {
         "latin": "ire (eo, ii, itum)",
@@ -3253,7 +3308,8 @@
         "fr": "aller",
         "etym": "itinéraire, initié",
         "ex": "Quo vadis ?",
-        "ex_fr": "Où vas-tu ?"
+        "ex_fr": "Où vas-tu ?",
+        "monde": "monde24"
       },
       {
         "latin": "legere (lego, legi, lectum)",
@@ -3262,7 +3318,8 @@
         "fr": "lire / cueillir / choisir",
         "etym": "lecture, leçon, lisible",
         "ex": "Librum legere dulce est.",
-        "ex_fr": "Lire un livre est doux."
+        "ex_fr": "Lire un livre est doux.",
+        "monde": "monde15"
       },
       {
         "latin": "mittere (mitto, misi, missum)",
@@ -3271,7 +3328,8 @@
         "fr": "envoyer",
         "etym": "mission, émettre, transmettre",
         "ex": "Litteras mittit.",
-        "ex_fr": "Il envoie une lettre."
+        "ex_fr": "Il envoie une lettre.",
+        "monde": ""
       },
       {
         "latin": "monere (moneo, monui, monitum)",
@@ -3280,7 +3338,8 @@
         "fr": "avertir / conseiller",
         "etym": "moniteur, prémonition",
         "ex": "Periculum monet.",
-        "ex_fr": "Il avertit du danger."
+        "ex_fr": "Il avertit du danger.",
+        "monde": ""
       },
       {
         "latin": "posse (possum, potui)",
@@ -3289,7 +3348,8 @@
         "fr": "pouvoir / être capable",
         "etym": "possible, puissance, pouvoir",
         "ex": "Possunt quia posse videntur.",
-        "ex_fr": "Ils peuvent parce qu'ils semblent pouvoir."
+        "ex_fr": "Ils peuvent parce qu'ils semblent pouvoir.",
+        "monde": ""
       },
       {
         "latin": "pugnare (pugno, pugnavi, pugnatum)",
@@ -3298,7 +3358,8 @@
         "fr": "combattre / se battre",
         "etym": "pugnace, pugilat",
         "ex": "Pro patria pugnant.",
-        "ex_fr": "Ils combattent pour la patrie."
+        "ex_fr": "Ils combattent pour la patrie.",
+        "monde": "monde5"
       },
       {
         "latin": "scribere (scribo, scripsi, scriptum)",
@@ -3307,7 +3368,8 @@
         "fr": "écrire",
         "etym": "écrire, script, scribe, écriture",
         "ex": "Calamo in cera scribit.",
-        "ex_fr": "Il écrit au calame sur la cire."
+        "ex_fr": "Il écrit au calame sur la cire.",
+        "monde": "monde2"
       },
       {
         "latin": "venire (venio, veni, ventum)",
@@ -3316,7 +3378,8 @@
         "fr": "venir / arriver",
         "etym": "venir, avenir, aventure",
         "ex": "Veni, vidi, vici.",
-        "ex_fr": "Je suis venu, j'ai vu, j'ai vaincu."
+        "ex_fr": "Je suis venu, j'ai vu, j'ai vaincu.",
+        "monde": "monde24"
       },
       {
         "latin": "videre (video, vidi, visum)",
@@ -3325,7 +3388,8 @@
         "fr": "voir",
         "etym": "vision, visible, vidéo, évident",
         "ex": "Video barbam et pallium.",
-        "ex_fr": "Je vois la barbe et le manteau."
+        "ex_fr": "Je vois la barbe et le manteau.",
+        "monde": "monde4"
       },
       {
         "latin": "vincere (vinco, vici, victum)",
@@ -3334,7 +3398,8 @@
         "fr": "vaincre / l'emporter",
         "etym": "vainqueur, victoire, invincible",
         "ex": "Labor omnia vincit improbus.",
-        "ex_fr": "Le travail acharné vient à bout de tout."
+        "ex_fr": "Le travail acharné vient à bout de tout.",
+        "monde": "monde5"
       },
       {
         "latin": "vivere (vivo, vixi, victum)",
@@ -3343,7 +3408,8 @@
         "fr": "vivre",
         "etym": "vivre, vital, vivace, survie",
         "ex": "Dum spiro, spero.",
-        "ex_fr": "Tant que je respire, j'espère."
+        "ex_fr": "Tant que je respire, j'espère.",
+        "monde": ""
       },
       {
         "latin": "altus, -a, -um",
@@ -3352,7 +3418,8 @@
         "fr": "haut / profond",
         "etym": "altitude, altier",
         "ex": "Arbor alta est.",
-        "ex_fr": "L'arbre est haut."
+        "ex_fr": "L'arbre est haut.",
+        "monde": "monde14"
       },
       {
         "latin": "bonus, -a, -um",
@@ -3361,7 +3428,8 @@
         "fr": "bon / bienveillant",
         "etym": "bon, bonté, bonus",
         "ex": "Bonus civis legibus paret.",
-        "ex_fr": "Le bon citoyen obéit aux lois."
+        "ex_fr": "Le bon citoyen obéit aux lois.",
+        "monde": "monde14"
       },
       {
         "latin": "brevis, -e",
@@ -3370,7 +3438,8 @@
         "fr": "court / bref",
         "etym": "bref, brièveté, abréger",
         "ex": "Vita brevis, ars longa.",
-        "ex_fr": "La vie est courte, l'art est long."
+        "ex_fr": "La vie est courte, l'art est long.",
+        "monde": ""
       },
       {
         "latin": "clarus, -a, -um",
@@ -3379,7 +3448,8 @@
         "fr": "clair / illustre / célèbre",
         "etym": "clarté, éclairer, clair",
         "ex": "Clarus imperator.",
-        "ex_fr": "Un illustre empereur."
+        "ex_fr": "Un illustre empereur.",
+        "monde": "monde14"
       },
       {
         "latin": "fortis, -e",
@@ -3388,7 +3458,8 @@
         "fr": "fort / courageux",
         "etym": "fort, force, forteresse",
         "ex": "Fortes fortuna adiuvat.",
-        "ex_fr": "La fortune sourit aux audacieux."
+        "ex_fr": "La fortune sourit aux audacieux.",
+        "monde": "monde11"
       },
       {
         "latin": "magnus, -a, -um",
@@ -3397,7 +3468,8 @@
         "fr": "grand / puissant",
         "etym": "magnifique, magnitude, majeur",
         "ex": "Alexander Magnus.",
-        "ex_fr": "Alexandre le Grand."
+        "ex_fr": "Alexandre le Grand.",
+        "monde": "monde16"
       },
       {
         "latin": "malus, -a, -um",
@@ -3406,7 +3478,8 @@
         "fr": "mauvais / méchant",
         "etym": "malice, malveillant, malin",
         "ex": "Mala herba cito crescit.",
-        "ex_fr": "Mauvaise herbe pousse vite."
+        "ex_fr": "Mauvaise herbe pousse vite.",
+        "monde": ""
       },
       {
         "latin": "parvus, -a, -um",
@@ -3415,7 +3488,8 @@
         "fr": "petit",
         "etym": "parcelle",
         "ex": "Parva scintilla magnum gignit ignem.",
-        "ex_fr": "Une petite étincelle produit un grand feu."
+        "ex_fr": "Une petite étincelle produit un grand feu.",
+        "monde": ""
       },
       {
         "latin": "pulcher, -chra, -chrum",
@@ -3424,7 +3498,8 @@
         "fr": "beau / magnifique",
         "etym": "pulchritude (littéraire)",
         "ex": "Urbs pulcherrima est.",
-        "ex_fr": "La ville est très belle."
+        "ex_fr": "La ville est très belle.",
+        "monde": ""
       },
       {
         "latin": "Alea iacta est",
@@ -3433,7 +3508,8 @@
         "fr": "Les dés sont jetés",
         "etym": "Paroles de César franchissant le Rubicon.",
         "ex": "Alea iacta est !",
-        "ex_fr": "Le sort en est jeté !"
+        "ex_fr": "Le sort en est jeté !",
+        "monde": ""
       },
       {
         "latin": "Carpe diem",
@@ -3442,7 +3518,8 @@
         "fr": "Cueille le jour présent",
         "etym": "Célèbre vers du poète Horace.",
         "ex": "Carpe diem, quam minimum credula postero.",
-        "ex_fr": "Cueille le jour, sans te fier au lendemain."
+        "ex_fr": "Cueille le jour, sans te fier au lendemain.",
+        "monde": "monde7"
       },
       {
         "latin": "Festina lente",
@@ -3451,7 +3528,8 @@
         "fr": "Hâte-toi lentement",
         "etym": "Devise impériale de prudence et d'efficacité.",
         "ex": "Festina lente in studiis.",
-        "ex_fr": "Travaille vite mais avec rigueur."
+        "ex_fr": "Travaille vite mais avec rigueur.",
+        "monde": ""
       },
       {
         "latin": "Veni, vidi, vici",
@@ -3460,7 +3538,888 @@
         "fr": "Je suis venu, j'ai vu, j'ai vaincu",
         "etym": "Message laconique de César après Zéla.",
         "ex": "Veni, vidi, vici.",
-        "ex_fr": "Victoire fulgurante."
+        "ex_fr": "Victoire fulgurante.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "salve / salvete",
+        "cat": "Invariable",
+        "genre": "formule de salut",
+        "fr": "bonjour (à une / à plusieurs personnes)",
+        "etym": "salut, salutation",
+        "ex": "Salve, magister !",
+        "ex_fr": "Bonjour, maître !",
+        "monde": "monde1"
+      },
+      {
+        "latin": "vale / valete",
+        "cat": "Invariable",
+        "genre": "formule d'adieu",
+        "fr": "au revoir, porte-toi bien",
+        "etym": "valide, valeur",
+        "ex": "Vale, amice !",
+        "ex_fr": "Au revoir, mon ami !",
+        "monde": "monde1"
+      },
+      {
+        "latin": "magister, -tri",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le maître d'école",
+        "etym": "magistral, magistrat, maître",
+        "ex": "Magister pueros docet.",
+        "ex_fr": "Le maître instruit les enfants.",
+        "monde": "monde1"
+      },
+      {
+        "latin": "Roma, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "Rome",
+        "etym": "romain, roman",
+        "ex": "Roma in Italia est.",
+        "ex_fr": "Rome est en Italie.",
+        "monde": "monde1"
+      },
+      {
+        "latin": "via, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la route, la rue",
+        "etym": "voie, viaduc, via",
+        "ex": "Via Appia longa est.",
+        "ex_fr": "La voie Appienne est longue.",
+        "monde": "monde1"
+      },
+      {
+        "latin": "filius, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le fils",
+        "etym": "filial, filiation, fils",
+        "ex": "Filius patrem amat.",
+        "ex_fr": "Le fils aime son père.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "filia, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la fille",
+        "etym": "filiale, fille",
+        "ex": "Filia matrem iuvat.",
+        "ex_fr": "La fille aide sa mère.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "frater, -tris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le frère",
+        "etym": "fraternel, fraternité",
+        "ex": "Romulus et Remus fratres sunt.",
+        "ex_fr": "Romulus et Rémus sont frères.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "soror, -oris",
+        "cat": "Nom",
+        "genre": "fém. 3e décl.",
+        "fr": "la sœur",
+        "etym": "sororité",
+        "ex": "Soror mea in horto ludit.",
+        "ex_fr": "Ma sœur joue dans le jardin.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "felis, -is",
+        "cat": "Nom",
+        "genre": "fém. 3e décl.",
+        "fr": "le chat",
+        "etym": "félin",
+        "ex": "Felis murem capit.",
+        "ex_fr": "Le chat attrape la souris.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "avis, -is",
+        "cat": "Nom",
+        "genre": "fém. 3e décl.",
+        "fr": "l'oiseau",
+        "etym": "aviation, aviaire",
+        "ex": "Avis in arbore cantat.",
+        "ex_fr": "L'oiseau chante dans l'arbre.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "servus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "l'esclave, le serviteur",
+        "etym": "servir, servile, serf",
+        "ex": "Servus aquam portat.",
+        "ex_fr": "L'esclave porte de l'eau.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "hortus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le jardin",
+        "etym": "horticulture, hortensia",
+        "ex": "In horto rosae sunt.",
+        "ex_fr": "Il y a des roses dans le jardin.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "cena, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "le dîner, le repas du soir",
+        "etym": "Cène",
+        "ex": "Familia cenam parat.",
+        "ex_fr": "La famille prépare le dîner.",
+        "monde": "monde2"
+      },
+      {
+        "latin": "deus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le dieu",
+        "etym": "divin, déité, adieu",
+        "ex": "Iupiter deus caeli est.",
+        "ex_fr": "Jupiter est le dieu du ciel.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "dea, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la déesse",
+        "etym": "déesse",
+        "ex": "Minerva dea sapientiae est.",
+        "ex_fr": "Minerve est la déesse de la sagesse.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "caelum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le ciel",
+        "etym": "céleste, ciel",
+        "ex": "Aves in caelo volant.",
+        "ex_fr": "Les oiseaux volent dans le ciel.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "terra, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la terre",
+        "etym": "terrestre, territoire, terrain",
+        "ex": "Terra rotunda est.",
+        "ex_fr": "La terre est ronde.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "fulmen, -inis",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "la foudre",
+        "etym": "fulminer, fulgurant",
+        "ex": "Iupiter fulmen iacit.",
+        "ex_fr": "Jupiter lance la foudre.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "ala, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "l'aile",
+        "etym": "aile, ailier",
+        "ex": "Icarus alas habet.",
+        "ex_fr": "Icare a des ailes.",
+        "monde": "monde3"
+      },
+      {
+        "latin": "leo, -onis",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le lion",
+        "etym": "léonin, Léon",
+        "ex": "Hercules leonem necat.",
+        "ex_fr": "Hercule tue le lion.",
+        "monde": "monde4"
+      },
+      {
+        "latin": "agnus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "l'agneau",
+        "etym": "agnelet",
+        "ex": "Lupus agnum videt.",
+        "ex_fr": "Le loup voit l'agneau.",
+        "monde": "monde4"
+      },
+      {
+        "latin": "heros, -ois",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le héros",
+        "etym": "héros, héroïque",
+        "ex": "Hercules heros clarus est.",
+        "ex_fr": "Hercule est un héros célèbre.",
+        "monde": "monde4"
+      },
+      {
+        "latin": "labor, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le travail, l'effort",
+        "etym": "labeur, laborieux, laboratoire",
+        "ex": "Labor omnia vincit.",
+        "ex_fr": "Le travail vient à bout de tout.",
+        "monde": "monde4"
+      },
+      {
+        "latin": "necare (neco, necavi, necatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "tuer",
+        "etym": "internécin",
+        "ex": "Hercules hydram necat.",
+        "ex_fr": "Hercule tue l'hydre.",
+        "monde": "monde4"
+      },
+      {
+        "latin": "currere (curro, cucurri, cursum)",
+        "cat": "Verbe",
+        "genre": "3e groupe",
+        "fr": "courir",
+        "etym": "courir, course, courrier",
+        "ex": "Puer in via currit.",
+        "ex_fr": "Le garçon court dans la rue.",
+        "monde": "monde5"
+      },
+      {
+        "latin": "ambulare (ambulo, ambulavi, ambulatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "se promener, marcher",
+        "etym": "ambulant, ambulance, préambule",
+        "ex": "Marcus in foro ambulat.",
+        "ex_fr": "Marcus se promène sur le forum.",
+        "monde": "monde5"
+      },
+      {
+        "latin": "cantare (canto, cantavi, cantatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "chanter",
+        "etym": "chanter, cantate, cantique",
+        "ex": "Puella cantat.",
+        "ex_fr": "La jeune fille chante.",
+        "monde": "monde5"
+      },
+      {
+        "latin": "laborare (laboro, laboravi, laboratum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "travailler",
+        "etym": "labourer, laboratoire",
+        "ex": "Agricola in agro laborat.",
+        "ex_fr": "Le paysan travaille dans le champ.",
+        "monde": "monde5"
+      },
+      {
+        "latin": "agricola, -ae",
+        "cat": "Nom",
+        "genre": "masc. 1re décl.",
+        "fr": "le paysan, l'agriculteur",
+        "etym": "agricole, agriculture",
+        "ex": "Agricola terram amat.",
+        "ex_fr": "Le paysan aime la terre.",
+        "monde": "monde5"
+      },
+      {
+        "latin": "gladiator, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le gladiateur",
+        "etym": "gladiateur, glaïeul",
+        "ex": "Gladiator in arena pugnat.",
+        "ex_fr": "Le gladiateur combat dans l'arène.",
+        "monde": "monde6"
+      },
+      {
+        "latin": "harena, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "le sable, l'arène",
+        "etym": "arène",
+        "ex": "Harena amphitheatri magna est.",
+        "ex_fr": "L'arène de l'amphithéâtre est grande.",
+        "monde": "monde6"
+      },
+      {
+        "latin": "spectator, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le spectateur",
+        "etym": "spectateur, spectacle",
+        "ex": "Spectatores clamant.",
+        "ex_fr": "Les spectateurs crient.",
+        "monde": "monde6"
+      },
+      {
+        "latin": "rete, -is",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "le filet",
+        "etym": "réseau, rétiaire",
+        "ex": "Retiarius rete iacit.",
+        "ex_fr": "Le rétiaire lance son filet.",
+        "monde": "monde6"
+      },
+      {
+        "latin": "clamare (clamo, clamavi, clamatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "crier",
+        "etym": "clamer, réclamer, exclamation",
+        "ex": "Populus clamat.",
+        "ex_fr": "Le peuple crie.",
+        "monde": "monde6"
+      },
+      {
+        "latin": "pes, pedis",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le pied",
+        "etym": "pédestre, piéton, pédale",
+        "ex": "Pedes mei fessi sunt.",
+        "ex_fr": "Mes pieds sont fatigués.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "oculus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "l'œil",
+        "etym": "oculaire, oculiste",
+        "ex": "Cyclops unum oculum habet.",
+        "ex_fr": "Le Cyclope a un seul œil.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "caput, -itis",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "la tête",
+        "etym": "capitale, capitaine, chef",
+        "ex": "Roma caput mundi.",
+        "ex_fr": "Rome, capitale du monde.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "liber, -bri",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le livre",
+        "etym": "librairie, libraire",
+        "ex": "Discipulus librum legit.",
+        "ex_fr": "L'élève lit un livre.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "tempus, -oris",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "le temps",
+        "etym": "temporel, temporaire, tempête",
+        "ex": "Tempus fugit.",
+        "ex_fr": "Le temps s'enfuit.",
+        "monde": "monde7"
+      },
+      {
+        "latin": "panis, -is",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le pain",
+        "etym": "panier, panification",
+        "ex": "Pistor panem vendit.",
+        "ex_fr": "Le boulanger vend du pain.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "vinum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le vin",
+        "etym": "vin, vignoble",
+        "ex": "Romani vinum cum aqua bibunt.",
+        "ex_fr": "Les Romains boivent le vin coupé d'eau.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "forum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "la place publique, le marché",
+        "etym": "forum, forain",
+        "ex": "Mercator in foro est.",
+        "ex_fr": "Le marchand est sur le forum.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "mercator, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le marchand",
+        "etym": "mercantile, commerce",
+        "ex": "Mercator merces vendit.",
+        "ex_fr": "Le marchand vend ses marchandises.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "emere (emo, emi, emptum)",
+        "cat": "Verbe",
+        "genre": "3e groupe",
+        "fr": "acheter",
+        "etym": "exemption, préemption",
+        "ex": "Mater panem emit.",
+        "ex_fr": "La mère achète du pain.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "vendere (vendo, vendidi, venditum)",
+        "cat": "Verbe",
+        "genre": "3e groupe",
+        "fr": "vendre",
+        "etym": "vendre, vendeur",
+        "ex": "Agricola poma vendit.",
+        "ex_fr": "Le paysan vend des fruits.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "thermae, -arum",
+        "cat": "Nom",
+        "genre": "fém. pluriel 1re décl.",
+        "fr": "les thermes, les bains publics",
+        "etym": "thermal, thermomètre",
+        "ex": "Romani in thermis lavant.",
+        "ex_fr": "Les Romains se lavent aux thermes.",
+        "monde": "monde8"
+      },
+      {
+        "latin": "legio, -onis",
+        "cat": "Nom",
+        "genre": "fém. 3e décl.",
+        "fr": "la légion",
+        "etym": "légion, légionnaire",
+        "ex": "Legio castra ponit.",
+        "ex_fr": "La légion installe son camp.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "castra, -orum",
+        "cat": "Nom",
+        "genre": "neutre pluriel 2e décl.",
+        "fr": "le camp militaire",
+        "etym": "Chester, Lancaster (villes anglaises)",
+        "ex": "Milites in castris dormiunt.",
+        "ex_fr": "Les soldats dorment au camp.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "pilum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le javelot",
+        "etym": "pilum",
+        "ex": "Miles pilum iacit.",
+        "ex_fr": "Le soldat lance son javelot.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "galea, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "le casque",
+        "etym": "galéa (anatomie)",
+        "ex": "Galea caput servat.",
+        "ex_fr": "Le casque protège la tête.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "fortiter",
+        "cat": "Invariable",
+        "genre": "adverbe",
+        "fr": "courageusement",
+        "etym": "fort, force",
+        "ex": "Milites fortiter pugnant.",
+        "ex_fr": "Les soldats combattent courageusement.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "proelium, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le combat, la bataille",
+        "etym": "prélude (sens figuré)",
+        "ex": "Proelium acre est.",
+        "ex_fr": "La bataille est rude.",
+        "monde": "monde9"
+      },
+      {
+        "latin": "monstrum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le monstre, le prodige",
+        "etym": "monstre, monstrueux, montrer",
+        "ex": "Minotaurus monstrum est.",
+        "ex_fr": "Le Minotaure est un monstre.",
+        "monde": "monde10"
+      },
+      {
+        "latin": "porta, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la porte",
+        "etym": "porte, portail, portier",
+        "ex": "Cerberus portas custodit.",
+        "ex_fr": "Cerbère garde les portes.",
+        "monde": "monde10"
+      },
+      {
+        "latin": "custodire (custodio, custodivi, custoditum)",
+        "cat": "Verbe",
+        "genre": "4e groupe",
+        "fr": "garder, surveiller",
+        "etym": "custode",
+        "ex": "Canis domum custodit.",
+        "ex_fr": "Le chien garde la maison.",
+        "monde": "monde10"
+      },
+      {
+        "latin": "forma, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la forme, la beauté",
+        "etym": "forme, former, formule",
+        "ex": "Deus formam mutat.",
+        "ex_fr": "Le dieu change de forme.",
+        "monde": "monde10"
+      },
+      {
+        "latin": "mutare (muto, mutavi, mutatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "changer, transformer",
+        "etym": "muter, mutation, commuter",
+        "ex": "Circe viros in porcos mutat.",
+        "ex_fr": "Circé change les hommes en porcs.",
+        "monde": "monde10"
+      },
+      {
+        "latin": "pons, pontis",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le pont",
+        "etym": "pont, pontife, ponton",
+        "ex": "Horatius pontem defendit.",
+        "ex_fr": "Horatius défend le pont.",
+        "monde": "monde11"
+      },
+      {
+        "latin": "patria, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la patrie",
+        "etym": "patrie, patriote, patriotisme",
+        "ex": "Patriam amamus.",
+        "ex_fr": "Nous aimons notre patrie.",
+        "monde": "monde11"
+      },
+      {
+        "latin": "defendere (defendo, defendi, defensum)",
+        "cat": "Verbe",
+        "genre": "3e groupe",
+        "fr": "défendre",
+        "etym": "défendre, défense",
+        "ex": "Milites urbem defendunt.",
+        "ex_fr": "Les soldats défendent la ville.",
+        "monde": "monde11"
+      },
+      {
+        "latin": "consul, -is",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le consul",
+        "etym": "consul, consulat",
+        "ex": "Duo consules Romam regunt.",
+        "ex_fr": "Deux consuls gouvernent Rome.",
+        "monde": "monde12"
+      },
+      {
+        "latin": "senator, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le sénateur",
+        "etym": "sénateur, sénile",
+        "ex": "Senatores in curia sedent.",
+        "ex_fr": "Les sénateurs siègent à la curie.",
+        "monde": "monde12"
+      },
+      {
+        "latin": "respublica, reipublicae",
+        "cat": "Nom",
+        "genre": "fém. 5e + 1re décl.",
+        "fr": "l'État, la République",
+        "etym": "république, public",
+        "ex": "Cicero rem publicam servat.",
+        "ex_fr": "Cicéron sauve la République.",
+        "monde": "monde12"
+      },
+      {
+        "latin": "vox, vocis",
+        "cat": "Nom",
+        "genre": "fém. 3e décl.",
+        "fr": "la voix",
+        "etym": "voix, vocal, vocabulaire",
+        "ex": "Vox populi, vox dei.",
+        "ex_fr": "La voix du peuple est la voix de Dieu.",
+        "monde": "monde12"
+      },
+      {
+        "latin": "nauta, -ae",
+        "cat": "Nom",
+        "genre": "masc. 1re décl.",
+        "fr": "le marin",
+        "etym": "nautique, nautile, astronaute",
+        "ex": "Nautae navem ducunt.",
+        "ex_fr": "Les marins mènent le navire.",
+        "monde": "monde13"
+      },
+      {
+        "latin": "unda, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la vague, l'onde",
+        "etym": "onde, ondulation, inonder",
+        "ex": "Undae navem pulsant.",
+        "ex_fr": "Les vagues frappent le navire.",
+        "monde": "monde13"
+      },
+      {
+        "latin": "portus, -us",
+        "cat": "Nom",
+        "genre": "masc. 4e décl.",
+        "fr": "le port",
+        "etym": "port, portuaire",
+        "ex": "Navis in portu est.",
+        "ex_fr": "Le navire est au port.",
+        "monde": "monde13"
+      },
+      {
+        "latin": "navigare (navigo, navigavi, navigatum)",
+        "cat": "Verbe",
+        "genre": "1er groupe",
+        "fr": "naviguer",
+        "etym": "naviguer, navigation",
+        "ex": "Romani in mari navigant.",
+        "ex_fr": "Les Romains naviguent sur la mer.",
+        "monde": "monde13"
+      },
+      {
+        "latin": "iter, itineris",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "le chemin, l'étape",
+        "etym": "itinéraire",
+        "ex": "Legio iter facit.",
+        "ex_fr": "La légion fait route.",
+        "monde": "monde14"
+      },
+      {
+        "latin": "signum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le signal, l'enseigne militaire",
+        "etym": "signe, signal, enseigne",
+        "ex": "Signifer signum portat.",
+        "ex_fr": "Le porte-enseigne porte l'enseigne.",
+        "monde": "monde14"
+      },
+      {
+        "latin": "ducere (duco, duxi, ductum)",
+        "cat": "Verbe",
+        "genre": "3e groupe",
+        "fr": "conduire, mener",
+        "etym": "conduire, produire, aqueduc",
+        "ex": "Dux milites ducit.",
+        "ex_fr": "Le chef conduit les soldats.",
+        "monde": "monde14"
+      },
+      {
+        "latin": "Gallia, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la Gaule",
+        "etym": "gaulois, gallican",
+        "ex": "Gallia est omnis divisa in partes tres.",
+        "ex_fr": "La Gaule dans son ensemble est divisée en trois parties.",
+        "monde": "monde17"
+      },
+      {
+        "latin": "Gallus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le Gaulois",
+        "etym": "gaulois",
+        "ex": "Galli fortiter pugnant.",
+        "ex_fr": "Les Gaulois combattent courageusement.",
+        "monde": "monde17"
+      },
+      {
+        "latin": "oppidum, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "la place forte, la ville fortifiée",
+        "etym": "oppidum",
+        "ex": "Caesar oppidum capit.",
+        "ex_fr": "César prend la place forte.",
+        "monde": "monde17"
+      },
+      {
+        "latin": "triumphus, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le triomphe",
+        "etym": "triomphe, triompher",
+        "ex": "Imperator triumphum agit.",
+        "ex_fr": "Le général célèbre son triomphe.",
+        "monde": "monde18"
+      },
+      {
+        "latin": "gloria, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la gloire",
+        "etym": "gloire, glorieux",
+        "ex": "Gloria victoribus.",
+        "ex_fr": "Gloire aux vainqueurs.",
+        "monde": "monde18"
+      },
+      {
+        "latin": "victoria, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la victoire",
+        "etym": "victoire, victorieux",
+        "ex": "Victoria nostra est.",
+        "ex_fr": "La victoire est à nous.",
+        "monde": "monde18"
+      },
+      {
+        "latin": "imperator, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le général vainqueur, l'empereur",
+        "etym": "empereur, impérial",
+        "ex": "Augustus imperator est.",
+        "ex_fr": "Auguste est empereur.",
+        "monde": "monde19"
+      },
+      {
+        "latin": "imperium, -i",
+        "cat": "Nom",
+        "genre": "neutre 2e décl.",
+        "fr": "le commandement, l'empire",
+        "etym": "empire, impérieux",
+        "ex": "Imperium Romanum magnum est.",
+        "ex_fr": "L'Empire romain est grand.",
+        "monde": "monde19"
+      },
+      {
+        "latin": "aquaeductus, -us",
+        "cat": "Nom",
+        "genre": "masc. 4e décl.",
+        "fr": "l'aqueduc",
+        "etym": "aqueduc",
+        "ex": "Aquaeductus aquam in urbem ducit.",
+        "ex_fr": "L'aqueduc conduit l'eau dans la ville.",
+        "monde": "monde20"
+      },
+      {
+        "latin": "milia passuum",
+        "cat": "Invariable",
+        "genre": "expression",
+        "fr": "les milles romains (mille pas)",
+        "etym": "mille, mile (anglais)",
+        "ex": "Roma centum milia passuum abest.",
+        "ex_fr": "Rome est à cent milles d'ici.",
+        "monde": "monde20"
+      },
+      {
+        "latin": "ignis, -is",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "le feu",
+        "etym": "igné, ignifugé, ignition",
+        "ex": "Vesuvius ignem emittit.",
+        "ex_fr": "Le Vésuve crache du feu.",
+        "monde": "monde21"
+      },
+      {
+        "latin": "cinis, -eris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "la cendre",
+        "etym": "incinérer, cinéraire",
+        "ex": "Cinis urbem tegit.",
+        "ex_fr": "La cendre recouvre la ville.",
+        "monde": "monde21"
+      },
+      {
+        "latin": "fugere (fugio, fugi, fugitum)",
+        "cat": "Verbe",
+        "genre": "3e groupe mixte",
+        "fr": "fuir",
+        "etym": "fugitif, fugue",
+        "ex": "Incolae e urbe fugiunt.",
+        "ex_fr": "Les habitants fuient la ville.",
+        "monde": "monde21"
+      },
+      {
+        "latin": "poeta, -ae",
+        "cat": "Nom",
+        "genre": "masc. 1re décl.",
+        "fr": "le poète",
+        "etym": "poète, poésie",
+        "ex": "Vergilius poeta clarus est.",
+        "ex_fr": "Virgile est un poète célèbre.",
+        "monde": "monde25"
+      },
+      {
+        "latin": "carmen, -inis",
+        "cat": "Nom",
+        "genre": "neutre 3e décl.",
+        "fr": "le poème, le chant",
+        "etym": "charme",
+        "ex": "Poeta carmen scribit.",
+        "ex_fr": "Le poète écrit un poème.",
+        "monde": "monde25"
+      },
+      {
+        "latin": "amor, -oris",
+        "cat": "Nom",
+        "genre": "masc. 3e décl.",
+        "fr": "l'amour",
+        "etym": "amour, amoureux",
+        "ex": "Omnia vincit amor.",
+        "ex_fr": "L'amour triomphe de tout.",
+        "monde": "monde25"
       }
     ],
     "declinaisons": {

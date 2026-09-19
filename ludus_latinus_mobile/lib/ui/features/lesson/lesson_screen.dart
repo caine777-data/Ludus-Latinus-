@@ -15,6 +15,8 @@ import 'widgets/word_puzzle_widget.dart';
 import 'widgets/cloze_fill_widget.dart';
 import 'widgets/case_decoder_widget.dart';
 import 'widgets/arena_challenge_widget.dart';
+import 'widgets/vocab_question_widget.dart';
+import '../../../data/models/vocab_question.dart';
 
 /// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
 class LessonScreen extends StatefulWidget {
@@ -55,9 +57,75 @@ class _LessonScreenState extends State<LessonScreen> {
     return 1;
   }
 
+  // Série d'exercices : l'exercice principal, puis des questions de vocabulaire
+  // du monde. Une question ratée est reposée à la fin de la série.
+  late final List<VocabQuestion> _vocabQueue;
+  final Map<VocabQuestion, int> _requeued = {};
+  bool _mainDone = false;
+  int _vocabIndex = 0;
+
+  int get _totalSteps => 1 + _vocabQueue.length;
+  int get _currentStep => _mainDone ? _vocabIndex + 2 : 1;
+
+  List<VocabQuestion> _buildVocabQueue() {
+    final lesson = widget.lesson;
+    String textOf(Lesson l) => [l.content, l.latin ?? '', l.question ?? '', ...l.options, ...l.words].join(' ');
+
+    // Texte de toutes les leçons jusqu'à celle-ci : on n'interroge que des mots déjà vus.
+    String worldId = '';
+    final known = StringBuffer();
+    outer:
+    for (final w in widget.repo.worlds) {
+      for (final l in w.lessons) {
+        known.write(' ${textOf(l)}');
+        if (l.id == lesson.id) {
+          worldId = w.id;
+          break outer;
+        }
+      }
+    }
+    return VocabQuestion.forLesson(
+      dictionary: widget.repo.thesaurus,
+      worldId: worldId,
+      lessonText: textOf(lesson),
+      knownText: known.toString(),
+      count: 3,
+    );
+  }
+
+  void _onMainDone() {
+    if (_vocabQueue.isEmpty) {
+      _handleSuccess();
+      return;
+    }
+    AudioService().playCorrect();
+    setState(() => _mainDone = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToExercise());
+  }
+
+  void _onVocabAnswered(bool correct) {
+    final q = _vocabQueue[_vocabIndex];
+    if (!correct) {
+      _mistakes++;
+      // Reposée au plus deux fois, pour ne jamais bloquer l'élève.
+      final n = _requeued[q] ?? 0;
+      if (n < 2) {
+        _requeued[q] = n + 1;
+        _vocabQueue.add(q);
+      }
+    }
+    if (_vocabIndex + 1 >= _vocabQueue.length) {
+      _handleSuccess();
+      return;
+    }
+    setState(() => _vocabIndex++);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToExercise());
+  }
+
   @override
   void initState() {
     super.initState();
+    _vocabQueue = _buildVocabQueue();
     AudioService().enterMusic(MusicTrack.lecon);
     _order = List.generate(widget.lesson.options.length, (i) => i);
     _scrollController.addListener(_updateExerciseVisibility);
@@ -104,7 +172,7 @@ class _LessonScreenState extends State<LessonScreen> {
     });
 
     if (isCorrect) {
-      _handleSuccess();
+      _onMainDone();
     } else {
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.light);
@@ -150,16 +218,9 @@ class _LessonScreenState extends State<LessonScreen> {
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
-      // Son de bonne réponse, puis celui de la leçon validée (première fois)
-      // ou de l'étoile (record battu), décalé pour ne pas se chevaucher.
+      // Son de bonne réponse ; le bilan joue ensuite une note par étoile,
+      // puis le tintement des pièces quand elles tombent dans la bourse.
       AudioService().playCorrect();
-      Future.delayed(const Duration(milliseconds: 700), () {
-        if (result.firstTime) {
-          AudioService().playLessonDone();
-        } else if (result.improved) {
-          AudioService().playStar();
-        }
-      });
     }
     _showResultSheet(result);
   }
@@ -229,20 +290,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(3, (i) {
-                final filled = i < result.stars;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: Icon(
-                    filled ? Icons.star_rounded : Icons.star_outline_rounded,
-                    size: 34,
-                    color: filled ? RomanColors.imperialGold : const Color(0xFFCFC3B3),
-                  ),
-                );
-              }),
-            ),
+            _ResultStars(stars: result.stars),
             const SizedBox(height: 6),
             Text(
               subtitle,
@@ -267,6 +315,9 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
             ],
             const SizedBox(height: 12),
+            if (result.sestercesGained > 0)
+              _CoinReward(amount: result.sestercesGained, delay: Duration(milliseconds: 350 + 300 * result.stars))
+            else
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
@@ -275,9 +326,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 border: Border.all(color: RomanColors.imperialGold),
               ),
               child: Text(
-                result.sestercesGained > 0
-                    ? '+${result.sestercesGained} HS'
-                    : (result.improved
+                    (result.improved
                         ? 'Nouveau record : ${result.stars} ★'
                         : (result.bestStars > result.stars
                             ? 'Leçon déjà validée (record : ${result.bestStars} ★)'
@@ -666,7 +715,7 @@ class _LessonScreenState extends State<LessonScreen> {
             const SizedBox(height: 16),
 
             // 3. Exercice Interactif Pédagogique (adapté selon le type : QCM, Puzzle, Trou, Décodeur, Arène)
-            KeyedSubtree(key: _exerciseKey, child: _buildInteractiveExerciseSection(lesson)),
+            KeyedSubtree(key: _exerciseKey, child: _buildExerciseStep(lesson)),
             const SizedBox(height: 20),
           ],
         ),
@@ -675,13 +724,38 @@ class _LessonScreenState extends State<LessonScreen> {
   );
   }
 
+  Widget _buildExerciseStep(Lesson lesson) {
+    if (_mainDone && _vocabIndex < _vocabQueue.length) {
+      return VocabQuestionWidget(
+        key: ValueKey('vocab_$_vocabIndex'),
+        question: _vocabQueue[_vocabIndex],
+        progressLabel: 'EXERCICE $_currentStep / $_totalSteps • VOCABULAIRE',
+        onAnswered: _onVocabAnswered,
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (_totalSteps > 1)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8, left: 4),
+            child: Text(
+              'EXERCICE 1 / $_totalSteps',
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 0.8, color: RomanColors.goldDark),
+            ),
+          ),
+        _buildInteractiveExerciseSection(lesson),
+      ],
+    );
+  }
+
   Widget _buildInteractiveExerciseSection(Lesson lesson) {
     if (lesson.type == 'puzzle' && lesson.words.isNotEmpty) {
       return WordPuzzleWidget(
         availableWords: lesson.words,
         targetSolution: lesson.solution ?? lesson.latin ?? lesson.words.join(' '),
         latinPhrase: lesson.latin,
-        onCompleted: _handleSuccess,
+        onCompleted: _onMainDone,
         onMistake: () => _mistakes++,
       );
     } else if (lesson.type == 'trou') {
@@ -692,7 +766,7 @@ class _LessonScreenState extends State<LessonScreen> {
         solution: lesson.solution ?? '',
         options: lesson.options,
         latinComplet: lesson.latinComplet,
-        onCompleted: _handleSuccess,
+        onCompleted: _onMainDone,
         onMistake: () => _mistakes++,
       );
     } else if (lesson.type == 'decodeur' && lesson.words.isNotEmpty) {
@@ -700,14 +774,14 @@ class _LessonScreenState extends State<LessonScreen> {
         words: lesson.words,
         expectedRoles: lesson.roles,
         latinPhrase: lesson.latin,
-        onCompleted: _handleSuccess,
+        onCompleted: _onMainDone,
         onMistake: () => _mistakes++,
       );
     } else if (lesson.type == 'arene' && lesson.questions.isNotEmpty) {
       return ArenaChallengeWidget(
         boss: lesson.boss,
         questions: lesson.questions,
-        onCompleted: _handleSuccess,
+        onCompleted: _onMainDone,
         onMistake: () => _mistakes++,
       );
     } else if (lesson.options.isNotEmpty) {
@@ -942,6 +1016,158 @@ class _LessonScreenState extends State<LessonScreen> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Les étoiles du bilan apparaissent une à une, avec une note chacune.
+class _ResultStars extends StatefulWidget {
+  final int stars;
+  const _ResultStars({required this.stars});
+
+  @override
+  State<_ResultStars> createState() => _ResultStarsState();
+}
+
+class _ResultStarsState extends State<_ResultStars> with SingleTickerProviderStateMixin {
+  static const _step = 300; // ms entre deux étoiles
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 350 + 3 * _step + 400),
+  );
+  int _played = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _c.addListener(() {
+      final elapsed = _c.value * _c.duration!.inMilliseconds;
+      while (_played < widget.stars && elapsed >= 350 + _played * _step) {
+        _played++;
+        AudioService().playStar();
+        HapticFeedback.lightImpact();
+      }
+    });
+    _c.forward();
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final total = _c.duration!.inMilliseconds;
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (context, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (i) {
+            final filled = i < widget.stars;
+            final start = (350 + i * _step) / total;
+            final t = ((_c.value - start) / (400 / total)).clamp(0.0, 1.0);
+            final scale = filled ? Curves.elasticOut.transform(t) : 1.0;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Icon(Icons.star_outline_rounded, size: 40, color: Color(0xFFCFC3B3)),
+                  if (filled)
+                    Transform.scale(
+                      scale: scale,
+                      child: const Icon(Icons.star_rounded, size: 40, color: RomanColors.imperialGold),
+                    ),
+                ],
+              ),
+            );
+          }),
+        );
+      },
+    );
+  }
+}
+
+/// Récompense en sesterces : des pièces tombent dans la bourse puis le montant défile.
+class _CoinReward extends StatefulWidget {
+  final int amount;
+  final Duration delay;
+  const _CoinReward({required this.amount, required this.delay});
+
+  @override
+  State<_CoinReward> createState() => _CoinRewardState();
+}
+
+class _CoinRewardState extends State<_CoinReward> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 900));
+  bool _started = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(widget.delay, () {
+      if (!mounted) return;
+      setState(() => _started = true);
+      _c.forward();
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) AudioService().playLessonDone();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      child: AnimatedBuilder(
+        animation: _c,
+        builder: (context, _) {
+          return Stack(
+            alignment: Alignment.bottomCenter,
+            clipBehavior: Clip.none,
+            children: [
+              // Pièces qui tombent, décalées, vers la bourse.
+              for (var i = 0; i < 5; i++)
+                Builder(builder: (context) {
+                  final t = ((_c.value - i * 0.08) / 0.6).clamp(0.0, 1.0);
+                  final y = Curves.easeIn.transform(t);
+                  return Positioned(
+                    bottom: 20 + (1 - y) * 44,
+                    left: null,
+                    child: Transform.translate(
+                      offset: Offset((i - 2) * 16.0 * (1 - y), 0),
+                      child: Opacity(
+                        opacity: _started ? (t < 1 ? 1.0 : 0.0) : 0.0,
+                        child: const Text('🪙', style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
+                  );
+                }),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.4),
+                ),
+                child: Text(
+                  '+${(widget.amount * Curves.easeOut.transform(((_c.value - 0.4) / 0.6).clamp(0.0, 1.0))).round()} HS',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF7A5901)),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

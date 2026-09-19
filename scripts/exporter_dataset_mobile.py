@@ -7,6 +7,7 @@ assets/data/ludus_latinus_dataset.json pour l'application mobile et le web.
 """
 
 import json
+import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -26,6 +27,39 @@ from app.thesaurus import (  # noqa: E402
 )
 from content import CLASSES, CURRICULUM, GLOSSAIRE  # noqa: E402
 from content.cartes_data import CARTES_COLLECTION, CATEGORIES, RARETES  # noqa: E402
+
+
+def _monde_du_mot(entree, curriculum):
+    """Premier monde dont une leçon emploie le mot : sert aux exercices de vocabulaire."""
+    if entree.get("monde"):
+        return entree["monde"]
+    latin = entree["latin"]
+    if entree.get("cat") == "Devise":
+        formes = [latin.lower()]
+    else:
+        formes = [latin.split(",")[0].split("(")[0].split("/")[0].strip().lower()]
+    if entree.get("cat") == "Verbe" and "(" in latin:
+        # Les leçons emploient surtout la 1re et la 3e personne : video, videt, vincit.
+        premiere = latin.split("(")[1].split(",")[0].strip().lower()
+        formes.append(premiere)
+        if premiere.endswith("eo"):
+            formes.append(premiere[:-1] + "t")
+        elif premiere.endswith("io"):
+            formes.append(premiere[:-1] + "t")
+        elif premiere.endswith("o"):
+            formes.append(premiere[:-1] + ("at" if formes[0].endswith("are") else "it"))
+    formes = [f for f in formes if len(f) >= 3]
+    for monde in curriculum:
+        for lecon in monde.get("lessons", []):
+            texte = json.dumps(lecon, ensure_ascii=False).lower()
+            if any(re.search(r"(?<![a-zà-ÿ])" + re.escape(f) + r"(?![a-zà-ÿ])", texte) for f in formes):
+                return monde["id"]
+    return ""
+
+
+def dictionnaire_avec_mondes(curriculum=None):
+    curriculum = CURRICULUM if curriculum is None else curriculum
+    return [{**e, "monde": _monde_du_mot(e, curriculum)} for e in DICTIONNAIRE_LATIN]
 
 
 def exporter_dataset(dest_path=None) -> Path:
@@ -65,7 +99,7 @@ def exporter_dataset(dest_path=None) -> Path:
         ],
         "mondes": CURRICULUM,
         "thesaurus": {
-            "dictionnaire": DICTIONNAIRE_LATIN,
+            "dictionnaire": dictionnaire_avec_mondes(),
             "declinaisons": TABLES_DECLINAISONS,
             "conjugaisons": TABLES_CONJUGAISONS,
         },

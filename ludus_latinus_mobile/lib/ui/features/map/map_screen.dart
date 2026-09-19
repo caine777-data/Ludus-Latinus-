@@ -28,10 +28,59 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late int _activeFilter; // 0 = Tous, 1 = 5ème, 2 = 4ème, 3 = 3ème
 
+  // Le pion du héros : une seule position, la prochaine leçon à faire.
+  final GlobalKey _pawnKey = GlobalKey();
+  String? _pawnLessonId;
+  bool _pawnJustMoved = false;
+
   @override
   void initState() {
     super.initState();
     _activeFilter = widget.initialClassFilter == 0 ? 0 : widget.initialClassFilter;
+    _pawnLessonId = _nextLessonId();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToPawn(animate: false));
+  }
+
+  /// Première leçon non terminée, dans l'ordre de la Via Appia.
+  String? _nextLessonId() {
+    for (final w in widget.repo.worlds) {
+      for (final l in w.lessons) {
+        if (!widget.repo.isLessonCompleted(l.id)) return l.id;
+      }
+    }
+    return null;
+  }
+
+  void _scrollToPawn({bool animate = true}) {
+    final ctx = _pawnKey.currentContext;
+    if (ctx == null) return;
+    Scrollable.ensureVisible(
+      ctx,
+      alignment: 0.35,
+      duration: animate ? const Duration(milliseconds: 900) : Duration.zero,
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  Future<void> _openLesson(Lesson lesson) async {
+    AudioService().playCardFlip();
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson)),
+    );
+    if (!mounted) return;
+    final next = _nextLessonId();
+    if (next != _pawnLessonId) {
+      // Le héros avance : le pion « tombe » sur la nouvelle borne et la carte le suit.
+      setState(() {
+        _pawnLessonId = next;
+        _pawnJustMoved = true;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Future.delayed(const Duration(milliseconds: 250));
+        if (mounted) _scrollToPawn();
+      });
+    }
   }
 
   List<World> _getFilteredWorlds() {
@@ -179,13 +228,16 @@ class _MapScreenState extends State<MapScreen> {
                         ),
                       ),
                       // Liste défilante des mondes et bornes milliaires
-                      ListView.builder(
+                      // Tout est construit d'avance (113 bornes au plus) pour que la
+                      // carte puisse défiler jusqu'au pion où qu'il soit.
+                      SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        itemCount: worlds.length,
-                        itemBuilder: (context, index) {
-                          final world = worlds[index];
-                          return _buildWorldSection(context, world, index);
-                        },
+                        child: Column(
+                          children: [
+                            for (var index = 0; index < worlds.length; index++)
+                              _buildWorldSection(context, worlds[index], index),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -353,8 +405,8 @@ class _MapScreenState extends State<MapScreen> {
                       ? 50
                       : 0;
 
-          // Détection si c'est la leçon active où se tient le joueur
-          final bool isCurrentActive = isUnlocked && !isCompleted;
+          // Le joueur se tient sur une seule borne : sa prochaine leçon.
+          final bool isCurrentActive = lesson.id == _pawnLessonId;
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
@@ -392,15 +444,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return GestureDetector(
       onTap: isUnlocked
-          ? () {
-              AudioService().playCardFlip();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson),
-                ),
-              );
-            }
+          ? () => _openLesson(lesson)
           : () {
               AudioService().playError();
               ScaffoldMessenger.of(context).showSnackBar(
@@ -415,38 +459,11 @@ class _MapScreenState extends State<MapScreen> {
         children: [
           // Pin du Joueur si c'est la leçon active
           if (isCurrentActive) ...[
-            Container(
-              margin: const EdgeInsets.only(bottom: 4),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: RomanColors.goldLight,
-                      border: Border.all(color: RomanColors.imperialGold, width: 2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x33000000),
-                          offset: Offset(0, 3),
-                          blurRadius: 4,
-                        )
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        avatarImg,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Center(
-                          child: Text('📍', style: TextStyle(fontSize: 16)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            _HeroPawn(
+              key: _pawnKey,
+              avatarImg: avatarImg,
+              arriving: _pawnJustMoved,
+              onArrived: () => _pawnJustMoved = false,
             ),
           ],
 
@@ -672,6 +689,78 @@ class _MapScreenState extends State<MapScreen> {
       }
     }
     return res.isEmpty ? '' : res;
+  }
+}
+
+/// Pion du héros : il sautille doucement sur sa borne, et tombe en rebondissant
+/// quand il vient d'avancer d'une leçon.
+class _HeroPawn extends StatefulWidget {
+  final String avatarImg;
+  final bool arriving;
+  final VoidCallback onArrived;
+
+  const _HeroPawn({super.key, required this.avatarImg, required this.arriving, required this.onArrived});
+
+  @override
+  State<_HeroPawn> createState() => _HeroPawnState();
+}
+
+class _HeroPawnState extends State<_HeroPawn> with TickerProviderStateMixin {
+  late final AnimationController _hop = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100))
+    ..repeat(reverse: true);
+  late final AnimationController _drop = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.arriving) {
+      _drop.forward().then((_) {
+        widget.onArrived();
+        AudioService().playStar();
+      });
+    } else {
+      _drop.value = 1;
+    }
+  }
+
+  @override
+  void dispose() {
+    _hop.dispose();
+    _drop.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_hop, _drop]),
+      builder: (context, child) {
+        final drop = Curves.bounceOut.transform(_drop.value);
+        final hop = Curves.easeInOut.transform(_hop.value) * 5;
+        return Transform.translate(
+          offset: Offset(0, -120 * (1 - drop) - hop),
+          child: Opacity(opacity: _drop.value.clamp(0.0, 1.0), child: child),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 4),
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: RomanColors.goldLight,
+          border: Border.all(color: RomanColors.imperialGold, width: 2),
+          boxShadow: const [BoxShadow(color: Color(0x33000000), offset: Offset(0, 3), blurRadius: 4)],
+        ),
+        child: ClipOval(
+          child: Image.asset(
+            widget.avatarImg,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => const Center(child: Text('📍', style: TextStyle(fontSize: 16))),
+          ),
+        ),
+      ),
+    );
   }
 }
 
