@@ -392,6 +392,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.arene);
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -404,6 +405,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
   @override
   void dispose() {
+    AudioService().leaveMusic(MusicTrack.arene);
     _incidentCountdownTimer?.cancel();
     _gameLoopTimer?.cancel();
     _animController.dispose();

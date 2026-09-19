@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.accueil);
     // Vidéo d'introduction au tout premier lancement seulement.
     if (!widget.repo.profile.introSeen) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -178,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onDestinationSelected: (index) {
           if (_currentTabIndex != index) {
             HapticFeedback.selectionClick();
-            AudioService().playCardFlip();
+            AudioService().playButton();
             setState(() => _currentTabIndex = index);
           }
         },

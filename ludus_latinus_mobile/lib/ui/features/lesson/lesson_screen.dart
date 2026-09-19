@@ -58,6 +58,7 @@ class _LessonScreenState extends State<LessonScreen> {
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.lecon);
     _order = List.generate(widget.lesson.options.length, (i) => i);
     _scrollController.addListener(_updateExerciseVisibility);
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateExerciseVisibility());
@@ -65,6 +66,7 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   void dispose() {
+    AudioService().leaveMusic(MusicTrack.lecon);
     _scrollController.dispose();
     super.dispose();
   }
@@ -116,7 +118,7 @@ class _LessonScreenState extends State<LessonScreen> {
         .toList();
     if (candidates.isEmpty) return;
     HapticFeedback.lightImpact();
-    AudioService().playCardFlip();
+    AudioService().playHint();
     candidates.shuffle();
     setState(() {
       _hintUsed = true;
@@ -147,12 +149,17 @@ class _LessonScreenState extends State<LessonScreen> {
       if (!mounted) return;
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-    } else if (result.firstTime) {
-      HapticFeedback.mediumImpact();
-      AudioService().playSesterces();
     } else {
-      HapticFeedback.lightImpact();
-      AudioService().playCardFlip();
+      // Son de bonne réponse, puis celui de la leçon validée (première fois)
+      // ou de l'étoile (record battu), décalé pour ne pas se chevaucher.
+      AudioService().playCorrect();
+      Future.delayed(const Duration(milliseconds: 700), () {
+        if (result.firstTime) {
+          AudioService().playLessonDone();
+        } else if (result.improved) {
+          AudioService().playStar();
+        }
+      });
     }
     _showResultSheet(result);
   }

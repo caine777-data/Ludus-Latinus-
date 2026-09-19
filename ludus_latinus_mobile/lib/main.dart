@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'data/repositories/game_repository.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
+import 'data/services/audio_service.dart';
 import 'ui/core/themes.dart';
 import 'ui/features/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AudioService().init();
 
   final dataService = DataService();
   final storageService = StorageService();

@@ -342,6 +342,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.arene);
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
@@ -359,6 +360,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    AudioService().leaveMusic(MusicTrack.arene);
     _pulseController.dispose();
     super.dispose();
   }

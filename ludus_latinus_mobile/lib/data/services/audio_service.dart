@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ffi';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 
 // Signatures C pour winmm.dll sous Windows
 typedef _PlaySoundC = Int32 Function(Pointer<Utf16> pszSound, IntPtr hmod, Uint32 fdwSound);
@@ -87,7 +91,18 @@ class _WindowsAudioEngine {
 /// Service audio antique gérant les bruitages immersifs de Rome antique.
 /// Fonctionne avec une fidélité acoustique réelle sur Android (SoundPool)
 /// et Windows (winmm.dll), avec repli haptique et sonore universel.
-class AudioService extends ChangeNotifier {
+///
+/// Musiques d'ambiance disponibles.
+enum MusicTrack {
+  accueil('assets/audio/musique_accueil.ogg'),
+  lecon('assets/audio/musique_lecon.ogg'),
+  arene('assets/audio/musique_arene.ogg');
+
+  final String asset;
+  const MusicTrack(this.asset);
+}
+
+class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   static final AudioService _instance = AudioService._internal();
   factory AudioService() => _instance;
   AudioService._internal() {
@@ -95,14 +110,19 @@ class AudioService extends ChangeNotifier {
   }
 
   static const MethodChannel _androidChannel = MethodChannel('com.luduslatinus/audio');
+  static const String _settingsFile = 'reglages_audio.json';
 
   bool _isMuted = false;
   double _volume = 0.85;
   bool _hapticsEnabled = true;
+  bool _musicEnabled = true;
+  double _musicVolume = 0.5;
 
   bool get isMuted => _isMuted;
   double get volume => _volume;
   bool get hapticsEnabled => _hapticsEnabled;
+  bool get musicEnabled => _musicEnabled;
+  double get musicVolume => _musicVolume;
 
   final Map<String, String> _resolvedWindowsPaths = {};
 
@@ -113,11 +133,52 @@ class AudioService extends ChangeNotifier {
     }
   }
 
+  // --- Réglages mémorisés d'une session à l'autre ---
+
+  /// À appeler une fois au démarrage : relit les réglages et suit l'arrière-plan de l'appli.
+  Future<void> init() async {
+    WidgetsBinding.instance.addObserver(this);
+    try {
+      final file = File('${(await getApplicationDocumentsDirectory()).path}/$_settingsFile');
+      if (await file.exists()) {
+        final m = json.decode(await file.readAsString()) as Map<String, dynamic>;
+        _isMuted = m['muet'] as bool? ?? false;
+        _volume = (m['volume'] as num?)?.toDouble() ?? _volume;
+        _hapticsEnabled = m['vibrations'] as bool? ?? true;
+        _musicEnabled = m['musique'] as bool? ?? true;
+        _musicVolume = (m['volume_musique'] as num?)?.toDouble() ?? _musicVolume;
+      }
+    } catch (e) {
+      debugPrint('[AudioService] Réglages audio par défaut ($e)');
+    }
+    if (!kIsWeb && Platform.isWindows) {
+      _WindowsAudioEngine.setVolume(_isMuted ? 0.0 : _volume);
+    }
+    notifyListeners();
+  }
+
+  Future<void> _saveSettings() async {
+    try {
+      final file = File('${(await getApplicationDocumentsDirectory()).path}/$_settingsFile');
+      await file.writeAsString(json.encode({
+        'muet': _isMuted,
+        'volume': _volume,
+        'vibrations': _hapticsEnabled,
+        'musique': _musicEnabled,
+        'volume_musique': _musicVolume,
+      }));
+    } catch (e) {
+      debugPrint('[AudioService] Sauvegarde des réglages impossible ($e)');
+    }
+  }
+
   void toggleMute() {
     _isMuted = !_isMuted;
     if (!kIsWeb && Platform.isWindows) {
       _WindowsAudioEngine.setVolume(_isMuted ? 0.0 : _volume);
     }
+    _applyMusic();
+    _saveSettings();
     notifyListeners();
   }
 
@@ -126,12 +187,106 @@ class AudioService extends ChangeNotifier {
     if (!kIsWeb && Platform.isWindows) {
       _WindowsAudioEngine.setVolume(_isMuted ? 0.0 : _volume);
     }
+    _saveSettings();
     notifyListeners();
   }
 
   void setHapticsEnabled(bool enabled) {
     _hapticsEnabled = enabled;
+    _saveSettings();
     notifyListeners();
+  }
+
+  // --- Musique d'ambiance ---
+  //
+  // Chaque écran « entre » dans sa musique et en « sort » à sa fermeture :
+  // une pile permet de retrouver la musique de l'écran précédent. Une entrée
+  // nulle impose le silence (cinématiques, qui ont leur propre bande-son).
+
+  final AudioPlayer _musicPlayer = AudioPlayer(playerId: 'musique');
+  final List<MusicTrack?> _musicStack = [];
+  MusicTrack? _currentTrack;
+  bool _appInBackground = false;
+  bool _musicContextSet = false;
+
+  void setMusicEnabled(bool enabled) {
+    _musicEnabled = enabled;
+    _applyMusic();
+    _saveSettings();
+    notifyListeners();
+  }
+
+  void setMusicVolume(double vol) {
+    _musicVolume = vol.clamp(0.0, 1.0);
+    _musicPlayer.setVolume(_musicVolume * _volume);
+    _saveSettings();
+    notifyListeners();
+  }
+
+  /// Un écran demande sa musique (null = silence). À appeler dans initState.
+  void enterMusic(MusicTrack? track) {
+    _musicStack.add(track);
+    _applyMusic();
+  }
+
+  /// L'écran se ferme : la musique précédente reprend. À appeler dans dispose.
+  void leaveMusic(MusicTrack? track) {
+    final i = _musicStack.lastIndexOf(track);
+    if (i >= 0) _musicStack.removeAt(i);
+    _applyMusic();
+  }
+
+  // Les demandes sont traitées l'une après l'autre : sinon une pause peut
+  // arriver avant la fin d'un démarrage et la musique reste bloquée.
+  Future<void> _musicQueue = Future.value();
+
+  Future<void> _applyMusic() {
+    _musicQueue = _musicQueue.then((_) => _applyMusicNow());
+    return _musicQueue;
+  }
+
+  Future<void> _applyMusicNow() async {
+    final wanted = _musicStack.isEmpty ? null : _musicStack.last;
+    final audible = wanted != null && _musicEnabled && !_isMuted && !_appInBackground;
+    try {
+      if (!audible) {
+        await _musicPlayer.pause();
+        return;
+      }
+      if (!_musicContextSet) {
+        // L'appli gère elle-même quand la musique se tait (vidéos, arrière-plan) :
+        // sans cela, la vidéo lui « vole » le focus audio et elle ne reprend plus.
+        await _musicPlayer.setAudioContext(AudioContext(
+          android: const AudioContextAndroid(
+            isSpeakerphoneOn: false,
+            audioMode: AndroidAudioMode.normal,
+            stayAwake: false,
+            contentType: AndroidContentType.music,
+            usageType: AndroidUsageType.media,
+            audioFocus: AndroidAudioFocus.none,
+          ),
+          iOS: AudioContextIOS(category: AVAudioSessionCategory.ambient),
+        ));
+        await _musicPlayer.setReleaseMode(ReleaseMode.loop);
+        _musicContextSet = true;
+      }
+      await _musicPlayer.setVolume(_musicVolume * _volume);
+      if (wanted != _currentTrack || _musicPlayer.state == PlayerState.stopped || _musicPlayer.state == PlayerState.completed) {
+        _currentTrack = wanted;
+        await _musicPlayer.play(AssetSource(wanted.asset.replaceFirst('assets/', '')));
+      } else if (_musicPlayer.state != PlayerState.playing) {
+        await _musicPlayer.resume();
+      }
+    } catch (e) {
+      debugPrint('[AudioService] Musique indisponible ($e)');
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pas de musique quand l'appli est en arrière-plan ou l'écran éteint.
+    _appInBackground = state != AppLifecycleState.resumed;
+    _applyMusic();
   }
 
   /// Résout le chemin physique d'un asset audio sur Windows
@@ -268,11 +423,42 @@ class AudioService extends ChangeNotifier {
     await playAsset('assets/audio/card_flip.wav');
   }
 
-  /// Échec ou erreur
+  /// Erreur : son boisé discret (plus le bip d'alerte du téléphone).
   Future<void> playError() async {
     if (_isMuted) return;
-    if (_hapticsEnabled) HapticFeedback.vibrate();
-    SystemSound.play(SystemSoundType.alert);
+    if (_hapticsEnabled) HapticFeedback.lightImpact();
+    await playAsset('assets/audio/erreur.wav');
+  }
+
+  /// Bonne réponse dans une leçon.
+  Future<void> playCorrect() async {
+    if (_isMuted) return;
+    if (_hapticsEnabled) HapticFeedback.mediumImpact();
+    await playAsset('assets/audio/bonne_reponse.wav');
+  }
+
+  /// Indice demandé.
+  Future<void> playHint() async {
+    if (_isMuted) return;
+    await playAsset('assets/audio/indice.wav', volumeMultiplier: 0.8);
+  }
+
+  /// Leçon validée pour la première fois.
+  Future<void> playLessonDone() async {
+    if (_isMuted) return;
+    await playAsset('assets/audio/lecon_validee.wav');
+  }
+
+  /// Étoile obtenue.
+  Future<void> playStar() async {
+    if (_isMuted) return;
+    await playAsset('assets/audio/etoile.wav', volumeMultiplier: 0.8);
+  }
+
+  /// Toucher d'un onglet ou d'un bouton de navigation.
+  Future<void> playButton() async {
+    if (_isMuted) return;
+    await playAsset('assets/audio/bouton.wav', volumeMultiplier: 0.5);
   }
 
   /// Arrêt de tous les flux audio

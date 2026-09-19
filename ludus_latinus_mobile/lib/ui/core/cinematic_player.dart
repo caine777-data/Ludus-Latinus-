@@ -74,7 +74,12 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset(widget.config.assetPath);
+    // La vidéo a sa propre bande-son : la musique d'ambiance se tait.
+    AudioService().enterMusic(null);
+    _controller = VideoPlayerController.asset(
+      widget.config.assetPath,
+      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
+    );
     _controller.addListener(_onTick);
     _controller.initialize().then((_) {
       if (!mounted) return;
@@ -102,6 +107,7 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
     _safetyTimer?.cancel();
     _controller.removeListener(_onTick);
     _controller.dispose();
+    AudioService().leaveMusic(null);
     super.dispose();
   }
 
