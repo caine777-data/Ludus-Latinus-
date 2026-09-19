@@ -88,10 +88,6 @@ class _WindowsAudioEngine {
   }
 }
 
-/// Service audio antique gérant les bruitages immersifs de Rome antique.
-/// Fonctionne avec une fidélité acoustique réelle sur Android (SoundPool)
-/// et Windows (winmm.dll), avec repli haptique et sonore universel.
-///
 /// Musiques d'ambiance disponibles.
 enum MusicTrack {
   accueil('assets/audio/musique_accueil.ogg'),
@@ -102,6 +98,9 @@ enum MusicTrack {
   const MusicTrack(this.asset);
 }
 
+/// Service audio antique gérant les bruitages immersifs de Rome antique.
+/// Fonctionne avec une fidélité acoustique réelle sur Android (SoundPool)
+/// et Windows (winmm.dll), avec repli haptique et sonore universel.
 class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   static final AudioService _instance = AudioService._internal();
   factory AudioService() => _instance;
