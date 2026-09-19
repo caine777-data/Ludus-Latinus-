@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/video_player.dart';
 import '../../data/services/audio_service.dart';
 import 'themes.dart';
 
@@ -11,69 +12,43 @@ enum CinematicType {
   triumph,
 }
 
-/// Modèle de configuration pour une courte vidéo cinématique.
+/// Configuration d'une courte vidéo cinématique (vidéos verticales 9:16 avec bande-son).
 class CinematicConfig {
   final String assetPath;
   final String title;
   final String subtitle;
-  final Duration duration;
-  final VoidCallback? onAudioTrigger;
 
   const CinematicConfig({
     required this.assetPath,
     required this.title,
     required this.subtitle,
-    required this.duration,
-    this.onAudioTrigger,
   });
 
   static CinematicConfig forType(CinematicType type, {String? extraInfo}) {
     switch (type) {
       case CinematicType.intro:
-        return CinematicConfig(
-          assetPath: 'assets/cinematics/intro_eagle_rome.webp',
-          title: 'S • P • Q • R',
-          subtitle: 'LUDUS LATINUS • L\'Épopée de la Langue Latine',
-          duration: const Duration(milliseconds: 3800),
-          onAudioTrigger: () {
-            AudioService().playTriumph();
-          },
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/intro.mp4',
+          title: 'LUDUS LATINUS',
+          subtitle: '« Per aspera ad astra » : par des chemins ardus, jusqu\'aux étoiles',
         );
       case CinematicType.bossEntrance:
         return CinematicConfig(
-          assetPath: 'assets/cinematics/boss_entrance.webp',
-          title: '⚔️ COLOSSEUM DUELLUM',
-          subtitle: extraInfo != null
-              ? 'DÉFI DU CHAMPION : $extraInfo'
-              : '« AVE CAESAR, MORITURI TE SALUTANT ! »',
-          duration: const Duration(milliseconds: 2500),
-          onAudioTrigger: () {
-            AudioService().playSwordClash();
-            Future.delayed(const Duration(milliseconds: 700), () {
-              AudioService().playCrowdCheer();
-            });
-          },
+          assetPath: 'assets/cinematics/boss_entrance.mp4',
+          title: 'COLOSSEUM DUELLUM',
+          subtitle: extraInfo != null ? 'Ton adversaire : $extraInfo' : '« Ave Caesar, morituri te salutant ! »',
         );
       case CinematicType.triumph:
         return CinematicConfig(
-          assetPath: 'assets/cinematics/triumph_arc.webp',
-          title: '🏛️ TRIUMPHUS IMPERIALIS',
-          subtitle: extraInfo != null
-              ? 'NOUVEAU RANG : $extraInfo'
-              : '« SENATVS POPVLVSQVE ROMANVS » • HONOS ET GLORIA',
-          duration: const Duration(milliseconds: 3500),
-          onAudioTrigger: () {
-            AudioService().playTriumph();
-            Future.delayed(const Duration(milliseconds: 600), () {
-              AudioService().playCrowdCheer();
-            });
-          },
+          assetPath: 'assets/cinematics/triumph.mp4',
+          title: 'TRIUMPHUS',
+          subtitle: extraInfo ?? 'Rome célèbre ta victoire !',
         );
     }
   }
 }
 
-/// Widget plein écran immersif de lecture de courte vidéo cinématique.
+/// Lecteur plein écran d'une courte vidéo cinématique, avec bouton « Passer ».
 class RomanCinematicPlayer extends StatefulWidget {
   final CinematicConfig config;
   final VoidCallback? onCompleted;
@@ -90,46 +65,51 @@ class RomanCinematicPlayer extends StatefulWidget {
   State<RomanCinematicPlayer> createState() => _RomanCinematicPlayerState();
 }
 
-class _RomanCinematicPlayerState extends State<RomanCinematicPlayer>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animController;
-  late Animation<double> _scaleAnimation;
-  Timer? _completeTimer;
+class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
+  late final VideoPlayerController _controller;
+  Timer? _safetyTimer;
+  bool _ready = false;
   bool _isExiting = false;
 
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: widget.config.duration,
-    );
-
-    // Effet Ken Burns : zoom lent et majestueux
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
-      CurvedAnimation(parent: _animController, curve: Curves.easeOutCubic),
-    );
-
-    _animController.forward();
-    widget.config.onAudioTrigger?.call();
-
-    // Minuteur automatique de fin de cinématique
-    _completeTimer = Timer(widget.config.duration, () {
+    _controller = VideoPlayerController.asset(widget.config.assetPath);
+    _controller.addListener(_onTick);
+    _controller.initialize().then((_) {
+      if (!mounted) return;
+      // Respecte le réglage « muet » de l'appli.
+      _controller.setVolume(AudioService().isMuted ? 0 : AudioService().volume);
+      _controller.play();
+      setState(() => _ready = true);
+    }).catchError((_) {
+      // Vidéo illisible sur cet appareil : on ne bloque jamais l'élève.
       _handleExit();
     });
+    // Filet de sécurité si la vidéo ne signale jamais sa fin.
+    _safetyTimer = Timer(const Duration(seconds: 15), _handleExit);
+  }
+
+  void _onTick() {
+    final v = _controller.value;
+    if (v.isInitialized && !v.isPlaying && v.duration > Duration.zero && v.position >= v.duration) {
+      _handleExit();
+    }
   }
 
   @override
   void dispose() {
-    _completeTimer?.cancel();
-    _animController.dispose();
+    _safetyTimer?.cancel();
+    _controller.removeListener(_onTick);
+    _controller.dispose();
     super.dispose();
   }
 
   void _handleExit() {
     if (_isExiting) return;
     _isExiting = true;
-    _completeTimer?.cancel();
+    _safetyTimer?.cancel();
+    _controller.pause();
     widget.onCompleted?.call();
   }
 
@@ -140,107 +120,51 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // 1. Vidéo Cinématique Animée avec Effet Ken Burns
-          Center(
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: AnimatedBuilder(
-                animation: _scaleAnimation,
-                builder: (context, child) {
-                  return Transform.scale(
-                    scale: _scaleAnimation.value,
-                    child: child,
-                  );
-                },
-                child: Image.asset(
-                  widget.config.assetPath,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => Container(
-                    color: const Color(0xFF1E1018),
-                    child: Center(
-                      child: Text(
-                        widget.config.title,
-                        style: const TextStyle(
-                          color: RomanColors.imperialGold,
-                          fontSize: 22,
-                          fontFamily: 'serif',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+          // Vidéo verticale en plein écran (recadrée sur les écrans plus allongés).
+          AnimatedOpacity(
+            opacity: _ready ? 1 : 0,
+            duration: const Duration(milliseconds: 350),
+            child: _ready
+                ? FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: _controller.value.size.width,
+                      height: _controller.value.size.height,
+                      child: VideoPlayer(_controller),
                     ),
-                  ),
-                ),
-              ),
-            ),
+                  )
+                : const SizedBox.shrink(),
           ),
 
-          // 2. Bandes Noires Cinématiques Anamorphiques 21:9 (Letterbox)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 38,
-            child: Container(color: Colors.black),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 38,
-            child: Container(color: Colors.black),
-          ),
-
-          // 3. Bouton "Passer >>" (Touch Target >= 48x48)
+          // Bouton « Passer » (zone tactile ≥ 48 dp).
           if (widget.showSkipButton)
-            Positioned(
-              top: 48,
-              right: 20,
-              child: SafeArea(
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(24),
-                    onTap: () {
-                      HapticFeedback.lightImpact();
-                      _handleExit();
-                    },
-                    child: Container(
-                      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.65),
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(
-                          color: RomanColors.imperialGold.withOpacity(0.8),
-                          width: 1.2,
-                        ),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x66000000),
-                            blurRadius: 8,
-                            offset: Offset(0, 3),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Text(
-                            'PASSER',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.2,
+            SafeArea(
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Material(
+                    color: Colors.black.withOpacity(0.55),
+                    shape: StadiumBorder(side: BorderSide(color: RomanColors.imperialGold.withOpacity(0.8))),
+                    child: InkWell(
+                      customBorder: const StadiumBorder(),
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        _handleExit();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'PASSER',
+                              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 1.2),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            size: 12,
-                            color: RomanColors.imperialGold,
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Icon(Icons.arrow_forward_ios, size: 13, color: RomanColors.imperialGold),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -248,30 +172,22 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer>
               ),
             ),
 
-          // 4. Sous-titre Épique Déroulant en Bas
+          // Titre sur un dégradé sombre en bas, lisible sur toutes les images.
           Positioned(
-            bottom: 50,
-            left: 20,
-            right: 20,
-            child: SafeArea(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      const Color(0xFF330E06).withOpacity(0.85),
-                      Colors.black.withOpacity(0.8),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: RomanColors.imperialGold.withOpacity(0.7),
-                    width: 1.2,
-                  ),
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(24, 60, 24, 36),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x00000000), Color(0xCC000000)],
                 ),
+              ),
+              child: SafeArea(
+                top: false,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -279,23 +195,18 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer>
                       widget.config.title,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontFamily: 'serif',
-                        fontSize: 17,
+                        fontFamily: RomanFonts.imperial,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 2,
                         color: RomanColors.imperialGold,
                       ),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 6),
                     Text(
                       widget.config.subtitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 11.5,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.white.withOpacity(0.9),
-                        height: 1.3,
-                      ),
+                      style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: Colors.white, height: 1.35),
                     ),
                   ],
                 ),
@@ -308,85 +219,31 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer>
   }
 }
 
-/// Classe utilitaire pour afficher instantanément une cinématique par-dessus l'écran.
+/// Affiche une cinématique par-dessus l'écran courant.
 class RomanCinematicOverlay {
-  /// Affiche la séquence d'introduction au lancement.
-  static Future<void> showIntro(
-    BuildContext context, {
-    VoidCallback? onFinish,
-  }) async {
-    final config = CinematicConfig.forType(CinematicType.intro);
-    await Navigator.of(context).push(
+  static Future<void> _show(BuildContext context, CinematicConfig config) {
+    return Navigator.of(context).push(
       PageRouteBuilder(
         opaque: true,
-        transitionDuration: const Duration(milliseconds: 400),
+        transitionDuration: const Duration(milliseconds: 350),
         pageBuilder: (ctx, _, __) => RomanCinematicPlayer(
           config: config,
-          onCompleted: () {
-            Navigator.of(ctx).pop();
-            onFinish?.call();
-          },
+          onCompleted: () => Navigator.of(ctx).pop(),
         ),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
+        transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
       ),
     );
   }
 
-  /// Affiche l'entrée martiale d'un Boss au Colisée.
-  static Future<void> showBossEntrance(
-    BuildContext context, {
-    String? bossName,
-    VoidCallback? onStartCombat,
-  }) async {
-    final config = CinematicConfig.forType(
-      CinematicType.bossEntrance,
-      extraInfo: bossName,
-    );
-    await Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: true,
-        transitionDuration: const Duration(milliseconds: 300),
-        pageBuilder: (ctx, _, __) => RomanCinematicPlayer(
-          config: config,
-          onCompleted: () {
-            Navigator.of(ctx).pop();
-            onStartCombat?.call();
-          },
-        ),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-  }
+  /// Séquence d'introduction (premier lancement).
+  static Future<void> showIntro(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.intro));
 
-  /// Affiche la cinématique de Triomphe lors d'une promotion au Cursus Honorum.
-  static Future<void> showTriumph(
-    BuildContext context, {
-    String? rankTitle,
-    VoidCallback? onFinish,
-  }) async {
-    final config = CinematicConfig.forType(
-      CinematicType.triumph,
-      extraInfo: rankTitle,
-    );
-    await Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: true,
-        transitionDuration: const Duration(milliseconds: 400),
-        pageBuilder: (ctx, _, __) => RomanCinematicPlayer(
-          config: config,
-          onCompleted: () {
-            Navigator.of(ctx).pop();
-            onFinish?.call();
-          },
-        ),
-        transitionsBuilder: (_, animation, __, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-  }
+  /// Entrée d'un champion au Colisée.
+  static Future<void> showBossEntrance(BuildContext context, {String? bossName}) =>
+      _show(context, CinematicConfig.forType(CinematicType.bossEntrance, extraInfo: bossName));
+
+  /// Triomphe : fin d'un monde de la Via Appia.
+  static Future<void> showTriumph(BuildContext context, {String? subtitle}) =>
+      _show(context, CinematicConfig.forType(CinematicType.triumph, extraInfo: subtitle));
 }

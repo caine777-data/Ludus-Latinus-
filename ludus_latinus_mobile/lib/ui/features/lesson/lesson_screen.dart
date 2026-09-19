@@ -7,6 +7,7 @@ import '../../core/lottie_effects.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../core/game_juice.dart';
 import '../../core/markdown_lite.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -133,12 +134,17 @@ class _LessonScreenState extends State<LessonScreen> {
     });
   }
 
-  void _handleSuccess() {
+  Future<void> _handleSuccess() async {
     final result = widget.repo.completeLesson(widget.lesson.id, _stars);
     if (result.worldCompleted) {
-      // Seule la fin d'un monde mérite le grand triomphe.
+      // Seule la fin d'un monde mérite le grand triomphe : la vidéo (avec sa
+      // propre bande-son), puis les lauriers sur le bilan.
       HapticFeedback.heavyImpact();
-      AudioService().playTriumph();
+      await RomanCinematicOverlay.showTriumph(
+        context,
+        subtitle: result.worldTitle != null ? 'Monde terminé : ${result.worldTitle}' : 'Monde terminé !',
+      );
+      if (!mounted) return;
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else if (result.firstTime) {

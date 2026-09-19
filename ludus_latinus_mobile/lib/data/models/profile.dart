@@ -102,6 +102,8 @@ class UserProfile {
   int streakDays;
   /// Dernier jour (AAAA-MM-JJ) où l'élève a validé une leçon ou révisé.
   String? lastActivityDate;
+  /// Vrai une fois la vidéo d'introduction vue (elle ne se joue qu'au premier lancement).
+  bool introSeen;
   List<String> completedLessons;
   /// Meilleur nombre d'étoiles (1 à 3) obtenu par leçon.
   Map<String, int> lessonStars;
@@ -126,6 +128,7 @@ class UserProfile {
     this.sesterces = 50,
     this.streakDays = 0,
     this.lastActivityDate,
+    this.introSeen = false,
     List<String>? completedLessons,
     Map<String, int>? lessonStars,
     List<String>? restoredMonuments,
@@ -349,6 +352,8 @@ class UserProfile {
       sesterces: json['sesterces'] as int? ?? 50,
       streakDays: json['streak'] as int? ?? 0,
       lastActivityDate: json['last_activity_date'] as String?,
+      // Un profil qui a déjà progressé ne revoit pas l'introduction.
+      introSeen: json['intro_seen'] as bool? ?? rawCompleted.isNotEmpty,
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
       // Les leçons validées avant l'arrivée des étoiles gardent 3 étoiles.
       lessonStars: {
@@ -378,6 +383,7 @@ class UserProfile {
       'sesterces': sesterces,
       'streak': streakDays,
       'last_activity_date': lastActivityDate,
+      'intro_seen': introSeen,
       'completed': completedLessons,
       'lesson_stars': lessonStars,
       'forum_monuments': restoredMonuments,

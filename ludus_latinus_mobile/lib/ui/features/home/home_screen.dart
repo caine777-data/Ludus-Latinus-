@@ -5,6 +5,7 @@ import '../../core/widgets.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/game_juice.dart';
 import '../../core/markdown_lite.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -39,6 +40,19 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTabIndex = 0; // 0 = Cursus, 1 = Bibliotheca, 2 = Ludi
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
   final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
+
+  @override
+  void initState() {
+    super.initState();
+    // Vidéo d'introduction au tout premier lancement seulement.
+    if (!widget.repo.profile.introSeen) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        widget.repo.markIntroSeen();
+        await RomanCinematicOverlay.showIntro(context);
+      });
+    }
+  }
 
   /// Étoiles obtenues pour une leçon, sous forme ★★☆.
   String _stars(String lessonId) {

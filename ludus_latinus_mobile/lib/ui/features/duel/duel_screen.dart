@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/game_juice.dart';
 import '../../core/widgets.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -347,6 +348,13 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     )..repeat(reverse: true);
 
     _initBoss();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showBossEntrance();
+    });
+  }
+
+  void _showBossEntrance() {
+    RomanCinematicOverlay.showBossEntrance(context, bossName: _bosses[_currentBossIndex]['nom'] as String);
   }
 
   @override
@@ -1381,6 +1389,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       _currentBossIndex++;
                       _initBoss();
                     });
+                    _showBossEntrance();
                   },
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text('Boss Suivant'),

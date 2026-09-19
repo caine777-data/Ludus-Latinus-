@@ -162,6 +162,12 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  void markIntroSeen() {
+    if (profile.introSeen) return;
+    profile.introSeen = true;
+    storageService.saveProfile(profile);
+  }
+
   int get taverneRewardsLeftToday => profile.taverneRewardsLeftToday;
 
   /// Réserve un lancer récompensé de la Taverne (3 par jour). Renvoie false si épuisé.
