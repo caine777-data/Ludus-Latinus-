@@ -9,6 +9,7 @@ import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
+import '../../core/avatar_assets.dart';
 
 /// La Carte d'Aventure de la Via Appia inspirée de l'esthétique de Monument Valley.
 class MapScreen extends StatefulWidget {
@@ -438,9 +439,7 @@ class _MapScreenState extends State<MapScreen> {
     required bool isCurrentActive,
   }) {
     final profile = widget.repo.profile;
-    final avatarImg = profile.genre == 'fille'
-        ? 'assets/images/avatar_fille_medaillon_48.png'
-        : 'assets/images/avatar_garcon_medaillon_48.png';
+    final avatarImg = AvatarAssets.medaillon(profile, taille: 48);
 
     return GestureDetector(
       onTap: isUnlocked

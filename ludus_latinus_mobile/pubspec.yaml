@@ -30,6 +30,7 @@ flutter:
     - assets/images/lupulus/
     - assets/images/circus/
     - assets/images/boutique/
+    - assets/images/avatars/
     - assets/audio/
     - assets/animations/
     - assets/images/animated/

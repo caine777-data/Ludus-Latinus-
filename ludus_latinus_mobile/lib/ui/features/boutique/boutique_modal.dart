@@ -7,6 +7,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
+import '../../core/avatar_assets.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
 /// Permet au joueur de dépenser ses sesterces pour acheter et équiper des goodies.
@@ -123,9 +124,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       animation: widget.repo,
       builder: (context, _) {
         final profile = widget.repo.profile;
-        final avatarImg = profile.genre == 'fille'
-            ? 'assets/images/avatar_fille_medaillon_140.png'
-            : 'assets/images/avatar_garcon_medaillon_140.png';
+        final avatarImg = AvatarAssets.medaillon(profile);
 
         final itemsFiltered = kCatalogueBoutique
             .where((it) => it.categorie == _activeCategory)

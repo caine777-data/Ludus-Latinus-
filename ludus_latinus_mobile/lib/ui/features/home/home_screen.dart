@@ -25,6 +25,7 @@ import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
+import '../../core/avatar_assets.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -75,9 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final profile = widget.repo.profile;
-    final avatarImg = profile.genre == 'fille'
-        ? 'assets/images/avatar_fille_medaillon_140.png'
-        : 'assets/images/avatar_garcon_medaillon_140.png';
+    final avatarImg = AvatarAssets.medaillon(profile);
 
     return Scaffold(
       appBar: AppBar(

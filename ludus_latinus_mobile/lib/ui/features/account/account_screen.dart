@@ -7,6 +7,7 @@ import '../../core/roman_diploma_dialog.dart';
 import '../boutique/boutique_modal.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import '../../core/avatar_assets.dart';
 
 /// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l'élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
@@ -86,9 +87,7 @@ class _AccountScreenState extends State<AccountScreen> {
       animation: widget.repo,
       builder: (context, _) {
         final profile = widget.repo.profile;
-        final avatarImg = profile.genre == 'fille'
-            ? 'assets/images/avatar_fille_medaillon_140.png'
-            : 'assets/images/avatar_garcon_medaillon_140.png';
+        final avatarImg = AvatarAssets.medaillon(profile);
 
         return Scaffold(
           appBar: AppBar(

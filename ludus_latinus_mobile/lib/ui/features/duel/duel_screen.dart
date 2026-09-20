@@ -9,6 +9,7 @@ import '../../core/widgets.dart';
 import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import '../../core/avatar_assets.dart';
 
 enum CombatStance {
   gravis(
@@ -603,9 +604,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
   Widget _buildArenaView(Map<String, dynamic> boss) {
     final isGirl = widget.repo.profile.genre == 'fille';
-    final heroAvatar = isGirl
-        ? 'assets/images/avatar_fille_medaillon_140.png'
-        : 'assets/images/avatar_garcon_medaillon_140.png';
+    final heroAvatar = AvatarAssets.medaillon(widget.repo.profile);
     final heroName = widget.repo.profile.nomHeros.isNotEmpty
         ? widget.repo.profile.nomHeros
         : (isGirl ? 'Julia' : 'Marcus');
