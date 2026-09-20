@@ -489,7 +489,8 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
             child: ClipOval(
               child: Image.asset(
                 'assets/images/boutique/${item.id}.png',
-                fit: BoxFit.cover,
+                // « contain » : l'objet détouré reste entier dans le médaillon.
+                fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) => Center(
                   child: Text(item.icone, style: const TextStyle(fontSize: 28)),
                 ),
