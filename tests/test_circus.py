@@ -10,6 +10,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.circus import QUESTIONS_CIRCUS, CircusMaximusWindow
+from tests.tk_base import detruire_racine
 
 
 class MockCircusApp:
@@ -48,11 +49,8 @@ class TestCircusMaximus(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_questions_circus_valides(self):
         """Vérifie la cohérence du pool de questions du Circus Maximus."""

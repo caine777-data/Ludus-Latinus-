@@ -10,6 +10,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.duel import QUESTIONS_DUEL, DuelWindow
+from tests.tk_base import detruire_racine
 
 
 class DummyApp:
@@ -42,11 +43,8 @@ class TestDuel(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_questions_structure_et_integrite(self):
         self.assertTrue(len(QUESTIONS_DUEL) >= 15, "Au moins 15 questions doivent être définies")

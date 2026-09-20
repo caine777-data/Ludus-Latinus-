@@ -17,6 +17,7 @@ from app.mascotte import (
     REPLIQUES_CLIC,
     MascotteWidget,
 )
+from tests.tk_base import detruire_racine
 
 
 class TestMascotteLupulus(unittest.TestCase):
@@ -34,11 +35,8 @@ class TestMascotteLupulus(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_dossier_et_fichiers_assets_lupulus(self):
         self.assertTrue(ASSETS_LUPULUS.exists(), f"Le dossier {ASSETS_LUPULUS} doit exister")

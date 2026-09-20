@@ -276,7 +276,7 @@ class PythonLearnApp:
         self._largeur_barre = 0
         self._icones_toolbar = {}     # Références d'icônes romaines 3D
 
-        icones_map = get_icones_toolbar()
+        icones_map = get_icones_toolbar(self.root)
 
         # Pas de largeur fixe : le nom du thème suffit, et la barre est
         # déjà dense.
@@ -554,7 +554,7 @@ class PythonLearnApp:
         self.hdr_xp_lbl.pack(side=tk.LEFT, padx=(0, 6))
 
         # Sesterces avec icône romaine 3D (cliquable -> ouvre la Penderie / Boutique)
-        self._img_sesterce_hdr = charger_icone("icone_sesterce", 20)
+        self._img_sesterce_hdr = charger_icone("icone_sesterce", 20, master=self.root)
         self.hdr_sesterces_lbl = tk.Label(left, text=" 50 Sesterces", font=(self.body.cget("family"), 9, "bold"),
                                           image=self._img_sesterce_hdr, compound=tk.LEFT if self._img_sesterce_hdr else None,
                                           bg=C["editor"], fg="#d4af37",
@@ -563,7 +563,7 @@ class PythonLearnApp:
         self.hdr_sesterces_lbl.bind("<Button-1>", lambda _e: self._ouvrir_penderie())
 
         # Badges / Lauriers avec trophée romain 3D (cliquable -> ouvre les Succès)
-        self._img_laurier_hdr = charger_icone("icone_laurier", 20)
+        self._img_laurier_hdr = charger_icone("icone_laurier", 20, master=self.root)
         self.hdr_badges_lbl = tk.Label(left, text=" 0/7", font=(self.body.cget("family"), 9),
                                        image=self._img_laurier_hdr, compound=tk.LEFT if self._img_laurier_hdr else None,
                                        bg=C["editor"], fg=C["code"],
@@ -575,7 +575,7 @@ class PythonLearnApp:
         right.pack(side=tk.RIGHT)
 
         # Défi du jour avec icône arène romaine 3D
-        self._img_arene_hdr = charger_icone("icone_arene", 20)
+        self._img_arene_hdr = charger_icone("icone_arene", 20, master=self.root)
         self.hdr_defi_btn = tk.Button(right, text=f" {self.tr('hdr_defi')}", font=(self.body.cget("family"), 9, "bold"),
                                       image=self._img_arene_hdr, compound=tk.LEFT if self._img_arene_hdr else None,
                                       bg=C["accent"], fg=C["sel_fg"], relief="flat",
@@ -583,7 +583,7 @@ class PythonLearnApp:
         self.hdr_defi_btn.pack(side=tk.RIGHT, padx=(6, 0))
 
         # Avatar avec icône médaillon centurion 3D
-        self._img_avatar_hdr = charger_icone("icone_profils", 20)
+        self._img_avatar_hdr = charger_icone("icone_profils", 20, master=self.root)
         self.hdr_avatar_btn = tk.Button(right, text=" Mon Avatar", font=(self.body.cget("family"), 9, "bold"),
                                         image=self._img_avatar_hdr, compound=tk.LEFT if self._img_avatar_hdr else None,
                                         bg=C["panel"], fg=C["fg"], relief="flat",
@@ -591,7 +591,7 @@ class PythonLearnApp:
         self.hdr_avatar_btn.pack(side=tk.RIGHT, padx=4)
 
         # Musée avec amphore / louve romaine 3D
-        self._img_musee_hdr = charger_icone("icone_musee", 20)
+        self._img_musee_hdr = charger_icone("icone_musee", 20, master=self.root)
         self.hdr_musee_btn = tk.Button(right, text=" Musée", font=(self.body.cget("family"), 9, "bold"),
                                        image=self._img_musee_hdr, compound=tk.LEFT if self._img_musee_hdr else None,
                                        bg=C["panel"], fg=C["fg"], relief="flat",
@@ -599,7 +599,7 @@ class PythonLearnApp:
         self.hdr_musee_btn.pack(side=tk.RIGHT, padx=4)
 
         # Son avec cornu / tuba romain 3D
-        self._img_tuba_hdr = charger_icone("icone_tuba", 20)
+        self._img_tuba_hdr = charger_icone("icone_tuba", 20, master=self.root)
         son_texte = "" if (self._img_tuba_hdr and audio.is_sound_enabled()) else ("🔊" if audio.is_sound_enabled() else "🔇")
         self.hdr_son_btn = tk.Button(right, text=son_texte, font=("Segoe UI Emoji", 10),
                                      image=self._img_tuba_hdr if (self._img_tuba_hdr and audio.is_sound_enabled()) else None,

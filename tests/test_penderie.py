@@ -14,6 +14,7 @@ from app.mascotte import (
     MascotteWidget,
     PenderieLupulusDialog,
 )
+from tests.tk_base import detruire_racine
 
 
 class MockApp:
@@ -46,11 +47,8 @@ class TestPenderieLupulus(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_catalogue_costumes(self):
         """Vérifie la définition des costumes antiques."""

@@ -17,6 +17,7 @@ from app.succes import (
     verifier_et_debloquer_succes,
     verifier_tous_succes,
 )
+from tests.tk_base import detruire_racine
 
 
 class MockApp:
@@ -66,11 +67,8 @@ class TestSucces(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_structure_catalogue(self):
         """Vérifie la présence et la structure des succès requis."""

@@ -17,6 +17,7 @@ from app.decrypteur_visuel import (
     analyser_phrase_auto,
 )
 from app.taverne_alea import TaverneAleaWindow
+from tests.tk_base import detruire_racine
 
 
 class MockApp:
@@ -74,11 +75,8 @@ class TestDecrypteurVisuel(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_phrases_predefinies_conformite(self):
         """Vérifie que chaque phrase du corpus est intègre et complète."""
@@ -170,11 +168,8 @@ class TestTaverneAlea(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_combinaisons_romaines(self):
         """Teste la détection des tirages antiques (Vénus, Chien, Sénateur, Plébéien)."""
@@ -269,10 +264,7 @@ class TestAudioAndCoursSublime(unittest.TestCase):
             self.assertIn("Chapitre 2", contenu)
             app.quitter()
         finally:
-            try:
-                root.destroy()
-            except Exception:
-                pass
+            detruire_racine(root)
 
 
 if __name__ == "__main__":

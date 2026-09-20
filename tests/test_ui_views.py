@@ -7,6 +7,7 @@ import unittest
 
 import content
 from app.ui import PythonLearnApp
+from tests.tk_base import detruire_racine
 
 
 class TestUIViews(unittest.TestCase):
@@ -27,11 +28,8 @@ class TestUIViews(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_chargement_tous_types_de_lecons(self):
         if not self.root or not self.app:
