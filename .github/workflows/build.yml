@@ -1,4 +1,8 @@
-name: Build & Release Ludus Latinus
+name: Ancienne appli de bureau Python (manuel)
+
+# Installateurs de l'ANCIENNE application Python/Tkinter (Windows, macOS, Linux).
+# L'application à tester et publier est désormais l'appli Flutter : voir appli.yml.
+# Ce workflow ne se lance plus tout seul : onglet Actions > Run workflow.
 
 on:
   workflow_dispatch:
@@ -21,9 +25,6 @@ on:
         description: "Si 'personnalisée', entrez la version exacte (ex: 1.0.1) :"
         required: false
         default: ""
-  push:
-    branches: [ "main", "master" ]
-    tags: [ "v*" ]
 
 permissions:
   contents: write

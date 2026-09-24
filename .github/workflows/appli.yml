@@ -1,0 +1,165 @@
+name: Appli Ludus Latinus (Android & Windows)
+
+# À chaque modification de l'application mobile, trois fichiers à télécharger
+# dans l'onglet « Actions » de GitHub, rubrique « Artifacts » de l'exécution :
+#
+#   LudusLatinus-APK        LudusLatinus.apk            à installer sur un téléphone
+#   LudusLatinus-PlayStore  LudusLatinus-PlayStore.aab  à envoyer sur la Play Console
+#   LudusLatinus-Windows    LudusLatinus-Windows.zip    à décompresser et lancer sur PC
+#
+# Signature Play Store : si les secrets ANDROID_* sont définis dans le dépôt
+# (voir ludus_latinus_mobile/PUBLICATION.md), l'APK et l'AAB sont signés avec
+# la clé d'upload. Sinon ils sont signés avec une clé de test : parfaits pour
+# essayer l'app, refusés par le Play Store.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'ludus_latinus_mobile/**'
+      - '.github/workflows/appli.yml'
+
+# Un nouvel envoi sur la même branche annule la construction en cours.
+concurrency:
+  group: appli-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Même version que sur le PC de développement : pas de surprise d'une mise à jour de Flutter.
+  FLUTTER_VERSION: '3.47.4'
+
+jobs:
+  android:
+    name: Android (APK + Play Store)
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: ludus_latinus_mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Dépendances
+        run: flutter pub get
+
+      - name: Analyse du code
+        run: flutter analyze --no-fatal-warnings --no-fatal-infos
+
+      - name: Clé de signature Play Store
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::warning::Pas de clé d'upload : APK et AAB signés avec une clé de test (refusés par le Play Store)."
+            echo "SIGNATURE=clé de test (non publiable)" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload.jks
+          # storeFile est relatif à android/app (file() dans app/build.gradle).
+          {
+            echo "storePassword=$STORE_PASSWORD"
+            echo "keyPassword=$KEY_PASSWORD"
+            echo "keyAlias=$KEY_ALIAS"
+            echo "storeFile=upload.jks"
+          } > android/key.properties
+          echo "SIGNATURE=clé d'upload Play Store" >> "$GITHUB_ENV"
+
+      # Le Play Store exige un numéro de version toujours croissant :
+      # celui de l'exécution du workflow l'est par construction.
+      - name: APK à installer
+        run: |
+          flutter build apk --release --build-number ${{ github.run_number }}
+          cp build/app/outputs/flutter-apk/app-release.apk ../LudusLatinus.apk
+
+      - name: Paquet Play Store
+        run: |
+          flutter build appbundle --release --build-number ${{ github.run_number }}
+          cp build/app/outputs/bundle/release/app-release.aab ../LudusLatinus-PlayStore.aab
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LudusLatinus-APK
+          path: LudusLatinus.apk
+          retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LudusLatinus-PlayStore
+          path: LudusLatinus-PlayStore.aab
+          retention-days: 30
+
+      - name: Résumé
+        if: always()
+        run: |
+          {
+            echo "## Android — build ${{ github.run_number }}"
+            echo ""
+            echo "- Signature : ${SIGNATURE:-inconnue (étape non atteinte)}"
+            [ -f ../LudusLatinus.apk ] && echo "- LudusLatinus.apk : $(du -h ../LudusLatinus.apk | cut -f1)"
+            [ -f ../LudusLatinus-PlayStore.aab ] && echo "- LudusLatinus-PlayStore.aab : $(du -h ../LudusLatinus-PlayStore.aab | cut -f1)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Effacer la clé
+        if: always()
+        run: rm -f android/app/upload.jks android/key.properties
+
+  windows:
+    name: Windows (version de test PC)
+    runs-on: windows-2022
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: ludus_latinus_mobile
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Dépendances
+        run: flutter pub get
+
+      - name: Compilation Windows
+        run: flutter build windows --release --build-number ${{ github.run_number }}
+
+      # Le dossier Release contient l'exe et ses DLL/données : tout est à garder ensemble.
+      - name: Archive
+        shell: pwsh
+        run: |
+          $release = "build/windows/x64/runner/Release"
+          if (-not (Test-Path "$release/LudusLatinus.exe")) {
+            Write-Error "LudusLatinus.exe introuvable dans $release"
+            exit 1
+          }
+          Compress-Archive -Path "$release/*" -DestinationPath "../LudusLatinus-Windows.zip" -Force
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LudusLatinus-Windows
+          path: LudusLatinus-Windows.zip
+          retention-days: 30
+
+      - name: Résumé
+        if: success()
+        shell: pwsh
+        run: |
+          $taille = "{0:N0} Mo" -f ((Get-Item ../LudusLatinus-Windows.zip).Length / 1MB)
+          "## Windows — build ${{ github.run_number }}`n`n- LudusLatinus-Windows.zip : $taille (décompresser, puis lancer LudusLatinus.exe)" |
+            Out-File -Append -Encoding utf8 -FilePath $env:GITHUB_STEP_SUMMARY

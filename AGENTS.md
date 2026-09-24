@@ -92,6 +92,7 @@ assets/
   images/via/       <nom>.png        8 éléments de bord de route, proportions réelles
   images/animated/  lupulus_<humeur>.webp  Lupulus animé (WebP transparent, en boucle) :
                     idle (= attente), joie, reflexion, salut, triomphe — voir LupulusMood
+  (windows/          projet Windows versionné : exe LudusLatinus.exe, fenêtre portrait 460x900)
   audio/            bruitages WAV mono 44,1 kHz + 3 musiques OGG — voir AudioService
   cinematics/       vidéos 9:16 avec bande-son : intro, triumph, boss_entrance (secours),
                     boss_<retiaire|lion|minotaure|sphinx|mercure>, niveau_<5e|4e|3e>
@@ -180,6 +181,23 @@ python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ×2, phonétique « Veni vidi vici »). Ils ne doivent pas augmenter. Tout
 nouvel échec est de ta responsabilité.
 
+### Construction automatique (GitHub Actions)
+
+| Workflow | Quand | Produit |
+|---|---|---|
+| `appli.yml` | à chaque envoi qui touche `ludus_latinus_mobile/` | `LudusLatinus.apk`, `LudusLatinus-PlayStore.aab`, `LudusLatinus-Windows.zip` |
+| `tests.yml` | à chaque envoi | tests Python + style (ruff) |
+| `build.yml` | **manuel seulement** | installateurs de l'ancienne appli Python |
+
+Flutter est figé à la même version qu'en local (`FLUTTER_VERSION` dans
+`appli.yml`) : si tu mets Flutter à jour sur le PC, mets aussi ce numéro à
+jour. La signature Play Store vient de secrets GitHub (voir
+`ludus_latinus_mobile/PUBLICATION.md`) ; **`key.properties` et `*.jks` ne
+doivent jamais être commités** (ils sont dans `.gitignore`).
+
+La version Windows ne peut pas être compilée sur ce PC (Visual Studio absent) :
+elle se vérifie avec l'archive produite par `appli.yml`.
+
 **Une modification visible à l'écran se vérifie sur l'émulateur**, avec une
 capture d'écran jointe au compte rendu. « Ça compile » ne suffit pas.
 
@@ -254,6 +272,12 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **CI simplifiée** — un seul workflow `appli.yml` produit l'APK, l'AAB Play
+  Store (numéro de version = numéro d'exécution) et la version Windows. Le
+  projet Windows est versionné (plus régénéré à chaque exécution), l'exe
+  s'appelle `LudusLatinus.exe`. L'ancien `build_mobile.yml` est supprimé ;
+  le workflow de l'appli Python ne se lance plus qu'à la main.
 
 - **Lupulus triomphant animé** — coupe levée et étincelles, en fin de monde,
   à la victoire du Duel et du Circus, et dans Memoria (série de 5 et bilan).

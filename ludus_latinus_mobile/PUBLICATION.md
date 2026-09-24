@@ -40,13 +40,50 @@ avertissement s'affiche : ce paquet-là sera refusé par le Play Store.
 
 ## 3. Construire le paquet
 
+### Le plus simple : GitHub le fait pour toi
+
+À chaque modification de l'appli envoyée sur GitHub, le workflow
+`.github/workflows/appli.yml` construit trois fichiers, à télécharger dans
+l'onglet **Actions** → l'exécution → rubrique **Artifacts** :
+
+| Fichier | Usage |
+|---|---|
+| `LudusLatinus.apk` | installer sur un téléphone |
+| `LudusLatinus-PlayStore.aab` | envoyer sur la Play Console |
+| `LudusLatinus-Windows.zip` | tester sur PC : décompresser, lancer `LudusLatinus.exe` |
+
+Le numéro de version (celui après `+`) est celui de l'exécution du workflow :
+il augmente tout seul, comme l'exige le Play Store.
+
+Pour que GitHub signe avec **ta** clé, et que l'AAB soit accepté, ajoute ces
+4 secrets dans le dépôt : **Settings → Secrets and variables → Actions →
+New repository secret**.
+
+| Secret | Valeur |
+|---|---|
+| `ANDROID_KEYSTORE_BASE64` | le fichier `.jks` encodé en texte (commande ci-dessous) |
+| `ANDROID_STORE_PASSWORD` | le mot de passe du fichier |
+| `ANDROID_KEY_PASSWORD` | le mot de passe de la clé |
+| `ANDROID_KEY_ALIAS` | `upload` |
+
+Pour obtenir le texte du premier secret (PowerShell), puis le coller dans GitHub :
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("$env:USERPROFILE\cles\ludus-upload.jks")) | Set-Clipboard
+```
+
+Sans ces secrets, tout se construit quand même, mais signé avec une clé de
+test : bien pour essayer, refusé par le Play Store. Le résumé de l'exécution
+indique quelle signature a été utilisée.
+
+### À la main, sur ce PC
+
 ```bash
-flutter build appbundle --release
+flutter build appbundle --release --build-number 2
 ```
 
 Le fichier à envoyer est `build/app/outputs/bundle/release/app-release.aab`.
-Pense à augmenter `version:` dans `pubspec.yaml` (ex. `1.0.1+2`) à chaque envoi :
-le nombre après `+` doit toujours croître.
+Le `--build-number` doit toujours croître d'un envoi à l'autre.
 
 ## 4. Play Console : ce qui est obligatoire pour une appli destinée aux enfants
 
