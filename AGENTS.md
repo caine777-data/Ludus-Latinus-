@@ -323,6 +323,16 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 - **Boutique illustrée** — 20 articles avec image détourée.
 - **CI Linux** — plus d'abandon Tcl en fin de suite (`tests/tk_base.py`).
 
+### Décisions de Cédric (à respecter)
+
+- **La première leçon de chaque monde reste ouverte d'emblée**, y compris
+  en 4e et en 3e : un professeur doit pouvoir faire travailler directement
+  le niveau de sa classe. Ne pas verrouiller.
+- **Trois leçons par notion lourde** (ablatif absolu, passif, proposition
+  infinitive…), la troisième servant de révision.
+- Pas de version web : les cibles sont Android (APK, Play Store) et
+  Windows (test sur PC).
+
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
 Issues de l'audit pédagogique du 24/09/2026 (rapport :
@@ -332,12 +342,18 @@ https://claude.ai/artifact/5G9NxprB69Ehc7Tng1oXSY). Dans l'ordre :
    l'affichage (T2) ; intro à chaque démarrage (T3) ; Memoria limitée aux
    mondes atteints et sans auto-évaluation payée ; menu Paramètres (nom,
    fille ou garçon, son, revoir l'intro) et choix du héros au premier
-   lancement ; icône de l'Épigraphie.
+   lancement ; icône de l'Épigraphie ; **économie tenue** : un plafond
+   quotidien par mini-jeu (comme la Taverne, 3 par jour), missions de César
+   et étals du Marché payés une seule fois et retenus dans le profil, plus de
+   pièces pour une mauvaise réponse, César validé par une réponse et non
+   par la roue.
 2. **Phase 2, refonte pédagogique** (contenu validé par Cédric) — enseigner
    les 1re et 2e déclinaisons en 5e ; trois exercices tirés du cours par
    leçon (reconnaître, appliquer, traduire, y compris français → latin) ;
    ne plus écrire la réponse dans le cours ni la consigne ; une explication
-   par mauvaise réponse ; arènes rééquilibrées et avec un vrai enjeu.
+   par mauvaise réponse ; arènes rééquilibrées et avec un vrai enjeu ;
+   Circus et Duel qui tirent une partie de leurs questions des mondes
+   atteints ; une carte du Panthéon par monde terminé.
 3. **Phase 3, visuels Gemini** — cartes des six cas, en-têtes des
    leçons-récits de 4e et 3e, stèle vierge de l'Épigraphie.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
