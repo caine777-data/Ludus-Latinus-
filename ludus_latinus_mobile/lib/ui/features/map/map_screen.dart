@@ -183,7 +183,7 @@ class _MapScreenState extends State<MapScreen> {
                   height: 7,
                   backgroundColor: const Color(0xFFEBE3D7),
                   color: RomanColors.imperialGold,
-                  ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
+                  ghostColor: RomanColors.laurelGreen.withValues(alpha: 0.4),
                 ),
                 const SizedBox(height: 10),
                 // Filtres de classes
@@ -472,7 +472,7 @@ class _MapScreenState extends State<MapScreen> {
             decoration: BoxDecoration(
               color: isCurrentActive
                   ? const Color(0xFFFFF9E6)
-                  : Colors.white.withOpacity(0.94),
+                  : Colors.white.withValues(alpha: 0.94),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: isCurrentActive
