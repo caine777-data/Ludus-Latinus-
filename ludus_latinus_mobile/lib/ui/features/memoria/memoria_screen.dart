@@ -517,9 +517,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     child: Image.asset(
                       _streak >= 5
                           ? 'assets/images/lupulus/lupulus_triomphe_180.png'
-                          : _streak >= 3
-                              ? 'assets/images/lupulus/lupulus_joie_180.png'
-                              : 'assets/images/lupulus/lupulus_reflexion_180.png',
+                          : lupulusAnimation(_streak >= 3 ? LupulusMood.joie : LupulusMood.reflexion),
                       width: 24,
                       height: 24,
                       fit: BoxFit.cover,

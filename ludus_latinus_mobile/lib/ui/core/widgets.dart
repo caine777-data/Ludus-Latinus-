@@ -183,14 +183,26 @@ class RomanMedallion extends StatelessWidget {
 }
 
 /// Avatar animé et vivant de Lupulus réagissant au toucher (clignement idle et salut légionnaire).
+/// Humeur de Lupulus : choisit son animation de repos.
+enum LupulusMood { attente, joie, reflexion }
+
+/// Animation (WebP transparent, en boucle) de Lupulus pour une humeur donnée.
+String lupulusAnimation(LupulusMood mood) => switch (mood) {
+      LupulusMood.attente => 'assets/images/animated/lupulus_idle.webp',
+      LupulusMood.joie => 'assets/images/animated/lupulus_joie.webp',
+      LupulusMood.reflexion => 'assets/images/animated/lupulus_reflexion.webp',
+    };
+
 class AnimatedLupulusAvatar extends StatefulWidget {
   final double size;
   final VoidCallback? onTap;
+  final LupulusMood mood;
 
   const AnimatedLupulusAvatar({
     super.key,
     this.size = 54,
     this.onTap,
+    this.mood = LupulusMood.attente,
   });
 
   @override
@@ -217,7 +229,7 @@ class _AnimatedLupulusAvatarState extends State<AnimatedLupulusAvatar> {
   Widget build(BuildContext context) {
     final assetPath = _isSaluting
         ? 'assets/images/animated/lupulus_salut.webp'
-        : 'assets/images/animated/lupulus_idle.webp';
+        : lupulusAnimation(widget.mood);
 
     return GestureDetector(
       onTap: _triggerSalute,

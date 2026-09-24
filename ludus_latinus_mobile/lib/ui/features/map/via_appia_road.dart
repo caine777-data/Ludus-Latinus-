@@ -196,3 +196,40 @@ class ViaAppiaRoadPainter extends CustomPainter {
       old.bottomTravelled != bottomTravelled ||
       old.seed != seed;
 }
+
+/// Élément de décor planté au bord de la Via Appia : pin, borne, fontaine…
+///
+/// Une borne sur deux en reçoit un : celles que le serpentin décale à gauche
+/// ou à droite, l'élément se plaçant du côté resté libre. Le choix dépend du
+/// rang de la borne, si bien que chaque borne garde toujours le même voisin.
+class ViaAppiaProp {
+  final String asset;
+
+  /// Hauteur affichée, en dp : les proportions réelles sont respectées
+  /// (un pin domine une borne, une charrette reste basse).
+  final double height;
+
+  const ViaAppiaProp(this.asset, this.height);
+
+  static const _all = [
+    ViaAppiaProp('assets/images/via/pin.png', 88),
+    ViaAppiaProp('assets/images/via/borne.png', 42),
+    ViaAppiaProp('assets/images/via/fontaine.png', 52),
+    ViaAppiaProp('assets/images/via/cypres.png', 92),
+    ViaAppiaProp('assets/images/via/amphores.png', 44),
+    ViaAppiaProp('assets/images/via/mausolee.png', 58),
+    ViaAppiaProp('assets/images/via/charrette.png', 40),
+    ViaAppiaProp('assets/images/via/colonne.png', 58),
+  ];
+
+  /// Écart horizontal entre la borne et son élément, en multiple du décalage
+  /// de la borne : assez loin pour ne pas toucher la carte de la leçon.
+  static const double distanceFactor = 2.3;
+
+  /// Élément de la rangée, ou `null` pour les bornes centrées.
+  static ViaAppiaProp? forRow(int worldIndex, int lessonIndex) {
+    if (serpentinOffset(lessonIndex) == 0) return null;
+    // Pas de 7 sur 8 éléments : deux bornes voisines n'ont jamais le même.
+    return _all[(worldIndex * 13 + lessonIndex * 7) % _all.length];
+  }
+}

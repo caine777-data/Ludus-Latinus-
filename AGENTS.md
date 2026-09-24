@@ -82,12 +82,16 @@ ludus_latinus_mobile/lib/
     core/            Thème (RomanColors, RomanFonts), widgets communs, AvatarAssets
     features/        Un dossier par écran : home, map, lesson, boutique, duel…
       map/           Via Appia : map_screen.dart (bornes, bannières des mondes)
-                     et via_appia_road.dart (la chaussée pavée, peinte rangée par rangée)
+                     et via_appia_road.dart (la chaussée pavée, peinte rangée par rangée,
+                     et ViaAppiaProp : les éléments plantés au bord de la route)
 assets/
   data/ludus_latinus_dataset.json   GÉNÉRÉ — ne pas éditer
   images/boutique/  <id>.png         20 articles, 256 px, fond transparent
   images/avatars/   <genre>_<toge>_<140|48>.png
   images/mondes/    monde<N>.webp    26 décors, bannières de la Via Appia
+  images/via/       <nom>.png        8 éléments de bord de route, proportions réelles
+  images/animated/  lupulus_<humeur>.webp  Lupulus animé (WebP transparent, en boucle) :
+                    idle (= attente), joie, reflexion, salut — voir LupulusMood
   audio/, cinematics/, fonts/
 ```
 
@@ -128,6 +132,14 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
 10. **Ne lance pas `dart format` sur un fichier existant entier** : il
     reformate tout le fichier et noie la vraie modification dans le diff.
     Formate seulement les fichiers que tu crées.
+11. **Un `Stack` aligne ses enfants en haut à gauche par défaut.** Sur la
+    carte, envelopper une borne dans un `Stack` sans
+    `alignment: Alignment.topCenter` la décale hors de la route (déjà
+    arrivé). Vérifie toujours une modification de la carte sur l'émulateur.
+12. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
+    `AnimatedLupulusAvatar(mood: …)` plutôt qu'un chemin d'image en dur.
+    « Triomphe » n'a pas encore d'animation : l'image fixe
+    `lupulus_triomphe_180.png` reste utilisée.
 
 ---
 
@@ -187,6 +199,11 @@ Cédric génère les images et les dépose dans
 | `chroma_boutique.py [id …]` | `<id>.jpg` sur fond vert | `images/boutique/<id>.png` détouré, 256 px |
 | `chroma_avatars.py [genre_toge …]` | `avatar_<genre>_<toge>.jpg` | `images/avatars/…_140.png` et `_48.png` |
 | `decors_mondes.py [N …]` | `decor_monde<N>.jpg` | `images/mondes/monde<N>.webp` |
+| `via_elements.py [nom …]` | `via_<nom>.jpg` | `images/via/<nom>.png`, recadré au ras, sans carré |
+| `lupulus_videos.py [humeur …]` | `lupulus_<humeur>.mp4` (fond vert) | `images/animated/lupulus_*.webp`, son retiré |
+
+`lupulus_videos.py` demande `pip install imageio-ffmpeg numpy` (outils de
+préparation seulement, pas des dépendances de l'app).
 
 Règles pour les images :
 - tout ce qui doit être détouré est généré sur **fond vert uni `#00FF00`** ;
@@ -222,6 +239,14 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Lupulus animé** — les 4 vidéos Gemini sont devenues des WebP animés
+  transparents (environ 280 Ko chacun, 10 images/s, son retiré).
+  `LupulusMood` choisit l'animation ; la leçon (réussite, indice) et Memoria
+  utilisent désormais « joie » et « réflexion » animés.
+- **Bord de route** — 8 éléments (pin, cyprès, borne, fontaine, amphores,
+  mausolée, charrette, colonne) plantés une borne sur deux, du côté libre du
+  serpentin, estompés devant l'élève comme la route.
+
 - **Via Appia pavée** — la chaussée n'est plus un fond fixe : chaque rangée
   de la carte peint son tronçon (`ViaAppiaRoadPainter`), qui passe sous sa
   borne et se raccorde aux voisines. Pavés de basalte, bordure de travertin,
@@ -236,11 +261,12 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
-- Éléments de bord de route sur la Via Appia (pins, cyprès, bornes, petits
-  monuments) : images à générer par Cédric, prompts `via_*.jpg`.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
-- Vidéos de Lupulus (attente, joie, réflexion, salut), à partir de la fiche
-  de personnage `REFERENCE_lupulus.png`.
+- **Refaire `lupulus_joie.mp4`** : dans la vidéo actuelle, la couronne de
+  laurier apparaît et disparaît en cours d'animation.
+- Vidéos d'entrée de niveau (5e, 4e, 3e) et 6 nouveaux bruitages : fournis
+  par Cédric, à intégrer.
+- Vidéos des boss du Duel : pas encore générées.
 
 ---
 

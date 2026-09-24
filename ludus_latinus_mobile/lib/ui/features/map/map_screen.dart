@@ -366,6 +366,7 @@ class _MapScreenState extends State<MapScreen> {
               lessonIndex == lastIndex ? 0 : (offsetFactor + serpentinOffset(lessonIndex + 1)) / 2;
           // Centre de la borne : marge haute, pion éventuel (46), demi-borne (31).
           final double nodeY = 10 + (isCurrentActive ? 46 : 0) + 31;
+          final prop = ViaAppiaProp.forRow(worldIndex, lessonIndex);
 
           return RepaintBoundary(
             child: CustomPaint(
@@ -380,19 +381,49 @@ class _MapScreenState extends State<MapScreen> {
               ),
               child: SizedBox(
                 width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Transform.translate(
-                    offset: Offset(offsetFactor, 0),
-                    child: _buildMilestoneNode(
-                      context,
-                      lesson: lesson,
-                      index: lessonIndex + 1,
-                      isCompleted: isCompleted,
-                      isUnlocked: isUnlocked,
-                      isCurrentActive: isCurrentActive,
+                child: Stack(
+                  // Centré comme l'était la colonne : la route est peinte depuis le
+                  // milieu de la rangée, la borne doit l'être aussi.
+                  alignment: Alignment.topCenter,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Transform.translate(
+                        offset: Offset(offsetFactor, 0),
+                        child: _buildMilestoneNode(
+                          context,
+                          lesson: lesson,
+                          index: lessonIndex + 1,
+                          isCompleted: isCompleted,
+                          isUnlocked: isUnlocked,
+                          isCurrentActive: isCurrentActive,
+                        ),
+                      ),
                     ),
-                  ),
+                    // Élément de bord de route, posé par sa base un peu sous la borne,
+                    // du côté que le serpentin laisse libre.
+                    if (prop != null)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: nodeY + 34 - prop.height,
+                        child: IgnorePointer(
+                          child: Transform.translate(
+                            offset: Offset(-offsetFactor * ViaAppiaProp.distanceFactor, 0),
+                            child: Center(
+                              child: Image.asset(
+                                prop.asset,
+                                height: prop.height,
+                                // Estompé devant l'élève, comme la route.
+                                opacity: isUnlocked ? null : const AlwaysStoppedAnimation(0.45),
+                                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),

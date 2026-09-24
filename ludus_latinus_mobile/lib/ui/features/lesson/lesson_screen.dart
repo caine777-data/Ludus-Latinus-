@@ -269,11 +269,16 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               child: ClipOval(
                 child: Image.asset(
+                  // Pas encore d'animation de triomphe : l'image fixe reste.
                   result.worldCompleted
                       ? 'assets/images/lupulus/lupulus_triomphe_180.png'
-                      : 'assets/images/lupulus/lupulus_joie_180.png',
+                      : lupulusAnimation(LupulusMood.joie),
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  errorBuilder: (_, __, ___) => Image.asset(
+                    'assets/images/lupulus/lupulus_joie_180.png',
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  ),
                 ),
               ),
             ),
@@ -942,9 +947,13 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
                 child: ClipOval(
                   child: Image.asset(
-                    'assets/images/lupulus/lupulus_reflexion_180.png',
+                    lupulusAnimation(LupulusMood.reflexion),
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    errorBuilder: (_, __, ___) => Image.asset(
+                      'assets/images/lupulus/lupulus_reflexion_180.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
                   ),
                 ),
               ),
