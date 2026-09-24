@@ -275,78 +275,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget _buildWorldSection(BuildContext context, World world, int worldIndex) {
     return Column(
       children: [
-        // 🏛️ Arc de Triomphe Monumental SPQR
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF5A121E), Color(0xFF380912)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: RomanColors.imperialGold, width: 1.8),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x28000000),
-                offset: Offset(0, 4),
-                blurRadius: 8,
-              )
-            ],
-          ),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                decoration: const BoxDecoration(
-                  color: RomanColors.imperialGold,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('🌿 ', style: TextStyle(fontSize: 12)),
-                    Text(
-                      'S • P • Q • R  •  MONDE ${world.id.replaceAll(RegExp(r'\D'), '')}',
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
-                        color: Color(0xFF2C1E0A),
-                      ),
-                    ),
-                    const Text(' 🌿', style: TextStyle(fontSize: 12)),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('🏛️', style: TextStyle(fontSize: 20)),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        world.title.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 0.8,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+        // Bannière du monde : son décor illustré, le titre posé dessus.
+        _WorldBanner(world: world),
 
         // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
         Padding(
@@ -693,6 +623,105 @@ class _MapScreenState extends State<MapScreen> {
 
 /// Pion du héros : il sautille doucement sur sa borne, et tombe en rebondissant
 /// quand il vient d'avancer d'une leçon.
+/// Bannière d'un monde sur la Via Appia : décor illustré, bandeau SPQR et titre.
+/// Sans illustration (monde ajouté plus tard), on retombe sur le dégradé bordeaux.
+class _WorldBanner extends StatelessWidget {
+  final World world;
+
+  const _WorldBanner({required this.world});
+
+  String get _numero => world.id.replaceAll(RegExp(r'\D'), '');
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      height: 168,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: RomanColors.imperialGold, width: 1.8),
+        boxShadow: const [
+          BoxShadow(color: Color(0x28000000), offset: Offset(0, 4), blurRadius: 8),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/images/mondes/${world.id}.webp',
+              fit: BoxFit.cover,
+              // Les décors gardent le ciel en haut : on cadre un peu sous le centre.
+              alignment: const Alignment(0, 0.25),
+              errorBuilder: (_, __, ___) => const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF5A121E), Color(0xFF380912)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
+            ),
+            // Voile sombre en bas : le titre blanc reste lisible sur tous les décors.
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x00000000), Color(0x00000000), Color(0xCC1E0508)],
+                  stops: [0, 0.45, 1],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                decoration: const BoxDecoration(
+                  color: RomanColors.imperialGold,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'S • P • Q • R  •  MONDE $_numero',
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                    color: Color(0xFF2C1E0A),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 14,
+              right: 14,
+              bottom: 12,
+              child: Text(
+                world.title.toUpperCase(),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 0.8,
+                  shadows: [Shadow(color: Color(0xAA000000), blurRadius: 6)],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _HeroPawn extends StatefulWidget {
   final String avatarImg;
   final bool arriving;
