@@ -146,7 +146,11 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     depuis la carte et depuis l'accueil, c'est pour ça qu'elle est dans
     l'écran de leçon. Un profil qui a déjà validé une leçon du niveau ne la
     voit pas.
-13. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
+13. **Tout QCM doit mélanger ses réponses au premier affichage.** Dans le
+    dataset, la bonne réponse est très souvent la première (82 % des QCM,
+    78 % des questions d'arène) : un écran qui affiche les options dans
+    l'ordre des données laisse gagner sans lire.
+14. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
     `AnimatedLupulusAvatar(mood: …)` plutôt qu'un chemin d'image en dur.
     Les images fixes de `images/lupulus/` ne servent plus que de secours
     (`errorBuilder`) et pour les costumes (centurion, gladiateur, imperator,
@@ -321,6 +325,21 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
+Issues de l'audit pédagogique du 24/09/2026 (rapport :
+https://claude.ai/artifact/5G9NxprB69Ehc7Tng1oXSY). Dans l'ordre :
+
+1. **Phase 1, réparer ce qui fausse le jeu** — réponses mélangées dès
+   l'affichage (T2) ; intro à chaque démarrage (T3) ; Memoria limitée aux
+   mondes atteints et sans auto-évaluation payée ; menu Paramètres (nom,
+   fille ou garçon, son, revoir l'intro) et choix du héros au premier
+   lancement ; icône de l'Épigraphie.
+2. **Phase 2, refonte pédagogique** (contenu validé par Cédric) — enseigner
+   les 1re et 2e déclinaisons en 5e ; trois exercices tirés du cours par
+   leçon (reconnaître, appliquer, traduire, y compris français → latin) ;
+   ne plus écrire la réponse dans le cours ni la consigne ; une explication
+   par mauvaise réponse ; arènes rééquilibrées et avec un vrai enjeu.
+3. **Phase 3, visuels Gemini** — cartes des six cas, en-têtes des
+   leçons-récits de 4e et 3e, stèle vierge de l'Épigraphie.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
 
 ---

@@ -81,3 +81,95 @@ passation sur une tâche sans risque.
 **Vérification de l'architecte** : diff limité aux 2 remplacements attendus,
 périmètre respecté, capture fournie, commit au bon format. Validé. Le circuit
 de passation fonctionne.
+
+---
+
+## T2 — Mélanger les réponses dès l'affichage (QCM de leçon et arène)
+
+Statut : À FAIRE
+
+**Objectif** : aujourd'hui la bonne réponse est en première position dans
+82 % des QCM de leçon et 78 % des questions d'arène, et l'app ne mélange
+qu'après une erreur. Un élève gagne en touchant toujours la même case. Il
+faut que l'ordre des réponses soit aléatoire **dès le premier affichage**.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/lesson/lesson_screen.dart`
+- `ludus_latinus_mobile/lib/ui/features/lesson/widgets/arena_challenge_widget.dart`
+
+**Étapes** :
+1. `lesson_screen.dart`, dans `initState` : la liste `_order` est créée par
+   `List.generate(widget.lesson.options.length, (i) => i)`. Ajoute
+   `..shuffle()` au bout de cette ligne. Ne change rien d'autre : tout
+   l'affichage passe déjà par `_order`, et `_retry()` remélange déjà.
+2. `arena_challenge_widget.dart` : les options sont affichées dans l'ordre
+   des données (`options[optIndex]`, avec `optIndex` = position dans la
+   grille). Ajoute dans l'état une liste d'ordres, un par question, créée
+   dans `initState` :
+   `late final List<List<int>> _ordres = [for (final q in widget.questions) List.generate((q['options'] as List).length, (i) => i)..shuffle()];`
+   Puis, là où la grille construit une case à la position `pos`, utilise
+   `final optIndex = _ordres[_currentQuestionIndex][pos];` pour choisir le
+   texte **et** l'index passé à `_submitAnswer`. La comparaison avec
+   `answer` et la couleur de la case choisie (`_selectedOption`) doivent
+   continuer à se faire sur l'index d'origine `optIndex`, pas sur `pos`.
+3. Aucune autre modification, même si tu vois d'autres améliorations
+   possibles : note-les dans le compte rendu.
+
+**Critères de réussite** :
+- [ ] `flutter analyze` sur les deux fichiers : aucune erreur.
+- [ ] `flutter test` : toujours 36 réussis et les 3 échecs connus, pas plus.
+- [ ] Sur l'émulateur, la leçon m1-01 (« L'Alphabet secret des Romains »)
+      ouverte 3 fois ne montre pas toujours la bonne réponse au même
+      endroit (bonne réponse : « Toujours [K] : 'Kirkous' »).
+- [ ] Sur l'émulateur, une arène (m1-06, boss Mercure) : les réponses ne
+      sont pas dans l'ordre des données ; une bonne réponse fait bien
+      perdre un PV au boss ; une mauvaise fait trembler l'écran et laisse
+      réessayer la même question, et c'est la case touchée qui s'affiche en
+      rouge (pas une autre).
+- [ ] Captures d'écran jointes (chemins dans le compte rendu).
+- [ ] Un commit `fix(mobile): réponses mélangées dès l'affichage (leçons et arène)`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T3 — Jouer la vidéo d'intro à chaque démarrage
+
+Statut : À FAIRE
+
+**Objectif** : demande de Cédric. L'intro ne se joue qu'au tout premier
+lancement de l'app ; elle doit se jouer **à chaque démarrage**, une seule
+fois par démarrage, toujours avec le bouton « Passer » qui existe déjà.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart`
+
+**Étapes** :
+1. Dans `initState` de l'écran d'accueil, la vidéo est lancée seulement si
+   `!widget.repo.profile.introSeen`. Remplace cette condition par un
+   indicateur **statique** de la classe d'état, par exemple
+   `static bool _introJoueeCeLancement = false;` : il vaut `false` à chaque
+   démarrage de l'app, et reste `true` tant que l'app tourne. Ainsi, revenir
+   sur l'accueil pendant la même partie ne relance pas la vidéo.
+2. Passe l'indicateur à `true` juste avant de lancer la vidéo.
+3. Garde l'appel à `widget.repo.markIntroSeen()` tel quel.
+4. Écris un commentaire d'une ligne qui explique pourquoi l'indicateur est
+   statique.
+
+**Critères de réussite** :
+- [ ] `flutter analyze lib/ui/features/home/home_screen.dart` : aucune erreur.
+- [ ] Sur l'émulateur : arrêter l'app (`adb shell am force-stop com.luduslatinus.app`)
+      puis la relancer → l'intro se joue, deux fois de suite.
+- [ ] « Passer » ferme bien la vidéo et laisse l'accueil utilisable.
+- [ ] Aller sur la carte puis revenir à l'accueil → l'intro **ne** se rejoue **pas**.
+- [ ] Un commit `feat(mobile): l'intro se joue à chaque démarrage`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
