@@ -81,6 +81,8 @@ ludus_latinus_mobile/lib/
   ui/
     core/            Thème (RomanColors, RomanFonts), widgets communs, AvatarAssets
     features/        Un dossier par écran : home, map, lesson, boutique, duel…
+      map/           Via Appia : map_screen.dart (bornes, bannières des mondes)
+                     et via_appia_road.dart (la chaussée pavée, peinte rangée par rangée)
 assets/
   data/ludus_latinus_dataset.json   GÉNÉRÉ — ne pas éditer
   images/boutique/  <id>.png         20 articles, 256 px, fond transparent
@@ -117,6 +119,15 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
 8. **PowerShell** : `$` dans une chaîne entre guillemets doubles est
    interprété. Pour modifier un fichier, préfère l'outil d'édition de fichier
    à une commande shell.
+9. **La route de la Via Appia dépend de la géométrie des bornes.** Le
+   serpentin vient de `serpentinOffset()` (`via_appia_road.dart`), partagé
+   par les bornes et la route. La hauteur du centre de la borne est calculée
+   à la main dans `map_screen.dart` : marge 10 + pion 46 (s'il est là) + demi-
+   borne 31. **Si tu changes la taille d'une borne, du pion ou leur marge,
+   mets ce calcul à jour**, sinon la route ne passe plus sous les bornes.
+10. **Ne lance pas `dart format` sur un fichier existant entier** : il
+    reformate tout le fichier et noie la vraie modification dans le diff.
+    Formate seulement les fichiers que tu crées.
 
 ---
 
@@ -207,7 +218,33 @@ refusé.
 
 ---
 
-## 7. Passation entre l'architecte et les exécutants
+## 7. Dernières évolutions
+
+Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Via Appia pavée** — la chaussée n'est plus un fond fixe : chaque rangée
+  de la carte peint son tronçon (`ViaAppiaRoadPainter`), qui passe sous sa
+  borne et se raccorde aux voisines. Pavés de basalte, bordure de travertin,
+  bas-côtés en terre. La route est pleine là où l'élève est passé, estompée
+  devant lui.
+- **Décors des mondes** — les 26 décors Gemini servent de bannière à chaque
+  monde sur la carte (`_WorldBanner`, `assets/images/mondes/`).
+- **Avatars selon la toge** — `AvatarAssets.medaillon()` ; seules les 5 toges
+  changent l'avatar, pas encore les couronnes ni les accessoires.
+- **Boutique illustrée** — 20 articles avec image détourée.
+- **CI Linux** — plus d'abandon Tcl en fin de suite (`tests/tk_base.py`).
+
+### Prochaines étapes envisagées (décidées par l'architecte)
+
+- Éléments de bord de route sur la Via Appia (pins, cyprès, bornes, petits
+  monuments) : images à générer par Cédric, prompts `via_*.jpg`.
+- Teinte du sol qui change avec le cycle (5e, 4e, 3e).
+- Vidéos de Lupulus (attente, joie, réflexion, salut), à partir de la fiche
+  de personnage `REFERENCE_lupulus.png`.
+
+---
+
+## 8. Passation entre l'architecte et les exécutants
 
 `docs/TACHES.md` est le seul canal de passation. Il contient :
 
@@ -216,7 +253,10 @@ refusé.
 - **les comptes rendus**, écrits par l'exécutant sous chaque tâche.
 
 Quand l'architecte reprend la main, il lit les comptes rendus, vérifie le
-travail et corrige si besoin. **Un compte rendu honnête** (« le test X échoue
+travail et corrige si besoin. **C'est l'architecte qui tient ce fichier
+`AGENTS.md` à jour.** Si tu découvres un piège ou une convention qui
+manque, ne modifie pas `AGENTS.md` : écris-le dans ton compte rendu, sous
+« Doutes, questions pour l'architecte ». **Un compte rendu honnête** (« le test X échoue
 encore », « je n'ai pas pu vérifier sur l'émulateur ») est plus utile qu'un
 compte rendu rassurant. Ne prétends jamais avoir vérifié ce que tu n'as pas
 vérifié.

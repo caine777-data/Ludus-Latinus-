@@ -41,7 +41,7 @@ Statut : À FAIRE
 
 ## T1 — Remplacer `withOpacity` sur l'écran de la carte
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : `Color.withOpacity()` est déprécié dans cette version de
 Flutter et produit des avertissements. On le remplace par
@@ -77,3 +77,7 @@ passation sur une tâche sans risque.
   - Validation sur émulateur Android `Pixel_Ludus` : capture d'écran sauvegardée sous `scratch/capture_via_appia.png`. Rendu identique et sans régression.
 - Doutes, questions pour l'architecte : Aucun, le circuit de passation fonctionne parfaitement.
 - Reste à faire : Rien sur T1. Tâche terminée.
+
+**Vérification de l'architecte** : diff limité aux 2 remplacements attendus,
+périmètre respecté, capture fournie, commit au bon format. Validé. Le circuit
+de passation fonctionne.

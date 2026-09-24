@@ -10,6 +10,7 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
 import '../../core/avatar_assets.dart';
+import 'via_appia_road.dart';
 
 /// La Carte d'Aventure de la Via Appia inspirée de l'esthétique de Monument Valley.
 class MapScreen extends StatefulWidget {
@@ -236,7 +237,15 @@ class _MapScreenState extends State<MapScreen> {
                         child: Column(
                           children: [
                             for (var index = 0; index < worlds.length; index++)
-                              _buildWorldSection(context, worlds[index], index),
+                              _buildWorldSection(
+                                context,
+                                worlds[index],
+                                index,
+                                // On est « entré » dans un monde quand le précédent est achevé.
+                                entered: index == 0 ||
+                                    worlds[index - 1].lessons.isEmpty ||
+                                    widget.repo.isLessonCompleted(worlds[index - 1].lessons.last.id),
+                              ),
                           ],
                         ),
                       ),
@@ -272,46 +281,62 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget _buildWorldSection(BuildContext context, World world, int worldIndex) {
+  Widget _buildWorldSection(
+    BuildContext context,
+    World world,
+    int worldIndex, {
+    required bool entered,
+  }) {
+    final lastIndex = world.lessons.length - 1;
+    final worldDone = world.lessons.isNotEmpty && widget.repo.isLessonCompleted(world.lessons.last.id);
+
     return Column(
       children: [
-        // Bannière du monde : son décor illustré, le titre posé dessus.
-        _WorldBanner(world: world),
-
-        // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        // La route passe tout droit sous la bannière et sous Lupulus.
+        CustomPaint(
+          painter: ViaAppiaRoadPainter.straight(x: 0, travelled: entered, seed: worldIndex * 1000),
+          child: Column(
             children: [
-              AnimatedLupulusAvatar(
-                size: 38,
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  AudioService().playWheelClick();
-                },
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: RomanColors.palatinCream,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
-                    boxShadow: const [
-                      BoxShadow(color: Color(0x0C000000), offset: Offset(0, 2), blurRadius: 4),
-                    ],
-                  ),
-                  child: Text(
-                    '« Monde ${world.id.replaceAll(RegExp(r'\D'), '')} : que ta marche soit triomphale ! »',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600,
-                      color: RomanColors.imperialPurple,
+              // Bannière du monde : son décor illustré, le titre posé dessus.
+              _WorldBanner(world: world),
+
+              // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AnimatedLupulusAvatar(
+                      size: 38,
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        AudioService().playWheelClick();
+                      },
                     ),
-                  ),
+                    const SizedBox(width: 10),
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: RomanColors.palatinCream,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
+                          boxShadow: const [
+                            BoxShadow(color: Color(0x0C000000), offset: Offset(0, 2), blurRadius: 4),
+                          ],
+                        ),
+                        child: Text(
+                          '« Monde ${world.id.replaceAll(RegExp(r'\D'), '')} : que ta marche soit triomphale ! »',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w600,
+                            color: RomanColors.imperialPurple,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -327,35 +352,57 @@ class _MapScreenState extends State<MapScreen> {
               widget.repo.isLessonCompleted(world.lessons[lessonIndex - 1].id);
 
           // Alternance en serpentin doux (-50, 0, 50, 0)
-          final pattern = lessonIndex % 4;
-          final double offsetFactor = (pattern == 0)
-              ? -50
-              : (pattern == 1)
-                  ? 0
-                  : (pattern == 2)
-                      ? 50
-                      : 0;
+          final double offsetFactor = serpentinOffset(lessonIndex);
 
           // Le joueur se tient sur une seule borne : sa prochaine leçon.
           final bool isCurrentActive = lesson.id == _pawnLessonId;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Transform.translate(
-              offset: Offset(offsetFactor, 0),
-              child: _buildMilestoneNode(
-                context,
-                lesson: lesson,
-                index: lessonIndex + 1,
-                isCompleted: isCompleted,
-                isUnlocked: isUnlocked,
-                isCurrentActive: isCurrentActive,
+          // Le tronçon de route de cette rangée : il entre au milieu de la borne
+          // précédente et ressort au milieu de la suivante, centré en début et
+          // fin de monde pour rejoindre la route droite sous les bannières.
+          final double topX =
+              lessonIndex == 0 ? 0 : (serpentinOffset(lessonIndex - 1) + offsetFactor) / 2;
+          final double bottomX =
+              lessonIndex == lastIndex ? 0 : (offsetFactor + serpentinOffset(lessonIndex + 1)) / 2;
+          // Centre de la borne : marge haute, pion éventuel (46), demi-borne (31).
+          final double nodeY = 10 + (isCurrentActive ? 46 : 0) + 31;
+
+          return RepaintBoundary(
+            child: CustomPaint(
+              painter: ViaAppiaRoadPainter(
+                topX: topX,
+                nodeX: offsetFactor,
+                nodeY: nodeY,
+                bottomX: bottomX,
+                topTravelled: isUnlocked,
+                bottomTravelled: isCompleted,
+                seed: worldIndex * 1000 + lessonIndex + 1,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Transform.translate(
+                    offset: Offset(offsetFactor, 0),
+                    child: _buildMilestoneNode(
+                      context,
+                      lesson: lesson,
+                      index: lessonIndex + 1,
+                      isCompleted: isCompleted,
+                      isUnlocked: isUnlocked,
+                      isCurrentActive: isCurrentActive,
+                    ),
+                  ),
+                ),
               ),
             ),
           );
         }),
 
-        const SizedBox(height: 16),
+        CustomPaint(
+          painter: ViaAppiaRoadPainter.straight(x: 0, travelled: worldDone, seed: worldIndex * 1000 + 999),
+          child: const SizedBox(height: 16, width: double.infinity),
+        ),
       ],
     );
   }
@@ -854,31 +901,8 @@ class ViaAppiaBackgroundPainter extends CustomPainter {
     }
     // Ligne supérieure de l'aqueduc
     canvas.drawLine(Offset(0, yAqueduct), Offset(size.width, yAqueduct), aqueductPaint);
-
-    // 3. Chaussée de la Via Appia (pavés polygonaux en basalte)
-    final roadBorderPaint = Paint()
-      ..color = const Color(0x1CC5B396)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 36;
-
-    final roadPath = Path();
-    roadPath.moveTo(size.width * 0.5, 0);
-    roadPath.cubicTo(
-      size.width * 0.26, size.height * 0.33,
-      size.width * 0.74, size.height * 0.66,
-      size.width * 0.5, size.height,
-    );
-    canvas.drawPath(roadPath, roadBorderPaint);
-
-    // Pavés transversaux de basalte romain
-    final stoneLinePaint = Paint()
-      ..color = const Color(0x1E8D6E63)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-
-    for (double y = 40; y < size.height; y += 60) {
-      canvas.drawLine(Offset(size.width * 0.46, y), Offset(size.width * 0.54, y + 2), stoneLinePaint);
-    }
+    // La chaussée elle-même est peinte rangée par rangée (ViaAppiaRoadPainter),
+    // pour défiler avec les bornes au lieu de rester figée à l'écran.
   }
 
   @override
