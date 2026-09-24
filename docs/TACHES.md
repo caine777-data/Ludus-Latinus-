@@ -155,7 +155,7 @@ faut que l'ordre des réponses soit aléatoire **dès le premier affichage**.
 
 ## T3 — Jouer la vidéo d'intro à chaque démarrage
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : demande de Cédric. L'intro ne se joue qu'au tout premier
 lancement de l'app ; elle doit se jouer **à chaque démarrage**, une seule
@@ -177,15 +177,25 @@ fois par démarrage, toujours avec le bouton « Passer » qui existe déjà.
    statique.
 
 **Critères de réussite** :
-- [ ] `flutter analyze lib/ui/features/home/home_screen.dart` : aucune erreur.
-- [ ] Sur l'émulateur : arrêter l'app (`adb shell am force-stop com.luduslatinus.app`)
+- [x] `flutter analyze lib/ui/features/home/home_screen.dart` : aucune erreur.
+- [x] Sur l'émulateur : arrêter l'app (`adb shell am force-stop com.luduslatinus.app`)
       puis la relancer → l'intro se joue, deux fois de suite.
-- [ ] « Passer » ferme bien la vidéo et laisse l'accueil utilisable.
-- [ ] Aller sur la carte puis revenir à l'accueil → l'intro **ne** se rejoue **pas**.
-- [ ] Un commit `feat(mobile): l'intro se joue à chaque démarrage`.
+- [x] « Passer » ferme bien la vidéo et laisse l'accueil utilisable.
+- [x] Aller sur la carte puis revenir à l'accueil → l'intro **ne** se rejoue **pas**.
+- [x] Un commit `feat(mobile): l'intro se joue à chaque démarrage`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `flutter analyze lib/ui/features/home/home_screen.dart` : 0 erreur (infos de dépréciation préexistantes conservées).
+  - `flutter test` : 36 tests passés, 3 échecs connus inchangés (0 régression).
+  - `flutter build apk --debug` : compilation réussie en 19,7s.
+  - Validation sur émulateur Android `Pixel_Ludus` :
+    - Démarrage 1 (après `am force-stop`) : la vidéo d'intro s'exécute automatiquement (`scratch/t3_intro_playing.png`).
+    - Démarrage 2 (après nouveau `am force-stop`) : la vidéo d'intro s'exécute à nouveau (`scratch/t3_intro_launch2.png`).
+    - Bouton « Passer » : tap sur le bouton en haut à droite -> la vidéo se ferme immédiatement et l'accueil est utilisable (`scratch/t3_passer_clicked.png`).
+    - Navigation : aller sur la carte Via Appia (`scratch/t3_map_nav.png`) puis retour arrière sur l'accueil (`scratch/t3_back_to_home.png`) -> l'intro ne se relance pas.
+- Doutes, questions pour l'architecte : Aucun doute. Le booléen statique assure la persistance en mémoire pour toute la durée de la session.
+- Reste à faire : Rien sur T3. Tâche terminée.

@@ -42,12 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
   final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
 
+  // Statique : survit aux reconstructions et navigations, réinitialisé à chaque fermeture du process.
+  static bool _introJoueeCeLancement = false;
+
   @override
   void initState() {
     super.initState();
     AudioService().enterMusic(MusicTrack.accueil);
-    // Vidéo d'introduction au tout premier lancement seulement.
-    if (!widget.repo.profile.introSeen) {
+    // Vidéo d'introduction jouée au démarrage de l'application (une seule fois par session).
+    if (!_introJoueeCeLancement) {
+      _introJoueeCeLancement = true;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
         widget.repo.markIntroSeen();
