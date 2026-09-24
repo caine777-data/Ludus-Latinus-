@@ -8,7 +8,7 @@ Image.asset : pas de lecteur vidéo, pas de son, environ 300 Ko par animation.
 La piste audio générée par Gemini est donc volontairement abandonnée.
 
 Usage : python scripts/assets/lupulus_videos.py [humeur ...]
-        (sans argument : attente, joie, reflexion, salut)
+        (sans argument : attente, joie, reflexion, salut, triomphe)
 Dépendances d'outillage (pas de l'app) : pip install imageio-ffmpeg numpy pillow
 """
 
@@ -30,6 +30,7 @@ SORTIES = {
     "joie": "lupulus_joie",
     "reflexion": "lupulus_reflexion",
     "salut": "lupulus_salut",
+    "triomphe": "lupulus_triomphe",
 }
 
 TAILLE = 200   # côté du carré : Lupulus s'affiche au plus à ~60 dp (x3 en haute densité)

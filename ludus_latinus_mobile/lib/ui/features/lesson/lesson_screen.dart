@@ -279,10 +279,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               child: ClipOval(
                 child: Image.asset(
-                  // Pas encore d'animation de triomphe : l'image fixe reste.
-                  result.worldCompleted
-                      ? 'assets/images/lupulus/lupulus_triomphe_180.png'
-                      : lupulusAnimation(LupulusMood.joie),
+                  lupulusAnimation(result.worldCompleted ? LupulusMood.triomphe : LupulusMood.joie),
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => Image.asset(
                     'assets/images/lupulus/lupulus_joie_180.png',

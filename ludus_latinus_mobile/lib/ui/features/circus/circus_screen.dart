@@ -1537,7 +1537,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 ],
               ),
               child: Image.asset(
-                'assets/images/lupulus/lupulus_triomphe_180.png',
+                lupulusAnimation(LupulusMood.triomphe),
                 height: 96,
                 fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) => const Text('🏆', style: TextStyle(fontSize: 48)),

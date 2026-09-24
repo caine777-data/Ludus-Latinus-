@@ -1308,7 +1308,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         children: [
           if (_victoire) ...[
             Image.asset(
-              'assets/images/lupulus/lupulus_triomphe_180.png',
+              lupulusAnimation(LupulusMood.triomphe),
               width: 120,
               height: 120,
               fit: BoxFit.contain,

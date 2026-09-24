@@ -184,13 +184,14 @@ class RomanMedallion extends StatelessWidget {
 
 /// Avatar animé et vivant de Lupulus réagissant au toucher (clignement idle et salut légionnaire).
 /// Humeur de Lupulus : choisit son animation de repos.
-enum LupulusMood { attente, joie, reflexion }
+enum LupulusMood { attente, joie, reflexion, triomphe }
 
 /// Animation (WebP transparent, en boucle) de Lupulus pour une humeur donnée.
 String lupulusAnimation(LupulusMood mood) => switch (mood) {
       LupulusMood.attente => 'assets/images/animated/lupulus_idle.webp',
       LupulusMood.joie => 'assets/images/animated/lupulus_joie.webp',
       LupulusMood.reflexion => 'assets/images/animated/lupulus_reflexion.webp',
+      LupulusMood.triomphe => 'assets/images/animated/lupulus_triomphe.webp',
     };
 
 class AnimatedLupulusAvatar extends StatefulWidget {

@@ -91,7 +91,7 @@ assets/
   images/mondes/    monde<N>.webp    26 décors, bannières de la Via Appia
   images/via/       <nom>.png        8 éléments de bord de route, proportions réelles
   images/animated/  lupulus_<humeur>.webp  Lupulus animé (WebP transparent, en boucle) :
-                    idle (= attente), joie, reflexion, salut — voir LupulusMood
+                    idle (= attente), joie, reflexion, salut, triomphe — voir LupulusMood
   audio/            bruitages WAV mono 44,1 kHz + 3 musiques OGG — voir AudioService
   cinematics/       vidéos 9:16 avec bande-son : intro, triumph, boss_entrance (secours),
                     boss_<retiaire|lion|minotaure|sphinx|mercure>, niveau_<5e|4e|3e>
@@ -147,8 +147,8 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     voit pas.
 13. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
     `AnimatedLupulusAvatar(mood: …)` plutôt qu'un chemin d'image en dur.
-    « Triomphe » n'a pas encore d'animation : l'image fixe
-    `lupulus_triomphe_180.png` reste utilisée.
+    Les images fixes de `images/lupulus/` ne servent plus que de secours
+    (`errorBuilder`) ou pour les costumes.
 
 ---
 
@@ -254,6 +254,10 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Lupulus triomphant animé** — coupe levée et étincelles, en fin de monde,
+  à la victoire du Duel et du Circus, et dans Memoria (série de 5 et bilan).
+  Les 5 humeurs de Lupulus sont désormais toutes animées.
+
 - **Assets refaits** — Sphinx à visage humain, Lupulus joyeux qui garde sa
   couronne sur toute l'animation, nouvelle acclamation de la foule (coupée à
   2,6 s et baissée de 5 dB : `DUREE_MAX` et `GAIN_EXTRA` dans
@@ -293,7 +297,6 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
-- Animation « triomphe » de Lupulus (aujourd'hui image fixe).
 
 ---
 
