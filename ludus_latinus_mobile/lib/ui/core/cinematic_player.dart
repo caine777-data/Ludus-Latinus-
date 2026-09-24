@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
+import '../../data/models/world.dart';
 import '../../data/services/audio_service.dart';
 import 'themes.dart';
 
@@ -24,7 +25,7 @@ class CinematicConfig {
     required this.subtitle,
   });
 
-  static CinematicConfig forType(CinematicType type, {String? extraInfo}) {
+  static CinematicConfig forType(CinematicType type, {String? extraInfo, String? video}) {
     switch (type) {
       case CinematicType.intro:
         return const CinematicConfig(
@@ -34,7 +35,8 @@ class CinematicConfig {
         );
       case CinematicType.bossEntrance:
         return CinematicConfig(
-          assetPath: 'assets/cinematics/boss_entrance.mp4',
+          // Chaque champion a son entrée ; la vidéo générique reste en secours.
+          assetPath: video ?? 'assets/cinematics/boss_entrance.mp4',
           title: 'COLOSSEUM DUELLUM',
           subtitle: extraInfo != null ? 'Ton adversaire : $extraInfo' : '« Ave Caesar, morituri te salutant ! »',
         );
@@ -246,10 +248,32 @@ class RomanCinematicOverlay {
       _show(context, CinematicConfig.forType(CinematicType.intro));
 
   /// Entrée d'un champion au Colisée.
-  static Future<void> showBossEntrance(BuildContext context, {String? bossName}) =>
-      _show(context, CinematicConfig.forType(CinematicType.bossEntrance, extraInfo: bossName));
+  static Future<void> showBossEntrance(BuildContext context, {String? bossName, String? video}) =>
+      _show(context, CinematicConfig.forType(CinematicType.bossEntrance, extraInfo: bossName, video: video));
 
   /// Triomphe : fin d'un monde de la Via Appia.
   static Future<void> showTriumph(BuildContext context, {String? subtitle}) =>
       _show(context, CinematicConfig.forType(CinematicType.triumph, extraInfo: subtitle));
+
+  /// Vidéo propre à chaque niveau, par identifiant de classe.
+  static const _videosNiveau = {
+    '5eme': 'assets/cinematics/niveau_5e.mp4',
+    '4eme': 'assets/cinematics/niveau_4e.mp4',
+    '3eme': 'assets/cinematics/niveau_3e.mp4',
+  };
+
+  /// Entrée dans un niveau (5e, 4e, 3e) : survol de la Rome de cette époque.
+  /// Voir `GameRepository.enterLevelOf` pour la règle « une seule fois ».
+  static Future<void> showLevel(BuildContext context, SchoolClass niveau) {
+    final video = _videosNiveau[niveau.id];
+    if (video == null) return Future.value();
+    return _show(
+      context,
+      CinematicConfig(
+        assetPath: video,
+        title: 'CLASSE DE ${niveau.titre.toUpperCase()}',
+        subtitle: niveau.sousTitre,
+      ),
+    );
+  }
 }

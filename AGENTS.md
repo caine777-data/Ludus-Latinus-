@@ -92,7 +92,10 @@ assets/
   images/via/       <nom>.png        8 éléments de bord de route, proportions réelles
   images/animated/  lupulus_<humeur>.webp  Lupulus animé (WebP transparent, en boucle) :
                     idle (= attente), joie, reflexion, salut — voir LupulusMood
-  audio/, cinematics/, fonts/
+  audio/            bruitages WAV mono 44,1 kHz + 3 musiques OGG — voir AudioService
+  cinematics/       vidéos 9:16 avec bande-son : intro, triumph, boss_entrance (secours),
+                    boss_<retiaire|lion|minotaure|sphinx|mercure>, niveau_<5e|4e|3e>
+  fonts/
 ```
 
 ---
@@ -136,7 +139,13 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     carte, envelopper une borne dans un `Stack` sans
     `alignment: Alignment.topCenter` la décale hors de la route (déjà
     arrivé). Vérifie toujours une modification de la carte sur l'émulateur.
-12. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
+12. **Vidéo d'entrée de niveau : une seule fois, décidée par
+    `GameRepository.enterLevelOf()`**, appelée à l'ouverture de
+    `LessonScreen`. Ne la déclenche pas ailleurs : les leçons s'ouvrent
+    depuis la carte et depuis l'accueil, c'est pour ça qu'elle est dans
+    l'écran de leçon. Un profil qui a déjà validé une leçon du niveau ne la
+    voit pas.
+13. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
     `AnimatedLupulusAvatar(mood: …)` plutôt qu'un chemin d'image en dur.
     « Triomphe » n'a pas encore d'animation : l'image fixe
     `lupulus_triomphe_180.png` reste utilisée.
@@ -202,8 +211,14 @@ Cédric génère les images et les dépose dans
 | `via_elements.py [nom …]` | `via_<nom>.jpg` | `images/via/<nom>.png`, recadré au ras, sans carré |
 | `lupulus_videos.py [humeur …]` | `lupulus_<humeur>.mp4` (fond vert) | `images/animated/lupulus_*.webp`, son retiré |
 
-`lupulus_videos.py` demande `pip install imageio-ffmpeg numpy` (outils de
-préparation seulement, pas des dépendances de l'app).
+| `bruitages.py [nom …]` | `<nom>.wav` | `audio/<nom>.wav` : silences coupés, crête -3 dB, mono 44,1 kHz |
+
+`lupulus_videos.py` et `bruitages.py` demandent `pip install imageio-ffmpeg numpy`
+(outils de préparation seulement, pas des dépendances de l'app).
+
+Les **cinématiques** (vidéos plein écran avec son) sont seulement ré-encodées
+pour alléger l'APK, avec le ffmpeg d'`imageio_ffmpeg` :
+`-c:v libx264 -preset slow -crf 25 -pix_fmt yuv420p -movflags +faststart -c:a aac -b:a 96k`.
 
 Règles pour les images :
 - tout ce qui doit être détouré est généré sur **fond vert uni `#00FF00`** ;
@@ -239,6 +254,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Boss du Duel** — chacun des 5 boss a sa vidéo d'entrée (clé `video` de
+  sa fiche dans `duel_screen.dart`) ; `boss_entrance.mp4` reste en secours.
+- **Vidéos de niveau** — survol de la Rome de chaque époque, joué la
+  première fois que l'élève ouvre une leçon de 5e, de 4e ou de 3e
+  (`UserProfile.niveauxVus`, `RomanCinematicOverlay.showLevel`).
+- **Bruitages** — achat (`playPurchase`), fin de monde
+  (`playWorldComplete`, après la vidéo de triomphe), carte révélée au
+  Panthéon (`playCardObtained`, à la place de la fanfare), page tournée
+  (`playPage`, onglets de la boutique et du Thesaurus) ; le choc d'épées est
+  remplacé par la version Gemini.
+
 - **Lupulus animé** — les 4 vidéos Gemini sont devenues des WebP animés
   transparents (environ 280 Ko chacun, 10 images/s, son retiré).
   `LupulusMood` choisit l'animation ; la leçon (réussite, indice) et Memoria
@@ -264,9 +290,12 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
 - **Refaire `lupulus_joie.mp4`** : dans la vidéo actuelle, la couronne de
   laurier apparaît et disparaît en cours d'animation.
-- Vidéos d'entrée de niveau (5e, 4e, 3e) et 6 nouveaux bruitages : fournis
-  par Cédric, à intégrer.
-- Vidéos des boss du Duel : pas encore générées.
+- **Refaire `boss_sphinx.mp4`** (décidé par Cédric) : le Sphinx actuel a une
+  tête de lion au lieu d'un visage humain.
+- **Régénérer `foule.wav` plus long** (environ 2 s) : la version reçue ne
+  dure que 0,48 s, donc l'ancienne acclamation `crowd_cheer.wav` a été
+  gardée.
+- Animation « triomphe » de Lupulus (aujourd'hui image fixe).
 
 ---
 

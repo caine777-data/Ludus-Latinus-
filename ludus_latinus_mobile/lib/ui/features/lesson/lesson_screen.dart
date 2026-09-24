@@ -129,7 +129,16 @@ class _LessonScreenState extends State<LessonScreen> {
     AudioService().enterMusic(MusicTrack.lecon);
     _order = List.generate(widget.lesson.options.length, (i) => i);
     _scrollController.addListener(_updateExerciseVisibility);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _updateExerciseVisibility());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _updateExerciseVisibility();
+      // Première leçon d'un niveau : sa vidéo d'entrée, une seule fois. On la
+      // lance ici plutôt qu'à l'ouverture, car les leçons s'ouvrent depuis la
+      // carte comme depuis l'accueil.
+      final niveau = widget.repo.enterLevelOf(widget.lesson.id);
+      if (niveau != null && mounted) {
+        await RomanCinematicOverlay.showLevel(context, niveau);
+      }
+    });
   }
 
   @override
@@ -215,6 +224,7 @@ class _LessonScreenState extends State<LessonScreen> {
         subtitle: result.worldTitle != null ? 'Monde terminé : ${result.worldTitle}' : 'Monde terminé !',
       );
       if (!mounted) return;
+      AudioService().playWorldComplete();
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {

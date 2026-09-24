@@ -144,7 +144,8 @@ class _PantheonScreenState extends State<PantheonScreen> {
         _cartesRetournees.remove(id);
       } else {
         _cartesRetournees.add(id);
-        AudioService().playTriumph();
+        // Révéler une carte n'est pas un triomphe : un miroitement suffit.
+        AudioService().playCardObtained();
         RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
       }
     });

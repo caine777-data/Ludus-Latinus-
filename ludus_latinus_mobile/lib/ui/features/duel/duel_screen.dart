@@ -80,6 +80,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Marcus le Rétiaire',
       'titre': 'Gladiateur Vétéran',
       'image': 'assets/images/boss_gladiateur_140.png',
+      'video': 'assets/cinematics/boss_retiaire.mp4',
       'maxHp': 100,
       'attaque': 20,
       'citation': '« Mors aut gloria in harena ! »',
@@ -90,6 +91,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Lion de Némée',
       'titre': 'Fauve Légendaire',
       'image': 'assets/images/boss_lion_140.png',
+      'video': 'assets/cinematics/boss_lion.mp4',
       'maxHp': 120,
       'attaque': 25,
       'citation': '« Rugitus leonis terram commovet ! »',
@@ -100,6 +102,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Minotaure',
       'titre': 'Gardien du Labyrinthe',
       'image': 'assets/images/boss_minotaure_140.png',
+      'video': 'assets/cinematics/boss_minotaure.mp4',
       'maxHp': 140,
       'attaque': 30,
       'citation': '« Nullus exitus e labyrintho patet ! »',
@@ -110,6 +113,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Sphinx de Thèbes',
       'titre': 'Maître des Énigmes',
       'image': 'assets/images/boss_sphinx_140.png',
+      'video': 'assets/cinematics/boss_sphinx.mp4',
       'maxHp': 160,
       'attaque': 35,
       'citation': '« Solve aenigma aut peri ! »',
@@ -120,6 +124,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Mercure Céleste',
       'titre': 'Messager des Dieux',
       'image': 'assets/images/boss_mercure_140.png',
+      'video': 'assets/cinematics/boss_mercure.mp4',
       'maxHp': 180,
       'attaque': 40,
       'citation': '« Celeritas deorum vincit omnia ! »',
@@ -356,7 +361,12 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   }
 
   void _showBossEntrance() {
-    RomanCinematicOverlay.showBossEntrance(context, bossName: _bosses[_currentBossIndex]['nom'] as String);
+    final boss = _bosses[_currentBossIndex];
+    RomanCinematicOverlay.showBossEntrance(
+      context,
+      bossName: boss['nom'] as String,
+      video: boss['video'] as String?,
+    );
   }
 
   @override

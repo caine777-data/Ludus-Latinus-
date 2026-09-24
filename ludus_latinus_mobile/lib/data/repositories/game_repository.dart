@@ -168,6 +168,38 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
   }
 
+  /// Niveau (5e, 4e, 3e) dans lequel l'élève entre en ouvrant cette leçon,
+  /// ou `null` s'il y est déjà entré. La vidéo d'entrée d'un niveau ne se
+  /// joue qu'une fois : le niveau est marqué comme vu dès cet appel.
+  ///
+  /// Un élève qui a déjà validé une leçon du niveau (profil antérieur à ces
+  /// vidéos) y est considéré comme entré : on ne lui impose pas la vidéo.
+  SchoolClass? enterLevelOf(String lessonId) {
+    World? world;
+    for (final w in worlds) {
+      if (w.lessons.any((l) => l.id == lessonId)) {
+        world = w;
+        break;
+      }
+    }
+    if (world == null) return null;
+    SchoolClass? niveau;
+    for (final c in classes) {
+      if (c.mondesIds.contains(world.id)) {
+        niveau = c;
+        break;
+      }
+    }
+    if (niveau == null || profile.niveauxVus.contains(niveau.id)) return null;
+
+    final dejaEntre = worlds
+        .where((w) => niveau!.mondesIds.contains(w.id))
+        .any((w) => w.lessons.any((l) => isLessonCompleted(l.id)));
+    profile.niveauxVus.add(niveau.id);
+    storageService.saveProfile(profile);
+    return dejaEntre ? null : niveau;
+  }
+
   int get taverneRewardsLeftToday => profile.taverneRewardsLeftToday;
 
   /// Réserve un lancer récompensé de la Taverne (3 par jour). Renvoie false si épuisé.

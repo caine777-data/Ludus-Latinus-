@@ -152,7 +152,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         ),
                         onSelected: (selected) {
                           if (selected) {
-                            AudioService().playCardFlip();
+                            AudioService().playPage();
                             setState(() => _selectedCategory = cat);
                           }
                         },

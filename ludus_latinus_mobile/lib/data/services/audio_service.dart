@@ -460,6 +460,33 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
     await playAsset('assets/audio/bouton.wav', volumeMultiplier: 0.5);
   }
 
+  /// Achat conclu dans la Taberna : pièces sur le comptoir et clochette.
+  Future<void> playPurchase() async {
+    if (_isMuted) return;
+    if (_hapticsEnabled) HapticFeedback.heavyImpact();
+    await playAsset('assets/audio/achat.wav');
+  }
+
+  /// Carte de collection obtenue.
+  Future<void> playCardObtained() async {
+    if (_isMuted) return;
+    if (_hapticsEnabled) HapticFeedback.mediumImpact();
+    await playAsset('assets/audio/carte_obtenue.wav');
+  }
+
+  /// Dernière leçon d'un monde réussie : fanfare plus solennelle que celle d'une leçon.
+  Future<void> playWorldComplete() async {
+    if (_isMuted) return;
+    if (_hapticsEnabled) HapticFeedback.heavyImpact();
+    await playAsset('assets/audio/monde_termine.wav');
+  }
+
+  /// Page de parchemin tournée (onglets, pages du Thesaurus).
+  Future<void> playPage() async {
+    if (_isMuted) return;
+    await playAsset('assets/audio/page.wav', volumeMultiplier: 0.7);
+  }
+
   /// Arrêt de tous les flux audio
   Future<void> stopAll() async {
     if (!kIsWeb && Platform.isWindows) {

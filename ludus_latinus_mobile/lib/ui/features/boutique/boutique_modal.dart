@@ -54,7 +54,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
   void _onCategoryChanged(GoodieCategory cat) {
     HapticFeedback.selectionClick();
-    AudioService().playCardFlip();
+    AudioService().playPage();
     setState(() => _activeCategory = cat);
   }
 
@@ -75,8 +75,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
     }
 
     HapticFeedback.heavyImpact();
-    AudioService().playSesterces();
-    AudioService().playTriumph();
+    AudioService().playPurchase();
 
     final ok = widget.repo.buyGoodie(item);
     if (ok) {
