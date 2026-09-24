@@ -29,7 +29,19 @@ SONS = {
     "monde_termine.wav": "monde_termine.wav",
     "page.wav": "page.wav",
     "coup_epee.wav": "sword_clash.wav",   # remplace l'ancien choc d'épées
-    # « foule.wav » n'est pas repris : 0,48 s, trop bref face à l'acclamation actuelle.
+    "foule.wav": "crowd_cheer.wav",       # remplace l'ancienne acclamation
+}
+
+# Sons générés trop longs : on les coupe, avec un fondu plus long pour que la
+# coupe ne s'entende pas (une foule ne s'arrête pas net).
+DUREE_MAX = {
+    "foule.wav": (2.6, 0.9),   # (durée gardée en s, fondu de sortie en s)
+}
+
+# Sons denses (une foule, un souffle) : même crête que les autres mais bien plus
+# forts à l'oreille. Correction en dB pour les aligner (volume moyen ~ -19 dB).
+GAIN_EXTRA = {
+    "foule.wav": -5.0,
 }
 
 DEBUT = "silenceremove=start_periods=1:start_threshold=-40dB:start_silence=0.02"
@@ -56,12 +68,16 @@ def convertir(source, cible):
         return
     duree, crete, silences = mesurer(src, DEBUT)
     fin = min(duree, next((s for s in silences if s > 0.05), duree) + 0.12)
-    gain = -3.0 - crete
+    fondu = 0.08
+    if source in DUREE_MAX:
+        limite, fondu = DUREE_MAX[source]
+        fin = min(fin, limite)
+    gain = -3.0 - crete + GAIN_EXTRA.get(source, 0.0)
     DEST.mkdir(parents=True, exist_ok=True)
     subprocess.run(
         [FF, "-hide_banner", "-loglevel", "error", "-y", "-i", str(src), "-af",
          f"{DEBUT},atrim=0:{fin},asetpts=PTS-STARTPTS,"
-         f"afade=t=out:st={max(0, fin - 0.08)}:d=0.08,volume={gain}dB",
+         f"afade=t=out:st={max(0, fin - fondu)}:d={fondu},volume={gain}dB",
          "-ac", "1", "-ar", "44100", "-c:a", "pcm_s16le", str(DEST / cible)],
         check=True,
     )

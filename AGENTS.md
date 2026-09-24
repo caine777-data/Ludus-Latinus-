@@ -254,6 +254,11 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Assets refaits** — Sphinx à visage humain, Lupulus joyeux qui garde sa
+  couronne sur toute l'animation, nouvelle acclamation de la foule (coupée à
+  2,6 s et baissée de 5 dB : `DUREE_MAX` et `GAIN_EXTRA` dans
+  `scripts/assets/bruitages.py`).
+
 - **Boss du Duel** — chacun des 5 boss a sa vidéo d'entrée (clé `video` de
   sa fiche dans `duel_screen.dart`) ; `boss_entrance.mp4` reste en secours.
 - **Vidéos de niveau** — survol de la Rome de chaque époque, joué la
@@ -288,13 +293,6 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
-- **Refaire `lupulus_joie.mp4`** : dans la vidéo actuelle, la couronne de
-  laurier apparaît et disparaît en cours d'animation.
-- **Refaire `boss_sphinx.mp4`** (décidé par Cédric) : le Sphinx actuel a une
-  tête de lion au lieu d'un visage humain.
-- **Régénérer `foule.wav` plus long** (environ 2 s) : la version reçue ne
-  dure que 0,48 s, donc l'ancienne acclamation `crowd_cheer.wav` a été
-  gardée.
 - Animation « triomphe » de Lupulus (aujourd'hui image fixe).
 
 ---
