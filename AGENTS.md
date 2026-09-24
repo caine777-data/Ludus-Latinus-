@@ -148,7 +148,8 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
 13. **Lupulus : utilise `lupulusAnimation(LupulusMood.xxx)`** ou
     `AnimatedLupulusAvatar(mood: …)` plutôt qu'un chemin d'image en dur.
     Les images fixes de `images/lupulus/` ne servent plus que de secours
-    (`errorBuilder`) ou pour les costumes.
+    (`errorBuilder`) et pour les costumes (centurion, gladiateur, imperator,
+    philosophe…), qui n'ont pas d'animation.
 
 ---
 

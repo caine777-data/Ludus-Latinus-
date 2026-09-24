@@ -280,6 +280,13 @@ class LupulusDialogue extends StatelessWidget {
     this.onTap,
   });
 
+  static const _moods = {
+    'normal': LupulusMood.attente,
+    'joie': LupulusMood.joie,
+    'reflexion': LupulusMood.reflexion,
+    'triomphe': LupulusMood.triomphe,
+  };
+
   @override
   Widget build(BuildContext context) {
     const validEmotions = [
@@ -321,8 +328,9 @@ class LupulusDialogue extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            safeEmotion == 'normal'
-                ? AnimatedLupulusAvatar(size: 54, onTap: onTap)
+            // Humeurs animées ; les costumes (centurion, gladiateur…) restent fixes.
+            _moods.containsKey(safeEmotion)
+                ? AnimatedLupulusAvatar(size: 54, onTap: onTap, mood: _moods[safeEmotion]!)
                 : Container(
                     width: 54,
                     height: 54,
