@@ -94,7 +94,7 @@ assets/
                     idle (= attente), joie, reflexion, salut, triomphe — voir LupulusMood
   (windows/          projet Windows versionné : exe LudusLatinus.exe, fenêtre portrait 460x900)
   audio/            bruitages WAV mono 44,1 kHz + 3 musiques OGG — voir AudioService
-  cinematics/       vidéos 9:16 avec bande-son : intro, triumph, boss_entrance (secours),
+  cinematics/       vidéos 9:16 avec bande-son : intro, triumph,
                     boss_<retiaire|lion|minotaure|sphinx|mercure>, niveau_<5e|4e|3e>
   fonts/
 ```
@@ -277,6 +277,9 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Vidéos allégées** — l'intro et le triomphe ré-encodés (6,3 Mo → 2,6 Mo) ;
+  `boss_entrance.mp4` supprimé, devenu inutile depuis les vidéos par boss.
+
 - **CI simplifiée** — un seul workflow `appli.yml` produit l'APK, l'AAB Play
   Store (numéro de version = numéro d'exécution) et la version Windows. Le
   projet Windows est versionné (plus régénéré à chaque exécution), l'exe
@@ -293,7 +296,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   `scripts/assets/bruitages.py`).
 
 - **Boss du Duel** — chacun des 5 boss a sa vidéo d'entrée (clé `video` de
-  sa fiche dans `duel_screen.dart`) ; `boss_entrance.mp4` reste en secours.
+  sa fiche dans `duel_screen.dart`) ; à défaut, celle du Rétiaire.
 - **Vidéos de niveau** — survol de la Rome de chaque époque, joué la
   première fois que l'élève ouvre une leçon de 5e, de 4e ou de 3e
   (`UserProfile.niveauxVus`, `RomanCinematicOverlay.showLevel`).

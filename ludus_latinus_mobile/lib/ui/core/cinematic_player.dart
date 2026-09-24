@@ -35,8 +35,8 @@ class CinematicConfig {
         );
       case CinematicType.bossEntrance:
         return CinematicConfig(
-          // Chaque champion a son entrée ; la vidéo générique reste en secours.
-          assetPath: video ?? 'assets/cinematics/boss_entrance.mp4',
+          // Chaque champion a son entrée ; à défaut, celle du premier boss.
+          assetPath: video ?? 'assets/cinematics/boss_retiaire.mp4',
           title: 'COLOSSEUM DUELLUM',
           subtitle: extraInfo != null ? 'Ton adversaire : $extraInfo' : '« Ave Caesar, morituri te salutant ! »',
         );
