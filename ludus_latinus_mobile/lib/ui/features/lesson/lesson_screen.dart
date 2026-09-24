@@ -127,7 +127,7 @@ class _LessonScreenState extends State<LessonScreen> {
     super.initState();
     _vocabQueue = _buildVocabQueue();
     AudioService().enterMusic(MusicTrack.lecon);
-    _order = List.generate(widget.lesson.options.length, (i) => i);
+    _order = List.generate(widget.lesson.options.length, (i) => i)..shuffle();
     _scrollController.addListener(_updateExerciseVisibility);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _updateExerciseVisibility();

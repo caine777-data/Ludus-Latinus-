@@ -34,6 +34,10 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
   bool _isAnswered = false;
   bool _isSuccess = false;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
+  late final List<List<int>> _ordres = [
+    for (final q in widget.questions)
+      List.generate((q['options'] as List).length, (i) => i)..shuffle()
+  ];
 
   @override
   void initState() {
@@ -220,7 +224,8 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 childAspectRatio: 2.2,
               ),
               itemCount: options.length,
-              itemBuilder: (context, optIndex) {
+              itemBuilder: (context, pos) {
+                final optIndex = _ordres[_currentQuestionIndex][pos];
                 final optionText = options[optIndex];
                 final isSelected = (_selectedOption == optIndex);
 

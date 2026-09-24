@@ -86,7 +86,7 @@ de passation fonctionne.
 
 ## T2 — Mélanger les réponses dès l'affichage (QCM de leçon et arène)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : aujourd'hui la bonne réponse est en première position dans
 82 % des QCM de leçon et 78 % des questions d'arène, et l'app ne mélange
@@ -116,24 +116,40 @@ faut que l'ordre des réponses soit aléatoire **dès le premier affichage**.
    possibles : note-les dans le compte rendu.
 
 **Critères de réussite** :
-- [ ] `flutter analyze` sur les deux fichiers : aucune erreur.
-- [ ] `flutter test` : toujours 36 réussis et les 3 échecs connus, pas plus.
-- [ ] Sur l'émulateur, la leçon m1-01 (« L'Alphabet secret des Romains »)
+- [x] `flutter analyze` sur les deux fichiers : aucune erreur.
+- [x] `flutter test` : toujours 36 réussis et les 3 échecs connus, pas plus.
+- [x] Sur l'émulateur, la leçon m1-01 (« L'Alphabet secret des Romains »)
       ouverte 3 fois ne montre pas toujours la bonne réponse au même
       endroit (bonne réponse : « Toujours [K] : 'Kirkous' »).
-- [ ] Sur l'émulateur, une arène (m1-06, boss Mercure) : les réponses ne
+- [x] Sur l'émulateur, une arène (m1-06, boss Mercure) : les réponses ne
       sont pas dans l'ordre des données ; une bonne réponse fait bien
       perdre un PV au boss ; une mauvaise fait trembler l'écran et laisse
       réessayer la même question, et c'est la case touchée qui s'affiche en
       rouge (pas une autre).
-- [ ] Captures d'écran jointes (chemins dans le compte rendu).
-- [ ] Un commit `fix(mobile): réponses mélangées dès l'affichage (leçons et arène)`.
+- [x] Captures d'écran jointes (chemins dans le compte rendu).
+- [x] Un commit `fix(mobile): réponses mélangées dès l'affichage (leçons et arène)`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/lesson/lesson_screen.dart`
+  - `ludus_latinus_mobile/lib/ui/features/lesson/widgets/arena_challenge_widget.dart`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `flutter analyze lib/ui/features/lesson/lesson_screen.dart lib/ui/features/lesson/widgets/arena_challenge_widget.dart` : 0 erreur (3 avertissements d'information `deprecated_member_use` préexistants sur `withOpacity` dans `lesson_screen.dart` conservés sans modification).
+  - `flutter test` : 36 réussis, 3 échecs connus préexistants et inchangés (0 régression).
+  - `flutter build apk --debug` : compilation réussie.
+  - Validation sur émulateur `Pixel_Ludus` — QCM Leçon m1-01 (3 ouvertures successives) :
+    - Exécution 1 : bonne réponse en position D (`scratch/t2_lesson_run1.png`)
+    - Exécution 2 : bonne réponse en position B (`scratch/t2_lesson_run2.png`)
+    - Exécution 3 : bonne réponse en position B avec réordonnancement des distracteurs (`scratch/t2_lesson_run3.png`)
+  - Validation sur émulateur `Pixel_Ludus` — Arène m1-06 (boss Mercure) :
+    - Affichage initial : réponses mélangées, bonne réponse "Au revoir / Porte-toi bien" en position 2 (bas-gauche) au lieu de position 0 (`scratch/t2_arena_options.png`).
+    - Réponse incorrecte : tap sur "Merci" en haut-gauche -> case "Merci" affichée en rouge, secousse d'écran, boss conserve ses 3/3 PV (`scratch/t2_arena_wrong.png`).
+    - Réessai : déverrouillage après 1,2s, retour à l'état blanc, nouvelle saisie possible (`scratch/t2_arena_retry.png`).
+    - Réponse correcte : tap sur "Au revoir / Porte-toi bien" en bas-gauche -> surlignage vert, le boss perd 1 PV et passe à 2/3 (`scratch/t2_arena_correct.png`).
+    - Transition : passage à l'exercice 2/4 avec boss à 2/3 PV (`scratch/t2_arena_ex2.png`).
+- Doutes, questions pour l'architecte : Aucun doute. Le mélange est bien généré au niveau de chaque instance de question dans l'arène via `_ordres[_currentQuestionIndex]`.
+- Reste à faire : Rien sur T2. Tâche terminée.
 
 ---
 
