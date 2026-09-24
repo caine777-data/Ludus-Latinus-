@@ -27,6 +27,10 @@ toucher au code. Il prime sur tes habitudes par défaut.
    lancées et leur résultat réel, doutes, ce qui reste à faire. Passe le
    statut à `FAIT` ou `BLOQUÉ`.
 5. Fais **un commit** par tâche (voir section 6). Ne pousse pas.
+6. **Laisse l'émulateur comme tu l'as trouvé** : si tu actives une option de
+   développeur (affichage du pointeur, des touchers…), éteins-la avant de
+   finir (`adb shell settings put system pointer_location 0` et
+   `show_touches 0`).
 
 ### Ce qu'un exécutant ne fait jamais
 
@@ -276,6 +280,10 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **T2 et T3 validées** (exécutant Gemini) — réponses mélangées dès
+  l'affichage dans les leçons et l'arène ; intro à chaque démarrage.
+  T4 ouverte : l'arène révélait la bonne réponse après une erreur.
 
 - **Vidéos allégées** — l'intro et le triomphe ré-encodés (6,3 Mo → 2,6 Mo) ;
   `boss_entrance.mp4` supprimé, devenu inutile depuis les vidéos par boss.

@@ -86,7 +86,7 @@ de passation fonctionne.
 
 ## T2 — Mélanger les réponses dès l'affichage (QCM de leçon et arène)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : aujourd'hui la bonne réponse est en première position dans
 82 % des QCM de leçon et 78 % des questions d'arène, et l'app ne mélange
@@ -151,11 +151,18 @@ faut que l'ordre des réponses soit aléatoire **dès le premier affichage**.
 - Doutes, questions pour l'architecte : Aucun doute. Le mélange est bien généré au niveau de chaque instance de question dans l'arène via `_ordres[_currentQuestionIndex]`.
 - Reste à faire : Rien sur T2. Tâche terminée.
 
+**Vérification de l'architecte** : diff minimal et exact (`..shuffle()` dans
+la leçon ; `_ordres` dans l'arène, avec texte, couleur et validation sur
+l'index d'origine), périmètre respecté, `analysis_options.yaml` non commité,
+captures conformes. Validé. Remarque : l'affichage de la position du doigt
+avait été laissé allumé sur l'émulateur (barre de coordonnées sur les
+captures) ; éteint par l'architecte, voir la règle ajoutée dans AGENTS.md.
+
 ---
 
 ## T3 — Jouer la vidéo d'intro à chaque démarrage
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : demande de Cédric. L'intro ne se joue qu'au tout premier
 lancement de l'app ; elle doit se jouer **à chaque démarrage**, une seule
@@ -199,3 +206,43 @@ fois par démarrage, toujours avec le bouton « Passer » qui existe déjà.
     - Navigation : aller sur la carte Via Appia (`scratch/t3_map_nav.png`) puis retour arrière sur l'accueil (`scratch/t3_back_to_home.png`) -> l'intro ne se relance pas.
 - Doutes, questions pour l'architecte : Aucun doute. Le booléen statique assure la persistance en mémoire pour toute la durée de la session.
 - Reste à faire : Rien sur T3. Tâche terminée.
+
+**Vérification de l'architecte** : indicateur statique conforme, commentaire
+présent, `markIntroSeen()` conservé, quatre scénarios capturés. Validé.
+
+---
+
+## T4 — Arène : ne plus révéler la bonne réponse après une erreur
+
+Statut : À FAIRE
+
+**Objectif** : dans l'arène, après une mauvaise réponse, la bonne s'affiche
+en vert, puis l'élève peut réessayer : il n'a plus qu'à toucher la case
+verte. La bonne réponse ne doit apparaître en vert **que si c'est elle que
+l'élève a choisie**. Le QCM des leçons fait déjà ainsi.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/lesson/widgets/arena_challenge_widget.dart`
+
+**Étapes** :
+1. Dans `itemBuilder`, le bloc `if (_isAnswered)` colore en vert toute case
+   dont `optIndex == expectedAnswer`. Remplace cette condition par
+   `optIndex == expectedAnswer && isSelected`.
+2. Ne change rien d'autre (la case choisie reste en rouge quand elle est
+   fausse).
+
+**Critères de réussite** :
+- [ ] `flutter analyze` sur le fichier : aucune erreur.
+- [ ] `flutter test` : 36 réussis et les 3 échecs connus, pas plus.
+- [ ] Sur l'émulateur, arène m1-06 : une mauvaise réponse ne colore **que**
+      la case touchée (en rouge) ; aucune case verte n'apparaît.
+- [ ] Une bonne réponse s'affiche bien en vert et fait perdre un PV au boss.
+- [ ] L'affichage de la position du doigt est éteint avant les captures
+      (`adb shell settings put system pointer_location 0`).
+- [ ] Un commit `fix(mobile): l'arène ne révèle plus la bonne réponse après une erreur`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
