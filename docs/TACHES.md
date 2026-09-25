@@ -214,7 +214,7 @@ présent, `markIntroSeen()` conservé, quatre scénarios capturés. Validé.
 
 ## T4 — Arène : ne plus révéler la bonne réponse après une erreur
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : dans l'arène, après une mauvaise réponse, la bonne s'affiche
 en vert, puis l'élève peut réessayer : il n'a plus qu'à toucher la case
@@ -232,17 +232,29 @@ l'élève a choisie**. Le QCM des leçons fait déjà ainsi.
    fausse).
 
 **Critères de réussite** :
-- [ ] `flutter analyze` sur le fichier : aucune erreur.
-- [ ] `flutter test` : 36 réussis et les 3 échecs connus, pas plus.
-- [ ] Sur l'émulateur, arène m1-06 : une mauvaise réponse ne colore **que**
+- [x] `flutter analyze` sur le fichier : aucune erreur.
+- [x] `flutter test` : 36 réussis et les 3 échecs connus, pas plus.
+- [x] Sur l'émulateur, arène m1-06 : une mauvaise réponse ne colore **que**
       la case touchée (en rouge) ; aucune case verte n'apparaît.
-- [ ] Une bonne réponse s'affiche bien en vert et fait perdre un PV au boss.
-- [ ] L'affichage de la position du doigt est éteint avant les captures
+- [x] Une bonne réponse s'affiche bien en vert et fait perdre un PV au boss.
+- [x] L'affichage de la position du doigt est éteint avant les captures
       (`adb shell settings put system pointer_location 0`).
-- [ ] Un commit `fix(mobile): l'arène ne révèle plus la bonne réponse après une erreur`.
+- [x] Un commit `fix(mobile): l'arène ne révèle plus la bonne réponse après une erreur`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/lesson/widgets/arena_challenge_widget.dart`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `adb shell settings put system pointer_location 0` et `show_touches 0` : désactivation de l'overlay de débogage pointeur sur l'émulateur.
+  - `flutter analyze lib/ui/features/lesson/widgets/arena_challenge_widget.dart` : 0 issue (No issues found! en 15.6s).
+  - `flutter test` : 36 passés, les 3 échecs historiques connus et inchangés (0 régression).
+  - `flutter build apk --debug` : compilation réussie.
+  - `adb install -r ludus_latinus_mobile/build/app/outputs/flutter-apk/app-debug.apk` : installation réussie.
+  - Validation sur émulateur `Pixel_Ludus` (arène m1-06 Mercure) :
+    - Écran propre sans overlay de pointeur : (`scratch/t4_arena_options.png`).
+    - Réponse incorrecte : tap sur "Merci" -> seule la case "Merci" est surlignée en rouge, aucune case verte n'apparaît, boss conserve ses 3/3 PV (`scratch/t4_arena_wrong.png`).
+    - Réponse correcte : tap sur "Au revoir / Porte-toi bien" -> la case devient verte, Mercure perd 1 PV et passe à 2/3 PV (`scratch/t4_arena_correct.png`).
+    - Transition vers l'exercice 2/4 : (`scratch/t4_arena_ex2.png`).
+- Doutes, questions pour l'architecte : Aucun doute. Le comportement est maintenant strictement aligné avec celui de `lesson_screen.dart`.
+- Reste à faire : Rien sur T4. Tâche terminée.

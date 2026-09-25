@@ -234,7 +234,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 Color borderColor = RomanColors.marbleBorder;
 
                 if (_isAnswered) {
-                  if (optIndex == expectedAnswer) {
+                  if (optIndex == expectedAnswer && isSelected) {
                     btnColor = const Color(0xFFE8F5E9);
                     textColor = const Color(0xFF1B5E20);
                     borderColor = RomanColors.laurelGreen;
