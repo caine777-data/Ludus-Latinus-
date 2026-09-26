@@ -104,6 +104,8 @@ class UserProfile {
   String? lastActivityDate;
   /// Vrai une fois la vidéo d'introduction vue (elle ne se joue qu'au premier lancement).
   bool introSeen;
+  /// Vrai une fois le héros choisi (prénom, fille ou garçon) au premier lancement.
+  bool heroChoisi;
   /// Niveaux (identifiants de classe : 5eme, 4eme, 3eme) dont la vidéo d'entrée a été vue.
   List<String> niveauxVus;
   List<String> completedLessons;
@@ -131,6 +133,7 @@ class UserProfile {
     this.streakDays = 0,
     this.lastActivityDate,
     this.introSeen = false,
+    this.heroChoisi = false,
     List<String>? niveauxVus,
     List<String>? completedLessons,
     Map<String, int>? lessonStars,
@@ -358,6 +361,8 @@ class UserProfile {
       lastActivityDate: json['last_activity_date'] as String?,
       // Un profil qui a déjà progressé ne revoit pas l'introduction.
       introSeen: json['intro_seen'] as bool? ?? rawCompleted.isNotEmpty,
+      // Un profil qui a déjà progressé a déjà son héros : on ne le lui redemande pas.
+      heroChoisi: json['hero_choisi'] as bool? ?? rawCompleted.isNotEmpty,
       niveauxVus: (json['niveaux_vus'] as List?)?.map((e) => e.toString()).toList(),
       completedLessons: rawCompleted.map((e) => e.toString()).toList(),
       // Les leçons validées avant l'arrivée des étoiles gardent 3 étoiles.
@@ -389,6 +394,7 @@ class UserProfile {
       'streak': streakDays,
       'last_activity_date': lastActivityDate,
       'intro_seen': introSeen,
+      'hero_choisi': heroChoisi,
       'niveaux_vus': niveauxVus,
       'completed': completedLessons,
       'lesson_stars': lessonStars,

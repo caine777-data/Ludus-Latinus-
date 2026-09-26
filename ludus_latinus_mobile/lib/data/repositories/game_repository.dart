@@ -142,6 +142,15 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Prénom le plus long accepté : il doit tenir sur la carte du héros.
+  static const int longueurMaxPrenom = 18;
+
+  /// Choix du héros au premier lancement : il ne sera plus redemandé.
+  void chooseHero(String prenom, String genre) {
+    profile.heroChoisi = true;
+    updateProfileName(prenom, genre);
+  }
+
   void registerAccount(String email) {
     profile.email = email;
     profile.lastSyncDate = DateTime.now().toString().substring(0, 16);

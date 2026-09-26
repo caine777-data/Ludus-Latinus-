@@ -281,6 +281,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **EN COURS (architecte) : Paramètres et choix du héros.** Fait : champ
+  `UserProfile.heroChoisi` (faux pour un nouveau profil, vrai si le profil a
+  déjà progressé), `GameRepository.chooseHero()`, `AvatarAssets.pourGenre()`.
+  Reste : formulaire du héros partagé, écran de création au premier
+  lancement (après l'intro, dans `home_screen.dart`), écran Paramètres
+  (héros, son via `RomanAudioModal`, revoir l'intro, version) derrière une
+  roue dentée qui remplace l'icône du son sur l'accueil ; corriger
+  `_toggleGender` du compte, qui écrase le prénom par Marcus/Julia.
+
 - **T2 et T3 validées** (exécutant Gemini) — réponses mélangées dès
   l'affichage dans les leçons et l'arène ; intro à chaque démarrage.
   T4 validée : l'arène ne révèle plus la bonne réponse après une erreur.
