@@ -291,6 +291,10 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   affichage, il faisait passer une autre carte sous la carte retournée.
   Les filtres 5e / 4e / 3e suivent le monde du mot. Clés de progression :
   `th:<latin>`.
+  **Limite connue** : à partir du monde 15, le Thesaurus n'a que 0 à 5 mots
+  par monde (aucun pour le monde 22) ; Memoria y sera maigre tant qu'il
+  n'est pas enrichi (diagnostic demandé en T10, rédaction par l'architecte,
+  validation par Cédric).
 
 - **Paramètres et choix du héros** (vérifiés sur l'émulateur ; formulaire
   couvert par `test/hero_form_test.dart`) — `lib/ui/features/settings/` : `HeroForm` (fille ou garçon

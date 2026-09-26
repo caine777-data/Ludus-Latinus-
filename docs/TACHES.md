@@ -420,7 +420,7 @@ des avertissements `deprecated_member_use`.
 - [ ] `grep -c "withOpacity"` vaut `0` sur les deux fichiers.
 - [ ] `flutter analyze` sur les deux fichiers : aucune erreur, plus aucun
       `deprecated_member_use`.
-- [ ] `flutter test` : 36 réussis et les 3 échecs connus.
+- [ ] `flutter test` : 39 réussis et les 3 échecs connus.
 - [ ] Sur l'émulateur : l'intro (bouton « Passer ») et une leçon
       s'affichent comme avant (captures, pointeur éteint).
 - [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (cinématiques, leçon)`.
@@ -431,4 +431,90 @@ des avertissements `deprecated_member_use`.
 - Doutes, questions pour l'architecte :
 - Reste à faire :
 
-**Ordre conseillé** : T5, T6, T7, T8 — une tâche par session, un commit par tâche.
+**Ordre conseillé** : T5, T6, T7, T8, puis T9 et T10 — une tâche par session, un commit par tâche.
+
+---
+
+## T9 — Remplacer `withOpacity` dans quatre écrans de révision
+
+Statut : À FAIRE
+
+**Objectif** : même travail que T1 et T8, sur quatre fichiers (14
+occurrences) qui produisent des avertissements `deprecated_member_use`.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart` (3)
+- `ludus_latinus_mobile/lib/ui/core/widgets.dart` (3)
+- `ludus_latinus_mobile/lib/ui/features/home/views/bibliotheca_view.dart` (2)
+- `ludus_latinus_mobile/lib/ui/features/thesaurus/thesaurus_screen.dart` (6)
+
+**Étapes** :
+1. Dans ces quatre fichiers uniquement, remplace chaque `.withOpacity(X)`
+   par `.withValues(alpha: X)`, en gardant la même valeur `X`.
+2. Rien d'autre.
+
+**Critères de réussite** :
+- [ ] `grep -c "withOpacity"` vaut `0` sur les quatre fichiers.
+- [ ] `flutter analyze` sur les quatre fichiers : aucune erreur, plus aucun
+      `deprecated_member_use` lié à `withOpacity`.
+- [ ] `flutter test` : 39 réussis et les 3 échecs connus.
+- [ ] Sur l'émulateur, captures (pointeur éteint) de : Bibliotheca, Memoria
+      (une carte avec ses 4 réponses), Thesaurus, et la bulle de Lupulus de
+      l'accueil — rendu identique à avant.
+- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (révisions)`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T10 — Diagnostic : quels mots manquent au Thesaurus ? (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : Memoria révise désormais les mots du Thesaurus des mondes
+déjà travaillés. Or, à partir du monde 15, chaque monde n'apporte que 0 à 5
+mots (le monde 22 : aucun). Avant que l'architecte rédige les mots
+manquants, il faut **la liste des mots latins employés dans les leçons et
+absents du Thesaurus**, monde par monde. C'est une enquête : **tu ne
+modifies aucun fichier du dépôt** sauf `docs/TACHES.md`.
+
+**Périmètre** :
+- lecture seule : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json`
+- script jetable : dans `scratch/` (ignoré par git), jamais dans le dépôt
+- écriture : `docs/TACHES.md` uniquement
+
+**Étapes** :
+1. Écris un script Python dans `scratch/` qui, pour chaque monde :
+   - relève les mots latins des champs `latin`, `latin_complet`,
+     `phrase_latine` et, pour les décodeurs, `mots` ;
+   - retire la ponctuation et met en minuscules ;
+   - les compare aux entrées du Thesaurus (`thesaurus.dictionnaire`, champ
+     `latin`, en ne gardant que la forme avant la première virgule ou
+     parenthèse, et toutes les formes séparées par `/`).
+2. Les formes fléchies comptent comme connues si le radical est évident
+   (ex. `Romam` pour `Roma`, `amat` pour `amo`) : signale-les à part,
+   « probablement connu », sans les mettre dans la liste principale.
+3. Liste aussi les 16 mots du Thesaurus dont le champ `monde` est vide, avec
+   leur catégorie, et indique si tu trouves une leçon qui les emploie sous
+   une forme fléchie.
+4. **N'écris aucune traduction ni aucune entrée de Thesaurus** : c'est du
+   contenu pédagogique, réservé à l'architecte et à Cédric.
+
+**Critères de réussite** :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un tableau par monde (1 à 26) : mots absents du Thesaurus, puis
+      « probablement connus ».
+- [ ] La liste des 16 mots sans monde, avec leur catégorie.
+- [ ] Le chemin du script dans `scratch/`, pour que l'architecte puisse le relancer.
+- [ ] Un commit `docs: diagnostic des mots manquants au Thesaurus`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Mots manquants par monde :
+- Mots du Thesaurus sans monde :
+- Doutes, questions pour l'architecte :
