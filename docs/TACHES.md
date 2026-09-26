@@ -214,7 +214,7 @@ présent, `markIntroSeen()` conservé, quatre scénarios capturés. Validé.
 
 ## T4 — Arène : ne plus révéler la bonne réponse après une erreur
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : dans l'arène, après une mauvaise réponse, la bonne s'affiche
 en vert, puis l'élève peut réessayer : il n'a plus qu'à toucher la case
@@ -258,3 +258,7 @@ l'élève a choisie**. Le QCM des leçons fait déjà ainsi.
     - Transition vers l'exercice 2/4 : (`scratch/t4_arena_ex2.png`).
 - Doutes, questions pour l'architecte : Aucun doute. Le comportement est maintenant strictement aligné avec celui de `lesson_screen.dart`.
 - Reste à faire : Rien sur T4. Tâche terminée.
+
+**Vérification de l'architecte** : une seule condition changée, comme
+demandé ; captures conformes (mauvaise réponse en rouge seule, bonne réponse
+en vert) et propres, l'affichage du pointeur ayant été éteint. Validé.

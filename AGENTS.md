@@ -283,7 +283,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
 - **T2 et T3 validées** (exécutant Gemini) — réponses mélangées dès
   l'affichage dans les leçons et l'arène ; intro à chaque démarrage.
-  T4 ouverte : l'arène révélait la bonne réponse après une erreur.
+  T4 validée : l'arène ne révèle plus la bonne réponse après une erreur.
 
 - **Vidéos allégées** — l'intro et le triomphe ré-encodés (6,3 Mo → 2,6 Mo) ;
   `boss_entrance.mp4` supprimé, devenu inutile depuis les vidéos par boss.
