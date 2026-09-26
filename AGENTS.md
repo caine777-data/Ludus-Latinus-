@@ -281,8 +281,19 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
-- **Paramètres et choix du héros** (à vérifier sur l'émulateur par
-  l'architecte) — `lib/ui/features/settings/` : `HeroForm` (fille ou garçon
+- **Memoria honnête** (vérifiée sur l'émulateur) — le paquet vient de
+  `GameRepository.memoriaCards` : les mots du Thesaurus des mondes où au
+  moins une leçon est validée (vide avant la première leçon, avec un message).
+  L'élève choisit la traduction parmi quatre, au lieu de se noter lui-même ;
+  la carte ne se retourne qu'après la réponse. Gain :
+  `GameRepository.gainMemoria` (2 HS), seulement sur une carte à réviser.
+  **Le paquet est figé pour la séance** (`_seance`) : retrié à chaque
+  affichage, il faisait passer une autre carte sous la carte retournée.
+  Les filtres 5e / 4e / 3e suivent le monde du mot. Clés de progression :
+  `th:<latin>`.
+
+- **Paramètres et choix du héros** (vérifiés sur l'émulateur ; formulaire
+  couvert par `test/hero_form_test.dart`) — `lib/ui/features/settings/` : `HeroForm` (fille ou garçon
   avec aperçu de l'avatar, prénom de 18 caractères au plus), partagé par
   `HeroCreationScreen` (premier lancement, juste après l'intro, impossible à
   quitter sans prénom) et `SettingsScreen` (héros, son via

@@ -10,27 +10,18 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
 enum NiveauMemoria {
-  tous('Tous', 'Toutes les cartes'),
-  cinquieme('5ème', 'Maison, Famille & Nature'),
-  quatrieme('4ème', 'Mythes, Dieux & Légions'),
-  troisieme('3ème', 'Citoyenneté & Verbes');
+  tous('Tous', null),
+  cinquieme('5ème', '5eme'),
+  quatrieme('4ème', '4eme'),
+  troisieme('3ème', '3eme');
 
   final String label;
-  final String description;
-  const NiveauMemoria(this.label, this.description);
 
-  bool matches(String categorie) {
-    switch (this) {
-      case NiveauMemoria.tous:
-        return true;
-      case NiveauMemoria.cinquieme:
-        return categorie.contains('Famille') || categorie.contains('Nature') || categorie.contains('Animaux');
-      case NiveauMemoria.quatrieme:
-        return categorie.contains('Dieux') || categorie.contains('Mythes') || categorie.contains('Armée') || categorie.contains('Légions');
-      case NiveauMemoria.troisieme:
-        return categorie.contains('Citoyenneté') || categorie.contains('Valeurs') || categorie.contains('Verbes');
-    }
-  }
+  /// Identifiant de classe des mondes retenus (null : tous les niveaux).
+  final String? classeId;
+  const NiveauMemoria(this.label, this.classeId);
+
+  bool matches(String? classe) => classeId == null || classe == classeId;
 }
 
 /// Dojo de Révision Éclair — Flashcards 3D Matrix4 avec esthétique de marbre sculpté.
@@ -56,15 +47,47 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
   String _cardKey(SrsCard card) => card.id.isNotEmpty ? card.id : card.latin;
 
-  List<SrsCard> get _filteredCards {
-    final all = widget.repo.srsCards;
-    List<SrsCard> cards;
-    if (selectedNiveau == NiveauMemoria.tous) {
-      cards = List.of(all);
-    } else {
-      final filtered = all.where((c) => selectedNiveau.matches(c.categorie)).toList();
-      cards = filtered.isNotEmpty ? filtered : List.of(all);
+  // Question de la carte en cours : l'élève choisit la traduction parmi quatre.
+  // Avant, il se notait lui-même (« Maîtrisé ! ») et était payé pour ça.
+  String? _questionPour;
+  List<String> _options = const [];
+  String _bonne = '';
+  String? _choix;
+
+  static String _court(String fr) => fr.split('(').first.split(';').first.trim();
+
+  void _preparerQuestion(SrsCard card) {
+    if (_questionPour == _cardKey(card)) return;
+    final rnd = math.Random();
+    _questionPour = _cardKey(card);
+    _choix = null;
+    _bonne = _court(card.francais);
+    final autres = widget.repo.thesaurus
+        .where((e) => e.latin != card.latin && e.cat != 'Devise' && _court(e.fr).isNotEmpty)
+        .toList()
+      ..shuffle(rnd);
+    // Des distracteurs de même nature (noms avec noms…) d'abord : sinon on devine.
+    autres.sort((a, b) => (a.cat == card.categorie ? 0 : 1) - (b.cat == card.categorie ? 0 : 1));
+    final faux = <String>[];
+    for (final e in autres) {
+      final f = _court(e.fr);
+      if (f.toLowerCase() != _bonne.toLowerCase() && !faux.contains(f)) faux.add(f);
+      if (faux.length == 3) break;
     }
+    _options = [_bonne, ...faux]..shuffle(rnd);
+  }
+
+  // Paquet de la séance, figé à l'ouverture et à chaque changement de niveau.
+  // Retrié à chaque affichage, il faisait passer une autre carte sous la
+  // carte retournée : l'élève voyait la solution de la suivante.
+  List<SrsCard>? _seance;
+
+  List<SrsCard> get _paquet => _seance ??= _filteredCards;
+
+  List<SrsCard> get _filteredCards {
+    final cards = widget.repo.memoriaCards
+        .where((c) => selectedNiveau.matches(widget.repo.classeDuMonde(c.monde)))
+        .toList();
 
     // Trie par priorité didactique : les cartes à réviser (isDue) en tête de file
     cards.sort((a, b) {
@@ -79,7 +102,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   int get _dueCount {
-    return _filteredCards.where((c) => widget.repo.getSrsProgress(_cardKey(c)).isDue).length;
+    return _paquet.where((c) => widget.repo.getSrsProgress(_cardKey(c)).isDue).length;
   }
 
   static String _toRoman(int number) {
@@ -150,6 +173,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   }
 
   void _flipCard() {
+    // Retourner la carte avant de répondre, ce serait lire la solution.
+    if (_choix == null) return;
     AudioService().playCardFlip();
     if (isFront) {
       _flipController.forward();
@@ -161,73 +186,57 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     });
   }
 
-  void _rateCard(int rating) {
-    final cards = _filteredCards;
-    final safeIndex = currentIndex.clamp(0, cards.length - 1);
-    if (safeIndex < cards.length) {
-      final currentCard = cards[safeIndex];
-      final key = _cardKey(currentCard);
-      final isSuccess = rating >= 2;
-      widget.repo.recordSrsReview(key, success: isSuccess);
+  void _repondre(SrsCard card, String option) {
+    if (_choix != null) return;
+    final key = _cardKey(card);
+    final etaitAReviser = widget.repo.getSrsProgress(key).isDue;
+    final juste = option == _bonne;
+    widget.repo.recordSrsReview(key, success: juste);
 
-      final newProg = widget.repo.getSrsProgress(key);
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      if (isSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: RomanColors.laurelGreen,
-            duration: const Duration(milliseconds: 1100),
-            content: Text('📦 Arca ${_toRoman(newProg.box)} (Prochaine révision dans ${_boxIntervalDays(newProg.box)} j)'),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Color(0xFF8B2500),
-            duration: Duration(milliseconds: 1100),
-            content: Text('📦 Retour en Arca I pour consolidation immédiate'),
-          ),
-        );
-      }
-    }
-
-    int baseGain = 0;
-    if (rating == 3) {
+    var gain = 0;
+    if (juste) {
       _streak++;
       if (_streak > _maxStreak) _maxStreak = _streak;
-
-      // Multiplicateurs Furor Latinus
-      if (_streak >= 5) {
-        baseGain = 20; // x2.0
-        HapticFeedback.heavyImpact();
-        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-      } else if (_streak >= 3) {
-        baseGain = 15; // x1.5
-        HapticFeedback.mediumImpact();
-      } else {
-        baseGain = 10;
-        HapticFeedback.selectionClick();
-      }
-      AudioService().playSesterces();
-    } else if (rating == 2) {
-      _streak = 0;
-      baseGain = 5;
-      AudioService().playSesterces();
+      // Seule une carte à réviser rapporte : revoir en boucle une carte déjà
+      // sue ne doit pas remplir la bourse.
+      if (etaitAReviser) gain = GameRepository.gainMemoria;
+      HapticFeedback.mediumImpact();
+      if (_streak >= 5) RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      AudioService().playCorrect();
     } else {
       _streak = 0;
-      baseGain = 0;
+      HapticFeedback.lightImpact();
       AudioService().playError();
     }
+    if (gain > 0) {
+      sessionEarnings += gain;
+      widget.repo.addSesterces(gain);
+    }
 
-    sessionEarnings += baseGain;
-    widget.repo.addSesterces(baseGain);
+    final prog = widget.repo.getSrsProgress(key);
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: juste ? RomanColors.laurelGreen : const Color(0xFF8B2500),
+        duration: const Duration(milliseconds: 1400),
+        content: Text(juste
+            ? 'Exact ! Arca ${_toRoman(prog.box)} : prochaine révision dans ${_boxIntervalDays(prog.box)} j${gain > 0 ? ' (+$gain HS)' : ''}'
+            : "C'était « $_bonne ». Retour en Arca I : tu la reverras bientôt."),
+      ),
+    );
 
-    if (currentIndex < cards.length - 1) {
-      if (!isFront) {
-        _flipController.reverse();
-        isFront = true;
-      }
+    setState(() => _choix = option);
+    // La carte se retourne toute seule : traduction, étymologie, exemple.
+    _flipController.forward();
+    isFront = false;
+  }
+
+  void _carteSuivante(int total) {
+    HapticFeedback.selectionClick();
+    if (currentIndex < total - 1) {
+      _flipController.reverse();
       setState(() {
+        isFront = true;
         currentIndex++;
       });
     } else {
@@ -300,16 +309,28 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final cards = _filteredCards;
+    final cards = _paquet;
     if (cards.isEmpty) {
       return Scaffold(
         appBar: AppBar(title: const Text('MEMORIA VELOX')),
-        body: const Center(child: Text('Aucune carte de vocabulaire disponible.')),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: Text(
+              selectedNiveau == NiveauMemoria.tous
+                  ? "Ta Memoria est encore vide.\n\nTermine une leçon de la Via Appia : ses mots viendront s'y réviser."
+                  : "Aucun mot de ${selectedNiveau.label} pour l'instant : termine une leçon de ce niveau.",
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, height: 1.5, color: RomanColors.charcoal),
+            ),
+          ),
+        ),
       );
     }
 
     final safeIndex = currentIndex.clamp(0, cards.length - 1);
     final card = cards[safeIndex];
+    _preparerQuestion(card);
 
     return Scaffold(
       appBar: AppBar(
@@ -369,6 +390,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                           AudioService().playCardFlip();
                           setState(() {
                             selectedNiveau = lvl;
+                            _seance = null;
                             currentIndex = 0;
                             if (!isFront) {
                               _flipController.reverse();
@@ -413,9 +435,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     const Text('🔥', style: TextStyle(fontSize: 16)),
                     const SizedBox(width: 6),
                     Text(
-                      _streak >= 5
-                          ? 'FUROR LATINUS MAXIMUS (x2.0 HS) !'
-                          : 'FUROR LATINUS (x1.5 HS) !',
+                      _streak >= 5 ? 'FUROR LATINUS MAXIMUS !' : 'FUROR LATINUS !',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11.5,
@@ -527,17 +547,20 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     ),
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    _streak >= 5
-                        ? '« Incredibile ! Le feu de Rome brûle en toi ! »'
-                        : _streak >= 3
-                            ? '« Macte animo ! Continue sur cette belle lancée ! »'
-                            : '« Repetitio est mater studiorum : touche la carte ! »',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontStyle: FontStyle.italic,
-                      color: RomanColors.imperialPurple,
-                      fontWeight: FontWeight.w600,
+                  // Souple : les messages de série sont longs, ils passent à la ligne.
+                  Flexible(
+                    child: Text(
+                      _streak >= 5
+                          ? '« Incredibile ! Le feu de Rome brûle en toi ! »'
+                          : _streak >= 3
+                              ? '« Macte animo ! Continue sur cette belle lancée ! »'
+                              : '« Repetitio est mater studiorum ! »',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontStyle: FontStyle.italic,
+                        color: RomanColors.imperialPurple,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],
@@ -586,37 +609,29 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
             const SizedBox(height: 14),
 
-            // 5. Boutons Leitner SRS avec relief tactile et multiplicateurs
-            Row(
-              children: [
-                Expanded(
-                  child: _buildLeitnerButton(
-                    label: '🔴 À Revoir',
-                    sub: '+0 HS',
-                    color: const Color(0xFF8B2500),
-                    onTap: () => _rateCard(1),
-                  ),
+            // 5. Quatre traductions possibles, puis « Carte suivante » une fois répondu.
+            if (_choix == null)
+              GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
+                childAspectRatio: 3.2,
+                children: [
+                  for (final option in _options)
+                    _buildOption(option, onTap: () => _repondre(card, option)),
+                ],
+              )
+            else
+              SizedBox(
+                width: double.infinity,
+                child: RomanButton(
+                  text: safeIndex < cards.length - 1 ? 'CARTE SUIVANTE' : 'TERMINER',
+                  icon: Icons.arrow_forward_rounded,
+                  onPressed: () => _carteSuivante(cards.length),
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildLeitnerButton(
-                    label: '🟡 Hésitant',
-                    sub: '+5 HS',
-                    color: const Color(0xFFB8860B),
-                    onTap: () => _rateCard(2),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: _buildLeitnerButton(
-                    label: '🟢 Maîtrisé !',
-                    sub: _streak >= 5 ? '+20 HS (x2)' : _streak >= 3 ? '+15 HS (x1.5)' : '+10 HS',
-                    color: RomanColors.laurelGreen,
-                    onTap: () => _rateCard(3),
-                  ),
-                ),
-              ],
-            ),
+              ),
           ],
         ),
       ),
@@ -920,9 +935,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           child: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('👆 ', style: TextStyle(fontSize: 12)),
+              Text('👇 ', style: TextStyle(fontSize: 12)),
               Text(
-                'Touche pour retourner la carte',
+                'Choisis sa traduction ci-dessous',
                 style: TextStyle(fontSize: 11, color: Colors.black54, fontWeight: FontWeight.w600),
               ),
             ],
@@ -1043,75 +1058,25 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     );
   }
 
-  Widget _buildLeitnerButton({
-    required String label,
-    required String sub,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
+  Widget _buildOption(String texte, {required VoidCallback onTap}) {
+    return Material(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: color.withOpacity(0.35),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        side: const BorderSide(color: RomanColors.imperialGold, width: 1.4),
       ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(14),
-          child: Ink(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  color,
-                  Color.lerp(color, Colors.black, 0.22)!,
-                ],
-              ),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(
-                color: Colors.white.withOpacity(0.3),
-                width: 1.2,
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 0.2,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    sub,
-                    style: const TextStyle(
-                      fontSize: 9.5,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFFECB3),
-                    ),
-                  ),
-                ),
-              ],
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(
+              texte,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.w600, color: RomanColors.charcoal),
             ),
           ),
         ),

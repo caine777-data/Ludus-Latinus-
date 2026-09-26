@@ -9,6 +9,9 @@ class SrsCard {
   final String exempleFr;
   final String categorie;
 
+  /// Monde de la Via Appia où le mot est rencontré (vide pour les anciennes cartes).
+  final String monde;
+
   const SrsCard({
     required this.id,
     required this.latin,
@@ -18,6 +21,7 @@ class SrsCard {
     required this.exemple,
     required this.exempleFr,
     required this.categorie,
+    this.monde = '',
   });
 
   factory SrsCard.fromJson(Map<String, dynamic> json) {

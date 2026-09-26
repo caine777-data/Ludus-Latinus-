@@ -19,7 +19,8 @@ class BibliothecaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profile = repo.profile;
-    final srsCount = profile.srsScores.length;
+    // Un mot est « ancré » dès qu'il a quitté la première boîte (Arca I) de Memoria.
+    final srsCount = profile.srsCards.entries.where((e) => e.key.startsWith('th:') && e.value.box >= 2).length;
     final restoredCount = profile.restoredMonuments.length;
     final epigraphCount = profile.decodedEpigraphs.length;
 

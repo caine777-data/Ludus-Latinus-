@@ -49,6 +49,44 @@ class GameRepository extends ChangeNotifier {
   List<ForumMonument> get monuments => dataService.monuments;
   List<SrsCard> get srsCards => dataService.srsCards;
 
+  /// Cartes de Memoria : les mots du Thesaurus des mondes où l'élève a validé
+  /// au moins une leçon. On ne révise que ce qu'on a rencontré ; avant, les
+  /// 29 cartes arrivaient toutes d'un coup, mots de 4e compris, dès le départ.
+  List<SrsCard> get memoriaCards {
+    final mondesVus = {
+      for (final w in worlds)
+        if (w.lessons.any((l) => isLessonCompleted(l.id))) w.id,
+    };
+    final vus = <String>{};
+    return [
+      for (final e in thesaurus)
+        if (e.monde.isNotEmpty && mondesVus.contains(e.monde) && vus.add(e.latin))
+          SrsCard(
+            id: 'th:${e.latin}',
+            latin: e.latin,
+            genre: e.genre,
+            francais: e.fr,
+            etymologie: e.etym,
+            exemple: e.ex,
+            exempleFr: e.exFr,
+            categorie: e.cat,
+            monde: e.monde,
+          ),
+    ];
+  }
+
+  /// Classe (5eme, 4eme, 3eme) d'un monde de la Via Appia.
+  String? classeDuMonde(String mondeId) {
+    for (final c in classes) {
+      if (c.mondesIds.contains(mondeId)) return c.id;
+    }
+    return null;
+  }
+
+  /// Gain d'une bonne réponse dans Memoria, sur une carte qui était à réviser.
+  /// Volontairement modeste : Memoria sert à retenir, pas à s'enrichir.
+  static const int gainMemoria = 2;
+
   Future<void> initialize() async {
     await dataService.loadDataset();
     await storageService.init();
