@@ -4,6 +4,7 @@ import tkinter as tk
 import unittest
 
 from app.carte import CarteAventureWindow, calculer_offset_route, to_roman
+from tests.tk_base import detruire_racine
 
 
 class MockApp:
@@ -51,10 +52,8 @@ class TestCarteAventure(unittest.TestCase):
         self.app = MockApp(self.root)
 
     def tearDown(self):
-        try:
-            self.root.destroy()
-        except Exception:
-            pass
+        detruire_racine(self.root)
+        self.root = None
 
     def test_to_roman(self):
         self.assertEqual(to_roman(1), "I")

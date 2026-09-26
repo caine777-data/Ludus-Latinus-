@@ -80,9 +80,9 @@ class RomanTheme {
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: RomanColors.imperialPurple,
-          fontSize: 19,
+          fontSize: 17,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.5,
+          letterSpacing: 0.6,
           fontFamily: RomanFonts.imperial,
         ),
       ),
@@ -130,9 +130,9 @@ class RomanTheme {
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: RomanColors.imperialGold,
-          fontSize: 19,
+          fontSize: 17,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.5,
+          letterSpacing: 0.6,
           fontFamily: RomanFonts.imperial,
         ),
       ),

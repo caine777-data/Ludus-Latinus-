@@ -8,6 +8,28 @@ import '../models/world.dart';
 import '../services/data_service.dart';
 import '../services/storage_service.dart';
 
+/// Résultat de la validation d'une leçon, pour doser la célébration.
+class LessonResult {
+  final int stars;
+  final int bestStars;
+  final int sestercesGained;
+  final bool firstTime;
+  /// Vrai si ce passage bat le meilleur nombre d'étoiles précédent.
+  final bool improved;
+  final bool worldCompleted;
+  final String? worldTitle;
+
+  const LessonResult({
+    required this.stars,
+    required this.bestStars,
+    required this.sestercesGained,
+    required this.firstTime,
+    this.improved = false,
+    required this.worldCompleted,
+    this.worldTitle,
+  });
+}
+
 /// Repository principal qui expose l'état du jeu et de la progression à toute l'UI.
 class GameRepository extends ChangeNotifier {
   final DataService dataService;
@@ -33,13 +55,54 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  void completeLesson(String lessonId, int rewardSesterces) {
-    storageService.addCompletedLesson(lessonId);
-    // Bonus Temple de Saturne (+20%)
-    double bonus = isMonumentRestored('templum_saturni') ? 0.20 : 0.0;
-    int totalGain = rewardSesterces + (rewardSesterces * bonus).round();
-    storageService.addSesterces(totalGain);
+  /// Sesterces gagnés à la première réussite d'une leçon, selon les étoiles.
+  static int rewardForStars(int stars) => const {3: 10, 2: 7, 1: 4}[stars.clamp(1, 3)]!;
+
+  int starsForLesson(String lessonId) => profile.lessonStars[lessonId] ?? 0;
+
+  /// Valide une leçon. Les sesterces ne sont versés qu'à la première réussite,
+  /// les étoiles gardent le meilleur résultat.
+  LessonResult completeLesson(String lessonId, int stars) {
+    stars = stars.clamp(1, 3);
+    final firstTime = !isLessonCompleted(lessonId);
+    final previousStars = starsForLesson(lessonId);
+
+    int gain = 0;
+    if (firstTime) {
+      final base = rewardForStars(stars);
+      // Bonus Temple de Saturne (+20%)
+      final bonus = isMonumentRestored('templum_saturni') ? 0.20 : 0.0;
+      gain = base + (base * bonus).round();
+      storageService.addCompletedLesson(lessonId);
+      storageService.addSesterces(gain);
+    }
+    if (stars > previousStars) {
+      profile.lessonStars[lessonId] = stars;
+    }
+    profile.recordActivity();
+    storageService.saveProfile(profile);
+
+    World? world;
+    for (final w in worlds) {
+      if (w.lessons.any((l) => l.id == lessonId)) {
+        world = w;
+        break;
+      }
+    }
+    final worldCompleted = firstTime &&
+        world != null &&
+        world.lessons.every((l) => isLessonCompleted(l.id));
+
     notifyListeners();
+    return LessonResult(
+      stars: stars,
+      bestStars: stars > previousStars ? stars : previousStars,
+      sestercesGained: gain,
+      firstTime: firstTime,
+      improved: !firstTime && stars > previousStars,
+      worldCompleted: worldCompleted,
+      worldTitle: world?.title,
+    );
   }
 
   void addSesterces(int amount) {
@@ -67,6 +130,7 @@ class GameRepository extends ChangeNotifier {
 
   void recordSrsReview(String cardId, {required bool success}) {
     profile.updateCardSrs(cardId, success: success);
+    profile.recordActivity();
     storageService.saveProfile(profile);
     notifyListeners();
   }
@@ -98,6 +162,54 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  void markIntroSeen() {
+    if (profile.introSeen) return;
+    profile.introSeen = true;
+    storageService.saveProfile(profile);
+  }
+
+  /// Niveau (5e, 4e, 3e) dans lequel l'élève entre en ouvrant cette leçon,
+  /// ou `null` s'il y est déjà entré. La vidéo d'entrée d'un niveau ne se
+  /// joue qu'une fois : le niveau est marqué comme vu dès cet appel.
+  ///
+  /// Un élève qui a déjà validé une leçon du niveau (profil antérieur à ces
+  /// vidéos) y est considéré comme entré : on ne lui impose pas la vidéo.
+  SchoolClass? enterLevelOf(String lessonId) {
+    World? world;
+    for (final w in worlds) {
+      if (w.lessons.any((l) => l.id == lessonId)) {
+        world = w;
+        break;
+      }
+    }
+    if (world == null) return null;
+    SchoolClass? niveau;
+    for (final c in classes) {
+      if (c.mondesIds.contains(world.id)) {
+        niveau = c;
+        break;
+      }
+    }
+    if (niveau == null || profile.niveauxVus.contains(niveau.id)) return null;
+
+    final dejaEntre = worlds
+        .where((w) => niveau!.mondesIds.contains(w.id))
+        .any((w) => w.lessons.any((l) => isLessonCompleted(l.id)));
+    profile.niveauxVus.add(niveau.id);
+    storageService.saveProfile(profile);
+    return dejaEntre ? null : niveau;
+  }
+
+  int get taverneRewardsLeftToday => profile.taverneRewardsLeftToday;
+
+  /// Réserve un lancer récompensé de la Taverne (3 par jour). Renvoie false si épuisé.
+  bool consumeTaverneReward() {
+    final ok = profile.consumeTaverneReward();
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return ok;
+  }
+
   bool isEpigraphDecoded(String monumentId) {
     return profile.decodedEpigraphs.contains(monumentId);
   }
@@ -110,7 +222,11 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get isDarkMode => profile.isDarkMode;
+  /// Le mode sombre est masqué tant que les écrans n'utilisent pas les
+  /// couleurs du thème (textes invisibles, cartes restées claires).
+  static const bool modeSombreDisponible = false;
+
+  bool get isDarkMode => modeSombreDisponible && profile.isDarkMode;
 
   void toggleThemeMode() {
     profile.isDarkMode = !profile.isDarkMode;

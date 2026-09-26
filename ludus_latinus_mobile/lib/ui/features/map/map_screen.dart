@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
-import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
 import '../../../data/models/world.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
+import '../../core/avatar_assets.dart';
+import 'via_appia_road.dart';
 
-/// La Carte d''Aventure de la Via Appia inspirée de l''esthétique de Monument Valley.
+/// La Carte d'Aventure de la Via Appia inspirée de l'esthétique de Monument Valley.
 class MapScreen extends StatefulWidget {
   final GameRepository repo;
   final int initialClassFilter;
@@ -29,10 +30,59 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late int _activeFilter; // 0 = Tous, 1 = 5ème, 2 = 4ème, 3 = 3ème
 
+  // Le pion du héros : une seule position, la prochaine leçon à faire.
+  final GlobalKey _pawnKey = GlobalKey();
+  String? _pawnLessonId;
+  bool _pawnJustMoved = false;
+
   @override
   void initState() {
     super.initState();
     _activeFilter = widget.initialClassFilter == 0 ? 0 : widget.initialClassFilter;
+    _pawnLessonId = _nextLessonId();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToPawn(animate: false));
+  }
+
+  /// Première leçon non terminée, dans l'ordre de la Via Appia.
+  String? _nextLessonId() {
+    for (final w in widget.repo.worlds) {
+      for (final l in w.lessons) {
+        if (!widget.repo.isLessonCompleted(l.id)) return l.id;
+      }
+    }
+    return null;
+  }
+
+  void _scrollToPawn({bool animate = true}) {
+    final ctx = _pawnKey.currentContext;
+    if (ctx == null) return;
+    Scrollable.ensureVisible(
+      ctx,
+      alignment: 0.35,
+      duration: animate ? const Duration(milliseconds: 900) : Duration.zero,
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  Future<void> _openLesson(Lesson lesson) async {
+    AudioService().playCardFlip();
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson)),
+    );
+    if (!mounted) return;
+    final next = _nextLessonId();
+    if (next != _pawnLessonId) {
+      // Le héros avance : le pion « tombe » sur la nouvelle borne et la carte le suit.
+      setState(() {
+        _pawnLessonId = next;
+        _pawnJustMoved = true;
+      });
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await Future.delayed(const Duration(milliseconds: 250));
+        if (mounted) _scrollToPawn();
+      });
+    }
   }
 
   List<World> _getFilteredWorlds() {
@@ -57,7 +107,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('VIA APPIA PANORAMIQUE'),
+        title: const Text('VIA APPIA'),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 14),
@@ -111,7 +161,7 @@ class _MapScreenState extends State<MapScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Épopée Romaine : $completedCount / $totalLessons étapes',
+                      'Épopée Romaine : $completedCount / $totalLessons leçons',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -134,7 +184,7 @@ class _MapScreenState extends State<MapScreen> {
                   height: 7,
                   backgroundColor: const Color(0xFFEBE3D7),
                   color: RomanColors.imperialGold,
-                  ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
+                  ghostColor: RomanColors.laurelGreen.withValues(alpha: 0.4),
                 ),
                 const SizedBox(height: 10),
                 // Filtres de classes
@@ -180,13 +230,24 @@ class _MapScreenState extends State<MapScreen> {
                         ),
                       ),
                       // Liste défilante des mondes et bornes milliaires
-                      ListView.builder(
+                      // Tout est construit d'avance (113 bornes au plus) pour que la
+                      // carte puisse défiler jusqu'au pion où qu'il soit.
+                      SingleChildScrollView(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        itemCount: worlds.length,
-                        itemBuilder: (context, index) {
-                          final world = worlds[index];
-                          return _buildWorldSection(context, world, index);
-                        },
+                        child: Column(
+                          children: [
+                            for (var index = 0; index < worlds.length; index++)
+                              _buildWorldSection(
+                                context,
+                                worlds[index],
+                                index,
+                                // On est « entré » dans un monde quand le précédent est achevé.
+                                entered: index == 0 ||
+                                    worlds[index - 1].lessons.isEmpty ||
+                                    widget.repo.isLessonCompleted(worlds[index - 1].lessons.last.id),
+                              ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -220,116 +281,62 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget _buildWorldSection(BuildContext context, World world, int worldIndex) {
+  Widget _buildWorldSection(
+    BuildContext context,
+    World world,
+    int worldIndex, {
+    required bool entered,
+  }) {
+    final lastIndex = world.lessons.length - 1;
+    final worldDone = world.lessons.isNotEmpty && widget.repo.isLessonCompleted(world.lessons.last.id);
+
     return Column(
       children: [
-        // 🏛️ Arc de Triomphe Monumental SPQR
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF5A121E), Color(0xFF380912)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: RomanColors.imperialGold, width: 1.8),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x28000000),
-                offset: Offset(0, 4),
-                blurRadius: 8,
-              )
-            ],
-          ),
+        // La route passe tout droit sous la bannière et sous Lupulus.
+        CustomPaint(
+          painter: ViaAppiaRoadPainter.straight(x: 0, travelled: entered, seed: worldIndex * 1000),
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                decoration: const BoxDecoration(
-                  color: RomanColors.imperialGold,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('🌿 ', style: TextStyle(fontSize: 12)),
-                    Text(
-                      'S • P • Q • R  •  PARCOURS ${world.id.toUpperCase()}',
-                      style: const TextStyle(
-                        fontSize: 10.5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
-                        color: Color(0xFF2C1E0A),
-                      ),
-                    ),
-                    const Text(' 🌿', style: TextStyle(fontSize: 12)),
-                  ],
-                ),
-              ),
+              // Bannière du monde : son décor illustré, le titre posé dessus.
+              _WorldBanner(world: world),
+
+              // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('🏛️', style: TextStyle(fontSize: 20)),
-                    const SizedBox(width: 8),
+                    AnimatedLupulusAvatar(
+                      size: 38,
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        AudioService().playWheelClick();
+                      },
+                    ),
+                    const SizedBox(width: 10),
                     Flexible(
-                      child: Text(
-                        world.title.toUpperCase(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 0.8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: RomanColors.palatinCream,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
+                          boxShadow: const [
+                            BoxShadow(color: Color(0x0C000000), offset: Offset(0, 2), blurRadius: 4),
+                          ],
+                        ),
+                        child: Text(
+                          '« Monde ${world.id.replaceAll(RegExp(r'\D'), '')} : que ta marche soit triomphale ! »',
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w600,
+                            color: RomanColors.imperialPurple,
+                          ),
                         ),
                       ),
                     ),
                   ],
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // Sentinelle Lupulus veillant sur le tronçon de la voie romaine
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AnimatedLupulusAvatar(
-                size: 38,
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  AudioService().playWheelClick();
-                },
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: RomanColors.palatinCream,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: RomanColors.marbleBorder, width: 0.9),
-                    boxShadow: const [
-                      BoxShadow(color: Color(0x0C000000), offset: Offset(0, 2), blurRadius: 4),
-                    ],
-                  ),
-                  child: Text(
-                    '« Étape ${world.id.toUpperCase()} : Que ta marche soit triomphale ! »',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600,
-                      color: RomanColors.imperialPurple,
-                    ),
-                  ),
                 ),
               ),
             ],
@@ -345,35 +352,88 @@ class _MapScreenState extends State<MapScreen> {
               widget.repo.isLessonCompleted(world.lessons[lessonIndex - 1].id);
 
           // Alternance en serpentin doux (-50, 0, 50, 0)
-          final pattern = lessonIndex % 4;
-          final double offsetFactor = (pattern == 0)
-              ? -50
-              : (pattern == 1)
-                  ? 0
-                  : (pattern == 2)
-                      ? 50
-                      : 0;
+          final double offsetFactor = serpentinOffset(lessonIndex);
 
-          // Détection si c''est la leçon active où se tient le joueur
-          final bool isCurrentActive = isUnlocked && !isCompleted;
+          // Le joueur se tient sur une seule borne : sa prochaine leçon.
+          final bool isCurrentActive = lesson.id == _pawnLessonId;
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Transform.translate(
-              offset: Offset(offsetFactor, 0),
-              child: _buildMilestoneNode(
-                context,
-                lesson: lesson,
-                index: lessonIndex + 1,
-                isCompleted: isCompleted,
-                isUnlocked: isUnlocked,
-                isCurrentActive: isCurrentActive,
+          // Le tronçon de route de cette rangée : il entre au milieu de la borne
+          // précédente et ressort au milieu de la suivante, centré en début et
+          // fin de monde pour rejoindre la route droite sous les bannières.
+          final double topX =
+              lessonIndex == 0 ? 0 : (serpentinOffset(lessonIndex - 1) + offsetFactor) / 2;
+          final double bottomX =
+              lessonIndex == lastIndex ? 0 : (offsetFactor + serpentinOffset(lessonIndex + 1)) / 2;
+          // Centre de la borne : marge haute, pion éventuel (46), demi-borne (31).
+          final double nodeY = 10 + (isCurrentActive ? 46 : 0) + 31;
+          final prop = ViaAppiaProp.forRow(worldIndex, lessonIndex);
+
+          return RepaintBoundary(
+            child: CustomPaint(
+              painter: ViaAppiaRoadPainter(
+                topX: topX,
+                nodeX: offsetFactor,
+                nodeY: nodeY,
+                bottomX: bottomX,
+                topTravelled: isUnlocked,
+                bottomTravelled: isCompleted,
+                seed: worldIndex * 1000 + lessonIndex + 1,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: Stack(
+                  // Centré comme l'était la colonne : la route est peinte depuis le
+                  // milieu de la rangée, la borne doit l'être aussi.
+                  alignment: Alignment.topCenter,
+                  clipBehavior: Clip.none,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Transform.translate(
+                        offset: Offset(offsetFactor, 0),
+                        child: _buildMilestoneNode(
+                          context,
+                          lesson: lesson,
+                          index: lessonIndex + 1,
+                          isCompleted: isCompleted,
+                          isUnlocked: isUnlocked,
+                          isCurrentActive: isCurrentActive,
+                        ),
+                      ),
+                    ),
+                    // Élément de bord de route, posé par sa base un peu sous la borne,
+                    // du côté que le serpentin laisse libre.
+                    if (prop != null)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: nodeY + 34 - prop.height,
+                        child: IgnorePointer(
+                          child: Transform.translate(
+                            offset: Offset(-offsetFactor * ViaAppiaProp.distanceFactor, 0),
+                            child: Center(
+                              child: Image.asset(
+                                prop.asset,
+                                height: prop.height,
+                                // Estompé devant l'élève, comme la route.
+                                opacity: isUnlocked ? null : const AlwaysStoppedAnimation(0.45),
+                                errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           );
         }),
 
-        const SizedBox(height: 16),
+        CustomPaint(
+          painter: ViaAppiaRoadPainter.straight(x: 0, travelled: worldDone, seed: worldIndex * 1000 + 999),
+          child: const SizedBox(height: 16, width: double.infinity),
+        ),
       ],
     );
   }
@@ -387,22 +447,11 @@ class _MapScreenState extends State<MapScreen> {
     required bool isCurrentActive,
   }) {
     final profile = widget.repo.profile;
-    final avatarImg = profile.genre == 'fille'
-        ? 'assets/images/avatar_fille_medaillon_48.png'
-        : 'assets/images/avatar_garcon_medaillon_48.png';
+    final avatarImg = AvatarAssets.medaillon(profile, taille: 48);
 
     return GestureDetector(
       onTap: isUnlocked
-          ? () {
-              AudioService().playTriumph();
-              RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson),
-                ),
-              );
-            }
+          ? () => _openLesson(lesson)
           : () {
               AudioService().playError();
               ScaffoldMessenger.of(context).showSnackBar(
@@ -415,40 +464,13 @@ class _MapScreenState extends State<MapScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Pin du Joueur si c''est la leçon active
+          // Pin du Joueur si c'est la leçon active
           if (isCurrentActive) ...[
-            Container(
-              margin: const EdgeInsets.only(bottom: 4),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: RomanColors.goldLight,
-                      border: Border.all(color: RomanColors.imperialGold, width: 2),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x33000000),
-                          offset: Offset(0, 3),
-                          blurRadius: 4,
-                        )
-                      ],
-                    ),
-                    child: ClipOval(
-                      child: Image.asset(
-                        avatarImg,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => const Center(
-                          child: Text('📍', style: TextStyle(fontSize: 16)),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            _HeroPawn(
+              key: _pawnKey,
+              avatarImg: avatarImg,
+              arriving: _pawnJustMoved,
+              onArrived: () => _pawnJustMoved = false,
             ),
           ],
 
@@ -528,7 +550,7 @@ class _MapScreenState extends State<MapScreen> {
             decoration: BoxDecoration(
               color: isCurrentActive
                   ? const Color(0xFFFFF9E6)
-                  : Colors.white.withOpacity(0.94),
+                  : Colors.white.withValues(alpha: 0.94),
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: isCurrentActive
@@ -579,7 +601,10 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 const SizedBox(height: 2),
                 if (isCompleted)
-                  const Text('⭐⭐⭐', style: TextStyle(fontSize: 8))
+                  Text(
+                    '★' * widget.repo.starsForLesson(lesson.id).clamp(0, 3) + '☆' * (3 - widget.repo.starsForLesson(lesson.id).clamp(0, 3)),
+                    style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold),
+                  )
                 else if (isCurrentActive)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
@@ -674,6 +699,177 @@ class _MapScreenState extends State<MapScreen> {
   }
 }
 
+/// Pion du héros : il sautille doucement sur sa borne, et tombe en rebondissant
+/// quand il vient d'avancer d'une leçon.
+/// Bannière d'un monde sur la Via Appia : décor illustré, bandeau SPQR et titre.
+/// Sans illustration (monde ajouté plus tard), on retombe sur le dégradé bordeaux.
+class _WorldBanner extends StatelessWidget {
+  final World world;
+
+  const _WorldBanner({required this.world});
+
+  String get _numero => world.id.replaceAll(RegExp(r'\D'), '');
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      height: 168,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: RomanColors.imperialGold, width: 1.8),
+        boxShadow: const [
+          BoxShadow(color: Color(0x28000000), offset: Offset(0, 4), blurRadius: 8),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/images/mondes/${world.id}.webp',
+              fit: BoxFit.cover,
+              // Les décors gardent le ciel en haut : on cadre un peu sous le centre.
+              alignment: const Alignment(0, 0.25),
+              errorBuilder: (_, __, ___) => const DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF5A121E), Color(0xFF380912)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+              ),
+            ),
+            // Voile sombre en bas : le titre blanc reste lisible sur tous les décors.
+            const DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x00000000), Color(0x00000000), Color(0xCC1E0508)],
+                  stops: [0, 0.45, 1],
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                decoration: const BoxDecoration(
+                  color: RomanColors.imperialGold,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'S • P • Q • R  •  MONDE $_numero',
+                  style: const TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2,
+                    color: Color(0xFF2C1E0A),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 14,
+              right: 14,
+              bottom: 12,
+              child: Text(
+                world.title.toUpperCase(),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 0.8,
+                  shadows: [Shadow(color: Color(0xAA000000), blurRadius: 6)],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _HeroPawn extends StatefulWidget {
+  final String avatarImg;
+  final bool arriving;
+  final VoidCallback onArrived;
+
+  const _HeroPawn({super.key, required this.avatarImg, required this.arriving, required this.onArrived});
+
+  @override
+  State<_HeroPawn> createState() => _HeroPawnState();
+}
+
+class _HeroPawnState extends State<_HeroPawn> with TickerProviderStateMixin {
+  late final AnimationController _hop = AnimationController(vsync: this, duration: const Duration(milliseconds: 1100))
+    ..repeat(reverse: true);
+  late final AnimationController _drop = AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.arriving) {
+      _drop.forward().then((_) {
+        widget.onArrived();
+        AudioService().playStar();
+      });
+    } else {
+      _drop.value = 1;
+    }
+  }
+
+  @override
+  void dispose() {
+    _hop.dispose();
+    _drop.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: Listenable.merge([_hop, _drop]),
+      builder: (context, child) {
+        final drop = Curves.bounceOut.transform(_drop.value);
+        final hop = Curves.easeInOut.transform(_hop.value) * 5;
+        return Transform.translate(
+          offset: Offset(0, -120 * (1 - drop) - hop),
+          child: Opacity(opacity: _drop.value.clamp(0.0, 1.0), child: child),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 4),
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: RomanColors.goldLight,
+          border: Border.all(color: RomanColors.imperialGold, width: 2),
+          boxShadow: const [BoxShadow(color: Color(0x33000000), offset: Offset(0, 3), blurRadius: 4)],
+        ),
+        child: ClipOval(
+          child: Image.asset(
+            widget.avatarImg,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => const Center(child: Text('📍', style: TextStyle(fontSize: 16))),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _LessonLegendPill extends StatelessWidget {
   final String icon;
   final String label;
@@ -736,31 +932,8 @@ class ViaAppiaBackgroundPainter extends CustomPainter {
     }
     // Ligne supérieure de l'aqueduc
     canvas.drawLine(Offset(0, yAqueduct), Offset(size.width, yAqueduct), aqueductPaint);
-
-    // 3. Chaussée de la Via Appia (pavés polygonaux en basalte)
-    final roadBorderPaint = Paint()
-      ..color = const Color(0x1CC5B396)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 36;
-
-    final roadPath = Path();
-    roadPath.moveTo(size.width * 0.5, 0);
-    roadPath.cubicTo(
-      size.width * 0.26, size.height * 0.33,
-      size.width * 0.74, size.height * 0.66,
-      size.width * 0.5, size.height,
-    );
-    canvas.drawPath(roadPath, roadBorderPaint);
-
-    // Pavés transversaux de basalte romain
-    final stoneLinePaint = Paint()
-      ..color = const Color(0x1E8D6E63)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.2;
-
-    for (double y = 40; y < size.height; y += 60) {
-      canvas.drawLine(Offset(size.width * 0.46, y), Offset(size.width * 0.54, y + 2), stoneLinePaint);
-    }
+    // La chaussée elle-même est peinte rangée par rangée (ViaAppiaRoadPainter),
+    // pour défiler avec les bornes au lieu de rester figée à l'écran.
   }
 
   @override

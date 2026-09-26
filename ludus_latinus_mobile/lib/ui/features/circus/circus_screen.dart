@@ -6,7 +6,6 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
-import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -393,6 +392,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.arene);
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -405,6 +405,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
   @override
   void dispose() {
+    AudioService().leaveMusic(MusicTrack.arene);
     _incidentCountdownTimer?.cancel();
     _gameLoopTimer?.cancel();
     _animController.dispose();
@@ -636,16 +637,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       AudioService().playCrowdCheer();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-
-      // Déclenchement de la cinématique de triomphe impérial
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (mounted) {
-          RomanCinematicOverlay.showTriumph(
-            context,
-            rankTitle: 'Aurige Victorieux du Circus Maximus',
-          );
-        }
-      });
     } else {
       widget.repo.addSesterces(10);
       AudioService().playError();
@@ -1546,7 +1537,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 ],
               ),
               child: Image.asset(
-                'assets/images/victoire_320.png',
+                lupulusAnimation(LupulusMood.triomphe),
                 height: 96,
                 fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) => const Text('🏆', style: TextStyle(fontSize: 48)),

@@ -6,7 +6,7 @@ export 'roman_audio_modal.dart';
 export 'room_decorations.dart';
 export 'roman_lock_badge.dart';
 
-/// Bouton tactile impérial romain avec liseré d''or et retour haptique.
+/// Bouton tactile impérial romain avec liseré d'or et retour haptique.
 class RomanButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -86,7 +86,7 @@ class RomanButton extends StatelessWidget {
   }
 }
 
-/// Carte en marbre travertin sculpté inspirée de l''élégance géométrique de Monument Valley.
+/// Carte en marbre travertin sculpté inspirée de l'élégance géométrique de Monument Valley.
 class RomanCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -183,14 +183,27 @@ class RomanMedallion extends StatelessWidget {
 }
 
 /// Avatar animé et vivant de Lupulus réagissant au toucher (clignement idle et salut légionnaire).
+/// Humeur de Lupulus : choisit son animation de repos.
+enum LupulusMood { attente, joie, reflexion, triomphe }
+
+/// Animation (WebP transparent, en boucle) de Lupulus pour une humeur donnée.
+String lupulusAnimation(LupulusMood mood) => switch (mood) {
+      LupulusMood.attente => 'assets/images/animated/lupulus_idle.webp',
+      LupulusMood.joie => 'assets/images/animated/lupulus_joie.webp',
+      LupulusMood.reflexion => 'assets/images/animated/lupulus_reflexion.webp',
+      LupulusMood.triomphe => 'assets/images/animated/lupulus_triomphe.webp',
+    };
+
 class AnimatedLupulusAvatar extends StatefulWidget {
   final double size;
   final VoidCallback? onTap;
+  final LupulusMood mood;
 
   const AnimatedLupulusAvatar({
     super.key,
     this.size = 54,
     this.onTap,
+    this.mood = LupulusMood.attente,
   });
 
   @override
@@ -217,7 +230,7 @@ class _AnimatedLupulusAvatarState extends State<AnimatedLupulusAvatar> {
   Widget build(BuildContext context) {
     final assetPath = _isSaluting
         ? 'assets/images/animated/lupulus_salut.webp'
-        : 'assets/images/animated/lupulus_idle.webp';
+        : lupulusAnimation(widget.mood);
 
     return GestureDetector(
       onTap: _triggerSalute,
@@ -267,6 +280,13 @@ class LupulusDialogue extends StatelessWidget {
     this.onTap,
   });
 
+  static const _moods = {
+    'normal': LupulusMood.attente,
+    'joie': LupulusMood.joie,
+    'reflexion': LupulusMood.reflexion,
+    'triomphe': LupulusMood.triomphe,
+  };
+
   @override
   Widget build(BuildContext context) {
     const validEmotions = [
@@ -308,8 +328,9 @@ class LupulusDialogue extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            safeEmotion == 'normal'
-                ? AnimatedLupulusAvatar(size: 54, onTap: onTap)
+            // Humeurs animées ; les costumes (centurion, gladiateur…) restent fixes.
+            _moods.containsKey(safeEmotion)
+                ? AnimatedLupulusAvatar(size: 54, onTap: onTap, mood: _moods[safeEmotion]!)
                 : Container(
                     width: 54,
                     height: 54,

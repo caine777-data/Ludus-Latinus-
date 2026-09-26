@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
-import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
-import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
+import '../../core/markdown_lite.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../map/map_screen.dart';
@@ -25,8 +25,9 @@ import '../../../data/models/cursus_honorum.dart';
 import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
+import '../../core/avatar_assets.dart';
 
-/// Tableau de bord d''accueil mobile au niveau artistique et architectural de Monument Valley.
+/// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -41,12 +42,36 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
   final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
 
+  // Statique : survit aux reconstructions et navigations, réinitialisé à chaque fermeture du process.
+  static bool _introJoueeCeLancement = false;
+
+  @override
+  void initState() {
+    super.initState();
+    AudioService().enterMusic(MusicTrack.accueil);
+    // Vidéo d'introduction jouée au démarrage de l'application (une seule fois par session).
+    if (!_introJoueeCeLancement) {
+      _introJoueeCeLancement = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        widget.repo.markIntroSeen();
+        await RomanCinematicOverlay.showIntro(context);
+      });
+    }
+  }
+
+  /// Étoiles obtenues pour une leçon, sous forme ★★☆.
+  String _stars(String lessonId) {
+    final s = widget.repo.starsForLesson(lessonId).clamp(0, 3);
+    return '★' * s + '☆' * (3 - s);
+  }
+
   String get _appBarTitle {
     switch (_currentTabIndex) {
       case 1:
-        return 'BIBLIOTHECA ROMANA';
+        return 'BIBLIOTHECA';
       case 2:
-        return 'LUDI & ARÈNES';
+        return 'LUDI';
       default:
         return 'LUDUS LATINUS';
     }
@@ -55,9 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final profile = widget.repo.profile;
-    final avatarImg = profile.genre == 'fille'
-        ? 'assets/images/avatar_fille_medaillon_140.png'
-        : 'assets/images/avatar_garcon_medaillon_140.png';
+    final avatarImg = AvatarAssets.medaillon(profile);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text('🔥', style: TextStyle(fontSize: 12)),
                 const SizedBox(width: 3),
                 Text(
-                  '${profile.streakDays} j',
+                  '${profile.currentStreak()} j',
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -121,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           // 3. Bascule Jour / Nuit
+          if (GameRepository.modeSombreDisponible)
           IconButton(
             icon: Icon(
               widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
@@ -158,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onDestinationSelected: (index) {
           if (_currentTabIndex != index) {
             HapticFeedback.selectionClick();
-            AudioService().playCardFlip();
+            AudioService().playButton();
             setState(() => _currentTabIndex = index);
           }
         },
@@ -363,7 +387,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Chaussée pavée polygonale • 26 étapes milliaires • Cycle 4',
+                      '26 mondes du collège, de la 5e à la 3e',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
                     ),
@@ -372,8 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: '▶ AVANCER SUR LA ROUTE',
                       isLarge: true,
                       onPressed: () {
-                        AudioService().playTriumph();
-                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -394,7 +417,10 @@ class _HomeScreenState extends State<HomeScreen> {
               // 3. Carte « Défi du Jour » dynamique (+25 HS)
               Builder(
                 builder: (context) {
-                  final dailyQuest = DailyQuest.getTodayQuest();
+                  final dailyQuest = DailyQuest.getTodayQuest(
+                    null,
+                    (q) => profile.getUnlockStatusForGame(q.routeCible == 'colosseum' ? 'duel' : q.routeCible).isUnlocked,
+                  );
                   final isDone = profile.isDailyQuestCompletedToday;
 
                   return Container(
@@ -610,77 +636,56 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: RomanColors.imperialGold.withOpacity(0.6)),
           ),
+          // Titre sur toute la largeur, badges en dessous : plus de débordement sur téléphone.
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: const BoxDecoration(
-                      color: RomanColors.imperialPurple,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Text('📖', style: TextStyle(fontSize: 12)),
-                  ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
-                            style: const TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.8,
-                              color: RomanColors.imperialPurple,
-                              fontFamily: 'serif',
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-                            decoration: BoxDecoration(
-                              color: RomanColors.imperialPurple,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: const Text(
-                              'PROGRAMME SCOLAIRE',
-                              style: TextStyle(
-                                fontSize: 8.5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                letterSpacing: 0.4,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 2),
-                      const Text(
-                        'Progression officielle collège — Grammaire, textes & exercices',
-                        style: TextStyle(fontSize: 10.5, color: Colors.black54),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1),
+                padding: const EdgeInsets.all(5),
+                decoration: const BoxDecoration(
+                  color: RomanColors.imperialPurple,
+                  shape: BoxShape.circle,
                 ),
-                child: Text(
-                  '$completedInClass / $totalInClass terminées',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
-                  ),
+                child: const Icon(Icons.menu_book_rounded, size: 14, color: Colors.white),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.6,
+                        color: RomanColors.imperialPurple,
+                        fontFamily: 'serif',
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    const Text(
+                      'Programme du collège : grammaire, textes et exercices',
+                      style: TextStyle(fontSize: 11, color: Colors.black54),
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: RomanColors.imperialGold, width: 1),
+                      ),
+                      child: Text(
+                        '$completedInClass / $totalInClass leçons terminées',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF7A5901),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -756,7 +761,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      isActiveCompleted ? '✓ MAÎTRISÉE ⭐⭐⭐' : '▶ LEÇON SUIVANTE',
+                      isActiveCompleted ? '✓ VALIDÉE ${_stars(activeLesson.id)}' : '▶ LEÇON SUIVANTE',
                       style: TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
@@ -783,11 +788,11 @@ class _HomeScreenState extends State<HomeScreen> {
               // Extrait ou consigne
               Text(
                 activeLesson.content.isNotEmpty
-                    ? (activeLesson.content.length > 100
-                        ? '${activeLesson.content.substring(0, 100)}...'
-                        : activeLesson.content)
+                    ? MarkdownLite.plainText(activeLesson.content)
                     : (activeLesson.question ?? 'Exercice interactif du collège.'),
-                style: const TextStyle(fontSize: 12, color: Colors.black54, height: 1.3),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 12.5, color: Colors.black54, height: 1.35),
               ),
               const SizedBox(height: 14),
 
@@ -797,8 +802,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        AudioService().playTriumph();
-                        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -857,11 +861,11 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Feuilleter toutes les étapes de ce niveau :',
+              'Toutes les leçons de ce niveau :',
               style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black54),
             ),
             Text(
-              '${classLessons.length} étapes',
+              '${classLessons.length} leçons',
               style: const TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
             ),
           ],
@@ -933,7 +937,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           if (isDone)
-                            const Text('⭐⭐⭐', style: TextStyle(fontSize: 9))
+                            Text(_stars(l.id), style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold))
                           else if (isCurrent)
                             const Text('📍 ICI', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
                         ],
@@ -957,7 +961,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 3),
                           Text(
-                            isDone ? 'Maîtrisée' : 'Explorer',
+                            isDone ? 'Validée' : 'Explorer',
                             style: TextStyle(
                               fontSize: 9.5,
                               color: isDone ? Colors.green.shade700 : RomanColors.imperialPurple,
@@ -1148,61 +1152,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: const TextStyle(fontSize: 11, color: Color(0xFFFFD54F), fontWeight: FontWeight.bold),
                           ),
                         ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Boutons Cinématiques Antiques
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: RomanColors.imperialPurple,
-                          side: const BorderSide(color: RomanColors.imperialPurple, width: 1.2),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        icon: const Icon(Icons.play_circle_fill_rounded, size: 16),
-                        label: const FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'TRIOMPHE (ARC)',
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                          ),
-                        ),
-                        onPressed: () {
-                          RomanCinematicOverlay.showTriumph(
-                            context,
-                            rankTitle: currentRank.titre,
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF8A5B00),
-                          side: const BorderSide(color: RomanColors.imperialGold, width: 1.2),
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        icon: const Icon(Icons.play_circle_outline, size: 16, color: RomanColors.imperialGold),
-                        label: const FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            'INTRO (AIGLE)',
-                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, letterSpacing: 0.5),
-                          ),
-                        ),
-                        onPressed: () {
-                          RomanCinematicOverlay.showIntro(context);
-                        },
                       ),
                     ),
                   ],

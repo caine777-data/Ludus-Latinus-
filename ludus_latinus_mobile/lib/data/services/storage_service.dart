@@ -20,7 +20,7 @@ class StorageService {
       nomHeros: 'Marcus',
       genre: 'garcon',
       sesterces: 50,
-      streakDays: 1,
+      streakDays: 0,
       completedLessons: [],
       restoredMonuments: [],
     );

@@ -24,7 +24,9 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   List<int> _gaiusDiceValues = [3, 4, 5, 6];
   bool _isRolling = false;
   bool _modeDuelGaius = false;
-  int _miseDuel = 10;
+  // Pas de mise : un collégien ne doit jamais risquer ses sesterces aux dés.
+  static const int _gainVictoireGaius = 10;
+  bool _lancerRecompense = true;
   String? _gaiusReplique;
   String _resultTitle = 'Lance le cornet (Fritillus)';
   String _resultDesc = 'Tente le Coup de Vénus (Iactus Venereus) pour remporter 50 HS !';
@@ -122,19 +124,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   void _rollDice() async {
     if (_isRolling) return;
 
-    if (_modeDuelGaius) {
-      if (widget.repo.profile.sesterces < _miseDuel) {
-        AudioService().playError();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.red,
-            content: Text('Sesterces insuffisants pour défier Gaius ! Gagne des HS en leçon !'),
-          ),
-        );
-        return;
-      }
-      widget.repo.addSesterces(-_miseDuel);
-    }
+    _lancerRecompense = widget.repo.consumeTaverneReward();
 
     HapticFeedback.heavyImpact();
     AudioService().playDiceRoll();
@@ -186,32 +176,33 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       final gaiusScore = _scoreCombo(_gaiusDiceValues);
 
       if (playerScore > gaiusScore) {
-        final gain = _miseDuel * 2;
-        widget.repo.addSesterces(gain);
+        final gain = _lancerRecompense ? _gainVictoireGaius : 0;
+        if (gain > 0) widget.repo.addSesterces(gain);
         AudioService().playTriumph();
         RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
         setState(() {
           _lastGain = gain;
           _resultTitle = '🏆 Victoire contre Gaius l\'Aubergiste !';
-          _resultDesc = 'Tu bats le tavernier sur le marbre ! Gain : +$gain HS !';
-          _gaiusReplique = '« Par Bacchus, quelle chance insolente ! Tiens ta bourse ! »';
+          _resultDesc = gain > 0
+              ? 'Tu bats le tavernier sur le marbre ! +$gain HS !'
+              : 'Tu bats le tavernier sur le marbre ! (Plus de récompense aujourd\'hui.)';
+          _gaiusReplique = '« Par Bacchus, quelle chance insolente ! »';
         });
       } else if (playerScore < gaiusScore) {
         AudioService().playError();
         HapticFeedback.vibrate();
         setState(() {
           _lastGain = 0;
-          _resultTitle = '❌ Gaius remporte la manche !';
-          _resultDesc = 'Les dés de l\'aubergiste ont été plus forts cette fois-ci.';
-          _gaiusReplique = '« Les dés de la taverne ne mentent jamais ! Merci pour le pourboire ! »';
+          _resultTitle = 'Gaius remporte la manche';
+          _resultDesc = 'Les dés de l\'aubergiste ont été plus forts cette fois-ci. Tu ne perds rien : retente ta chance !';
+          _gaiusReplique = '« Les dés de la taverne ne mentent jamais ! »';
         });
       } else {
-        widget.repo.addSesterces(_miseDuel);
         AudioService().playSesterces();
         setState(() {
-          _lastGain = _miseDuel;
+          _lastGain = 0;
           _resultTitle = '⚖️ Égalité parfaite !';
-          _resultDesc = 'Vos figures sont de même valeur. Ta mise de $_miseDuel HS t\'est rendue.';
+          _resultDesc = 'Vos figures sont de même valeur. Relance pour vous départager !';
           _gaiusReplique = '« Bacchus partage la coupe ! On remet ça quand tu veux ! »';
         });
       }
@@ -263,6 +254,10 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       AudioService().playSesterces();
     }
 
+    if (!_lancerRecompense && gain > 0) {
+      gain = 0;
+      desc = '$desc\n(Les 3 lancers récompensés du jour sont épuisés : reviens demain pour gagner des sesterces.)';
+    }
     if (gain > 0) {
       widget.repo.addSesterces(gain);
     }
@@ -346,11 +341,11 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               if (isRight) {
                 AudioService().playTriumph();
                 RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-                widget.repo.addSesterces(20);
+                if (_lancerRecompense) widget.repo.addSesterces(20);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     backgroundColor: RomanColors.laurelGreen,
-                    content: Text('✓ Optime ! ${q['explication']} (+20 HS)'),
+                    content: Text('✓ Optime ! ${q['explication']}${_lancerRecompense ? ' (+20 HS)' : ''}'),
                   ),
                 );
               } else {
@@ -508,33 +503,16 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               ],
             ),
 
+            const SizedBox(height: 10),
+            Text(
+              widget.repo.taverneRewardsLeftToday > 0
+                  ? 'Lancers récompensés aujourd\'hui : ${widget.repo.taverneRewardsLeftToday} / 3'
+                  : 'Lancers récompensés épuisés : reviens demain !',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+            ),
+
             if (_modeDuelGaius) ...[
-              const SizedBox(height: 12),
-              // Sélecteur de mise
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Mise : ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: RomanColors.imperialPurple)),
-                  ...[5, 10, 25].map((mise) {
-                    final isSel = (_miseDuel == mise);
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
-                      child: ChoiceChip(
-                        label: Text('$mise HS', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: isSel ? Colors.white : RomanColors.imperialPurple)),
-                        selected: isSel,
-                        selectedColor: RomanColors.imperialPurple,
-                        backgroundColor: RomanColors.goldLight,
-                        onSelected: (val) {
-                          if (val) {
-                            setState(() { _miseDuel = mise; });
-                            AudioService().playWheelClick();
-                          }
-                        },
-                      ),
-                    );
-                  }),
-                ],
-              ),
               if (_gaiusReplique != null)
                 Container(
                   margin: const EdgeInsets.only(top: 8),
@@ -724,7 +702,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                         child: Text(
                           _isRolling
                               ? 'ROULEMENT DES DÉS...'
-                              : (_modeDuelGaius ? 'LANCER CONTRE GAIUS ($_miseDuel HS)' : 'SECOUER LE FRITILLUS (GRATUIT)'),
+                              : (_modeDuelGaius ? 'LANCER CONTRE GAIUS' : 'SECOUER LE FRITILLUS'),
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, letterSpacing: 0.8),
                         ),
                       ),

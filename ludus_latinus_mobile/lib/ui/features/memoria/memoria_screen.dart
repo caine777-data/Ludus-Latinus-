@@ -269,7 +269,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: ClipOval(
                 child: Image.asset(
-                  'assets/images/lupulus/lupulus_triomphe_180.png',
+                  lupulusAnimation(LupulusMood.triomphe),
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => const Center(
                     child: Text('🏆', style: TextStyle(fontSize: 40)),
@@ -515,11 +515,11 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      _streak >= 5
-                          ? 'assets/images/lupulus/lupulus_triomphe_180.png'
+                      lupulusAnimation(_streak >= 5
+                          ? LupulusMood.triomphe
                           : _streak >= 3
-                              ? 'assets/images/lupulus/lupulus_joie_180.png'
-                              : 'assets/images/lupulus/lupulus_reflexion_180.png',
+                              ? LupulusMood.joie
+                              : LupulusMood.reflexion),
                       width: 24,
                       height: 24,
                       fit: BoxFit.cover,

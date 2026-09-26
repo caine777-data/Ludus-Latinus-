@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import MagicMock
 
 from app.responsive import adapter_geometrie_fenetre, lier_wraplength_dynamique
+from tests.tk_base import detruire_racine
 
 
 class TestResponsive(unittest.TestCase):
@@ -27,11 +28,8 @@ class TestResponsive(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if getattr(cls, "has_tk", False) and getattr(cls, "root", None):
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(getattr(cls, "root", None))
+        cls.root = None
 
     def test_adapter_geometrie_fenetre_avec_mock(self):
         """Vérifie le calcul responsive de géométrie et minsize sur une fenêtre simulée."""

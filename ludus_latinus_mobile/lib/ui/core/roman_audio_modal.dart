@@ -242,6 +242,66 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           const Divider(color: RomanColors.marbleBorder, height: 1),
                           const SizedBox(height: 14),
 
+                          // Musique d'ambiance : on peut la couper sans couper les bruitages (en classe).
+                          Row(
+                            children: [
+                              Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: RomanColors.imperialPurple.withOpacity(0.12),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(Icons.library_music_rounded, color: RomanColors.imperialPurple, size: 22),
+                              ),
+                              const SizedBox(width: 14),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Musique',
+                                      style: theme.textTheme.bodyLarge?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: RomanColors.imperialPurple,
+                                      ),
+                                    ),
+                                    Text(
+                                      _audio.musicEnabled ? 'Ambiance de lyre et de flûte' : 'Musique coupée',
+                                      style: theme.textTheme.bodySmall?.copyWith(color: RomanColors.charcoal),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Switch.adaptive(
+                                value: _audio.musicEnabled,
+                                activeColor: RomanColors.goldDark,
+                                onChanged: (active) => setState(() => _audio.setMusicEnabled(active)),
+                              ),
+                            ],
+                          ),
+                          SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              activeTrackColor: RomanColors.goldDark,
+                              inactiveTrackColor: RomanColors.marbleBorder.withOpacity(0.4),
+                              thumbColor: RomanColors.imperialGold,
+                              overlayColor: RomanColors.imperialGold.withOpacity(0.2),
+                              trackHeight: 4,
+                            ),
+                            child: Slider(
+                              value: _audio.musicVolume,
+                              min: 0.0,
+                              max: 1.0,
+                              onChanged: (_audio.isMuted || !_audio.musicEnabled)
+                                  ? null
+                                  : (v) => setState(() => _audio.setMusicVolume(v)),
+                            ),
+                          ),
+
+                          const SizedBox(height: 6),
+                          const Divider(color: RomanColors.marbleBorder, height: 1),
+                          const SizedBox(height: 14),
+
                           // Interrupteur Retours Tactiles & Vibrations
                           Row(
                             children: [

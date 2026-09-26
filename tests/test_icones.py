@@ -10,6 +10,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from app.icones import ICONS_DIR, charger_icone, get_icones_toolbar
+from tests.tk_base import detruire_racine
 
 
 class TestIconesRomaines(unittest.TestCase):
@@ -27,11 +28,8 @@ class TestIconesRomaines(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        if cls.root:
-            try:
-                cls.root.destroy()
-            except Exception:
-                pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_dossier_icones_existe(self):
         self.assertTrue(ICONS_DIR.exists(), f"Le dossier {ICONS_DIR} doit exister")

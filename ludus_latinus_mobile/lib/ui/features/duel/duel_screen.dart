@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
-import '../../core/cinematic_player.dart';
 import '../../core/game_juice.dart';
 import '../../core/widgets.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import '../../core/avatar_assets.dart';
 
 enum CombatStance {
   gravis(
@@ -79,6 +80,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Marcus le Rétiaire',
       'titre': 'Gladiateur Vétéran',
       'image': 'assets/images/boss_gladiateur_140.png',
+      'video': 'assets/cinematics/boss_retiaire.mp4',
       'maxHp': 100,
       'attaque': 20,
       'citation': '« Mors aut gloria in harena ! »',
@@ -89,6 +91,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Lion de Némée',
       'titre': 'Fauve Légendaire',
       'image': 'assets/images/boss_lion_140.png',
+      'video': 'assets/cinematics/boss_lion.mp4',
       'maxHp': 120,
       'attaque': 25,
       'citation': '« Rugitus leonis terram commovet ! »',
@@ -99,6 +102,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Minotaure',
       'titre': 'Gardien du Labyrinthe',
       'image': 'assets/images/boss_minotaure_140.png',
+      'video': 'assets/cinematics/boss_minotaure.mp4',
       'maxHp': 140,
       'attaque': 30,
       'citation': '« Nullus exitus e labyrintho patet ! »',
@@ -109,6 +113,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Le Sphinx de Thèbes',
       'titre': 'Maître des Énigmes',
       'image': 'assets/images/boss_sphinx_140.png',
+      'video': 'assets/cinematics/boss_sphinx.mp4',
       'maxHp': 160,
       'attaque': 35,
       'citation': '« Solve aenigma aut peri ! »',
@@ -119,6 +124,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       'nom': 'Mercure Céleste',
       'titre': 'Messager des Dieux',
       'image': 'assets/images/boss_mercure_140.png',
+      'video': 'assets/cinematics/boss_mercure.mp4',
       'maxHp': 180,
       'attaque': 40,
       'citation': '« Celeritas deorum vincit omnia ! »',
@@ -342,30 +348,30 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    AudioService().enterMusic(MusicTrack.arene);
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     )..repeat(reverse: true);
 
     _initBoss();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _showBossEntranceCinematic();
-      }
+      if (mounted) _showBossEntrance();
     });
   }
 
-  void _showBossEntranceCinematic() {
+  void _showBossEntrance() {
     final boss = _bosses[_currentBossIndex];
     RomanCinematicOverlay.showBossEntrance(
       context,
       bossName: boss['nom'] as String,
+      video: boss['video'] as String?,
     );
   }
 
   @override
   void dispose() {
+    AudioService().leaveMusic(MusicTrack.arene);
     _pulseController.dispose();
     super.dispose();
   }
@@ -509,18 +515,6 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       AudioService().playTriumph();
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-
-      // Cinématique de triomphe impérial lors de la victoire contre le boss ultime
-      if (_currentBossIndex == _bosses.length - 1) {
-        Future.delayed(const Duration(milliseconds: 600), () {
-          if (mounted) {
-            RomanCinematicOverlay.showTriumph(
-              context,
-              rankTitle: 'Grand Vainqueur du Colisée',
-            );
-          }
-        });
-      }
     } else {
       widget.repo.addSesterces(5);
       AudioService().playError();
@@ -564,11 +558,6 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                     ),
                   ],
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.movie_creation_outlined, color: RomanColors.imperialGold),
-                tooltip: 'Revoir la Cinématique du Boss',
-                onPressed: _showBossEntranceCinematic,
               ),
               IconButton(
                 icon: const Icon(Icons.info_outline),
@@ -625,9 +614,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
   Widget _buildArenaView(Map<String, dynamic> boss) {
     final isGirl = widget.repo.profile.genre == 'fille';
-    final heroAvatar = isGirl
-        ? 'assets/images/avatar_fille_medaillon_140.png'
-        : 'assets/images/avatar_garcon_medaillon_140.png';
+    final heroAvatar = AvatarAssets.medaillon(widget.repo.profile);
     final heroName = widget.repo.profile.nomHeros.isNotEmpty
         ? widget.repo.profile.nomHeros
         : (isGirl ? 'Julia' : 'Marcus');
@@ -1321,7 +1308,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         children: [
           if (_victoire) ...[
             Image.asset(
-              'assets/images/victoire_320.png',
+              lupulusAnimation(LupulusMood.triomphe),
               width: 120,
               height: 120,
               fit: BoxFit.contain,
@@ -1413,7 +1400,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       _currentBossIndex++;
                       _initBoss();
                     });
-                    _showBossEntranceCinematic();
+                    _showBossEntrance();
                   },
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text('Boss Suivant'),

@@ -12,6 +12,8 @@ class WordPuzzleWidget extends StatefulWidget {
   final String targetSolution;
   final String? latinPhrase;
   final VoidCallback onCompleted;
+  /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
+  final VoidCallback? onMistake;
 
   const WordPuzzleWidget({
     super.key,
@@ -19,6 +21,7 @@ class WordPuzzleWidget extends StatefulWidget {
     required this.targetSolution,
     this.latinPhrase,
     required this.onCompleted,
+    this.onMistake,
   });
 
   @override
@@ -106,6 +109,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
       widget.onCompleted();
     } else {
       HapticFeedback.mediumImpact();
+      widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {

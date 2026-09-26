@@ -7,8 +7,9 @@ import '../../core/roman_diploma_dialog.dart';
 import '../boutique/boutique_modal.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import '../../core/avatar_assets.dart';
 
-/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l''élève (Style Monument Valley).
+/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l'élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -86,14 +87,13 @@ class _AccountScreenState extends State<AccountScreen> {
       animation: widget.repo,
       builder: (context, _) {
         final profile = widget.repo.profile;
-        final avatarImg = profile.genre == 'fille'
-            ? 'assets/images/avatar_fille_medaillon_140.png'
-            : 'assets/images/avatar_garcon_medaillon_140.png';
+        final avatarImg = AvatarAssets.medaillon(profile);
 
         return Scaffold(
           appBar: AppBar(
             title: const Text('TABULARIUM'),
             actions: [
+              if (GameRepository.modeSombreDisponible)
               IconButton(
                 icon: Icon(
                   widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
@@ -173,8 +173,8 @@ class _AccountScreenState extends State<AccountScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 profile.genre == 'fille'
-                                    ? 'Élève Julia • Touche l''avatar pour changer'
-                                    : 'Élève Marcus • Touche l''avatar pour changer',
+                                    ? 'Élève Julia • Touche l\'avatar pour changer'
+                                    : 'Élève Marcus • Touche l\'avatar pour changer',
                                 style: const TextStyle(fontSize: 11, color: Colors.black54),
                               ),
                             ],
@@ -192,7 +192,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜'),
                         _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙'),
-                        _buildStatCol('Série', '${profile.streakDays} j', '🔥'),
+                        _buildStatCol('Série', '${profile.currentStreak()} j', '🔥'),
                         _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️'),
                       ],
                     ),
@@ -376,7 +376,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           title: 'Aurige',
                           romanNum: 'III',
                           condition: 'Atteindre une série de 3 jours consécutifs.',
-                          unlocked: profile.streakDays >= 3,
+                          unlocked: profile.currentStreak() >= 3,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_louve.png',

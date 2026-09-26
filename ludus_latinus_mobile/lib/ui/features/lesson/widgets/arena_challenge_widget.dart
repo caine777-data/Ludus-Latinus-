@@ -11,12 +11,15 @@ class ArenaChallengeWidget extends StatefulWidget {
   final Map<String, dynamic>? boss;
   final List<Map<String, dynamic>> questions;
   final VoidCallback onCompleted;
+  /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
+  final VoidCallback? onMistake;
 
   const ArenaChallengeWidget({
     super.key,
     this.boss,
     required this.questions,
     required this.onCompleted,
+    this.onMistake,
   });
 
   @override
@@ -31,6 +34,10 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
   bool _isAnswered = false;
   bool _isSuccess = false;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
+  late final List<List<int>> _ordres = [
+    for (final q in widget.questions)
+      List.generate((q['options'] as List).length, (i) => i)..shuffle()
+  ];
 
   @override
   void initState() {
@@ -77,6 +84,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
       });
     } else {
       HapticFeedback.mediumImpact();
+      widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
 
@@ -216,7 +224,8 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 childAspectRatio: 2.2,
               ),
               itemCount: options.length,
-              itemBuilder: (context, optIndex) {
+              itemBuilder: (context, pos) {
+                final optIndex = _ordres[_currentQuestionIndex][pos];
                 final optionText = options[optIndex];
                 final isSelected = (_selectedOption == optIndex);
 
@@ -225,7 +234,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 Color borderColor = RomanColors.marbleBorder;
 
                 if (_isAnswered) {
-                  if (optIndex == expectedAnswer) {
+                  if (optIndex == expectedAnswer && isSelected) {
                     btnColor = const Color(0xFFE8F5E9);
                     textColor = const Color(0xFF1B5E20);
                     borderColor = RomanColors.laurelGreen;

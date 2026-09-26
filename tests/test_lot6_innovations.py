@@ -18,6 +18,7 @@ from app.thesaurus import (
     TABLES_CONJUGAISONS,
     TABLES_DECLINAISONS,
 )
+from tests.tk_base import detruire_racine
 
 
 class TestLot6Innovations(unittest.TestCase):
@@ -236,10 +237,8 @@ class TestDialogsLot6(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        try:
-            cls.root.destroy()
-        except Exception:
-            pass
+        detruire_racine(cls.root)
+        cls.root = None
 
     def test_open_compte_dialog(self):
         from app.compte import CompteDialog

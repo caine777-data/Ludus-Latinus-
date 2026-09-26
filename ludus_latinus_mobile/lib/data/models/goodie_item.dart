@@ -36,7 +36,7 @@ extension GoodieCategoryExt on GoodieCategory {
   String get icone {
     switch (this) {
       case GoodieCategory.toge:
-        return '🥋';
+        return '🏛️';
       case GoodieCategory.couronne:
         return '🌿';
       case GoodieCategory.accessoire:
@@ -81,7 +81,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     nomLatin: 'Toga Pura',
     categorie: GoodieCategory.toge,
     prix: 0,
-    icone: '🥋',
+    icone: '🏛️',
     description: 'La toge de laine écrue portée par tous les jeunes citoyens romains.',
     bonus: 'Tenue de départ',
   ),
@@ -91,7 +91,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     nomLatin: 'Toga Praetexta',
     categorie: GoodieCategory.toge,
     prix: 35,
-    icone: '👘',
+    icone: '🟣',
     description: 'Bordée d’une bande de pourpre phénicienne, symbole des enfants nobles et des magistrats.',
     bonus: '+10% Prestige',
   ),
@@ -111,7 +111,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     nomLatin: 'Toga Picta',
     categorie: GoodieCategory.toge,
     prix: 120,
-    icone: '👑',
+    icone: '✨',
     description: 'Toge de pourpre entièrement brodée d’or, réservée aux généraux en plein Triomphe.',
     bonus: 'Aura Impériale Suprême',
   ),
@@ -143,7 +143,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     nomLatin: 'Corona Aenea',
     categorie: GoodieCategory.couronne,
     prix: 25,
-    icone: '🥉',
+    icone: '🌿',
     description: 'Couronne de feuilles martelées offerte aux jeunes apprentis valeureux.',
     bonus: 'Marque des premiers triomphes',
   ),
@@ -317,7 +317,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     nomLatin: 'Pegasus Aureus',
     categorie: GoodieCategory.compagnon,
     prix: 160,
-    icone: '🦄',
+    icone: '🐎',
     description: 'Coursier ailé né des mythes antiques, guidant ton esprit vers les cimes du Savoir.',
     bonus: 'Ailes de la Victoire',
   ),

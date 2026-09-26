@@ -230,7 +230,7 @@ class RomanDiplomaDialog extends StatelessWidget {
                           _buildStatItem('📖 Leçons', '${profile.completedLessons.length}'),
                           _buildStatItem('🏛️ Forum', '${profile.restoredMonuments.length}'),
                           _buildStatItem('🪙 Trésor', '${profile.sesterces} HS'),
-                          _buildStatItem('🔥 Ferveur', '${profile.streakDays} j'),
+                          _buildStatItem('🔥 Ferveur', '${profile.currentStreak()} j'),
                         ],
                       ),
                     ),

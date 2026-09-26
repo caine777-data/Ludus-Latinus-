@@ -1,0 +1,1 @@
+Illustrations de la boutique : <id de l'objet>.png, 256x256, fond transparent.

@@ -7,6 +7,8 @@ class ThesaurusEntry {
   final String etym;
   final String ex;
   final String exFr;
+  /// Monde de la Via Appia où le mot est rencontré (vide si aucun).
+  final String monde;
 
   const ThesaurusEntry({
     required this.latin,
@@ -16,6 +18,7 @@ class ThesaurusEntry {
     required this.etym,
     required this.ex,
     required this.exFr,
+    this.monde = '',
   });
 
   factory ThesaurusEntry.fromJson(Map<String, dynamic> json) {
@@ -27,6 +30,7 @@ class ThesaurusEntry {
       etym: json['etym'] as String? ?? '',
       ex: json['ex'] as String? ?? '',
       exFr: json['ex_fr'] as String? ?? '',
+      monde: json['monde'] as String? ?? '',
     );
   }
 }

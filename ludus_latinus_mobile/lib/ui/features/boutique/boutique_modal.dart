@@ -7,6 +7,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
+import '../../core/avatar_assets.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
 /// Permet au joueur de dépenser ses sesterces pour acheter et équiper des goodies.
@@ -53,7 +54,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
   void _onCategoryChanged(GoodieCategory cat) {
     HapticFeedback.selectionClick();
-    AudioService().playCardFlip();
+    AudioService().playPage();
     setState(() => _activeCategory = cat);
   }
 
@@ -74,8 +75,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
     }
 
     HapticFeedback.heavyImpact();
-    AudioService().playSesterces();
-    AudioService().playTriumph();
+    AudioService().playPurchase();
 
     final ok = widget.repo.buyGoodie(item);
     if (ok) {
@@ -123,9 +123,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       animation: widget.repo,
       builder: (context, _) {
         final profile = widget.repo.profile;
-        final avatarImg = profile.genre == 'fille'
-            ? 'assets/images/avatar_fille_medaillon_140.png'
-            : 'assets/images/avatar_garcon_medaillon_140.png';
+        final avatarImg = AvatarAssets.medaillon(profile);
 
         final itemsFiltered = kCatalogueBoutique
             .where((it) => it.categorie == _activeCategory)
@@ -473,8 +471,8 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
         children: [
           // Grande icône stylisée en médaillon
           Container(
-            width: 52,
-            height: 52,
+            width: 64,
+            height: 64,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isEquipped
@@ -485,8 +483,16 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                 width: 1.2,
               ),
             ),
-            child: Center(
-              child: Text(item.icone, style: const TextStyle(fontSize: 26)),
+            // Illustration de l'objet si elle existe, sinon l'icône de secours.
+            child: ClipOval(
+              child: Image.asset(
+                'assets/images/boutique/${item.id}.png',
+                // « contain » : l'objet détouré reste entier dans le médaillon.
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => Center(
+                  child: Text(item.icone, style: const TextStyle(fontSize: 28)),
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 14),
@@ -496,21 +502,21 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item.nom,
-                        style: const TextStyle(
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.bold,
-                          color: RomanColors.charcoal,
-                        ),
-                      ),
-                    ),
-                    if (item.bonus != null)
-                      Container(
-                        margin: const EdgeInsets.only(left: 6),
+                // Nom sur toute la largeur, badge en dessous : plus de coupure lettre par lettre.
+                Text(
+                  item.nom,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: RomanColors.charcoal,
+                  ),
+                ),
+                // Les « bonus » affichés (+15 % Résistance…) n'ont aucun effet dans le jeu :
+                // on ne promet rien de faux à l'élève tant qu'ils ne sont pas codés.
+                if (item.bonus != null && !item.bonus!.contains('%'))
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: RomanColors.goldLight,
@@ -520,20 +526,19 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                         child: Text(
                           item.bonus!,
                           style: const TextStyle(
-                            fontSize: 9.5,
+                            fontSize: 11,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF684900),
                           ),
                         ),
                       ),
-                  ],
-                ),
-                const SizedBox(height: 2),
+                  ),
+                const SizedBox(height: 4),
                 Text(
                   item.nomLatin,
                   style: const TextStyle(
                     fontStyle: FontStyle.italic,
-                    fontSize: 11.5,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: RomanColors.imperialPurple,
                   ),
@@ -542,9 +547,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                 Text(
                   item.description,
                   style: const TextStyle(
-                    fontSize: 11,
+                    fontSize: 13,
                     color: Colors.black54,
-                    height: 1.2,
+                    height: 1.3,
                   ),
                 ),
               ],

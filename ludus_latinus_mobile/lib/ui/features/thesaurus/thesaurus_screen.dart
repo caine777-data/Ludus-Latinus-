@@ -152,7 +152,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                         ),
                         onSelected: (selected) {
                           if (selected) {
-                            AudioService().playCardFlip();
+                            AudioService().playPage();
                             setState(() => _selectedCategory = cat);
                           }
                         },
@@ -400,7 +400,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           type: 'Verbe irrégulier fondamental',
           cases: const [
             ['Personne', 'Présent', 'Imparfait', 'Sens'],
-            ['1re Sg. (ego)', 'sum', 'eram', 'je suis / j''étais'],
+            ['1re Sg. (ego)', 'sum', 'eram', 'je suis / j\'étais'],
             ['2e Sg. (tu)', 'es', 'eras', 'tu es / tu étais'],
             ['3e Sg. (is/ea)', 'est', 'erat', 'il est / il était'],
             ['1re Pl. (nos)', 'sumus', 'eramus', 'nous sommes / étions'],
@@ -411,10 +411,10 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
         const SizedBox(height: 16),
         _buildDeclensionCard(
           title: '1ère Conjugaison (Amare — aimer)',
-          type: 'Verbes en -are (Présent de l''indicatif)',
+          type: 'Verbes en -are (Présent de l\'indicatif)',
           cases: const [
             ['Personne', 'Forme Latine', 'Traduction'],
-            ['1re Sg.', 'am-o', 'j''aime'],
+            ['1re Sg.', 'am-o', 'j\'aime'],
             ['2e Sg.', 'am-as', 'tu aimes'],
             ['3e Sg.', 'am-at', 'il / elle aime'],
             ['1re Pl.', 'am-amus', 'nous aimons'],
