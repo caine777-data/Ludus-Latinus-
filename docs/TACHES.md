@@ -262,3 +262,173 @@ l'élève a choisie**. Le QCM des leçons fait déjà ainsi.
 **Vérification de l'architecte** : une seule condition changée, comme
 demandé ; captures conformes (mauvaise réponse en rouge seule, bonne réponse
 en vert) et propres, l'affichage du pointeur ayant été éteint. Validé.
+
+---
+
+## T5 — Compte : changer fille ou garçon ne doit plus effacer le prénom
+
+Statut : À FAIRE
+
+**Objectif** : dans le Tabularium (compte), toucher l'avatar bascule entre
+fille et garçon, mais remplace aussi le prénom par « Marcus » ou « Julia ».
+Une élève qui s'appelle Léa redevient « Julia ». Le prénom choisi doit être
+conservé ; seuls les prénoms par défaut suivent le genre.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/account/account_screen.dart`
+
+**Étapes** :
+1. Dans `_toggleGender()`, garde le prénom actuel
+   (`widget.repo.profile.nomHeros`), **sauf** s'il vaut exactement
+   `'Marcus'` ou `'Julia'` : dans ce cas seulement, prends le prénom par
+   défaut du nouveau genre, comme aujourd'hui.
+2. Mets `_nameController.text` à jour avec le prénom retenu.
+3. Ne touche à rien d'autre.
+
+**Critères de réussite** :
+- [ ] `flutter analyze` sur le fichier : aucune erreur.
+- [ ] Sur l'émulateur : dans le compte, renomme le héros « Léa », enregistre,
+      puis touche l'avatar → l'avatar change de genre et le prénom reste « Léa ».
+- [ ] Remets le prénom « Marcus », touche l'avatar → il devient « Julia »
+      (fille) ; touche encore → « Marcus » (garçon).
+- [ ] Captures jointes ; affichage du pointeur éteint.
+- [ ] Un commit `fix(mobile): changer de genre garde le prénom choisi`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T6 — Marché de Trajan : une mauvaise réponse ne rapporte plus rien
+
+Statut : À FAIRE
+
+**Objectif** : au Marché, une option fausse de négociation rapporte encore
+5 sesterces. Un jeu scolaire ne doit pas payer une erreur.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/marche/marche_trajan_screen.dart`
+
+**Étapes** :
+1. Dans la liste des missions de négociation, l'option
+   « Minime ! Pretium XVIII HS immutabile est, miles ! » a
+   `estBonChoix: false` et `sestercesGain: 5`. Passe `sestercesGain` à `0`,
+   et retire « (+5 HS) » de la fin de son `reactionClient` (garde le reste
+   de la phrase, guillemets compris).
+2. Vérifie qu'aucune autre option avec `estBonChoix: false` n'a un
+   `sestercesGain` supérieur à 0 (il ne doit y en avoir aucune après l'étape 1).
+3. Dans la méthode qui traite le choix (branche `else`, quand
+   `option.estBonChoix` est faux), supprime le bloc
+   `if (option.sestercesGain > 0) { widget.repo.addSesterces(...); }`.
+   Garde la vibration, le son d'erreur et le message du client.
+
+**Critères de réussite** :
+- [ ] `flutter analyze` sur le fichier : aucune erreur.
+- [ ] `grep -n "estBonChoix: false" -A1` ne montre plus aucun `sestercesGain` non nul.
+- [ ] Sur l'émulateur, Marché de Trajan, négociation : choisir une option
+      fausse ne change pas le solde de sesterces (capture avant / après).
+- [ ] Une bonne option rapporte toujours ses sesterces.
+- [ ] Affichage du pointeur éteint.
+- [ ] Un commit `fix(mobile): le Marché ne paie plus les mauvaises réponses`.
+
+Note : le Marché se déverrouille après 18 leçons. Si le profil de
+l'émulateur n'en a pas assez, écris-le dans le compte rendu et vérifie
+seulement par la lecture du code : **ne modifie pas la progression** pour
+contourner le verrou.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T7 — Diagnostic des 3 tests Flutter en échec (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : trois tests échouent depuis longtemps. Avant de corriger, il
+faut savoir pour chacun si c'est **le test** ou **le code** qui a tort.
+Cette tâche est une enquête : **tu ne modifies aucun fichier** sauf
+`docs/TACHES.md` (ton compte rendu).
+
+**Périmètre** :
+- lecture seule : `ludus_latinus_mobile/test/`, `ludus_latinus_mobile/lib/`,
+  `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json`
+- écriture : `docs/TACHES.md` uniquement
+
+**Les trois tests** (sortie de `flutter test`) :
+1. `exercise_and_srs_test.dart` — Type « puzzle » : attend les mots
+   `['Romulus', 'Romam', 'condit']`, obtient une liste vide.
+2. `exercise_and_srs_test.dart` — Type « decodeur » : attend
+   `latinComplet == 'Marcus gladium tenet'`, obtient `null`.
+3. `latin_phonetics_test.dart` — « Veni vidi vici » : attend `tʃ`, obtient
+   `[ˈve.ni ˈvi.di ˈvit.ʃi]`.
+
+**Étapes** :
+1. Pour chaque test, trouve la cause exacte : quelle clé JSON, quel champ du
+   modèle, quelle fonction. Compare la donnée utilisée par le test avec la
+   structure réelle des leçons dans le dataset (clés `mots`, `phrase_latine`,
+   `mots_francais`, `latin_complet`, `roles`…).
+2. Dis si c'est le test qui est périmé (le format des données a changé) ou
+   le code qui est faux, et propose la correction en une ou deux phrases.
+3. **Test 3, point pédagogique** : la leçon m1-01 enseigne la prononciation
+   **restituée** (C toujours [k], V toujours [w] : « Késar », « ouilla »).
+   Indique quelle prononciation le moteur `LatinPhoneticsEngine` utilise
+   réellement (restituée ou ecclésiastique / italienne) sur « Veni vidi
+   vici », « Caesar » et « Cicero », avec la sortie exacte obtenue pour
+   chacun (écris un petit script ou lance le test en mode verbeux, sans
+   modifier les fichiers du dépôt).
+
+**Critères de réussite** :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Pour chacun des 3 tests : cause, fautif (test ou code), correction proposée.
+- [ ] Les sorties phonétiques de « Veni vidi vici », « Caesar », « Cicero ».
+- [ ] Un commit `docs: diagnostic des 3 tests Flutter en échec`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Diagnostic test 1 :
+- Diagnostic test 2 :
+- Diagnostic test 3 et prononciation :
+- Doutes, questions pour l'architecte :
+
+---
+
+## T8 — Remplacer `withOpacity` dans le lecteur de cinématiques et la leçon
+
+Statut : À FAIRE
+
+**Objectif** : même travail que T1, sur deux autres fichiers qui produisent
+des avertissements `deprecated_member_use`.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/core/cinematic_player.dart`
+- `ludus_latinus_mobile/lib/ui/features/lesson/lesson_screen.dart`
+
+**Étapes** :
+1. Dans ces deux fichiers uniquement, remplace chaque `.withOpacity(X)` par
+   `.withValues(alpha: X)`, en gardant la même valeur `X`.
+2. Rien d'autre.
+
+**Critères de réussite** :
+- [ ] `grep -c "withOpacity"` vaut `0` sur les deux fichiers.
+- [ ] `flutter analyze` sur les deux fichiers : aucune erreur, plus aucun
+      `deprecated_member_use`.
+- [ ] `flutter test` : 36 réussis et les 3 échecs connus.
+- [ ] Sur l'émulateur : l'intro (bouton « Passer ») et une leçon
+      s'affichent comme avant (captures, pointeur éteint).
+- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (cinématiques, leçon)`.
+
+**Compte rendu** :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+**Ordre conseillé** : T5, T6, T7, T8 — une tâche par session, un commit par tâche.

@@ -287,8 +287,8 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   Reste : formulaire du héros partagé, écran de création au premier
   lancement (après l'intro, dans `home_screen.dart`), écran Paramètres
   (héros, son via `RomanAudioModal`, revoir l'intro, version) derrière une
-  roue dentée qui remplace l'icône du son sur l'accueil ; corriger
-  `_toggleGender` du compte, qui écrase le prénom par Marcus/Julia.
+  roue dentée qui remplace l'icône du son sur l'accueil. (Le prénom écrasé
+  par `_toggleGender` dans le compte est confié à Gemini : T5.)
 
 - **T2 et T3 validées** (exécutant Gemini) — réponses mélangées dès
   l'affichage dans les leçons et l'arène ; intro à chaque démarrage.
@@ -352,6 +352,10 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   infinitive…), la troisième servant de révision.
 - Pas de version web : les cibles sont Android (APK, Play Store) et
   Windows (test sur PC).
+- **En attente de Cédric : quelle prononciation ?** La leçon m1-01 enseigne
+  la prononciation restituée (C = [k], V = [w]) ; le moteur de phonétique
+  semble produire la prononciation italienne (« vitchi »). Diagnostic
+  demandé en T7, décision à prendre ensuite.
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
