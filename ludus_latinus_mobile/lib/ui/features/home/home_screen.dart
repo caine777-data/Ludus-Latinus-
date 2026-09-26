@@ -26,6 +26,8 @@ import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
+import '../settings/hero_creation_screen.dart';
+import '../settings/settings_screen.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -56,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
         if (!mounted) return;
         widget.repo.markIntroSeen();
         await RomanCinematicOverlay.showIntro(context);
+        // Premier lancement : l'élève choisit son héros juste après l'intro.
+        if (mounted) await HeroCreationScreen.showIfNeeded(context, widget.repo);
       });
     }
   }
@@ -158,17 +162,15 @@ class _HomeScreenState extends State<HomeScreen> {
               widget.repo.toggleThemeMode();
             },
           ),
-          // 4. Harmonia Antiqua (Réglages Audio & Bruitages)
+          // 4. Paramètres : héros, son et musique, intro
           IconButton(
             icon: Icon(
-              AudioService().isMuted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
+              Icons.settings_rounded,
               color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
               size: 22,
             ),
-            tooltip: 'Harmonia Antiqua (Réglages Audio)',
-            onPressed: () {
-              RomanAudioModal.show(context);
-            },
+            tooltip: 'Paramètres',
+            onPressed: () => SettingsScreen.show(context, widget.repo),
           ),
         ],
       ),
