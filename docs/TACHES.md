@@ -1241,7 +1241,7 @@ défaut du moteur (voir T7) ; il fait échouer le dernier test.
 
 ## T13 — Remplacer `withOpacity` dans l'audio et les décors
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : même travail que T1, T8 et T9, sur les trois fichiers qui en
 ont le plus.
@@ -1279,11 +1279,13 @@ ont le plus.
 - Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire : Rien sur T13. Tâche terminée.
 
+**Vérification de l'architecte** : 31 lignes, uniquement le remplacement demandé ; plus aucun `withOpacity` dans les trois fichiers. Validé.
+
 ---
 
 ## T14 — Remplacer `withOpacity` dans le Panthéon, la boutique et les effets
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : suite de T13.
 
@@ -1317,3 +1319,126 @@ Statut : FAIT
   - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré après analyse et tests.
 - Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire : Rien sur T14. Tâche terminée.
+
+**Vérification de l'architecte** : 22 lignes, uniquement le remplacement demandé ; plus aucun `withOpacity` dans les quatre fichiers. Validé.
+
+---
+
+**Ordre conseillé** : T15, T16, puis T17 — une tâche par session, un commit
+par tâche, `git add <fichier>` uniquement. **Tous les tests Flutter passent
+depuis T12 (54 sur 54) : un seul échec est une régression.**
+
+---
+
+## T15 — Remplacer `withOpacity` dans le Circus et le Duel
+
+Statut : À FAIRE
+
+**Objectif** : même travail que T13 et T14, sur les deux jeux qui en ont le plus.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart` (12)
+- `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart` (9)
+- `docs/TACHES.md`
+
+**Étapes** : les mêmes que T13 (remplacement seul, pas de `dart format`,
+`flutter analyze`, `flutter test`, puis
+`git checkout -- ludus_latinus_mobile/analysis_options.yaml`).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `grep -c withOpacity` donne 0 pour les deux fichiers.
+- [ ] 21 lignes changées au total, chacune ne différant que par ce remplacement.
+- [ ] `flutter test` : tous les tests passent. Recopie la ligne finale.
+- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (Circus, Duel)`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T16 — Remplacer les derniers `withOpacity`
+
+Statut : À FAIRE
+
+**Objectif** : finir le nettoyage : après cette tâche, plus aucun
+`withOpacity` dans `lib/`.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart` (5)
+- `ludus_latinus_mobile/lib/ui/features/home/views/ludi_view.dart` (2)
+- `ludus_latinus_mobile/lib/ui/features/taverne/taverne_screen.dart` (2)
+- `ludus_latinus_mobile/lib/ui/features/lesson/widgets/case_decoder_widget.dart` (2)
+- `ludus_latinus_mobile/lib/ui/features/lesson/widgets/vocab_question_widget.dart` (1)
+- `ludus_latinus_mobile/lib/ui/features/forum/forum_screen.dart` (1)
+- `ludus_latinus_mobile/lib/ui/features/cesar/cesar_screen.dart` (1)
+- `docs/TACHES.md`
+
+**Étapes** : les mêmes que T13.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `grep -rn withOpacity ludus_latinus_mobile/lib` ne renvoie **rien**.
+- [ ] 14 lignes changées au total, chacune ne différant que par ce remplacement.
+- [ ] `flutter analyze lib` : plus aucun avertissement `deprecated_member_use`
+      lié à `withOpacity` (recopie le nombre total d'« issues » avant et après).
+- [ ] `flutter test` : tous les tests passent.
+- [ ] Un commit `refactor(mobile): plus aucun withOpacity dans l'appli`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T17 — Diagnostic : les leçons qui donnent la réponse avant l'exercice (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'audit a montré que, souvent, le cours affiché juste avant
+l'exercice contient déjà la réponse (20 quiz sur 28, 19 exercices à trou sur
+26). Avant de réécrire ces leçons, il faut la liste exacte, leçon par leçon.
+Cette tâche est une **enquête** : tu ne modifies aucun fichier du dépôt sauf
+`docs/TACHES.md`.
+
+**Périmètre** :
+- lecture seule : `content/` (la source du contenu, un fichier par monde),
+  `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json`
+- écriture : `docs/TACHES.md` ; ton script dans `scratch/` (hors dépôt)
+
+**Étapes** :
+1. Écris un script `scratch/reponses_revelees.py` qui parcourt les 113 leçons
+   du dataset et, pour chaque exercice, cherche si la réponse attendue figure
+   déjà dans le texte montré à l'élève avant de répondre (`content`,
+   `consigne`, `avant`, `apres`, `title`) :
+   - **quiz** : le texte de la bonne option (`options[answer]`) ;
+   - **trou** : la `solution`, et surtout le mot complet (`avant` + `solution`) ;
+   - **puzzle** : la `solution` française, ou une glose mot à mot du type
+     « *(Romani = les Romains, in foro = sur le forum…)* » qui donne la
+     traduction ;
+   - **décodeur** : les cas de `roles` écrits en toutes lettres dans le cours ;
+   - **arène** : ignore-les pour cette tâche.
+   Compare sans tenir compte des majuscules, des accents ni de la ponctuation.
+2. Pour chaque leçon trouvée, note : l'id, le type, la réponse, **la phrase
+   exacte du cours qui la révèle** (un extrait de 15 mots au plus), et le
+   fichier source dans `content/` (ex. `content/monde15_imparfait.py`).
+3. Relis à la main une dizaine de cas : le script peut se tromper (un mot très
+   court comme « est » se trouve partout). Classe chaque leçon en
+   **« révèle la réponse »**, **« indice acceptable »** (la règle est donnée,
+   pas la réponse) ou **« faux positif »**.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un tableau par classe (5e, 4e, 3e) : id, type, réponse, extrait
+      révélateur, fichier source, classement.
+- [ ] Les totaux : combien de leçons « révèle la réponse » par type.
+- [ ] Un commit `docs: diagnostic des leçons qui révèlent la réponse`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

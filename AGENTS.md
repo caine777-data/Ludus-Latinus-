@@ -333,6 +333,10 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   visite ; la somme à rendre n'est plus affichée. **La phase 1 est terminée.** Le latin fautif de deux missions de César
   (*nitidet* n'existe pas) est remplacé : « Alea iacta est. Rubiconem
   transeo ! » et « Fortiter pugnate, milites ! Victoria nostra erit ! ».
+- **T13 et T14 validées** — `withOpacity` retiré de 7 fichiers de plus.
+  Suite confiée : T15 et T16 (les 35 derniers), T17 (diagnostic des leçons
+  qui donnent la réponse avant l'exercice, base du prochain chantier de la
+  phase 2).
 - **T12 validée : toute la suite Flutter passe (54 tests sur 54).** La
   syllabation garde entiers `tʃ`, `dʒ`, `ts` et `kw` (« vi.tʃi »,
   « se.kwi.tur »). Un test qui échoue est désormais une vraie régression.
