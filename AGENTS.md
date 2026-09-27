@@ -197,9 +197,9 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : 3 échecs sont connus et antérieurs** (analyse d'exercices
-×2, phonétique « Veni vidi vici »). Ils ne doivent pas augmenter. Tout
-nouvel échec est de ta responsabilité.
+**Tests Flutter : tous doivent passer** (54 sur 54 depuis T12, le
+27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
+et il est de ta responsabilité.
 
 ### Construction automatique (GitHub Actions)
 
@@ -318,6 +318,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   visite ; la somme à rendre n'est plus affichée. **La phase 1 est terminée.** Le latin fautif de deux missions de César
   (*nitidet* n'existe pas) est remplacé : « Alea iacta est. Rubiconem
   transeo ! » et « Fortiter pugnate, milites ! Victoria nostra erit ! ».
+- **T12 validée : toute la suite Flutter passe (54 tests sur 54).** La
+  syllabation garde entiers `tʃ`, `dʒ`, `ts` et `kw` (« vi.tʃi »,
+  « se.kwi.tur »). Un test qui échoue est désormais une vraie régression.
 - **T11 validée** — les tests du puzzle et du décodeur utilisent les clés
   du dataset ; seul reste l'échec de la prononciation (T12).
 - **T5 à T10 validées** (exécutant Gemini) — le compte garde le prénom ; le
@@ -414,7 +417,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   le moteur produit les deux et que la fenêtre de prononciation s'ouvre sur
   la restituée, l'ecclésiastique restant en option. C'est cohérent : rien à
   trancher, sauf avis contraire de Cédric. Le défaut de syllabation de
-  l'ecclésiastique (« vit.ʃi ») est confié en T12.
+  l'ecclésiastique (« vit.ʃi ») est corrigé (T12).
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 

@@ -1159,7 +1159,7 @@ vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
 
 ## T12 — Prononciation : ne plus couper les affriquées en deux syllabes
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : en prononciation ecclésiastique, « vici » donne `[ˈvit.ʃi]` au
 lieu de `[ˈvi.tʃi]` : la syllabation coupe l'affriquée `tʃ`. C'est un vrai
@@ -1234,6 +1234,8 @@ défaut du moteur (voir T7) ; il fait échouer le dernier test.
     *Explication* : dans la chaîne API restituée, `qu` est transcrit en `kw`. Auparavant, `_syllabify` connaissait la règle pour le `qu` orthographique latin (`between.startsWith('qu')`), mais lors du passage sur la chaîne API contenant `kw`, cette séquence de 2 consonnes tombait dans le cas général scindé en `k.w`. La nouvelle règle `between.endsWith('kw')` conserve le groupe labiovélaire unitaire ouvrant la syllabe (`se.kwi.tur`), ce qui est la prononciation exacte du latin classique restitué.
 - Doutes, questions pour l'architecte : Aucun doute. La totalité de la suite de tests Flutter passe désormais au vert (54/54).
 - Reste à faire : Rien sur T12. Tâche terminée.
+
+**Vérification de l'architecte** : une seule condition ajoutée dans `_syllabify`, test ajouté, 54 tests sur 54 chez moi aussi. Le changement de la restituée de *sequitur* (`se.kwi.tur`) est bien une correction. Validé.
 
 ---
 
