@@ -252,7 +252,7 @@ const List<MissionNegociation> kMissionsNegociation = [
         traduction: '« Je te concède : donne-moi 15 HS et ce glaive est à toi ! »',
         estBonChoix: true,
         sestercesGain: 25,
-        reactionClient: '« Aequum pactum ! Un bon soldat sait apprécier le juste compromis ! (+25 HS) »',
+        reactionClient: '« Aequum pactum ! Un bon soldat sait apprécier le juste compromis ! »',
       ),
       OptionNegociation(
         texteLatin: '« Minime ! Pretium XVIII HS immutabile est, miles ! »',
@@ -284,14 +284,14 @@ const List<MissionNegociation> kMissionsNegociation = [
         traduction: '« J\'accepte 100 HS, noble dame : ce bijou est digne de votre grâce ! »',
         estBonChoix: true,
         sestercesGain: 35,
-        reactionClient: '« Urbanitas tua me delectat ! Tu auras toute la clientèle de ma villa ! (+35 HS) »',
+        reactionClient: '« Urbanitas tua me delectat ! Tu auras toute la clientèle de ma villa ! »',
       ),
       OptionNegociation(
         texteLatin: '« Si addis anulum argenteum, pactum confectum est ! »',
         traduction: '« Si vous ajoutez un anneau d\'argent, le marché est conclu ! »',
         estBonChoix: true,
         sestercesGain: 30,
-        reactionClient: '« Bien négocié ! Voici l\'anneau et les 100 sesterces ! (+30 HS) »',
+        reactionClient: '« Bien négocié ! Voici l\'anneau et les 100 sesterces ! »',
       ),
       OptionNegociation(
         texteLatin: '« C HS nimis exile est ! Vade ad plebeias tabernas ! »',
@@ -316,14 +316,14 @@ const List<MissionNegociation> kMissionsNegociation = [
         traduction: '« La sagesse n\'a pas de prix, mais le copiste achète le papyrus ! 60 HS suffisent ! »',
         estBonChoix: true,
         sestercesGain: 30,
-        reactionClient: '« Logica stoica et iustitia mercatoria ! Voici tes 60 HS avec mes louanges ! (+30 HS) »',
+        reactionClient: '« Logica stoica et iustitia mercatoria ! Voici tes 60 HS avec mes louanges ! »',
       ),
       OptionNegociation(
         texteLatin: '« Gratis tibi dono si unam sententiam Zenonis mihi doces ! »',
         traduction: '« Je te le donne gratuitement si tu m\'enseignes une maxime de Zénon ! »',
         estBonChoix: true,
         sestercesGain: 25,
-        reactionClient: '« Magnanime marchand ! Écoute : "Le bonheur est un flot paisible de vie." (+25 HS) »',
+        reactionClient: '« Magnanime marchand ! Écoute : "Le bonheur est un flot paisible de vie." »',
       ),
       OptionNegociation(
         texteLatin: '« Nolo verba Graeca ! Solvis aut relinquis volumen ! »',
@@ -358,6 +358,23 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   String? _messageFeedback;
   bool _feedbackSucces = false;
 
+  // Chaque exercice ne paie qu'une fois (retenu dans le profil), et rien s'il a
+  // été raté pendant cette visite : avant, les exercices tournaient en boucle
+  // et payaient à chaque tour, même après avoir lu la solution.
+  final Set<String> _ratesCetteVisite = {};
+
+  String get _cleEtal => 'marche:etal:${_articleIndex % kArticlesMarche.length}';
+  String get _cleRendu => 'marche:rendu:${_clientIndex % kClientsMarche.length}';
+  String get _cleNegociation => 'marche:nego:${_negociationIndex % kMissionsNegociation.length}';
+
+  /// Paie l'exercice réussi et renvoie la fin du message à afficher.
+  String _payer(String cle, int montant) {
+    widget.repo.accomplirDefi('marche');
+    if (_ratesCetteVisite.contains(cle)) return ' (pas de sesterces après une erreur)';
+    if (widget.repo.estDejaPaye(cle)) return ' (déjà payé)';
+    return ' (+${widget.repo.payerUneFois(cle, montant)} HS)';
+  }
+
   MissionNegociation get _negociationActuelle =>
       kMissionsNegociation[_negociationIndex % kMissionsNegociation.length];
 
@@ -385,11 +402,10 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       AudioService().playSesterces();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-      widget.repo.addSesterces(option.sestercesGain);
-      widget.repo.accomplirDefi('marche');
+      final fin = _payer(_cleNegociation, GameRepository.gainMarcheNegociation);
       setState(() {
         _feedbackSucces = true;
-        _messageFeedback = '${mission.nomClient} : ${option.reactionClient}';
+        _messageFeedback = '${mission.nomClient} : ${option.reactionClient}$fin';
       });
 
       Future.delayed(const Duration(milliseconds: 2400), () {
@@ -526,10 +542,10 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
         AudioService().playSesterces();
         AudioService().playTriumph();
         RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-        widget.repo.addSesterces(15);
+        final fin = _payer(_cleRendu, GameRepository.gainMarcheRendu);
         setState(() {
           _feedbackSucces = true;
-          _messageFeedback = '${client.nom} : ${client.repliqueSucces} (+15 HS de pourboire !)';
+          _messageFeedback = '${client.nom} : ${client.repliqueSucces}$fin';
         });
 
         Future.delayed(const Duration(milliseconds: 1800), () {
@@ -542,6 +558,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
           });
         });
       } else if (valeurSaisie == attendu) {
+        _ratesCetteVisite.add(_cleRendu);
         HapticFeedback.vibrate();
         AudioService().playError();
         setState(() {
@@ -549,6 +566,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
           _messageFeedback = 'La somme est exacte ($attendu HS), mais en chiffres romains canoniques on écrit $attenduRomain !';
         });
       } else {
+        _ratesCetteVisite.add(_cleRendu);
         HapticFeedback.vibrate();
         AudioService().playError();
         setState(() {
@@ -567,10 +585,10 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       AudioService().playSesterces();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
-      widget.repo.addSesterces(15);
+      final fin = _payer(_cleEtal, GameRepository.gainMarcheEtal);
       setState(() {
         _feedbackSucces = true;
-        _messageFeedback = 'Optime ! Tu as composé $attenduRomain ($prixAttendu HS). Gaius t\'offre +15 HS !';
+        _messageFeedback = 'Optime ! Tu as composé $attenduRomain ($prixAttendu HS).$fin';
       });
 
       Future.delayed(const Duration(milliseconds: 1600), () {
@@ -584,6 +602,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       });
     } else if (valeurSaisie == prixAttendu) {
       // Valeur mathématique bonne mais écriture non canonique (ex: IIII au lieu de IV)
+      _ratesCetteVisite.add(_cleEtal);
       HapticFeedback.vibrate();
       AudioService().playError();
       setState(() {
@@ -591,6 +610,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
         _messageFeedback = 'La valeur est bonne ($prixAttendu), mais en latin canonique on écrit $attenduRomain !';
       });
     } else {
+      _ratesCetteVisite.add(_cleEtal);
       HapticFeedback.vibrate();
       AudioService().playError();
       setState(() {
@@ -1090,18 +1110,6 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                               Text('Prix : ${_clientActuel.prixArticle} HS • Donné : ${_clientActuel.sommeDonnee} HS', style: const TextStyle(fontSize: 12, color: Colors.black54)),
                             ],
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: RomanColors.laurelGreen.withOpacity(0.12),
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: RomanColors.laurelGreen),
-                            ),
-                            child: Text(
-                              'À RENDRE : ${_clientActuel.renduAttendu} HS',
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: RomanColors.laurelGreen),
-                            ),
-                          ),
                         ],
                       ),
                     ],
@@ -1253,7 +1261,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                       flex: 2,
                       child: RomanButton(
                         text: _modeRenduMonnaie
-                            ? '✓ RENDRE (${_clientActuel.renduAttendu} HS)'
+                            ? '✓ RENDRE LA MONNAIE'
                             : '✓ PAYER (${article.prix} HS)',
                         onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
                       ),

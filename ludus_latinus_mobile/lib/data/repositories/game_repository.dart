@@ -274,6 +274,9 @@ class GameRepository extends ChangeNotifier {
   static const int gainCircus = 12;
   static const int gainDuel = 15;
   static const int gainMissionCesar = 10;
+  static const int gainMarcheEtal = 5;
+  static const int gainMarcheRendu = 5;
+  static const int gainMarcheNegociation = 10;
 
   int recompensesRestantes(String jeu) => profile.recompensesRestantes(jeu);
 
@@ -287,6 +290,19 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
     notifyListeners();
     return montant + prime;
+  }
+
+  bool estDejaPaye(String cle) => profile.recompensesUniques.contains(cle);
+
+  /// Exercice payé une seule fois, même après redémarrage (étals du Marché…).
+  /// Renvoie le montant versé, 0 s'il l'avait déjà été.
+  int payerUneFois(String cle, int montant) {
+    if (estDejaPaye(cle)) return 0;
+    profile.recompensesUniques.add(cle);
+    storageService.addSesterces(montant);
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return montant;
   }
 
   bool isMissionCesarReussie(int index) => profile.missionsCesar.contains(index);
