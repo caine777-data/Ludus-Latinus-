@@ -26,7 +26,7 @@ class RomanMeanderPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.miter;
 
     final railPaint = Paint()
-      ..color = color.withOpacity(0.5)
+      ..color = color.withValues(alpha: 0.5)
       ..strokeWidth = strokeWidth * 0.75
       ..style = PaintingStyle.stroke;
 
@@ -240,7 +240,7 @@ class RomanParchmentCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: RomanColors.imperialGold.withOpacity(0.35),
+                      color: RomanColors.imperialGold.withValues(alpha: 0.35),
                       width: 0.8,
                     ),
                   ),
@@ -309,7 +309,7 @@ class RomanWaxSeal extends StatelessWidget {
           // Dégradé de volume 3D imitant la cire fondue pressée
           gradient: RadialGradient(
             colors: [
-              sealColor.withOpacity(0.95),
+              sealColor.withValues(alpha: 0.95),
               sealColor,
               Color.lerp(sealColor, Colors.black, 0.45)!,
             ],
@@ -322,12 +322,12 @@ class RomanWaxSeal extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.35),
+              color: Colors.black.withValues(alpha: 0.35),
               offset: const Offset(0, 4),
               blurRadius: 7,
             ),
             BoxShadow(
-              color: sealColor.withOpacity(0.3),
+              color: sealColor.withValues(alpha: 0.3),
               offset: const Offset(0, 1),
               blurRadius: 3,
             ),
@@ -343,7 +343,7 @@ class RomanWaxSeal extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   width: 1.0,
                 ),
               ),
@@ -356,7 +356,7 @@ class RomanWaxSeal extends StatelessWidget {
                 Icon(
                   Icons.shield_outlined,
                   size: size * 0.28,
-                  color: stampColor.withOpacity(0.9),
+                  color: stampColor.withValues(alpha: 0.9),
                 ),
                 Text(
                   label,
@@ -368,7 +368,7 @@ class RomanWaxSeal extends StatelessWidget {
                     color: stampColor,
                     shadows: [
                       Shadow(
-                        color: Colors.black.withOpacity(0.6),
+                        color: Colors.black.withValues(alpha: 0.6),
                         offset: const Offset(0.8, 1.0),
                         blurRadius: 1.5,
                       ),
@@ -426,7 +426,7 @@ class RomanPedestal extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                        color: effectiveGlow.withOpacity(0.38),
+                        color: effectiveGlow.withValues(alpha: 0.38),
                         blurRadius: 14,
                         spreadRadius: 2,
                       ),

@@ -78,8 +78,8 @@ class RomanOculusPainter extends CustomPainter {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            beamColor.withOpacity(beamOpacity * 1.2),
-            beamColor.withOpacity(beamOpacity * 0.6),
+            beamColor.withValues(alpha: beamOpacity * 1.2),
+            beamColor.withValues(alpha: beamOpacity * 0.6),
             Colors.transparent,
           ],
           stops: const [0.0, 0.45, 1.0],
@@ -117,7 +117,7 @@ class RomanOculusPainter extends CustomPainter {
     final glowPaint = Paint()
       ..shader = RadialGradient(
         colors: [
-          beamColor.withOpacity(beamOpacity * 1.5),
+          beamColor.withValues(alpha: beamOpacity * 1.5),
           Colors.transparent,
         ],
       ).createShader(Rect.fromCircle(center: center, radius: 70.0));
@@ -207,8 +207,8 @@ class RomanTorchWidget extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  const Color(0xFFFFB300).withOpacity(0.35),
-                  const Color(0xFFFF6F00).withOpacity(0.15),
+                  const Color(0xFFFFB300).withValues(alpha: 0.35),
+                  const Color(0xFFFF6F00).withValues(alpha: 0.15),
                   Colors.transparent,
                 ],
               ),
@@ -340,8 +340,8 @@ class CircusVelariumHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      color.withOpacity(0.9),
-                      color.withOpacity(0.65),
+                      color.withValues(alpha: 0.9),
+                      color.withValues(alpha: 0.65),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -357,7 +357,7 @@ class CircusVelariumHeader extends StatelessWidget {
                   boxShadow: isSelected
                       ? [
                           BoxShadow(
-                            color: color.withOpacity(0.6),
+                            color: color.withValues(alpha: 0.6),
                             blurRadius: 8,
                             spreadRadius: 1,
                           )
@@ -479,7 +479,7 @@ class ColosseumArenaPainter extends CustomPainter {
 
     // 4. Ligne dorée subtile de séparation d'arène
     final rimPaint = Paint()
-      ..color = RomanColors.imperialGold.withOpacity(0.35)
+      ..color = RomanColors.imperialGold.withValues(alpha: 0.35)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     canvas.drawLine(

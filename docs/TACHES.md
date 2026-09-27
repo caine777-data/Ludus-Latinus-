@@ -1241,7 +1241,7 @@ défaut du moteur (voir T7) ; il fait échouer le dernier test.
 
 ## T13 — Remplacer `withOpacity` dans l'audio et les décors
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : même travail que T1, T8 et T9, sur les trois fichiers qui en
 ont le plus.
@@ -1259,16 +1259,25 @@ ont le plus.
    `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `grep -c withOpacity` donne 0 pour les trois fichiers.
-- [ ] 31 lignes changées au total, chacune ne différant que par ce remplacement.
-- [ ] `flutter test` : même résultat qu'avant ta modification.
-- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (audio, décors)`.
+- [x] `grep -c withOpacity` donne 0 pour les trois fichiers.
+- [x] 31 lignes changées au total, chacune ne différant que par ce remplacement.
+- [x] `flutter test` : même résultat qu'avant ta modification.
+- [x] Un commit `refactor(mobile): withValues à la place de withOpacity (audio, décors)`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/core/roman_audio_modal.dart` (13 remplacements)
+  - `ludus_latinus_mobile/lib/ui/core/room_decorations.dart` (9 remplacements)
+  - `ludus_latinus_mobile/lib/ui/core/roman_ornaments.dart` (9 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep "withOpacity" ludus_latinus_mobile/lib/ui/core/roman_audio_modal.dart ludus_latinus_mobile/lib/ui/core/room_decorations.dart ludus_latinus_mobile/lib/ui/core/roman_ornaments.dart` : 0 résultat (`grep -c` = 0).
+  - `git diff --stat` : exactement 31 insertions(+) et 31 suppressions(-) réparties sur les 3 fichiers, chaque ligne ne différant que par `.withValues(alpha: x)`.
+  - `flutter analyze` sur les 3 fichiers : 0 erreur, 0 avertissement lié à `withOpacity`.
+  - `flutter test` : 54 réussis, 0 échec. Ligne finale : `00:03 +54: All tests passed!`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré après analyse et tests.
+- Doutes, questions pour l'architecte : Aucun doute.
+- Reste à faire : Rien sur T13. Tâche terminée.
 
 ---
 

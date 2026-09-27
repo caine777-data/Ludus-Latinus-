@@ -55,7 +55,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
               width: 44,
               height: 4,
               decoration: BoxDecoration(
-                color: RomanColors.marbleBorder.withOpacity(0.4),
+                color: RomanColors.marbleBorder.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -129,8 +129,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                 height: 44,
                                 decoration: BoxDecoration(
                                   color: _audio.isMuted
-                                      ? Colors.red.withOpacity(0.12)
-                                      : RomanColors.imperialGold.withOpacity(0.16),
+                                      ? Colors.red.withValues(alpha: 0.12)
+                                      : RomanColors.imperialGold.withValues(alpha: 0.16),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
@@ -199,7 +199,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                                 decoration: BoxDecoration(
-                                  color: RomanColors.imperialGold.withOpacity(0.2),
+                                  color: RomanColors.imperialGold.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(color: RomanColors.imperialGold, width: 0.8),
                                 ),
@@ -216,9 +216,9 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           SliderTheme(
                             data: SliderTheme.of(context).copyWith(
                               activeTrackColor: RomanColors.goldDark,
-                              inactiveTrackColor: RomanColors.marbleBorder.withOpacity(0.4),
+                              inactiveTrackColor: RomanColors.marbleBorder.withValues(alpha: 0.4),
                               thumbColor: RomanColors.imperialGold,
-                              overlayColor: RomanColors.imperialGold.withOpacity(0.2),
+                              overlayColor: RomanColors.imperialGold.withValues(alpha: 0.2),
                               trackHeight: 4,
                             ),
                             child: Slider(
@@ -249,7 +249,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: RomanColors.imperialPurple.withOpacity(0.12),
+                                  color: RomanColors.imperialPurple.withValues(alpha: 0.12),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(Icons.library_music_rounded, color: RomanColors.imperialPurple, size: 22),
@@ -283,9 +283,9 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           SliderTheme(
                             data: SliderTheme.of(context).copyWith(
                               activeTrackColor: RomanColors.goldDark,
-                              inactiveTrackColor: RomanColors.marbleBorder.withOpacity(0.4),
+                              inactiveTrackColor: RomanColors.marbleBorder.withValues(alpha: 0.4),
                               thumbColor: RomanColors.imperialGold,
-                              overlayColor: RomanColors.imperialGold.withOpacity(0.2),
+                              overlayColor: RomanColors.imperialGold.withValues(alpha: 0.2),
                               trackHeight: 4,
                             ),
                             child: Slider(
@@ -309,7 +309,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                 width: 44,
                                 height: 44,
                                 decoration: BoxDecoration(
-                                  color: RomanColors.imperialPurple.withOpacity(0.12),
+                                  color: RomanColors.imperialPurple.withValues(alpha: 0.12),
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -451,10 +451,10 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
               child: Ink(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85),
+                  color: Colors.white.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: RomanColors.marbleBorder.withOpacity(0.6),
+                    color: RomanColors.marbleBorder.withValues(alpha: 0.6),
                     width: 1,
                   ),
                 ),
@@ -464,7 +464,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                       width: 38,
                       height: 38,
                       decoration: BoxDecoration(
-                        color: RomanColors.imperialGold.withOpacity(0.16),
+                        color: RomanColors.imperialGold.withValues(alpha: 0.16),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
