@@ -76,9 +76,12 @@ class _AccountScreenState extends State<AccountScreen> {
     HapticFeedback.selectionClick();
     AudioService().playCardFlip();
     final newGender = widget.repo.profile.genre == 'garcon' ? 'fille' : 'garcon';
-    final defaultName = newGender == 'garcon' ? 'Marcus' : 'Julia';
-    widget.repo.updateProfileName(defaultName, newGender);
-    _nameController.text = defaultName;
+    final currentName = widget.repo.profile.nomHeros;
+    final String chosenName = (currentName == 'Marcus' || currentName == 'Julia')
+        ? (newGender == 'garcon' ? 'Marcus' : 'Julia')
+        : currentName;
+    widget.repo.updateProfileName(chosenName, newGender);
+    _nameController.text = chosenName;
   }
 
   @override

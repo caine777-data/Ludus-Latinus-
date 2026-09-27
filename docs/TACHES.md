@@ -267,7 +267,7 @@ en vert) et propres, l'affichage du pointeur ayant été éteint. Validé.
 
 ## T5 — Compte : changer fille ou garçon ne doit plus effacer le prénom
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : dans le Tabularium (compte), toucher l'avatar bascule entre
 fille et garçon, mais remplace aussi le prénom par « Marcus » ou « Julia ».
@@ -286,19 +286,30 @@ conservé ; seuls les prénoms par défaut suivent le genre.
 3. Ne touche à rien d'autre.
 
 **Critères de réussite** :
-- [ ] `flutter analyze` sur le fichier : aucune erreur.
-- [ ] Sur l'émulateur : dans le compte, renomme le héros « Léa », enregistre,
+- [x] `flutter analyze` sur le fichier : aucune erreur.
+- [x] Sur l'émulateur : dans le compte, renomme le héros « Léa », enregistre,
       puis touche l'avatar → l'avatar change de genre et le prénom reste « Léa ».
-- [ ] Remets le prénom « Marcus », touche l'avatar → il devient « Julia »
+- [x] Remets le prénom « Marcus », touche l'avatar → il devient « Julia »
       (fille) ; touche encore → « Marcus » (garçon).
-- [ ] Captures jointes ; affichage du pointeur éteint.
-- [ ] Un commit `fix(mobile): changer de genre garde le prénom choisi`.
+- [x] Captures jointes ; affichage du pointeur éteint.
+- [x] Un commit `fix(mobile): changer de genre garde le prénom choisi`.
 
 **Compte rendu** :
-- Fichiers modifiés :
+- Fichiers modifiés : `ludus_latinus_mobile/lib/ui/features/account/account_screen.dart`, `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `adb shell settings put system pointer_location 0` et `show_touches 0` : désactivation de l'overlay de débogage pointeur sur l'émulateur.
+  - `flutter analyze lib/ui/features/account/account_screen.dart` : 0 erreur (2 infos `prefer_const_constructors` préexistantes conservées sans modification).
+  - `flutter test` : 39 passés (dont les 3 tests de formulaire `hero_form_test.dart`), les 3 échecs historiques connus et inchangés (0 régression).
+  - `flutter build apk --debug` : compilation réussie en 96s (`build/app/outputs/flutter-apk/app-debug.apk`).
+  - `adb install -r ludus_latinus_mobile/build/app/outputs/flutter-apk/app-debug.apk` : installation réussie.
+  - Validation sur émulateur Android `Pixel_Ludus` (écran Tabularium) :
+    - Saisie du prénom "Lea" et soumission (`onSubmitted`) : confirmation par SnackBar "Profil mis à jour : Salve, Lea !" (`scratch/t5_saved_lea.png`).
+    - Clic sur l'avatar : l'avatar bascule vers Julia (fille, toge lorica avec bandeau et cheveux longs) et le prénom dans le champ reste "Lea" (`scratch/t5_tap_reload_badge.png` et zoom `scratch/crop_avatar_girl.png`).
+    - Saisie et soumission du prénom par défaut "Marcus" (`scratch/t5_saved_marcus.png` et `scratch/t5_marcus_initial.png`).
+    - Clic sur l'avatar : il devient "Julia" (fille) avec mise à jour du champ textuel en "Julia" (`scratch/t5_marcus_to_julia.png`).
+    - Nouveau clic sur l'avatar : il redevient "Marcus" (garçon) avec mise à jour du champ textuel en "Marcus" (`scratch/t5_julia_to_marcus.png`).
+- Doutes, questions pour l'architecte : Aucun doute. La conservation du prénom personnalisé lors du basculement de genre fonctionne conformément aux spécifications.
+- Reste à faire : Rien sur T5. Tâche terminée.
 
 ---
 
