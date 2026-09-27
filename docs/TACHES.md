@@ -464,7 +464,7 @@ Cette tâche est une enquête : **tu ne modifies aucun fichier** sauf
 
 ## T8 — Remplacer `withOpacity` dans le lecteur de cinématiques et la leçon
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : même travail que T1, sur deux autres fichiers qui produisent
 des avertissements `deprecated_member_use`.
@@ -479,19 +479,31 @@ des avertissements `deprecated_member_use`.
 2. Rien d'autre.
 
 **Critères de réussite** :
-- [ ] `grep -c "withOpacity"` vaut `0` sur les deux fichiers.
-- [ ] `flutter analyze` sur les deux fichiers : aucune erreur, plus aucun
+- [x] `grep -c "withOpacity"` vaut `0` sur les deux fichiers.
+- [x] `flutter analyze` sur les deux fichiers : aucune erreur, plus aucun
       `deprecated_member_use`.
-- [ ] `flutter test` : 39 réussis et les 3 échecs connus.
-- [ ] Sur l'émulateur : l'intro (bouton « Passer ») et une leçon
+- [x] `flutter test` : 39 réussis et les 3 échecs connus.
+- [x] Sur l'émulateur : l'intro (bouton « Passer ») et une leçon
       s'affichent comme avant (captures, pointeur éteint).
-- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (cinématiques, leçon)`.
+- [x] Un commit `refactor(mobile): withValues à la place de withOpacity (cinématiques, leçon)`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/core/cinematic_player.dart` (2 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/lesson/lesson_screen.dart` (3 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep "withOpacity" -- ludus_latinus_mobile/lib/ui/core/cinematic_player.dart ludus_latinus_mobile/lib/ui/features/lesson/lesson_screen.dart` : 0 occurrence trouvée (`grep -c` = 0).
+  - `flutter analyze lib/ui/core/cinematic_player.dart lib/ui/features/lesson/lesson_screen.dart` : 0 issue (`No issues found! en 6.9s`), aucun `deprecated_member_use`.
+  - `flutter test` : 39 passés, 3 échecs historiques connus documentés dans T7 (aucune régression).
+  - `flutter build apk --debug` : compilation réussie en 24,1s (`build/app/outputs/flutter-apk/app-debug.apk`).
+  - `adb install -r` : installation réussie (`Success`).
+  - Validation sur l'émulateur `Pixel_Ludus` :
+    - Vidéo d'introduction : bouton « Passer » affiché avec son fond translucide et contour doré (`scratch/t8_intro_passer.png`).
+    - Écran de leçon : ouverture de la leçon m1-05 depuis la Via Appia (`scratch/t8_lesson_display.png`), les badges et styles avec transparence s'affichent parfaitement (`scratch/t8_lesson_exercise.png`).
+    - Overlay pointeur vérifié éteint (`pointer_location = 0`).
+- Doutes, questions pour l'architecte : Aucun doute. La migration vers `.withValues(alpha: X)` élimine complètement les avertissements de dépréciation sur ces deux fichiers.
+- Reste à faire : Rien sur T8. Tâche terminée.
 
 **Ordre conseillé** : T5, T6, T7, T8, puis T9 et T10 — une tâche par session, un commit par tâche.
 

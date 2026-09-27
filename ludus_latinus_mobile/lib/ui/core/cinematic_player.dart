@@ -152,8 +152,8 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Material(
-                    color: Colors.black.withOpacity(0.55),
-                    shape: StadiumBorder(side: BorderSide(color: RomanColors.imperialGold.withOpacity(0.8))),
+                    color: Colors.black.withValues(alpha: 0.55),
+                    shape: StadiumBorder(side: BorderSide(color: RomanColors.imperialGold.withValues(alpha: 0.8))),
                     child: InkWell(
                       customBorder: const StadiumBorder(),
                       onTap: () {

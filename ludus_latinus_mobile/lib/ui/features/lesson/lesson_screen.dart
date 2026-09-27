@@ -317,7 +317,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 decoration: BoxDecoration(
                   color: const Color(0xFFF1F8F3),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: RomanColors.laurelGreen.withOpacity(0.35)),
+                  border: Border.all(color: RomanColors.laurelGreen.withValues(alpha: 0.35)),
                 ),
                 child: Text(
                   explanation,
@@ -374,7 +374,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   RomanElasticProgressBar(
                     value: (widget.repo.profile.completedLessons.length / widget.repo.worlds.fold<int>(0, (s, w) => s + w.lessons.length).clamp(1, 100000)).clamp(0.0, 1.0),
                     color: RomanColors.imperialGold,
-                    ghostColor: RomanColors.laurelGreen.withOpacity(0.4),
+                    ghostColor: RomanColors.laurelGreen.withValues(alpha: 0.4),
                     backgroundColor: const Color(0xFFEBE3D7),
                     height: 8,
                   ),
@@ -559,7 +559,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: _getLessonTypeColor(lesson.type).withOpacity(0.12),
+                      color: _getLessonTypeColor(lesson.type).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: _getLessonTypeColor(lesson.type), width: 1),
                     ),
