@@ -267,7 +267,7 @@ en vert) et propres, l'affichage du pointeur ayant été éteint. Validé.
 
 ## T5 — Compte : changer fille ou garçon ne doit plus effacer le prénom
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : dans le Tabularium (compte), toucher l'avatar bascule entre
 fille et garçon, mais remplace aussi le prénom par « Marcus » ou « Julia ».
@@ -311,11 +311,13 @@ conservé ; seuls les prénoms par défaut suivent le genre.
 - Doutes, questions pour l'architecte : Aucun doute. La conservation du prénom personnalisé lors du basculement de genre fonctionne conformément aux spécifications.
 - Reste à faire : Rien sur T5. Tâche terminée.
 
+**Vérification de l'architecte** : diff limité à `_toggleGender` : le prénom est gardé, seuls Marcus et Julia basculent. Validé.
+
 ---
 
 ## T6 — Marché de Trajan : une mauvaise réponse ne rapporte plus rien
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : au Marché, une option fausse de négociation rapporte encore
 5 sesterces. Un jeu scolaire ne doit pas payer une erreur.
@@ -370,11 +372,13 @@ contourner le verrou.
 - Doutes, questions pour l'architecte : Aucun doute. La non-rémunération des erreurs est garantie à double titre : dans les données (`sestercesGain: 0`) et dans le contrôleur d'événements (`addSesterces` supprimé de la branche d'échec).
 - Reste à faire : Rien sur T6. Tâche terminée.
 
+**Vérification de l'architecte** : `sestercesGain` à 0 et paiement retiré de la branche d'erreur ; j'ai vérifié qu'aucune autre mauvaise option du fichier ne paie encore. Validé.
+
 ---
 
 ## T7 — Diagnostic des 3 tests Flutter en échec (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : trois tests échouent depuis longtemps. Avant de corriger, il
 faut savoir pour chacun si c'est **le test** ou **le code** qui a tort.
@@ -460,11 +464,13 @@ Cette tâche est une enquête : **tu ne modifies aucun fichier** sauf
   - Pour le test 3 : pour corriger le comportement de `_syllabify` sur `vitʃi`, préconises-tu d'ajuster `_syllabify` pour qu'il reconnaisse les affriquées API, ou de découper le mot en syllabes avant la substitution API ?
 - Reste à faire : Rien sur T7. Tâche d'enquête terminée.
 
+**Vérification de l'architecte** : diagnostic juste et bien sourcé. Décisions : on corrige les tests 1 et 2 côté test seulement (T11, sans rétrocompatibilité dans `Lesson.fromJson`) ; on protège les affriquées dans `_syllabify` (T12). Le moteur s'ouvre sur la prononciation restituée : cohérent avec m1-01. Validé.
+
 ---
 
 ## T8 — Remplacer `withOpacity` dans le lecteur de cinématiques et la leçon
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : même travail que T1, sur deux autres fichiers qui produisent
 des avertissements `deprecated_member_use`.
@@ -505,13 +511,15 @@ des avertissements `deprecated_member_use`.
 - Doutes, questions pour l'architecte : Aucun doute. La migration vers `.withValues(alpha: X)` élimine complètement les avertissements de dépréciation sur ces deux fichiers.
 - Reste à faire : Rien sur T8. Tâche terminée.
 
-**Ordre conseillé** : T5, T6, T7, T8, puis T9 et T10 — une tâche par session, un commit par tâche.
+**Ordre conseillé** : T5, T6, T7, T8, puis T9 et T10 — une tâche par session, un commit par tâche. (Toutes validées.)
+
+**Vérification de l'architecte** : 4 remplacements, plus aucun `withOpacity` dans les deux fichiers. Validé.
 
 ---
 
 ## T9 — Remplacer `withOpacity` dans quatre écrans de révision
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : même travail que T1 et T8, sur quatre fichiers (14
 occurrences) qui produisent des avertissements `deprecated_member_use`.
@@ -557,11 +565,13 @@ occurrences) qui produisent des avertissements `deprecated_member_use`.
 - Doutes, questions pour l'architecte : Aucun doute. La migration vers `.withValues(alpha: X)` est complète sur ces quatre écrans de révision.
 - Reste à faire : Rien sur T9. Tâche terminée.
 
+**Vérification de l'architecte** : 14 remplacements, conformes, plus aucun `withOpacity` dans les quatre fichiers. Validé.
+
 ---
 
 ## T10 — Diagnostic : quels mots manquent au Thesaurus ? (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : Memoria révise désormais les mots du Thesaurus des mondes
 déjà travaillés. Or, à partir du monde 15, chaque monde n'apporte que 0 à 5
@@ -1094,3 +1104,154 @@ modifies aucun fichier du dépôt** sauf `docs/TACHES.md`.
   - Sur les noms propres (ex. `Midas`, `Icarus`, `Marcus`, `Caesar`, `Cerberus`, `Hercules`, `Cloelia`, `Pompeii`, `Vesuvius`) : à trancher si l'architecte souhaite les intégrer au Thesaurus ou les considérer hors lexique d'apprentissage de base.
   - Sur les mots grammaticaux invariants (prépositions `in`, `ad`, `pro`, `a/ab`, conjonction `et`, salutation `ave`, pronom relatif `qui, quae, quod`) : à décider s'ils doivent entrer dans la catégorie `Invariable` du Thesaurus.
 - Reste à faire : Rien sur T10. Tâche terminée.
+
+**Vérification de l'architecte** : tableaux complets par monde, script resté dans `scratch/` (ignoré par git). Réponses : les noms propres restent hors Thesaurus ; les mots invariables utiles (`in`, `ad`, `et`, `ave`, `a/ab`, `pro`) y entreront avec la catégorie `Invariable` ; « submarin » est un mot français voulu. L'enrichissement sera écrit par l'architecte puis validé par Cédric. Validé.
+
+---
+
+**Ordre conseillé pour la suite** : T11, T12, T13, T14 — une tâche par session,
+un commit par tâche. Commite **uniquement les fichiers de ton périmètre**
+(`git add <fichier>`, jamais `git add -A` ni `git add .`) : l'architecte
+travaille dans le même dépôt.
+
+---
+
+## T11 — Réparer les deux tests périmés du puzzle et du décodeur
+
+Statut : À FAIRE
+
+**Objectif** : les tests 1 et 2 de T7 échouent parce qu'ils utilisent de
+vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
+`mots` et `latin_complet`, et `Lesson.fromJson` a raison.
+
+**Périmètre** :
+- `ludus_latinus_mobile/test/exercise_and_srs_test.dart`
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Dans le test « puzzle », remplace la clé `'words'` par `'mots'`.
+2. Dans le test « décodeur », remplace la clé `'latinComplet'` par `'latin_complet'`.
+3. Ne change rien d'autre : ni les valeurs, ni les `expect`, ni `lib/`.
+4. Lance `flutter test`, puis `git checkout -- ludus_latinus_mobile/analysis_options.yaml`
+   (voir le piège 5 d'`AGENTS.md`).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git diff` : exactement 2 lignes changées dans le fichier de test.
+- [ ] `flutter test` : il ne reste qu'**un** échec, celui de « Veni vidi vici ».
+      Recopie la ligne finale du résultat (« +N -1 »).
+- [ ] Un commit `test(mobile): clés du dataset dans les tests puzzle et décodeur`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T12 — Prononciation : ne plus couper les affriquées en deux syllabes
+
+Statut : À FAIRE
+
+**Objectif** : en prononciation ecclésiastique, « vici » donne `[ˈvit.ʃi]` au
+lieu de `[ˈvi.tʃi]` : la syllabation coupe l'affriquée `tʃ`. C'est un vrai
+défaut du moteur (voir T7) ; il fait échouer le dernier test.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/data/services/latin_phonetics_engine.dart`
+  (fonction `_syllabify` **seulement**)
+- `ludus_latinus_mobile/test/latin_phonetics_test.dart` (ajout d'un test)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Dans `_syllabify`, dans la boucle qui calcule `between` (les consonnes entre
+   deux voyelles), ajoute **en premier** un cas : si `between` se termine par
+   une des suites `tʃ`, `dʒ`, `ts` ou `kw`, la coupure se place **juste avant**
+   cette suite : `cuts.add(k2Start - 2)`. Ces quatre suites sont un seul son
+   (affriquée) ou un seul groupe (qu), qui ouvre la syllabe suivante.
+   Attention : `ʃ` et `ʒ` sont chacun **un seul** caractère Dart, donc
+   `tʃ` fait bien 2 de longueur.
+2. Ne touche à aucune autre règle (muta cum liquida, `qu` du latin brut…).
+3. Ajoute dans `latin_phonetics_test.dart` un test qui vérifie que
+   `LatinPhoneticsEngine.analyze('Veni vidi vici').fullIpaEcclesiastique`
+   contient `vi.tʃi` ou `ˈvi.tʃi`, et ne contient pas `t.ʃ`.
+4. Écris un petit script dans `scratch/` (hors dépôt) qui affiche les deux
+   transcriptions (restituée et ecclésiastique) de : `Veni vidi vici`,
+   `Caesar`, `Cicero`, `legiones`, `sequitur`, `gratia`, `amicitia`.
+   Recopie-les **avant et après** ta modification dans le compte rendu.
+5. `flutter test`, puis `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git diff` : seule `_syllabify` change dans le moteur, plus le nouveau test.
+- [ ] `flutter test` : **0 échec** (si T11 est faite). Recopie la ligne finale.
+- [ ] Les 7 transcriptions avant et après, et aucune transcription
+      **restituée** n'a changé (sinon, explique pourquoi).
+- [ ] Un commit `fix(mobile): la syllabation garde les affriquées entières`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T13 — Remplacer `withOpacity` dans l'audio et les décors
+
+Statut : À FAIRE
+
+**Objectif** : même travail que T1, T8 et T9, sur les trois fichiers qui en
+ont le plus.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/core/roman_audio_modal.dart` (13)
+- `ludus_latinus_mobile/lib/ui/core/room_decorations.dart` (9)
+- `ludus_latinus_mobile/lib/ui/core/roman_ornaments.dart` (9)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Remplace chaque `.withOpacity(x)` par `.withValues(alpha: x)`, rien d'autre.
+2. Pas de `dart format` sur ces fichiers (piège 10 d'`AGENTS.md`).
+3. `flutter analyze` sur les trois fichiers, puis `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `grep -c withOpacity` donne 0 pour les trois fichiers.
+- [ ] 31 lignes changées au total, chacune ne différant que par ce remplacement.
+- [ ] `flutter test` : même résultat qu'avant ta modification.
+- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (audio, décors)`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T14 — Remplacer `withOpacity` dans le Panthéon, la boutique et les effets
+
+Statut : À FAIRE
+
+**Objectif** : suite de T13.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart` (8)
+- `ludus_latinus_mobile/lib/ui/features/boutique/boutique_modal.dart` (6)
+- `ludus_latinus_mobile/lib/ui/core/game_juice.dart` (5)
+- `ludus_latinus_mobile/lib/ui/core/particles_overlay.dart` (3)
+- `docs/TACHES.md`
+
+**Étapes** : les mêmes que T13.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `grep -c withOpacity` donne 0 pour les quatre fichiers.
+- [ ] 22 lignes changées au total, chacune ne différant que par ce remplacement.
+- [ ] `flutter test` : même résultat qu'avant ta modification.
+- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (Panthéon, boutique, effets)`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

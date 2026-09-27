@@ -159,6 +159,17 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     Les images fixes de `images/lupulus/` ne servent plus que de secours
     (`errorBuilder`) et pour les costumes (centurion, gladiateur, imperator,
     philosophe…), qui n'ont pas d'animation.
+15. **Un mini-jeu ne verse jamais de sesterces avec `addSesterces` en direct.**
+    Une partie gagnée passe par `GameRepository.payerPartie(jeu, montant)`
+    (3 parties payées par jour et par jeu), une mission unique par une
+    méthode qui l'enregistre dans le profil (`validerMissionCesar`), et toute
+    réussite appelle `accomplirDefi(jeu)` pour le défi du jour. Barème : une
+    partie gagnée vaut à peu près une leçon (10 HS) ; `gainCircus`,
+    `gainDuel`, `gainMissionCesar`, `gainMemoria`. Sans ça, un jeu en boucle
+    rapportait plus que toutes les leçons.
+16. **Ne commite que les fichiers de ta tâche** (`git add <fichier>`, jamais
+    `git add -A` ni `git add .`) : l'architecte et l'exécutant travaillent
+    parfois en même temps dans le même dépôt.
 
 ---
 
@@ -281,6 +292,25 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Économie des mini-jeux** (tests `recompenses_jeux_test.dart` et
+  `cesar_mission_test.dart`) — Circus et Duel : 12 et 15 HS par victoire,
+  3 parties payées par jour et par jeu (`UserProfile.recompensesJeux`) ; le
+  score en course et en combat est affiché en points. César : l'énoncé ne
+  donne plus la clé ; une fois la clé trouvée, l'élève choisit la
+  traduction parmi trois ; 10 HS par mission, une seule fois (5 après une
+  erreur), missions retenues dans `UserProfile.missionsCesar`. Le décodeur
+  entre camarades ne paie plus. Défi du jour : 10 HS, versés par
+  `accomplirDefi` quand le défi est réussi dans le jeu (course ou duel
+  gagné, mission de César, 5 bonnes réponses dans Memoria, étal du Marché
+  réussi, Gaius battu), et plus au toucher du bouton de l'accueil.
+  **Reste pour la phase 1** : étals du Marché payés une seule fois ; icône
+  de l'Épigraphie. **À signaler à Cédric** : latin fautif dans deux
+  missions de César (« ROMA NITIDET », « VIRE QUISQUE ANIMAS », « VICTORIA
+  NITIDET » : *nitidet* n'existe pas).
+- **T5 à T10 validées** (exécutant Gemini) — le compte garde le prénom ; le
+  Marché ne paie plus d'erreur ; diagnostics des tests et du Thesaurus ;
+  `withOpacity` retiré de six fichiers. Suite confiée : T11 à T14.
+
 - **Memoria honnête** (vérifiée sur l'émulateur) — le paquet vient de
   `GameRepository.memoriaCards` : les mots du Thesaurus des mondes où au
   moins une leçon est validée (vide avant la première leçon, avec un message).
@@ -366,10 +396,12 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   infinitive…), la troisième servant de révision.
 - Pas de version web : les cibles sont Android (APK, Play Store) et
   Windows (test sur PC).
-- **En attente de Cédric : quelle prononciation ?** La leçon m1-01 enseigne
-  la prononciation restituée (C = [k], V = [w]) ; le moteur de phonétique
-  semble produire la prononciation italienne (« vitchi »). Diagnostic
-  demandé en T7, décision à prendre ensuite.
+- **Prononciation : restituée par défaut.** La leçon m1-01 enseigne la
+  prononciation restituée (C = [k], V = [w]) ; le diagnostic T7 montre que
+  le moteur produit les deux et que la fenêtre de prononciation s'ouvre sur
+  la restituée, l'ecclésiastique restant en option. C'est cohérent : rien à
+  trancher, sauf avis contraire de Cédric. Le défaut de syllabation de
+  l'ecclésiastique (« vit.ʃi ») est confié en T12.
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 
