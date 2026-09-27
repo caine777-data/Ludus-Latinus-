@@ -561,7 +561,7 @@ occurrences) qui produisent des avertissements `deprecated_member_use`.
 
 ## T10 — Diagnostic : quels mots manquent au Thesaurus ? (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : Memoria révise désormais les mots du Thesaurus des mondes
 déjà travaillés. Or, à partir du monde 15, chaque monde n'apporte que 0 à 5
@@ -593,16 +593,504 @@ modifies aucun fichier du dépôt** sauf `docs/TACHES.md`.
    contenu pédagogique, réservé à l'architecte et à Cédric.
 
 **Critères de réussite** :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un tableau par monde (1 à 26) : mots absents du Thesaurus, puis
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un tableau par monde (1 à 26) : mots absents du Thesaurus, puis
       « probablement connus ».
-- [ ] La liste des 16 mots sans monde, avec leur catégorie.
-- [ ] Le chemin du script dans `scratch/`, pour que l'architecte puisse le relancer.
-- [ ] Un commit `docs: diagnostic des mots manquants au Thesaurus`.
+- [x] La liste des 16 mots sans monde, avec leur catégorie.
+- [x] Le chemin du script dans `scratch/`, pour que l'architecte puisse le relancer.
+- [x] Un commit `docs: diagnostic des mots manquants au Thesaurus`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `docs/TACHES.md` uniquement (aucun fichier source ni de données modifié dans le dépôt).
 - Commandes lancées et résultat réel :
-- Mots manquants par monde :
+  - Script développé et exécuté : `python scratch/thesaurus_diagnostic.py` (exécution complète, 26 mondes analysés, 16 mots sans monde investigués).
+  - Chemin du script reproductible : `scratch/thesaurus_diagnostic.py`.
+- Mots manquants par monde (Mondes 1 à 26) :
+
+### Monde 1 — 1 · Salve ! Premiers pas à Rome 🏛️
+- **Phrases sources** :
+  - `m1-02` (puzzle) : *Salve, amice !*
+  - `m1-03` (trou) : *Romanus sum.*
+  - `m1-05` (puzzle) : *Lupa pueros curat.*
+- **Mots absents du Thesaurus (0)** :
+  *(Aucun mot absent)*
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (5)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `amice` | `amicus, -i` | vocatif singulier de amicus |
+| `romanus` | `Roma, -ae` | dérivé de Roma |
+| `sum` | `esse (sum, fui)` | présent 1sg de esse |
+| `pueros` | `puer, -eri` | accusatif pluriel de puer |
+| `curat` | `curare` | présent 3sg de curare |
+- **Formes exactes du Thesaurus (2)** : `salve` (salve / salvete), `lupa` (lupa, -ae)
+
+### Monde 2 — 2 · Dans la Maison Romaine 🏠
+- **Phrases sources** :
+  - `m2-02` (puzzle) : *Canis in horto est.*
+  - `m2-03` (trou) : *Discipulus scribit in tabula.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `in` | `in` | préposition |
+| `discipulus` | `discipulus, -i` | nom masculin |
+| `tabula` | `tabula, -ae` | nom féminin |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `horto` | `hortus, -i` | ablatif singulier de hortus |
+| `est` | `esse (sum, fui)` | présent 3sg de esse |
+| `scribit` | `scribere` | présent 3sg de scribere |
+- **Formes exactes du Thesaurus (1)** : `canis` (canis, -is)
+
+### Monde 3 — 3 · Les Dieux de l'Olympe & Légendes ⚡
+- **Phrases sources** :
+  - `m3-02` (puzzle) : *Midas aurum amat.*
+  - `m3-03` (trou) : *Icarus ad solem volat.*
+- **Mots absents du Thesaurus (6)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `midas` | `Midas` | nom propre mythologique |
+| `aurum` | `aurum, -i` | nom neutre |
+| `icarus` | `Icarus` | nom propre mythologique |
+| `ad` | `ad` | préposition |
+| `solem` | `sol, solis` | accusatif singulier de sol |
+| `volat` | `volare` | présent 3sg de volare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (1)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `amat` | `amare` | présent 3sg de amare |
+
+### Monde 4 — 4 · Les Cas & Travaux d'Hercule 🦁
+- **Phrases sources** :
+  - `m4-02` (puzzle) : *Puella cantat.*
+  - `m4-03` (trou) : *Puer puellam amat.*
+  - `m4-04` (decodeur) : *Lupus agnum videt*
+- **Mots absents du Thesaurus (0)** :
+  *(Aucun mot absent)*
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (5)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `cantat` | `cantare` | présent 3sg de cantare |
+| `puellam` | `puella, -ae` | accusatif singulier de puella |
+| `amat` | `amare` | présent 3sg de amare |
+| `agnum` | `agnus, -i` | accusatif singulier de agnus |
+| `videt` | `videre` | présent 3sg de videre |
+- **Formes exactes du Thesaurus (3)** : `puella` (puella, -ae), `puer` (puer, -eri), `lupus` (lupus, -i)
+
+### Monde 5 — 5 · Les Verbes au Présent & L'Action ⚔️
+- **Phrases sources** :
+  - `m5-01` (puzzle) : *Romanus sum.*
+  - `m5-02` (trou) : *Marcus Romam amat.*
+  - `m5-03` (puzzle) : *Miles fortiter pugnat.*
+  - `m5-04` (decodeur) : *Miles gladium capit*
+- **Mots absents du Thesaurus (1)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `marcus` | `Marcus` | nom propre |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (7)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `romanus` | `Roma, -ae` | dérivé de Roma |
+| `sum` | `esse (sum, fui)` | présent 1sg de esse |
+| `romam` | `Roma, -ae` | accusatif singulier de Roma |
+| `amat` | `amare` | présent 3sg de amare |
+| `pugnat` | `pugnare` | présent 3sg de pugnare |
+| `gladium` | `gladius, -i` | accusatif singulier de gladius |
+| `capit` | `capere` | présent 3sg de capere |
+- **Formes exactes du Thesaurus (2)** : `miles` (miles, -itis), `fortiter` (fortiter)
+
+### Monde 6 — 6 · Les Gladiateurs & le Colisée 🛡️
+- **Phrases sources** :
+  - `m6-02` (puzzle) : *Equi celeriter currunt.*
+  - `m6-03` (trou) : *Ave Caesar !*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `celeriter` | `celeriter` | adverbe |
+| `ave` | `ave` | salutation/interjection |
+| `caesar` | `Caesar` | nom propre historique |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (2)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `equi` | `equus, -i` | nominatif pluriel de equus |
+| `currunt` | `currere` | présent 3pl de currere |
+
+### Monde 7 — 7 · Détective des Mots & Devises 📜
+- **Phrases sources** :
+  - `m7-02` (trou) : *Submarin.*
+  - `m7-03` (puzzle) : *Veni, vidi, vici.*
+- **Mots absents du Thesaurus (1)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `submarin` | `submarin` | mot français (exercice didactique préfixe sub-) |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `veni` | `venire` | parfait 1sg de venire |
+| `vidi` | `videre` | parfait 1sg de videre |
+| `vici` | `vincere` | parfait 1sg de vincere |
+
+### Monde 8 — 8 · La Cité de Rome, Marchés & Vie Quotidienne 🍇
+- **Phrases sources** :
+  - `m8-02` (puzzle) : *Puer panem emit.*
+  - `m8-04` (decodeur) : *Mercator aquam vendit*
+- **Mots absents du Thesaurus (0)** :
+  *(Aucun mot absent)*
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (4)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `panem` | `panis, -is` | accusatif singulier de panis |
+| `emit` | `emere` | présent 3sg de emere |
+| `aquam` | `aqua, -ae` | accusatif singulier de aqua |
+| `vendit` | `vendere` | présent 3sg de vendere |
+- **Formes exactes du Thesaurus (2)** : `puer` (puer, -eri), `mercator` (mercator, -oris)
+
+### Monde 9 — 9 · L'Armée Romaine & les Légions 🦅
+- **Phrases sources** :
+  - `m9-02` (puzzle) : *Legio fortiter pugnat.*
+  - `m9-04` (decodeur) : *Miles pilum iacit*
+- **Mots absents du Thesaurus (1)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `iacit` | `iacere` | présent 3sg de iacere |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (1)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `pugnat` | `pugnare` | présent 3sg de pugnare |
+- **Formes exactes du Thesaurus (4)** : `legio` (legio, -onis), `fortiter` (fortiter), `miles` (miles, -itis), `pilum` (pilum, -i)
+
+### Monde 10 — 10 · Monstres Fabuleux & Métamorphoses 🐉
+- **Phrases sources** :
+  - `m10-02` (puzzle) : *Cerberus portas custodit.*
+  - `m10-04` (decodeur) : *Hercules monstrum superat*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `cerberus` | `Cerberus` | nom propre mythologique |
+| `hercules` | `Hercules` | nom propre mythologique |
+| `superat` | `superare` | présent 3sg de superare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (2)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `portas` | `porta, -ae` | accusatif pluriel de porta |
+| `custodit` | `custodire` | présent 3sg de custodire |
+- **Formes exactes du Thesaurus (1)** : `monstrum` (monstrum, -i)
+
+### Monde 11 — 11 · Les Héros de la République 🛡️
+- **Phrases sources** :
+  - `m11-02` (puzzle) : *Civis Romanus sum.*
+  - `m11-03` (trou) : *Cloelia fluvium transit.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `cloelia` | `Cloelia` | nom propre historique |
+| `fluvium` | `fluvius, -i` | accusatif singulier de fluvius |
+| `transit` | `transire` | présent 3sg de transire |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (2)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `romanus` | `Roma, -ae` | dérivé de Roma |
+| `sum` | `esse (sum, fui)` | présent 1sg de esse |
+- **Formes exactes du Thesaurus (1)** : `civis` (civis, -is)
+
+### Monde 12 — 12 · Le Sénat et le Peuple (SPQR) 🏛️
+- **Phrases sources** :
+  - `m12-02` (trou) : *Consul militem convocat.*
+  - `m12-03` (puzzle) : *Dux leges civibus dat.*
+- **Mots absents du Thesaurus (2)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `convocat` | `convocare` | présent 3sg de convocare |
+| `dat` | `dare` | présent 3sg de dare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `militem` | `miles, -itis` | accusatif singulier de miles |
+| `leges` | `lex, legis` | accusatif pluriel de lex |
+| `civibus` | `civis, -is` | datif/ablatif pluriel de civis |
+- **Formes exactes du Thesaurus (2)** : `consul` (consul, -is), `dux` (dux, ducis)
+
+### Monde 13 — 13 · Mare Nostrum & Les Conquêtes ⛵
+- **Phrases sources** :
+  - `m13-02` (trou) : *Naves maria percurrunt.*
+  - `m13-03` (puzzle) : *Naves Romanae in mari navigant.*
+- **Mots absents du Thesaurus (2)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `percurrunt` | `percurrere` | présent 3pl de percurrere |
+| `in` | `in` | préposition |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (5)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `naves` | `navis, -is` | nominatif/accusatif pluriel de navis |
+| `maria` | `mare, -is` | nominatif/accusatif pluriel de mare |
+| `romanae` | `Roma, -ae` | dérivé féminin pluriel de Roma |
+| `mari` | `mare, -is` | ablatif singulier de mare |
+| `navigant` | `navigare` | présent 3pl de navigare |
+
+### Monde 14 — 14 · Les Légions en Marche 🦅
+- **Phrases sources** :
+  - `m14-02` (trou) : *Dux ingens periculum videt.*
+  - `m14-03` (puzzle) : *Miles Romanus fortissimus est.*
+- **Mots absents du Thesaurus (2)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `ingens` | `ingens, -entis` | adjectif |
+| `periculum` | `periculum, -i` | nom neutre |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (4)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `videt` | `videre` | présent 3sg de videre |
+| `romanus` | `Roma, -ae` | dérivé de Roma |
+| `fortissimus` | `fortis, -e` | superlatif de fortis |
+| `est` | `esse (sum, fui)` | présent 3sg de esse |
+- **Formes exactes du Thesaurus (2)** : `dux` (dux, ducis), `miles` (miles, -itis)
+
+### Monde 15 — 15 · Récits d'Autrefois : L'Imparfait 📜
+- **Phrases sources** :
+  - `m15-02` (trou) : *Cives in foro erant.*
+  - `m15-03` (puzzle) : *Romani in foro conveniebant.*
+- **Mots absents du Thesaurus (2)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `in` | `in` | préposition |
+| `conveniebant` | `convenire` | imparfait 3pl de convenire |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (4)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `cives` | `civis, -is` | nominatif/accusatif pluriel de civis |
+| `foro` | `forum, -i` | ablatif singulier de forum |
+| `erant` | `esse (sum, fui)` | imparfait 3pl de esse |
+| `romani` | `Roma, -ae` | dérivé masculin pluriel de Roma |
+
+### Monde 16 — 16 · Veni, Vidi, Vici : Le Parfait ⚡
+- **Phrases sources** :
+  - `m16-02` (trou) : *Caesar clarus dux fuit.*
+  - `m16-03` (puzzle) : *Veni, vidi, vici.*
+- **Mots absents du Thesaurus (1)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `caesar` | `Caesar` | nom propre historique |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (4)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `fuit` | `esse (sum, fui)` | parfait 3sg de esse |
+| `veni` | `venire` | parfait 1sg de venire |
+| `vidi` | `videre` | parfait 1sg de videre |
+| `vici` | `vincere` | parfait 1sg de vincere |
+- **Formes exactes du Thesaurus (2)** : `clarus` (clarus, -a, -um), `dux` (dux, ducis)
+
+### Monde 17 — 17 · César et la Guerre des Gaules 🏹
+- **Phrases sources** :
+  - `m17-02` (trou) : *Caesar eum vincet.*
+  - `m17-03` (puzzle) : *Galli pro libertate pugnabant.*
+- **Mots absents du Thesaurus (4)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `caesar` | `Caesar` | nom propre historique |
+| `eum` | `is, ea, id` | pronom accusatif masculin singulier |
+| `pro` | `pro` | préposition |
+| `libertate` | `libertas, -atis` | ablatif singulier de libertas |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `vincet` | `vincere` | futur 3sg de vincere |
+| `galli` | `Gallus, -i` | nominatif pluriel de Gallus |
+| `pugnabant` | `pugnare` | imparfait 3pl de pugnare |
+
+### Monde 18 — 18 · Le Grand Triomphe de la République 👑
+- **Phrases sources** :
+  - `m18-02` (trou) : *Fortes milites patriam defenderunt.*
+  - `m18-03` (puzzle) : *Virtus et sapientia rem publicam servant.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `et` | `et` | conjonction |
+| `sapientia` | `sapientia, -ae` | nom féminin |
+| `servant` | `servare` | présent 3pl de servare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (6)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `fortes` | `fortis, -e` | nominatif pluriel de fortis |
+| `milites` | `miles, -itis` | nominatif pluriel de miles |
+| `patriam` | `patria, -ae` | accusatif singulier de patria |
+| `defenderunt` | `defendere` | parfait 3pl de defendere |
+| `rem` | `res, rei` | accusatif singulier de res |
+| `publicam` | `respublica, reipublicae` | accusatif féminin sg de publicus / respublica |
+- **Formes exactes du Thesaurus (1)** : `virtus` (virtus, -utis)
+
+### Monde 19 — 19 · La Paix d'Auguste (Pax Romana) 🏛️
+- **Phrases sources** :
+  - `m19-02` (trou) : *Dies novus est.*
+  - `m19-03` (puzzle) : *Augustus pacem populo dedit.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `novus` | `novus, -a, -um` | adjectif |
+| `augustus` | `Augustus` | nom propre historique |
+| `dedit` | `dare` | parfait 3sg de dare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `est` | `esse (sum, fui)` | présent 3sg de esse |
+| `pacem` | `pax, pacis` | accusatif singulier de pax |
+| `populo` | `populus, -i` | datif singulier de populus |
+- **Formes exactes du Thesaurus (1)** : `dies` (dies, -ei)
+
+### Monde 20 — 20 · Les Chemins de l'Empire 🛣️
+- **Phrases sources** :
+  - `m20-02` (trou) : *Via quae Romam ducit.*
+  - `m20-03` (puzzle) : *Via Appia regina viarum est.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `quae` | `qui, quae, quod` | pronom relatif |
+| `appia` | `Appius, -a, -um` | nom propre/adjectif |
+| `regina` | `regina, -ae` | nom féminin |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (4)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `romam` | `Roma, -ae` | accusatif singulier de Roma |
+| `ducit` | `ducere` | présent 3sg de ducere |
+| `viarum` | `via, -ae` | génitif pluriel de via |
+| `est` | `esse (sum, fui)` | présent 3sg de esse |
+- **Formes exactes du Thesaurus (1)** : `via` (via, -ae)
+
+### Monde 21 — 21 · Sous la Cendre du Vésuve 🌋
+- **Phrases sources** :
+  - `m21-02` (trou) : *Pompeii urbs deleta est.*
+  - `m21-03` (puzzle) : *Mons Vesuvius nubes atra erigebat.*
+- **Mots absents du Thesaurus (6)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `pompeii` | `Pompeii` | nom propre toponyme |
+| `deleta` | `delere` | participe parfait passif de delere |
+| `vesuvius` | `Vesuvius` | nom propre toponyme |
+| `nubes` | `nubes, -is` | nom féminin |
+| `atra` | `ater, atra, atrum` | adjectif |
+| `erigebat` | `erigere` | imparfait 3sg de erigere |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (1)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `est` | `esse (sum, fui)` | présent 3sg de esse |
+- **Formes exactes du Thesaurus (2)** : `urbs` (urbs, urbis), `mons` (mons, montis)
+
+### Monde 22 — 22 · Le Secret de l'Ablatif Absolu 📜
+- **Phrases sources** :
+  - `m22-02` (trou) : *Pace facta, cives gaudent.*
+  - `m22-03` (puzzle) : *Caesare duce, Romani vicerunt.*
+- **Mots absents du Thesaurus (3)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `facta` | `facere` | participe parfait passif de facere |
+| `gaudent` | `gaudere` | présent 3pl de gaudere |
+| `caesare` | `Caesar` | ablatif de Caesar |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (5)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `pace` | `pax, pacis` | ablatif singulier de pax |
+| `cives` | `civis, -is` | nominatif/accusatif pluriel de civis |
+| `duce` | `dux, ducis` | ablatif singulier de dux |
+| `romani` | `Roma, -ae` | dérivé masculin pluriel de Roma |
+| `vicerunt` | `vincere` | parfait 3pl de vincere |
+
+### Monde 23 — 23 · Les Échos du Forum : La Voix Passive 🏛️
+- **Phrases sources** :
+  - `m23-02` (trou) : *Patria a Romanis amatur.*
+  - `m23-03` (puzzle) : *Pax et concordia a civibus quaeruntur.*
+- **Mots absents du Thesaurus (4)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `a` | `a / ab` | préposition |
+| `et` | `et` | conjonction |
+| `concordia` | `concordia, -ae` | nom féminin |
+| `quaeruntur` | `quaerere` | présent passif 3pl de quaerere |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `romanis` | `Roma, -ae` | dérivé ablatif pluriel de Roma |
+| `amatur` | `amare` | présent passif 3sg de amare |
+| `civibus` | `civis, -is` | datif/ablatif pluriel de civis |
+- **Formes exactes du Thesaurus (2)** : `patria` (patria, -ae), `pax` (pax, pacis)
+
+### Monde 24 — 24 · La Proposition Infinitive 🗣️
+- **Phrases sources** :
+  - `m24-02` (trou) : *Audio amicum venire.*
+  - `m24-03` (puzzle) : *Dicit consulem Romam venire.*
+- **Mots absents du Thesaurus (0)** :
+  *(Aucun mot absent)*
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (5)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `audio` | `audire` | présent 1sg de audire |
+| `amicum` | `amicus, -i` | accusatif singulier de amicus |
+| `dicit` | `dicere` | présent 3sg de dicere |
+| `consulem` | `consul, -is` | accusatif singulier de consul |
+| `romam` | `Roma, -ae` | accusatif singulier de Roma |
+- **Formes exactes du Thesaurus (1)** : `venire` (venire)
+
+### Monde 25 — 25 · L'Or des Poètes : Virgile & Ovide 📜
+- **Phrases sources** :
+  - `m25-02` (trou) : *Felix sis !*
+  - `m25-03` (puzzle) : *Arma virumque cano.*
+- **Mots absents du Thesaurus (4)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `felix` | `felix, -icis` | adjectif |
+| `arma` | `arma, -orum` | nom neutre pluriel |
+| `virumque` | `vir, -i + -que` | accusatif de vir + enclitique -que |
+| `cano` | `canere` | présent 1sg de canere |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (1)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `sis` | `esse (sum, fui)` | subjonctif présent 2sg de esse |
+
+### Monde 26 — 26 · Le Grand Triomphe du Collège 👑
+- **Phrases sources** :
+  - `m26-02` (trou) : *Populus Romanus libertatem et pacem servat.*
+  - `m26-03` (puzzle) : *Litterae et sapientia mentem hominis ornant.*
+- **Mots absents du Thesaurus (7)** :
+| Mot dans la leçon | Lemme / Radical suggéré | Nature grammaticale |
+|---|---|---|
+| `libertatem` | `libertas, -atis` | accusatif singulier de libertas |
+| `et` | `et` | conjonction |
+| `servat` | `servare` | présent 3sg de servare |
+| `litterae` | `littera, -ae` | nominatif pluriel de littera |
+| `sapientia` | `sapientia, -ae` | nom féminin |
+| `mentem` | `mens, mentis` | accusatif singulier de mens |
+| `ornant` | `ornare` | présent 3pl de ornare |
+- **Mots « probablement connus » (formes fléchies du Thesaurus) (3)** :
+| Forme fléchie | Entrée Thesaurus de rattachement | Analyse morphologique |
+|---|---|---|
+| `romanus` | `Roma, -ae` | dérivé de Roma |
+| `pacem` | `pax, pacis` | accusatif singulier de pax |
+| `hominis` | `homo, -inis` | génitif singulier de homo (Thesaurus sans monde) |
+- **Formes exactes du Thesaurus (1)** : `populus` (populus, -i)
+
 - Mots du Thesaurus sans monde :
+
+| # | Entrée latine | Catégorie | Emploi fléchi dans les leçons ? |
+|---|---|---|---|
+| 1 | `amica, -ae` | Nom | Non (absent des leçons) |
+| 2 | `arcus, -us` | Nom | Non (absent des leçons) |
+| 3 | `homo, -inis` | Nom | **Oui** : `m26-03` (*hominis*, génitif singulier) |
+| 4 | `verbum, -i` | Nom | Non (absent des leçons) |
+| 5 | `docere (doceo, docui, doctum)` | Verbe | Non (absent des leçons) |
+| 6 | `habere (habeo, habui, habitum)` | Verbe | Non (absent des leçons) |
+| 7 | `mittere (mitto, misi, missum)` | Verbe | Non (absent des leçons) |
+| 8 | `monere (moneo, monui, monitum)` | Verbe | Non (absent des leçons) |
+| 9 | `posse (possum, potui)` | Verbe | Non (absent des leçons) |
+| 10 | `vivere (vivo, vixi, victum)` | Verbe | Non (absent des leçons) |
+| 11 | `brevis, -e` | Adjectif | Non (absent des leçons) |
+| 12 | `malus, -a, -um` | Adjectif | Non (absent des leçons) |
+| 13 | `parvus, -a, -um` | Adjectif | Non (absent des leçons) |
+| 14 | `pulcher, -chra, -chrum` | Adjectif | Non (absent des leçons) |
+| 15 | `Alea iacta est` | Devise | Non (absent des leçons) |
+| 16 | `Festina lente` | Devise | Non (absent des leçons) |
+
 - Doutes, questions pour l'architecte :
+  - Sur `submarin` (monde 7, `m7-02`) : mot français pour l'exercice didactique sur le préfixe latin `sub-`.
+  - Sur les noms propres (ex. `Midas`, `Icarus`, `Marcus`, `Caesar`, `Cerberus`, `Hercules`, `Cloelia`, `Pompeii`, `Vesuvius`) : à trancher si l'architecte souhaite les intégrer au Thesaurus ou les considérer hors lexique d'apprentissage de base.
+  - Sur les mots grammaticaux invariants (prépositions `in`, `ad`, `pro`, `a/ab`, conjonction `et`, salutation `ave`, pronom relatif `qui, quae, quod`) : à décider s'ils doivent entrer dans la catégorie `Invariable` du Thesaurus.
+- Reste à faire : Rien sur T10. Tâche terminée.
