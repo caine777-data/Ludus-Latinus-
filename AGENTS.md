@@ -161,8 +161,9 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     philosophe…), qui n'ont pas d'animation.
 15. **Un mini-jeu ne verse jamais de sesterces avec `addSesterces` en direct.**
     Une partie gagnée passe par `GameRepository.payerPartie(jeu, montant)`
-    (3 parties payées par jour et par jeu), une mission unique par une
-    méthode qui l'enregistre dans le profil (`validerMissionCesar`), et toute
+    (3 parties payées par jour et par jeu), un exercice unique par
+    `payerUneFois(cle, montant)` ou `validerMissionCesar`, qui l'enregistrent
+    dans le profil, et toute
     réussite appelle `accomplirDefi(jeu)` pour le défi du jour. Barème : une
     partie gagnée vaut à peu près une leçon (10 HS) ; `gainCircus`,
     `gainDuel`, `gainMissionCesar`, `gainMemoria`. Sans ça, un jeu en boucle
@@ -310,9 +311,15 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   `accomplirDefi` quand le défi est réussi dans le jeu (course ou duel
   gagné, mission de César, 5 bonnes réponses dans Memoria, étal du Marché
   réussi, Gaius battu), et plus au toucher du bouton de l'accueil.
-  **Reste pour la phase 1** : étals du Marché payés une seule fois. **À signaler à Cédric** : latin fautif dans deux
+  Marché (test `marche_paiement_test.dart`) : étal 5 HS, rendu de monnaie
+  5 HS, négociation 10 HS, chacun payé une seule fois
+  (`GameRepository.payerUneFois`, clés `marche:etal:<n>`… dans
+  `UserProfile.recompensesUniques`) et rien s'il a été raté pendant la
+  visite ; la somme à rendre n'est plus affichée. **La phase 1 est terminée.** **À signaler à Cédric** : latin fautif dans deux
   missions de César (« ROMA NITIDET », « VIRE QUISQUE ANIMAS », « VICTORIA
   NITIDET » : *nitidet* n'existe pas).
+- **T11 validée** — les tests du puzzle et du décodeur utilisent les clés
+  du dataset ; seul reste l'échec de la prononciation (T12).
 - **T5 à T10 validées** (exécutant Gemini) — le compte garde le prénom ; le
   Marché ne paie plus d'erreur ; diagnostics des tests et du Thesaurus ;
   `withOpacity` retiré de six fichiers. Suite confiée : T11 à T14.

@@ -1118,7 +1118,7 @@ travaille dans le même dépôt.
 
 ## T11 — Réparer les deux tests périmés du puzzle et du décodeur
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : les tests 1 et 2 de T7 échouent parce qu'ils utilisent de
 vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
@@ -1152,6 +1152,8 @@ vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
   - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : restauré après le passage des tests.
 - Doutes, questions pour l'architecte : Aucun doute. Les deux tests testent désormais les clés réelles du dataset.
 - Reste à faire : Rien sur T11. Tâche terminée.
+
+**Vérification de l'architecte** : exactement les 2 clés demandées, rien d'autre ; il ne reste que l'échec de « Veni vidi vici », confié en T12. Validé.
 
 ---
 
