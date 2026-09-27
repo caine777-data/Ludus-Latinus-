@@ -748,8 +748,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(
                       color: isFront
-                          ? RomanColors.imperialGold.withOpacity(0.5)
-                          : RomanColors.laurelGreen.withOpacity(0.5),
+                          ? RomanColors.imperialGold.withValues(alpha: 0.5)
+                          : RomanColors.laurelGreen.withValues(alpha: 0.5),
                       width: 1,
                     ),
                   ),
@@ -956,7 +956,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           decoration: BoxDecoration(
             color: const Color(0xFFE8F5EE),
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: RomanColors.laurelGreen.withOpacity(0.5)),
+            border: Border.all(color: RomanColors.laurelGreen.withValues(alpha: 0.5)),
           ),
           child: const Text(
             'TRADUCTION FRANÇAISE',

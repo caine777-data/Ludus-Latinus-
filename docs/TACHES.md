@@ -511,7 +511,7 @@ des avertissements `deprecated_member_use`.
 
 ## T9 — Remplacer `withOpacity` dans quatre écrans de révision
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : même travail que T1 et T8, sur quatre fichiers (14
 occurrences) qui produisent des avertissements `deprecated_member_use`.
@@ -528,20 +528,34 @@ occurrences) qui produisent des avertissements `deprecated_member_use`.
 2. Rien d'autre.
 
 **Critères de réussite** :
-- [ ] `grep -c "withOpacity"` vaut `0` sur les quatre fichiers.
-- [ ] `flutter analyze` sur les quatre fichiers : aucune erreur, plus aucun
+- [x] `grep -c "withOpacity"` vaut `0` sur les quatre fichiers.
+- [x] `flutter analyze` sur les quatre fichiers : aucune erreur, plus aucun
       `deprecated_member_use` lié à `withOpacity`.
-- [ ] `flutter test` : 39 réussis et les 3 échecs connus.
-- [ ] Sur l'émulateur, captures (pointeur éteint) de : Bibliotheca, Memoria
+- [x] `flutter test` : 39 réussis et les 3 échecs connus.
+- [x] Sur l'émulateur, captures (pointeur éteint) de : Bibliotheca, Memoria
       (une carte avec ses 4 réponses), Thesaurus, et la bulle de Lupulus de
       l'accueil — rendu identique à avant.
-- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (révisions)`.
+- [x] Un commit `refactor(mobile): withValues à la place de withOpacity (révisions)`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/core/widgets.dart` (3 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/home/views/bibliotheca_view.dart` (2 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart` (3 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/thesaurus/thesaurus_screen.dart` (6 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep "withOpacity" -- ludus_latinus_mobile/lib/ui/core/widgets.dart ludus_latinus_mobile/lib/ui/features/home/views/bibliotheca_view.dart ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart ludus_latinus_mobile/lib/ui/features/thesaurus/thesaurus_screen.dart` : 0 occurrence (`grep -c` = 0).
+  - `flutter analyze lib/ui/core/widgets.dart lib/ui/features/home/views/bibliotheca_view.dart lib/ui/features/memoria/memoria_screen.dart lib/ui/features/thesaurus/thesaurus_screen.dart` : 0 erreur, aucun `deprecated_member_use` lié à `withOpacity`.
+  - `flutter test` : 39 réussis, 3 échecs historiques connus documentés dans T7 (aucune régression).
+  - `flutter build apk --debug` et `adb install -r` : compilation et installation réussies sur `Pixel_Ludus`.
+  - Captures sur l'émulateur (pointeur éteint `pointer_location = 0`) :
+    - Accueil avec bulle Lupulus : `scratch/t9_accueil_lupulus.png`
+    - Bibliotheca (grille des outils et révisions) : `scratch/t9_bibliotheca.png`
+    - Memoria Velox (carte active avec 4 choix de réponse) : `scratch/t9_memoria.png`
+    - Thesaurus (dictionnaire et filtres lexicaux) : `scratch/t9_thesaurus.png`
+- Doutes, questions pour l'architecte : Aucun doute. La migration vers `.withValues(alpha: X)` est complète sur ces quatre écrans de révision.
+- Reste à faire : Rien sur T9. Tâche terminée.
 
 ---
 

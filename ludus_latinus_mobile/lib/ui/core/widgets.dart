@@ -243,7 +243,7 @@ class _AnimatedLupulusAvatarState extends State<AnimatedLupulusAvatar> {
           border: Border.all(color: RomanColors.imperialGold, width: 1.5),
           boxShadow: [
             BoxShadow(
-              color: RomanColors.imperialGold.withOpacity(0.3),
+              color: RomanColors.imperialGold.withValues(alpha: 0.3),
               blurRadius: _isSaluting ? 10 : 4,
               offset: const Offset(0, 2),
             ),
@@ -463,7 +463,7 @@ class CaseRibbon extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: color, width: 1),
       ),
@@ -483,7 +483,7 @@ class CaseRibbon extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             '($fonction)',
-            style: TextStyle(fontSize: 10, color: color.withOpacity(0.85)),
+            style: TextStyle(fontSize: 10, color: color.withValues(alpha: 0.85)),
           ),
         ],
       ),

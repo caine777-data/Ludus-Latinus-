@@ -376,9 +376,9 @@ class BibliothecaView extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
                                   decoration: BoxDecoration(
-                                    color: tagColor.withOpacity(0.1),
+                                    color: tagColor.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(4),
-                                    border: Border.all(color: tagColor.withOpacity(0.4), width: 0.8),
+                                    border: Border.all(color: tagColor.withValues(alpha: 0.4), width: 0.8),
                                   ),
                                   child: Text(
                                     tagLabel,

@@ -494,12 +494,12 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
               rows: cases.skip(1).map((row) {
                 final caseName = row.first;
                 Color caseColor = Colors.transparent;
-                if (caseName.contains('Nominatif')) caseColor = CaseColors.nominative.withOpacity(0.08);
-                if (caseName.contains('Vocatif')) caseColor = CaseColors.vocative.withOpacity(0.08);
-                if (caseName.contains('Accusatif')) caseColor = CaseColors.accusative.withOpacity(0.08);
-                if (caseName.contains('Génitif')) caseColor = CaseColors.genitive.withOpacity(0.08);
-                if (caseName.contains('Datif')) caseColor = CaseColors.dative.withOpacity(0.08);
-                if (caseName.contains('Ablatif')) caseColor = CaseColors.ablative.withOpacity(0.08);
+                if (caseName.contains('Nominatif')) caseColor = CaseColors.nominative.withValues(alpha: 0.08);
+                if (caseName.contains('Vocatif')) caseColor = CaseColors.vocative.withValues(alpha: 0.08);
+                if (caseName.contains('Accusatif')) caseColor = CaseColors.accusative.withValues(alpha: 0.08);
+                if (caseName.contains('Génitif')) caseColor = CaseColors.genitive.withValues(alpha: 0.08);
+                if (caseName.contains('Datif')) caseColor = CaseColors.dative.withValues(alpha: 0.08);
+                if (caseName.contains('Ablatif')) caseColor = CaseColors.ablative.withValues(alpha: 0.08);
 
                 return DataRow(
                   color: MaterialStateProperty.all(caseColor),
