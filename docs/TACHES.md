@@ -374,7 +374,7 @@ contourner le verrou.
 
 ## T7 — Diagnostic des 3 tests Flutter en échec (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : trois tests échouent depuis longtemps. Avant de corriger, il
 faut savoir pour chacun si c'est **le test** ou **le code** qui a tort.
@@ -410,18 +410,55 @@ Cette tâche est une enquête : **tu ne modifies aucun fichier** sauf
    modifier les fichiers du dépôt).
 
 **Critères de réussite** :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Pour chacun des 3 tests : cause, fautif (test ou code), correction proposée.
-- [ ] Les sorties phonétiques de « Veni vidi vici », « Caesar », « Cicero ».
-- [ ] Un commit `docs: diagnostic des 3 tests Flutter en échec`.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Pour chacun des 3 tests : cause, fautif (test ou code), correction proposée.
+- [x] Les sorties phonétiques de « Veni vidi vici », « Caesar », « Cicero ».
+- [x] Un commit `docs: diagnostic des 3 tests Flutter en échec`.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `docs/TACHES.md` uniquement (aucun fichier de code ou de test modifié dans le dépôt).
 - Commandes lancées et résultat réel :
+  - `flutter test` (rappel résultat initial) : 39 passés, 3 échecs (`exercise_and_srs_test.dart` [puzzle & decodeur] et `latin_phonetics_test.dart` [Veni vidi vici]).
+  - `git grep '"words"' ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` : 0 résultat (la clé n'existe pas dans le dataset).
+  - `git grep '"mots"' ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` : 30 occurrences (clé standard de toutes les leçons puzzle / décodeur).
+  - `git grep '"latin_complet"' ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` : 23 occurrences (clé standard du dataset).
+  - `git grep '"latinComplet"' ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` : 0 résultat.
+  - `dart scratch/test_phonetics.dart` (script temporaire de lecture phonétique sans modification du code) : analyse exacte des transcriptions API restituée et ecclésiastique.
 - Diagnostic test 1 :
+  - **Fichier & Ligne** : `test/exercise_and_srs_test.dart` (l. 14).
+  - **Cause exacte** : Le test fournit dans son JSON fictif la clé `'words': ['Romulus', 'Romam', 'condit']`. Or, la méthode `Lesson.fromJson` (`lib/data/models/lesson.dart`, l. 47) lit la clé française `json['mots']` (`var rawWords = json['mots'] as List<dynamic>? ?? [];`). Comme la clé `'mots'` est absente, `rawWords` reste vide (`[]`), d'où `lesson.words == []`. Dans `ludus_latinus_dataset.json`, toutes les leçons puzzle (ex: `m1-02`, `m1-05`) utilisent exclusivement `"mots"`.
+  - **Qui a tort** : **Le test** (test mal écrit/périmé qui utilise le nom de la variable Dart `words` au lieu de la clé JSON du dataset `mots`).
+  - **Correction proposée** : Remplacer dans le test `'words': ['Romulus', 'Romam', 'condit']` par `'mots': ['Romulus', 'Romam', 'condit']`. *(Optionnellement, ajouter `?? json['words']` dans `Lesson.fromJson` pour tolérance aux deux formats).*
 - Diagnostic test 2 :
+  - **Fichier & Ligne** : `test/exercise_and_srs_test.dart` (l. 50).
+  - **Cause exacte** : Le test fournit la clé camelCase `'latinComplet': 'Marcus gladium tenet'`. Or, `Lesson.fromJson` (`lib/data/models/lesson.dart`, l. 86) recherche la clé snake_case standard du dataset : `latinComplet: json['latin_complet'] as String? ?? json['solution_complete'] as String?`. Comme `'latinComplet'` n'est pas géré, la valeur reste `null`. Dans le dataset, la clé utilisée est toujours `"latin_complet"`.
+  - **Qui a tort** : **Le test** (test qui utilise le nom de propriété Dart camelCase `latinComplet` au lieu de la clé normalisée du dataset `latin_complet`).
+  - **Correction proposée** : Remplacer dans le test `'latinComplet': 'Marcus gladium tenet'` par `'latin_complet': 'Marcus gladium tenet'`. *(Optionnellement, ajouter `?? json['latinComplet']` dans `Lesson.fromJson`).*
 - Diagnostic test 3 et prononciation :
+  - **Fichier & Ligne** : `test/latin_phonetics_test.dart` (l. 51) et `lib/data/services/latin_phonetics_engine.dart` (l. 258-263, 397, 414-422).
+  - **Cause exacte** : Le test vérifie que la transcription ecclésiastique contient l'affriquée `tʃ` (`expect(res.fullIpaEcclesiastique, contains('tʃ'))`). Dans `_transcribeEcclesiastique`, le `c` devant `i` de *vici* est transformé en digramme `tʃ` (`vitʃi`). Ensuite, `_syllabify("vitʃi")` est appelé sur cette chaîne API. Comme `_syllabify` ne connaît que les règles consonnantiques du latin brut (et ignore que `tʃ` forme une consonne affriquée insécable), il applique la coupure consonnantique par défaut entre `t` et `ʃ` (`cuts.add(k1End + 1)`). L'assemblage final insère un point syllabique (`.`), produisant `[ˈvit.ʃi]`. La chaîne générée contient donc `t.ʃ` au lieu de `tʃ`, faisant échouer le test.
+  - **Qui a tort** : **Le code** (`LatinPhoneticsEngine`). Phonétiquement, [t͡ʃ] est une affriquée unitaire qui débute la syllabe d'attaque (`vi-ci` -> `[ˈvi.tʃi]`). Couper l'affriquée en deux (`vit.ʃi`) est une erreur de traitement dans la chaîne de transformation syllabique. Dans le lexique pré-annoté (`_curatedLexicon`), `Cicero` et `Caesar` contiennent bien `tʃ` sans coupure (`[ˈtʃi.tʃe.ro]` et `[ˈtʃe.zar]`).
+  - **Correction proposée** : Dans `LatinPhoneticsEngine`, découper les syllabes sur le mot latin *avant* la conversion en affriquées API, ou protéger les digrammes affriqués (`tʃ`, `dʒ`, `ts`) dans `_syllabify` pour éviter qu'un point de séparation syllabique ne s'insère entre le `t` et le `ʃ`.
+  - **Sorties exactes obtenues du moteur pour les 3 expressions** :
+    1. **« Veni vidi vici »** :
+       - Restituée : `[ˈwe.ni ˈwi.di ˈwi.ki]`
+       - Ecclésiastique : `[ˈve.ni ˈvi.di ˈvit.ʃi]`
+    2. **« Caesar »** :
+       - Restituée : `[ˈkae̯.sar]`
+       - Ecclésiastique : `[ˈtʃe.zar]`
+    3. **« Cicero »** :
+       - Restituée : `[ˈkɪ.kɛ.roː]`
+       - Ecclésiastique : `[ˈtʃi.tʃe.ro]`
+  - **Point pédagogique (concordance avec la leçon m1-01)** :
+    - La leçon `m1-01` enseigne expressément la prononciation classique restituée (Cicéron, Ier s. av. J.-C.) : C se prononce toujours [k] dur (« Késar »), V se prononce toujours [w] (« ouilla »).
+    - Le moteur `LatinPhoneticsEngine` implémente bien les deux systèmes :
+      - Il génère à la fois la transcription restituée classique (`fullIpaRestituee`, conforme à m1-01 avec [w] et [k]) et la transcription ecclésiastique médiévale/italienne (`fullIpaEcclesiastique` avec [v] et [tʃ]).
+      - Dans l'application mobile (`LatinPronunciationModal`), le mode par défaut à l'ouverture est configuré sur la prononciation restituée (`_isRestituee = true`), permettant à l'élève de basculer sur l'ecclésiastique à titre d'enrichissement culturel et historique.
 - Doutes, questions pour l'architecte :
+  - Pour une tâche ultérieure de correction des tests : souhaites-tu qu'on corrige uniquement les tests 1 et 2 pour refléter fidèlement le dataset (`mots`, `latin_complet`), ou qu'on rende aussi `Lesson.fromJson` rétrocompatible (`?? json['words']`, `?? json['latinComplet']`) ?
+  - Pour le test 3 : pour corriger le comportement de `_syllabify` sur `vitʃi`, préconises-tu d'ajuster `_syllabify` pour qu'il reconnaisse les affriquées API, ou de découper le mot en syllabes avant la substitution API ?
+- Reste à faire : Rien sur T7. Tâche d'enquête terminée.
 
 ---
 
