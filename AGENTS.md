@@ -245,6 +245,7 @@ Cédric génère les images et les dépose dans
 |---|---|---|
 | `chroma_boutique.py [id …]` | `<id>.jpg` sur fond vert | `images/boutique/<id>.png` détouré, 256 px |
 | `chroma_avatars.py [genre_toge …]` | `avatar_<genre>_<toge>.jpg` | `images/avatars/…_140.png` et `_48.png` |
+| `icones.py` | `icone_<nom>.jpg` (liste `ICONES`) | `images/icone_<nom>.png`, marge pour un médaillon rond |
 | `decors_mondes.py [N …]` | `decor_monde<N>.jpg` | `images/mondes/monde<N>.webp` |
 | `via_elements.py [nom …]` | `via_<nom>.jpg` | `images/via/<nom>.png`, recadré au ras, sans carré |
 | `lupulus_videos.py [humeur …]` | `lupulus_<humeur>.mp4` (fond vert) | `images/animated/lupulus_*.webp`, son retiré |
@@ -292,6 +293,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Icône de l'Épigraphie** (vérifiée sur l'émulateur) — stèle et loupe
+  Gemini (`images/icone_epigraphie.png`, `scripts/assets/icones.py`) sur la
+  tuile de la Bibliotheca, à la place du logo du centurion, et dans
+  l'en-tête de l'atelier du Forum, dont le titre passe désormais à la ligne
+  au lieu de déborder.
+
 - **Économie des mini-jeux** (tests `recompenses_jeux_test.dart` et
   `cesar_mission_test.dart`) — Circus et Duel : 12 et 15 HS par victoire,
   3 parties payées par jour et par jeu (`UserProfile.recompensesJeux`) ; le
@@ -303,8 +310,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   `accomplirDefi` quand le défi est réussi dans le jeu (course ou duel
   gagné, mission de César, 5 bonnes réponses dans Memoria, étal du Marché
   réussi, Gaius battu), et plus au toucher du bouton de l'accueil.
-  **Reste pour la phase 1** : étals du Marché payés une seule fois ; icône
-  de l'Épigraphie. **À signaler à Cédric** : latin fautif dans deux
+  **Reste pour la phase 1** : étals du Marché payés une seule fois. **À signaler à Cédric** : latin fautif dans deux
   missions de César (« ROMA NITIDET », « VIRE QUISQUE ANIMAS », « VICTORIA
   NITIDET » : *nitidet* n'existe pas).
 - **T5 à T10 validées** (exécutant Gemini) — le compte garde le prénom ; le

@@ -167,7 +167,7 @@ class BibliothecaView extends StatelessWidget {
                       // D. Épigraphie Lapidaire (Stèles antiques)
                       _buildStudyTile(
                         context: context,
-                        imagePath: 'assets/images/logo_centurion_64.png',
+                        imagePath: 'assets/images/icone_epigraphie.png',
                         fallbackIcon: '🔍',
                         title: 'Épigraphie',
                         subtitle: '$epigraphCount inscription(s) décodée(s)',

@@ -141,20 +141,33 @@ class ForumScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
-                          children: [
-                            Text('🏛️ ', style: TextStyle(fontSize: 20)),
-                            Text(
-                              'Atelier d\'Épigraphie Lapidaire',
-                              style: TextStyle(
-                                fontFamily: 'serif',
-                                fontSize: 14.5,
-                                fontWeight: FontWeight.bold,
-                                color: RomanColors.imperialPurple,
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/icone_epigraphie.png',
+                                width: 28,
+                                height: 28,
+                                errorBuilder: (_, __, ___) => const Text('🏛️ ', style: TextStyle(fontSize: 20)),
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 6),
+                              // Souple : sur un téléphone étroit, le titre passe à la ligne
+                              // au lieu de pousser le compteur hors de la carte.
+                              const Flexible(
+                                child: Text(
+                                  'Atelier d\'Épigraphie Lapidaire',
+                                  style: TextStyle(
+                                    fontFamily: 'serif',
+                                    fontSize: 14.5,
+                                    fontWeight: FontWeight.bold,
+                                    color: RomanColors.imperialPurple,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
