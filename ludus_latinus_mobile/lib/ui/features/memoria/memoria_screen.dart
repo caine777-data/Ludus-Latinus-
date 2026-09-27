@@ -43,6 +43,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
   bool isFront = true;
   NiveauMemoria selectedNiveau = NiveauMemoria.tous;
   int _streak = 0;
+  int _bonnesReponses = 0;
   int _maxStreak = 0;
 
   String _cardKey(SrsCard card) => card.id.isNotEmpty ? card.id : card.latin;
@@ -200,6 +201,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
       // Seule une carte à réviser rapporte : revoir en boucle une carte déjà
       // sue ne doit pas remplir la bourse.
       if (etaitAReviser) gain = GameRepository.gainMemoria;
+      _bonnesReponses++;
+      // Le défi du jour (versé par le dépôt) : compté dans la séance, pas payé deux fois.
+      if (_bonnesReponses == 5) sessionEarnings += widget.repo.accomplirDefi('memoria');
       HapticFeedback.mediumImpact();
       if (_streak >= 5) RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       AudioService().playCorrect();

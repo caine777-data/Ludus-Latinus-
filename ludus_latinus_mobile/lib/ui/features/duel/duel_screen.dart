@@ -32,7 +32,7 @@ enum CombatStance {
     'Fuga Celox',
     'Esquive Agile',
     '💨',
-    '+10 HS et Coup Critique si réponse < 4s',
+    '+10 pts et Coup Critique si réponse < 4s',
     1.15,
     1.00,
   );
@@ -334,7 +334,10 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   int _bossHp = 100;
   bool _combatFini = false;
   bool _victoire = false;
+  // Score du combat, en points : ce n'est plus de l'argent.
   int _gainsSesterces = 0;
+  // Sesterces vraiment versés à la fin (0 si perdu ou quota du jour atteint).
+  int _recompense = 0;
 
   late Map<String, dynamic> _currentQ;
   late List<String> _shuffledChoices;
@@ -384,6 +387,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       _combatFini = false;
       _victoire = false;
       _gainsSesterces = 0;
+      _recompense = 0;
       _currentBossSpeech = null;
       _nextQuestion();
     });
@@ -438,7 +442,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
           const SnackBar(
             backgroundColor: RomanColors.laurelGreen,
             duration: Duration(seconds: 1),
-            content: Text('⚡ Coup Critique & Célérité ! (+10 HS)'),
+            content: Text('⚡ Coup Critique & Célérité ! (+10 pts)'),
           ),
         );
       } else {
@@ -507,8 +511,9 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     });
 
     if (victoire) {
-      final total = _gainsSesterces + 50;
-      widget.repo.addSesterces(total);
+      // Un boss vaincu vaut un peu plus qu'une leçon, et seulement 3 fois par jour.
+      // Avant : score + 50, sans limite.
+      _recompense = widget.repo.payerPartie('duel', GameRepository.gainDuel);
       HapticFeedback.heavyImpact();
       AudioService().playSwordClash();
       AudioService().playCrowdCheer();
@@ -516,7 +521,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
-      widget.repo.addSesterces(5);
+      _recompense = 0;
       AudioService().playError();
     }
   }
@@ -553,7 +558,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                     const Text('🪙', style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 4),
                     Text(
-                      '+$_gainsSesterces (${widget.repo.profile.sesterces} HS)',
+                      '$_gainsSesterces pts (${widget.repo.profile.sesterces} HS)',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                     ),
                   ],
@@ -1346,29 +1351,13 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               children: [
                 const Text('🪙', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 8),
-                const Text(
-                  '+',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
-                  ),
-                ),
-                RollingSestercesCounter(
-                  value: _victoire ? _gainsSesterces + 50 : 5,
-                  initialValue: 0,
-                  showIcon: false,
-                  duration: const Duration(milliseconds: 900),
+                Text(
+                  _recompense > 0
+                      ? '+$_recompense Sesterces remportés'
+                      : _victoire
+                          ? 'Victoire pour la gloire : 3 duels payés par jour'
+                          : 'Pas de sesterces cette fois',
                   style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
-                  ),
-                ),
-                const SizedBox(width: 4),
-                const Text(
-                  'remportés',
-                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF7A5901),

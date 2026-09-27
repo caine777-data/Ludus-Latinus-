@@ -88,7 +88,10 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   static const int _totalLaps = 3;
   bool _raceFinished = false;
   bool _playerWon = false;
+  // Score de la course, en points : ce n'est plus de l'argent.
   int _scoreSesterces = 0;
+  // Sesterces vraiment versés à la fin (0 si perdu ou quota du jour atteint).
+  int _recompense = 0;
   int _comboCount = 0;
   int _turboRemainingFrames = 0;
 
@@ -542,7 +545,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         const SnackBar(
           backgroundColor: RomanColors.laurelGreen,
           duration: Duration(seconds: 2),
-          content: Text('✓ Virage magistral ! Turbo impérial activé ! (+15 HS)'),
+          content: Text('✓ Virage magistral ! Turbo impérial activé ! (+15 pts)'),
         ),
       );
     } else {
@@ -630,15 +633,18 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     _playerWon = won;
 
     if (won) {
-      final baseReward = _scoreSesterces + 50;
-      final finalReward = (baseReward * _selectedFaction.sestercesMult).round();
-      widget.repo.addSesterces(finalReward);
+      // Une course gagnée vaut une leçon réussie, et seulement 3 fois par jour.
+      // Avant : score + 50, souvent plus de 200 HS, sans limite.
+      _recompense = widget.repo.payerPartie(
+        'circus',
+        (GameRepository.gainCircus * _selectedFaction.sestercesMult).round(),
+      );
       HapticFeedback.heavyImpact();
       AudioService().playCrowdCheer();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
-      widget.repo.addSesterces(10);
+      _recompense = 0;
       AudioService().playError();
     }
   }
@@ -653,6 +659,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       _raceFinished = false;
       _playerWon = false;
       _scoreSesterces = 0;
+      _recompense = 0;
       _comboCount = 0;
       _turboRemainingFrames = 0;
       _incidentActive = false;
@@ -698,7 +705,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                     const Text('🪙', style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 4),
                     Text(
-                      '+$_scoreSesterces (${widget.repo.profile.sesterces} HS)',
+                      '$_scoreSesterces pts (${widget.repo.profile.sesterces} HS)',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -1589,7 +1596,11 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 const Text('🪙', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 8),
                 Text(
-                  '+${_playerWon ? _scoreSesterces + 50 : 10} Sesterces remportés',
+                  _recompense > 0
+                      ? '+$_recompense Sesterces remportés'
+                      : _playerWon
+                          ? 'Victoire pour la gloire : 3 courses payées par jour'
+                          : 'Pas de sesterces cette fois',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

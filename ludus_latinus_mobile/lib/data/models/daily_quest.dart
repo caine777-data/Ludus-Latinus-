@@ -21,9 +21,9 @@ class DailyQuest {
     DailyQuest(
       id: 'quest_memoria',
       titre: 'Défi de Memoria Velox',
-      description: 'Révise 5 flashcards antiques au dojo pour affûter ta mémoire latine !',
+      description: 'Donne 5 bonnes traductions dans Memoria Velox !',
       icone: '🃏',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'memoria',
     ),
     DailyQuest(
@@ -31,7 +31,7 @@ class DailyQuest {
       titre: 'Défi du Circus Maximus',
       description: 'Prends les rênes d\'un quadrige et triomphe dans l\'arène du Grand Cirque !',
       icone: '🐎',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'circus',
     ),
     DailyQuest(
@@ -39,15 +39,15 @@ class DailyQuest {
       titre: 'Défi de l\'Atelier de César',
       description: 'Déchiffre un message militaire crypté à la cire pour le compte des légions !',
       icone: '📜',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'cesar',
     ),
     DailyQuest(
       id: 'quest_duel',
       titre: 'Défi du Colosseum Duellum',
-      description: 'Défie un champion dans l\'arène et teste tes postures de combat !',
+      description: 'Terrasse un champion dans l\'arène du Colisée !',
       icone: '⚔️',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'duel',
     ),
     DailyQuest(
@@ -55,15 +55,15 @@ class DailyQuest {
       titre: 'Défi du Marché de Trajan',
       description: 'Gère un étal d\'argentarius et réussis le compte des sesterces romains !',
       icone: '🏺',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'marche',
     ),
     DailyQuest(
       id: 'quest_taverne',
       titre: 'Défi de la Taverne des Dés',
-      description: 'Lance les dés romains à six faces et défie Gaius à Alea Iacta Est !',
+      description: 'Bats Gaius l\'aubergiste aux dés, à Alea Iacta Est !',
       icone: '🎲',
-      recompense: 25,
+      recompense: 10,
       routeCible: 'taverne',
     ),
   ];

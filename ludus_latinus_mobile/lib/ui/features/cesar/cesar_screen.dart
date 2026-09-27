@@ -39,62 +39,62 @@ const List<MissionCesar> kMissionsCesar = [
   MissionCesar(
     titre: "Mission 1 : Le Camp de Quintus Cicéron",
     dateContexte: "Gaule, 54 av. J.-C.",
-    explication: "Les Nerviens encerclent la légion romaine. César envoie un messager gaulois avec une lettre cryptée par la clé classique (+3).",
+    explication: "Les Nerviens encerclent la légion romaine. César envoie un messager gaulois avec une lettre cryptée par le décalage préféré de César. Tourne la roue jusqu'à lire du latin.",
     cle: 3,
     messageChiffre: "FDHVDU TXLQWR VDOXWHP GLFLW. OHJLRQHV DGIXWXUDH VXQW !",
     messageClair: "CAESAR QUINTO SALUTEM DICIT. LEGIONES ADFUTURAE SUNT !",
     traduction: "« César salue Quintus. Les légions arrivent à la rescousse ! »",
-    gain: 20,
+    gain: GameRepository.gainMissionCesar,
   ),
   MissionCesar(
     titre: "Mission 2 : Le Franchissement du Rubicon",
     dateContexte: "Italie, 49 av. J.-C.",
-    explication: "César défie le Sénat et décide de franchir la frontière sacrée avec la clé secrète (+5).",
+    explication: "César défie le Sénat et décide de franchir la frontière sacrée dans un message chiffré. Trouve la clé.",
     cle: 5,
     messageChiffre: "FQJF NFHYF JXY. WTRF SNYNIJY !",
     messageClair: "ALEA IACTA EST. ROMA NITIDET !",
     traduction: "« Le sort en est jeté. Rome resplendit ! »",
-    gain: 25,
+    gain: GameRepository.gainMissionCesar,
   ),
   MissionCesar(
     titre: "Mission 3 : La Victoire d'Alésia",
     dateContexte: "Alésia, 52 av. J.-C.",
-    explication: "Les lignes de circonvallation subissent l'assaut final. César transmet la consigne suprême avec la clé (+4).",
+    explication: "Les lignes de circonvallation subissent l'assaut final. César transmet la consigne suprême dans un message chiffré.",
     cle: 4,
     messageChiffre: "ZMVI UYMWUYI ERMQEW ! ZMGXSVME RMXMHIX !",
     messageClair: "VIRE QUISQUE ANIMAS ! VICTORIA NITIDET !",
     traduction: "« Que chacun ranime son courage ! La victoire rayonne ! »",
-    gain: 30,
+    gain: GameRepository.gainMissionCesar,
   ),
   MissionCesar(
     titre: "Mission 4 : L'Avertissement des Ides de Mars",
     dateContexte: "Rome, 15 mars 44 av. J.-C.",
-    explication: "Le devin Artémidore tente d'avertir César en route vers la Curie avec la clé secrète (+6).",
+    explication: "Le devin Artémidore tente d'avertir César en route vers la Curie par un message chiffré.",
     cle: 6,
     messageChiffre: "IGBK OJAY SGXZOGY ! IUTOAXGZOU ZK VKZOZ !",
     messageClair: "CAVE IDUS MARTIAS ! CONIURATIO TE PETIT !",
     traduction: "« Prends garde aux ides de Mars ! Le complot te vise ! »",
-    gain: 35,
+    gain: GameRepository.gainMissionCesar,
   ),
   MissionCesar(
     titre: "Mission 5 : La Conjuration de Catilina",
     dateContexte: "Sénat de Rome, 63 av. J.-C.",
-    explication: "Cicéron démasque la conspiration de Catilina et chiffre sa célèbre harangue avec la clé (+7).",
+    explication: "Cicéron démasque la conspiration de Catilina et chiffre sa célèbre harangue dans un message chiffré.",
     cle: 7,
     messageChiffre: "XBV BZXBL AHUKLT HIBALYL WHAPLUAPH UVZAYH !",
     messageClair: "QUO USQUE TANDEM ABUTERE PATIENTIA NOSTRA !",
     traduction: "« Jusqu'à quand abuseras-tu de notre patience ! »",
-    gain: 40,
+    gain: GameRepository.gainMissionCesar,
   ),
   MissionCesar(
     titre: "Mission 6 : L'Embrasement de Rome",
     dateContexte: "Rome, 64 ap. J.-C.",
-    explication: "Les flammes ravagent la Subure. Les vigiles romains transmettent l'alerte avec la clé (+8).",
+    explication: "Les flammes ravagent la Subure. Les vigiles romains transmettent l'alerte par un message chiffré.",
     cle: 8,
     messageChiffre: "ZWUI IZLMB MB DQOQTMA WXMU NMZCVB !",
     messageClair: "ROMA ARDET ET VIGILES OPEM FERUNT !",
     traduction: "« Rome brûle et les vigiles apportent du secours ! »",
-    gain: 45,
+    gain: GameRepository.gainMissionCesar,
   ),
 ];
 
@@ -113,8 +113,11 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
   ModeCesar _modeActuel = ModeCesar.missions;
   final TextEditingController _saisieControleur = TextEditingController(text: "VENI VIDI VICI");
   final TextEditingController _decodeurControleur = TextEditingController(text: "PHGLFRV VXQW FDHVDU");
-  final Set<int> _missionsReussies = {};
-  final Set<String> _messagesAmiDechiffres = {};
+  // Traductions proposées pour chaque mission, et missions déjà ratées une fois
+  // (une mission réussie après une erreur rapporte moins).
+  final Map<int, List<String>> _optionsMission = {};
+  final Set<int> _missionsRatees = {};
+  String? _mauvaisChoix;
   MissionCesar get _missionActuelle => kMissionsCesar[_missionIndex % kMissionsCesar.length];
 
   @override
@@ -197,21 +200,46 @@ $texteChiffre
 
   void _verifierMission() {
     if (_modeActuel != ModeCesar.missions) return;
-    final mission = _missionActuelle;
-    if (_cleActuelle == mission.cle && !_missionsReussies.contains(_missionIndex)) {
-      HapticFeedback.mediumImpact();
-      AudioService().playTriumph();
-      AudioService().playSesterces();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-      widget.repo.addSesterces(mission.gain);
-      setState(() {
-        _missionsReussies.add(_missionIndex);
-      });
-      _afficherVictoireMission(mission);
-    }
+    // Trouver la clé ne suffit plus : il faut ensuite comprendre le message.
+    if (_cleActuelle == _missionActuelle.cle) HapticFeedback.mediumImpact();
   }
 
-  void _afficherVictoireMission(MissionCesar mission) {
+  /// La vraie traduction et deux traductions d'autres missions, mélangées.
+  List<String> _optionsPour(int index) => _optionsMission.putIfAbsent(index, () {
+        final bonne = kMissionsCesar[index].traduction;
+        final autres = [
+          for (final m in kMissionsCesar)
+            if (m.traduction != bonne) m.traduction
+        ]..shuffle();
+        return [bonne, ...autres.take(2)]..shuffle();
+      });
+
+  void _choisirTraduction(String option) {
+    final mission = _missionActuelle;
+    final index = _missionIndex % kMissionsCesar.length;
+    if (widget.repo.isMissionCesarReussie(index)) return;
+    if (option != mission.traduction) {
+      HapticFeedback.vibrate();
+      AudioService().playError();
+      setState(() {
+        _mauvaisChoix = option;
+        _missionsRatees.add(index);
+      });
+      return;
+    }
+    final gain = widget.repo.validerMissionCesar(
+      index,
+      _missionsRatees.contains(index) ? (mission.gain / 2).round() : mission.gain,
+    );
+    HapticFeedback.mediumImpact();
+    AudioService().playTriumph();
+    AudioService().playSesterces();
+    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+    setState(() => _mauvaisChoix = null);
+    _afficherVictoireMission(mission, gain);
+  }
+
+  void _afficherVictoireMission(MissionCesar mission, int gain) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -224,12 +252,14 @@ $texteChiffre
           children: [
             Text('🦅', style: TextStyle(fontSize: 26)),
             SizedBox(width: 8),
-            Text(
-              'Message Déchiffré !',
-              style: TextStyle(
-                color: RomanColors.imperialPurple,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'serif',
+            Flexible(
+              child: Text(
+                'Message Déchiffré !',
+                style: TextStyle(
+                  color: RomanColors.imperialPurple,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'serif',
+                ),
               ),
             ),
           ],
@@ -280,7 +310,7 @@ $texteChiffre
                 const Text('🪙', style: TextStyle(fontSize: 16)),
                 const SizedBox(width: 6),
                 Text(
-                  '+${mission.gain} Sesterces remportés !',
+                  '+$gain Sesterces remportés !',
                   style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.laurelGreen),
                 ),
               ],
@@ -591,7 +621,7 @@ $texteChiffre
                   child: Row(
                     children: List.generate(kMissionsCesar.length, (idx) {
                       final isSelected = _missionIndex == idx;
-                      final isDone = _missionsReussies.contains(idx);
+                      final isDone = widget.repo.isMissionCesarReussie(idx);
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: ChoiceChip(
@@ -607,7 +637,10 @@ $texteChiffre
                           onSelected: (val) {
                             if (val) {
                               HapticFeedback.selectionClick();
-                              setState(() => _missionIndex = idx);
+                              setState(() {
+                                _missionIndex = idx;
+                                _mauvaisChoix = null;
+                              });
                             }
                           },
                         ),
@@ -706,7 +739,39 @@ $texteChiffre
                           ),
                         ),
                       ),
-                      if (estCleValide) ...[
+                      if (estCleValide && !widget.repo.isMissionCesarReussie(_missionIndex)) ...[
+                        const SizedBox(height: 12),
+                        const Text(
+                          'QUE DIT LE MESSAGE ?',
+                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+                        ),
+                        const SizedBox(height: 6),
+                        for (final option in _optionsPour(_missionIndex))
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 6),
+                            child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                backgroundColor: option == _mauvaisChoix ? const Color(0xFFFBE9E7) : Colors.white,
+                                side: BorderSide(
+                                  color: option == _mauvaisChoix ? const Color(0xFF8B2500) : RomanColors.imperialGold,
+                                ),
+                              ),
+                              onPressed: option == _mauvaisChoix ? null : () => _choisirTraduction(option),
+                              child: Text(
+                                option,
+                                style: const TextStyle(fontSize: 12.5, color: RomanColors.charcoal),
+                              ),
+                            ),
+                          ),
+                        if (_mauvaisChoix != null)
+                          const Text(
+                            'Ce n\'est pas ça : relis le latin mot à mot.',
+                            style: TextStyle(fontSize: 12, color: Color(0xFF8B2500)),
+                          ),
+                      ],
+                      if (estCleValide && widget.repo.isMissionCesarReussie(_missionIndex)) ...[
                         const SizedBox(height: 8),
                         Text(
                           'Traduction : ${mission.traduction}',
@@ -967,38 +1032,6 @@ $texteChiffre
                             letterSpacing: 1.1,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      RomanButton(
-                        text: '✓ VALIDER LE DÉCHIFFREMENT (+10 HS)',
-                        onPressed: _decodeurControleur.text.trim().isEmpty
-                            ? null
-                            : () {
-                                final textKey = '${_decodeurControleur.text}_$_cleActuelle';
-                                if (!_messagesAmiDechiffres.contains(textKey)) {
-                                  HapticFeedback.mediumImpact();
-                                  AudioService().playTriumph();
-                                  AudioService().playSesterces();
-                                  RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-                                  widget.repo.addSesterces(10);
-                                  setState(() {
-                                    _messagesAmiDechiffres.add(textKey);
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Missive déchiffrée ! +10 Sesterces remportés ! 🪙'),
-                                      duration: Duration(seconds: 3),
-                                    ),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Missive déjà validée pour cette clé !'),
-                                      duration: Duration(seconds: 2),
-                                    ),
-                                  );
-                                }
-                              },
                       ),
                     ],
                   ),

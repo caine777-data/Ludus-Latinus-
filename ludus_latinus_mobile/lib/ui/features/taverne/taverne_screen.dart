@@ -176,8 +176,9 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       final gaiusScore = _scoreCombo(_gaiusDiceValues);
 
       if (playerScore > gaiusScore) {
-        final gain = _lancerRecompense ? _gainVictoireGaius : 0;
+        var gain = _lancerRecompense ? _gainVictoireGaius : 0;
         if (gain > 0) widget.repo.addSesterces(gain);
+        gain += widget.repo.accomplirDefi('taverne');
         AudioService().playTriumph();
         RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
         setState(() {

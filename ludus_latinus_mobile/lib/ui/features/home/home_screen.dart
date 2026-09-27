@@ -22,7 +22,6 @@ import '../boutique/boutique_modal.dart';
 import 'views/bibliotheca_view.dart';
 import 'views/ludi_view.dart';
 import '../../../data/models/cursus_honorum.dart';
-import '../../../data/models/daily_quest.dart';
 import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
@@ -416,13 +415,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 14),
 
-              // 3. Carte « Défi du Jour » dynamique (+25 HS)
+              // 3. Carte « Défi du Jour » : payée quand le défi est réussi dans le jeu
               Builder(
                 builder: (context) {
-                  final dailyQuest = DailyQuest.getTodayQuest(
-                    null,
-                    (q) => profile.getUnlockStatusForGame(q.routeCible == 'colosseum' ? 'duel' : q.routeCible).isUnlocked,
-                  );
+                  final dailyQuest = widget.repo.defiDuJour;
                   final isDone = profile.isDailyQuestCompletedToday;
 
                   return Container(
@@ -477,19 +473,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             ),
-                            onPressed: () {
-                              RomanLottieEffects.showChestReward(
-                                context,
-                                sestercesReward: dailyQuest.recompense,
-                                questTitle: dailyQuest.titre,
-                                onClaim: () {
-                                  widget.repo.completeDailyQuest(dailyQuest.recompense);
-                                  setState(() {});
-                                  _navigateToQuestTarget(context, dailyQuest.routeCible);
-                                },
-                              );
-                            },
-                            child: Text('🎁 +${dailyQuest.recompense} HS'),
+                            // La prime est versée dans le jeu, une fois le défi réussi.
+                            onPressed: () => _navigateToQuestTarget(context, dailyQuest.routeCible),
+                            child: Text('JOUER · +${dailyQuest.recompense} HS'),
                           ),
                       ],
                     ),

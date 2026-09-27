@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
 import '../models/monument.dart';
 import '../models/profile.dart';
@@ -201,12 +202,24 @@ class GameRepository extends ChangeNotifier {
     return profile.lastDailyQuestDate == today;
   }
 
-  void completeDailyQuest(int reward) {
-    if (isDailyQuestCompletedToday()) return;
+  /// Défi du jour, choisi parmi les jeux déjà ouverts : on ne promet pas un jeu verrouillé.
+  DailyQuest get defiDuJour => DailyQuest.getTodayQuest(
+        null,
+        (q) => profile.getUnlockStatusForGame(q.routeCible == 'colosseum' ? 'duel' : q.routeCible).isUnlocked,
+      );
+
+  /// À appeler quand l'élève réussit quelque chose dans un jeu. Si c'est le jeu
+  /// du défi du jour, le défi est payé. Renvoie la prime versée (0 sinon).
+  /// Avant, la prime tombait dès qu'on touchait le bouton, sans jouer.
+  int accomplirDefi(String jeu) {
+    if (isDailyQuestCompletedToday()) return 0;
+    final defi = defiDuJour;
+    if (defi.routeCible != jeu) return 0;
     profile.lastDailyQuestDate = DateTime.now().toIso8601String().substring(0, 10);
-    storageService.addSesterces(reward);
+    storageService.addSesterces(defi.recompense);
     storageService.saveProfile(profile);
     notifyListeners();
+    return defi.recompense;
   }
 
   void markIntroSeen() {
@@ -255,6 +268,37 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
     notifyListeners();
     return ok;
+  }
+
+  /// Barème des jeux d'arcade : une partie gagnée vaut à peu près une leçon (10 HS).
+  static const int gainCircus = 12;
+  static const int gainDuel = 15;
+  static const int gainMissionCesar = 10;
+
+  int recompensesRestantes(String jeu) => profile.recompensesRestantes(jeu);
+
+  /// Paie une partie gagnée d'un jeu d'arcade, dans la limite du jour.
+  /// Renvoie le montant réellement versé (0 si le quota est atteint).
+  /// Le défi du jour compte même quand le quota est atteint.
+  int payerPartie(String jeu, int montant) {
+    final prime = accomplirDefi(jeu);
+    if (!profile.prendreRecompense(jeu)) return prime;
+    storageService.addSesterces(montant);
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return montant + prime;
+  }
+
+  bool isMissionCesarReussie(int index) => profile.missionsCesar.contains(index);
+
+  /// Mission de César réussie : payée une seule fois, même après redémarrage.
+  int validerMissionCesar(int index, int gain) {
+    if (isMissionCesarReussie(index)) return 0;
+    profile.missionsCesar.add(index);
+    storageService.addSesterces(gain);
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return gain + accomplirDefi('cesar');
   }
 
   bool isEpigraphDecoded(String monumentId) {

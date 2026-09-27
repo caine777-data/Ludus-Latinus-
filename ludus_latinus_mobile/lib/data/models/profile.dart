@@ -120,6 +120,13 @@ class UserProfile {
   String? lastDailyQuestDate;
   String? taverneRewardDate;
   int taverneRewardCount;
+
+  /// Parties récompensées aujourd'hui, par jeu (« circus », « duel »).
+  String? recompensesJeuxDate;
+  Map<String, int> recompensesJeux;
+
+  /// Missions de César déjà payées (numéros 0 à 5).
+  List<int> missionsCesar;
   List<String> decodedEpigraphs;
   bool isDarkMode;
   Map<String, String> equippedGoodies;
@@ -146,6 +153,9 @@ class UserProfile {
     this.lastDailyQuestDate,
     this.taverneRewardDate,
     this.taverneRewardCount = 0,
+    this.recompensesJeuxDate,
+    Map<String, int>? recompensesJeux,
+    List<int>? missionsCesar,
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
     Map<String, String>? equippedGoodies,
@@ -157,6 +167,8 @@ class UserProfile {
         srsScores = srsScores ?? {},
         srsCards = srsCards ?? {},
         decodedEpigraphs = decodedEpigraphs ?? [],
+        recompensesJeux = recompensesJeux ?? {},
+        missionsCesar = missionsCesar ?? [],
         equippedGoodies = equippedGoodies ?? {
           'toge': 'lin_blanc',
           'couronne': 'aucune',
@@ -244,6 +256,26 @@ class UserProfile {
     }
     if (taverneRewardCount >= taverneRewardsPerDay) return false;
     taverneRewardCount++;
+    return true;
+  }
+
+  /// Parties payées par jour et par jeu d'arcade : au-delà, on joue pour le plaisir.
+  /// Sans plafond, une course gagnée en boucle rapportait plus que toutes les leçons.
+  static const int recompensesJeuParJour = 3;
+
+  int recompensesRestantes(String jeu) => recompensesJeuxDate == _todayStr
+      ? (recompensesJeuParJour - (recompensesJeux[jeu] ?? 0)).clamp(0, recompensesJeuParJour)
+      : recompensesJeuParJour;
+
+  /// Consomme une partie payée du jeu. Renvoie false si le quota du jour est atteint.
+  bool prendreRecompense(String jeu) {
+    if (recompensesJeuxDate != _todayStr) {
+      recompensesJeuxDate = _todayStr;
+      recompensesJeux.clear();
+    }
+    final n = recompensesJeux[jeu] ?? 0;
+    if (n >= recompensesJeuParJour) return false;
+    recompensesJeux[jeu] = n + 1;
     return true;
   }
 
@@ -378,6 +410,10 @@ class UserProfile {
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
       taverneRewardDate: json['taverne_reward_date'] as String?,
       taverneRewardCount: json['taverne_reward_count'] as int? ?? 0,
+      recompensesJeuxDate: json['recompenses_jeux_date'] as String?,
+      recompensesJeux: (json['recompenses_jeux'] as Map?)
+          ?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
+      missionsCesar: (json['missions_cesar'] as List?)?.map((e) => (e as num).toInt()).toList(),
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
       equippedGoodies: parsedEquipped,
@@ -403,6 +439,9 @@ class UserProfile {
       'last_daily_quest_date': lastDailyQuestDate,
       'taverne_reward_date': taverneRewardDate,
       'taverne_reward_count': taverneRewardCount,
+      'recompenses_jeux_date': recompensesJeuxDate,
+      'recompenses_jeux': recompensesJeux,
+      'missions_cesar': missionsCesar,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
       'equipped_goodies': equippedGoodies,

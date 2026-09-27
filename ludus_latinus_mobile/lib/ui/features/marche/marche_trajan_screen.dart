@@ -386,6 +386,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       widget.repo.addSesterces(option.sestercesGain);
+      widget.repo.accomplirDefi('marche');
       setState(() {
         _feedbackSucces = true;
         _messageFeedback = '${mission.nomClient} : ${option.reactionClient}';
