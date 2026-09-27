@@ -1118,7 +1118,7 @@ travaille dans le même dépôt.
 
 ## T11 — Réparer les deux tests périmés du puzzle et du décodeur
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : les tests 1 et 2 de T7 échouent parce qu'ils utilisent de
 vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
@@ -1136,16 +1136,22 @@ vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
    (voir le piège 5 d'`AGENTS.md`).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git diff` : exactement 2 lignes changées dans le fichier de test.
-- [ ] `flutter test` : il ne reste qu'**un** échec, celui de « Veni vidi vici ».
+- [x] `git diff` : exactement 2 lignes changées dans le fichier de test.
+- [x] `flutter test` : il ne reste qu'**un** échec, celui de « Veni vidi vici ».
       Recopie la ligne finale du résultat (« +N -1 »).
-- [ ] Un commit `test(mobile): clés du dataset dans les tests puzzle et décodeur`.
+- [x] Un commit `test(mobile): clés du dataset dans les tests puzzle et décodeur`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/test/exercise_and_srs_test.dart` (2 lignes changées : `words` -> `mots` l. 14, `latinComplet` -> `latin_complet` l. 50)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git diff ludus_latinus_mobile/test/exercise_and_srs_test.dart` : exactement 2 lignes changées.
+  - `flutter test` : 49 passés, 1 échec restant (« Veni vidi vici »).
+    Ligne finale : `00:03 +49 -1: Some tests failed.`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : restauré après le passage des tests.
+- Doutes, questions pour l'architecte : Aucun doute. Les deux tests testent désormais les clés réelles du dataset.
+- Reste à faire : Rien sur T11. Tâche terminée.
 
 ---
 

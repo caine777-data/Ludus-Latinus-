@@ -11,7 +11,7 @@ void main() {
         'type': 'puzzle',
         'description': 'Construis la phrase',
         'consigne': 'Remets les mots dans l''ordre.',
-        'words': ['Romulus', 'Romam', 'condit'],
+        'mots': ['Romulus', 'Romam', 'condit'],
         'solution': 'Romulus Romam condit',
         'xp': 20,
         'sesterces': 15,
@@ -47,7 +47,7 @@ void main() {
         'id': 'm1-08',
         'titre': 'Analyse des Fonctions',
         'type': 'decodeur',
-        'latinComplet': 'Marcus gladium tenet',
+        'latin_complet': 'Marcus gladium tenet',
         'roles': [
           {'mot': 'Marcus', 'cas': 'Nominatif (Sujet)'},
           {'mot': 'gladium', 'cas': 'Accusatif (COD)'},
