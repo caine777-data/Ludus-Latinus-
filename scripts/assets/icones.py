@@ -4,9 +4,8 @@ Réutilise le détourage de la boutique. Usage : python scripts/assets/icones.py
 """
 from pathlib import Path
 
-from PIL import Image
-
 from chroma_boutique import SOURCE, alleger, detourer, recadrer
+from PIL import Image
 
 DEST = Path(__file__).resolve().parents[2] / "ludus_latinus_mobile" / "assets" / "images"
 
