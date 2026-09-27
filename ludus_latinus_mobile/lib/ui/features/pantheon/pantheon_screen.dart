@@ -426,7 +426,7 @@ class _PantheonScreenState extends State<PantheonScreen> {
                   border: Border.all(color: rareteColor, width: 2),
                   boxShadow: [
                     BoxShadow(
-                      color: rareteColor.withOpacity(0.35),
+                      color: rareteColor.withValues(alpha: 0.35),
                       offset: const Offset(0, 5),
                       blurRadius: 12,
                     ),
@@ -455,7 +455,7 @@ class _PantheonScreenState extends State<PantheonScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: RomanColors.imperialGold.withOpacity(0.4),
+                                color: RomanColors.imperialGold.withValues(alpha: 0.4),
                                 width: 1,
                               ),
                             ),
@@ -520,7 +520,7 @@ class _PantheonScreenState extends State<PantheonScreen> {
                               decoration: BoxDecoration(
                                 color: const Color(0x1A421019),
                                 borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+                                border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.5)),
                               ),
                               child: Text(
                                 carte.devise,
@@ -562,7 +562,7 @@ class _PantheonScreenState extends State<PantheonScreen> {
                   border: Border.all(color: rareteColor, width: 1.8),
                   boxShadow: [
                     BoxShadow(
-                      color: rareteColor.withOpacity(0.28),
+                      color: rareteColor.withValues(alpha: 0.28),
                       offset: const Offset(0, 4),
                       blurRadius: 10,
                     ),
@@ -579,12 +579,12 @@ class _PantheonScreenState extends State<PantheonScreen> {
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              rareteColor.withOpacity(0.18),
-                              rareteColor.withOpacity(0.06),
+                              rareteColor.withValues(alpha: 0.18),
+                              rareteColor.withValues(alpha: 0.06),
                             ],
                           ),
                           border: Border(
-                            bottom: BorderSide(color: rareteColor.withOpacity(0.3), width: 1),
+                            bottom: BorderSide(color: rareteColor.withValues(alpha: 0.3), width: 1),
                           ),
                         ),
                         child: Row(
@@ -662,7 +662,7 @@ class _PantheonScreenState extends State<PantheonScreen> {
                             end: Alignment.bottomCenter,
                           ),
                           border: Border(
-                            top: BorderSide(color: RomanColors.imperialGold.withOpacity(0.6), width: 1.2),
+                            top: BorderSide(color: RomanColors.imperialGold.withValues(alpha: 0.6), width: 1.2),
                           ),
                         ),
                         child: Column(

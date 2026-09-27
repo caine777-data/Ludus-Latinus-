@@ -1283,7 +1283,7 @@ ont le plus.
 
 ## T14 — Remplacer `withOpacity` dans le Panthéon, la boutique et les effets
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : suite de T13.
 
@@ -1297,13 +1297,23 @@ Statut : À FAIRE
 **Étapes** : les mêmes que T13.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `grep -c withOpacity` donne 0 pour les quatre fichiers.
-- [ ] 22 lignes changées au total, chacune ne différant que par ce remplacement.
-- [ ] `flutter test` : même résultat qu'avant ta modification.
-- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (Panthéon, boutique, effets)`.
+- [x] `grep -c withOpacity` donne 0 pour les quatre fichiers.
+- [x] 22 lignes changées au total, chacune ne différant que par ce remplacement.
+- [x] `flutter test` : même résultat qu'avant ta modification.
+- [x] Un commit `refactor(mobile): withValues à la place de withOpacity (Panthéon, boutique, effets)`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart` (8 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/boutique/boutique_modal.dart` (6 remplacements)
+  - `ludus_latinus_mobile/lib/ui/core/game_juice.dart` (5 remplacements)
+  - `ludus_latinus_mobile/lib/ui/core/particles_overlay.dart` (3 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep "withOpacity" ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart ludus_latinus_mobile/lib/ui/features/boutique/boutique_modal.dart ludus_latinus_mobile/lib/ui/core/game_juice.dart ludus_latinus_mobile/lib/ui/core/particles_overlay.dart` : 0 résultat (`grep -c` = 0).
+  - `git diff --stat` : exactement 22 insertions(+) et 22 suppressions(-) réparties sur les 4 fichiers, chaque ligne ne différant que par `.withValues(alpha: x)`.
+  - `flutter analyze` sur les 4 fichiers : 0 erreur, 0 avertissement lié à `withOpacity`.
+  - `flutter test` : 54 réussis, 0 échec. Ligne finale : `00:03 +54: All tests passed!`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré après analyse et tests.
+- Doutes, questions pour l'architecte : Aucun doute.
+- Reste à faire : Rien sur T14. Tâche terminée.

@@ -351,8 +351,8 @@ class _RomanElasticProgressBarState extends State<RomanElasticProgressBar>
     final radius = widget.borderRadius ?? BorderRadius.circular(widget.height / 2);
     final effectiveGhostColor = widget.ghostColor ??
         (_targetValue < _oldMainValue
-            ? Colors.redAccent.withOpacity(0.5)
-            : RomanColors.imperialGold.withOpacity(0.4));
+            ? Colors.redAccent.withValues(alpha: 0.5)
+            : RomanColors.imperialGold.withValues(alpha: 0.4));
 
     return ClipRRect(
       borderRadius: radius,
@@ -391,7 +391,7 @@ class _RomanElasticProgressBarState extends State<RomanElasticProgressBar>
                       color: widget.color,
                       gradient: LinearGradient(
                         colors: [
-                          widget.color.withOpacity(0.85),
+                          widget.color.withValues(alpha: 0.85),
                           widget.color,
                         ],
                         begin: Alignment.topCenter,
@@ -413,8 +413,8 @@ class _RomanElasticProgressBarState extends State<RomanElasticProgressBar>
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.28),
-                      Colors.white.withOpacity(0.0),
+                      Colors.white.withValues(alpha: 0.28),
+                      Colors.white.withValues(alpha: 0.0),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

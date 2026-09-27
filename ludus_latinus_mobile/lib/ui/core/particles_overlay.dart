@@ -165,7 +165,7 @@ class _ParticlesPainter extends CustomPainter {
       final wavePaint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3.0 * (1.0 - progress)
-        ..color = const Color(0xFFD4AF37).withOpacity(waveOpacity);
+        ..color = const Color(0xFFD4AF37).withValues(alpha: waveOpacity);
       canvas.drawCircle(
         Offset(size.width / 2, size.height * 0.45),
         waveRadius,
@@ -191,7 +191,7 @@ class _ParticlesPainter extends CustomPainter {
 
       if (opacity <= 0.01) continue;
 
-      paint.color = p.color.withOpacity(opacity);
+      paint.color = p.color.withValues(alpha: opacity);
 
       canvas.save();
       canvas.translate(curX, curY);
@@ -222,7 +222,7 @@ class _ParticlesPainter extends CustomPainter {
     final veinPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0
-      ..color = Colors.white.withOpacity(0.4);
+      ..color = Colors.white.withValues(alpha: 0.4);
     canvas.drawLine(Offset(0, -half * 0.8), Offset(0, half * 0.8), veinPaint);
   }
 

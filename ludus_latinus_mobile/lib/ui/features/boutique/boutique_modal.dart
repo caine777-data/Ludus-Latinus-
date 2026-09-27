@@ -383,7 +383,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2.5),
         decoration: BoxDecoration(
-          color: isSelectedCat ? RomanColors.imperialPurple.withOpacity(0.08) : const Color(0xFFF7F4EC),
+          color: isSelectedCat ? RomanColors.imperialPurple.withValues(alpha: 0.08) : const Color(0xFFF7F4EC),
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelectedCat ? RomanColors.imperialPurple : RomanColors.marbleBorder,
@@ -455,13 +455,13 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           color: isEquipped
               ? RomanColors.laurelGreen
               : isOwned
-                  ? RomanColors.imperialGold.withOpacity(0.6)
+                  ? RomanColors.imperialGold.withValues(alpha: 0.6)
                   : RomanColors.marbleBorder,
           width: isEquipped ? 1.8 : 1.0,
         ),
         boxShadow: [
           BoxShadow(
-            color: isEquipped ? RomanColors.laurelGreen.withOpacity(0.08) : const Color(0x06000000),
+            color: isEquipped ? RomanColors.laurelGreen.withValues(alpha: 0.08) : const Color(0x06000000),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -476,10 +476,10 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isEquipped
-                  ? RomanColors.laurelGreen.withOpacity(0.12)
+                  ? RomanColors.laurelGreen.withValues(alpha: 0.12)
                   : const Color(0xFFF9F7F1),
               border: Border.all(
-                color: isEquipped ? RomanColors.laurelGreen : RomanColors.imperialGold.withOpacity(0.5),
+                color: isEquipped ? RomanColors.laurelGreen : RomanColors.imperialGold.withValues(alpha: 0.5),
                 width: 1.2,
               ),
             ),
@@ -569,7 +569,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: RomanColors.laurelGreen.withOpacity(0.12),
+          color: RomanColors.laurelGreen.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: RomanColors.laurelGreen, width: 1.2),
         ),
