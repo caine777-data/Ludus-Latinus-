@@ -51,6 +51,12 @@ void main() {
       expect(res.fullIpaEcclesiastique, contains('tʃ'));
     });
 
+    test('Non-coupure des affriquées en deux syllabes (vici -> vi.tʃi)', () {
+      final res = LatinPhoneticsEngine.analyze('Veni vidi vici');
+      expect(res.fullIpaEcclesiastique, anyOf(contains('vi.tʃi'), contains('ˈvi.tʃi')));
+      expect(res.fullIpaEcclesiastique, isNot(contains('t.ʃ')));
+    });
+
     test('Gestion des entrées vides ou avec ponctuation', () {
       final empty = LatinPhoneticsEngine.analyze('   ');
       expect(empty.words, isEmpty);

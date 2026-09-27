@@ -248,7 +248,9 @@ class LatinPhoneticsEngine {
       final k2Start = kernels[k + 1][0];
       final between = w.substring(k1End, k2Start);
 
-      if (between.startsWith('qu')) {
+      if (between.endsWith('tʃ') || between.endsWith('dʒ') || between.endsWith('ts') || between.endsWith('kw')) {
+        cuts.add(k2Start - 2);
+      } else if (between.startsWith('qu')) {
         cuts.add(k1End);
       } else if (between.length <= 1) {
         cuts.add(k1End);

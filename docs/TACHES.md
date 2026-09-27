@@ -1159,7 +1159,7 @@ vieux noms de clés. On corrige **les tests**, pas le code : le dataset utilise
 
 ## T12 — Prononciation : ne plus couper les affriquées en deux syllabes
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : en prononciation ecclésiastique, « vici » donne `[ˈvit.ʃi]` au
 lieu de `[ˈvi.tʃi]` : la syllabation coupe l'affriquée `tʃ`. C'est un vrai
@@ -1190,17 +1190,50 @@ défaut du moteur (voir T7) ; il fait échouer le dernier test.
 5. `flutter test`, puis `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git diff` : seule `_syllabify` change dans le moteur, plus le nouveau test.
-- [ ] `flutter test` : **0 échec** (si T11 est faite). Recopie la ligne finale.
-- [ ] Les 7 transcriptions avant et après, et aucune transcription
+- [x] `git diff` : seule `_syllabify` change dans le moteur, plus le nouveau test.
+- [x] `flutter test` : **0 échec** (si T11 est faite). Recopie la ligne finale.
+- [x] Les 7 transcriptions avant et après, et aucune transcription
       **restituée** n'a changé (sinon, explique pourquoi).
-- [ ] Un commit `fix(mobile): la syllabation garde les affriquées entières`.
+- [x] Un commit `fix(mobile): la syllabation garde les affriquées entières`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/data/services/latin_phonetics_engine.dart` (seule la fonction `_syllabify` a été modifiée : ajout de la condition préservant `tʃ`, `dʒ`, `ts` et `kw` entières en début de syllabe)
+  - `ludus_latinus_mobile/test/latin_phonetics_test.dart` (ajout du test unitaire `Non-coupure des affriquées en deux syllabes (vici -> vi.tʃi)`)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git diff ludus_latinus_mobile/lib/data/services/latin_phonetics_engine.dart` : exactement 3 lignes ajoutées dans `_syllabify`.
+  - `dart run scratch/test_phonetics_t12.dart` : exécution avant et après pour relever les 7 phrases tests.
+  - `flutter test` : 54 réussis, 0 échec. Ligne finale : `00:04 +54: All tests passed!`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : exécuté après les tests.
+- Transcriptions des 7 phrases **avant** la modification :
+| Phrase | Restituée | Ecclésiastique |
+|---|---|---|
+| `Veni vidi vici` | `[ˈwe.ni ˈwi.di ˈwi.ki]` | `[ˈve.ni ˈvi.di ˈvit.ʃi]` |
+| `Caesar` | `[ˈkae̯.sar]` | `[ˈtʃe.zar]` |
+| `Cicero` | `[ˈkɪ.kɛ.roː]` | `[ˈtʃi.tʃe.ro]` |
+| `legiones` | `[leˈɡi.o.nes]` | `[ledˈʒi.o.nes]` |
+| `sequitur` | `[sekˈwi.tur]` | `[sekˈwi.tur]` |
+| `gratia` | `[ˈɡra.ti.a]` | `[ˈgrat.si.a]` |
+| `amicitia` | `[a.miˈki.ti.a]` | `[a.mitˈʃit.si.a]` |
+
+- Transcriptions des 7 phrases **après** la modification :
+| Phrase | Restituée | Ecclésiastique |
+|---|---|---|
+| `Veni vidi vici` | `[ˈwe.ni ˈwi.di ˈwi.ki]` | `[ˈve.ni ˈvi.di ˈvi.tʃi]` |
+| `Caesar` | `[ˈkae̯.sar]` | `[ˈtʃe.zar]` |
+| `Cicero` | `[ˈkɪ.kɛ.roː]` | `[ˈtʃi.tʃe.ro]` |
+| `legiones` | `[leˈɡi.o.nes]` | `[leˈdʒi.o.nes]` |
+| `sequitur` | `[seˈkwi.tur]` | `[seˈkwi.tur]` |
+| `gratia` | `[ˈɡra.ti.a]` | `[ˈgra.tsi.a]` |
+| `amicitia` | `[a.miˈki.ti.a]` | `[a.miˈtʃi.tsi.a]` |
+
+- Analyse des transcriptions restituées et ecclésiastiques :
+  - **Ecclésiastique** : les affriquées `tʃ` (*vici*, *amicitia*), `dʒ` (*legiones*), `ts` (*gratia*, *amicitia*) ainsi que `kw` ne sont plus scindées par un point de coupe syllabique (`vit.ʃi` -> `vi.tʃi`, `led.ʒi` -> `le.dʒi`, `grat.si` -> `gra.tsi`).
+  - **Restituée** : 6 des 7 transcriptions sont strictement identiques. Seule la restituée de `sequitur` passe de `[sekˈwi.tur]` à `[seˈkwi.tur]`.
+    *Explication* : dans la chaîne API restituée, `qu` est transcrit en `kw`. Auparavant, `_syllabify` connaissait la règle pour le `qu` orthographique latin (`between.startsWith('qu')`), mais lors du passage sur la chaîne API contenant `kw`, cette séquence de 2 consonnes tombait dans le cas général scindé en `k.w`. La nouvelle règle `between.endsWith('kw')` conserve le groupe labiovélaire unitaire ouvrant la syllabe (`se.kwi.tur`), ce qui est la prononciation exacte du latin classique restitué.
+- Doutes, questions pour l'architecte : Aucun doute. La totalité de la suite de tests Flutter passe désormais au vert (54/54).
+- Reste à faire : Rien sur T12. Tâche terminée.
 
 ---
 
