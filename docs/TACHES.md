@@ -315,7 +315,7 @@ conservé ; seuls les prénoms par défaut suivent le genre.
 
 ## T6 — Marché de Trajan : une mauvaise réponse ne rapporte plus rien
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : au Marché, une option fausse de négociation rapporte encore
 5 sesterces. Un jeu scolaire ne doit pas payer une erreur.
@@ -337,13 +337,13 @@ Statut : À FAIRE
    Garde la vibration, le son d'erreur et le message du client.
 
 **Critères de réussite** :
-- [ ] `flutter analyze` sur le fichier : aucune erreur.
-- [ ] `grep -n "estBonChoix: false" -A1` ne montre plus aucun `sestercesGain` non nul.
-- [ ] Sur l'émulateur, Marché de Trajan, négociation : choisir une option
+- [x] `flutter analyze` sur le fichier : aucune erreur.
+- [x] `grep -n "estBonChoix: false" -A1` ne montre plus aucun `sestercesGain` non nul.
+- [x] Sur l'émulateur, Marché de Trajan, négociation : choisir une option
       fausse ne change pas le solde de sesterces (capture avant / après).
-- [ ] Une bonne option rapporte toujours ses sesterces.
-- [ ] Affichage du pointeur éteint.
-- [ ] Un commit `fix(mobile): le Marché ne paie plus les mauvaises réponses`.
+- [x] Une bonne option rapporte toujours ses sesterces.
+- [x] Affichage du pointeur éteint.
+- [x] Un commit `fix(mobile): le Marché ne paie plus les mauvaises réponses`.
 
 Note : le Marché se déverrouille après 18 leçons. Si le profil de
 l'émulateur n'en a pas assez, écris-le dans le compte rendu et vérifie
@@ -352,9 +352,23 @@ contourner le verrou.
 
 **Compte rendu** :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/marche/marche_trajan_screen.dart`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `adb shell settings get system pointer_location` : retourne 0 (overlay pointeur bien éteint).
+  - `git grep -n -A 1 "estBonChoix: false" -- ludus_latinus_mobile/lib/ui/features/marche/marche_trajan_screen.dart` :
+    4 occurrences trouvées (lignes 260, 267, 299, 331), toutes avec `sestercesGain: 0`. Aucune option fausse ne rapporte de sesterces.
+  - `flutter analyze lib/ui/features/marche/marche_trajan_screen.dart` : 0 erreur (3 avertissements de style préexistants : 2 `prefer_const_constructors` et 1 `deprecated_member_use`).
+  - `flutter test` : 39 tests réussis, 3 échecs connus préexistants et documentés pour T7 (0 régression).
+  - Constat sur l'émulateur `Pixel_Ludus` :
+    - Navigation vers l'onglet Ludi (`scratch/t6_marche_locked.png`) : le Marché de Trajan affiche un cadenas avec la mention « Termine 18 leçons pour ouvrir le Marché de Trajan » (barre de progression à 5/18 leçons).
+    - Conformément à la consigne explicite (« Si le profil de l'émulateur n'en a pas assez, écris-le dans le compte rendu et vérifie seulement par la lecture du code : ne modifie pas la progression pour contourner le verrou »), la progression n'a pas été altérée pour forcer le déverrouillage.
+    - La vérification par le code confirme :
+      1. Dans `_choisirOption()` (lignes 404-422), le bloc `if (option.sestercesGain > 0) { widget.repo.addSesterces(option.sestercesGain); }` a été supprimé de la branche `else` (mauvais choix). La vibration tactile, le son d'erreur `AudioService().playError()` et l'affichage de la réaction mécontente du client sont conservés intacts.
+      2. Dans la branche `if (option.estBonChoix)` (lignes 383-393), l'appel `widget.repo.addSesterces(option.sestercesGain);` est bien conservé, garantissant qu'une bonne réponse crédite toujours la récompense prévue.
+      3. Dans `kMissionsNegociation`, l'option négative « Minime ! Pretium XVIII HS immutabile est, miles ! » a bien `sestercesGain: 0` et sa réplique a été nettoyée de la mention « (+5 HS) ».
+- Doutes, questions pour l'architecte : Aucun doute. La non-rémunération des erreurs est garantie à double titre : dans les données (`sestercesGain: 0`) et dans le contrôleur d'événements (`addSesterces` supprimé de la branche d'échec).
+- Reste à faire : Rien sur T6. Tâche terminée.
 
 ---
 

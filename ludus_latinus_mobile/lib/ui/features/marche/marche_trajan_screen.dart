@@ -258,8 +258,8 @@ const List<MissionNegociation> kMissionsNegociation = [
         texteLatin: '« Minime ! Pretium XVIII HS immutabile est, miles ! »',
         traduction: '« Nullement ! Le prix de 18 HS est immuable, soldat ! »',
         estBonChoix: false,
-        sestercesGain: 5,
-        reactionClient: '« Tu es dur en affaires... Mais j\'en ai besoin pour l\'arène. (+5 HS) »',
+        sestercesGain: 0,
+        reactionClient: '« Tu es dur en affaires... Mais j\'en ai besoin pour l\'arène. »',
       ),
       OptionNegociation(
         texteLatin: '« Abi statim, avarus miles ! Nihil tibi vendam ! »',
@@ -404,9 +404,6 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
     } else {
       HapticFeedback.vibrate();
       AudioService().playError();
-      if (option.sestercesGain > 0) {
-        widget.repo.addSesterces(option.sestercesGain);
-      }
       setState(() {
         _feedbackSucces = false;
         _messageFeedback = '${mission.nomClient} : ${option.reactionClient}';
