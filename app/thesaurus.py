@@ -35,7 +35,7 @@ DICTIONNAIRE_LATIN = [
     {"latin": "familia, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la famille / maisonnée", "etym": "familial, famille", "ex": "Tota familia convenit.", "ex_fr": "Toute la famille se réunit."},
     {"latin": "flumen, -inis", "cat": "Nom", "genre": "neutre 3e décl.", "fr": "le fleuve / la rivière", "etym": "fluvial, fleuve", "ex": "Tiberis clarum flumen est.", "ex_fr": "Le Tibre est un fleuve célèbre."},
     {"latin": "gladius, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le glaive", "etym": "gladiateur, glaive", "ex": "Gladius miles armat.", "ex_fr": "Le glaive arme le soldat."},
-    {"latin": "homo, -inis", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'homme / l'être humain", "etym": "homicide, hommage, humanité", "ex": "Homo sum, nihil humani a me alienum puto.", "ex_fr": "Je suis homme, et rien d'humain ne m'est étranger."},
+    {"latin": "homo, -inis", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'homme / l'être humain", "etym": "homicide, hommage, humanité", "ex": "Homo sum, nihil humani a me alienum puto.", "ex_fr": "Je suis homme, et rien d'humain ne m'est étranger.", "monde": "monde26"},
     {"latin": "hostis, -is", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'ennemi", "etym": "hostile, hostilité", "ex": "Hostes urbem oppugnant.", "ex_fr": "Les ennemis attaquent la ville."},
     {"latin": "insula, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "l'île / l'immeuble romain", "etym": "insulaire, isoler, péninsule", "ex": "Plebs in insulis habitat.", "ex_fr": "La plèbe habite dans des immeubles."},
     {"latin": "lex, legis", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "la loi", "etym": "légal, légitime, légiférer", "ex": "Dura lex, sed lex.", "ex_fr": "La loi est dure, mais c'est la loi."},
@@ -289,7 +289,7 @@ class ThesaurusDialog(tk.Toplevel):
 
         # Filtres catégories
         self.var_cat = tk.StringVar(value="Tous")
-        for cat in ("Tous", "Nom", "Verbe", "Adjectif", "Devise"):
+        for cat in ("Tous", "Nom", "Verbe", "Adjectif", "Pronom", "Invariable", "Devise"):
             rb = tk.Radiobutton(
                 search_frame,
                 text=cat,

@@ -22,7 +22,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   String _selectedCategory = 'Tous';
   String _searchQuery = '';
 
-  final List<String> _categories = ['Tous', 'Nom', 'Verbe', 'Adjectif', 'Invariable'];
+  final List<String> _categories = ['Tous', 'Nom', 'Verbe', 'Adjectif', 'Pronom', 'Invariable'];
 
   @override
   void initState() {

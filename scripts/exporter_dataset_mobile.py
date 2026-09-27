@@ -63,9 +63,16 @@ def dictionnaire_avec_mondes(curriculum=None):
 
 
 def exporter_dataset(dest_path=None) -> Path:
-    """Extrait l'intégralité du contenu pédagogique et ludique dans un fichier JSON."""
+    """Extrait l'intégralité du contenu pédagogique et ludique dans un fichier JSON.
+
+    Sans destination, écrit la copie de la racine **et** celle que lit l'appli
+    mobile (``ludus_latinus_mobile/assets/data``) : avant, cette dernière
+    devait être recopiée à la main et restait facilement en retard.
+    """
+    copie_mobile = None
     if dest_path is None:
         dest_path = project_root / "assets" / "data" / "ludus_latinus_dataset.json"
+        copie_mobile = project_root / "ludus_latinus_mobile" / "assets" / "data" / "ludus_latinus_dataset.json"
 
     dest_path = Path(dest_path)
     dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -116,6 +123,8 @@ def exporter_dataset(dest_path=None) -> Path:
 
     contenu_json = json.dumps(dataset, ensure_ascii=False, indent=2)
     dest_path.write_text(contenu_json, encoding="utf-8")
+    if copie_mobile is not None:
+        copie_mobile.write_text(contenu_json, encoding="utf-8")
 
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -123,6 +132,8 @@ def exporter_dataset(dest_path=None) -> Path:
         pass
 
     print(f"[OK] Dataset universel exporte avec succes vers : {dest_path}")
+    if copie_mobile is not None:
+        print(f"  - et vers l'appli mobile : {copie_mobile}")
     print(f"  - Mondes : {len(CURRICULUM)} ({len(CLASSES)} classes)")
     print(f"  - Lecons & Exercices : {total_lecons}")
     print(f"  - Thesaurus latin : {len(DICTIONNAIRE_LATIN)} entrees")

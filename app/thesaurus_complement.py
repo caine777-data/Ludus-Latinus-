@@ -134,4 +134,83 @@ VOCABULAIRE_COMPLEMENTAIRE = [
     {"latin": "poeta, -ae", "cat": "Nom", "genre": "masc. 1re décl.", "fr": "le poète", "etym": "poète, poésie", "ex": "Vergilius poeta clarus est.", "ex_fr": "Virgile est un poète célèbre.", "monde": "monde25"},
     {"latin": "carmen, -inis", "cat": "Nom", "genre": "neutre 3e décl.", "fr": "le poème, le chant", "etym": "charme", "ex": "Poeta carmen scribit.", "ex_fr": "Le poète écrit un poème.", "monde": "monde25"},
     {"latin": "amor, -oris", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'amour", "etym": "amour, amoureux", "ex": "Omnia vincit amor.", "ex_fr": "L'amour triomphe de tout.", "monde": "monde25"},
+
+    # ---- Mondes 15 à 26 : ajouts validés par Cédric le 27/09/2026 ----
+    # Sans eux, Memoria restait presque vide en 3e (0 à 5 mots par monde).
+
+    # Monde 15 · Récits d'autrefois : l'imparfait
+    {"latin": "convenire (convenio, conveni, conventum)", "cat": "Verbe", "genre": "4e conjugaison", "fr": "se rassembler, se réunir", "etym": "convenir, convention", "ex": "Romani in foro conveniebant.", "ex_fr": "Les Romains se rassemblaient sur le forum.", "monde": "monde15"},
+    {"latin": "primus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "premier", "etym": "primaire, primitif, prime", "ex": "Romulus primus rex Romae erat.", "ex_fr": "Romulus était le premier roi de Rome.", "monde": "monde15"},
+    {"latin": "Romanus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "romain", "etym": "romain, roman", "ex": "Civis Romanus sum.", "ex_fr": "Je suis citoyen romain.", "monde": "monde15"},
+    {"latin": "narrare (narro, narravi, narratum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "raconter", "etym": "narration, narrateur", "ex": "Magister fabulam narrabat.", "ex_fr": "Le maître racontait une histoire.", "monde": "monde15"},
+
+    # Monde 16 · Le parfait
+    {"latin": "orator, -oris", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'orateur", "etym": "orateur, oral, oraison", "ex": "Cicero magnus orator fuit.", "ex_fr": "Cicéron fut un grand orateur.", "monde": "monde16"},
+    {"latin": "invictus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "invaincu, invincible", "etym": "invincible, vaincre", "ex": "Gladiator invictus fuit.", "ex_fr": "Le gladiateur fut invaincu.", "monde": "monde16"},
+    {"latin": "nuntius, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le messager, la nouvelle", "etym": "annoncer, nonce", "ex": "Nuntius Romam venit.", "ex_fr": "Le messager est venu à Rome.", "monde": "monde16"},
+
+    # Monde 17 · César et la Gaule
+    {"latin": "libertas, -atis", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "la liberté", "etym": "liberté, libéral, libérer", "ex": "Galli pro libertate pugnabant.", "ex_fr": "Les Gaulois combattaient pour la liberté.", "monde": "monde17"},
+    {"latin": "pro (+ ablatif)", "cat": "Invariable", "genre": "préposition", "fr": "pour, devant, à la place de", "etym": "pronom (« à la place du nom »)", "ex": "Pro patria pugnamus.", "ex_fr": "Nous combattons pour la patrie.", "monde": "monde17"},
+    {"latin": "is, ea, id", "cat": "Pronom", "genre": "démonstratif", "fr": "il, elle / celui-ci, celle-ci", "etym": "id (« cela ») dans « id est »", "ex": "Caesar eum vincet.", "ex_fr": "César le vaincra.", "monde": "monde17"},
+    {"latin": "aquilifer, -eri", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le porte-aigle", "etym": "aquilin (aquila, l'aigle)", "ex": "Aquilifer aquilam portat.", "ex_fr": "Le porte-aigle porte l'aigle.", "monde": "monde17"},
+
+    # Monde 18 · Le Grand Triomphe
+    {"latin": "sapientia, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la sagesse", "etym": "sapience, Homo sapiens", "ex": "Virtus et sapientia rem publicam servant.", "ex_fr": "Le courage et la sagesse sauvent la République.", "monde": "monde18"},
+    {"latin": "servare (servo, servavi, servatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "sauver, garder, conserver", "etym": "conserver, observer, réserver", "ex": "Populus Romanus libertatem servat.", "ex_fr": "Le peuple romain garde sa liberté.", "monde": "monde18"},
+    {"latin": "dictator, -oris", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "le dictateur", "etym": "dictateur, dicter", "ex": "Caesar dictator perpetuus erat.", "ex_fr": "César était dictateur à vie.", "monde": "monde18"},
+
+    # Monde 19 · La paix d'Auguste
+    {"latin": "fides, -ei", "cat": "Nom", "genre": "fém. 5e décl.", "fr": "la loyauté, la foi, la confiance", "etym": "fidèle, confiance, fiancé", "ex": "Sine fide nulla amicitia est.", "ex_fr": "Sans loyauté, il n'y a pas d'amitié.", "monde": "monde19"},
+    {"latin": "spes, spei", "cat": "Nom", "genre": "fém. 5e décl.", "fr": "l'espoir", "etym": "espérer, espérance", "ex": "Spes victoriae magna est.", "ex_fr": "L'espoir de la victoire est grand.", "monde": "monde19"},
+    {"latin": "cornu, -us", "cat": "Nom", "genre": "neutre 4e décl.", "fr": "la corne ; l'aile d'une armée", "etym": "corne, cornet, licorne", "ex": "Taurus cornua habet.", "ex_fr": "Le taureau a des cornes.", "monde": "monde19"},
+    {"latin": "marmor, -oris", "cat": "Nom", "genre": "neutre 3e décl.", "fr": "le marbre", "etym": "marbre, marmoréen", "ex": "Augustus urbem marmoream reliquit.", "ex_fr": "Auguste laissa une ville de marbre.", "monde": "monde19"},
+    {"latin": "dare (do, dedi, datum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "donner", "etym": "datif, date, données", "ex": "Augustus pacem populo dedit.", "ex_fr": "Auguste donna la paix au peuple.", "monde": "monde19"},
+    {"latin": "novus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "nouveau", "etym": "nouveau, novice, innover", "ex": "Dies novus est.", "ex_fr": "C'est un jour nouveau.", "monde": "monde19"},
+
+    # Monde 20 · Les chemins de l'Empire
+    {"latin": "qui, quae, quod", "cat": "Pronom", "genre": "relatif", "fr": "qui, que, lequel", "etym": "quiconque", "ex": "Via quae Romam ducit longa est.", "ex_fr": "La route qui mène à Rome est longue.", "monde": "monde20"},
+    {"latin": "regina, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la reine", "etym": "reine, régner, régent", "ex": "Via Appia regina viarum est.", "ex_fr": "La Via Appia est la reine des routes.", "monde": "monde20"},
+    {"latin": "collis, -is", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "la colline", "etym": "colline, col", "ex": "Urbs in colle stat.", "ex_fr": "La ville se dresse sur une colline.", "monde": "monde20"},
+    {"latin": "condere (condo, condidi, conditum)", "cat": "Verbe", "genre": "3e conjugaison", "fr": "fonder", "etym": "ab Urbe condita : depuis la fondation de Rome", "ex": "Romulus urbem condidit.", "ex_fr": "Romulus fonda la ville.", "monde": "monde20"},
+    {"latin": "lapis, -idis", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "la pierre", "etym": "lapider, lapidaire", "ex": "Via lapidibus strata est.", "ex_fr": "La route est pavée de pierres.", "monde": "monde20"},
+
+    # Monde 21 · Pompéi
+    {"latin": "nubes, -is", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "le nuage", "etym": "nuage, nuée, nébuleuse", "ex": "Nubes atra e monte oriebatur.", "ex_fr": "Un nuage noir s'élevait de la montagne.", "monde": "monde21"},
+    {"latin": "ater, atra, atrum", "cat": "Adjectif", "genre": "1re classe", "fr": "noir, sombre", "etym": "atrabilaire", "ex": "Nubes atra caelum tegit.", "ex_fr": "Un nuage noir couvre le ciel.", "monde": "monde21"},
+    {"latin": "delere (deleo, delevi, deletum)", "cat": "Verbe", "genre": "2e conjugaison", "fr": "détruire", "etym": "indélébile", "ex": "Pompeii urbs deleta est.", "ex_fr": "La ville de Pompéi a été détruite.", "monde": "monde21"},
+    {"latin": "vicus, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le quartier, le village", "etym": "vicinal (chemin)", "ex": "Vicus cinere deletus est.", "ex_fr": "Le quartier a été détruit par la cendre.", "monde": "monde21"},
+
+    # Monde 22 · L'ablatif absolu
+    {"latin": "sol, solis", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "le soleil", "etym": "solaire, solstice, parasol", "ex": "Sole oriente, agricolae laborant.", "ex_fr": "Au lever du soleil, les paysans travaillent.", "monde": "monde22"},
+    {"latin": "facere (facio, feci, factum)", "cat": "Verbe", "genre": "3e conjugaison mixte", "fr": "faire", "etym": "fait, facteur, facile", "ex": "Pace facta, cives gaudent.", "ex_fr": "La paix faite, les citoyens se réjouissent.", "monde": "monde22"},
+    {"latin": "gaudere (gaudeo, gavisus sum)", "cat": "Verbe", "genre": "2e conjugaison", "fr": "se réjouir", "etym": "joie (de gaudium)", "ex": "Cives victoria gaudent.", "ex_fr": "Les citoyens se réjouissent de la victoire.", "monde": "monde22"},
+    {"latin": "redire (redeo, redii, reditum)", "cat": "Verbe", "genre": "irrégulier (comme ire)", "fr": "revenir", "etym": "re- + ire : aller de nouveau", "ex": "Urbe capta, milites redierunt.", "ex_fr": "La ville prise, les soldats revinrent.", "monde": "monde22"},
+    {"latin": "oriri (orior, ortus sum)", "cat": "Verbe", "genre": "4e conjugaison, déponent", "fr": "se lever, naître", "etym": "orient (là où le soleil se lève), origine", "ex": "Sol oritur.", "ex_fr": "Le soleil se lève.", "monde": "monde22"},
+
+    # Monde 23 · La voix passive
+    {"latin": "laudare (laudo, laudavi, laudatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "louer, faire l'éloge", "etym": "louange, laudatif", "ex": "Miles fortis a duce laudatur.", "ex_fr": "Le soldat courageux est loué par le général.", "monde": "monde23"},
+    {"latin": "a / ab (+ ablatif)", "cat": "Invariable", "genre": "préposition", "fr": "par (complément d'agent) ; de, depuis", "etym": "absent, abstenir", "ex": "Patria a Romanis amatur.", "ex_fr": "La patrie est aimée par les Romains.", "monde": "monde23"},
+    {"latin": "concordia, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la concorde, l'entente", "etym": "concorde, concordance", "ex": "Pax et concordia a civibus quaeruntur.", "ex_fr": "La paix et la concorde sont recherchées par les citoyens.", "monde": "monde23"},
+    {"latin": "quaerere (quaero, quaesivi, quaesitum)", "cat": "Verbe", "genre": "3e conjugaison", "fr": "chercher, demander", "etym": "question, quête, enquête", "ex": "Pax a civibus quaeritur.", "ex_fr": "La paix est recherchée par les citoyens.", "monde": "monde23"},
+
+    # Monde 24 · La proposition infinitive
+    {"latin": "scire (scio, scivi, scitum)", "cat": "Verbe", "genre": "4e conjugaison", "fr": "savoir", "etym": "science, conscience", "ex": "Scio Marcum fortem esse.", "ex_fr": "Je sais que Marcus est courageux.", "monde": "monde24"},
+    {"latin": "putare (puto, putavi, putatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "penser, croire", "etym": "réputation, supputer", "ex": "Puto amicum venire.", "ex_fr": "Je pense que l'ami arrive.", "monde": "monde24"},
+    {"latin": "nuntiare (nuntio, nuntiavi, nuntiatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "annoncer", "etym": "annoncer, dénoncer", "ex": "Nuntiant hostes venire.", "ex_fr": "Ils annoncent que les ennemis arrivent.", "monde": "monde24"},
+    {"latin": "fama, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la rumeur, la renommée", "etym": "fameux, infâme", "ex": "Fama est consulem Romam venire.", "ex_fr": "Le bruit court que le consul vient à Rome.", "monde": "monde24"},
+
+    # Monde 25 · Les poètes
+    {"latin": "arma, -orum", "cat": "Nom", "genre": "neutre pluriel, 2e décl.", "fr": "les armes", "etym": "arme, armée, armure", "ex": "Arma virumque cano.", "ex_fr": "Je chante les armes et le héros.", "monde": "monde25"},
+    {"latin": "vir, viri", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "l'homme, le héros", "etym": "viril, triumvir", "ex": "Vir fortis patriam defendit.", "ex_fr": "L'homme courageux défend sa patrie.", "monde": "monde25"},
+    {"latin": "canere (cano, cecini, cantum)", "cat": "Verbe", "genre": "3e conjugaison", "fr": "chanter, célébrer", "etym": "incantation, chant", "ex": "Poeta heroes canit.", "ex_fr": "Le poète chante les héros.", "monde": "monde25"},
+    {"latin": "felix, -icis", "cat": "Adjectif", "genre": "2e classe", "fr": "heureux", "etym": "félicité, féliciter", "ex": "Felix sis !", "ex_fr": "Sois heureux !", "monde": "monde25"},
+    {"latin": "-que", "cat": "Invariable", "genre": "conjonction (collée au mot)", "fr": "et", "etym": "SPQR : Senatus Populusque Romanus", "ex": "Senatus Populusque Romanus.", "ex_fr": "Le Sénat et le peuple romain.", "monde": "monde25"},
+
+    # Monde 26 · Le Grand Triomphe du collège
+    {"latin": "littera, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la lettre (au pluriel : les lettres, la culture)", "etym": "lettre, littérature", "ex": "Litterae mentem ornant.", "ex_fr": "Les lettres ornent l'esprit.", "monde": "monde26"},
+    {"latin": "mens, mentis", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "l'esprit, l'intelligence", "etym": "mental, mentionner, démence", "ex": "Mens sana in corpore sano.", "ex_fr": "Un esprit sain dans un corps sain.", "monde": "monde26"},
+    {"latin": "ornare (orno, ornavi, ornatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "orner, embellir", "etym": "orner, ornement", "ex": "Litterae et sapientia mentem hominis ornant.", "ex_fr": "Les lettres et la sagesse ornent l'esprit de l'homme.", "monde": "monde26"},
+    {"latin": "princeps, -ipis", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "le premier citoyen, le prince", "etym": "prince, principal", "ex": "Traianus optimus princeps erat.", "ex_fr": "Trajan était le meilleur des princes.", "monde": "monde26"},
+    {"latin": "optimus, -a, -um", "cat": "Adjectif", "genre": "superlatif de bonus", "fr": "le meilleur, excellent", "etym": "optimal, optimiste", "ex": "Optimus magister patiens est.", "ex_fr": "Le meilleur maître est patient.", "monde": "monde26"},
 ]

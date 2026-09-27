@@ -56,9 +56,9 @@ Complète pour dire : « Pompéi est une ville détruite par la cendre » (*Pomp
 Le jeune Pline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.
 
 Reconstitue cette phrase adaptée de sa célèbre lettre à l'historien Tacite :
-*« Mons Vesuvius nubes atra erigebat. »*
-*(Mons Vesuvius = le mont Vésuve, nubes atra = un nuage noir, erigebat = dressait / projetait)*""",
-            "latin": "Mons Vesuvius nubes atra erigebat.",
+*« Mons Vesuvius nubem atram erigebat. »*
+*(Mons Vesuvius = le mont Vésuve, nubem atram = un nuage noir [Acc.], erigebat = dressait / projetait)*""",
+            "latin": "Mons Vesuvius nubem atram erigebat.",
             "mots": ["Le mont Vésuve", "dressait", "un nuage noir.", "La cendre", "tombait", "sur la cité."],
             "solution": "Le mont Vésuve dressait un nuage noir.",
         },

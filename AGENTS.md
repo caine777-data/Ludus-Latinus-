@@ -230,11 +230,18 @@ capture d'écran jointe au compte rendu. « Ça compile » ne suffit pas.
 Le contenu se modifie **côté Python**, puis s'exporte vers le mobile :
 
 1. modifier `content/` ou `app/thesaurus*.py` ;
-2. lancer `python scripts/exporter_dataset_mobile.py` ;
-3. commiter la source **et** le JSON régénéré ensemble.
+2. lancer `python scripts/exporter_dataset_mobile.py` : il écrit
+   `assets/data/ludus_latinus_dataset.json` **et** la copie que lit l'appli
+   mobile, `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` ;
+3. commiter la source **et** les deux JSON régénérés ensemble.
 
-`app/thesaurus_complement.py` (88 mots) n'a **pas encore été relu** par
-Cédric. N'y ajoute rien sans que la tâche le demande.
+Dans `app/thesaurus_complement.py`, seule la section « Mondes 15 à 26 »
+(52 mots) a été validée par Cédric ; le reste (88 mots) n'a **pas encore été
+relu**. N'y ajoute rien sans que la tâche le demande. Un mot sans clé
+`monde` est rattaché au premier monde dont une leçon l'emploie sous sa forme
+de dictionnaire ; donne-lui un `monde` explicite si les leçons n'emploient
+qu'une forme fléchie (comme `homo`, qu'on ne lit que sous la forme
+*hominis*).
 
 ### Les images générées dans Gemini
 
@@ -294,6 +301,14 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Thesaurus enrichi pour la 3e** (validé par Cédric) — 52 mots pour les
+  mondes 15 à 26, tirés des leçons de chaque monde (219 entrées en tout ;
+  4 à 11 mots par monde au lieu de 0 à 5). Nouvelle catégorie « Pronom »
+  (*is, ea, id* ; *qui, quae, quod*), avec son filtre dans le Thesaurus
+  mobile et de bureau. `homo` rattaché au monde 26. Latin corrigé en m21-03 :
+  « Mons Vesuvius nubem atram erigebat ». L'export écrit désormais aussi la
+  copie mobile du dataset.
+
 - **Icône de l'Épigraphie** (vérifiée sur l'émulateur) — stèle et loupe
   Gemini (`images/icone_epigraphie.png`, `scripts/assets/icones.py`) sur la
   tuile de la Bibliotheca, à la place du logo du centurion, et dans
@@ -337,10 +352,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   affichage, il faisait passer une autre carte sous la carte retournée.
   Les filtres 5e / 4e / 3e suivent le monde du mot. Clés de progression :
   `th:<latin>`.
-  **Limite connue** : à partir du monde 15, le Thesaurus n'a que 0 à 5 mots
-  par monde (aucun pour le monde 22) ; Memoria y sera maigre tant qu'il
-  n'est pas enrichi (diagnostic demandé en T10, rédaction par l'architecte,
-  validation par Cédric).
+  Depuis l'enrichissement du 27/09, chaque monde de 15 à 26 a de 4 à 11 mots.
 
 - **Paramètres et choix du héros** (vérifiés sur l'émulateur ; formulaire
   couvert par `test/hero_form_test.dart`) — `lib/ui/features/settings/` : `HeroForm` (fille ou garçon
