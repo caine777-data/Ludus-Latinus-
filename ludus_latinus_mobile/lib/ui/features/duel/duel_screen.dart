@@ -681,7 +681,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       RomanElasticProgressBar(
                         value: (_playerHp / 100.0).clamp(0.0, 1.0),
                         color: _playerHp > 30 ? RomanColors.laurelGreen : const Color(0xFF8E1724),
-                        ghostColor: const Color(0xFFFFD700).withOpacity(0.5),
+                        ghostColor: const Color(0xFFFFD700).withValues(alpha: 0.5),
                         backgroundColor: const Color(0xFF142132),
                         height: 10,
                         borderRadius: BorderRadius.circular(5),
@@ -764,7 +764,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       RomanElasticProgressBar(
                         value: (_bossHp / (boss['maxHp'] as int)).clamp(0.0, 1.0),
                         color: const Color(0xFF8E1724),
-                        ghostColor: const Color(0xFFFF5252).withOpacity(0.5),
+                        ghostColor: const Color(0xFFFF5252).withValues(alpha: 0.5),
                         backgroundColor: const Color(0xFF3E151D),
                         height: 10,
                         borderRadius: BorderRadius.circular(5),
@@ -821,8 +821,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                                     boxShadow: [
                                       BoxShadow(
                                         color: _playerRiposteAnim
-                                            ? const Color(0xFFD32F2F).withOpacity(0.8)
-                                            : RomanColors.imperialGold.withOpacity(0.35),
+                                            ? const Color(0xFFD32F2F).withValues(alpha: 0.8)
+                                            : RomanColors.imperialGold.withValues(alpha: 0.35),
                                         blurRadius: 16,
                                         spreadRadius: 2,
                                       ),
@@ -928,7 +928,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: const Color(0x66000000),
-                              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+                              border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.5)),
                             ),
                             child: const Text('⚔️', style: TextStyle(fontSize: 22)),
                           ),
@@ -986,8 +986,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                                     boxShadow: [
                                       BoxShadow(
                                         color: _animatingHit
-                                            ? const Color(0xFFD32F2F).withOpacity(0.8)
-                                            : const Color(0xFF8E1724).withOpacity(0.4),
+                                            ? const Color(0xFFD32F2F).withValues(alpha: 0.8)
+                                            : const Color(0xFF8E1724).withValues(alpha: 0.4),
                                         blurRadius: 16,
                                         spreadRadius: 2,
                                       ),
@@ -1125,7 +1125,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
                       boxShadow: isSelected
                           ? [
                               BoxShadow(
-                                color: RomanColors.imperialPurple.withOpacity(0.3),
+                                color: RomanColors.imperialPurple.withValues(alpha: 0.3),
                                 blurRadius: 4,
                                 offset: const Offset(0, 2),
                               )
@@ -1175,7 +1175,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
             decoration: BoxDecoration(
               color: RomanColors.goldLight,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+              border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.5)),
             ),
             child: Text(
               _currentQ['q'] as String,

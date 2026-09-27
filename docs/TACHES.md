@@ -1332,7 +1332,7 @@ depuis T12 (54 sur 54) : un seul échec est une régression.**
 
 ## T15 — Remplacer `withOpacity` dans le Circus et le Duel
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : même travail que T13 et T14, sur les deux jeux qui en ont le plus.
 
@@ -1346,16 +1346,24 @@ Statut : À FAIRE
 `git checkout -- ludus_latinus_mobile/analysis_options.yaml`).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `grep -c withOpacity` donne 0 pour les deux fichiers.
-- [ ] 21 lignes changées au total, chacune ne différant que par ce remplacement.
-- [ ] `flutter test` : tous les tests passent. Recopie la ligne finale.
-- [ ] Un commit `refactor(mobile): withValues à la place de withOpacity (Circus, Duel)`.
+- [x] `grep -c withOpacity` donne 0 pour les deux fichiers.
+- [x] 21 lignes changées au total, chacune ne différant que par ce remplacement.
+- [x] `flutter test` : tous les tests passent. Recopie la ligne finale.
+- [x] Un commit `refactor(mobile): withValues à la place de withOpacity (Circus, Duel)`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart` (12 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart` (9 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep "withOpacity" ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart` : 0 résultat (`grep -c` = 0).
+  - `git diff --stat` : exactement 21 insertions(+) et 21 suppressions(-) réparties sur les 2 fichiers (12 dans `circus_screen.dart`, 9 dans `duel_screen.dart`), chaque ligne ne différant que par `.withValues(alpha: x)`.
+  - `flutter analyze lib/ui/features/circus/circus_screen.dart lib/ui/features/duel/duel_screen.dart` : 0 erreur, 0 avertissement lié à `withOpacity`.
+  - `flutter test` : 54 réussis, 0 échec. Ligne finale : `00:03 +54: All tests passed!`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré après analyse et tests.
+- Doutes, questions pour l'architecte : Aucun doute.
+- Reste à faire : Rien sur T15. Tâche terminée.
 
 ---
 

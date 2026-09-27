@@ -769,7 +769,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 4),
               decoration: BoxDecoration(
-                color: isSelected ? f.couleur.withOpacity(0.12) : Colors.transparent,
+                color: isSelected ? f.couleur.withValues(alpha: 0.12) : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: isSelected ? f.couleur : Colors.grey.shade300,
@@ -845,8 +845,8 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
                 color: _turboRemainingFrames > 0
-                    ? Colors.orange.withOpacity(0.2)
-                    : _selectedFaction.couleur.withOpacity(0.12),
+                    ? Colors.orange.withValues(alpha: 0.2)
+                    : _selectedFaction.couleur.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: _turboRemainingFrames > 0 ? Colors.orange : _selectedFaction.couleur,
@@ -912,7 +912,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                   child: Center(
                     child: Container(
                       width: 3,
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withValues(alpha: 0.6),
                     ),
                   ),
                 ),
@@ -946,7 +946,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                             errorBuilder: (_, __, ___) => const SizedBox(),
                           ),
                           Container(
-                            color: Colors.black.withOpacity(0.22),
+                            color: Colors.black.withValues(alpha: 0.22),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1033,7 +1033,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                   margin: const EdgeInsets.only(left: 4, bottom: 2),
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
                   decoration: BoxDecoration(
-                    color: faction.couleur.withOpacity(0.92),
+                    color: faction.couleur.withValues(alpha: 0.92),
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(
                       color: isPlayer ? RomanColors.imperialGold : Colors.white70,
@@ -1145,11 +1145,11 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                             child: Container(
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.cyanAccent.withOpacity(0.85), width: 2),
-                                color: Colors.cyanAccent.withOpacity(0.18),
+                                border: Border.all(color: Colors.cyanAccent.withValues(alpha: 0.85), width: 2),
+                                color: Colors.cyanAccent.withValues(alpha: 0.18),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.cyanAccent.withOpacity(0.4),
+                                    color: Colors.cyanAccent.withValues(alpha: 0.4),
                                     blurRadius: 10,
                                     spreadRadius: 2,
                                   ),
@@ -1336,7 +1336,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             decoration: BoxDecoration(
               color: RomanColors.goldLight,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: RomanColors.imperialGold.withOpacity(0.5)),
+              border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.5)),
             ),
             child: Text(
               _currentQuestion['q'] as String,
@@ -1537,7 +1537,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: RomanColors.imperialGold.withOpacity(0.4),
+                    color: RomanColors.imperialGold.withValues(alpha: 0.4),
                     blurRadius: 20,
                     spreadRadius: 4,
                   ),
@@ -1714,7 +1714,7 @@ class _CircusTrackPainter extends CustomPainter {
 
     // 4. Lignes de séparation de couloirs en pointillés blancs et or
     final dashPaint = Paint()
-      ..color = Colors.white.withOpacity(0.45)
+      ..color = Colors.white.withValues(alpha: 0.45)
       ..strokeWidth = 2.0
       ..style = PaintingStyle.stroke;
 
