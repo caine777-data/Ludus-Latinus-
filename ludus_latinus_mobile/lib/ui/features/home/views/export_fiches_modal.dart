@@ -334,8 +334,8 @@ class _ExportFichesModalState extends State<ExportFichesModal>
     AudioService().playTriumph();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Row(
+      const SnackBar(
+        content: Row(
           children: [
             Text('📋', style: TextStyle(fontSize: 20)),
             SizedBox(width: 10),
@@ -348,7 +348,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
           ],
         ),
         backgroundColor: RomanColors.imperialPurple,
-        duration: const Duration(seconds: 4),
+        duration: Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
       ),
     );

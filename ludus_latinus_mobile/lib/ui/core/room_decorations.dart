@@ -19,22 +19,22 @@ class RomanOculusPainter extends CustomPainter {
 
     // 1. Fond de voûte en pierre de travertin avec dégradé d'ombre
     final domePaint = Paint()
-      ..shader = RadialGradient(
-        center: const Alignment(0.0, -0.56),
+      ..shader = const RadialGradient(
+        center: Alignment(0.0, -0.56),
         radius: 1.1,
-        colors: const [
+        colors: [
           Color(0xFFE8DCCB),
           Color(0xFFC7B69E),
           Color(0xFF9E8B72),
           Color(0xFF5A4836),
         ],
-        stops: const [0.0, 0.35, 0.70, 1.0],
+        stops: [0.0, 0.35, 0.70, 1.0],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), domePaint);
 
     // 2. Caissons concentriques en perspective (Lacunaria)
-    final ringCount = 5;
+    const ringCount = 5;
     for (int r = 1; r <= ringCount; r++) {
       final ringRadius = 40.0 + (r * (maxRadius - 40.0) / ringCount) * 0.55;
       final strokePaint = Paint()
@@ -56,7 +56,7 @@ class RomanOculusPainter extends CustomPainter {
 
     // 3. Faisceaux volumétriques de lumière divine (God Rays / Lux Divina)
     final beamOpacity = 0.18 + (math.sin(animationValue * 2 * math.pi) * 0.07);
-    final rayCount = 7;
+    const rayCount = 7;
     for (int i = 0; i < rayCount; i++) {
       final rayAngle = (i - (rayCount - 1) / 2) * 0.18;
       final raySpread = 0.14 + (i % 2 == 0 ? 0.05 : 0.0);
@@ -308,22 +308,22 @@ class CircusVelariumHeader extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('🏛️', style: TextStyle(fontSize: 14)),
-              const SizedBox(width: 8),
-              Text(
+              Text('🏛️', style: TextStyle(fontSize: 14)),
+              SizedBox(width: 8),
+              const Text(
                 'VÉLARIUM DU CIRCUS MAXIMUS',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                   color: RomanColors.imperialGold,
                 ),
               ),
-              const SizedBox(width: 8),
-              const Text('🏛️', style: TextStyle(fontSize: 14)),
+              SizedBox(width: 8),
+              Text('🏛️', style: TextStyle(fontSize: 14)),
             ],
           ),
           const SizedBox(height: 8),

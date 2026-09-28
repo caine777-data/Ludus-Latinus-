@@ -203,9 +203,9 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
+                  children: [
                     _LessonLegendPill(icon: '📜', label: 'Quiz Grammaire'),
                     _LessonLegendPill(icon: '🧩', label: 'Syntaxe'),
                     _LessonLegendPill(icon: '✏️', label: 'Déclinaisons'),

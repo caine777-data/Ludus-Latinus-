@@ -276,9 +276,9 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Taberna & Vestiaire Impérial',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: RomanFonts.imperial,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,

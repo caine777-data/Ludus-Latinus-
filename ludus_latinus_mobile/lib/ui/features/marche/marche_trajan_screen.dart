@@ -921,10 +921,10 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      Expanded(
+                      const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'GAIUS MERCATOR',
                               style: TextStyle(

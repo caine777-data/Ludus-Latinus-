@@ -169,13 +169,13 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                       children: [
                         const Text('🏛️', style: TextStyle(fontSize: 22)),
                         const SizedBox(width: 8),
-                        Expanded(
+                        const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'TABERNA ROMANA',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontFamily: RomanFonts.imperial,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -183,7 +183,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                                   color: RomanColors.imperialPurple,
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 'Boutique & Penderie Impériale • Équipe ton Héros',
                                 style: TextStyle(fontSize: 11, color: Colors.black54),
                               ),

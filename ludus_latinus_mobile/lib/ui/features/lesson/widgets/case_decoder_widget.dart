@@ -144,10 +144,10 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 1. En-tête
-            Row(
+            const Row(
               children: [
-                const Text('🔬 ', style: TextStyle(fontSize: 18)),
-                const Expanded(
+                Text('🔬 ', style: TextStyle(fontSize: 18)),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

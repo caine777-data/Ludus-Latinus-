@@ -646,10 +646,10 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     return Container(
       width: 8,
       height: 8,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: RomanColors.imperialGold,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
             color: Color(0x44000000),
             blurRadius: 2,
@@ -800,8 +800,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [RomanColors.goldLight, const Color(0xFFFFF9E8)],
+                gradient: const LinearGradient(
+                  colors: [RomanColors.goldLight, Color(0xFFFFF9E8)],
                 ),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: RomanColors.imperialGold, width: 1.2),

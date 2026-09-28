@@ -63,10 +63,10 @@ class LudiView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'LUDI & ARÈNES DE L\'EMPIRE',
                             style: TextStyle(

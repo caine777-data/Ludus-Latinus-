@@ -1046,10 +1046,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text('🦅', style: TextStyle(fontSize: 22)),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'CURSUS HONORUM',
                             style: TextStyle(

@@ -842,9 +842,9 @@ $texteChiffre
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
+                              children: [
                                 Text('🏛️', style: TextStyle(fontSize: 14)),
                                 SizedBox(width: 6),
                                 Text(
@@ -1088,7 +1088,7 @@ class RoueCesarPainter extends CustomPainter {
 
     // Dessin de l'alphabet extérieur fixe
     const totalLetters = 26;
-    final angleStep = (2 * math.pi) / totalLetters;
+    const angleStep = (2 * math.pi) / totalLetters;
 
     for (int i = 0; i < totalLetters; i++) {
       final angle = i * angleStep - math.pi / 2;

@@ -23,9 +23,14 @@ class _WindowsAudioEngine {
   static final Map<String, Pointer<Utf16>> _cachedPointers = {};
   static bool _initialized = false;
 
+  // Noms de l'API Windows (winmm.dll), à garder tels quels
+  // ignore: constant_identifier_names
   static const int SND_ASYNC = 0x0001;
+  // ignore: constant_identifier_names
   static const int SND_NODEFAULT = 0x0002;
+  // ignore: constant_identifier_names
   static const int SND_PURGE = 0x0040;
+  // ignore: constant_identifier_names
   static const int SND_FILENAME = 0x00020000;
 
   static void init() {

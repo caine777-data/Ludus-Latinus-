@@ -66,10 +66,10 @@ class BibliothecaView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
                             'BIBLIOTHECA ROMANA',
                             style: TextStyle(
@@ -221,10 +221,10 @@ class BibliothecaView extends StatelessWidget {
                         child: const Text('🖨️', style: TextStyle(fontSize: 24)),
                       ),
                       const SizedBox(width: 14),
-                      Expanded(
+                      const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               'TABULAE MEMORIALES (FICHES A4)',
                               style: TextStyle(

@@ -473,7 +473,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     style: ElevatedButton.styleFrom(
                       backgroundColor: !_modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
                       foregroundColor: !_modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
-                      side: BorderSide(color: RomanColors.imperialPurple),
+                      side: const BorderSide(color: RomanColors.imperialPurple),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       elevation: !_modeDuelGaius ? 3 : 0,
@@ -493,7 +493,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
                       foregroundColor: _modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
-                      side: BorderSide(color: RomanColors.imperialPurple),
+                      side: const BorderSide(color: RomanColors.imperialPurple),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       elevation: _modeDuelGaius ? 3 : 0,
@@ -666,9 +666,9 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                         }),
                       ),
                       const Divider(height: 24, thickness: 1.2),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text('🛡️ TES DÉS (TIRO)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
                           Text('TON CORNET', style: TextStyle(fontSize: 9, color: RomanColors.laurelGreen, fontWeight: FontWeight.bold)),
                         ],

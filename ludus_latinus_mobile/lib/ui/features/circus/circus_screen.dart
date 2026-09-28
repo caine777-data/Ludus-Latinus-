@@ -81,8 +81,8 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   double _playerProgress = 0.0;
   double _rivalProgress = 0.0;
   // Calibrage pour enfants 11-15 ans : tour de ~25s, course totale de ~80s
-  double _playerSpeed = 0.115;
-  double _rivalSpeed = 0.102;
+  final double _playerSpeed = 0.115;
+  final double _rivalSpeed = 0.102;
 
   int _currentLap = 1;
   static const int _totalLaps = 3;
@@ -801,9 +801,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: RomanColors.marbleBorder)),
+        border: const Border(bottom: const BorderSide(color: RomanColors.marbleBorder)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -948,9 +948,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                           Container(
                             color: Colors.black.withValues(alpha: 0.22),
                           ),
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               Text('🏛️', style: TextStyle(fontSize: 13)),
                               Text(
                                 'SPINA IMPERIALIS',
@@ -1088,9 +1088,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                             BoxShadow(color: Color(0x99FF6D00), blurRadius: 8, spreadRadius: 1),
                           ],
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
+                          children: [
                             Text('⚡', style: TextStyle(fontSize: 10)),
                             Text('🔥', style: TextStyle(fontSize: 13)),
                           ],
@@ -1577,8 +1577,8 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [RomanColors.goldLight, const Color(0xFFFFF8E7)],
+              gradient: const LinearGradient(
+                colors: [RomanColors.goldLight, Color(0xFFFFF8E7)],
               ),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: RomanColors.imperialGold, width: 1.5),
@@ -1618,7 +1618,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 onPressed: () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: RomanColors.imperialPurple,
-                  side: BorderSide(color: RomanColors.imperialPurple),
+                  side: const BorderSide(color: RomanColors.imperialPurple),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 ),

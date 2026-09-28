@@ -144,7 +144,7 @@ class _ParchmentCornersPainter extends CustomPainter {
     final w = size.width;
     final h = size.height;
     final s = cornerSize;
-    final inset = 4.0;
+    const inset = 4.0;
 
     void drawCorner(double startX, double startY, double dx, double dy) {
       final p = Path();
