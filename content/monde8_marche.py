@@ -32,16 +32,17 @@ Les Romains mangeaient peu le matin : un morceau de pain (*panis*) frotté d'ail
             "type": "puzzle",
             "title": "Faire ses courses au marché",
             "content": """## Commander comme un Romain
-Au comptoir du marchand, utilise les mots appris :
-- **Puer** : le jeune garçon (ou l'enfant).
-- **Panem** : du pain (à l'accusatif, car c'est ce qu'il achète !).
-- **Emit** : achète (du verbe *emere*).
+Au comptoir, l'enfant achète : *« Puer panem emit. »* = « L'enfant achète du pain. »
 
-Reconstitue la phrase pour dire que l'enfant achète du pain.""",
-            "latin": "Puer panem emit.",
-            "mots": ["L'enfant", "achète", "du pain.", "vend", "la pomme.", "le soldat"],
-            "solution": "L'enfant achète du pain.",
-            "hints": ["Puer = L'enfant", "panem = du pain", "emit = achète"],
+De l'autre côté du comptoir, que fait le marchand ?
+- **Mercator, -oris** : le marchand.
+- **Vendere** : vendre (*emere* : acheter).
+
+Traduis la phrase du marchand :""",
+            "latin": "Mercator panem vendit.",
+            "mots": ["Le marchand", "vend", "du pain.", "L'enfant", "achète", "de l'eau."],
+            "solution": "Le marchand vend du pain.",
+            "hints": ["mercator = le marchand (sujet)", "vendere = vendre", "panis, -is = le pain (ici COD)"],
         },
         {
             "id": "m8-03",

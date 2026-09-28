@@ -37,12 +37,15 @@ Le roi Midas rendit service au dieu Bacchus. Pour le remercier, le dieu lui acco
 
 Au début, il était fou de joie. Mais catastrophe : dès qu'il touchait du pain ou de l'eau, ils se transformaient en blocs d'or dur ! Il risquait de mourir de faim et supplia le dieu d'annuler ce sortilège.
 
-Reconstitue cette phrase en français :
-*« Midas aurum amat. »*
-*(Midas = Midas, aurum = l'or, amat = aime)*""",
-            "latin": "Midas aurum amat.",
-            "mots": ["Midas", "aime", "l'or.", "Le roi", "déteste", "le pain."],
-            "solution": "Midas aime l'or.",
+Exemple : *« Midas aurum amat. »* = « Midas aime l'or. »
+
+Mais après le sortilège, affamé, il ne rêve plus que d'une chose…
+*(panis, -is = le pain ; aqua, -ae = l'eau)*
+
+Traduis sa nouvelle envie :""",
+            "latin": "Midas panem amat.",
+            "mots": ["Midas", "aime", "le pain.", "l'or.", "l'eau.", "déteste"],
+            "solution": "Midas aime le pain.",
         },
         {
             "id": "m3-03",
@@ -55,10 +58,10 @@ Prisonniers du labyrinthe de Crète, l'ingénieux Dédale et son jeune fils **Ic
 Avant de s'envoler, le père prévient son fils :
 *« Ne vole ni trop bas près de la mer (l'eau mouillerait les plumes), ni trop haut près du soleil (la chaleur ferait fondre la cire) ! »*
 
-Mais enivré par la magie du vol, Icare monte de plus en plus haut vers le soleil (*sol* en latin)... La cire fond et il tombe dans la mer.
+Mais enivré par la magie du vol, Icare monte de plus en plus haut vers le soleil... La cire fond et il tombe dans la mer.
 
-Complète le mot latin pour 'le soleil' (**sol**) :""",
-            "consigne": "Complète le mot 'soleil' (sol) en latin :",
+🔎 **Enquête** : le mot latin pour « soleil » se cache dans « **sol**aire », « para**sol** » et « **sol**stice ».""",
+            "consigne": "Retrouve le mot latin « soleil » grâce aux mots français :",
             "avant": "Icarus ad ",
             "apres": "em volat (Icare vole vers le soleil).",
             "solution": "sol",

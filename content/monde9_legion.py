@@ -32,15 +32,14 @@ Un légionnaire portait sur son dos un sac de plus de 30 kg contenant son équip
             "type": "puzzle",
             "title": "La Légion au Combat",
             "content": """## Traduis l'action des troupes romaines
-- **Legio** : la légion (l'armée de 5000 soldats).
-- **Fortiter** : courageusement, vaillamment.
-- **Pugnat** : combat, livre bataille (du verbe *pugnare*).
+- **Legio** : la légion (l'armée de 5000 soldats) ; au pluriel : **legiones**.
+- Exemple : *« Legio fortiter pugnat. »* = « La légion combat courageusement. »
 
-Reconstitue la phrase latine en français :""",
-            "latin": "Legio fortiter pugnat.",
-            "mots": ["La légion", "combat", "courageusement.", "fuit", "faiblement.", "le chef"],
-            "solution": "La légion combat courageusement.",
-            "hints": ["Legio = La légion", "fortiter = courageusement", "pugnat = combat"],
+César envoie maintenant plusieurs légions. Reconstitue la phrase en français :""",
+            "latin": "Legiones fortiter pugnant.",
+            "mots": ["Les légions", "combattent", "courageusement.", "La légion", "combat", "fuient"],
+            "solution": "Les légions combattent courageusement.",
+            "hints": ["legiones = pluriel de legio", "-nt = ils, elles (plusieurs)", "fortiter = courageusement"],
         },
         {
             "id": "m9-03",

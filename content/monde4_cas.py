@@ -44,14 +44,13 @@ Exemples avec des noms féminins en **-a** :
 - **ROSA** : la rose (Sujet)
 - **SILVA** : la forêt (Sujet)
 
-Regarde cette phrase :
-*« Puella cantat. »*
-*(Puella = la jeune fille, cantat = chante)*
+Exemple : *« Puella cantat. »* = « La jeune fille chante. » (*Puella* est le sujet.)
 
+À toi ! Nouveaux mots : *ambulat* = se promène ; *in silva* = dans la forêt.
 Reconstitue la traduction en français :""",
-            "latin": "Puella cantat.",
-            "mots": ["La jeune fille", "chante.", "Le garçon", "dort", "fleurit."],
-            "solution": "La jeune fille chante.",
+            "latin": "Puella in silva ambulat.",
+            "mots": ["La jeune fille", "se promène", "dans la forêt.", "Le garçon", "chante", "la rose"],
+            "solution": "La jeune fille se promène dans la forêt.",
         },
         {
             "id": "m4-03",
@@ -69,12 +68,12 @@ Exemple magique :
 - *rosam* = la rose (COD, parce qu'il y a le **-m** !)
 - *videt* = voit (Verbe)
 
-Complète la terminaison pour mettre 'la fille' (puella) au COD (accusatif) :""",
-            "consigne": "Mets la terminaison du COD (-am) :",
-            "avant": "Puer puell",
-            "apres": " amat (Le garçon aime la jeune fille).",
+Complète la terminaison pour que « la forêt » (*silva*) devienne le COD :""",
+            "consigne": "Mets silva au COD :",
+            "avant": "Puer silv",
+            "apres": " videt (Le garçon voit la forêt).",
             "solution": "am",
-            "latin_complet": "Puer puellam amat.",
+            "latin_complet": "Puer silvam videt.",
         },
         {
             "id": "m4-04",

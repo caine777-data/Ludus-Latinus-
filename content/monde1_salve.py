@@ -63,8 +63,8 @@ Un garde de la légion romaine s'approche et te demande ton identité :
 En latin, pour dire « je suis », on utilise le petit mot magique **SUM** !
 Exemple : *Discipulus sum* = « Je suis un élève ».
 
-Complète la phrase pour dire : « Je suis romain » (*Romanus sum*).""",
-            "consigne": "Complète le mot pour dire 'Je suis' (sum) :",
+Complète la phrase pour dire : « Je suis romain ».""",
+            "consigne": "Écris le verbe qui manque pour dire « Je suis romain » :",
             "avant": "Romanus ",
             "apres": ".",
             "solution": "sum",

@@ -38,12 +38,12 @@ Le plus grand stade de Rome n'était pas le Colisée, mais le **Circus Maximus**
 
 Les cochers (*auriges*) pilotaient des chars tirés par 4 chevaux au galop : le **QUADRIGE** (*quadriga*). Il fallait faire 7 tours de piste à toute vitesse en frôlant les bornes de virage (*metae*) où les accidents spectaculaires étaient fréquents !
 
-Reconstitue cette clameur de la foule :
-*« Equi celeriter currunt. »*
-*(Equi = les chevaux, celeriter = rapidement, currunt = courent)*""",
-            "latin": "Equi celeriter currunt.",
-            "mots": ["Les chevaux", "courent", "rapidement.", "Les chars", "s'arrêtent", "au virage."],
-            "solution": "Les chevaux courent rapidement.",
+La foule crie : *« Equi celeriter currunt ! »* = « Les chevaux courent rapidement ! »
+
+Mais un cheval s'échappe seul de la piste… Traduis (un seul cheval : *equus*) :""",
+            "latin": "Equus celeriter currit.",
+            "mots": ["Le cheval", "court", "rapidement.", "Les chevaux", "courent", "s'arrête"],
+            "solution": "Le cheval court rapidement.",
         },
         {
             "id": "m6-03",
@@ -53,18 +53,19 @@ Reconstitue cette clameur de la foule :
 
 Avant d'entamer les combats, les gladiateurs défilaient en toge chamarrée devant la tribune de l'empereur, levaient le bras droit et clamaient la devise immortelle :
 
-*« AVE CAESAR, MORITURI TE SALUTANT ! »*
+*« AVE CAESAR, MORITURI TE SALUT… ! »*
 *(Salut César, ceux qui vont mourir te saluent !)*
 
+Le temps a effacé la fin de la devise sur la pierre !
 - **AVE** = Salut / Sois le bienvenu
-- **SALUTANT** = ils saluent (verbe se terminant par **-nt**)
+- **SALUTAT** = il salue… mais ici, ce sont **tous** les gladiateurs qui saluent.
 
-Complète la phrase pour dire « Salut César » :""",
-            "consigne": "Complète le mot de salutation (Ave) :",
-            "avant": "",
-            "apres": " Caesar !",
-            "solution": "Ave",
-            "latin_complet": "Ave Caesar !",
+Rappelle-toi la terminaison des verbes quand ils sont plusieurs (monde 5) :""",
+            "consigne": "Complète le verbe « ils saluent » :",
+            "avant": "Morituri te salut",
+            "apres": " !",
+            "solution": "ant",
+            "latin_complet": "Ave Caesar, morituri te salutant !",
         },
         {
             "id": "m6-04",

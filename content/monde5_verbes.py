@@ -26,10 +26,11 @@ Le verbe **ÊTRE** en latin s'appelle *ESSE*. Voici ses formes au présent :
 💡 **Astuce magique** :
 En latin, pas besoin d'écrire 'je', 'tu', 'il' devant le verbe : la terminaison du verbe suffit ! *Sum* veut dire directement « je suis » !
 
-Reconstitue la phrase : *« Romanus sum. »*""",
-            "latin": "Romanus sum.",
-            "mots": ["Je suis", "romain.", "Tu es", "un soldat", "grec."],
-            "solution": "Je suis romain.",
+À toi ! *Romani* = les Romains (pluriel de *Romanus*).
+Reconstitue la traduction :""",
+            "latin": "Romani sumus.",
+            "mots": ["Nous sommes", "romains.", "Je suis", "Ils sont", "romain."],
+            "solution": "Nous sommes romains.",
         },
         {
             "id": "m5-02",
@@ -47,13 +48,12 @@ Observe les terminaisons de chaque personne :
 - *Am-**ATIS*** = vous aimez
 - *Am-**ANT*** = ils / elles aiment (toujours un **-nt** !)
 
-Complète le verbe à la 3e personne du singulier (*il aime*) pour la phrase :
-*« Marcus Romam amat »* (Marcus aime Rome).""",
-            "consigne": "Complète la terminaison 'il aime' (-at) :",
-            "avant": "Marcus Romam am",
+Les autres verbes en **-ARE** suivent le même modèle. Avec *cantare* (chanter), complète pour dire : « Les enfants chantent dans le jardin ».""",
+            "consigne": "Complète la terminaison de « ils chantent » :",
+            "avant": "Pueri in horto cant",
             "apres": ".",
-            "solution": "at",
-            "latin_complet": "Marcus Romam amat.",
+            "solution": "ant",
+            "latin_complet": "Pueri in horto cantant.",
         },
         {
             "id": "m5-03",
@@ -67,12 +67,12 @@ Voici les verbes préférés de Jules César et des héros de Rome :
 - **CURRIT** = il court *(a donné : courir, coursier)*
 - **VIDET** = il voit *(a donné : vidéo, visible)*
 
-Reconstitue cette phrase de victoire :
-*« Miles fortiter pugnat. »*
-*(Miles = le soldat, fortiter = courageusement, pugnat = combat)*""",
-            "latin": "Miles fortiter pugnat.",
-            "mots": ["Le soldat", "combat", "courageusement.", "Le général", "fuit", "la forêt."],
-            "solution": "Le soldat combat courageusement.",
+Exemple : *« Miles fortiter pugnat. »* = « Le soldat combat courageusement. »
+
+À toi ! Attention à la terminaison du verbe : **-t** pour un seul, **-nt** pour plusieurs.""",
+            "latin": "Romani fortiter pugnant.",
+            "mots": ["Les Romains", "combattent", "courageusement.", "Le Romain", "combat", "fuient"],
+            "solution": "Les Romains combattent courageusement.",
         },
         {
             "id": "m5-04",

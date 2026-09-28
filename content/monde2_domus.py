@@ -45,12 +45,13 @@ Les Romains adoraient leurs animaux de compagnie :
 - **EQUUS** : le cheval *(la monture noble)*
 - **AVIS** : l'oiseau
 
-Reconstitue cette phrase de la vie quotidienne :
-*« Canis in horto est. »*
-*(Canis = le chien, in = dans, horto = le jardin, est = est)*""",
-            "latin": "Canis in horto est.",
-            "mots": ["Le chien", "est", "dans le jardin.", "Le cheval", "court", "la maison."],
-            "solution": "Le chien est dans le jardin.",
+Exemple : *« Canis in horto est. »* = « Le chien est dans le jardin. »
+*(in horto = dans le jardin)*
+
+À toi : traduis une autre phrase en t'aidant de la liste des animaux.""",
+            "latin": "Felis in horto est.",
+            "mots": ["Le chat", "est", "dans le jardin.", "Le chien", "Le cheval", "court"],
+            "solution": "Le chat est dans le jardin.",
         },
         {
             "id": "m2-03",
@@ -62,16 +63,16 @@ Reconstitue cette phrase de la vie quotidienne :
 
 Ils n'ont ni trousse ni cahier en papier ! Ils écrivent avec un stylet pointu en fer ou en os (*stilus*) sur une **tablette de bois recouverte de cire d'abeille noire**. S'ils se trompent, ils utilisent le bout plat du stylet pour lisser la cire et recommencer !
 
-📌 **Le verbe écrire** :
-- *Scribo* = j'écris
-- *Scribit* = il/elle écrit (se termine par un **-t**)
+📌 **Il ou elle fait l'action : le verbe finit par -T**
+- *Scribo* = j'écris ➔ *Scribit* = il/elle écrit
+- *Lego* = je lis ➔ à toi de trouver « il/elle lit » !
 
-Complète la phrase pour dire : « L'élève écrit sur la tablette » (*Discipulus scribit*).""",
-            "consigne": "Complète le verbe 'écrit' (scribit) :",
-            "avant": "Discipulus scri",
-            "apres": " in tabula.",
-            "solution": "bit",
-            "latin_complet": "Discipulus scribit in tabula.",
+Complète la phrase pour dire : « L'élève lit sur la tablette ».""",
+            "consigne": "Complète le verbe « lit » (de lego, je lis) :",
+            "avant": "Discipulus in tabula leg",
+            "apres": ".",
+            "solution": "it",
+            "latin_complet": "Discipulus in tabula legit.",
         },
         {
             "id": "m2-04",

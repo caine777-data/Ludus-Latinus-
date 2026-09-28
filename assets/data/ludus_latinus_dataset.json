@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-09-27 21:10:38",
+    "date_export": "2026-09-28 15:53:45",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -106,8 +106,8 @@
           "id": "m1-03",
           "type": "trou",
           "title": "Se présenter : Comment t'appelles-tu ?",
-          "content": "## Quis es ? (Qui es-tu ?)\n\nUn garde de la légion romaine s'approche et te demande ton identité :\n- *« Quis es ? »* = « Qui es-tu ? »\n- *« Nomen mihi est Marcus. »* = « Mon nom est Marcus » (littéralement : *Le nom pour moi est Marcus*).\n\n📌 **La règle d'or** :\nEn latin, pour dire « je suis », on utilise le petit mot magique **SUM** !\nExemple : *Discipulus sum* = « Je suis un élève ».\n\nComplète la phrase pour dire : « Je suis romain » (*Romanus sum*).",
-          "consigne": "Complète le mot pour dire 'Je suis' (sum) :",
+          "content": "## Quis es ? (Qui es-tu ?)\n\nUn garde de la légion romaine s'approche et te demande ton identité :\n- *« Quis es ? »* = « Qui es-tu ? »\n- *« Nomen mihi est Marcus. »* = « Mon nom est Marcus » (littéralement : *Le nom pour moi est Marcus*).\n\n📌 **La règle d'or** :\nEn latin, pour dire « je suis », on utilise le petit mot magique **SUM** !\nExemple : *Discipulus sum* = « Je suis un élève ».\n\nComplète la phrase pour dire : « Je suis romain ».",
+          "consigne": "Écris le verbe qui manque pour dire « Je suis romain » :",
           "avant": "Romanus ",
           "apres": ".",
           "solution": "sum",
@@ -215,28 +215,28 @@
           "id": "m2-02",
           "type": "puzzle",
           "title": "Les Animaux de compagnie",
-          "content": "## Les compagnons à 4 pattes des Romains\n\nLes Romains adoraient leurs animaux de compagnie :\n- **CANIS** : le chien *(qui monte la garde : Cave canem !)*\n- **FELIS** : le chat\n- **EQUUS** : le cheval *(la monture noble)*\n- **AVIS** : l'oiseau\n\nReconstitue cette phrase de la vie quotidienne :\n*« Canis in horto est. »*\n*(Canis = le chien, in = dans, horto = le jardin, est = est)*",
-          "latin": "Canis in horto est.",
+          "content": "## Les compagnons à 4 pattes des Romains\n\nLes Romains adoraient leurs animaux de compagnie :\n- **CANIS** : le chien *(qui monte la garde : Cave canem !)*\n- **FELIS** : le chat\n- **EQUUS** : le cheval *(la monture noble)*\n- **AVIS** : l'oiseau\n\nExemple : *« Canis in horto est. »* = « Le chien est dans le jardin. »\n*(in horto = dans le jardin)*\n\nÀ toi : traduis une autre phrase en t'aidant de la liste des animaux.",
+          "latin": "Felis in horto est.",
           "mots": [
-            "Le chien",
+            "Le chat",
             "est",
             "dans le jardin.",
+            "Le chien",
             "Le cheval",
-            "court",
-            "la maison."
+            "court"
           ],
-          "solution": "Le chien est dans le jardin."
+          "solution": "Le chat est dans le jardin."
         },
         {
           "id": "m2-03",
           "type": "trou",
           "title": "L'École Romaine (Schola)",
-          "content": "## Une journée d'école à Rome\n\nÀ 7 ans, les enfants vont à l'école (*schola*) avec leur précepteur.\n\nIls n'ont ni trousse ni cahier en papier ! Ils écrivent avec un stylet pointu en fer ou en os (*stilus*) sur une **tablette de bois recouverte de cire d'abeille noire**. S'ils se trompent, ils utilisent le bout plat du stylet pour lisser la cire et recommencer !\n\n📌 **Le verbe écrire** :\n- *Scribo* = j'écris\n- *Scribit* = il/elle écrit (se termine par un **-t**)\n\nComplète la phrase pour dire : « L'élève écrit sur la tablette » (*Discipulus scribit*).",
-          "consigne": "Complète le verbe 'écrit' (scribit) :",
-          "avant": "Discipulus scri",
-          "apres": " in tabula.",
-          "solution": "bit",
-          "latin_complet": "Discipulus scribit in tabula."
+          "content": "## Une journée d'école à Rome\n\nÀ 7 ans, les enfants vont à l'école (*schola*) avec leur précepteur.\n\nIls n'ont ni trousse ni cahier en papier ! Ils écrivent avec un stylet pointu en fer ou en os (*stilus*) sur une **tablette de bois recouverte de cire d'abeille noire**. S'ils se trompent, ils utilisent le bout plat du stylet pour lisser la cire et recommencer !\n\n📌 **Il ou elle fait l'action : le verbe finit par -T**\n- *Scribo* = j'écris ➔ *Scribit* = il/elle écrit\n- *Lego* = je lis ➔ à toi de trouver « il/elle lit » !\n\nComplète la phrase pour dire : « L'élève lit sur la tablette ».",
+          "consigne": "Complète le verbe « lit » (de lego, je lis) :",
+          "avant": "Discipulus in tabula leg",
+          "apres": ".",
+          "solution": "it",
+          "latin_complet": "Discipulus in tabula legit."
         },
         {
           "id": "m2-04",
@@ -324,24 +324,24 @@
           "id": "m3-02",
           "type": "puzzle",
           "title": "Le Roi Midas et le toucher d'or",
-          "content": "## Le vœu dangereux du roi Midas\n\nLe roi Midas rendit service au dieu Bacchus. Pour le remercier, le dieu lui accorda un souhait. Midas, très avide, demanda :\n*« Que tout ce que je touche se transforme en or pur ! »*\n\nAu début, il était fou de joie. Mais catastrophe : dès qu'il touchait du pain ou de l'eau, ils se transformaient en blocs d'or dur ! Il risquait de mourir de faim et supplia le dieu d'annuler ce sortilège.\n\nReconstitue cette phrase en français :\n*« Midas aurum amat. »*\n*(Midas = Midas, aurum = l'or, amat = aime)*",
-          "latin": "Midas aurum amat.",
+          "content": "## Le vœu dangereux du roi Midas\n\nLe roi Midas rendit service au dieu Bacchus. Pour le remercier, le dieu lui accorda un souhait. Midas, très avide, demanda :\n*« Que tout ce que je touche se transforme en or pur ! »*\n\nAu début, il était fou de joie. Mais catastrophe : dès qu'il touchait du pain ou de l'eau, ils se transformaient en blocs d'or dur ! Il risquait de mourir de faim et supplia le dieu d'annuler ce sortilège.\n\nExemple : *« Midas aurum amat. »* = « Midas aime l'or. »\n\nMais après le sortilège, affamé, il ne rêve plus que d'une chose…\n*(panis, -is = le pain ; aqua, -ae = l'eau)*\n\nTraduis sa nouvelle envie :",
+          "latin": "Midas panem amat.",
           "mots": [
             "Midas",
             "aime",
+            "le pain.",
             "l'or.",
-            "Le roi",
-            "déteste",
-            "le pain."
+            "l'eau.",
+            "déteste"
           ],
-          "solution": "Midas aime l'or."
+          "solution": "Midas aime le pain."
         },
         {
           "id": "m3-03",
           "type": "trou",
           "title": "Le Vol d'Icare (Les ailes de cire)",
-          "content": "## Ne vole pas trop près du soleil !\n\nPrisonniers du labyrinthe de Crète, l'ingénieux Dédale et son jeune fils **Icare** fabriquent des ailes géantes avec des plumes d'oiseaux collées avec de la cire d'abeille.\n\nAvant de s'envoler, le père prévient son fils :\n*« Ne vole ni trop bas près de la mer (l'eau mouillerait les plumes), ni trop haut près du soleil (la chaleur ferait fondre la cire) ! »*\n\nMais enivré par la magie du vol, Icare monte de plus en plus haut vers le soleil (*sol* en latin)... La cire fond et il tombe dans la mer.\n\nComplète le mot latin pour 'le soleil' (**sol**) :",
-          "consigne": "Complète le mot 'soleil' (sol) en latin :",
+          "content": "## Ne vole pas trop près du soleil !\n\nPrisonniers du labyrinthe de Crète, l'ingénieux Dédale et son jeune fils **Icare** fabriquent des ailes géantes avec des plumes d'oiseaux collées avec de la cire d'abeille.\n\nAvant de s'envoler, le père prévient son fils :\n*« Ne vole ni trop bas près de la mer (l'eau mouillerait les plumes), ni trop haut près du soleil (la chaleur ferait fondre la cire) ! »*\n\nMais enivré par la magie du vol, Icare monte de plus en plus haut vers le soleil... La cire fond et il tombe dans la mer.\n\n🔎 **Enquête** : le mot latin pour « soleil » se cache dans « **sol**aire », « para**sol** » et « **sol**stice ».",
+          "consigne": "Retrouve le mot latin « soleil » grâce aux mots français :",
           "avant": "Icarus ad ",
           "apres": "em volat (Icare vole vers le soleil).",
           "solution": "sol",
@@ -433,27 +433,28 @@
           "id": "m4-02",
           "type": "puzzle",
           "title": "Le Sujet : Le Nominatif (Qui fait l'action ?)",
-          "content": "## Le Maître de la phrase : Le Nominatif\n\nLe **NOMINATIF** est le cas du **Sujet**. C'est le mot qui réalise l'action ou qui 'est' quelque chose.\n\nExemples avec des noms féminins en **-a** :\n- **PUELLA** : la jeune fille (Sujet)\n- **ROSA** : la rose (Sujet)\n- **SILVA** : la forêt (Sujet)\n\nRegarde cette phrase :\n*« Puella cantat. »*\n*(Puella = la jeune fille, cantat = chante)*\n\nReconstitue la traduction en français :",
-          "latin": "Puella cantat.",
+          "content": "## Le Maître de la phrase : Le Nominatif\n\nLe **NOMINATIF** est le cas du **Sujet**. C'est le mot qui réalise l'action ou qui 'est' quelque chose.\n\nExemples avec des noms féminins en **-a** :\n- **PUELLA** : la jeune fille (Sujet)\n- **ROSA** : la rose (Sujet)\n- **SILVA** : la forêt (Sujet)\n\nExemple : *« Puella cantat. »* = « La jeune fille chante. » (*Puella* est le sujet.)\n\nÀ toi ! Nouveaux mots : *ambulat* = se promène ; *in silva* = dans la forêt.\nReconstitue la traduction en français :",
+          "latin": "Puella in silva ambulat.",
           "mots": [
             "La jeune fille",
-            "chante.",
+            "se promène",
+            "dans la forêt.",
             "Le garçon",
-            "dort",
-            "fleurit."
+            "chante",
+            "la rose"
           ],
-          "solution": "La jeune fille chante."
+          "solution": "La jeune fille se promène dans la forêt."
         },
         {
           "id": "m4-03",
           "type": "trou",
           "title": "Le Cible de l'Action : L'Accusatif (Le COD)",
-          "content": "## Quand le mot devient COD, il attrape un -M !\n\nQuand un nom en **-a** devient la cible de l'action (le Complément d'Objet Direct / COD), les Romains lui ajoutaient un **-M** à la fin :\n- *Rosa* (Sujet) ➔ devient **ROSAM** (COD) !\n- *Puella* (Sujet) ➔ devient **PUELLAM** (COD) !\n\nExemple magique :\n*« Puer rosam videt. »*\n- *Puer* = l'enfant (Sujet)\n- *rosam* = la rose (COD, parce qu'il y a le **-m** !)\n- *videt* = voit (Verbe)\n\nComplète la terminaison pour mettre 'la fille' (puella) au COD (accusatif) :",
-          "consigne": "Mets la terminaison du COD (-am) :",
-          "avant": "Puer puell",
-          "apres": " amat (Le garçon aime la jeune fille).",
+          "content": "## Quand le mot devient COD, il attrape un -M !\n\nQuand un nom en **-a** devient la cible de l'action (le Complément d'Objet Direct / COD), les Romains lui ajoutaient un **-M** à la fin :\n- *Rosa* (Sujet) ➔ devient **ROSAM** (COD) !\n- *Puella* (Sujet) ➔ devient **PUELLAM** (COD) !\n\nExemple magique :\n*« Puer rosam videt. »*\n- *Puer* = l'enfant (Sujet)\n- *rosam* = la rose (COD, parce qu'il y a le **-m** !)\n- *videt* = voit (Verbe)\n\nComplète la terminaison pour que « la forêt » (*silva*) devienne le COD :",
+          "consigne": "Mets silva au COD :",
+          "avant": "Puer silv",
+          "apres": " videt (Le garçon voit la forêt).",
           "solution": "am",
-          "latin_complet": "Puer puellam amat."
+          "latin_complet": "Puer silvam videt."
         },
         {
           "id": "m4-04",
@@ -527,43 +528,43 @@
           "id": "m5-01",
           "type": "puzzle",
           "title": "Le Verbe ÊTRE (Esse)",
-          "content": "## Le verbe le plus important de l'Empire\n\nLe verbe **ÊTRE** en latin s'appelle *ESSE*. Voici ses formes au présent :\n\n- **SUM** = Je suis *(ex: Romanus sum = Je suis romain)*\n- **ES** = Tu es\n- **EST** = Il / Elle est *(ex: Roma magna est = Rome est grande)*\n- **SUMUS** = Nous sommes\n- **ESTIS** = Vous êtes\n- **SUNT** = Ils / Elles sont *(ex: Discipuli sunt = Ils sont élèves)*\n\n💡 **Astuce magique** :\nEn latin, pas besoin d'écrire 'je', 'tu', 'il' devant le verbe : la terminaison du verbe suffit ! *Sum* veut dire directement « je suis » !\n\nReconstitue la phrase : *« Romanus sum. »*",
-          "latin": "Romanus sum.",
+          "content": "## Le verbe le plus important de l'Empire\n\nLe verbe **ÊTRE** en latin s'appelle *ESSE*. Voici ses formes au présent :\n\n- **SUM** = Je suis *(ex: Romanus sum = Je suis romain)*\n- **ES** = Tu es\n- **EST** = Il / Elle est *(ex: Roma magna est = Rome est grande)*\n- **SUMUS** = Nous sommes\n- **ESTIS** = Vous êtes\n- **SUNT** = Ils / Elles sont *(ex: Discipuli sunt = Ils sont élèves)*\n\n💡 **Astuce magique** :\nEn latin, pas besoin d'écrire 'je', 'tu', 'il' devant le verbe : la terminaison du verbe suffit ! *Sum* veut dire directement « je suis » !\n\nÀ toi ! *Romani* = les Romains (pluriel de *Romanus*).\nReconstitue la traduction :",
+          "latin": "Romani sumus.",
           "mots": [
+            "Nous sommes",
+            "romains.",
             "Je suis",
-            "romain.",
-            "Tu es",
-            "un soldat",
-            "grec."
+            "Ils sont",
+            "romain."
           ],
-          "solution": "Je suis romain."
+          "solution": "Nous sommes romains."
         },
         {
           "id": "m5-02",
           "type": "trou",
           "title": "Les Verbes d'Action (1er groupe en -ARE)",
-          "content": "## Comment conjuguer au présent ?\n\nPrenons le verbe d'amour et d'amitié : **AMARE** (aimer).\n\nObserve les terminaisons de chaque personne :\n- *Am-**O*** = j'aime\n- *Am-**AS*** = tu aimes\n- *Am-**AT*** = il / elle aime (toujours un **-t** !)\n- *Am-**AMUS*** = nous aimons\n- *Am-**ATIS*** = vous aimez\n- *Am-**ANT*** = ils / elles aiment (toujours un **-nt** !)\n\nComplète le verbe à la 3e personne du singulier (*il aime*) pour la phrase :\n*« Marcus Romam amat »* (Marcus aime Rome).",
-          "consigne": "Complète la terminaison 'il aime' (-at) :",
-          "avant": "Marcus Romam am",
+          "content": "## Comment conjuguer au présent ?\n\nPrenons le verbe d'amour et d'amitié : **AMARE** (aimer).\n\nObserve les terminaisons de chaque personne :\n- *Am-**O*** = j'aime\n- *Am-**AS*** = tu aimes\n- *Am-**AT*** = il / elle aime (toujours un **-t** !)\n- *Am-**AMUS*** = nous aimons\n- *Am-**ATIS*** = vous aimez\n- *Am-**ANT*** = ils / elles aiment (toujours un **-nt** !)\n\nLes autres verbes en **-ARE** suivent le même modèle. Avec *cantare* (chanter), complète pour dire : « Les enfants chantent dans le jardin ».",
+          "consigne": "Complète la terminaison de « ils chantent » :",
+          "avant": "Pueri in horto cant",
           "apres": ".",
-          "solution": "at",
-          "latin_complet": "Marcus Romam amat."
+          "solution": "ant",
+          "latin_complet": "Pueri in horto cantant."
         },
         {
           "id": "m5-03",
           "type": "puzzle",
           "title": "Combattre et Vaincre : Les Verbes Héroïques",
-          "content": "## Les verbes des grands généraux\n\nVoici les verbes préférés de Jules César et des héros de Rome :\n- **PUGNAT** = il combat *(a donné : pugnace, pugilat)*\n- **VINCIT** = il vainc / il gagne *(a donné : vaincre, victoire)*\n- **CURRIT** = il court *(a donné : courir, coursier)*\n- **VIDET** = il voit *(a donné : vidéo, visible)*\n\nReconstitue cette phrase de victoire :\n*« Miles fortiter pugnat. »*\n*(Miles = le soldat, fortiter = courageusement, pugnat = combat)*",
-          "latin": "Miles fortiter pugnat.",
+          "content": "## Les verbes des grands généraux\n\nVoici les verbes préférés de Jules César et des héros de Rome :\n- **PUGNAT** = il combat *(a donné : pugnace, pugilat)*\n- **VINCIT** = il vainc / il gagne *(a donné : vaincre, victoire)*\n- **CURRIT** = il court *(a donné : courir, coursier)*\n- **VIDET** = il voit *(a donné : vidéo, visible)*\n\nExemple : *« Miles fortiter pugnat. »* = « Le soldat combat courageusement. »\n\nÀ toi ! Attention à la terminaison du verbe : **-t** pour un seul, **-nt** pour plusieurs.",
+          "latin": "Romani fortiter pugnant.",
           "mots": [
-            "Le soldat",
-            "combat",
+            "Les Romains",
+            "combattent",
             "courageusement.",
-            "Le général",
-            "fuit",
-            "la forêt."
+            "Le Romain",
+            "combat",
+            "fuient"
           ],
-          "solution": "Le soldat combat courageusement."
+          "solution": "Les Romains combattent courageusement."
         },
         {
           "id": "m5-04",
@@ -652,28 +653,28 @@
           "id": "m6-02",
           "type": "puzzle",
           "title": "Les Courses de Chars au Circus Maximus",
-          "content": "## Plus rapide que le vent : Le Quadrige !\n\nLe plus grand stade de Rome n'était pas le Colisée, mais le **Circus Maximus** (plus de 150 000 places !).\n\nLes cochers (*auriges*) pilotaient des chars tirés par 4 chevaux au galop : le **QUADRIGE** (*quadriga*). Il fallait faire 7 tours de piste à toute vitesse en frôlant les bornes de virage (*metae*) où les accidents spectaculaires étaient fréquents !\n\nReconstitue cette clameur de la foule :\n*« Equi celeriter currunt. »*\n*(Equi = les chevaux, celeriter = rapidement, currunt = courent)*",
-          "latin": "Equi celeriter currunt.",
+          "content": "## Plus rapide que le vent : Le Quadrige !\n\nLe plus grand stade de Rome n'était pas le Colisée, mais le **Circus Maximus** (plus de 150 000 places !).\n\nLes cochers (*auriges*) pilotaient des chars tirés par 4 chevaux au galop : le **QUADRIGE** (*quadriga*). Il fallait faire 7 tours de piste à toute vitesse en frôlant les bornes de virage (*metae*) où les accidents spectaculaires étaient fréquents !\n\nLa foule crie : *« Equi celeriter currunt ! »* = « Les chevaux courent rapidement ! »\n\nMais un cheval s'échappe seul de la piste… Traduis (un seul cheval : *equus*) :",
+          "latin": "Equus celeriter currit.",
           "mots": [
+            "Le cheval",
+            "court",
+            "rapidement.",
             "Les chevaux",
             "courent",
-            "rapidement.",
-            "Les chars",
-            "s'arrêtent",
-            "au virage."
+            "s'arrête"
           ],
-          "solution": "Les chevaux courent rapidement."
+          "solution": "Le cheval court rapidement."
         },
         {
           "id": "m6-03",
           "type": "trou",
           "title": "Le Salut Historique : Ave Caesar !",
-          "content": "## Devant la loge impériale\n\nAvant d'entamer les combats, les gladiateurs défilaient en toge chamarrée devant la tribune de l'empereur, levaient le bras droit et clamaient la devise immortelle :\n\n*« AVE CAESAR, MORITURI TE SALUTANT ! »*\n*(Salut César, ceux qui vont mourir te saluent !)*\n\n- **AVE** = Salut / Sois le bienvenu\n- **SALUTANT** = ils saluent (verbe se terminant par **-nt**)\n\nComplète la phrase pour dire « Salut César » :",
-          "consigne": "Complète le mot de salutation (Ave) :",
-          "avant": "",
-          "apres": " Caesar !",
-          "solution": "Ave",
-          "latin_complet": "Ave Caesar !"
+          "content": "## Devant la loge impériale\n\nAvant d'entamer les combats, les gladiateurs défilaient en toge chamarrée devant la tribune de l'empereur, levaient le bras droit et clamaient la devise immortelle :\n\n*« AVE CAESAR, MORITURI TE SALUT… ! »*\n*(Salut César, ceux qui vont mourir te saluent !)*\n\nLe temps a effacé la fin de la devise sur la pierre !\n- **AVE** = Salut / Sois le bienvenu\n- **SALUTAT** = il salue… mais ici, ce sont **tous** les gladiateurs qui saluent.\n\nRappelle-toi la terminaison des verbes quand ils sont plusieurs (monde 5) :",
+          "consigne": "Complète le verbe « ils saluent » :",
+          "avant": "Morituri te salut",
+          "apres": " !",
+          "solution": "ant",
+          "latin_complet": "Ave Caesar, morituri te salutant !"
         },
         {
           "id": "m6-04",
@@ -757,8 +758,8 @@
           "id": "m7-02",
           "type": "trou",
           "title": "Les Préfixes Magiques (Sub, Trans, Post...)",
-          "content": "## Les petits blocs qui construisent les mots\n\nLes Romains adoraient accrocher de petits préfixes devant les mots pour en changer le sens. Nous faisons exactement la même chose en français aujourd'hui :\n\n- **SUB-** = « sous » ➔ *submerger* (mettre sous l'eau), *subaquatique*.\n- **TRANS-** = « à travers, au-delà » ➔ *transporter*, *transatlantique* (qui traverse l'Atlantique).\n- **POST-** = « après » ➔ *post-scriptum* (écrit après la lettre), *posthume*.\n- **CIRCUM-** = « autour » ➔ *circonférence*, *circumnavigation*.\n\nComplète le préfixe latin qui veut dire 'sous' (sub-) dans ce mot français :",
-          "consigne": "Complète le préfixe latin 'sous' (sub) :",
+          "content": "## Les petits blocs qui construisent les mots\n\nLes Romains adoraient accrocher de petits préfixes devant les mots pour en changer le sens. Nous faisons exactement la même chose en français aujourd'hui :\n\n- **SUB-** = « sous » ➔ *submerger* (mettre sous l'eau), *subaquatique*.\n- **TRANS-** = « à travers, au-delà » ➔ *transporter*, *transatlantique* (qui traverse l'Atlantique).\n- **POST-** = « après » ➔ *post-scriptum* (écrit après la lettre), *posthume*.\n- **CIRCUM-** = « autour » ➔ *circonférence*, *circumnavigation*.\n\nComplète le préfixe latin qui veut dire « sous » dans ce mot français :",
+          "consigne": "Quel préfixe veut dire « sous » ?",
           "avant": "",
           "apres": "marin (un engin qui va sous la mer).",
           "solution": "sub",
@@ -862,21 +863,21 @@
           "id": "m8-02",
           "type": "puzzle",
           "title": "Faire ses courses au marché",
-          "content": "## Commander comme un Romain\nAu comptoir du marchand, utilise les mots appris :\n- **Puer** : le jeune garçon (ou l'enfant).\n- **Panem** : du pain (à l'accusatif, car c'est ce qu'il achète !).\n- **Emit** : achète (du verbe *emere*).\n\nReconstitue la phrase pour dire que l'enfant achète du pain.",
-          "latin": "Puer panem emit.",
+          "content": "## Commander comme un Romain\nAu comptoir, l'enfant achète : *« Puer panem emit. »* = « L'enfant achète du pain. »\n\nDe l'autre côté du comptoir, que fait le marchand ?\n- **Mercator, -oris** : le marchand.\n- **Vendere** : vendre (*emere* : acheter).\n\nTraduis la phrase du marchand :",
+          "latin": "Mercator panem vendit.",
           "mots": [
+            "Le marchand",
+            "vend",
+            "du pain.",
             "L'enfant",
             "achète",
-            "du pain.",
-            "vend",
-            "la pomme.",
-            "le soldat"
+            "de l'eau."
           ],
-          "solution": "L'enfant achète du pain.",
+          "solution": "Le marchand vend du pain.",
           "hints": [
-            "Puer = L'enfant",
-            "panem = du pain",
-            "emit = achète"
+            "mercator = le marchand (sujet)",
+            "vendere = vendre",
+            "panis, -is = le pain (ici COD)"
           ]
         },
         {
@@ -985,21 +986,21 @@
           "id": "m9-02",
           "type": "puzzle",
           "title": "La Légion au Combat",
-          "content": "## Traduis l'action des troupes romaines\n- **Legio** : la légion (l'armée de 5000 soldats).\n- **Fortiter** : courageusement, vaillamment.\n- **Pugnat** : combat, livre bataille (du verbe *pugnare*).\n\nReconstitue la phrase latine en français :",
-          "latin": "Legio fortiter pugnat.",
+          "content": "## Traduis l'action des troupes romaines\n- **Legio** : la légion (l'armée de 5000 soldats) ; au pluriel : **legiones**.\n- Exemple : *« Legio fortiter pugnat. »* = « La légion combat courageusement. »\n\nCésar envoie maintenant plusieurs légions. Reconstitue la phrase en français :",
+          "latin": "Legiones fortiter pugnant.",
           "mots": [
+            "Les légions",
+            "combattent",
+            "courageusement.",
             "La légion",
             "combat",
-            "courageusement.",
-            "fuit",
-            "faiblement.",
-            "le chef"
+            "fuient"
           ],
-          "solution": "La légion combat courageusement.",
+          "solution": "Les légions combattent courageusement.",
           "hints": [
-            "Legio = La légion",
-            "fortiter = courageusement",
-            "pugnat = combat"
+            "legiones = pluriel de legio",
+            "-nt = ils, elles (plusieurs)",
+            "fortiter = courageusement"
           ]
         },
         {
@@ -1108,21 +1109,21 @@
           "id": "m10-02",
           "type": "puzzle",
           "title": "Cerbère le Gardien des Enfers (Cerberus)",
-          "content": "## Aux portes du royaume souterrain\nPour empêcher les âmes de s'enfuir et les vivants d'entrer sans permission, le dieu Pluton a placé un gardien terrible :\n- **Cerberus** : Cerbère, le chien colossal à trois têtes.\n- **Portas** : les portes (à l'accusatif pluriel).\n- **Custodit** : garde, surveille (du verbe *custodire* qui a donné « garde à vue » et « custode »).\n\nReconstitue la phrase :",
-          "latin": "Cerberus portas custodit.",
+          "content": "## Aux portes du royaume souterrain\nPour empêcher les âmes de s'enfuir et les vivants d'entrer sans permission, le dieu Pluton a placé un gardien terrible :\n- **Cerberus** : Cerbère, le chien colossal à trois têtes.\n- **Porta, -ae** : la porte. Au COD : *portam* (une porte) ou *portas* (plusieurs).\n- **Custodire** : garder, surveiller (qui a donné « custode »).\n- Exemple : *« Cerberus portas custodit. »* = « Cerbère garde les portes. »\n\nCe soir, une seule porte reste ouverte. Reconstitue la phrase :",
+          "latin": "Cerberus portam custodit.",
           "mots": [
             "Cerbère",
             "garde",
+            "la porte.",
             "les portes.",
-            "dévore",
-            "la maison.",
-            "le cheval"
+            "gardent",
+            "dévore"
           ],
-          "solution": "Cerbère garde les portes.",
+          "solution": "Cerbère garde la porte.",
           "hints": [
-            "Cerberus = Cerbère",
-            "portas = les portes",
-            "custodit = garde"
+            "Cerberus = Cerbère (sujet)",
+            "portam : -am = un seul COD",
+            "custodit : -t = il"
           ]
         },
         {
@@ -2779,7 +2780,7 @@
         "etym": "aquatique, aquarium, aqueduc",
         "ex": "Aqua vitae fons est.",
         "ex_fr": "L'eau est la source de la vie.",
-        "monde": "monde7"
+        "monde": "monde3"
       },
       {
         "latin": "aquila, -ae",
@@ -3319,7 +3320,7 @@
         "etym": "lecture, leçon, lisible",
         "ex": "Librum legere dulce est.",
         "ex_fr": "Lire un livre est doux.",
-        "monde": "monde15"
+        "monde": "monde2"
       },
       {
         "latin": "mittere (mitto, misi, missum)",

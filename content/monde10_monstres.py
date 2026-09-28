@@ -32,14 +32,15 @@ Après ses exploits, Jupiter plaça Pégase dans le ciel : il est devenu une bri
             "content": """## Aux portes du royaume souterrain
 Pour empêcher les âmes de s'enfuir et les vivants d'entrer sans permission, le dieu Pluton a placé un gardien terrible :
 - **Cerberus** : Cerbère, le chien colossal à trois têtes.
-- **Portas** : les portes (à l'accusatif pluriel).
-- **Custodit** : garde, surveille (du verbe *custodire* qui a donné « garde à vue » et « custode »).
+- **Porta, -ae** : la porte. Au COD : *portam* (une porte) ou *portas* (plusieurs).
+- **Custodire** : garder, surveiller (qui a donné « custode »).
+- Exemple : *« Cerberus portas custodit. »* = « Cerbère garde les portes. »
 
-Reconstitue la phrase :""",
-            "latin": "Cerberus portas custodit.",
-            "mots": ["Cerbère", "garde", "les portes.", "dévore", "la maison.", "le cheval"],
-            "solution": "Cerbère garde les portes.",
-            "hints": ["Cerberus = Cerbère", "portas = les portes", "custodit = garde"],
+Ce soir, une seule porte reste ouverte. Reconstitue la phrase :""",
+            "latin": "Cerberus portam custodit.",
+            "mots": ["Cerbère", "garde", "la porte.", "les portes.", "gardent", "dévore"],
+            "solution": "Cerbère garde la porte.",
+            "hints": ["Cerberus = Cerbère (sujet)", "portam : -am = un seul COD", "custodit : -t = il"],
         },
         {
             "id": "m10-03",

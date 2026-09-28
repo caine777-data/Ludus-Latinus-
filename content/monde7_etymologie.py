@@ -41,8 +41,8 @@ Les Romains adoraient accrocher de petits préfixes devant les mots pour en chan
 - **POST-** = « après » ➔ *post-scriptum* (écrit après la lettre), *posthume*.
 - **CIRCUM-** = « autour » ➔ *circonférence*, *circumnavigation*.
 
-Complète le préfixe latin qui veut dire 'sous' (sub-) dans ce mot français :""",
-            "consigne": "Complète le préfixe latin 'sous' (sub) :",
+Complète le préfixe latin qui veut dire « sous » dans ce mot français :""",
+            "consigne": "Quel préfixe veut dire « sous » ?",
             "avant": "",
             "apres": "marin (un engin qui va sous la mer).",
             "solution": "sub",
