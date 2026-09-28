@@ -1611,7 +1611,7 @@ doivent passer.
 
 ## T18 — Un test qui empêche un exercice de 5e de redonner sa réponse
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : les exercices de 5e viennent d'être réécrits pour que le
 cours ne donne plus la réponse (commit `e26c38b`). Un test doit empêcher
@@ -1672,11 +1672,13 @@ qu'une modification future la remette par erreur.
 - Reste à faire :
   - Rien sur T18 (tâche terminée et prête pour relecture/validation par l'architecte).
 
+**Vérification de l'architecte** : test clair, exceptions justifiées en tête de fichier, et preuve qu'il échoue quand on remet une réponse. Validé.
+
 ---
 
 ## T19 — Analyse Flutter : trier les 59 remarques restantes
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : après le nettoyage de `withOpacity`, `flutter analyze lib`
 signale encore 59 remarques. On veut savoir lesquelles comptent avant d'y
@@ -1750,3 +1752,96 @@ toucher, et corriger la seule API obsolète déjà repérée.
   - Les 4 remarques `constant_identifier_names` dans `audio_service.dart` proviennent des constantes Win32 C (`winmm.dll`) nécessaires aux appels FFI sous Windows. Les renommer en lowerCamelCase violerait les conventions de nommage de l'API native Windows. Un `// ignore: constant_identifier_names` ciblé sera à prévoir le moment venu.
 - Reste à faire :
   - Rien sur T19 (tâche terminée et validée).
+
+**Vérification de l'architecte** : une seule ligne changée ; tableau des 59 remarques et analyse des risques exacte (le fond sombre de `themes.dart` ne doit pas être touché sans précaution). Suite confiée en T20 et T21. Validé.
+
+---
+
+**Ordre conseillé** : T20 puis T21 — une tâche par session, un commit par
+tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
+
+---
+
+## T20 — Corriger trois API obsolètes (sans toucher au thème)
+
+Statut : À FAIRE
+
+**Objectif** : appliquer les corrections que tu as proposées en T19, sauf
+celle de `themes.dart` (trop risquée pour le mode sombre).
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/core/roman_audio_modal.dart` (3 `Switch`)
+- `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart` (1 `Matrix4`)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Dans les trois `Switch.adaptive` de `roman_audio_modal.dart`, remplace
+   `activeColor: RomanColors.goldDark` par **deux** lignes :
+   `activeThumbColor: RomanColors.goldDark,` et
+   `activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45),`
+   (sinon la piste prend la couleur du thème et perd l'or).
+2. Dans `memoria_screen.dart`, remplace `..scale(scale)` par
+   `..scaleByDouble(scale, scale, scale, 1)`.
+3. Vérifie sur l'émulateur : la fenêtre du son (roue dentée ➔ Son et
+   musique) avec ses interrupteurs, et le retournement d'une carte dans
+   Memoria. Capture avant et après pour les interrupteurs.
+4. `flutter analyze lib` (recopie le total avant et après), `flutter test`,
+   puis `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Plus aucun `deprecated_member_use` dans ces deux fichiers.
+- [ ] Les interrupteurs restent dorés (captures avant et après).
+- [ ] La carte de Memoria se retourne comme avant.
+- [ ] `flutter test` : tous les tests passent.
+- [ ] Un commit `refactor(mobile): interrupteurs et Memoria sans API obsolète`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T21 — Les remarques `const` et les constantes Windows
+
+Statut : À FAIRE
+
+**Objectif** : faire tomber la cinquantaine de remarques `prefer_const_*` et
+`prefer_final_fields`, qui sont mécaniques, et documenter les 4 constantes
+Windows qu'on ne doit pas renommer.
+
+**Périmètre** :
+- les fichiers listés dans ton tableau de T19 pour `prefer_const_constructors`,
+  `prefer_const_literals_to_create_immutables`, `prefer_const_declarations`
+  et `prefer_final_fields`, **sauf** `duel_screen.dart` (l'architecte vient de
+  le réécrire, laisse-le)
+- `ludus_latinus_mobile/lib/data/services/audio_service.dart` (commentaires seulement)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Lance `dart fix --dry-run` dans `ludus_latinus_mobile` et recopie ce qu'il
+   propose pour ces quatre règles.
+2. Applique-les **règle par règle** :
+   `dart fix --apply --code=prefer_const_constructors` (puis les trois autres).
+   Si un fichier hors périmètre est touché (par exemple `duel_screen.dart`),
+   annule ce fichier avec `git checkout -- <fichier>`.
+3. Dans `audio_service.dart`, ajoute au-dessus des 4 constantes `SND_*` :
+   `// ignore: constant_identifier_names` sur chaque ligne, avec un
+   commentaire : « noms de l'API Windows (winmm.dll), à garder tels quels ».
+4. `flutter analyze lib` (total avant et après), `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+5. Ouvre l'appli sur l'émulateur et parcours accueil, carte, Circus,
+   Taverne (si ouverte) : rien ne doit avoir changé à l'écran.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Les remarques de ces quatre règles tombent à 0 hors `duel_screen.dart`.
+- [ ] `git diff` : uniquement des `const` ajoutés, des `final` et les commentaires.
+- [ ] `flutter test` : tous les tests passent.
+- [ ] Un commit `refactor(mobile): const et final là où l'analyse le demande`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

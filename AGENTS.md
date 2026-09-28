@@ -171,6 +171,10 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
 16. **Ne commite que les fichiers de ta tâche** (`git add <fichier>`, jamais
     `git add -A` ni `git add .`) : l'architecte et l'exécutant travaillent
     parfois en même temps dans le même dépôt.
+17. **Une animation WebP ne rejoue pas toute seule** : Flutter garde l'image
+    décodée en cache et la reprend là où elle en était. Pour la rejouer
+    depuis le début (l'impact d'épées du Duel à chaque coup), appelle
+    `AssetImage(...).evict()` et donne au widget `Image` une nouvelle `key`.
 
 ---
 
@@ -256,7 +260,8 @@ Cédric génère les images et les dépose dans
 | `icones.py` | `icone_<nom>.jpg` (liste `ICONES`) | `images/icone_<nom>.png`, marge pour un médaillon rond |
 | `decors_mondes.py [N …]` | `decor_monde<N>.jpg` | `images/mondes/monde<N>.webp` |
 | `via_elements.py [nom …]` | `via_<nom>.jpg` | `images/via/<nom>.png`, recadré au ras, sans carré |
-| `lupulus_videos.py [humeur …]` | `lupulus_<humeur>.mp4` (fond vert) | `images/animated/lupulus_*.webp`, son retiré |
+| `lupulus_videos.py [humeur ou effet …]` | `lupulus_<humeur>.mp4`, ou un effet de `EFFETS` (fond vert) | `images/animated/*.webp`, son retiré ; un effet peut ne garder qu'une plage d'images |
+| `illustrations.py [nom …]` | `stele_vierge`, `cas_<cas>`, `boss_retiaire`, `decor_colisee_duel` | `images/epigraphie/`, `images/cas/`, `images/duel/`, WebP ; détourage par « verdeur », qui tient sur un fond vert dégradé |
 
 | `bruitages.py [nom …]` | `<nom>.wav` | `audio/<nom>.wav` : silences coupés, crête -3 dB, mono 44,1 kHz |
 
@@ -300,6 +305,24 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Duel animé et visuels du 28/09** (vérifiés sur l'émulateur) —
+  `duel_screen.dart` : décor `images/duel/decor_colisee.webp`, scène
+  `_buildScene` pilotée par `_assaut` (900 ms : élan de l'attaquant, recul,
+  flash rouge et bascule de la cible, impact `duel_impact.webp`, dégâts qui
+  s'élèvent) ; le vaincu tombe et pâlit ; les jauges abrègent les noms.
+  Le premier boss s'appelle **Crixus le Rétiaire** (`boss_retiaire.webp`) ;
+  l'enfant gladiateur `boss_gladiateur_140.png` reste l'icône du Colisée dans
+  Ludi. L'éclat d'épées et la pluie de pièces Lottie ne servent plus dans le
+  Duel ; **la pluie de pièces reste dans la leçon, aussi plate : à remplacer**.
+  Stèle de l'Épigraphie (`images/epigraphie/stele_vierge.webp`), cartes des
+  six cas en tête de l'onglet Déclinaisons du Thesaurus
+  (`images/cas/cas_<cas>.webp`), Lupulus qui encourage après une erreur de
+  leçon (`LupulusMood.encouragement`), explication de « HS » en touchant les
+  sesterces de la boutique. **À revoir** : l'Épigraphie affiche la
+  traduction complète avant tout déchiffrage.
+- **T18 et T19 validées** — un test garde la 5e ; les 59 remarques de
+  l'analyse sont triées. Suite confiée : T20 et T21.
 
 - **Exercices de 5e : la réponse n'est plus dans le cours** (validé par
   Cédric) — 16 exercices réécrits sur les 22 de 5e. Principe à suivre pour
