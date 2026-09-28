@@ -190,20 +190,34 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                             ],
                           ),
                         ),
-                        // Compteur de Sesterces doré
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: RomanColors.goldLight,
+                        // Compteur de Sesterces doré : le toucher explique l'abréviation HS.
+                        Tooltip(
+                          message: 'Pourquoi « HS » ?',
+                          child: InkWell(
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                          ),
-                          child: RollingSestercesCounter(
-                            value: profile.sesterces,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF684900),
+                            onTap: () => _expliquerHS(context),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                color: RomanColors.goldLight,
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  RollingSestercesCounter(
+                                    value: profile.sesterces,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF684900),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(Icons.help_outline_rounded, size: 15, color: Color(0xFF684900)),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -640,4 +654,33 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       ),
     );
   }
+}
+
+
+/// « Le savais-tu ? » : d'où vient l'abréviation HS des sesterces.
+void _expliquerHS(BuildContext context) {
+  showDialog<void>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      backgroundColor: RomanColors.travertine,
+      title: const Text(
+        'Pourquoi « HS » ?',
+        style: TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+      ),
+      content: const Text(
+        'Le sesterce (sestertius) était une pièce romaine qui valait deux as et demi.\n\n'
+        "Les Romains l'écrivaient IIS : II pour « deux », et S pour semis, « demi ». "
+        'Pour ne pas le confondre avec un nombre, ils barraient les deux I… '
+        'et le signe a fini par ressembler à un H : HS.\n\n'
+        "Sous l'empereur Auguste, un légionnaire gagnait environ 900 sesterces par an.",
+        style: TextStyle(fontSize: 14.5, height: 1.45),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx),
+          child: const Text('Optime !'),
+        ),
+      ],
+    ),
+  );
 }

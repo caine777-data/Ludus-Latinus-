@@ -954,7 +954,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
                 child: ClipOval(
                   child: Image.asset(
-                    lupulusAnimation(LupulusMood.reflexion),
+                    lupulusAnimation(LupulusMood.encouragement),
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Image.asset(
                       'assets/images/lupulus/lupulus_reflexion_180.png',

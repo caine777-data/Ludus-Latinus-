@@ -7,8 +7,11 @@ Un WebP animé garde la transparence et boucle tout seul dans un simple
 Image.asset : pas de lecteur vidéo, pas de son, environ 300 Ko par animation.
 La piste audio générée par Gemini est donc volontairement abandonnée.
 
-Usage : python scripts/assets/lupulus_videos.py [humeur ...]
-        (sans argument : attente, joie, reflexion, salut, triomphe)
+Traite aussi les effets visuels sur fond vert (liste EFFETS), comme l'impact
+des épées du Duel : même détourage, autre taille.
+
+Usage : python scripts/assets/lupulus_videos.py [humeur ou effet ...]
+        (sans argument : toutes les humeurs et tous les effets)
 Dépendances d'outillage (pas de l'app) : pip install imageio-ffmpeg numpy pillow
 """
 
@@ -31,6 +34,14 @@ SORTIES = {
     "reflexion": "lupulus_reflexion",
     "salut": "lupulus_salut",
     "triomphe": "lupulus_triomphe",
+    "encouragement": "lupulus_encouragement",
+}
+
+# Effets visuels : fichier source (sans .mp4) -> (côté en pixels, images gardées).
+# Pour l'impact : on ne garde que le choc et les étincelles ; les premières
+# images (épées floues en mouvement) gardent un reflet vert impossible à ôter.
+EFFETS = {
+    "duel_impact": (320, slice(3, 19)),
 }
 
 TAILLE = 200   # côté du carré : Lupulus s'affiche au plus à ~60 dp (x3 en haute densité)
@@ -97,21 +108,27 @@ def cadre_commun(images):
 
 
 def convertir(humeur):
-    video = SOURCE / f"lupulus_{humeur}.mp4"
+    if humeur in EFFETS:
+        taille, images = EFFETS[humeur]
+        return convertir_video(SOURCE / f"{humeur}.mp4", humeur, taille, images)
+    return convertir_video(SOURCE / f"lupulus_{humeur}.mp4", SORTIES[humeur], TAILLE)
+
+
+def convertir_video(video, nom_sortie, taille, garder=slice(None)):
     if not video.exists():
         print(f"[MANQUE] {video.name}")
         return
     with tempfile.TemporaryDirectory() as dossier:
-        images = [detourer(f) for f in extraire_images(video, dossier)]
+        images = [detourer(f) for f in extraire_images(video, dossier)[garder]]
     boite = cadre_commun(images)
     finales = []
     for im in images:
         carre = Image.new("RGBA", (boite[2] - boite[0], boite[3] - boite[1]), (0, 0, 0, 0))
         carre.paste(im, (-boite[0], -boite[1]), im)
-        finales.append(carre.resize((TAILLE, TAILLE), Image.LANCZOS))
+        finales.append(carre.resize((taille, taille), Image.LANCZOS))
 
     DEST.mkdir(parents=True, exist_ok=True)
-    sortie = DEST / f"{SORTIES[humeur]}.webp"
+    sortie = DEST / f"{nom_sortie}.webp"
     finales[0].save(
         sortie, "WEBP", save_all=True, append_images=finales[1:],
         duration=round(1000 / IMAGES_PAR_SECONDE), loop=0, quality=72, method=6,
@@ -120,5 +137,5 @@ def convertir(humeur):
 
 
 if __name__ == "__main__":
-    for h in sys.argv[1:] or list(SORTIES):
+    for h in sys.argv[1:] or [*SORTIES, *EFFETS]:
         convertir(h)

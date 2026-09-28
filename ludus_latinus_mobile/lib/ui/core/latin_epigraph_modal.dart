@@ -171,76 +171,76 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
             child: ListView(
               padding: const EdgeInsets.all(18),
               children: [
-                // 1. La Pierre de Marbre Gravée
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFEADCCB), Color(0xFFD8C7B0)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: const Color(0xFFB59D82), width: 2),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x33000000),
-                        blurRadius: 10,
-                        offset: Offset(2, 4),
-                      ),
-                      BoxShadow(
-                        color: Colors.white70,
-                        blurRadius: 4,
-                        offset: Offset(-1, -1),
-                      ),
-                    ],
+                // 1. La stèle de marbre (image Gemini), l'inscription gravée dans son panneau.
+                const Text(
+                  '« ÉPIGRAPHE ORIGINALE GRAVÉE »',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                    color: Color(0xFF634A31),
                   ),
-                  child: Column(
-                    children: [
-                      const Text(
-                        '« ÉPIGRAPHE ORIGINALE GRAVÉE »',
-                        style: TextStyle(
-                          fontSize: 10.5,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.5,
-                          color: Color(0xFF634A31),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      SelectableText(
-                        widget.epigraph.texteAntique,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: 'serif',
-                          fontSize: 17,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: 1.8,
-                          height: 1.6,
-                          color: Color(0xFF2B1C10),
-                          shadows: [
-                            Shadow(
-                              color: Colors.white,
-                              offset: Offset(1, 1),
-                              blurRadius: 1,
+                ),
+                const SizedBox(height: 6),
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 330),
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Image.asset(
+                            'assets/images/epigraphie/stele_vierge.webp',
+                            fit: BoxFit.contain,
+                            errorBuilder: (_, __, ___) => const ColoredBox(color: Color(0xFFEADCCB)),
+                          ),
+                          // Le panneau lisse, à l'intérieur de la couronne de laurier.
+                          Align(
+                            alignment: const Alignment(0, -0.06),
+                            child: FractionallySizedBox(
+                              widthFactor: 0.46,
+                              heightFactor: 0.52,
+                              child: LayoutBuilder(
+                                builder: (context, c) => FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: SizedBox(
+                                    width: c.maxWidth,
+                                    child: Text(
+                                      // Des points entre les mots, comme sur les vraies stèles.
+                                      widget.epigraph.texteAntique.replaceAll('·', ' · '),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontFamily: 'serif',
+                                        fontSize: 13.5,
+                                        fontWeight: FontWeight.w900,
+                                        letterSpacing: 1.1,
+                                        height: 1.45,
+                                        color: Color(0xFF4A3520),
+                                        shadows: [
+                                          Shadow(color: Colors.white, offset: Offset(1, 1), blurRadius: 1),
+                                          Shadow(color: Color(0x55000000), offset: Offset(-1, -1), blurRadius: 1),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                            Shadow(
-                              color: Color(0x66000000),
-                              offset: Offset(-1, -1),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Touchez un mot gravé ci-dessous pour révéler son secret lapidaire',
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontStyle: FontStyle.italic,
-                          color: Color(0xFF5A442E),
-                        ),
-                      ),
-                    ],
+                    ),
+                  ),
+                ),
+                const Text(
+                  'Touchez un mot gravé ci-dessous pour révéler son secret lapidaire',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontStyle: FontStyle.italic,
+                    color: Color(0xFF5A442E),
                   ),
                 ),
 

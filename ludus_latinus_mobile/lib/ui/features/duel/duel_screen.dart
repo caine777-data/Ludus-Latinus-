@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
-import '../../core/lottie_effects.dart';
 import '../../core/game_juice.dart';
 import '../../core/widgets.dart';
 import '../../core/cinematic_player.dart';
@@ -67,7 +66,7 @@ class DuelScreen extends StatefulWidget {
   State<DuelScreen> createState() => _DuelScreenState();
 }
 
-class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateMixin {
+class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   late AnimationController _pulseController;
 
   int _currentBossIndex = 0;
@@ -77,9 +76,9 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
 
   final List<Map<String, dynamic>> _bosses = [
     {
-      'nom': 'Marcus le Rétiaire',
+      'nom': 'Crixus le Rétiaire',
       'titre': 'Gladiateur Vétéran',
-      'image': 'assets/images/boss_gladiateur_140.png',
+      'image': 'assets/images/boss_retiaire.webp',
       'video': 'assets/cinematics/boss_retiaire.mp4',
       'maxHp': 100,
       'attaque': 20,
@@ -342,11 +341,28 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   late Map<String, dynamic> _currentQ;
   late List<String> _shuffledChoices;
   String? _chosenAnswer;
-  bool _animatingHit = false;
-  bool _playerRiposteAnim = false;
   String? _floatingCombatText;
-  bool _floatingCombatIsHero = false;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
+
+  // Assaut : l'attaquant s'élance, frappe, revient. [_assautHeros] dit qui attaque.
+  late final AnimationController _assaut = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+    value: 1,
+  );
+  bool _assautHeros = true;
+  int _coups = 0;
+  static const _imageImpact = AssetImage('assets/images/animated/duel_impact.webp');
+
+  void _lancerAssaut({required bool heros}) {
+    // L'impact animé rejoue depuis sa première image à chaque coup.
+    _imageImpact.evict();
+    setState(() {
+      _assautHeros = heros;
+      _coups++;
+    });
+    _assaut.forward(from: 0);
+  }
 
   @override
   void initState() {
@@ -376,6 +392,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
   void dispose() {
     AudioService().leaveMusic(MusicTrack.arene);
     _pulseController.dispose();
+    _assaut.dispose();
     super.dispose();
   }
 
@@ -405,8 +422,6 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
     options.shuffle();
     _shuffledChoices = options;
     _chosenAnswer = null;
-    _animatingHit = false;
-    _playerRiposteAnim = false;
     _floatingCombatText = null;
     _questionStartTime = DateTime.now();
   }
@@ -426,8 +441,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       HapticFeedback.heavyImpact();
       AudioService().playSwordClash();
       AudioService().playSesterces();
-      RomanLottieEffects.showSwordClash(context);
-      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
+      _lancerAssaut(heros: true);
 
       int degats = (35 * _currentStance.damageMult).round();
       int sestercesEarned = 15;
@@ -453,10 +467,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         _bossHp = math.max(0, _bossHp - degats);
         _gainsSesterces += sestercesEarned;
         _currentBossSpeech = boss['tauntBlesse'] as String?;
-        _floatingCombatText = isCrit ? '⚡ CRITIQUE -$degats HP !' : '⚔️ -$degats HP !';
-        _floatingCombatIsHero = true;
-        _animatingHit = true;
-        _playerRiposteAnim = false;
+        _floatingCombatText = isCrit ? '⚡ CRITIQUE -$degats' : '-$degats';
       });
 
       if (_bossHp <= 0) {
@@ -467,16 +478,14 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       HapticFeedback.vibrate();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
+      _lancerAssaut(heros: false);
       final baseRiposte = boss['attaque'] as int;
       final riposte = (baseRiposte * _currentStance.riposteMult).round();
 
       setState(() {
         _playerHp = math.max(0, _playerHp - riposte);
         _currentBossSpeech = boss['tauntAttaque'] as String?;
-        _floatingCombatText = '🛡️ RIPOSTE -$riposte HP !';
-        _floatingCombatIsHero = false;
-        _animatingHit = false;
-        _playerRiposteAnim = true;
+        _floatingCombatText = '-$riposte';
       });
 
       if (_currentStance == CombatStance.scutum) {
@@ -518,7 +527,6 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
       AudioService().playSwordClash();
       AudioService().playCrowdCheer();
       AudioService().playTriumph();
-      RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
       _recompense = 0;
@@ -537,8 +545,8 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
           backgroundColor: const Color(0xFF1B1622), // Ambiance nocturne au Colisée
           appBar: AppBar(
             title: const Text(
-              'COLOSSEUM DUELLUM',
-              style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16),
+              'COLOSSEUM',
+              style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
             ),
             centerTitle: true,
             backgroundColor: const Color(0xFF2D1E3A),
@@ -598,9 +606,7 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
               // 1. Arène & Jauges de Vie
               Expanded(
                 flex: 5,
-                child: ColosseumArenaBackdrop(
-                  child: _buildArenaView(boss),
-                ),
+                child: _buildArenaView(boss),
               ),
 
               // 2. Panneau Question / Énigme ou Victoire
@@ -624,464 +630,381 @@ class _DuelScreenState extends State<DuelScreen> with SingleTickerProviderStateM
         ? widget.repo.profile.nomHeros
         : (isGirl ? 'Julia' : 'Marcus');
 
-    return Container(
-      width: double.infinity,
-      color: Colors.transparent,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          // 1. Barres de Vie Épiques en Marbre & Or Antique
-          Row(
+    return Stack(
+      children: [
+        // Le Colisée au crépuscule, assombri en haut et en bas pour que les
+        // jauges et les répliques restent lisibles.
+        Positioned.fill(
+          child: Image.asset(
+            'assets/images/duel/decor_colisee.webp',
+            fit: BoxFit.cover,
+            alignment: const Alignment(0, 0.35),
+            errorBuilder: (_, __, ___) => const ColoredBox(color: Color(0xFF1B1622)),
+          ),
+        ),
+        const Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(0xCC120E16), Color(0x22120E16), Color(0x33120E16), Color(0xCC120E16)],
+                stops: [0, 0.3, 0.7, 1],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
+          child: Column(
             children: [
-              // Jauge Héros (Joueur)
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xDD0D1B2A),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                    boxShadow: const [
-                      BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 2)),
-                    ],
+              Row(
+                children: [
+                  Expanded(
+                    child: _jauge(
+                      nom: heroName,
+                      pv: _playerHp,
+                      pvMax: 100,
+                      couleur: _playerHp > 30 ? RomanColors.laurelGreen : const Color(0xFF8E1724),
+                      bordure: RomanColors.imperialGold,
+                      texte: const Color(0xFFFFE082),
+                      aDroite: false,
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Text('🛡️ ', style: TextStyle(fontSize: 11)),
-                              Text(
-                                heroName.toUpperCase(),
-                                style: const TextStyle(
-                                  color: Color(0xFFFFE082),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10.5,
-                                  fontFamily: 'serif',
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '$_playerHp/100',
-                            style: TextStyle(
-                              color: _playerHp > 30 ? const Color(0xFF81C784) : const Color(0xFFE57373),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                            ),
-                          ),
-                        ],
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFF2E0811),
+                      border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                    ),
+                    child: const Text(
+                      'VS',
+                      style: TextStyle(
+                        color: RomanColors.imperialGold,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 10,
+                        fontFamily: 'serif',
                       ),
-                      const SizedBox(height: 5),
-                      RomanElasticProgressBar(
-                        value: (_playerHp / 100.0).clamp(0.0, 1.0),
-                        color: _playerHp > 30 ? RomanColors.laurelGreen : const Color(0xFF8E1724),
-                        ghostColor: const Color(0xFFFFD700).withValues(alpha: 0.5),
-                        backgroundColor: const Color(0xFF142132),
-                        height: 10,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: _jauge(
+                      nom: boss['nom'] as String,
+                      pv: _bossHp,
+                      pvMax: boss['maxHp'] as int,
+                      couleur: const Color(0xFF8E1724),
+                      bordure: const Color(0xFF8E1724),
+                      texte: const Color(0xFFFF8A80),
+                      aDroite: true,
+                    ),
+                  ),
+                ],
               ),
-
-              const SizedBox(width: 8),
-
-              // Médaillon VS central
+              Expanded(child: _buildScene(boss, heroAvatar, heroName)),
               Container(
-                padding: const EdgeInsets.all(6),
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: const Color(0xFF2E0811),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                  boxShadow: const [
-                    BoxShadow(color: Color(0x66FFD700), blurRadius: 8),
-                  ],
+                  color: const Color(0xDD3E151D),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: RomanColors.imperialGold, width: 1.2),
                 ),
-                child: const Text(
-                  'VS',
-                  style: TextStyle(
-                    color: RomanColors.imperialGold,
+                child: Text(
+                  // Les répliques portent déjà leurs guillemets.
+                  _combatFini && _victoire
+                      ? '« Io triumphe ! » (Victoire, triomphe !)'
+                      : _currentBossSpeech ?? boss['citation'] as String,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.amberAccent,
+                    fontSize: 10.5,
                     fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    fontFamily: 'serif',
-                  ),
-                ),
-              ),
-
-              const SizedBox(width: 8),
-
-              // Jauge Champion Boss
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xDD2B0E14),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFF8E1724), width: 1.2),
-                    boxShadow: const [
-                      BoxShadow(color: Color(0x33000000), blurRadius: 6, offset: Offset(0, 2)),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '$_bossHp/${boss['maxHp']}',
-                            style: const TextStyle(
-                              color: Color(0xFFFF8A80),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                (boss['nom'] as String).toUpperCase(),
-                                style: const TextStyle(
-                                  color: Color(0xFFFF8A80),
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10.5,
-                                  fontFamily: 'serif',
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              const Text(' ⚔️', style: TextStyle(fontSize: 11)),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      RomanElasticProgressBar(
-                        value: (_bossHp / (boss['maxHp'] as int)).clamp(0.0, 1.0),
-                        color: const Color(0xFF8E1724),
-                        ghostColor: const Color(0xFFFF5252).withValues(alpha: 0.5),
-                        backgroundColor: const Color(0xFF3E151D),
-                        height: 10,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ],
+                    fontStyle: FontStyle.italic,
                   ),
                 ),
               ),
             ],
           ),
+        ),
+      ],
+    );
+  }
 
-          // 2. Face-à-Face des Combattants dans l'Arène
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
+  /// Jauge de vie : le nom s'abrège au lieu de déborder de l'écran.
+  Widget _jauge({
+    required String nom,
+    required int pv,
+    required int pvMax,
+    required Color couleur,
+    required Color bordure,
+    required Color texte,
+    required bool aDroite,
+  }) {
+    final libelle = Expanded(
+      child: Text(
+        nom.toUpperCase(),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        textAlign: aDroite ? TextAlign.right : TextAlign.left,
+        style: TextStyle(
+          color: texte,
+          fontWeight: FontWeight.bold,
+          fontSize: 10.5,
+          fontFamily: 'serif',
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+    final chiffres = Text(
+      '$pv/$pvMax',
+      style: TextStyle(color: texte, fontWeight: FontWeight.bold, fontSize: 10),
+    );
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: const Color(0xDD0D1B2A),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: bordure, width: 1.2),
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: aDroite
+                ? [chiffres, const SizedBox(width: 6), libelle]
+                : [libelle, const SizedBox(width: 6), chiffres],
+          ),
+          const SizedBox(height: 5),
+          RomanElasticProgressBar(
+            value: (pv / pvMax).clamp(0.0, 1.0),
+            color: couleur,
+            ghostColor: const Color(0xFFFFD700).withValues(alpha: 0.5),
+            backgroundColor: const Color(0xFF142132),
+            height: 10,
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Le face-à-face sur le sable : respiration au repos, élan de l'attaquant,
+  /// recul et flash rouge de celui qui encaisse, impact au point de contact.
+  Widget _buildScene(Map<String, dynamic> boss, String heroAvatar, String heroName) {
+    return LayoutBuilder(
+      builder: (context, c) {
+        final w = c.maxWidth;
+        final taille = math.min(100.0, c.maxHeight * 0.58);
+        final xHeros = w * 0.24;
+        final xBoss = w * 0.76;
+        final portee = math.max(0.0, (xBoss - xHeros) - taille * 1.05);
+        final sol = c.maxHeight * 0.16;
+
+        return AnimatedBuilder(
+          animation: Listenable.merge([_pulseController, _assaut]),
+          builder: (context, _) {
+            final t = _assaut.value;
+            // Aller (0 à 0,35), choc (0,35 à 0,5), retour (0,5 à 1).
+            final elan = t < 0.35
+                ? Curves.easeIn.transform(t / 0.35)
+                : t < 0.5
+                    ? 1.0
+                    : 1 - Curves.easeOutCubic.transform((t - 0.5) / 0.5);
+            final encaisse = t >= 0.35 && t < 0.95 ? math.sin((t - 0.35) / 0.6 * math.pi) : 0.0;
+            final respire = math.sin(_pulseController.value * math.pi);
+
+            final dxHeros = _assautHeros ? elan * portee : -encaisse * 16;
+            final dxBoss = _assautHeros ? encaisse * 16 : -elan * portee;
+            final xCible = _assautHeros ? xBoss - taille * 0.45 : xHeros + taille * 0.45;
+            final yCentre = sol + taille / 2;
+
+            return Stack(
+              clipBehavior: Clip.none,
               children: [
-                // Héros Joueur (Gauche) avec Recul & Torche
-                AnimatedSlide(
-                  offset: _playerRiposteAnim ? const Offset(-0.10, 0) : Offset.zero,
-                  duration: const Duration(milliseconds: 180),
-                  curve: Curves.easeOutCubic,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedBuilder(
-                        animation: _pulseController,
-                        builder: (context, _) {
-                          final heroScale = _playerRiposteAnim
-                              ? 0.88
-                              : 1.0 + (_pulseController.value * 0.03);
-                          return Transform.scale(
-                            scale: heroScale,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              clipBehavior: Clip.none,
-                              children: [
-                                Positioned(
-                                  left: -14,
-                                  top: -6,
-                                  child: Image.asset(
-                                    'assets/images/animated/flambeau_flamme.webp',
-                                    width: 22,
-                                    height: 38,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                Container(
-                                  width: 88,
-                                  height: 88,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _playerRiposteAnim
-                                            ? const Color(0xFFD32F2F).withValues(alpha: 0.8)
-                                            : RomanColors.imperialGold.withValues(alpha: 0.35),
-                                        blurRadius: 16,
-                                        spreadRadius: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 82,
-                                  height: 82,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: _playerRiposteAnim ? const Color(0xFFFF5252) : RomanColors.imperialGold,
-                                      width: 2.5,
-                                    ),
-                                  ),
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                      heroAvatar,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) => const Center(
-                                        child: Text('🛡️', style: TextStyle(fontSize: 32)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black87,
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: RomanColors.imperialGold, width: 0.8),
-                                    ),
-                                    child: Text(
-                                      _currentStance.nom.toUpperCase(),
-                                      style: const TextStyle(
-                                        color: RomanColors.imperialGold,
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        '🛡️ $heroName',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.5,
-                          fontFamily: 'serif',
-                        ),
-                      ),
-                    ],
+                Positioned(
+                  left: xHeros - taille / 2 - 20 + dxHeros,
+                  bottom: sol + respire * 3,
+                  child: _combattant(
+                    image: heroAvatar,
+                    nom: heroName,
+                    badge: _currentStance.nom,
+                    taille: taille,
+                    couleur: RomanColors.imperialGold,
+                    touche: _assautHeros ? 0 : encaisse,
+                    sens: -1,
+                    vaincu: _combatFini && !_victoire,
                   ),
                 ),
-
-                // Centre d'Affrontement avec Dégâts Flottants Dynamiques & Glaives Croisés
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (_floatingCombatText != null)
-                      RomanSpringBounce(
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 4),
-                          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3.5),
-                          decoration: BoxDecoration(
-                            color: _floatingCombatIsHero ? const Color(0xFF8E1724) : const Color(0xFF4A0E17),
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: RomanColors.imperialGold, width: 1.4),
-                            boxShadow: const [
-                              BoxShadow(color: Color(0x66FFD700), blurRadius: 10, spreadRadius: 1),
-                            ],
-                          ),
-                          child: Text(
-                            _floatingCombatText!,
-                            style: const TextStyle(
-                              color: Color(0xFFFFE082),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11.5,
-                              letterSpacing: 0.6,
-                            ),
-                          ),
-                        ),
-                      )
-                    else
-                      const SizedBox(height: 22),
-
-                    AnimatedBuilder(
-                      animation: _pulseController,
-                      builder: (context, _) {
-                        return Transform.rotate(
-                          angle: (_animatingHit ? 0.3 : 0.0) + (math.sin(_pulseController.value * math.pi) * 0.08),
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: const Color(0x66000000),
-                              border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.5)),
-                            ),
-                            child: const Text('⚔️', style: TextStyle(fontSize: 22)),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 2),
-                    const Text(
-                      'COLOSSEUM',
-                      style: TextStyle(
-                        color: RomanColors.imperialGold,
-                        fontSize: 8.5,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
+                Positioned(
+                  left: xBoss - taille / 2 - 20 + dxBoss,
+                  bottom: sol + (1 - respire) * 3,
+                  child: _combattant(
+                    image: boss['image'] as String,
+                    nom: boss['nom'] as String,
+                    badge: boss['titre'] as String,
+                    taille: taille,
+                    couleur: const Color(0xFFFF8A80),
+                    touche: _assautHeros ? encaisse : 0,
+                    sens: 1,
+                    vaincu: _combatFini && _victoire,
+                  ),
+                ),
+                if (t > 0.3 && t < 1)
+                  Positioned(
+                    left: xCible - taille * 0.9,
+                    bottom: yCentre - taille * 0.9,
+                    width: taille * 1.8,
+                    height: taille * 1.8,
+                    child: IgnorePointer(
+                      child: Image(
+                        key: ValueKey(_coups),
+                        image: _imageImpact,
+                        gaplessPlayback: true,
                       ),
                     ),
+                  ),
+                if (_floatingCombatText != null && t > 0.35 && t < 1)
+                  Positioned(
+                    left: xCible - 70,
+                    width: 140,
+                    bottom: yCentre + taille * 0.55 + (t - 0.35) * 40,
+                    child: Opacity(
+                      opacity: (1 - (t - 0.6) / 0.4).clamp(0.0, 1.0),
+                      child: Text(
+                        _floatingCombatText!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xFFFFE082),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          shadows: [Shadow(color: Colors.black, blurRadius: 6)],
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  /// Un combattant : médaillon, nom et badge. [touche] (0 à 1) le fait
+  /// basculer vers l'arrière et rougir ; [sens] vaut -1 à gauche, 1 à droite.
+  Widget _combattant({
+    required String image,
+    required String nom,
+    required String badge,
+    required double taille,
+    required Color couleur,
+    required double touche,
+    required int sens,
+    bool vaincu = false,
+  }) {
+    // Le vaincu bascule en arrière, s'enfonce et pâlit.
+    return AnimatedSlide(
+      offset: vaincu ? const Offset(0, 0.12) : Offset.zero,
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.easeOutBack,
+      child: AnimatedOpacity(
+        opacity: vaincu ? 0.45 : 1,
+        duration: const Duration(milliseconds: 700),
+        child: AnimatedRotation(
+          turns: vaincu ? sens * 0.06 : 0,
+          duration: const Duration(milliseconds: 700),
+          curve: Curves.easeOutBack,
+          child: _combattantPose(image, nom, badge, taille, couleur, touche, sens),
+        ),
+      ),
+    );
+  }
+
+  Widget _combattantPose(
+    String image,
+    String nom,
+    String badge,
+    double taille,
+    Color couleur,
+    double touche,
+    int sens,
+  ) {
+    return SizedBox(
+      width: taille + 40,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Transform.rotate(
+            angle: sens * touche * 0.18,
+            child: Container(
+              width: taille,
+              height: taille,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Color.lerp(couleur, const Color(0xFFFF5252), touche)!,
+                  width: 2.5,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.lerp(
+                      couleur.withValues(alpha: 0.35),
+                      const Color(0xFFD32F2F),
+                      touche,
+                    )!,
+                    blurRadius: 14 + touche * 10,
+                    spreadRadius: 1 + touche * 3,
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const Center(
+                        child: Text('⚔️', style: TextStyle(fontSize: 32)),
+                      ),
+                    ),
+                    // Flash rouge du coup encaissé.
+                    ColoredBox(color: const Color(0xFFD32F2F).withValues(alpha: touche * 0.45)),
                   ],
                 ),
-
-                // Champion Boss (Droite) avec Torches Animées & Recul
-                AnimatedSlide(
-                  offset: _animatingHit ? const Offset(0.10, 0) : Offset.zero,
-                  duration: const Duration(milliseconds: 180),
-                  curve: Curves.easeOutCubic,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      AnimatedBuilder(
-                        animation: _pulseController,
-                        builder: (context, _) {
-                          final bossScale = _animatingHit
-                              ? 0.88
-                              : 1.0 + (_pulseController.value * 0.03);
-                          return Transform.scale(
-                            scale: bossScale,
-                            child: Stack(
-                              alignment: Alignment.center,
-                              clipBehavior: Clip.none,
-                              children: [
-                                Positioned(
-                                  right: -14,
-                                  top: -6,
-                                  child: Image.asset(
-                                    'assets/images/animated/flambeau_flamme.webp',
-                                    width: 22,
-                                    height: 38,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                                Container(
-                                  width: 88,
-                                  height: 88,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: _animatingHit
-                                            ? const Color(0xFFD32F2F).withValues(alpha: 0.8)
-                                            : const Color(0xFF8E1724).withValues(alpha: 0.4),
-                                        blurRadius: 16,
-                                        spreadRadius: 2,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 82,
-                                  height: 82,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: _animatingHit ? const Color(0xFFFF5252) : const Color(0xFF8E1724),
-                                      width: 2.5,
-                                    ),
-                                  ),
-                                  child: ClipOval(
-                                    child: Image.asset(
-                                      boss['image'] as String,
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (_, __, ___) => const Center(
-                                        child: Text('⚔️', style: TextStyle(fontSize: 32)),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF3E151D),
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(color: const Color(0xFFFF8A80), width: 0.8),
-                                    ),
-                                    child: Text(
-                                      '${boss['titre']}'.toUpperCase(),
-                                      style: const TextStyle(
-                                        color: Color(0xFFFF8A80),
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        '⚔️ ${boss['nom']}',
-                        style: const TextStyle(
-                          color: Colors.amberAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.5,
-                          fontFamily: 'serif',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-
-          // 3. Dialogue / Taunt du Boss
-          if (_currentBossSpeech != null)
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 14),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: const Color(0xDD3E151D),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-              ),
-              child: Text(
-                _currentBossSpeech!,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.amberAccent,
-                  fontSize: 10.5,
-                  fontWeight: FontWeight.bold,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            )
-          else
-            Text(
-              '« ${boss['citation']} »',
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white70, fontStyle: FontStyle.italic, fontSize: 10.5),
+          const SizedBox(height: 4),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1),
+            decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.circular(6),
+              border: Border.all(color: couleur, width: 0.8),
             ),
+            child: Text(
+              badge.toUpperCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: couleur, fontSize: 8, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            nom,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 10.5,
+              fontFamily: 'serif',
+              shadows: [Shadow(color: Colors.black, blurRadius: 4)],
+            ),
+          ),
         ],
       ),
     );

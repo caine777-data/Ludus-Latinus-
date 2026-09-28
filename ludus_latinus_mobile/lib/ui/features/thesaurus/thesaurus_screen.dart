@@ -346,6 +346,8 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        const _CartesDesCas(),
+        const SizedBox(height: 16),
         _buildDeclensionCard(
           title: '1ère Déclinaison (Rosa, ae, f.)',
           type: 'Noms féminins en -a',
@@ -522,6 +524,96 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           ),
         ],
       ),
+    );
+  }
+}
+
+
+/// Les six cas en images : Lupulus joue le rôle de chaque cas.
+class _CartesDesCas extends StatelessWidget {
+  const _CartesDesCas();
+
+  static const _cas = [
+    ('nominatif', 'Nominatif', "Qui fait l'action ?", 'Sujet', CaseColors.nominative),
+    ('vocatif', 'Vocatif', "On appelle quelqu'un", 'Apostrophe', CaseColors.vocative),
+    ('accusatif', 'Accusatif', "Qui ou quoi subit l'action ?", 'COD', CaseColors.accusative),
+    ('genitif', 'Génitif', 'De qui ? À qui est-ce ?', 'Complément du nom', CaseColors.genitive),
+    ('datif', 'Datif', 'À qui ? Pour qui ?', 'Attribution, COI', CaseColors.dative),
+    ('ablatif', 'Ablatif', 'Avec quoi ? Où ? Quand ?', 'Circonstances', CaseColors.ablative),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'LES SIX CAS',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.4,
+            color: RomanColors.imperialPurple,
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 206,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: _cas.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 10),
+            itemBuilder: (context, i) {
+              final (fichier, nom, question, fonction, couleur) = _cas[i];
+              return Container(
+                width: 132,
+                padding: const EdgeInsets.fromLTRB(8, 8, 8, 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: couleur, width: 2),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 104,
+                      height: 104,
+                      decoration: BoxDecoration(
+                        color: couleur.withValues(alpha: 0.12),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Image.asset(
+                        'assets/images/cas/cas_$fichier.webp',
+                        fit: BoxFit.contain,
+                        errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      nom,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: couleur),
+                    ),
+                    Text(
+                      question,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      style: const TextStyle(fontSize: 11.5, height: 1.25, color: RomanColors.charcoal),
+                    ),
+                    const Spacer(),
+                    Text(
+                      fonction,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: couleur),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
