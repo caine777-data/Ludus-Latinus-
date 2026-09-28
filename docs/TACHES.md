@@ -1611,7 +1611,7 @@ doivent passer.
 
 ## T18 — Un test qui empêche un exercice de 5e de redonner sa réponse
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : les exercices de 5e viennent d'être réécrits pour que le
 cours ne donne plus la réponse (commit `e26c38b`). Un test doit empêcher
@@ -1642,18 +1642,35 @@ qu'une modification future la remette par erreur.
 4. `python -m unittest discover -s tests`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Le test passe sur le contenu actuel.
-- [ ] Il échoue quand on remet une réponse (recopie le message d'échec).
-- [ ] `git status` : seuls le nouveau test et `docs/TACHES.md` sont modifiés.
-- [ ] `python -m unittest discover -s tests` : tout passe (recopie le total).
-- [ ] `ruff check .` : aucune erreur.
-- [ ] Un commit `test: les exercices de 5e ne redonnent pas leur réponse`.
+- [x] Le test passe sur le contenu actuel.
+- [x] Il échoue quand on remet une réponse (recopie le message d'échec).
+- [x] `git status` : seuls le nouveau test et `docs/TACHES.md` sont modifiés.
+- [x] `python -m unittest discover -s tests` : tout passe (recopie le total).
+- [x] `ruff check .` : aucune erreur.
+- [x] Un commit `test: les exercices de 5e ne redonnent pas leur réponse`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `tests/test_reponses_cachees.py` (création)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - `python -m unittest tests/test_reponses_cachees.py` : `Ran 2 tests in 0.004s — OK` (sur contenu actuel).
+  - Échec provoqué en ajoutant `(legit)` à `m2-03` dans `content/monde2_domus.py` :
+    ```
+    FAIL: test_trous_ne_donnent_pas_reponse (tests.test_reponses_cachees.TestReponsesCachees5eme.test_trous_ne_donnent_pas_reponse) (lesson='m2-03', mot='legit', champ='content')
+    Le mot complet reconstitué ne doit apparaître ni dans content ni dans consigne.
+    ----------------------------------------------------------------------
+    AssertionError: True is not false : La leçon m2-03 révèle le mot 'legit' dans son cours.
+    FAILED (failures=1)
+    ```
+  - Annulation de la modification de test : `git checkout -- content/` (arbre `content/` immédiatement restauré et propre).
+  - `python -m unittest discover -s tests` : `Ran 250 tests in 10.947s — OK` (250 tests au total, aucune régression).
+  - `python -m ruff check .` : `All checks passed!`.
 - Doutes, questions pour l'architecte :
+  - Pour les trous où `avant` se termine par un espace (ex. `m1-03` avec `avant="Romanus "` et `sol="sum"`), le test contrôle à la fois la forme concaténée et la forme avec espace (`Romanus sum`) si un espace séparateur est présent.
+  - La leçon `m7-02` a `avant=""` (préfixe en début de mot), elle est ignorée par le filtre `avant and solution`. Les 3 trous à choix (`m8-03`, `m9-03`, `m10-03`) et les 3 puzzles (`m1-02`, `m1-05`, `m7-03`) sont bien ignorés via la table d'exceptions documentée en tête de fichier.
 - Reste à faire :
+  - Rien sur T18 (tâche terminée et prête pour relecture/validation par l'architecte).
 
 ---
 
