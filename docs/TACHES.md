@@ -1764,7 +1764,7 @@ tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
 
 ## T20 — Corriger trois API obsolètes (sans toucher au thème)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : appliquer les corrections que tu as proposées en T19, sauf
 celle de `themes.dart` (trop risquée pour le mode sombre).
@@ -1776,7 +1776,7 @@ celle de `themes.dart` (trop risquée pour le mode sombre).
 
 **Étapes** :
 1. Dans les trois `Switch.adaptive` de `roman_audio_modal.dart`, remplace
-   `activeColor: RomanColors.goldDark` par **deux** lignes :
+`activeColor: RomanColors.goldDark` par **deux** lignes :
    `activeThumbColor: RomanColors.goldDark,` et
    `activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45),`
    (sinon la piste prend la couleur du thème et perd l'or).
@@ -1789,17 +1789,35 @@ celle de `themes.dart` (trop risquée pour le mode sombre).
    puis `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Plus aucun `deprecated_member_use` dans ces deux fichiers.
-- [ ] Les interrupteurs restent dorés (captures avant et après).
-- [ ] La carte de Memoria se retourne comme avant.
-- [ ] `flutter test` : tous les tests passent.
-- [ ] Un commit `refactor(mobile): interrupteurs et Memoria sans API obsolète`.
+- [x] Plus aucun `deprecated_member_use` dans ces deux fichiers.
+- [x] Les interrupteurs restent dorés (captures avant et après).
+- [x] La carte de Memoria se retourne comme avant.
+- [x] `flutter test` : tous les tests passent.
+- [x] Un commit `refactor(mobile): interrupteurs et Memoria sans API obsolète`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/core/roman_audio_modal.dart` (3 `Switch.adaptive`)
+  - `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart` (1 `Matrix4.scaleByDouble`)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - `roman_audio_modal.dart` : `activeThumbColor: RomanColors.goldDark` et `activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45)` appliqués aux 3 interrupteurs (`Sonorités de Rome`, `Musique`, `Retours Haptiques`).
+  - `memoria_screen.dart` : `..scaleByDouble(scale, scale, scale, 1)` appliqué sur l'effet 3D de la carte (l. 590).
+  - Validation sur émulateur `Pixel_Ludus` :
+    - Interrupteurs audio AVANT : `scratch/t20_audio_switches_avant.png` (interrupteurs dorés).
+    - Interrupteurs audio APRÈS : `scratch/t20_audio_switches_apres.png` (rendu doré identique préservé sur curseur et piste).
+    - Memoria Velox recto : `scratch/t20_memoria_screen.png`.
+    - Memoria Velox verso : `scratch/t20_memoria_card_flipped.png` (retournement 3D fluide au choix de réponse).
+    - Memoria Velox retour recto : `scratch/t20_memoria_card_recto_after.png` (retournement fluide au tap direct sur la carte).
+  - `flutter analyze lib/ui/core/roman_audio_modal.dart lib/ui/features/memoria/memoria_screen.dart` : 0 `deprecated_member_use` (seules 3 remarques `prefer_const_*` préexistantes pour T21 subsistent).
+  - `flutter analyze lib` : 58 remarques avant ➔ 54 remarques après (-4 résolues).
+  - `flutter test` : `+54: All tests passed!` (54 tests sur 54 passants).
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier régénéré annulé.
+  - Désactivation de l'overlay pointeur de l'émulateur (`pointer_location 0`, `show_touches 0`).
 - Doutes, questions pour l'architecte :
+  - Aucun doute. Le remplacement de `scale` par `scaleByDouble(scale, scale, scale, 1)` préserve parfaitement la perspective Z de `setEntry(3, 2, 0.0012)`.
 - Reste à faire :
+  - Rien sur T20. Prêt pour T21.
 
 ---
 

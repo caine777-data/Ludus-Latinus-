@@ -587,7 +587,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     return Transform(
                       transform: Matrix4.identity()
                         ..setEntry(3, 2, 0.0012)
-                        ..scale(scale)
+                        ..scaleByDouble(scale, scale, scale, 1)
                         ..rotateY(angle),
                       alignment: Alignment.center,
                       child: isFrontVisible

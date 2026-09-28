@@ -168,7 +168,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                               ),
                               Switch.adaptive(
                                 value: !_audio.isMuted,
-                                activeColor: RomanColors.goldDark,
+                                activeThumbColor: RomanColors.goldDark,
+                                activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45),
                                 onChanged: (active) {
                                   setState(() {
                                     _audio.toggleMute();
@@ -275,7 +276,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                               ),
                               Switch.adaptive(
                                 value: _audio.musicEnabled,
-                                activeColor: RomanColors.goldDark,
+                                activeThumbColor: RomanColors.goldDark,
+                                activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45),
                                 onChanged: (active) => setState(() => _audio.setMusicEnabled(active)),
                               ),
                             ],
@@ -343,7 +345,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                               ),
                               Switch.adaptive(
                                 value: _audio.hapticsEnabled,
-                                activeColor: RomanColors.goldDark,
+                                activeThumbColor: RomanColors.goldDark,
+                                activeTrackColor: RomanColors.goldDark.withValues(alpha: 0.45),
                                 onChanged: (active) {
                                   setState(() {
                                     _audio.setHapticsEnabled(active);
