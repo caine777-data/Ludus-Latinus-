@@ -306,6 +306,13 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Sphinx et Minotaure animés, pièces en 3D** — portraits animés
+  `boss_sphinx_anime.webp` et `boss_minotaure_anime.webp` (vidéos Gemini,
+  jouées à l'aller puis au retour ; `PORTRAITS` dans `illustrations.py`).
+  `RomanLottieEffects.showCoinShower` joue désormais `pieces_or.webp`.
+  Les anciens `boss_sphinx_140.png` et `boss_minotaure_140.png` restent :
+  l'appli de bureau (`app/vues_exercices.py`) s'en sert. Demandés à Cédric :
+  vidéos du rétiaire, du lion et de Mercure pour animer les trois autres boss.
 - **Duel animé et visuels du 28/09** (vérifiés sur l'émulateur) —
   `duel_screen.dart` : décor `images/duel/decor_colisee.webp`, scène
   `_buildScene` pilotée par `_assaut` (900 ms : élan de l'attaquant, recul,
@@ -314,7 +321,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   Le premier boss s'appelle **Crixus le Rétiaire** (`boss_retiaire.webp`) ;
   l'enfant gladiateur `boss_gladiateur_140.png` reste l'icône du Colisée dans
   Ludi. L'éclat d'épées et la pluie de pièces Lottie ne servent plus dans le
-  Duel ; **la pluie de pièces reste dans la leçon, aussi plate : à remplacer**.
+  Duel (la pluie de pièces a depuis été refaite en 3D).
   Stèle de l'Épigraphie (`images/epigraphie/stele_vierge.webp`), cartes des
   six cas en tête de l'onglet Déclinaisons du Thesaurus
   (`images/cas/cas_<cas>.webp`), Lupulus qui encourage après une erreur de
