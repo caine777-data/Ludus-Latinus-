@@ -48,9 +48,9 @@ Voici les terminaisons à mémoriser pour la 3e déclinaison consonantique :
 | **Datif** (COI / Attribution) | **-I** *(regi, consuli)* | **-IBUS** *(regibus, consulibus)* |
 | **Ablatif** (Circonstance) | **-E** *(rege, consule)* | **-IBUS** *(regibus, consulibus)* |
 
-Complète pour mettre le mot *miles* (le soldat) à l'accusatif singulier (COD) :
-« Le consul convoque le soldat » (*Consul militem convocat*).""",
-            "consigne": "Complète le mot 'soldat' à l'accusatif singulier (-em) :",
+Complète pour mettre le mot *miles, militis* (le soldat) à l'accusatif singulier (COD) :
+« Le consul convoque le soldat ».""",
+            "consigne": "Complète le mot « soldat » à l'accusatif singulier :",
             "avant": "Consul milit",
             "apres": " convocat.",
             "solution": "em",
@@ -65,12 +65,12 @@ Dans la République romaine, deux **consuls** élus pour un an dirigent l'État 
 
 Sur le Forum, le consul s'adresse aux citoyens avec autorité.
 
-Reconstitue cette phrase en latin de la 3e déclinaison :
-*« Dux leges civibus dat. »*
-*(Dux = le chef [Nom.], leges = les lois [Acc. pl.], civibus = aux citoyens [Dat. pl.], dat = donne)*""",
-            "latin": "Dux leges civibus dat.",
-            "mots": ["Le chef", "donne", "des lois", "aux citoyens.", "Le soldat", "marche."],
-            "solution": "Le chef donne des lois aux citoyens.",
+Exemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyens. »
+
+À toi ! Regarde bien les terminaisons de *lex, legis* (la loi) et de *civis* (le citoyen) :""",
+            "latin": "Consul legem civibus dat.",
+            "mots": ["Le consul", "donne", "une loi", "aux citoyens.", "des lois", "au citoyen."],
+            "solution": "Le consul donne une loi aux citoyens.",
         },
         {
             "id": "m12-04",

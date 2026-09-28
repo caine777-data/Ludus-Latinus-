@@ -54,12 +54,14 @@ En latin, pour désigner une personne ou un objet dont on vient de parler, on ut
 - *Eam* = la (féminin)
 - *Id* = cela (neutre)
 
-Complète la phrase de César pour dire : « César le vaincra » (*Caesar eum vincet*).""",
-            "consigne": "Complète le pronom COD 'le' au masculin (eum) :",
+Exemple : *Caesar Vercingetorigem vincet ? Caesar eum vincet.* = « César le vaincra. »
+
+À toi ! Il s'agit maintenant de la ville d'Alésia (*urbs*, féminin). Complète pour dire : « César la prendra ».""",
+            "consigne": "Complète le pronom COD « la » (féminin) :",
             "avant": "Caesar ",
-            "apres": " vincet.",
-            "solution": "eum",
-            "latin_complet": "Caesar eum vincet.",
+            "apres": " capiet.",
+            "solution": "eam",
+            "latin_complet": "Caesar eam capiet.",
         },
         {
             "id": "m17-03",
@@ -70,12 +72,12 @@ Enfermé sur la colline d'Alésia avec 80 000 guerriers, le jeune chef arverne *
 
 César fait creuser une double ligne de fortifications géante tout autour de la ville.
 
-Reconstitue cette phrase sur la bravoure des guerriers gaulois :
-*« Galli pro libertate pugnabant. »*
-*(Galli = les Gaulois [Nom. pl.], pro libertate = pour la liberté [Abl.], pugnabant = combattaient [Imparfait])*""",
-            "latin": "Galli pro libertate pugnabant.",
-            "mots": ["Les Gaulois", "combattaient", "pour la liberté.", "César", "assiégeait", "la ville."],
-            "solution": "Les Gaulois combattaient pour la liberté.",
+Exemple : *« Galli pro libertate pugnabant. »* = « Les Gaulois combattaient pour la liberté. »
+
+À toi ! Un seul guerrier, cette fois : regarde la fin du verbe.""",
+            "latin": "Vercingetorix pro libertate pugnabat.",
+            "mots": ["Vercingétorix", "combattait", "pour la liberté.", "combattaient", "César"],
+            "solution": "Vercingétorix combattait pour la liberté.",
         },
         {
             "id": "m17-04",

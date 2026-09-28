@@ -45,12 +45,14 @@ Pour un adjectif de 2ème classe comme *omnis* (tout) :
 
 Exemple : *Omnia vincit amor* = « L'amour triomphe de tout » (citation célèbre de Virgile).
 
-Complète la phrase pour dire : « Le général voit un immense péril » (*Dux ingens periculum videt*).""",
-            "consigne": "Complète l'adjectif 'immense' (ingens) au neutre :",
-            "avant": "Dux in",
-            "apres": " periculum videt.",
-            "solution": "gens",
-            "latin_complet": "Dux ingens periculum videt.",
+Applique la même règle à *ingens, ingentis* (immense), qui se décline comme *omnis*.
+*Periculum, -i* (n.) = le danger ; au pluriel : *pericula*.
+Complète pour dire : « Les soldats voient d'immenses dangers ».""",
+            "consigne": "Accorde « immenses » avec pericula (neutre pluriel) :",
+            "avant": "Milites ingent",
+            "apres": " pericula vident.",
+            "solution": "ia",
+            "latin_complet": "Milites ingentia pericula vident.",
         },
         {
             "id": "m14-03",
@@ -69,11 +71,12 @@ En latin, pour comparer deux personnes ou désigner le meilleur, c'est très ré
    - *fortis* ➔ **fortissimus** (le plus courageux / très courageux)
    - *clarus* ➔ **clarissimus** (très célèbre)
 
-Reconstitue cette devise de gloire romaine :
-*« Miles Romanus fortissimus est. »*""",
-            "latin": "Miles Romanus fortissimus est.",
-            "mots": ["Le soldat", "romain", "est", "le plus courageux.", "Le chef", "ordonne."],
-            "solution": "Le soldat romain est le plus courageux.",
+Exemple : *« Miles Romanus fortissimus est. »* = « Le soldat romain est le plus courageux. »
+
+À toi ! Comparatif ou superlatif ? Regarde bien la terminaison :""",
+            "latin": "Legio Romana fortior est.",
+            "mots": ["La légion", "romaine", "est", "plus courageuse.", "la plus courageuse.", "Le soldat"],
+            "solution": "La légion romaine est plus courageuse.",
         },
         {
             "id": "m14-04",

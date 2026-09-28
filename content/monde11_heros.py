@@ -49,10 +49,10 @@ Arrêté et menacé de tortures par le feu, Mucius tend calmement sa main droite
 
 Terrifié et admiratif devant un tel courage, le roi Porsenna le libère et fait la paix avec Rome. Ayant perdu l'usage de sa main droite brûlée, Mucius est surnommé **Scaevola** (« le gaucher »).
 
-Reconstitue sa fière déclaration républicaine :""",
-            "latin": "Civis Romanus sum.",
-            "mots": ["Je suis", "citoyen", "romain.", "Le roi", "a peur", "du feu."],
-            "solution": "Je suis citoyen romain.",
+Ses trois cents compagnons pourraient tous répondre au pluriel. Traduis leur réponse :""",
+            "latin": "Cives Romani sumus.",
+            "mots": ["Nous sommes", "citoyens", "romains.", "Je suis", "citoyen", "romain."],
+            "solution": "Nous sommes citoyens romains.",
         },
         {
             "id": "m11-03",
@@ -65,11 +65,12 @@ Refusant d'être prisonnière, Cloélie trompe la surveillance des gardes, entra
 
 Le roi Porsenna, stupéfait, exige qu'on lui renvoie Cloélie... non pour la punir, mais pour lui offrir un cheval d'honneur et libérer la moitié des autres otages de son choix. Les Romains lui érigèrent une statue équestre sur la Voie Sacrée !
 
-Complète la phrase latine pour dire : « La courageuse jeune fille traverse le fleuve » (*Cloelia fluvium transit*).""",
-            "consigne": "Complète le verbe 'traverse' (transit) :",
-            "avant": "Cloelia fluvium tran",
+*Transire* = traverser ; *fluvius, -i* = le fleuve.
+Complète la phrase latine pour dire : « Cloélie traverse le fleuve ».""",
+            "consigne": "Complète le verbe « traverse » (il ou elle fait l'action) :",
+            "avant": "Cloelia fluvium trans",
             "apres": ".",
-            "solution": "sit",
+            "solution": "it",
             "latin_complet": "Cloelia fluvium transit.",
         },
         {

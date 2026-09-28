@@ -40,18 +40,14 @@ Mais loin de sauver la République, cet assassinat déclenche de nouvelles guerr
             "content": """## Mets à l'épreuve tes connaissances de 4ème !
 Pour prouver que tu as assimilé la 3ème déclinaison et le Parfait :
 
-Complète la phrase latine :
-« Les braves soldats ont défendu la patrie. »
-*(Fortes milites patriam defenderunt)*.
+*Servare* = sauver ; son parfait : *servavi* (j'ai sauvé).
 
-- *Milites* = les soldats (Nom. pl. 3e déclinaison)
-- *Fortes* = courageux (Adjectif 2e classe, Nom. pl.)
-- *Defenderunt* = ont défendu (Verbe au parfait, 3e personne du pluriel en -erunt)""",
-            "consigne": "Complète le verbe 'ont défendu' au parfait (-erunt) :",
-            "avant": "Fortes milites patriam defend",
+Complète la phrase latine pour dire : « Les soldats ont sauvé la patrie ».""",
+            "consigne": "Complète le verbe « ont sauvé » au parfait :",
+            "avant": "Milites patriam servav",
             "apres": ".",
             "solution": "erunt",
-            "latin_complet": "Fortes milites patriam defenderunt.",
+            "latin_complet": "Milites patriam servaverunt.",
         },
         {
             "id": "m18-03",
@@ -60,11 +56,12 @@ Complète la phrase latine :
             "content": """## L'écho des siècles
 Reconstitue cette noble maxime républicaine qui résume tout l'honneur des citoyens romains de 4ème :
 
-*« Virtus et sapientia rem publicam servant. »*
-*(Virtus = le courage [3e décl.], sapientia = la sagesse [1re décl.], rem publicam = la république [Acc.], servant = sauvent)*""",
-            "latin": "Virtus et sapientia rem publicam servant.",
-            "mots": ["Le courage", "et la sagesse", "sauvent", "la république.", "Le tyran", "s'enfuit."],
-            "solution": "Le courage et la sagesse sauvent la république.",
+Exemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et la sagesse sauvent la République. »
+
+Épreuve finale : un génitif de la 3e déclinaison et un parfait dans la même phrase !""",
+            "latin": "Sapientia consulis rem publicam servavit.",
+            "mots": ["La sagesse", "du consul", "a sauvé", "la République.", "sauve", "des consuls"],
+            "solution": "La sagesse du consul a sauvé la République.",
         },
         {
             "id": "m18-04",

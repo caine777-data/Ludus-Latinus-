@@ -44,18 +44,16 @@ Le parfait du verbe *esse* (être) utilise le radical régulier **FU-** :
 - **FUI** : je fus / j'ai été
 - **FUISTI** : tu fus / tu as été
 - **FUIT** : il fut / il a été
-- **FUIMUS** : nous fûmes / nous avons été
-- **FUISTIS** : vous fûtes / vous avez été
-- **FUERUNT** : ils furent / ils ont été
+- Au pluriel, *fu-* prend les terminaisons de tous les parfaits : **-imus** (nous), **-istis** (vous), **-erunt** (ils, elles).
 
 Exemple : *Cicero magnus orator fuit.* = « Cicéron fut un grand orateur. »
 
-Complète pour dire : « César fut un général célèbre » (*Caesar clarus dux fuit*).""",
-            "consigne": "Complète le verbe être au parfait (fuit) :",
-            "avant": "Caesar clarus dux fu",
+Complète pour dire : « César et Pompée furent des chefs célèbres ».""",
+            "consigne": "Complète le verbe être au parfait : « ils furent » :",
+            "avant": "Caesar et Pompeius clari duces fu",
             "apres": ".",
-            "solution": "it",
-            "latin_complet": "Caesar clarus dux fuit.",
+            "solution": "erunt",
+            "latin_complet": "Caesar et Pompeius clari duces fuerunt.",
         },
         {
             "id": "m16-03",
@@ -69,10 +67,10 @@ En 47 av. J.-C., après avoir écrasé l'armée du roi Pharnace en un clin d'œi
 
 Trois verbes au parfait, à la première personne singulier en **-I** !
 
-Reconstitue cette citation triomphale :""",
-            "latin": "Veni, vidi, vici.",
-            "mots": ["Je suis venu,", "j'ai vu,", "j'ai vaincu.", "Rome", "a fêté", "le héros."],
-            "solution": "Je suis venu, j'ai vu, j'ai vaincu.",
+Et à la 3e personne ? *Vici* (j'ai vaincu) devient *vicit* (il a vaincu). Traduis :""",
+            "latin": "Caesar Gallos vicit.",
+            "mots": ["César", "a vaincu", "les Gaulois.", "vainc", "les Romains."],
+            "solution": "César a vaincu les Gaulois.",
         },
         {
             "id": "m16-04",

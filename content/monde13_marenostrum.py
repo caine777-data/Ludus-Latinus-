@@ -45,12 +45,13 @@ Exemples majeurs de 3e déclinaison :
 - **Flumen, fluminis** (n.) : le fleuve ➔ pluriel : **flumina** (les fleuves)
 - **Tempus, temporis** (n.) : le temps ➔ pluriel : **tempora** (les temps)
 
-Complète pour dire : « Les navires parcourent les mers » (*Naves maria percurrunt*).""",
-            "consigne": "Complète 'les mers' au pluriel neutre (-ia) :",
-            "avant": "Naves mar",
-            "apres": " percurrunt.",
-            "solution": "ia",
-            "latin_complet": "Naves maria percurrunt.",
+Applique la règle à un autre neutre : *nomen, nominis* (n.) = le nom.
+Complète pour dire : « Le maître écrit les noms des élèves ».""",
+            "consigne": "Complète « les noms » au pluriel neutre :",
+            "avant": "Magister nomin",
+            "apres": " discipulorum scribit.",
+            "solution": "a",
+            "latin_complet": "Magister nomina discipulorum scribit.",
         },
         {
             "id": "m13-03",
@@ -62,12 +63,12 @@ Après avoir vaincu la cité maritime de **Carthage** (commandée par le redouta
 Les Romains appellent désormais fièrement la mer Méditerranée :
 *« Mare Nostrum »* (« Notre Mer »).
 
-Reconstitue cette phrase sur la puissance maritime romaine :
-*« Naves Romanae in mari navigant. »*
-*(Naves Romanae = les navires romains [Nom. pl.], in mari = sur la mer [Abl. sg.], navigant = naviguent)*""",
-            "latin": "Naves Romanae in mari navigant.",
-            "mots": ["Les navires", "romains", "naviguent", "sur la mer.", "L'ennemi", "fuit."],
-            "solution": "Les navires romains naviguent sur la mer.",
+Exemple : *« Naves Romanae in mari navigant. »* = « Les navires romains naviguent sur la mer. »
+
+À toi ! *Navis* est le singulier de *naves*.""",
+            "latin": "Navis Romana in mari navigat.",
+            "mots": ["Le navire", "romain", "navigue", "sur la mer.", "Les navires", "naviguent"],
+            "solution": "Le navire romain navigue sur la mer.",
         },
         {
             "id": "m13-04",

@@ -45,19 +45,17 @@ Le verbe être (*esse*) à l'imparfait est indispensable pour tous les récits d
 - **ERAM** : j'étais
 - **ERAS** : tu étais
 - **ERAT** : il/elle était (*➔ formule magique pour commencer un récit !*)
-- **ERAMUS** : nous étions
-- **ERATIS** : vous étiez
-- **ERANT** : ils/elles étaient
+- Au pluriel, on ajoute à *era-* les terminaisons habituelles : **-mus** (nous), **-tis** (vous), **-nt** (ils, elles).
 
 Exemple classique de Tite-Live :
 *« Romulus primus rex Romae erat. »* = « Romulus était le premier roi de Rome. »
 
-Complète pour dire : « Les citoyens étaient sur le forum » (*Cives in foro erant*).""",
-            "consigne": "Complète le verbe être au pluriel 'étaient' (erant) :",
-            "avant": "Cives in foro er",
+Complète pour dire : « Les élèves étaient à l'école » (*in schola*).""",
+            "consigne": "Complète le verbe être : « ils étaient » :",
+            "avant": "Discipuli in schola er",
             "apres": ".",
             "solution": "ant",
-            "latin_complet": "Cives in foro erant.",
+            "latin_complet": "Discipuli in schola erant.",
         },
         {
             "id": "m15-03",
@@ -66,12 +64,12 @@ Complète pour dire : « Les citoyens étaient sur le forum » (*Cives in foro e
             "content": """## L'animation sur le Forum
 À l'époque de la République, les citoyens se réunissaient chaque matin pour écouter les orateurs et débattre des lois.
 
-Reconstitue cette phrase descriptive à l'imparfait :
-*« Romani in foro conveniebant. »*
-*(Romani = les Romains [Nom. pl.], in foro = sur le forum [Abl.], conveniebant = se rassemblaient [Imparfait])*""",
-            "latin": "Romani in foro conveniebant.",
-            "mots": ["Les Romains", "se rassemblaient", "sur le forum.", "Le consul", "partait."],
-            "solution": "Les Romains se rassemblaient sur le forum.",
+Exemple : *« Romani in foro conveniebant. »* = « Les Romains se rassemblaient sur le forum. »
+
+À toi ! *Clamare* = crier. Présent ou imparfait ? Cherche le **-ba-** :""",
+            "latin": "Romani in foro clamabant.",
+            "mots": ["Les Romains", "criaient", "sur le forum.", "crient", "Le Romain"],
+            "solution": "Les Romains criaient sur le forum.",
         },
         {
             "id": "m15-04",

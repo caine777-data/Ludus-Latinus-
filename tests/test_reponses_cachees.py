@@ -1,5 +1,5 @@
 """
-Tests empêchant les exercices de 5ème (mondes 1 à 10) de redonner leur réponse.
+Tests empêchant les exercices de 5e et de 4e (mondes 1 à 18) de redonner leur réponse.
 
 Vérifie que :
 - les exercices à trou ne divulguent pas le mot attendu dans le cours ou la consigne ;
@@ -25,7 +25,8 @@ EXCEPTIONS = {
     "m10-03": "trous à choix (civilisation)",
 }
 
-MONDES_5EME = {f"monde{i}" for i in range(1, 11)}
+# 5e (mondes 1 à 10) et 4e (mondes 11 à 18) sont réécrites ; la 3e viendra ensuite.
+MONDES_REECRITS = {f"monde{i}" for i in range(1, 19)}
 
 
 def normaliser(texte: str) -> str:
@@ -46,13 +47,13 @@ def contient_texte(cherche: str, cible: str) -> bool:
     return bool(re.search(pattern, cible_norm))
 
 
-class TestReponsesCachees5eme(unittest.TestCase):
-    """Vérifie que les exercices de 5e ne donnent pas leur réponse avant l'épreuve."""
+class TestReponsesCachees(unittest.TestCase):
+    """Vérifie que les exercices réécrits ne donnent pas leur réponse avant l'épreuve."""
 
     def test_trous_ne_donnent_pas_reponse(self):
         """Le mot complet reconstitué ne doit apparaître ni dans content ni dans consigne."""
         for level in CURRICULUM:
-            if level.get("id") not in MONDES_5EME:
+            if level.get("id") not in MONDES_REECRITS:
                 continue
             for lesson in level.get("lessons", []):
                 lid = lesson.get("id")
@@ -89,7 +90,7 @@ class TestReponsesCachees5eme(unittest.TestCase):
     def test_puzzles_ne_donnent_pas_reponse(self):
         """La phrase française complète de solution ne doit pas apparaître dans content."""
         for level in CURRICULUM:
-            if level.get("id") not in MONDES_5EME:
+            if level.get("id") not in MONDES_REECRITS:
                 continue
             for lesson in level.get("lessons", []):
                 lid = lesson.get("id")

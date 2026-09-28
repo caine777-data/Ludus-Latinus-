@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-09-28 15:53:45",
+    "date_export": "2026-09-28 20:33:30",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -1244,27 +1244,27 @@
           "id": "m11-02",
           "type": "puzzle",
           "title": "Mucius Scaevola et le brasier sacré",
-          "content": "## Le courage face à la douleur\nUn autre jeune héros romain, **Mucius**, s'introduit de nuit dans le camp ennemi pour éliminer le roi Porsenna. Par erreur, il tue le secrétaire du roi.\n\nArrêté et menacé de tortures par le feu, Mucius tend calmement sa main droite dans les flammes d'un brasier sans laisser échapper un seul cri, en disant :\n*« Civis Romanus sum ! »* (Je suis citoyen romain ! Trois cents jeunes Romains comme moi ont juré ta mort).\n\nTerrifié et admiratif devant un tel courage, le roi Porsenna le libère et fait la paix avec Rome. Ayant perdu l'usage de sa main droite brûlée, Mucius est surnommé **Scaevola** (« le gaucher »).\n\nReconstitue sa fière déclaration républicaine :",
-          "latin": "Civis Romanus sum.",
+          "content": "## Le courage face à la douleur\nUn autre jeune héros romain, **Mucius**, s'introduit de nuit dans le camp ennemi pour éliminer le roi Porsenna. Par erreur, il tue le secrétaire du roi.\n\nArrêté et menacé de tortures par le feu, Mucius tend calmement sa main droite dans les flammes d'un brasier sans laisser échapper un seul cri, en disant :\n*« Civis Romanus sum ! »* (Je suis citoyen romain ! Trois cents jeunes Romains comme moi ont juré ta mort).\n\nTerrifié et admiratif devant un tel courage, le roi Porsenna le libère et fait la paix avec Rome. Ayant perdu l'usage de sa main droite brûlée, Mucius est surnommé **Scaevola** (« le gaucher »).\n\nSes trois cents compagnons pourraient tous répondre au pluriel. Traduis leur réponse :",
+          "latin": "Cives Romani sumus.",
           "mots": [
+            "Nous sommes",
+            "citoyens",
+            "romains.",
             "Je suis",
             "citoyen",
-            "romain.",
-            "Le roi",
-            "a peur",
-            "du feu."
+            "romain."
           ],
-          "solution": "Je suis citoyen romain."
+          "solution": "Nous sommes citoyens romains."
         },
         {
           "id": "m11-03",
           "type": "trou",
           "title": "Cloélie, la jeune fille indomptable",
-          "content": "## L'héroïsme au féminin (Virgo fortis)\nPour garantir la paix, Rome doit livrer de jeunes otages, parmi lesquels une jeune fille nommée **Cloélie** (*Cloelia*).\n\nRefusant d'être prisonnière, Cloélie trompe la surveillance des gardes, entraîne ses compagnes et traverse le fleuve Tibre à la nage sous une pluie de flèches pour revenir libre à Rome !\n\nLe roi Porsenna, stupéfait, exige qu'on lui renvoie Cloélie... non pour la punir, mais pour lui offrir un cheval d'honneur et libérer la moitié des autres otages de son choix. Les Romains lui érigèrent une statue équestre sur la Voie Sacrée !\n\nComplète la phrase latine pour dire : « La courageuse jeune fille traverse le fleuve » (*Cloelia fluvium transit*).",
-          "consigne": "Complète le verbe 'traverse' (transit) :",
-          "avant": "Cloelia fluvium tran",
+          "content": "## L'héroïsme au féminin (Virgo fortis)\nPour garantir la paix, Rome doit livrer de jeunes otages, parmi lesquels une jeune fille nommée **Cloélie** (*Cloelia*).\n\nRefusant d'être prisonnière, Cloélie trompe la surveillance des gardes, entraîne ses compagnes et traverse le fleuve Tibre à la nage sous une pluie de flèches pour revenir libre à Rome !\n\nLe roi Porsenna, stupéfait, exige qu'on lui renvoie Cloélie... non pour la punir, mais pour lui offrir un cheval d'honneur et libérer la moitié des autres otages de son choix. Les Romains lui érigèrent une statue équestre sur la Voie Sacrée !\n\n*Transire* = traverser ; *fluvius, -i* = le fleuve.\nComplète la phrase latine pour dire : « Cloélie traverse le fleuve ».",
+          "consigne": "Complète le verbe « traverse » (il ou elle fait l'action) :",
+          "avant": "Cloelia fluvium trans",
           "apres": ".",
-          "solution": "sit",
+          "solution": "it",
           "latin_complet": "Cloelia fluvium transit."
         },
         {
@@ -1339,8 +1339,8 @@
           "id": "m12-02",
           "type": "trou",
           "title": "Les Terminaisons de la 3e Déclinaison",
-          "content": "## Le tableau des désinences (Masculin / Féminin)\n\nVoici les terminaisons à mémoriser pour la 3e déclinaison consonantique :\n\n| Cas | Singulier | Pluriel |\n| :--- | :--- | :--- |\n| **Nominatif** (Sujet) | variable *(rex, consul)* | **-ES** *(reges, consules)* |\n| **Accusatif** (COD) | **-EM** *(regem, consulem)* | **-ES** *(reges, consules)* |\n| **Génitif** (Compl. du Nom) | **-IS** *(regis, consulis)* | **-UM** *(regum, consulum)* |\n| **Datif** (COI / Attribution) | **-I** *(regi, consuli)* | **-IBUS** *(regibus, consulibus)* |\n| **Ablatif** (Circonstance) | **-E** *(rege, consule)* | **-IBUS** *(regibus, consulibus)* |\n\nComplète pour mettre le mot *miles* (le soldat) à l'accusatif singulier (COD) :\n« Le consul convoque le soldat » (*Consul militem convocat*).",
-          "consigne": "Complète le mot 'soldat' à l'accusatif singulier (-em) :",
+          "content": "## Le tableau des désinences (Masculin / Féminin)\n\nVoici les terminaisons à mémoriser pour la 3e déclinaison consonantique :\n\n| Cas | Singulier | Pluriel |\n| :--- | :--- | :--- |\n| **Nominatif** (Sujet) | variable *(rex, consul)* | **-ES** *(reges, consules)* |\n| **Accusatif** (COD) | **-EM** *(regem, consulem)* | **-ES** *(reges, consules)* |\n| **Génitif** (Compl. du Nom) | **-IS** *(regis, consulis)* | **-UM** *(regum, consulum)* |\n| **Datif** (COI / Attribution) | **-I** *(regi, consuli)* | **-IBUS** *(regibus, consulibus)* |\n| **Ablatif** (Circonstance) | **-E** *(rege, consule)* | **-IBUS** *(regibus, consulibus)* |\n\nComplète pour mettre le mot *miles, militis* (le soldat) à l'accusatif singulier (COD) :\n« Le consul convoque le soldat ».",
+          "consigne": "Complète le mot « soldat » à l'accusatif singulier :",
           "avant": "Consul milit",
           "apres": " convocat.",
           "solution": "em",
@@ -1350,17 +1350,17 @@
           "id": "m12-03",
           "type": "puzzle",
           "title": "Le Consul au Forum",
-          "content": "## Le pouvoir républicain en action\nDans la République romaine, deux **consuls** élus pour un an dirigent l'État et commandent les légions.\n\nSur le Forum, le consul s'adresse aux citoyens avec autorité.\n\nReconstitue cette phrase en latin de la 3e déclinaison :\n*« Dux leges civibus dat. »*\n*(Dux = le chef [Nom.], leges = les lois [Acc. pl.], civibus = aux citoyens [Dat. pl.], dat = donne)*",
-          "latin": "Dux leges civibus dat.",
+          "content": "## Le pouvoir républicain en action\nDans la République romaine, deux **consuls** élus pour un an dirigent l'État et commandent les légions.\n\nSur le Forum, le consul s'adresse aux citoyens avec autorité.\n\nExemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyens. »\n\nÀ toi ! Regarde bien les terminaisons de *lex, legis* (la loi) et de *civis* (le citoyen) :",
+          "latin": "Consul legem civibus dat.",
           "mots": [
-            "Le chef",
+            "Le consul",
             "donne",
-            "des lois",
+            "une loi",
             "aux citoyens.",
-            "Le soldat",
-            "marche."
+            "des lois",
+            "au citoyen."
           ],
-          "solution": "Le chef donne des lois aux citoyens."
+          "solution": "Le consul donne une loi aux citoyens."
         },
         {
           "id": "m12-04",
@@ -1434,28 +1434,28 @@
           "id": "m13-02",
           "type": "trou",
           "title": "Les Noms Neutres : Mare et Corpus",
-          "content": "## La Règle d'Or des Noms Neutres ⚖️\nEn latin, les noms neutres respectent TOUJOURS une règle absolue, quelle que soit la déclinaison :\n1. **Nominatif = Vocatif = Accusatif** (la même forme pour le sujet et le COD !).\n2. **Au pluriel, ils se terminent toujours par un -A** (ou **-IA**) !\n\nExemples majeurs de 3e déclinaison :\n- **Mare, maris** (n.) : la mer ➔ pluriel : **maria** (les mers)\n- **Corpus, corporis** (n.) : le corps ➔ pluriel : **corpora** (les corps)\n- **Flumen, fluminis** (n.) : le fleuve ➔ pluriel : **flumina** (les fleuves)\n- **Tempus, temporis** (n.) : le temps ➔ pluriel : **tempora** (les temps)\n\nComplète pour dire : « Les navires parcourent les mers » (*Naves maria percurrunt*).",
-          "consigne": "Complète 'les mers' au pluriel neutre (-ia) :",
-          "avant": "Naves mar",
-          "apres": " percurrunt.",
-          "solution": "ia",
-          "latin_complet": "Naves maria percurrunt."
+          "content": "## La Règle d'Or des Noms Neutres ⚖️\nEn latin, les noms neutres respectent TOUJOURS une règle absolue, quelle que soit la déclinaison :\n1. **Nominatif = Vocatif = Accusatif** (la même forme pour le sujet et le COD !).\n2. **Au pluriel, ils se terminent toujours par un -A** (ou **-IA**) !\n\nExemples majeurs de 3e déclinaison :\n- **Mare, maris** (n.) : la mer ➔ pluriel : **maria** (les mers)\n- **Corpus, corporis** (n.) : le corps ➔ pluriel : **corpora** (les corps)\n- **Flumen, fluminis** (n.) : le fleuve ➔ pluriel : **flumina** (les fleuves)\n- **Tempus, temporis** (n.) : le temps ➔ pluriel : **tempora** (les temps)\n\nApplique la règle à un autre neutre : *nomen, nominis* (n.) = le nom.\nComplète pour dire : « Le maître écrit les noms des élèves ».",
+          "consigne": "Complète « les noms » au pluriel neutre :",
+          "avant": "Magister nomin",
+          "apres": " discipulorum scribit.",
+          "solution": "a",
+          "latin_complet": "Magister nomina discipulorum scribit."
         },
         {
           "id": "m13-03",
           "type": "puzzle",
           "title": "La Flotte de Rome sur la Mer",
-          "content": "## Pourquoi « Mare Nostrum » ?\nAprès avoir vaincu la cité maritime de **Carthage** (commandée par le redoutable Hannibal Barca) lors des trois guerres puniques, Rome contrôle toutes les côtes de la Méditerranée.\n\nLes Romains appellent désormais fièrement la mer Méditerranée :\n*« Mare Nostrum »* (« Notre Mer »).\n\nReconstitue cette phrase sur la puissance maritime romaine :\n*« Naves Romanae in mari navigant. »*\n*(Naves Romanae = les navires romains [Nom. pl.], in mari = sur la mer [Abl. sg.], navigant = naviguent)*",
-          "latin": "Naves Romanae in mari navigant.",
+          "content": "## Pourquoi « Mare Nostrum » ?\nAprès avoir vaincu la cité maritime de **Carthage** (commandée par le redoutable Hannibal Barca) lors des trois guerres puniques, Rome contrôle toutes les côtes de la Méditerranée.\n\nLes Romains appellent désormais fièrement la mer Méditerranée :\n*« Mare Nostrum »* (« Notre Mer »).\n\nExemple : *« Naves Romanae in mari navigant. »* = « Les navires romains naviguent sur la mer. »\n\nÀ toi ! *Navis* est le singulier de *naves*.",
+          "latin": "Navis Romana in mari navigat.",
           "mots": [
-            "Les navires",
-            "romains",
-            "naviguent",
+            "Le navire",
+            "romain",
+            "navigue",
             "sur la mer.",
-            "L'ennemi",
-            "fuit."
+            "Les navires",
+            "naviguent"
           ],
-          "solution": "Les navires romains naviguent sur la mer."
+          "solution": "Le navire romain navigue sur la mer."
         },
         {
           "id": "m13-04",
@@ -1529,28 +1529,28 @@
           "id": "m14-02",
           "type": "trou",
           "title": "Le Neutre des Adjectifs : Mare Ingens",
-          "content": "## Accorder au neutre\nRappelle-toi la règle des neutres : au nominatif et à l'accusatif, ils ont la même forme.\n\nPour un adjectif de 2ème classe comme *omnis* (tout) :\n- Au neutre singulier : **omne**\n- Au neutre pluriel : **omnia** (*« Tout »*)\n\nExemple : *Omnia vincit amor* = « L'amour triomphe de tout » (citation célèbre de Virgile).\n\nComplète la phrase pour dire : « Le général voit un immense péril » (*Dux ingens periculum videt*).",
-          "consigne": "Complète l'adjectif 'immense' (ingens) au neutre :",
-          "avant": "Dux in",
-          "apres": " periculum videt.",
-          "solution": "gens",
-          "latin_complet": "Dux ingens periculum videt."
+          "content": "## Accorder au neutre\nRappelle-toi la règle des neutres : au nominatif et à l'accusatif, ils ont la même forme.\n\nPour un adjectif de 2ème classe comme *omnis* (tout) :\n- Au neutre singulier : **omne**\n- Au neutre pluriel : **omnia** (*« Tout »*)\n\nExemple : *Omnia vincit amor* = « L'amour triomphe de tout » (citation célèbre de Virgile).\n\nApplique la même règle à *ingens, ingentis* (immense), qui se décline comme *omnis*.\n*Periculum, -i* (n.) = le danger ; au pluriel : *pericula*.\nComplète pour dire : « Les soldats voient d'immenses dangers ».",
+          "consigne": "Accorde « immenses » avec pericula (neutre pluriel) :",
+          "avant": "Milites ingent",
+          "apres": " pericula vident.",
+          "solution": "ia",
+          "latin_complet": "Milites ingentia pericula vident."
         },
         {
           "id": "m14-03",
           "type": "puzzle",
           "title": "Plus fort, le plus fort : Comparatif & Superlatif",
-          "content": "## Les Degrés de l'Adjectif 🚀\nEn latin, pour comparer deux personnes ou désigner le meilleur, c'est très régulier et élégant :\n\n1. **Le Comparatif de supériorité** (« plus courageux ») :\n   - On ajoute le suffixe **-IOR** (m./f.) et **-IUS** (n.) au radical.\n   - *fortis* ➔ **fortior** (plus courageux)\n   - *altus* ➔ **altior** (plus haut)\n\n2. **Le Superlatif** (« le plus courageux », « très courageux ») :\n   - On ajoute **-ISSIMUS, -A, -UM**.\n   - *fortis* ➔ **fortissimus** (le plus courageux / très courageux)\n   - *clarus* ➔ **clarissimus** (très célèbre)\n\nReconstitue cette devise de gloire romaine :\n*« Miles Romanus fortissimus est. »*",
-          "latin": "Miles Romanus fortissimus est.",
+          "content": "## Les Degrés de l'Adjectif 🚀\nEn latin, pour comparer deux personnes ou désigner le meilleur, c'est très régulier et élégant :\n\n1. **Le Comparatif de supériorité** (« plus courageux ») :\n   - On ajoute le suffixe **-IOR** (m./f.) et **-IUS** (n.) au radical.\n   - *fortis* ➔ **fortior** (plus courageux)\n   - *altus* ➔ **altior** (plus haut)\n\n2. **Le Superlatif** (« le plus courageux », « très courageux ») :\n   - On ajoute **-ISSIMUS, -A, -UM**.\n   - *fortis* ➔ **fortissimus** (le plus courageux / très courageux)\n   - *clarus* ➔ **clarissimus** (très célèbre)\n\nExemple : *« Miles Romanus fortissimus est. »* = « Le soldat romain est le plus courageux. »\n\nÀ toi ! Comparatif ou superlatif ? Regarde bien la terminaison :",
+          "latin": "Legio Romana fortior est.",
           "mots": [
-            "Le soldat",
-            "romain",
+            "La légion",
+            "romaine",
             "est",
-            "le plus courageux.",
-            "Le chef",
-            "ordonne."
+            "plus courageuse.",
+            "la plus courageuse.",
+            "Le soldat"
           ],
-          "solution": "Le soldat romain est le plus courageux."
+          "solution": "La légion romaine est plus courageuse."
         },
         {
           "id": "m14-04",
@@ -1624,27 +1624,27 @@
           "id": "m15-02",
           "type": "trou",
           "title": "L'Imparfait du Verbe Être : Eram, Eras, Erat",
-          "content": "## J'étais, tu étais, il était...\nLe verbe être (*esse*) à l'imparfait est indispensable pour tous les récits de contes et d'histoire :\n\n- **ERAM** : j'étais\n- **ERAS** : tu étais\n- **ERAT** : il/elle était (*➔ formule magique pour commencer un récit !*)\n- **ERAMUS** : nous étions\n- **ERATIS** : vous étiez\n- **ERANT** : ils/elles étaient\n\nExemple classique de Tite-Live :\n*« Romulus primus rex Romae erat. »* = « Romulus était le premier roi de Rome. »\n\nComplète pour dire : « Les citoyens étaient sur le forum » (*Cives in foro erant*).",
-          "consigne": "Complète le verbe être au pluriel 'étaient' (erant) :",
-          "avant": "Cives in foro er",
+          "content": "## J'étais, tu étais, il était...\nLe verbe être (*esse*) à l'imparfait est indispensable pour tous les récits de contes et d'histoire :\n\n- **ERAM** : j'étais\n- **ERAS** : tu étais\n- **ERAT** : il/elle était (*➔ formule magique pour commencer un récit !*)\n- Au pluriel, on ajoute à *era-* les terminaisons habituelles : **-mus** (nous), **-tis** (vous), **-nt** (ils, elles).\n\nExemple classique de Tite-Live :\n*« Romulus primus rex Romae erat. »* = « Romulus était le premier roi de Rome. »\n\nComplète pour dire : « Les élèves étaient à l'école » (*in schola*).",
+          "consigne": "Complète le verbe être : « ils étaient » :",
+          "avant": "Discipuli in schola er",
           "apres": ".",
           "solution": "ant",
-          "latin_complet": "Cives in foro erant."
+          "latin_complet": "Discipuli in schola erant."
         },
         {
           "id": "m15-03",
           "type": "puzzle",
           "title": "Une Scène dans la Rome Républicaine",
-          "content": "## L'animation sur le Forum\nÀ l'époque de la République, les citoyens se réunissaient chaque matin pour écouter les orateurs et débattre des lois.\n\nReconstitue cette phrase descriptive à l'imparfait :\n*« Romani in foro conveniebant. »*\n*(Romani = les Romains [Nom. pl.], in foro = sur le forum [Abl.], conveniebant = se rassemblaient [Imparfait])*",
-          "latin": "Romani in foro conveniebant.",
+          "content": "## L'animation sur le Forum\nÀ l'époque de la République, les citoyens se réunissaient chaque matin pour écouter les orateurs et débattre des lois.\n\nExemple : *« Romani in foro conveniebant. »* = « Les Romains se rassemblaient sur le forum. »\n\nÀ toi ! *Clamare* = crier. Présent ou imparfait ? Cherche le **-ba-** :",
+          "latin": "Romani in foro clamabant.",
           "mots": [
             "Les Romains",
-            "se rassemblaient",
+            "criaient",
             "sur le forum.",
-            "Le consul",
-            "partait."
+            "crient",
+            "Le Romain"
           ],
-          "solution": "Les Romains se rassemblaient sur le forum."
+          "solution": "Les Romains criaient sur le forum."
         },
         {
           "id": "m15-04",
@@ -1718,28 +1718,27 @@
           "id": "m16-02",
           "type": "trou",
           "title": "Le Parfait du Verbe Être : Fui, Fuisti, Fuit",
-          "content": "## J'ai été, tu as été, il fut...\nLe parfait du verbe *esse* (être) utilise le radical régulier **FU-** :\n\n- **FUI** : je fus / j'ai été\n- **FUISTI** : tu fus / tu as été\n- **FUIT** : il fut / il a été\n- **FUIMUS** : nous fûmes / nous avons été\n- **FUISTIS** : vous fûtes / vous avez été\n- **FUERUNT** : ils furent / ils ont été\n\nExemple : *Cicero magnus orator fuit.* = « Cicéron fut un grand orateur. »\n\nComplète pour dire : « César fut un général célèbre » (*Caesar clarus dux fuit*).",
-          "consigne": "Complète le verbe être au parfait (fuit) :",
-          "avant": "Caesar clarus dux fu",
+          "content": "## J'ai été, tu as été, il fut...\nLe parfait du verbe *esse* (être) utilise le radical régulier **FU-** :\n\n- **FUI** : je fus / j'ai été\n- **FUISTI** : tu fus / tu as été\n- **FUIT** : il fut / il a été\n- Au pluriel, *fu-* prend les terminaisons de tous les parfaits : **-imus** (nous), **-istis** (vous), **-erunt** (ils, elles).\n\nExemple : *Cicero magnus orator fuit.* = « Cicéron fut un grand orateur. »\n\nComplète pour dire : « César et Pompée furent des chefs célèbres ».",
+          "consigne": "Complète le verbe être au parfait : « ils furent » :",
+          "avant": "Caesar et Pompeius clari duces fu",
           "apres": ".",
-          "solution": "it",
-          "latin_complet": "Caesar clarus dux fuit."
+          "solution": "erunt",
+          "latin_complet": "Caesar et Pompeius clari duces fuerunt."
         },
         {
           "id": "m16-03",
           "type": "puzzle",
           "title": "Les Trois Mots de César",
-          "content": "## Une dépêche éclair devenue immortelle\nEn 47 av. J.-C., après avoir écrasé l'armée du roi Pharnace en un clin d'œil à la bataille de Zéla, Jules César envoie ce rapport ultra-bref au Sénat romain :\n\n*« VENI, VIDI, VICI »*\n*(Veni = je suis venu, vidi = j'ai vu, vici = j'ai vaincu)*\n\nTrois verbes au parfait, à la première personne singulier en **-I** !\n\nReconstitue cette citation triomphale :",
-          "latin": "Veni, vidi, vici.",
+          "content": "## Une dépêche éclair devenue immortelle\nEn 47 av. J.-C., après avoir écrasé l'armée du roi Pharnace en un clin d'œil à la bataille de Zéla, Jules César envoie ce rapport ultra-bref au Sénat romain :\n\n*« VENI, VIDI, VICI »*\n*(Veni = je suis venu, vidi = j'ai vu, vici = j'ai vaincu)*\n\nTrois verbes au parfait, à la première personne singulier en **-I** !\n\nEt à la 3e personne ? *Vici* (j'ai vaincu) devient *vicit* (il a vaincu). Traduis :",
+          "latin": "Caesar Gallos vicit.",
           "mots": [
-            "Je suis venu,",
-            "j'ai vu,",
-            "j'ai vaincu.",
-            "Rome",
-            "a fêté",
-            "le héros."
+            "César",
+            "a vaincu",
+            "les Gaulois.",
+            "vainc",
+            "les Romains."
           ],
-          "solution": "Je suis venu, j'ai vu, j'ai vaincu."
+          "solution": "César a vaincu les Gaulois."
         },
         {
           "id": "m16-04",
@@ -1813,28 +1812,27 @@
           "id": "m17-02",
           "type": "trou",
           "title": "Le Pronom Démonstratif : Is, Ea, Id",
-          "content": "## Celui-ci, celle-ci, cela (ou il, elle)\nEn latin, pour désigner une personne ou un objet dont on vient de parler, on utilise le pronom démonstratif **is, ea, id** :\n\n- Masculin singulier : **IS** (celui-ci / il)\n- Féminin singulier : **EA** (celle-ci / elle)\n- Neutre singulier : **ID** (cela / ce fait)\n\nÀ l'accusatif (COD) :\n- *Eum* = le / lui (masculin)\n- *Eam* = la (féminin)\n- *Id* = cela (neutre)\n\nComplète la phrase de César pour dire : « César le vaincra » (*Caesar eum vincet*).",
-          "consigne": "Complète le pronom COD 'le' au masculin (eum) :",
+          "content": "## Celui-ci, celle-ci, cela (ou il, elle)\nEn latin, pour désigner une personne ou un objet dont on vient de parler, on utilise le pronom démonstratif **is, ea, id** :\n\n- Masculin singulier : **IS** (celui-ci / il)\n- Féminin singulier : **EA** (celle-ci / elle)\n- Neutre singulier : **ID** (cela / ce fait)\n\nÀ l'accusatif (COD) :\n- *Eum* = le / lui (masculin)\n- *Eam* = la (féminin)\n- *Id* = cela (neutre)\n\nExemple : *Caesar Vercingetorigem vincet ? Caesar eum vincet.* = « César le vaincra. »\n\nÀ toi ! Il s'agit maintenant de la ville d'Alésia (*urbs*, féminin). Complète pour dire : « César la prendra ».",
+          "consigne": "Complète le pronom COD « la » (féminin) :",
           "avant": "Caesar ",
-          "apres": " vincet.",
-          "solution": "eum",
-          "latin_complet": "Caesar eum vincet."
+          "apres": " capiet.",
+          "solution": "eam",
+          "latin_complet": "Caesar eam capiet."
         },
         {
           "id": "m17-03",
           "type": "puzzle",
           "title": "Le Siège d'Alésia (52 av. J.-C.)",
-          "content": "## L'ultime résistance gauloise\nEnfermé sur la colline d'Alésia avec 80 000 guerriers, le jeune chef arverne **Vercingétorix** unifie les tribus gauloises pour défendre leur indépendance.\n\nCésar fait creuser une double ligne de fortifications géante tout autour de la ville.\n\nReconstitue cette phrase sur la bravoure des guerriers gaulois :\n*« Galli pro libertate pugnabant. »*\n*(Galli = les Gaulois [Nom. pl.], pro libertate = pour la liberté [Abl.], pugnabant = combattaient [Imparfait])*",
-          "latin": "Galli pro libertate pugnabant.",
+          "content": "## L'ultime résistance gauloise\nEnfermé sur la colline d'Alésia avec 80 000 guerriers, le jeune chef arverne **Vercingétorix** unifie les tribus gauloises pour défendre leur indépendance.\n\nCésar fait creuser une double ligne de fortifications géante tout autour de la ville.\n\nExemple : *« Galli pro libertate pugnabant. »* = « Les Gaulois combattaient pour la liberté. »\n\nÀ toi ! Un seul guerrier, cette fois : regarde la fin du verbe.",
+          "latin": "Vercingetorix pro libertate pugnabat.",
           "mots": [
-            "Les Gaulois",
-            "combattaient",
+            "Vercingétorix",
+            "combattait",
             "pour la liberté.",
-            "César",
-            "assiégeait",
-            "la ville."
+            "combattaient",
+            "César"
           ],
-          "solution": "Les Gaulois combattaient pour la liberté."
+          "solution": "Vercingétorix combattait pour la liberté."
         },
         {
           "id": "m17-04",
@@ -1908,28 +1906,28 @@
           "id": "m18-02",
           "type": "trou",
           "title": "Le Grand Défi Grammatical de 4ème",
-          "content": "## Mets à l'épreuve tes connaissances de 4ème !\nPour prouver que tu as assimilé la 3ème déclinaison et le Parfait :\n\nComplète la phrase latine :\n« Les braves soldats ont défendu la patrie. »\n*(Fortes milites patriam defenderunt)*.\n\n- *Milites* = les soldats (Nom. pl. 3e déclinaison)\n- *Fortes* = courageux (Adjectif 2e classe, Nom. pl.)\n- *Defenderunt* = ont défendu (Verbe au parfait, 3e personne du pluriel en -erunt)",
-          "consigne": "Complète le verbe 'ont défendu' au parfait (-erunt) :",
-          "avant": "Fortes milites patriam defend",
+          "content": "## Mets à l'épreuve tes connaissances de 4ème !\nPour prouver que tu as assimilé la 3ème déclinaison et le Parfait :\n\n*Servare* = sauver ; son parfait : *servavi* (j'ai sauvé).\n\nComplète la phrase latine pour dire : « Les soldats ont sauvé la patrie ».",
+          "consigne": "Complète le verbe « ont sauvé » au parfait :",
+          "avant": "Milites patriam servav",
           "apres": ".",
           "solution": "erunt",
-          "latin_complet": "Fortes milites patriam defenderunt."
+          "latin_complet": "Milites patriam servaverunt."
         },
         {
           "id": "m18-03",
           "type": "puzzle",
           "title": "Proclamation Républicaine",
-          "content": "## L'écho des siècles\nReconstitue cette noble maxime républicaine qui résume tout l'honneur des citoyens romains de 4ème :\n\n*« Virtus et sapientia rem publicam servant. »*\n*(Virtus = le courage [3e décl.], sapientia = la sagesse [1re décl.], rem publicam = la république [Acc.], servant = sauvent)*",
-          "latin": "Virtus et sapientia rem publicam servant.",
+          "content": "## L'écho des siècles\nReconstitue cette noble maxime républicaine qui résume tout l'honneur des citoyens romains de 4ème :\n\nExemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et la sagesse sauvent la République. »\n\nÉpreuve finale : un génitif de la 3e déclinaison et un parfait dans la même phrase !",
+          "latin": "Sapientia consulis rem publicam servavit.",
           "mots": [
-            "Le courage",
-            "et la sagesse",
-            "sauvent",
-            "la république.",
-            "Le tyran",
-            "s'enfuit."
+            "La sagesse",
+            "du consul",
+            "a sauvé",
+            "la République.",
+            "sauve",
+            "des consuls"
           ],
-          "solution": "Le courage et la sagesse sauvent la république."
+          "solution": "La sagesse du consul a sauvé la République."
         },
         {
           "id": "m18-04",
@@ -2980,7 +2978,7 @@
         "etym": "légal, légitime, légiférer",
         "ex": "Dura lex, sed lex.",
         "ex_fr": "La loi est dure, mais c'est la loi.",
-        "monde": "monde23"
+        "monde": "monde12"
       },
       {
         "latin": "lupa, -ae",
@@ -3210,7 +3208,7 @@
         "etym": "urbain, urbanisme, urbanité",
         "ex": "Urbs aeterna.",
         "ex_fr": "La Ville Éternelle.",
-        "monde": "monde20"
+        "monde": "monde17"
       },
       {
         "latin": "verbum, -i",

@@ -345,8 +345,11 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   (singulier ou pluriel, sujet ou COD) ; aucune consigne ne donne la
   solution entre parenthèses. Gardés tels quels : m1-02, m1-05 (découverte),
   m7-03 (devise), m8-03, m9-03, m10-03 (civilisation à choix). Diagnostic
-  complet : T17. 4e et 3e restent à faire. T18 ajoute le test qui garde
-  la 5e.
+  complet : T17. **4e faite aussi** (16 exercices, validés par Cédric le
+  28/09) : m14-02 teste enfin l'accord au neutre (*ingentia*) ; les
+  tableaux d'*esse* (m15-02, m16-02) donnent le singulier et la règle du
+  pluriel au lieu des formes toutes faites. `tests/test_reponses_cachees.py`
+  garde les mondes 1 à 18 (`MONDES_REECRITS`). **Reste la 3e.**
 - **T15 à T17 validées** — plus aucun `withOpacity` dans `lib/` ;
   diagnostic des leçons qui donnent la réponse (83 exercices sur 87).
 - **Visuels demandés à Cédric (28/09)** — `stele_vierge.jpg` (support des
