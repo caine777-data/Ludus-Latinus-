@@ -301,6 +301,25 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Exercices de 5e : la réponse n'est plus dans le cours** (validé par
+  Cédric) — 16 exercices réécrits sur les 22 de 5e. Principe à suivre pour
+  la 4e et la 3e : le cours garde son exemple traduit comme modèle, et
+  l'exercice porte sur **une autre phrase** qui applique la même règle ; les
+  puzzles n'ont plus de glose mot à mot (seulement les mots nouveaux, sous
+  leur forme de dictionnaire) et leurs pièges portent sur la grammaire
+  (singulier ou pluriel, sujet ou COD) ; aucune consigne ne donne la
+  solution entre parenthèses. Gardés tels quels : m1-02, m1-05 (découverte),
+  m7-03 (devise), m8-03, m9-03, m10-03 (civilisation à choix). Diagnostic
+  complet : T17. 4e et 3e restent à faire. T18 ajoute le test qui garde
+  la 5e.
+- **T15 à T17 validées** — plus aucun `withOpacity` dans `lib/` ;
+  diagnostic des leçons qui donnent la réponse (83 exercices sur 87).
+- **Visuels demandés à Cédric (28/09)** — `stele_vierge.jpg` (support des
+  inscriptions de l'Épigraphie), six cartes des cas `cas_<cas>.jpg` (Lupulus
+  illustre le rôle du cas, sans halo : la couleur du cas sera un cadre dans
+  l'appli), vidéo `lupulus_encouragement.mp4` (après une erreur). Aucun
+  script ne les traite encore : à écrire à leur arrivée.
+
 - **Thesaurus enrichi pour la 3e** (validé par Cédric) — 52 mots pour les
   mondes 15 à 26, tirés des leçons de chaque monde (219 entrées en tout ;
   4 à 11 mots par monde au lieu de 0 à 5). Nouvelle catégorie « Pronom »

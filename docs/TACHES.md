@@ -1332,7 +1332,7 @@ depuis T12 (54 sur 54) : un seul échec est une régression.**
 
 ## T15 — Remplacer `withOpacity` dans le Circus et le Duel
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : même travail que T13 et T14, sur les deux jeux qui en ont le plus.
 
@@ -1365,11 +1365,13 @@ Statut : FAIT
 - Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire : Rien sur T15. Tâche terminée.
 
+**Vérification de l'architecte** : plus aucun `withOpacity` dans les deux fichiers. Validé.
+
 ---
 
 ## T16 — Remplacer les derniers `withOpacity`
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : finir le nettoyage : après cette tâche, plus aucun
 `withOpacity` dans `lib/`.
@@ -1415,11 +1417,13 @@ Statut : FAIT
 - Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire : Rien sur T16. Le nettoyage de `withOpacity` est achevé pour l'ensemble de l'application mobile.
 
+**Vérification de l'architecte** : recherche sur tout `lib/` : 0 `withOpacity`. Validé.
+
 ---
 
 ## T17 — Diagnostic : les leçons qui donnent la réponse avant l'exercice (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : l'audit a montré que, souvent, le cours affiché juste avant
 l'exercice contient déjà la réponse (20 quiz sur 28, 19 exercices à trou sur
@@ -1589,3 +1593,103 @@ Cette tâche est une **enquête** : tu ne modifies aucun fichier du dépôt sauf
 - Reste à faire :
   - Rien sur T17 (diagnostic complet et validé).
   - La Phase 2 pourra s'appuyer sur ces tableaux pour dissocier les exemples du cours des phrases d'exercice.
+
+**Vérification de l'architecte** : enquête complète et exploitable (83 exercices
+sur 87). Nuance : les quiz qui font redire la règle qu'on vient d'apprendre
+(m4-01, m12-01, m19-01…) sont moins graves que les trous « Complète pour
+dire… (réponse) » et les puzzles avec glose mot à mot ; ces deux familles
+sont réécrites en premier par l'architecte, avec validation de Cédric
+(5e validée le 28/09). Validé.
+
+---
+
+**Ordre conseillé** : T18 puis T19 — une tâche par session, un commit par
+tâche, `git add <fichier>` uniquement. Tous les tests (Python et Flutter)
+doivent passer.
+
+---
+
+## T18 — Un test qui empêche un exercice de 5e de redonner sa réponse
+
+Statut : À FAIRE
+
+**Objectif** : les exercices de 5e viennent d'être réécrits pour que le
+cours ne donne plus la réponse (commit `e26c38b`). Un test doit empêcher
+qu'une modification future la remette par erreur.
+
+**Périmètre** :
+- `tests/test_reponses_cachees.py` (nouveau)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Crée `tests/test_reponses_cachees.py`, un `unittest.TestCase` qui lit
+   `CURRICULUM` (`from content import CURRICULUM`) et, pour les mondes
+   `monde1` à `monde10` seulement :
+   - **trou** (leçons qui ont `avant` et `solution`) : le mot complet
+     reconstitué (dernier mot de `avant` + `solution`, par exemple
+     `leg` + `it` = `legit`) ne doit apparaître ni dans `content` ni dans
+     `consigne` ;
+   - **puzzle** : la `solution` (phrase française complète) ne doit pas
+     apparaître dans `content`.
+   Compare en minuscules, sans accents ni ponctuation, et **en mot entier**
+   (piège 7 d'`AGENTS.md`).
+2. Liste d'exceptions **en tête du fichier**, avec la raison en commentaire :
+   `m1-02`, `m1-05` (découverte, avant les cas), `m7-03` (devise à connaître),
+   et les trous à choix `m8-03`, `m9-03`, `m10-03` (civilisation).
+3. Vérifie que le test **échoue** si on remet une réponse : ajoute
+   temporairement « (legit) » à la fin du `content` de m2-03, lance le test,
+   constate l'échec, **annule** ta modification (`git checkout -- content/`).
+4. `python -m unittest discover -s tests`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Le test passe sur le contenu actuel.
+- [ ] Il échoue quand on remet une réponse (recopie le message d'échec).
+- [ ] `git status` : seuls le nouveau test et `docs/TACHES.md` sont modifiés.
+- [ ] `python -m unittest discover -s tests` : tout passe (recopie le total).
+- [ ] `ruff check .` : aucune erreur.
+- [ ] Un commit `test: les exercices de 5e ne redonnent pas leur réponse`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T19 — Analyse Flutter : trier les 59 remarques restantes
+
+Statut : À FAIRE
+
+**Objectif** : après le nettoyage de `withOpacity`, `flutter analyze lib`
+signale encore 59 remarques. On veut savoir lesquelles comptent avant d'y
+toucher, et corriger la seule API obsolète déjà repérée.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/thesaurus/thesaurus_screen.dart`
+  (une ligne : `MaterialStateProperty` → `WidgetStateProperty`)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Lance `flutter analyze lib` et range les 59 remarques par type
+   (`prefer_const_constructors`, `deprecated_member_use`, `unused_import`…)
+   avec leur nombre et les fichiers concernés.
+2. Remplace **uniquement** `MaterialStateProperty.all(caseColor)` par
+   `WidgetStateProperty.all(caseColor)` dans `thesaurus_screen.dart`.
+3. Pour chaque autre `deprecated_member_use` (par exemple `background:` dans
+   le `ColorScheme` de `themes.dart`), **ne corrige pas** : explique ce qu'il
+   faudrait changer et le risque (couleurs de fond qui changent).
+4. `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau des remarques par type, avec nombre et fichiers.
+- [ ] Une seule ligne de code changée.
+- [ ] `flutter test` : tous les tests passent.
+- [ ] Un commit `refactor(mobile): WidgetStateProperty dans le Thesaurus`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
