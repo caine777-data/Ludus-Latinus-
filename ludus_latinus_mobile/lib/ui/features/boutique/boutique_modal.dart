@@ -173,9 +173,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'TABERNA ROMANA',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: RomanFonts.imperial,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

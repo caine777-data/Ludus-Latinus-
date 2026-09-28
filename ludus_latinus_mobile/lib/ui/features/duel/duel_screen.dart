@@ -1297,7 +1297,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 onPressed: () => Navigator.pop(context),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: RomanColors.imperialPurple,
-                  side: BorderSide(color: RomanColors.imperialPurple),
+                  side: const BorderSide(color: RomanColors.imperialPurple),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 ),

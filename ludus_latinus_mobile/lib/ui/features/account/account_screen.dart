@@ -278,7 +278,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             children: [
                               const Text(
                                 'Taberna & Vestiaire Impérial',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontFamily: RomanFonts.imperial,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,

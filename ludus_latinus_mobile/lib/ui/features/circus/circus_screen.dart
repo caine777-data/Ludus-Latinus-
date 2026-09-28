@@ -803,7 +803,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: const Border(bottom: const BorderSide(color: RomanColors.marbleBorder)),
+        border: Border(bottom: BorderSide(color: RomanColors.marbleBorder)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

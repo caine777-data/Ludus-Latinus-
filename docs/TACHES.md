@@ -1915,7 +1915,7 @@ tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
 
 ## T22 — Les 8 dernières remarques `const`
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : après T21, `flutter analyze lib` signale encore 7
 `unnecessary_const` (des `const` en trop laissés par `dart fix`) et 1
@@ -1938,17 +1938,43 @@ les 2 remarques volontaires de `themes.dart`.
    `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `flutter analyze lib` : **2 remarques** exactement (les deux
+- [x] `flutter analyze lib` : **2 remarques** exactement (les deux
       `background` de `themes.dart`). Recopie la sortie.
-- [ ] `git diff` : uniquement des `const` retirés ou ajouté.
-- [ ] `flutter test` : tous les tests passent.
-- [ ] Un commit `refactor(mobile): dernières remarques const`.
+- [x] `git diff` : uniquement des `const` retirés ou ajouté.
+- [x] `flutter test` : tous les tests passent.
+- [x] Un commit `refactor(mobile): dernières remarques const`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/core/room_decorations.dart`
+  - `ludus_latinus_mobile/lib/ui/features/account/account_screen.dart`
+  - `ludus_latinus_mobile/lib/ui/features/boutique/boutique_modal.dart`
+  - `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart`
+  - `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Retrait des 7 `unnecessary_const` (parents déjà constants) :
+    - `room_decorations.dart` (l. 316, 318) : `const Text` -> `Text`, `style: const TextStyle` -> `style: TextStyle`.
+    - `account_screen.dart` (l. 281) : `style: const TextStyle` -> `style: TextStyle`.
+    - `boutique_modal.dart` (l. 176, 178) : `const Text` -> `Text`, `style: const TextStyle` -> `style: TextStyle`.
+    - `circus_screen.dart` (l. 806) : `border: const Border(bottom: const BorderSide(...))` -> `border: Border(bottom: BorderSide(...))`.
+  - Ajout du `const` dans `duel_screen.dart` (l. 1300) : `side: const BorderSide(color: RomanColors.imperialPurple)`.
+  - `flutter analyze lib` : exactement 2 remarques sur `themes.dart`. Sortie réelle :
+    ```
+    Analyzing lib...                                                
+
+       info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre. Try replacing the use of the deprecated member with the replacement - lib\ui\core\themes.dart:70:9 - deprecated_member_use
+       info - 'background' is deprecated and shouldn't be used. Use surface instead. This feature was deprecated after v3.18.0-0.1.pre. Try replacing the use of the deprecated member with the replacement - lib\ui\core\themes.dart:120:9 - deprecated_member_use
+
+    2 issues found. (ran in 4.0s)
+    ```
+  - `flutter test` : `+54: All tests passed!` (54/54 tests passants).
+  - `git diff` : 7 suppressions de `const` et 1 ajout de `const`, aucune autre altération.
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier régénéré annulé.
 - Doutes, questions pour l'architecte :
+  - Aucun doute. Le code Flutter `lib/` est au niveau de propreté maximal visé.
 - Reste à faire :
+  - Rien sur T22. Prêt pour T23.
 
 ---
 

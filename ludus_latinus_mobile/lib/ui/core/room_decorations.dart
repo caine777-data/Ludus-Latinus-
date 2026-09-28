@@ -313,9 +313,9 @@ class CircusVelariumHeader extends StatelessWidget {
             children: [
               Text('🏛️', style: TextStyle(fontSize: 14)),
               SizedBox(width: 8),
-              const Text(
+              Text(
                 'VÉLARIUM DU CIRCUS MAXIMUS',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
