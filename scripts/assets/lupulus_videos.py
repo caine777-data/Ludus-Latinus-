@@ -37,11 +37,17 @@ SORTIES = {
     "encouragement": "lupulus_encouragement",
 }
 
-# Effets visuels : fichier source (sans .mp4) -> (côté en pixels, images gardées).
+# Effets visuels : fichier source (sans .mp4) -> (côté en pixels, images gardées,
+# nom de sortie si différent de la source).
 # Pour l'impact : on ne garde que le choc et les étincelles ; les premières
 # images (épées floues en mouvement) gardent un reflet vert impossible à ôter.
 EFFETS = {
     "duel_impact": (320, slice(3, 19)),
+    # Pluie de pièces des leçons (remplace l'animation Lottie plate) : 3 secondes.
+    # Détourée par « verdeur » : ses paillettes trompent la distance au fond.
+    "La_pluie_de_pièce": (300, slice(0, 30), "pieces_or"),
+}
+PAR_VERDEUR = {"La_pluie_de_pièce"
 }
 
 TAILLE = 200   # côté du carré : Lupulus s'affiche au plus à ~60 dp (x3 en haute densité)
@@ -109,17 +115,22 @@ def cadre_commun(images):
 
 def convertir(humeur):
     if humeur in EFFETS:
-        taille, images = EFFETS[humeur]
-        return convertir_video(SOURCE / f"{humeur}.mp4", humeur, taille, images)
+        taille, images, *sortie = EFFETS[humeur]
+        return convertir_video(SOURCE / f"{humeur}.mp4", sortie[0] if sortie else humeur, taille, images,
+                               verdeur=humeur in PAR_VERDEUR)
     return convertir_video(SOURCE / f"lupulus_{humeur}.mp4", SORTIES[humeur], TAILLE)
 
 
-def convertir_video(video, nom_sortie, taille, garder=slice(None)):
+def convertir_video(video, nom_sortie, taille, garder=slice(None), verdeur=False):
     if not video.exists():
         print(f"[MANQUE] {video.name}")
         return
     with tempfile.TemporaryDirectory() as dossier:
-        images = [detourer(f) for f in extraire_images(video, dossier)[garder]]
+        if verdeur:
+            from illustrations import detourer as detourer_verdeur
+            images = [detourer_verdeur(Image.open(f)) for f in extraire_images(video, dossier)[garder]]
+        else:
+            images = [detourer(f) for f in extraire_images(video, dossier)[garder]]
     boite = cadre_commun(images)
     finales = []
     for im in images:

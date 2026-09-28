@@ -100,7 +100,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     {
       'nom': 'Le Minotaure',
       'titre': 'Gardien du Labyrinthe',
-      'image': 'assets/images/boss_minotaure_140.png',
+      'image': 'assets/images/boss_minotaure_anime.webp',
       'video': 'assets/cinematics/boss_minotaure.mp4',
       'maxHp': 140,
       'attaque': 30,
@@ -111,7 +111,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     {
       'nom': 'Le Sphinx de Thèbes',
       'titre': 'Maître des Énigmes',
-      'image': 'assets/images/boss_sphinx_140.png',
+      'image': 'assets/images/boss_sphinx_anime.webp',
       'video': 'assets/cinematics/boss_sphinx.mp4',
       'maxHp': 160,
       'attaque': 35,

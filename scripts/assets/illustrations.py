@@ -8,9 +8,12 @@ Usage : python scripts/assets/illustrations.py [nom ...]
 Dépendances d'outillage (pas de l'app) : pip install numpy pillow
 """
 
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
+import imageio_ffmpeg
 import numpy as np
 from PIL import Image, ImageFilter
 
@@ -25,6 +28,17 @@ DETOURES = {
 }
 
 MARGE = 0.04
+
+# Portraits animés des boss, tirés des vidéos Gemini (720 x 1280, avec décor) :
+# nom de la vidéo -> (sortie, (x0, y0, côté) du carré à garder, secondes gardées).
+# L'animation est jouée à l'aller puis au retour : elle boucle sans à-coup.
+PORTRAITS = {
+    "Le_Sphinx": ("boss_sphinx_anime.webp", (60, 150, 600), 4.0),
+    # 1,2 s : il respire ; ensuite il lève son marteau et sortirait du médaillon.
+    "Le_Minotaure": ("boss_minotaure_anime.webp", (40, 120, 640), 1.2),
+}
+PORTRAIT_COTE = 240
+PORTRAIT_IPS = 8
 
 
 def detourer(im):
@@ -81,6 +95,28 @@ def boss_retiaire():
     enregistrer(fond.convert("RGB"), "boss_retiaire.webp", 85)
 
 
+def portrait_anime(video, sortie, carre, duree):
+    x0, y0, cote = carre
+    with tempfile.TemporaryDirectory() as dossier:
+        subprocess.run(
+            [imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-i", str(SOURCE / f"{video}.mp4"),
+             "-an", "-t", str(duree), "-vf", f"fps={PORTRAIT_IPS}", str(Path(dossier) / "f_%03d.png")],
+            check=True,
+        )
+        images = [
+            Image.open(f).convert("RGB").crop((x0, y0, x0 + cote, y0 + cote))
+            .resize((PORTRAIT_COTE, PORTRAIT_COTE), Image.LANCZOS)
+            for f in sorted(Path(dossier).glob("f_*.png"))
+        ]
+    aller_retour = images + images[-2:0:-1]
+    chemin = IMAGES / sortie
+    aller_retour[0].save(
+        chemin, "WEBP", save_all=True, append_images=aller_retour[1:],
+        duration=round(1000 / PORTRAIT_IPS), loop=0, quality=62, method=6,
+    )
+    print(f"[OK] {sortie}  {len(aller_retour)} images, {chemin.stat().st_size // 1024} Ko")
+
+
 def main(noms):
     for nom in noms:
         if nom in DETOURES:
@@ -90,9 +126,11 @@ def main(noms):
             decor_duel()
         elif nom == "boss_retiaire":
             boss_retiaire()
+        elif nom in PORTRAITS:
+            portrait_anime(nom, *PORTRAITS[nom])
         else:
             print(f"[INCONNU] {nom}")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:] or [*DETOURES, "decor_colisee_duel", "boss_retiaire"])
+    main(sys.argv[1:] or [*DETOURES, "decor_colisee_duel", "boss_retiaire", *PORTRAITS])

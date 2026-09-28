@@ -6,27 +6,34 @@ import '../../data/services/audio_service.dart';
 
 /// Gestionnaire d'effets visuels et animations vectorielles Lottie 60 FPS.
 class RomanLottieEffects {
-  /// 🪙 Affiche une cascade / pluie de sesterces dorés par-dessus l'écran
+  static const _pieces = AssetImage('assets/images/animated/pieces_or.webp');
+
+  /// 🪙 Gerbe de sesterces dorés par-dessus l'écran.
+  ///
+  /// Animation Gemini en 3D (`pieces_or.webp`, 3 s), à la place de l'ancienne
+  /// pluie Lottie faite d'ovales jaunes plats.
   static void showCoinShower(
     BuildContext context, {
-    Duration duration = const Duration(milliseconds: 2200),
+    Duration duration = const Duration(milliseconds: 3000),
     VoidCallback? onFinished,
   }) {
     HapticFeedback.mediumImpact();
     AudioService().playTriumph();
+    // Rejoue l'animation depuis sa première image (piège 17 d'AGENTS.md).
+    _pieces.evict();
 
     final overlay = Overlay.of(context);
     late OverlayEntry entry;
     entry = OverlayEntry(
       builder: (ctx) => IgnorePointer(
         child: SizedBox.expand(
-          child: Center(
-            child: Lottie.asset(
-              'assets/animations/coin_rain.json',
-              repeat: false,
-              fit: BoxFit.cover,
-              width: MediaQuery.of(ctx).size.width,
-              height: MediaQuery.of(ctx).size.height,
+          child: Align(
+            alignment: const Alignment(0, 0.35),
+            child: Image(
+              key: UniqueKey(),
+              image: _pieces,
+              width: MediaQuery.of(ctx).size.width * 0.95,
+              fit: BoxFit.contain,
               errorBuilder: (_, __, ___) => const SizedBox.shrink(),
             ),
           ),
