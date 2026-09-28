@@ -449,7 +449,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     Text(
                       'Secoue le fritillus et lance les dés gravés. Aligne des faces distinctes pour obtenir le Coup de Vénus !',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11, color: Colors.white.withOpacity(0.85), height: 1.3),
+                      style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.85), height: 1.3),
                     ),
                   ],
                 ),
@@ -578,7 +578,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
-                                          color: RomanColors.imperialGold.withOpacity(0.4),
+                                          color: RomanColors.imperialGold.withValues(alpha: 0.4),
                                           blurRadius: 20,
                                           spreadRadius: 4,
                                         ),

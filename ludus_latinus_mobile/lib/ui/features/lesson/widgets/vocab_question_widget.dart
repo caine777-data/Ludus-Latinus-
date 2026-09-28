@@ -119,7 +119,7 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
               decoration: BoxDecoration(
                 color: _correct ? const Color(0xFFF1F8F3) : const Color(0xFFFFF7F2),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: _correct ? RomanColors.laurelGreen.withOpacity(0.4) : const Color(0xFFE28B68)),
+                border: Border.all(color: _correct ? RomanColors.laurelGreen.withValues(alpha: 0.4) : const Color(0xFFE28B68)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

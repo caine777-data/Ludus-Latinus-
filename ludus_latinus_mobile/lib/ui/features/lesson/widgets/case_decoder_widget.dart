@@ -194,7 +194,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                     duration: const Duration(milliseconds: 200),
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                     decoration: BoxDecoration(
-                      color: hasRole ? roleColor.withOpacity(0.18) : Colors.white,
+                      color: hasRole ? roleColor.withValues(alpha: 0.18) : Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: isSelected
@@ -205,7 +205,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                       boxShadow: [
                         BoxShadow(
                           color: isSelected
-                              ? RomanColors.imperialPurple.withOpacity(0.2)
+                              ? RomanColors.imperialPurple.withValues(alpha: 0.2)
                               : const Color(0x0C000000),
                           offset: const Offset(0, 3),
                           blurRadius: 6,

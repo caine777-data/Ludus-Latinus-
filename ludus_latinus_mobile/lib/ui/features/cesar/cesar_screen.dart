@@ -1020,7 +1020,7 @@ $texteChiffre
                         decoration: BoxDecoration(
                           color: const Color(0xFFF9F7F3),
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: RomanColors.imperialPurple.withOpacity(0.4)),
+                          border: Border.all(color: RomanColors.imperialPurple.withValues(alpha: 0.4)),
                         ),
                         child: SelectableText(
                           texteDechiffre.isEmpty ? '(Message vide)' : texteDechiffre,

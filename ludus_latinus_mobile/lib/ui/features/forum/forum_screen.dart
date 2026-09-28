@@ -415,7 +415,7 @@ class ForumScreen extends StatelessWidget {
               color: isRestored ? const Color(0xFFE8F5EE) : const Color(0xFFFFFBEA),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: isRestored ? RomanColors.laurelGreen.withOpacity(0.5) : const Color(0xFFE6C667),
+                color: isRestored ? RomanColors.laurelGreen.withValues(alpha: 0.5) : const Color(0xFFE6C667),
               ),
             ),
             child: Row(

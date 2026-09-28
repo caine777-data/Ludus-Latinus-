@@ -1369,7 +1369,7 @@ Statut : FAIT
 
 ## T16 — Remplacer les derniers `withOpacity`
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : finir le nettoyage : après cette tâche, plus aucun
 `withOpacity` dans `lib/`.
@@ -1387,18 +1387,33 @@ Statut : À FAIRE
 **Étapes** : les mêmes que T13.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `grep -rn withOpacity ludus_latinus_mobile/lib` ne renvoie **rien**.
-- [ ] 14 lignes changées au total, chacune ne différant que par ce remplacement.
-- [ ] `flutter analyze lib` : plus aucun avertissement `deprecated_member_use`
+- [x] `grep -rn withOpacity ludus_latinus_mobile/lib` ne renvoie **rien**.
+- [x] 14 lignes changées au total, chacune ne différant que par ce remplacement.
+- [x] `flutter analyze lib` : plus aucun avertissement `deprecated_member_use`
       lié à `withOpacity` (recopie le nombre total d'« issues » avant et après).
-- [ ] `flutter test` : tous les tests passent.
-- [ ] Un commit `refactor(mobile): plus aucun withOpacity dans l'appli`.
+- [x] `flutter test` : tous les tests passent.
+- [x] Un commit `refactor(mobile): plus aucun withOpacity dans l'appli`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/cesar/cesar_screen.dart` (1 remplacement)
+  - `ludus_latinus_mobile/lib/ui/features/forum/forum_screen.dart` (1 remplacement)
+  - `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart` (5 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/home/views/ludi_view.dart` (2 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/lesson/widgets/case_decoder_widget.dart` (2 remplacements)
+  - `ludus_latinus_mobile/lib/ui/features/lesson/widgets/vocab_question_widget.dart` (1 remplacement)
+  - `ludus_latinus_mobile/lib/ui/features/taverne/taverne_screen.dart` (2 remplacements)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `git grep -rn "withOpacity" ludus_latinus_mobile/lib` : 0 résultat (ne renvoie rien). Plus aucun `withOpacity` dans tout `lib/`.
+  - `git diff --stat` : exactement 14 insertions(+) et 14 suppressions(-) réparties sur les 7 fichiers de code, chaque ligne ne différant que par `.withValues(alpha: x)`.
+  - `flutter analyze lib` :
+    - Avant modifications : **73 issues found** (dont 14 avertissements `deprecated_member_use` pour `withOpacity`).
+    - Après modifications : **59 issues found** (0 avertissement `deprecated_member_use` lié à `withOpacity`, exactement 14 avertissements supprimés).
+  - `flutter test` : 54 réussis, 0 échec. Ligne finale : `00:04 +54: All tests passed!`
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré après analyse et tests.
+- Doutes, questions pour l'architecte : Aucun doute.
+- Reste à faire : Rien sur T16. Le nettoyage de `withOpacity` est achevé pour l'ensemble de l'application mobile.
 
 ---
 

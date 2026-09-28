@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: BoxDecoration(
               color: const Color(0xFFFFF0EC),
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.deepOrange.withOpacity(0.4), width: 0.8),
+              border: Border.all(color: Colors.deepOrange.withValues(alpha: 0.4), width: 0.8),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -620,9 +620,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-            color: RomanColors.goldLight.withOpacity(0.6),
+            color: RomanColors.goldLight.withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: RomanColors.imperialGold.withOpacity(0.6)),
+            border: Border.all(color: RomanColors.imperialGold.withValues(alpha: 0.6)),
           ),
           // Titre sur toute la largeur, badges en dessous : plus de débordement sur téléphone.
           child: Row(
@@ -718,7 +718,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: _getLessonTypeColor(activeLesson.type).withOpacity(0.12),
+                      color: _getLessonTypeColor(activeLesson.type).withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: _getLessonTypeColor(activeLesson.type),
@@ -912,7 +912,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
                             decoration: BoxDecoration(
-                              color: _getLessonTypeColor(l.type).withOpacity(0.12),
+                              color: _getLessonTypeColor(l.type).withValues(alpha: 0.12),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: Text(
