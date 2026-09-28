@@ -306,6 +306,10 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **T20 et T21 validées** — plus d'API obsolète hors `themes.dart` (le
+  `background` du thème reste volontairement : le changer éclaircirait le
+  fond du mode sombre) ; `flutter analyze lib` passe de 58 à 10 remarques.
+  Suite confiée : T22 (les 8 dernières) et T23 (tournée d'essai des cinq boss).
 - **Sphinx et Minotaure animés, pièces en 3D** — portraits animés
   `boss_sphinx_anime.webp` et `boss_minotaure_anime.webp` (vidéos Gemini,
   jouées à l'aller puis au retour ; `PORTRAITS` dans `illustrations.py`).

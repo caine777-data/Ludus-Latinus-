@@ -1764,7 +1764,7 @@ tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
 
 ## T20 — Corriger trois API obsolètes (sans toucher au thème)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : appliquer les corrections que tu as proposées en T19, sauf
 celle de `themes.dart` (trop risquée pour le mode sombre).
@@ -1819,11 +1819,13 @@ celle de `themes.dart` (trop risquée pour le mode sombre).
 - Reste à faire :
   - Rien sur T20. Prêt pour T21.
 
+**Vérification de l'architecte** : diff exact (trois interrupteurs, un `Matrix4`), plus aucune API obsolète hors `themes.dart`. Validé.
+
 ---
 
 ## T21 — Les remarques `const` et les constantes Windows
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : faire tomber la cinquantaine de remarques `prefer_const_*` et
 `prefer_final_fields`, qui sont mécaniques, et documenter les 4 constantes
@@ -1901,3 +1903,98 @@ Windows qu'on ne doit pas renommer.
   - Aucun doute. `duel_screen.dart` a été préservé intact sans toucher à la réécriture en cours.
 - Reste à faire :
   - Rien sur T21.
+
+**Vérification de l'architecte** : analyse passée de 58 à 10 remarques, `duel_screen.dart` épargné comme demandé, 54 tests sur 54. `dart fix` a laissé 7 `const` en trop : confiés en T22. Validé.
+
+---
+
+**Ordre conseillé** : T22 puis T23 — une tâche par session, un commit par
+tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
+
+---
+
+## T22 — Les 8 dernières remarques `const`
+
+Statut : À FAIRE
+
+**Objectif** : après T21, `flutter analyze lib` signale encore 7
+`unnecessary_const` (des `const` en trop laissés par `dart fix`) et 1
+`prefer_const_constructors` dans le Duel. On les retire ; il ne restera que
+les 2 remarques volontaires de `themes.dart`.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/core/room_decorations.dart` (l. 316, 318)
+- `ludus_latinus_mobile/lib/ui/features/account/account_screen.dart` (l. 281)
+- `ludus_latinus_mobile/lib/ui/features/boutique/boutique_modal.dart` (l. 176, 178)
+- `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart` (l. 806)
+- `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart` (l. 1300, un `const` à **ajouter**)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Pour chaque `unnecessary_const`, retire le mot `const` signalé (il est
+   déjà implicite parce qu'un parent est `const`). Ne touche à rien d'autre.
+2. Dans `duel_screen.dart`, ajoute `const` à la ligne signalée.
+3. `flutter analyze lib`, `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `flutter analyze lib` : **2 remarques** exactement (les deux
+      `background` de `themes.dart`). Recopie la sortie.
+- [ ] `git diff` : uniquement des `const` retirés ou ajouté.
+- [ ] `flutter test` : tous les tests passent.
+- [ ] Un commit `refactor(mobile): dernières remarques const`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T23 — Tournée d'essai des cinq boss du Duel (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : le Duel vient d'être réécrit (assaut animé, boss animés,
+chute du vaincu). L'architecte n'a combattu que Crixus sur l'émulateur. Il
+faut affronter les **cinq** boss et noter tout défaut visuel.
+
+**Périmètre** :
+- lecture seule : tout le dépôt ; écriture : `docs/TACHES.md` uniquement
+- captures dans `scratch/t23_*.png` (hors dépôt)
+
+**Étapes** :
+1. Note les sesterces du profil de test avant de commencer. **N'achète rien**
+   dans la boutique.
+2. Ouvre Ludi ➔ Colosseum Duellum. Pour chaque boss (Crixus, le Lion, le
+   Minotaure, le Sphinx, Mercure) :
+   - capture l'écran de départ (le portrait doit **bouger** : compare deux
+     captures prises à une seconde d'écart) ;
+   - réponds **faux une fois** : filme l'écran avec
+     `adb shell screenrecord --time-limit 3 /data/local/tmp/t23.mp4`
+     (piège de Git Bash : `MSYS_NO_PATHCONV=1` devant `adb`), vérifie que le
+     boss charge, que ton héros rougit et que l'impact d'épées apparaît ;
+   - réponds juste jusqu'à la victoire (les bonnes réponses sont dans
+     `_duelQuestions` de `duel_screen.dart`) : le boss vaincu doit tomber et
+     pâlir, la réplique devenir « Io triumphe ! » ;
+   - passe au boss suivant avec « Boss Suivant ».
+3. Pour chaque boss, note : portrait animé oui ou non, cadrage (tête coupée ?),
+   nom lisible dans la jauge, défauts (débordement, texte coupé, image qui
+   manque, animation qui saute).
+4. Note les sesterces à la fin : au plus **3 victoires payées** (15 HS
+   chacune, voir le piège 15 d'`AGENTS.md`), les suivantes à 0.
+5. Remets l'émulateur comme tu l'as trouvé (règle 6).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un tableau des cinq boss : portrait animé, cadrage, riposte, chute,
+      défauts, avec le nom de la capture ou de la vidéo.
+- [ ] Les sesterces avant et après, et le nombre de victoires payées.
+- [ ] Un commit `docs: tournée d'essai des cinq boss du Duel`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
