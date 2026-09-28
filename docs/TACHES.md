@@ -1419,7 +1419,7 @@ Statut : FAIT
 
 ## T17 — Diagnostic : les leçons qui donnent la réponse avant l'exercice (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : l'audit a montré que, souvent, le cours affiché juste avant
 l'exercice contient déjà la réponse (20 quiz sur 28, 19 exercices à trou sur
@@ -1454,14 +1454,138 @@ Cette tâche est une **enquête** : tu ne modifies aucun fichier du dépôt sauf
    pas la réponse) ou **« faux positif »**.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un tableau par classe (5e, 4e, 3e) : id, type, réponse, extrait
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un tableau par classe (5e, 4e, 3e) : id, type, réponse, extrait
       révélateur, fichier source, classement.
-- [ ] Les totaux : combien de leçons « révèle la réponse » par type.
-- [ ] Un commit `docs: diagnostic des leçons qui révèlent la réponse`.
+- [x] Les totaux : combien de leçons « révèle la réponse » par type.
+- [x] Un commit `docs: diagnostic des leçons qui révèlent la réponse`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` uniquement (aucun fichier du code source ni de données modifié dans le dépôt).
+  - Script développé hors dépôt : `scratch/reponses_revelees.py`.
 - Commandes lancées et résultat réel :
+  - `python scratch/reponses_revelees.py` : diagnostic complet des 113 leçons (87 exercices analysés hors arènes).
+- Synthèse des totaux (exercices qui révèlent la réponse avant de répondre) :
+  - **Quiz** : 27 sur 28 (96,4 %) — seul `m1-04` (calcul de XIV = 14) est un indice acceptable nécessitant un calcul d'après la règle.
+  - **Trou** : 26 sur 26 (100 %) — 19 contiennent mot pour mot la formule parenthésée `« ... » (*phrase*)` (signalée dans l'audit initial), et les 7 autres nomment le mot directement dans le cours et la consigne.
+  - **Puzzle** : 28 sur 28 (100 %) — tous contiennent la glose mot à mot `*(mot = traduction, ...)*` ou la traduction directe de la citation en exemple.
+  - **Décodeur** : 2 sur 5 (40 %) — `m4-04` et `m5-04` révèlent les 3 fonctions textuellement, tandis que `m8-04`, `m9-04` et `m10-04` fournissent des questions d'orientation (« indice acceptable »).
+  - **Total général** : **83 exercices sur 87** (95,4 %) révèlent la réponse avant que l'élève ne réponde.
+  - **Par classe** :
+    - 5ème : 35 révèlent la réponse sur 39 exercices (4 indices acceptables).
+    - 4ème : 24 révèlent la réponse sur 24 exercices (100 %).
+    - 3ème : 24 révèlent la réponse sur 24 exercices (100 %).
+- Tableaux détaillés par classe :
+
+### Classe de 5ème (Mondes 1 à 10 — 39 exercices hors arènes)
+
+| ID | Type | Réponse attendue | Extrait révélateur du cours | Fichier source | Classement |
+|---|---|---|---|---|---|
+| `m1-01` | quiz | Toujours [K] : 'Kirkous' | La lettre C se prononçait toujours [K], jamais [S] ! | `content/monde1_salve.py` | **révèle la réponse** |
+| `m1-02` | puzzle | Bonjour, ami ! | SALVE ! : « Bonjour ! / Salut ! » ... AMICUS : l'ami (amice) | `content/monde1_salve.py` | **révèle la réponse** |
+| `m1-03` | trou | sum (dans 'Romanus sum.') | Complète pour dire : « Je suis romain » (Romanus sum). | `content/monde1_salve.py` | **révèle la réponse** |
+| `m1-04` | quiz | 14 | Une lettre placée après s'ajoute... avant se soustrait : IV = 4 | `content/monde1_salve.py` | **indice acceptable** |
+| `m1-05` | puzzle | La louve prend soin des enfants. | (Lupa = la louve, pueros = les enfants, curat = prend soin de) | `content/monde1_salve.py` | **révèle la réponse** |
+| `m2-01` | quiz | Filius | - FILIUS : le fils | `content/monde2_domus.py` | **révèle la réponse** |
+| `m2-02` | puzzle | Le chien est dans le jardin. | (Canis = le chien, in = dans, horto = le jardin, est = est) | `content/monde2_domus.py` | **révèle la réponse** |
+| `m2-03` | trou | bit (dans 'Discipulus scribit in tabula.') | Complète pour dire : « L'élève écrit sur la tablette » (Discipulus scribit). | `content/monde2_domus.py` | **révèle la réponse** |
+| `m2-04` | quiz | L'atrium | 1. L'ATRIUM : La grande pièce centrale d'accueil, avec une ouverture... | `content/monde2_domus.py` | **révèle la réponse** |
+| `m3-01` | quiz | Neptune | - NEPTUNE (Poséidon) : Dieu des océans et des tempêtes, armé d'un trident | `content/monde3_dieux.py` | **révèle la réponse** |
+| `m3-02` | puzzle | Midas aime l'or. | (Midas = Midas, aurum = l'or, amat = aime) | `content/monde3_dieux.py` | **révèle la réponse** |
+| `m3-03` | trou | sol (dans 'Icarus ad solem volat.') | Complète le mot latin pour 'le soleil' (sol) : | `content/monde3_dieux.py` | **révèle la réponse** |
+| `m3-04` | quiz | Un bouclier miroir poli | Il a utilisé son bouclier de bronze poli comme un miroir... | `content/monde3_dieux.py` | **révèle la réponse** |
+| `m4-01` | quiz | Sa terminaison (son cas) | Grâce aux terminaisons (la fin du mot, qu'on appelle les cas) : | `content/monde4_cas.py` | **révèle la réponse** |
+| `m4-02` | puzzle | La jeune fille chante. | (Puella = la jeune fille, cantat = chante) | `content/monde4_cas.py` | **révèle la réponse** |
+| `m4-03` | trou | am (dans 'Puer puellam amat.') | - Puella (Sujet) ➔ devient PUELLAM (COD) ! | `content/monde4_cas.py` | **révèle la réponse** |
+| `m4-04` | decodeur | Lupus: sujet, agnum: cod, videt: verbe | - Sujet : C'est Lupus... - COD : C'est agnum... - Verbe : C'est videt | `content/monde4_cas.py` | **révèle la réponse** |
+| `m5-01` | puzzle | Je suis romain. | - SUM = Je suis (ex: Romanus sum = Je suis romain) | `content/monde5_verbes.py` | **révèle la réponse** |
+| `m5-02` | trou | at (dans 'Marcus Romam amat.') | Complète le verbe à la 3e personne : « Marcus Romam amat » | `content/monde5_verbes.py` | **révèle la réponse** |
+| `m5-03` | puzzle | Le soldat combat courageusement. | (Miles = le soldat, fortiter = courageusement, pugnat = combat) | `content/monde5_verbes.py` | **révèle la réponse** |
+| `m5-04` | decodeur | Miles: sujet, gladium: cod, capit: verbe | Miles = Sujet, gladium = COD, capit = Verbe | `content/monde5_verbes.py` | **révèle la réponse** |
+| `m6-01` | quiz | Un filet et un trident | LE RÉTIAIRE : Ses armes sont un filet plombé, un grand trident... | `content/monde6_colisee.py` | **révèle la réponse** |
+| `m6-02` | puzzle | Les chevaux courent rapidement. | (Equi = les chevaux, celeriter = rapidement, currunt = courent) | `content/monde6_colisee.py` | **révèle la réponse** |
+| `m6-03` | trou | Ave (dans 'Ave Caesar !') | « AVE CAESAR, MORITURI TE SALUTANT ! » - AVE = Salut | `content/monde6_colisee.py` | **révèle la réponse** |
+| `m7-01` | quiz | Aqua (l'eau) | - AQUA (l'eau) ➔ aquarium, aquatique, aquarelle, aqueduc. | `content/monde7_etymologie.py` | **révèle la réponse** |
+| `m7-02` | trou | sub (dans 'Submarin.') | - SUB- = « sous » ➔ submerger, subaquatique. | `content/monde7_etymologie.py` | **révèle la réponse** |
+| `m7-03` | puzzle | Je suis venu, j'ai vu, j'ai vaincu. | - Veni = Je suis venu - Vidi = J'ai vu - Vici = J'ai... | `content/monde7_etymologie.py` | **révèle la réponse** |
+| `m8-01` | quiz | Le pain | - Panis : le pain (aliment de base cuit dans des fours) | `content/monde8_marche.py` | **révèle la réponse** |
+| `m8-02` | puzzle | L'enfant achète du pain. | - Puer : l'enfant - Panem : du pain - Emit : achète | `content/monde8_marche.py` | **révèle la réponse** |
+| `m8-03` | trou | Caldarium | - Le Caldarium : la grande salle d'eau très chaude... | `content/monde8_marche.py` | **révèle la réponse** |
+| `m8-04` | decodeur | Mercator: sujet, aquam: cod, vendit: verbe | - Sujet : Qui fait l'action ? - COD : Qu'est-ce qui est vendu ? | `content/monde8_marche.py` | **indice acceptable** |
+| `m9-01` | quiz | Le Scutum | - Scutum : le grand bouclier rectangulaire courbé en bois... | `content/monde9_legion.py` | **révèle la réponse** |
+| `m9-02` | puzzle | La légion combat courageusement. | - Legio : la légion - Fortiter : courageusement - Pugnat : combat | `content/monde9_legion.py` | **révèle la réponse** |
+| `m9-03` | trou | Testudo | le centurion criait l'ordre : TESTUDO ! | `content/monde9_legion.py` | **révèle la réponse** |
+| `m9-04` | decodeur | Miles: sujet, pilum: cod, iacit: verbe | - Sujet : Qui attaque ? - COD : Quelle arme est lancée ? | `content/monde9_legion.py` | **indice acceptable** |
+| `m10-01` | quiz | La Chimère | Il aida le héros Bellérophon à vaincre la redoutable Chimère... | `content/monde10_monstres.py` | **révèle la réponse** |
+| `m10-02` | puzzle | Cerbère garde les portes. | - Cerberus : Cerbère - Portas : les portes - Custodit : garde | `content/monde10_monstres.py` | **révèle la réponse** |
+| `m10-03` | trou | Cyclopes | ...appartenant au peuple des Cyclopes : | `content/monde10_monstres.py` | **révèle la réponse** |
+| `m10-04` | decodeur | Hercules: sujet, monstrum: cod, superat: verbe | - Sujet : Qui triomphe ? - COD : Quelle créature est vaincue ? | `content/monde10_monstres.py` | **indice acceptable** |
+
+### Classe de 4ème (Mondes 11 à 18 — 24 exercices hors arènes)
+
+| ID | Type | Réponse attendue | Extrait révélateur du cours | Fichier source | Classement |
+|---|---|---|---|---|---|
+| `m11-01` | quiz | Il a retenu seul l'armée ennemie sur un pont... | Seul au bout du pont... il bloque à lui tout seul l'armée ennemie | `content/monde11_heros.py` | **révèle la réponse** |
+| `m11-02` | puzzle | Je suis citoyen romain. | « Civis Romanus sum ! » (Je suis citoyen romain !) | `content/monde11_heros.py` | **révèle la réponse** |
+| `m11-03` | trou | sit (dans 'Cloelia fluvium transit.') | Complète pour dire : « La jeune fille traverse le fleuve » (Cloelia fluvium transit). | `content/monde11_heros.py` | **révèle la réponse** |
+| `m12-01` | quiz | En -IS (ex: regis, ducis) | un nom de la 3e déclinaison se reconnaît TOUJOURS à son Génitif en -IS | `content/monde12_spqr.py` | **révèle la réponse** |
+| `m12-02` | trou | em (dans 'Consul militem convocat.') | Complète pour dire : « Le consul convoque le soldat » (Consul militem convocat). | `content/monde12_spqr.py` | **révèle la réponse** |
+| `m12-03` | puzzle | Le chef donne des lois aux citoyens. | (Dux = le chef, leges = les lois, civibus = aux citoyens, dat = donne) | `content/monde12_spqr.py` | **révèle la réponse** |
+| `m13-01` | quiz | Navium (des navires) | - navium = des navires | `content/monde13_marenostrum.py` | **révèle la réponse** |
+| `m13-02` | trou | ia (dans 'Naves maria percurrunt.') | Complète pour dire : « Les navires parcourent les mers » (Naves maria percurrunt). | `content/monde13_marenostrum.py` | **révèle la réponse** |
+| `m13-03` | puzzle | Les navires romains naviguent sur la mer. | (Naves Romanae = les navires romains, in mari = sur la mer, navigant) | `content/monde13_marenostrum.py` | **révèle la réponse** |
+| `m14-01` | quiz | Miles fortis | - Masculin & Féminin : fortis (ex: miles fortis = le soldat courageux) | `content/monde14_legions.py` | **révèle la réponse** |
+| `m14-02` | trou | gens (dans 'Dux ingens periculum videt.') | Complète pour dire : « Le général voit un immense péril » (Dux ingens periculum... | `content/monde14_legions.py` | **révèle la réponse** |
+| `m14-03` | puzzle | Le soldat romain est le plus courageux. | fortis ➔ fortissimus (le plus courageux / très courageux) | `content/monde14_legions.py` | **révèle la réponse** |
+| `m15-01` | quiz | -BA- (ex: amabam, legebat) | Il se forme en insérant le son magique -BA- entre le radical... | `content/monde15_imparfait.py` | **révèle la réponse** |
+| `m15-02` | trou | ant (dans 'Cives in foro erant.') | Complète pour dire : « Les citoyens étaient sur le forum » (Cives in foro... | `content/monde15_imparfait.py` | **révèle la réponse** |
+| `m15-03` | puzzle | Les Romains se rassemblaient sur le forum. | (Romani = les Romains, in foro = sur le forum, conveniebant = se rassemblaient) | `content/monde15_imparfait.py` | **révèle la réponse** |
+| `m16-01` | quiz | -IT (ex: amavit, vicit) | - 3ème sg : -IT (amav-it = il aima / il a aimé) | `content/monde16_parfait.py` | **révèle la réponse** |
+| `m16-02` | trou | it (dans 'Caesar clarus dux fuit.') | Complète pour dire : « César fut un général célèbre » (Caesar clarus dux fuit). | `content/monde16_parfait.py` | **révèle la réponse** |
+| `m16-03` | puzzle | Je suis venu, j'ai vu, j'ai vaincu. | (Veni = je suis venu, vidi = j'ai vu, vici = j'ai vaincu) | `content/monde16_parfait.py` | **révèle la réponse** |
+| `m17-01` | quiz | Il aimera | - Amabit = il aimera | `content/monde17_cesar.py` | **révèle la réponse** |
+| `m17-02` | trou | eum (dans 'Caesar eum vincet.') | Complète la phrase de César : « César le vaincra » (Caesar eum vincet). | `content/monde17_cesar.py` | **révèle la réponse** |
+| `m17-03` | puzzle | Les Gaulois combattaient pour la liberté. | (Galli = les Gaulois, pro libertate = pour la liberté, pugnabant = combattaient) | `content/monde17_cesar.py` | **révèle la réponse** |
+| `m18-01` | quiz | Toi aussi, mon fils ! | « Tu quoque, mi fili ! » (« Toi aussi, mon fils ! »). | `content/monde18_triomphe_rep.py` | **révèle la réponse** |
+| `m18-02` | trou | erunt (dans 'Fortes milites patriam defenderunt.') | Complète la phrase latine : « Les braves soldats... » (Fortes milites patriam defenderunt). | `content/monde18_triomphe_rep.py` | **révèle la réponse** |
+| `m18-03` | puzzle | Le courage et la sagesse sauvent la république. | (Virtus = le courage, sapientia = la sagesse, rem publicam = la république...) | `content/monde18_triomphe_rep.py` | **révèle la réponse** |
+
+### Classe de 3ème (Mondes 19 à 26 — 24 exercices hors arènes)
+
+| ID | Type | Réponse attendue | Extrait révélateur du cours | Fichier source | Classement |
+|---|---|---|---|---|---|
+| `m19-01` | quiz | -US (ex: manus, exercitus) | La 4ème déclinaison regroupe des noms dont le génitif singulier se termine par -US | `content/monde19_auguste.py` | **révèle la réponse** |
+| `m19-02` | trou | es (dans 'Dies novus est.') | Complète pour dire : « C'est un jour nouveau » (Dies novus est). | `content/monde19_auguste.py` | **révèle la réponse** |
+| `m19-03` | puzzle | Auguste a donné la paix au peuple. | (Augustus = Auguste, pacem = la paix, populo = au peuple, dedit = a donné) | `content/monde19_auguste.py` | **révèle la réponse** |
+| `m20-01` | quiz | QUI (miles qui pugnat) | - QUI (masculin) : qui / lequel | `content/monde20_chemins.py` | **révèle la réponse** |
+| `m20-02` | trou | quae (dans 'Via quae Romam ducit.') | Complète pour dire : « La voie romaine qui mène à Rome » (Via quae... | `content/monde20_chemins.py` | **révèle la réponse** |
+| `m20-03` | puzzle | La Voie Appienne est la reine des routes. | (Via Appia = la voie Appienne, regina = la reine, viarum = des routes) | `content/monde20_chemins.py` | **révèle la réponse** |
+| `m21-01` | quiz | La ville capturée / prise | Captum ➔ captus, capta, captum (« ayant été pris » / « capturé ») | `content/monde21_pompei.py` | **révèle la réponse** |
+| `m21-02` | trou | a (dans 'Pompeii urbs deleta est.') | Complète pour dire : « Pompéi est une ville détruite... » (Pompeii urbs deleta est). | `content/monde21_pompei.py` | **révèle la réponse** |
+| `m21-03` | puzzle | Le mont Vésuve dressait un nuage noir. | (Mons Vesuvius = le mont Vésuve, nubem atram = un nuage noir...) | `content/monde21_pompei.py` | **révèle la réponse** |
+| `m22-01` | quiz | D'un nom à l'ablatif et d'un participe à l'ablatif | 1. Un Nom ou pronom à l'Ablatif 2. Un Participe à l'Ablatif | `content/monde22_ablatif_absolu.py` | **révèle la réponse** |
+| `m22-02` | trou | a (dans 'Pace facta, cives gaudent.') | Complète l'ablatif absolu : « La paix ayant été conclue... » (Pace facta, cives gaudent). | `content/monde22_ablatif_absolu.py` | **révèle la réponse** |
+| `m22-03` | puzzle | Sous la conduite de César, les Romains ont vaincu. | (Caesare duce = sous la conduite de César, Romani, vicerunt = ont vaincu) | `content/monde22_ablatif_absolu.py` | **révèle la réponse** |
+| `m23-01` | quiz | -TUR (ex: amatur, laudatur) | - 3ème sg : -TUR (laudatur = il est loué) | `content/monde23_passif.py` | **révèle la réponse** |
+| `m23-02` | trou | tur (dans 'Patria a Romanis amatur.') | Complète pour dire : « La patrie est aimée de tous... » (Patria a Romanis... | `content/monde23_passif.py` | **révèle la réponse** |
+| `m23-03` | puzzle | La paix et la concorde sont recherchées par les citoyens. | (Pax et concordia = la paix et la concorde, a civibus, quaeruntur) | `content/monde23_passif.py` | **révèle la réponse** |
+| `m24-01` | quiz | Sujet à l'Accusatif + Verbe à l'Infinitif | 1. Le Sujet se met à l'ACCUSATIF ! 2. Le Verbe se met à l'INFINITIF... | `content/monde24_infinitive.py` | **révèle la réponse** |
+| `m24-02` | trou | ire (dans 'Audio amicum venire.') | Complète pour dire : « J'entends dire que l'ami arrive » (Audio amicum venire). | `content/monde24_infinitive.py` | **révèle la réponse** |
+| `m24-03` | puzzle | Il dit que le consul vient à Rome. | (Dicit = il dit [que], consulem = le consul, venire = venir) | `content/monde24_infinitive.py` | **révèle la réponse** |
+| `m25-01` | quiz | Virgile (Publius Vergilius Maro) | L'Énéide de Virgile : Le Chant des Armes et du Héros | `content/monde25_poetes.py` | **révèle la réponse** |
+| `m25-02` | trou | sis (dans 'Felix sis !') | Complète la formule de souhait au subjonctif : « Que tu sois heureux ! »... | `content/monde25_poetes.py` | **révèle la réponse** |
+| `m25-03` | puzzle | Je chante les armes et le héros. | (Arma = les armes, virumque = et le héros, cano = je chante) | `content/monde25_poetes.py` | **révèle la réponse** |
+| `m26-01` | quiz | L'Ablatif Absolu (ex: Caesare duce, urbe capta) | - Les constructions reines : ... Ablatif Absolu (urbe capta) | `content/monde26_triomphe_cycle4.py` | **révèle la réponse** |
+| `m26-02` | trou | vat (dans 'Populus Romanus libertatem et pacem servat.') | « Le peuple romain conserve la liberté... » (Populus Romanus libertatem et pacem servat). | `content/monde26_triomphe_cycle4.py` | **révèle la réponse** |
+| `m26-03` | puzzle | Les lettres et la sagesse embellissent l'esprit de l'homme. | (Litterae = les lettres, sapientia = la sagesse, mentem hominis = l'esprit...) | `content/monde26_triomphe_cycle4.py` | **révèle la réponse** |
+
 - Doutes, questions pour l'architecte :
+  - L'audit initial estimait 20 quiz sur 28 et 19 exercices à trou sur 26. Notre enquête systématique montre que :
+    1. Pour les trous : les 19 identifiés dans l'audit sont ceux qui utilisent la formule explicite `« ... » (*phrase*)` juste avant le champ de saisie. Les 7 restants nomment également le mot attendu dans le cours et dans la consigne.
+    2. Pour les quiz : 27 sur 28 divulguent la réponse directement dans le texte du cours ou le titre. Seul `m1-04` (chiffres romains XIV) demande un calcul d'après la règle générale sans donner le résultat.
+    3. Pour les puzzles : les 28 leçons donnent soit la glose mot à mot `*(mot = sens)*` de chaque élément de la phrase, soit la traduction intégrale en exemple, réduisant l'exercice à un simple réassemblage de français.
+    4. Pour les décodeurs : seuls `m4-04` et `m5-04` résolvent la phrase mot à mot ; `m8-04`, `m9-04` et `m10-04` constituent des indices acceptables avec questions guidées.
 - Reste à faire :
+  - Rien sur T17 (diagnostic complet et validé).
+  - La Phase 2 pourra s'appuyer sur ces tableaux pour dissocier les exemples du cours des phrases d'exercice.
