@@ -78,7 +78,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     {
       'nom': 'Crixus le Rétiaire',
       'titre': 'Gladiateur Vétéran',
-      'image': 'assets/images/boss_retiaire.webp',
+      'image': 'assets/images/boss_retiaire_anime.webp',
       'video': 'assets/cinematics/boss_retiaire.mp4',
       'maxHp': 100,
       'attaque': 20,
@@ -89,7 +89,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     {
       'nom': 'Le Lion de Némée',
       'titre': 'Fauve Légendaire',
-      'image': 'assets/images/boss_lion_140.png',
+      'image': 'assets/images/boss_lion_anime.webp',
       'video': 'assets/cinematics/boss_lion.mp4',
       'maxHp': 120,
       'attaque': 25,
@@ -122,7 +122,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     {
       'nom': 'Mercure Céleste',
       'titre': 'Messager des Dieux',
-      'image': 'assets/images/boss_mercure_140.png',
+      'image': 'assets/images/boss_mercure_anime.webp',
       'video': 'assets/cinematics/boss_mercure.mp4',
       'maxHp': 180,
       'attaque': 40,

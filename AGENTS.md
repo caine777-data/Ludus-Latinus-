@@ -311,8 +311,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   jouées à l'aller puis au retour ; `PORTRAITS` dans `illustrations.py`).
   `RomanLottieEffects.showCoinShower` joue désormais `pieces_or.webp`.
   Les anciens `boss_sphinx_140.png` et `boss_minotaure_140.png` restent :
-  l'appli de bureau (`app/vues_exercices.py`) s'en sert. Demandés à Cédric :
-  vidéos du rétiaire, du lion et de Mercure pour animer les trois autres boss.
+  l'appli de bureau (`app/vues_exercices.py`) s'en sert. Les cinq boss du
+  Duel sont désormais animés (`boss_<nom>_anime.webp`, vidéos Gemini
+  `Le_Retiaire`, `Le_Lion`, `Le_Mercure`, `Le_Sphinx`, `Le_Minotaure`).
 - **Duel animé et visuels du 28/09** (vérifiés sur l'émulateur) —
   `duel_screen.dart` : décor `images/duel/decor_colisee.webp`, scène
   `_buildScene` pilotée par `_assaut` (900 ms : élan de l'attaquant, recul,

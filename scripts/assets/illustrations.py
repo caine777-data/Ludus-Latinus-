@@ -36,6 +36,9 @@ PORTRAITS = {
     "Le_Sphinx": ("boss_sphinx_anime.webp", (60, 150, 600), 4.0),
     # 1,2 s : il respire ; ensuite il lève son marteau et sortirait du médaillon.
     "Le_Minotaure": ("boss_minotaure_anime.webp", (40, 120, 640), 1.2),
+    "Le_Retiaire": ("boss_retiaire_anime.webp", (80, 180, 560), 4.0),
+    "Le_Lion": ("boss_lion_anime.webp", (60, 150, 600), 4.0),
+    "Le_Mercure": ("boss_mercure_anime.webp", (80, 170, 560), 4.0),
 }
 PORTRAIT_COTE = 240
 PORTRAIT_IPS = 8
