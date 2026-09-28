@@ -502,7 +502,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                 if (caseName.contains('Ablatif')) caseColor = CaseColors.ablative.withValues(alpha: 0.08);
 
                 return DataRow(
-                  color: MaterialStateProperty.all(caseColor),
+                  color: WidgetStateProperty.all(caseColor),
                   cells: row.map((cell) {
                     final isHeader = cell == row.first;
                     return DataCell(

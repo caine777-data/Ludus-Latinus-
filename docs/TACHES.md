@@ -1676,7 +1676,7 @@ qu'une modification future la remette par erreur.
 
 ## T19 — Analyse Flutter : trier les 59 remarques restantes
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : après le nettoyage de `withOpacity`, `flutter analyze lib`
 signale encore 59 remarques. On veut savoir lesquelles comptent avant d'y
@@ -1700,13 +1700,53 @@ toucher, et corriger la seule API obsolète déjà repérée.
    `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau des remarques par type, avec nombre et fichiers.
-- [ ] Une seule ligne de code changée.
-- [ ] `flutter test` : tous les tests passent.
-- [ ] Un commit `refactor(mobile): WidgetStateProperty dans le Thesaurus`.
+- [x] Un tableau des remarques par type, avec nombre et fichiers.
+- [x] Une seule ligne de code changée.
+- [x] `flutter test` : tous les tests passent.
+- [x] Un commit `refactor(mobile): WidgetStateProperty dans le Thesaurus`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/thesaurus/thesaurus_screen.dart` (1 seule ligne modifiée)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - `flutter analyze lib` (initial) : 59 remarques (`info`).
+  - Remplacement effectué : `MaterialStateProperty.all(caseColor)` → `WidgetStateProperty.all(caseColor)` à la ligne 505 de `thesaurus_screen.dart`.
+  - `flutter analyze lib/ui/features/thesaurus/thesaurus_screen.dart` : `No issues found! (ran in 2.6s)`.
+  - `flutter test` : `+54: All tests passed!` (54 tests sur 54 passants).
+  - Restauration du fichier d'analyse régénéré : `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+  - `flutter analyze lib` (final) : 58 remarques (la remarque sur `MaterialStateProperty` est résolue).
+
+### Tableau récapitulatif des 59 remarques par type
+
+| Règle de linter | Nb | Fichiers concernés |
+|---|---|---|
+| `prefer_const_constructors` | 37 | `circus_screen.dart` (7), `room_decorations.dart` (4), `boutique_modal.dart` (4), `bibliotheca_view.dart` (4), `taverne_screen.dart` (3), `account_screen.dart` (2), `home_screen.dart` (2), `ludi_view.dart` (2), `marche_trajan_screen.dart` (2), `memoria_screen.dart` (2), `cesar_screen.dart` (1), `duel_screen.dart` (1), `export_fiches_modal.dart` (1), `case_decoder_widget.dart` (1), `map_screen.dart` (1) |
+| `deprecated_member_use` | 7 | `roman_audio_modal.dart` (3), `themes.dart` (2), `memoria_screen.dart` (1), `thesaurus_screen.dart` (1 — **corrigé**) |
+| `prefer_const_literals_to_create_immutables` | 5 | `boutique_modal.dart` (1), `circus_screen.dart` (1), `room_decorations.dart` (1), `case_decoder_widget.dart` (1), `memoria_screen.dart` (1) |
+| `constant_identifier_names` | 4 | `audio_service.dart` (4 : constantes Windows FFI `SND_ASYNC`, `SND_NODEFAULT`, `SND_PURGE`, `SND_FILENAME`) |
+| `prefer_const_declarations` | 4 | `room_decorations.dart` (2), `roman_ornaments.dart` (1), `cesar_screen.dart` (1) |
+| `prefer_final_fields` | 2 | `circus_screen.dart` (2 : `_playerSpeed`, `_rivalSpeed`) |
+| **Total** | **59** | |
+
+### Analyse détaillée des 6 autres `deprecated_member_use` (non modifiés)
+
+1. **`lib/ui/core/themes.dart` (l. 70 et 120) : `background:` dans `ColorScheme.light` et `ColorScheme.dark`**
+   - *Message* : `'background' is deprecated and shouldn't be used. Use surface instead.`
+   - *Ce qu'il faudrait changer* : Supprimer `background: ...` et ajuster `surface: ...` (ou utiliser `ColorScheme.fromSeed`).
+   - *Risque* : En mode sombre, `themes.dart` définit actuellement `surface: RomanColors.darkSurface` (`#1F1A24`) et `background: RomanColors.darkBackground` (`#120E16`), deux couleurs distinctes pour contraster les cartes et le fond. Si `background` est supprimé sans précaution, les composants Material 3 basculent sur `surface`, unifiant cartes et fond d'écran et détruisant le contraste des cartes en mode sombre.
+
+2. **`lib/ui/core/roman_audio_modal.dart` (l. 171, 278, 346) : `activeColor: RomanColors.goldDark` dans `Switch.adaptive`**
+   - *Message* : `'activeColor' is deprecated and shouldn't be used. Use activeThumbColor or activeTrackColor instead.`
+   - *Ce qu'il faudrait changer* : Remplacer par `activeThumbColor: RomanColors.goldDark` (ou spécifier à la fois `activeTrackColor`).
+   - *Risque* : Sous Material 3, `activeColor` teignait le curseur ou la piste selon la plateforme. Remplacer uniquement par `activeThumbColor` laisse la piste (`trackColor`) hériter du conteneur primaire/secondaire M3 (qui peut différer du design antique or/marbre attendu).
+
+3. **`lib/ui/features/memoria/memoria_screen.dart` (l. 590) : `Matrix4.scale(scale)`**
+   - *Message* : `'scale' is deprecated and shouldn't be used. Use scaleByVector3, scaleByVector4, or scaleByDouble instead.`
+   - *Ce qu'il faudrait changer* : Remplacer `..scale(scale)` par `..scaleByDouble(scale)`.
+   - *Risque* : Méthode de `vector_math`. Si un développeur remplace par `scaleByVector3` sans importer explicitement `Vector3` ou en omettant l'axe Z (`1.0`), la projection 3D en perspective (`setEntry(3, 2, 0.0012)`) lors du retournement de carte peut être aplatie ou déformée visuellement.
+
 - Doutes, questions pour l'architecte :
+  - Les 4 remarques `constant_identifier_names` dans `audio_service.dart` proviennent des constantes Win32 C (`winmm.dll`) nécessaires aux appels FFI sous Windows. Les renommer en lowerCamelCase violerait les conventions de nommage de l'API native Windows. Un `// ignore: constant_identifier_names` ciblé sera à prévoir le moment venu.
 - Reste à faire :
+  - Rien sur T19 (tâche terminée et validée).
