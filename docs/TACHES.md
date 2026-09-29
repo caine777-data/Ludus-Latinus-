@@ -1915,7 +1915,7 @@ tâche, `git add <fichier>` uniquement. Tous les tests doivent passer.
 
 ## T22 — Les 8 dernières remarques `const`
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : après T21, `flutter analyze lib` signale encore 7
 `unnecessary_const` (des `const` en trop laissés par `dart fix`) et 1
@@ -1975,6 +1975,8 @@ les 2 remarques volontaires de `themes.dart`.
   - Aucun doute. Le code Flutter `lib/` est au niveau de propreté maximal visé.
 - Reste à faire :
   - Rien sur T22. Prêt pour T23.
+
+**Vérification de l'architecte** : seuls des `const` changent ; `flutter analyze lib` ne signale plus que les 2 `background` volontaires de `themes.dart`. Validé.
 
 ---
 

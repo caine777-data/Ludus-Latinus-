@@ -306,6 +306,7 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **T22 validée** — `flutter analyze lib` : 2 remarques seulement (le `background` volontaire de `themes.dart`). Reste T23 pour Gemini.
 - **T20 et T21 validées** — plus d'API obsolète hors `themes.dart` (le
   `background` du thème reste volontairement : le changer éclaircirait le
   fond du mode sombre) ; `flutter analyze lib` passe de 58 à 10 remarques.
