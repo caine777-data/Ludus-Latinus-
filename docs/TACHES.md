@@ -2152,7 +2152,7 @@ l'écran de fin du Circus sur un **petit écran** (360 x 640) : Flutter fait
 
 ## T25 — Tournée d'essai du Circus Maximus (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : le Circus a changé (récompense plafonnée, score en points)
 mais personne n'a joué une course entière sur l'émulateur.
@@ -2173,16 +2173,33 @@ dans `scratch/t25_*`.
 5. Remets l'émulateur comme tu l'as trouvé (règle 6).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un tableau des trois courses : faction, issue, score, gain affiché,
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un tableau des trois courses : faction, issue, score, gain affiché,
       gain réel, défauts, capture.
-- [ ] Un commit `docs: tournée d'essai du Circus`.
+- [x] Un commit `docs: tournée d'essai du Circus`.
+
+### Tableau de synthèse des trois courses
+
+| Course | Faction | Issue | Score course | Gain affiché fin | Gain réel (solde) | Effet bonus faction | Défauts visuels | Captures |
+|---|---|---|---|---|---|---|---|---|
+| 1 | Veneti (Bleus) | Victoire | 60 pts | +22 Sesterces remportés (12 HS base + 10 HS quête jour) | +22 HS (392 -> 414 HS) | Vitesse +15 % bien active | Titre AppBar tronqué sur petit écran (« CIRCUS MAXIM... ») | `scratch/t25_race1_start.png`, `scratch/t25_race1_victory.png` |
+| 2 | Prasini (Verts) | Victoire | 150 pts | +16 Sesterces remportés | +16 HS (414 -> 430 HS) | Sesterces +30 % vérifié : 12 × 1,30 = 15,6 arrondi à 16 HS | Rendu impeccable, bannière de récompense bien dimensionnée | `scratch/t25_race2_start.png`, `scratch/t25_race2_victory.png` |
+| 3 | Albati (Blancs) | Défaite | 30 pts | Pas de sesterces cette fois | 0 HS (442 -> 442 HS) | Seconde Chance vérifiée : auréole cyan protectrice, 1re erreur amortie sans ralentissement | Aucun débordement. Dialogue « Course disputée » propre avec bouton Quitter opérationnel | `scratch/t25_race3_shield.png`, `scratch/t25_race3_defeat.png`, `scratch/t25_final_ludi.png` |
 
 **Compte rendu** (rempli par l'exécutant) :
-- Fichiers modifiés :
+- Fichiers modifiés : `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Émulateur Pixel_Ludus : 3 courses jouées conformément au protocole (Veneti gagnée, Prasini gagnée, Albati perdue volontairement).
+  - Solde initial avant la tournée : 392 HS (visible sur `scratch/t25_race1_start.png`).
+  - Course 1 (Veneti) : 60 pts, gain affiché +22 Sesterces (12 de base + 10 quête jour), solde passe à 414 HS (+22 HS réel).
+  - Course 2 (Prasini) : 150 pts, gain affiché +16 Sesterces, solde passe à 430 HS (+16 HS réel). Le calcul `round(12 * 1.30) = 16 HS` est strictement respecté.
+  - Course 3 (Albati) : test de la Seconde Chance au tour 1 : l'auréole cyan absorbe la 1re erreur sans pénalité de recul (`scratch/t25_race3_shield.png`). Puis défaite volontaire au tour 3 par cumul de mauvaises réponses (-2% chacune) et d'un incident de virage délaissé (-6%), permettant au rival Maximus de franchir la ligne d'arrivée en premier (`scratch/t25_race3_defeat.png`). Affichage de « 💨 COURSE DISPUTÉE ! », « Pas de sesterces cette fois », solde inchangé (0 HS gagné).
+  - Plafond quotidien vérifié : 3 parties payées par jour (une course supplémentaire intercalée a bien affiché « Pour la gloire : 3 courses payées par jour » avec 0 HS). Solde final sur l'écran Ludi : 442 HS (`scratch/t25_final_ludi.png`).
+  - Remise en état de l'émulateur (règle 6) : `adb shell settings put system pointer_location 0` et `adb shell settings put system show_touches 0` exécutés et vérifiés (valeurs 0).
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - **Remarque de game design importante** : Dans le code actuel de `circus_screen.dart`, la vitesse passive du joueur (`_playerSpeed = 0.115`, soit 2,30 %/s) est structurellement supérieure à celle du rival (`_rivalSpeed = 0.102`, soit 2,04 %/s). De plus, le rival ne peut déclencher une défaite qu'au Tour 3 (`_rivalProgress >= 100.0 && _currentLap >= _totalLaps`). Si un joueur pose son téléphone sans répondre à la moindre question, il gagne la course automatiquement en ~43 s par tour avec ~5 s d'avance sur le rival à chaque tour. Pour perdre, il est indispensable de faire exprès des erreurs répétées au Tour 3 pour freiner le char du joueur (-2 % et 2,5 s d'arrêt par faute). À envisager pour plus tard : ajuster la vitesse passive du rival ou pénaliser l'inactivité pour maintenir une tension de course.
+  - Le titre de l'AppBar « CIRCUS MAXIMUS » est parfois rogné à droite par le badge de score sur les écrans très étroits si la police système est grande.
+- Reste à faire : Rien sur T25. Tâche terminée.
 
 ---
 
