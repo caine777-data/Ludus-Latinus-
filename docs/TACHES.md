@@ -1982,7 +1982,7 @@ les 2 remarques volontaires de `themes.dart`.
 
 ## T23 — Tournée d'essai des cinq boss du Duel (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
 
 **Objectif** : le Duel vient d'être réécrit (assaut animé, boss animés,
 chute du vaincu). L'architecte n'a combattu que Crixus sur l'émulateur. Il
@@ -2056,3 +2056,259 @@ faut affronter les **cinq** boss et noter tout défaut visuel.
 - Reste à faire :
   - Rien sur T23.
 
+**Vérification de l'architecte** : tournée exemplaire, captures et vidéos à
+l'appui. Les deux défauts sont corrigés : le badge « Pour la gloire » ne
+déborde plus (panneau de victoire défilant, message raccourci, même
+correction dans le Circus) et la jauge affiche un nom court (`court` dans
+la fiche du boss). Validé.
+
+---
+
+**Série de tâches du 29/09** (l'architecte est absent quelques heures) :
+T24 à T29, **dans l'ordre**, une tâche par session, un commit par tâche,
+`git add <fichier>` uniquement. Tous les tests (Python et Flutter) doivent
+passer. Si une tâche est bloquée, passe-la à `BLOQUÉ` avec l'explication et
+continue avec la suivante.
+
+---
+
+## T24 — Un test qui empêche le Duel et le Circus de déborder
+
+Statut : À FAIRE
+
+**Objectif** : T23 a trouvé un débordement que les tests ne voyaient pas. On
+ajoute des tests de widgets qui montent le panneau de victoire du Duel et
+l'écran de fin du Circus sur un **petit écran** (360 x 640) : Flutter fait
+échouer le test si un `RenderFlex` déborde.
+
+**Périmètre** :
+- `ludus_latinus_mobile/test/fin_de_partie_test.dart` (nouveau)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Inspire-toi de `test/cesar_mission_test.dart` (construction du dépôt,
+   `tester.view.physicalSize`, `devicePixelRatio`, `addTearDown`).
+2. Écris un test qui ouvre `DuelScreen`, gagne le combat contre Crixus en
+   appuyant sur les bonnes réponses (lis `_duelQuestions` : la bonne réponse
+   est la clé `rep`, cherche son texte à l'écran), puis vérifie que
+   « TRIOMPHE DANS L'ARÈNE » s'affiche. Fais-le **deux fois** : quota non
+   atteint (« +15 Sesterces remportés ») et quota atteint
+   (`repo.profile.recompensesJeux = {'duel': 3}` et
+   `recompensesJeuxDate` à la date du jour : « Pour la gloire »).
+   Taille d'écran : `Size(720, 1280)` avec `devicePixelRatio = 2`
+   (soit 360 x 640 points).
+3. La vidéo d'entrée du boss s'ouvre au premier affichage : si elle gêne le
+   test, ferme-la avec le bouton « PASSER » ou attends avec `pumpAndSettle`.
+   Si c'est impossible à tester proprement, explique pourquoi et teste au
+   moins le Circus.
+4. Même principe pour la fin de course du Circus si c'est faisable ; sinon,
+   explique ce qui bloque.
+5. `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Le test passe, sur 360 x 640.
+- [ ] Il **échoue** si on remet l'ancien message long sans `Flexible`
+      (essaie-le en local, puis annule ta modification ; recopie l'erreur).
+- [ ] `git status` : seul le nouveau test et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `test(mobile): la fin du Duel ne déborde pas sur petit écran`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T25 — Tournée d'essai du Circus Maximus (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : le Circus a changé (récompense plafonnée, score en points)
+mais personne n'a joué une course entière sur l'émulateur.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures et vidéos
+dans `scratch/t25_*`.
+
+**Étapes** :
+1. Note les sesterces. **N'achète rien.**
+2. Joue **trois courses** avec trois factions différentes (Veneti, Prasini,
+   Albati) : gagne-en deux, perds-en une exprès.
+3. Pour chacune, note : le score affiché en course (« X pts »), le montant
+   affiché à la fin, les sesterces réellement gagnés (en-tête), l'effet de
+   la faction Prasini (« Sesterces +30 % » : 12 × 1,3 = 16 HS attendus),
+   l'effet de la Seconde Chance des Albati.
+4. Note tout défaut visuel (débordement, texte coupé, animation qui saute,
+   image manquante) avec une capture.
+5. Remets l'émulateur comme tu l'as trouvé (règle 6).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un tableau des trois courses : faction, issue, score, gain affiché,
+      gain réel, défauts, capture.
+- [ ] Un commit `docs: tournée d'essai du Circus`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T26 — Tournée d'essai de César, du Marché et de la Taverne (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : ces trois jeux ont été refaits (missions de César, Marché payé
+une fois, défi du jour) mais ils sont verrouillés pour le profil de test
+(il n'a que 5 leçons). On leur fait passer une tournée avec un profil
+temporaire, puis on remet le profil d'origine.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t26_*`. Le profil de l'émulateur est modifié **puis restauré**.
+
+**Étapes** :
+1. **Sauvegarde** le profil actuel de l'émulateur :
+   `MSYS_NO_PATHCONV=1 adb exec-out run-as com.luduslatinus.app cat app_flutter/ludus_latinus_save.json > scratch/t26_profil_avant.json`
+   Vérifie que le fichier n'est pas vide.
+2. Crée une copie où `completed` contient les 20 premières leçons (m1-01 à
+   m5-04 environ, prends les vrais identifiants dans le dataset) et pousse-la
+   à la place (voir `scratch/sauvegarde_profil_test.json` et la section
+   Commandes d'`AGENTS.md` pour la méthode `run-as`). Relance l'appli.
+3. **César** : fais la mission 1 en te trompant une fois de traduction, puis
+   la mission 2 du premier coup. Vérifie : la clé n'est plus dans l'énoncé,
+   5 HS après erreur, 10 HS du premier coup, mission cochée, et qu'une
+   mission déjà réussie ne repaie pas (quitte et reviens).
+4. **Marché** : réussis un étal, puis rate l'étal suivant avant de le
+   réussir : 5 HS puis « pas de sesterces après une erreur ». Revois le même
+   étal plus tard : « déjà payé ». Vérifie qu'en mode rendu de monnaie la
+   somme à rendre n'est plus affichée.
+5. **Taverne** : joue quelques lancers, vérifie le plafond de 3 lancers
+   récompensés par jour.
+6. **Restaure** le profil d'origine (`t26_profil_avant.json`), relance
+   l'appli et vérifie que l'accueil affiche de nouveau 5 leçons.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Le profil d'origine est restauré (capture de l'accueil à la fin).
+- [ ] Un tableau par jeu : ce qui est conforme, ce qui ne l'est pas, captures.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée d'essai de César, du Marché et de la Taverne`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T27 — Les images qui ne servent plus (sans rien supprimer)
+
+Statut : À FAIRE
+
+**Objectif** : l'APK grossit à chaque lot d'images. On veut la liste des
+fichiers de `ludus_latinus_mobile/assets/` qu'**aucun code ne cite plus**,
+pour que l'architecte décide quoi supprimer.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; script dans
+`scratch/assets_orphelins.py` (hors dépôt).
+
+**Étapes** :
+1. Liste tous les fichiers de `ludus_latinus_mobile/assets/` (images,
+   animations, audio, cinématiques).
+2. Pour chacun, cherche son nom de fichier dans `ludus_latinus_mobile/lib/`,
+   `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json`, `app/`
+   (l'appli de bureau en réutilise certains) et `content/`. Attention aux
+   chemins construits par morceaux (par exemple `'cas_$fichier.webp'`,
+   `'lupulus_${…}'`, `AvatarAssets`) : lis le code autour avant de conclure.
+3. Classe chaque fichier non cité : **orphelin sûr**, **cité par morceaux**
+   (faux positif) ou **doute**. Donne sa taille.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `git status` : seul `docs/TACHES.md` est modifié (rien de supprimé).
+- [ ] Un tableau : fichier, taille, classement, raison.
+- [ ] Le total des Ko récupérables avec les orphelins sûrs.
+- [ ] Un commit `docs: images et sons qui ne servent plus`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T28 — Tournée d'essai des écrans de révision (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : beaucoup d'écrans ont changé (Memoria, Thesaurus, Bibliotheca,
+Épigraphie, boutique, Paramètres). On veut une relecture visuelle, écran par
+écran, sur l'émulateur **et** avec une police agrandie.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t28_*`.
+
+**Étapes** :
+1. Parcours et capture : accueil, Paramètres (roue dentée), boutique
+   (touche le « ? » des sesterces), Bibliotheca, Memoria (réponds juste et
+   faux), Thesaurus (onglet Déclinaisons : les six cartes des cas ; filtre
+   Pronom), Épigraphie (la stèle), une leçon de monde 1 (réponds faux une
+   fois : Lupulus doit encourager).
+2. Recommence avec la police agrandie :
+   `adb shell settings put system font_scale 1.3` ; note chaque texte coupé
+   ou débordement ; puis **remets** `font_scale 1.0`.
+3. Remets l'émulateur comme tu l'as trouvé (règle 6).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau écran par écran : normal / police 1,3, défauts, capture.
+- [ ] `font_scale` remis à 1.0 (recopie la commande et le résultat).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée d'essai des écrans de révision`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T29 — Brouillon pour la 3e : exercices qui donnent la réponse (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'architecte va réécrire les exercices de 3e (mondes 19 à 26)
+comme la 5e et la 4e. Tu prépares le terrain : pour chaque trou et chaque
+puzzle, le texte actuel et **une proposition**, que l'architecte relira.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement. **Ne modifie pas
+`content/`.**
+
+**Étapes** :
+1. Relis dans `AGENTS.md` l'entrée « Exercices de 5e : la réponse n'est plus
+   dans le cours » (le principe) et regarde deux exemples réécrits :
+   `git show e26c38b -- content/monde5_verbes.py` et
+   `git show 8ea6668 -- content/monde14_legions.py`.
+2. Pour les 16 exercices de 3e (liste dans le tableau « Classe de 3ème » de
+   T17 : m19-02, m19-03, m20-02, m20-03… m26-02, m26-03), recopie la phrase
+   actuelle et propose **une autre phrase** qui applique la même règle,
+   avec sa traduction et, pour un puzzle, deux étiquettes-pièges
+   grammaticales.
+3. N'emploie que du vocabulaire déjà présent dans le Thesaurus (voir les
+   mots des mondes 15 à 26 ajoutés le 27/09) ; signale tout mot nouveau.
+4. Pour chaque proposition, écris la règle testée en une ligne.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau des 16 exercices : leçon, type, phrase actuelle, proposition,
+      traduction, pièges, règle testée, mots nouveaux.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: brouillon des exercices de 3e`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

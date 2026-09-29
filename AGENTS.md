@@ -306,6 +306,14 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **T23 validée et ses défauts corrigés** — les cinq boss testés sur
+  l'émulateur. Le panneau de victoire du Duel défile (il ne déborde plus),
+  le message du quota est raccourci (« Pour la gloire : 3 duels payés par
+  jour », idem Circus), et la jauge affiche le nom court du boss (clé
+  `court` de sa fiche). Série confiée pendant l'absence de l'architecte :
+  T24 à T29 (tests anti-débordement, tournées d'essai du Circus, de César,
+  du Marché, de la Taverne et des écrans de révision, images orphelines,
+  brouillon des exercices de 3e).
 - **T22 validée** — `flutter analyze lib` : 2 remarques seulement (le `background` volontaire de `themes.dart`). Reste T23 pour Gemini.
 - **T20 et T21 validées** — plus d'API obsolète hors `themes.dart` (le
   `background` du thème reste volontairement : le changer éclaircirait le
