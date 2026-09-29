@@ -1982,7 +1982,7 @@ les 2 remarques volontaires de `themes.dart`.
 
 ## T23 — Tournée d'essai des cinq boss du Duel (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : le Duel vient d'être réécrit (assaut animé, boss animés,
 chute du vaincu). L'architecte n'a combattu que Crixus sur l'émulateur. Il
@@ -2015,14 +2015,44 @@ faut affronter les **cinq** boss et noter tout défaut visuel.
 5. Remets l'émulateur comme tu l'as trouvé (règle 6).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un tableau des cinq boss : portrait animé, cadrage, riposte, chute,
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un tableau des cinq boss : portrait animé, cadrage, riposte, chute,
       défauts, avec le nom de la capture ou de la vidéo.
-- [ ] Les sesterces avant et après, et le nombre de victoires payées.
-- [ ] Un commit `docs: tournée d'essai des cinq boss du Duel`.
+- [x] Les sesterces avant et après, et le nombre de victoires payées.
+- [x] Un commit `docs: tournée d'essai des cinq boss du Duel`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md`
+- Sesterces :
+  - Avant la tournée : **347 HS** (vérifié sur `scratch/t23_duel_entry.png`)
+  - Boss 0 (Crixus) : +15 HS ➔ 362 HS (1re victoire payée)
+  - Boss 1 (Lion) : +15 HS ➔ 377 HS (2e victoire payée)
+  - Boss 2 (Minotaure) : +15 HS ➔ 392 HS (3e victoire payée)
+  - Boss 3 (Sphinx) : +0 HS ➔ 392 HS (quota de 3 duels payés/jour atteint : badge « Victoire pour la gloire : 3 duels payés par jour »)
+  - Boss 4 (Mercure) : +0 HS ➔ 392 HS (quota atteint)
+  - Après la tournée (écran Ludi) : **392 HS** (vérifié sur `scratch/t23_final_sesterces.png`)
+  - **Victoires payées : exactement 3** (+45 HS au total, 0 HS ensuite). Conforme au piège 15 d'`AGENTS.md`.
+
+- Tableau de synthèse des cinq boss :
+
+| Boss | Portrait animé | Cadrage | Riposte subie | Chute du vaincu | Défauts constatés | Captures et vidéos (`scratch/`) |
+|---|---|---|---|---|---|---|
+| **0. Crixus le Rétiaire** (100 PV) | **Oui** (regard, respiration buste, trident oscille) | **Bon** (centré, tête non coupée, trident et filet visibles) | **Oui** (charge vers la gauche, Marcus rougit, étincelles d'épées, -30 PV) | **Oui** (bascule, s'enfonce dans le sol, pâlit à opacité 0.45, bulle « Io triumphe ! ») | Jauge tronquée : `100/100 CRIXUS LE RÉTI...` (points de suspension) | `t23_boss0_idle1.png`, `t23_boss0_idle2.png`, `t23_boss0_riposte.mp4`, `t23_boss0_fall.png`, `t23_boss0_victory.png` |
+| **1. Le Lion de Némée** (120 PV) | **Oui** (respiration féline, crinière, yeux/gueule) | **Bon** (tête majestueuse entière, oreilles non coupées) | **Oui** (bond/charge vers la gauche, Marcus rougit, étincelles, -38 PV) | **Oui** (s'effondre incliné, s'enfonce, pâlit, « Io triumphe ! ») | Jauge tronquée à 3 chiffres : `120/120 LE LION DE NÉM...`, redevient entier `LE LION DE NÉMÉE` dès <100 PV (`72/120`) | `t23_boss1_idle1.png`, `t23_boss1_idle2.png`, `t23_boss1_riposte.mp4`, `t23_boss1_fall.png`, `t23_boss1_victory.png` |
+| **2. Le Minotaure** (140 PV) | **Oui** (souffle puissant des naseaux, torse et tête) | **Bon** (cornes imposantes bien cadrées dans le médaillon) | **Oui** (charge violente, Marcus rougit avec recul, étincelles, -45 PV) | **Oui** (bascule en arrière-droite, s'enfonce, pâlit, « Io triumphe ! ») | **Aucun** : nom court `LE MINOTAURE` tient entièrement même à 3 chiffres (`140/140 LE MINOTAURE`) | `t23_boss2_idle1.png`, `t23_boss2_idle2.png`, `t23_boss2_riposte.mp4`, `t23_boss2_fall.png`, `t23_boss2_victory.png` |
+| **3. Le Sphinx de Thèbes** (160 PV) | **Oui** (battement doux des ailes, clignement yeux, tête) | **Bon** (coiffe égyptienne et ailes visibles, centré) | **Oui** (piqué/charge vers la gauche, Marcus rougit, étincelles, -53 PV) | **Oui** (bascule, s'enfonce, pâlit, « Io triumphe ! ») | 1. Jauge tronquée : `160/160 LE SPHINX DE T...` (et encore à 2 chiffres `58/160 LE SPHINX DE TH...`).<br>2. **Bug RenderFlex** : dans la fiche de victoire, le badge « 🪙 Victoire pour la gloire : 3 duels payés par jour » déborde : `A RenderFlex overflowed by 5.6 pixels on the right` (hachures jaunes/noires sur le bord droit). | `t23_boss3_idle1.png`, `t23_boss3_idle2.png`, `t23_boss3_riposte.mp4`, `t23_boss3_fall.png`, `t23_boss3_victory.png` |
+| **4. Mercure Céleste** (180 PV) | **Oui** (clignement yeux, hochement tête, ailettes du casque frémissent) | **Bon** (casque ailé et caducée d'or bien visibles sans coupure) | **Oui** (charge rapide en éclair, Marcus rougit, étincelles, -60 PV avec posture lourde) | **Oui** (bascule, s'enfonce dans le sol, pâlit, « Io triumphe ! ») | 1. Jauge tronquée à 3 chiffres : `180/180 MERCURE CÉLE...`, s'affiche entier dès <100 PV (`78/180 MERCURE CÉLESTE`).<br>2. **Bug RenderFlex** : même débordement de 5.6 pixels sur le badge « Victoire pour la gloire ».<br>3. Boutons de fin : affiche « Quitter » et « Rejouer » (normal car 5e et dernier boss). | `t23_boss4_idle1.png`, `t23_boss4_idle2.png`, `t23_boss4_riposte.mp4`, `t23_boss4_fall.png`, `t23_boss4_victory.png` |
+
 - Commandes lancées et résultat réel :
+  - Relevé des sesterces initiaux : `adb shell screencap -p /sdcard/t23_duel_entry.png` ➔ 347 HS.
+  - Déroulé complet des 5 combats de duel via ADB (captures idle t=0s et t=1s, vidéo mp4 de riposte via `screenrecord`, enchaînement des réponses correctes depuis `_duelQuestions`, capture de chute et de victoire).
+  - Relevé des sesterces finaux : `adb shell screencap -p /sdcard/t23_final_sesterces.png` ➔ 392 HS (+45 HS = 3 x 15 HS).
+  - Remise à zéro des réglages développeur : `adb shell settings put system pointer_location 0` et `show_touches 0`.
 - Doutes, questions pour l'architecte :
+  - Deux défauts visuels majeurs à corriger dans une tâche ultérieure :
+    1. **Débordement du badge de gloire** (`duel_screen.dart:1270-1291`) : le texte `Victoire pour la gloire : 3 duels payés par jour` dans un `Row` avec icône dépasse de 5.6px sur écran standard (1080x2400). Un `Flexible` ou une taille de police légèrement ajustée (ou texte plus court, ex: `Victoire pour la gloire (max 3/jour)`) évitera le débordement.
+    2. **Troncature du nom du boss dans la jauge supérieure** : lorsque les PV comportent 3 chiffres (100 à 180), l'espace restant pour le nom du boss est trop restreint pour les noms longs (`CRIXUS LE RÉTI...`, `LE LION DE NÉM...`, `LE SPHINX DE T...`, `MERCURE CÉLE...`). Réduire la taille de police du nom ou élargir le bloc permettra un affichage complet.
 - Reste à faire :
+  - Rien sur T23.
+
