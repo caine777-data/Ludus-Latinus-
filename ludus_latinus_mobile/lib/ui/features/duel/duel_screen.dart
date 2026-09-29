@@ -77,6 +77,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   final List<Map<String, dynamic>> _bosses = [
     {
       'nom': 'Crixus le Rétiaire',
+      'court': 'Crixus', // pour la jauge, où le nom complet ne tient pas
       'titre': 'Gladiateur Vétéran',
       'image': 'assets/images/boss_retiaire_anime.webp',
       'video': 'assets/cinematics/boss_retiaire.mp4',
@@ -88,6 +89,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     },
     {
       'nom': 'Le Lion de Némée',
+      'court': 'Le Lion', // pour la jauge, où le nom complet ne tient pas
       'titre': 'Fauve Légendaire',
       'image': 'assets/images/boss_lion_anime.webp',
       'video': 'assets/cinematics/boss_lion.mp4',
@@ -99,6 +101,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     },
     {
       'nom': 'Le Minotaure',
+      'court': 'Le Minotaure', // pour la jauge, où le nom complet ne tient pas
       'titre': 'Gardien du Labyrinthe',
       'image': 'assets/images/boss_minotaure_anime.webp',
       'video': 'assets/cinematics/boss_minotaure.mp4',
@@ -110,6 +113,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     },
     {
       'nom': 'Le Sphinx de Thèbes',
+      'court': 'Le Sphinx', // pour la jauge, où le nom complet ne tient pas
       'titre': 'Maître des Énigmes',
       'image': 'assets/images/boss_sphinx_anime.webp',
       'video': 'assets/cinematics/boss_sphinx.mp4',
@@ -121,6 +125,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     },
     {
       'nom': 'Mercure Céleste',
+      'court': 'Mercure', // pour la jauge, où le nom complet ne tient pas
       'titre': 'Messager des Dieux',
       'image': 'assets/images/boss_mercure_anime.webp',
       'video': 'assets/cinematics/boss_mercure.mp4',
@@ -692,7 +697,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   const SizedBox(width: 8),
                   Expanded(
                     child: _jauge(
-                      nom: boss['nom'] as String,
+                      nom: (boss['court'] ?? boss['nom']) as String,
                       pv: _bossHp,
                       pvMax: boss['maxHp'] as int,
                       couleur: const Color(0xFF8E1724),
@@ -1231,7 +1236,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         color: Color(0xFFF9F6F0),
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      child: Column(
+      // Défilant : sur un petit écran, le panneau ne déborde plus.
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (_victoire) ...[
@@ -1274,16 +1281,20 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               children: [
                 const Text('🪙', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 8),
-                Text(
-                  _recompense > 0
-                      ? '+$_recompense Sesterces remportés'
-                      : _victoire
-                          ? 'Victoire pour la gloire : 3 duels payés par jour'
-                          : 'Pas de sesterces cette fois',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
+                // Passe à la ligne au lieu de déborder sur un petit écran.
+                Flexible(
+                  child: Text(
+                    _recompense > 0
+                        ? '+$_recompense Sesterces remportés'
+                        : _victoire
+                            ? 'Pour la gloire : 3 duels payés par jour'
+                            : 'Pas de sesterces cette fois',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF7A5901),
+                    ),
                   ),
                 ),
               ],
@@ -1341,6 +1352,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             ],
           ),
         ],
+        ),
       ),
     );
   }

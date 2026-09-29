@@ -1595,16 +1595,20 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               children: [
                 const Text('🪙', style: TextStyle(fontSize: 18)),
                 const SizedBox(width: 8),
-                Text(
-                  _recompense > 0
-                      ? '+$_recompense Sesterces remportés'
-                      : _playerWon
-                          ? 'Victoire pour la gloire : 3 courses payées par jour'
-                          : 'Pas de sesterces cette fois',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7A5901),
+                // Passe à la ligne au lieu de déborder sur un petit écran.
+                Flexible(
+                  child: Text(
+                    _recompense > 0
+                        ? '+$_recompense Sesterces remportés'
+                        : _playerWon
+                            ? 'Pour la gloire : 3 courses payées par jour'
+                            : 'Pas de sesterces cette fois',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF7A5901),
+                    ),
                   ),
                 ),
               ],
