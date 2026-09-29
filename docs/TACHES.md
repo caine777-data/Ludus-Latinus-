@@ -2074,7 +2074,7 @@ continue avec la suivante.
 
 ## T24 — Un test qui empêche le Duel et le Circus de déborder
 
-Statut : À FAIRE
+Statut : BLOQUÉ
 
 **Objectif** : T23 a trouvé un débordement que les tests ne voyaient pas. On
 ajoute des tests de widgets qui montent le panneau de victoire du Duel et
@@ -2110,14 +2110,43 @@ l'écran de fin du Circus sur un **petit écran** (360 x 640) : Flutter fait
 - [ ] Le test passe, sur 360 x 640.
 - [ ] Il **échoue** si on remet l'ancien message long sans `Flexible`
       (essaie-le en local, puis annule ta modification ; recopie l'erreur).
-- [ ] `git status` : seul le nouveau test et `docs/TACHES.md` sont modifiés.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
 - [ ] Un commit `test(mobile): la fin du Duel ne déborde pas sur petit écran`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Écriture du test dans `test/fin_de_partie_test.dart` avec `tester.view.physicalSize = const Size(720, 1280)` et `devicePixelRatio = 2.0` (360 x 640 points).
+  - Exécution du combat : les 2 questions correctes sont bien trouvées et frappées, le combat est gagné (`Triomphe count: 1`).
+  - `flutter test test/fin_de_partie_test.dart` : **Échec layout RenderFlex** dès l'apparition du panneau de victoire :
+    ```
+    ══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+    The following assertion was thrown during layout:
+    A RenderFlex overflowed by 70 pixels on the right.
+
+    The relevant error-causing widget was:
+      Row
+      Row:file:///C:/Users/caine/Downloads/LATIN_LEARN/latin_learn/ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:1304:11
+    ```
+- Diagnostic précis du blocage :
+  1. **Débordement horizontal non résolu dans `_buildVictoryPanel` (`duel_screen.dart:1304:11`)** :
+     Le `SingleChildScrollView` ajouté par l'architecte est vertical. La rangée de boutons d'action finale à la ligne 1304 :
+     `Row(children: [OutlinedButton('Quitter'), SizedBox(width: 16), ElevatedButton.icon('Boss Suivant')])`
+     est horizontale. Sur un écran de 360 points avec le padding de 20 px de chaque côté (`BoxConstraints(0.0<=w<=320.0)`), cette `Row` nécessite ~390 px dans l'environnement de test de widgets (police de test 1em/caractère), et dépasse de 70 pixels sur la droite.
+  2. **Débordement vertical dans `_buildQuizPanel` (`duel_screen.dart:1126`)** :
+     Sur 360 x 640 points, le panneau de quiz (`flex: 5`) ne dispose que de 255 px de hauteur. La 2e rangée de choix du `GridView` descend jusqu'à `y=703.4 px` (au-delà de `640 px`). Les réponses situées sur cette rangée sont coupées par le bas de l'écran et ne peuvent pas recevoir de tap au centre (`y=665.6 px`).
+  3. **Circus Maximus (`circus_screen.dart:1618`)** :
+     Même problème : `_buildVictoryScreen()` ne comporte aucun `SingleChildScrollView`, et la rangée de boutons `Row(Quitter, Nouvelle Course)` à la ligne 1618 déborde également sur 320 px de large disponible.
+  4. **Périmètre strict de T24** :
+     `duel_screen.dart` et `circus_screen.dart` sont hors du périmètre de T24 (`test/fin_de_partie_test.dart` et `docs/TACHES.md` uniquement). Remplacer la `Row` par un `Wrap(alignment: WrapAlignment.center, spacing: 16, runSpacing: 10, ...)` résoudrait ce débordement, mais l'exécutant ne peut pas modifier ces fichiers sans décision de l'architecte (Règle 2 et Piège 2 d'`AGENTS.md`).
+- Décision :
+  - Conformément à la consigne « *Si une tâche est bloquée, passe-la à `BLOQUÉ` avec l'explication et continue avec la suivante* », T24 est passée à `BLOQUÉ`.
+  - Le fichier de test temporaire a été nettoyé afin de maintenir l'arbre de tests au vert (`54/54 tests Flutter passants`, `250/250 tests Python passants`).
 - Doutes, questions pour l'architecte :
+  - Dans `duel_screen.dart:1304` et `circus_screen.dart:1618`, remplacer `Row` par `Wrap(alignment: WrapAlignment.center, spacing: 16, runSpacing: 10, children: [...])` et ajouter un défilement sur le quiz pour écrans < 650 dp.
 - Reste à faire :
+  - T24 passée à `BLOQUÉ` pour arbitrage de l'architecte. Continuer avec T25.
 
 ---
 
