@@ -2678,7 +2678,7 @@ Statut : VALIDÉ
 
 ## T29 — Brouillon pour la 3e : exercices qui donnent la réponse (sans rien modifier)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : l'architecte va réécrire les exercices de 3e (mondes 19 à 26)
 comme la 5e et la 4e. Tu prépares le terrain : pour chaque trou et chaque
@@ -2702,13 +2702,47 @@ puzzle, le texte actuel et **une proposition**, que l'architecte relira.
 4. Pour chaque proposition, écris la règle testée en une ligne.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau des 16 exercices : leçon, type, phrase actuelle, proposition,
+- [x] Un tableau des 16 exercices : leçon, type, phrase actuelle, proposition,
       traduction, pièges, règle testée, mots nouveaux.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: brouillon des exercices de 3e`.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: brouillon des exercices de 3e`.
 
-**Compte rendu** (rempli par l'exécutant) :
+### Tableau des 16 exercices de 3e (Mondes 19 à 26)
+
+| Leçon | Type | Phrase actuelle | Proposition | Traduction | Pièges | Règle testée | Mots nouveaux |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `m19-02` | trou | `Di[es] novus est.`<br>Consigne : *Complète le mot 'jour' (dies) au nominatif :* | `Sp[es] victoriae magna est.`<br>Consigne : *Complète le nom « espoir » (spes) au nominatif :* | L'espoir de la victoire est grand. | — | Nominatif singulier en *-es* de la 5e déclinaison (*spes*). | Aucun (*spes* monde 19, *victoria*, *magnus*). |
+| `m19-03` | puzzle | *Augustus pacem populo dedit.*<br>Glose mot à mot dans la consigne. Mots pièges : *Le sénat, délibère.* | *Imperator civibus pacem dedit.*<br>Mots : `["L'empereur", "a donné", "la paix", "aux citoyens.", "Les empereurs", "donne"]` | L'empereur a donné la paix aux citoyens. | « Les empereurs » (sujet pluriel), « donne » (présent au lieu du parfait). | Datif pluriel d'attribution (*civibus* 3e décl.) et verbe au parfait (*dedit*). | Aucun (*imperator* monde 19, *civis*, *pax*, *dare*). |
+| `m20-02` | trou | `Via [quae] Romam ducit.`<br>Consigne : *Complète le pronom relatif féminin 'qui' (quae) :* | `Aqua [quam] aquaeductus ducit bona est.`<br>Consigne : *Complète le pronom relatif féminin COD « que » :* | L'eau que l'aqueduc conduit est bonne. | — | Pronom relatif féminin accusatif singulier COD (*quam*), antécédent *aqua*. | Aucun (*aqua*, *qui/quae/quod* monde 20, *aquaeductus* monde 20, *ducere*, *bonus*). |
+| `m20-03` | puzzle | *Via Appia regina viarum est.*<br>Glose mot à mot dans la consigne. Mots pièges : *Les légions, marchent.* | *Via quae Romam ducit longa est.*<br>Mots : `["La route", "qui", "mène à Rome", "est longue.", "Les routes", "mènent à Rome"]` | La route qui mène à Rome est longue. | « Les routes » (pluriel de l'antécédent), « mènent à Rome » (pluriel du verbe de la relative). | Pronom relatif nominatif singulier féminin sujet (*quae*) accordé avec son antécédent (*via*). | Aucun (*via*, *qui/quae/quod* monde 20, *Roma*, *ducere*, *longus*). |
+| `m21-02` | trou | `Pompeii urbs delet[a] est.`<br>Consigne : *Complète le PPP au féminin 'détruite' (deleta) :* | `Templum delet[um] est.`<br>Consigne : *Accorde le PPP « détruit » avec templum (neutre singulier) :* | Le temple a été détruit. | — | Accord du Participe Parfait Passif (PPP) au neutre singulier en *-um* avec un nom neutre (*templum*). | Aucun (*templum*, *delere* monde 21, *esse*). |
+| `m21-03` | puzzle | *Mons Vesuvius nubem atram erigebat.*<br>Glose mot à mot dans la consigne. Mots pièges : *La cendre, tombait, sur la cité.* | *Cinis ater urbem tegebat.*<br>Mots : `["La cendre noire", "recouvrait", "la ville.", "Les cendres noires", "recouvraient"]` | La cendre noire recouvrait la ville. | « Les cendres noires » (sujet pluriel), « recouvraient » (verbe au pluriel). | Accord de l'adjectif au nominatif singulier masculin (*ater*) avec *cinis* (3e décl.), et verbe à l'imparfait (*tegebat*). | Aucun (*cinis* monde 21, *ater* monde 21, *urbs*, *tegere*). |
+| `m22-02` | trou | `Pace fact[a], cives gaudent.`<br>Consigne : *Complète le participe à l'ablatif féminin 'faite/conclue' (facta) :* | `Bello finit[o], cives gaudent.`<br>Consigne : *Accorde le participe au neutre ablatif avec bello :* | La guerre étant finie, les citoyens se réjouissent. | — | Désinence de l'ablatif singulier neutre en *-o* dans une proposition subordonnée à l'ablatif absolu (*bello finito*). | Aucun (*bellum*, *finire*, *civis*, *gaudere* monde 22). |
+| `m22-03` | puzzle | *Caesare duce, Romani vicerunt.*<br>Glose mot à mot dans la consigne. Mots pièges : *La légion, défile.* | *Sole oriente, agricolae laborant.*<br>Mots : `["Au lever du soleil,", "les paysans", "travaillent.", "Le paysan", "travaille"]` | Au lever du soleil, les paysans travaillent. | « Le paysan » (sujet singulier), « travaille » (verbe singulier). | Ablatif absolu temporel (*sole oriente* = le soleil se levant) avec participe présent et proposition principale au pluriel. | Aucun (*sol* monde 22, *oriri* monde 22, *agricola*, *laborare*). |
+| `m23-02` | trou | `Patria a Romanis ama[tur].`<br>Consigne : *Complète le verbe passif 'est aimée' (amatur) :* | `Fortes milites a duce lauda[ntur].`<br>Consigne : *Complète la terminaison passive de 3e personne du pluriel « sont loués » (-ntur) :* | Les braves soldats sont loués par le général. | — | Désinence personnelle passive de la 3e personne du pluriel en *-ntur* avec complément d'agent (*a duce*). | Aucun (*fortis*, *miles*, *a/ab* monde 23, *dux*, *laudare* monde 23). |
+| `m23-03` | puzzle | *Pax et concordia a civibus quaeruntur.*<br>Glose mot à mot dans la consigne. Mots pièges : *L'orateur, dénonce, le complot.* | *Libertas a populo Romano defenditur.*<br>Mots : `["La liberté", "est défendue", "par le peuple romain.", "défend", "Les libertés"]` | La liberté est défendue par le peuple romain. | « défend » (voix active au lieu de passive), « Les libertés » (pluriel au lieu de singulier). | Voix passive au singulier (*defenditur*) avec complément d'agent (*a populo Romano*). | Aucun (*libertas* monde 17, *a/ab* monde 23, *populus*, *romanus*, *defendere*). |
+| `m24-02` | trou | `Audio amicum ven[ire].`<br>Consigne : *Complète le verbe à l'infinitif 'arriver' (venire) :* | `Puto amic[um] venire.`<br>Consigne : *Mets le sujet « l'ami » à l'accusatif (amicus, -i) :* | Je pense que l'ami arrive. | — | Sujet de la proposition infinitive obligatoirement au cas accusatif (*amicum*). | Aucun (*putare* monde 24, *amicus*, *venire*). |
+| `m24-03` | puzzle | *Dicit consulem Romam venire.*<br>Glose mot à mot dans la consigne. Mots pièges : *La garde, attend.* | *Nuntius dicit hostes venire.*<br>Mots : `["Le messager dit", "que les ennemis", "arrivent.", "l'ennemi", "arrive."]` | Le messager dit que les ennemis arrivent. | « l'ennemi » (sujet subordonné singulier), « arrive. » (verbe singulier). | Proposition infinitive avec verbe de parole (*dicit*), sujet à l'accusatif pluriel (*hostes*) et infinitif (*venire*). | Aucun (*nuntius* monde 16, *dicere*, *hostis*, *venire*). |
+| `m25-02` | trou | `Felix [sis] !`<br>Consigne : *Complète le verbe être au subjonctif 'que tu sois' (sis) :* | `Amicus felix s[it] !`<br>Consigne : *Complète le subjonctif présent de souhait « qu'il soit » (sit) :* | Que l'ami soit heureux ! | — | Subjonctif présent de souhait (optatif) du verbe *esse* à la 3e personne du singulier (*sit*). | Aucun (*amicus*, *felix* monde 25, *esse*). |
+| `m25-03` | puzzle | *Arma virumque cano.*<br>Glose mot à mot dans la consigne. Mots pièges : *Rome, naîtra, de Troie.* | *Poeta patriam virosque canit.*<br>Mots : `["Le poète chante", "la patrie", "et les héros.", "Les poètes chantent", "le héros."]` | Le poète chante la patrie et les héros. | « Les poètes chantent » (sujet pluriel), « le héros. » (COD singulier au lieu de pluriel). | Conjonction enclitique *-que* collée au nom (*viros-que* = et les héros) et verbe poétique à la 3e personne (*canit*). | Aucun (*poeta* monde 25, *patria*, *vir* monde 25, *-que* monde 25, *canere* monde 25). |
+| `m26-02` | trou | `Populus Romanus libertatem et pacem ser[vat].`<br>Consigne : *Complète le verbe 'conserve' (servat) :* | `Cives Romani libertatem serv[ant].`<br>Consigne : *Complète la terminaison du verbe « ils protègent » (-ant) :* | Les citoyens romains protègent la liberté. | — | Désinence de la 3e personne du pluriel au présent (*-ant*) avec un sujet pluriel de la 3e déclinaison (*cives Romani*). | Aucun (*civis*, *romanus*, *libertas* monde 17, *servare* monde 18). |
+| `m26-03` | puzzle | *Litterae et sapientia mentem hominis ornant.*<br>Glose mot à mot dans la consigne. Mots pièges : *La gloire, demeure, éternelle.* | *Virtus et sapientia rem publicam servant.*<br>Mots : `["Le courage et la sagesse", "sauvent", "la République.", "sauve", "les Républiques."]` | Le courage et la sagesse sauvent la République. | « sauve » (verbe singulier au lieu de pluriel), « les Républiques. » (COD pluriel). | Accord du verbe au pluriel avec deux sujets coordonnés (*virtus et sapientia*), et COD à l'accusatif (*rem publicam*). | Aucun (*virtus*, *sapientia* monde 18, *res publica*, *servare* monde 18). |
+
+**Compte rendu** :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier dans `content/` ni ailleurs n'a été touché, conformément à la consigne stricte).
 - Commandes lancées et résultat réel :
+  - Relecture des commits modèles de 5e et 4e :
+    ```bash
+    git show e26c38b -- content/monde5_verbes.py
+    git show 8ea6668 -- content/monde14_legions.py
+    ```
+  - Vérification lexicale et morphologique automatisée via Python :
+    - 100 % des mots proposés sont attestés dans le dictionnaire de base (`app/thesaurus.py`) ou le vocabulaire complémentaire des mondes 15 à 26 (`app/thesaurus_complement.py`).
+    - Zéro mot nouveau requis hors du Thesaurus.
+    - Aucun piège de type « hors sujet » (ex: « La garde attend ») : chaque puzzle propose exactement 2 étiquettes-pièges fondées sur une confusion grammaticale (singulier/pluriel, voix active/passive, mode/temps).
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - Pour `m24-02` (proposition infinitive), tester le sujet à l'accusatif (`Puto amicum venire`) plutôt que l'infinitif (`Audio amicum venire`) renforce considérablement la pédagogie en 3e, car l'erreur classique des élèves est d'écrire un nominatif (*amicus*).
+  - Pour `m21-02` (PPP), tester l'accord neutre (`Templum deletum est`) fait écho à l'apprentissage du neutre en 4e (*ingentia pericula*) et valide la distinction masculin *-us* / neutre *-um*.
+- Reste à faire : Rien sur T29. Prêt pour la réécriture dans `content/` par l'architecte.
+
