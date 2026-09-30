@@ -2588,7 +2588,7 @@ pour que l'architecte décide quoi supprimer.
 
 ## T28 — Tournée d'essai des écrans de révision (sans rien modifier)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : beaucoup d'écrans ont changé (Memoria, Thesaurus, Bibliotheca,
 Épigraphie, boutique, Paramètres). On veut une relecture visuelle, écran par
@@ -2609,16 +2609,70 @@ Statut : À FAIRE
 3. Remets l'émulateur comme tu l'as trouvé (règle 6).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau écran par écran : normal / police 1,3, défauts, capture.
-- [ ] `font_scale` remis à 1.0 (recopie la commande et le résultat).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: tournée d'essai des écrans de révision`.
+- [x] Un tableau écran par écran : normal / police 1,3, défauts, capture.
+- [x] `font_scale` remis à 1.0 (recopie la commande et le résultat).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: tournée d'essai des écrans de révision`.
 
-**Compte rendu** (rempli par l'exécutant) :
+### Tableau comparatif écran par écran (font_scale 1.0 vs 1.3)
+
+| Écran / Contexte | Rendu normal (font_scale 1.0) | Rendu agrandi (font_scale 1.3) | Défauts / Débordements constatés (police 1.3) | Captures associées |
+| :--- | :--- | :--- | :--- | :--- |
+| **Accueil** (`HomeScreen`) | Mise en page équilibrée, titre « LUDUS LATINUS », puces « 1j » et « 444 HS » alignées, trois boutons de classe complets. | L'en-tête se resserre ; les boutons de niveau s'étirent horizontalement. | **AppBar :** Titre tronqué en `LUDUS LATI...` à cause de la largeur accrue des puces droite.<br>**Sélecteur classe :** 3e puce tronquée sur le bord droit (`3ème • E`). | Normal : `scratch/t28_norm_01_home.png`<br>Police 1.3 : `scratch/t28_font13_01_home.png` |
+| **Paramètres** (`SettingsModal`) | Modal propre, avatar Marcus, 3 switches (Effets sonores, Musique, Vidéo d'introduction), bouton Fermer. | Textes agrandis sans conflit, switches bien séparés, disposition conservée. | **Aucun.** Lisibilité préservée, aucun overflow ni texte tronqué. | Normal : `scratch/t28_norm_02_settings.png`<br>Police 1.3 : `scratch/t28_font13_02_settings.png` |
+| **Boutique** (`BoutiqueScreen`) | Podium de Marcus, 3 onglets horizontaux, cartes d'achats avec prix en HS. | Podium intact, onglets horizontaux défilables mais libellé n°2 tronqué. | **Onglets :** Le 2e onglet horizontal est tronqué en `Couronnes & Cas...`. | Normal : `scratch/t28_norm_03_boutique.png`<br>Police 1.3 : `scratch/t28_font13_03_boutique.png` |
+| **Boutique — Aide « ? » HS** (`SestercesHelpDialog`) | Dialogue explicatif « Pourquoi « HS » ? », historique de la monnaie romaine, bouton « J'ai compris ». | Boîte de dialogue défilable, typographie aérée, bouton d'action bien ancré. | **Aucun.** Rendu impeccable et très lisible. | Normal : `scratch/t28_norm_03_boutique_help.png`<br>Police 1.3 : `scratch/t28_font13_03_boutique_help.png` |
+| **Bibliotheca** (`BibliothecaScreen`) | Grille 2×2 d'ateliers (Thesaurus, Memoria, Épigraphie, Anthologie), fiches A4. | Cartes d'ateliers conservées en grille 2×2 mais sous-titres réduits. | **Grille ateliers :** Les 4 sous-titres descriptifs sont tronqués par des points de suspension (`en mé...`, `thématique & d...`, `restauré(...`, `décodé...`). | Normal : `scratch/t28_norm_04_bibliotheca.png`<br>Police 1.3 : `scratch/t28_font13_04_bibliotheca.png` |
+| **Memoria — Réponse juste** (`MemoriaScreen`) | Mot latin, 4 choix, badge vert « Bonne réponse ! +2 HS », citation de Cicéron, bouton Suivant. | *Non retesté en 1.3 (voir ligne ci-dessous pour le rendu général en 1.3).* | — | Normal : `scratch/t28_norm_05_memoria_correct.png` |
+| **Memoria — Réponse fausse & 1.3** (`MemoriaScreen`) | Choix faux en rouge, explication retour Arca I, bouton Continuer. | Cartouche d'échec rouge propre, mais en-tête et libellés longs contraints. | **AppBar :** Titre tronqué en `MEMORIA VE...`.<br>**Propositions :** 4e choix tronqué sur deux lignes (`commandement,...`). | Normal : `scratch/t28_norm_05_memoria_wrong.png`<br>Police 1.3 : `scratch/t28_font13_05_memoria.png` |
+| **Thesaurus — Déclinaisons (6 cartes)** (`ThesaurusScreen`) | Cartes illustrées des 6 cas (Nominatif, Vocatif, Accusatif, Génitif, Datif, Ablatif), tableau de synthèse complet. | Hauteur des cartes des cas insuffisante pour le texte agrandi ; colonnes du tableau resserrées. | **DÉFAUT CRITIQUE :** `A RenderFlex overflowed by 11 pixels on the bottom` (rayures jaunes/noires d'overflow Flutter) sur les cartes des cas !<br>**Tableau :** Colonne « Fonction » tronquée (`Complém...`, `Attributio...`).<br>**Onglets :** `Déclinaison...` et `Conjugaiso...` tronqués. | Normal : `scratch/t28_norm_06_thesaurus_cas.png`<br>Police 1.3 : `scratch/t28_font13_06_thesaurus_cas.png` |
+| **Thesaurus — Filtre Pronom** (`ThesaurusScreen`) | Ruban de filtres par classe (« Pronoms » actif), lemmes (`is, ea, id`, `qui, quae, quod`...). | Ruban de chips défilable horizontalement, liste de lemmes espacée. | **Filtres :** Chip « Pron... » en partie coupée sur le bord droit.<br>**Lemme :** `qui, qua...` tronqué. | Normal : `scratch/t28_norm_06_thesaurus_pronom.png`<br>Police 1.3 : `scratch/t28_font13_06_thesaurus_pronom.png` |
+| **Épigraphie — Stèle gravée** (`EpigraphieScreen`) | Stèle du Temple de Saturne avec texte capital gravé, estampage, calque, traduction française. | Stèle centrée et gravure nette ; bloc de traduction repoussé vers le bas. | **Défilement :** Nécessite de faire défiler pour voir la traduction française complète (comportement normal et géré). Pas d'overflow. | Normal : `scratch/t28_norm_07_epigraphie.png`<br>Police 1.3 : `scratch/t28_font13_07_epigraphie.png` |
+| **Leçon Monde 1 — Lupulus encourage** (`LessonScreen`) | Entête de leçon, question QCM, option fausse A en rouge, carte Lupulus « Pas tout à fait... » avec explications et boutons Réessayer. | Question et propositions très lisibles, carte Lupulus complète avec boutons d'action. | **DÉFAUT FLUTTER :** `A RenderFlex overflowed by 39 pixels on the right` sur la barre d'entête de la leçon (badges de type et d'étoiles). Carte Lupulus intacte. | Normal : `scratch/t28_norm_08_lesson_lupulus_full.png`<br>Police 1.3 : `scratch/t28_font13_08_lesson_lupulus.png` |
+
+**Compte rendu** :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (uniquement, aucune modification de code ou d'asset).
+- Captures d'écran réalisées :
+  - Rendu standard (`font_scale 1.0`) :
+    - `scratch/t28_norm_01_home.png`
+    - `scratch/t28_norm_02_settings.png`
+    - `scratch/t28_norm_03_boutique.png`
+    - `scratch/t28_norm_03_boutique_help.png`
+    - `scratch/t28_norm_04_bibliotheca.png`
+    - `scratch/t28_norm_05_memoria_correct.png`
+    - `scratch/t28_norm_05_memoria_wrong.png`
+    - `scratch/t28_norm_06_thesaurus_cas.png`
+    - `scratch/t28_norm_06_thesaurus_pronom.png`
+    - `scratch/t28_norm_07_epigraphie.png`
+    - `scratch/t28_norm_08_lesson_lupulus_full.png`
+  - Rendu agrandi (`font_scale 1.3`) :
+    - `scratch/t28_font13_01_home.png`
+    - `scratch/t28_font13_02_settings.png`
+    - `scratch/t28_font13_03_boutique.png`
+    - `scratch/t28_font13_03_boutique_help.png`
+    - `scratch/t28_font13_04_bibliotheca.png`
+    - `scratch/t28_font13_05_memoria.png`
+    - `scratch/t28_font13_06_thesaurus_cas.png`
+    - `scratch/t28_font13_06_thesaurus_pronom.png`
+    - `scratch/t28_font13_07_epigraphie.png`
+    - `scratch/t28_font13_08_lesson_lupulus.png`
 - Commandes lancées et résultat réel :
+  - Passage en police agrandie 1.3 :
+    ```bash
+    adb shell settings put system font_scale 1.3
+    ```
+  - Remise en police normale 1.0 et vérification :
+    ```bash
+    adb shell settings put system font_scale 1.0; adb shell settings get system font_scale
+    ```
+    Résultat : `1.0`
+  - Remise de l'émulateur dans son état initial (accueil au sommet, pas de dialogue ou leçon ouverte).
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - **Défaut critique n°1 (Thesaurus)** : En `font_scale 1.3`, les cartes des cas dans l'onglet Déclinaisons déclenchent un overflow Flutter vertical (`A RenderFlex overflowed by 11 pixels on the bottom`). Une `SizedBox` à hauteur fixe est utilisée dans ces cartes sans `Expanded` ou sans défilement adaptatif / `FittedBox`.
+  - **Défaut n°2 (Leçon)** : En `font_scale 1.3`, le bandeau d'entête de la leçon déborde horizontalement (`A RenderFlex overflowed by 39 pixels on the right`) car les badges et étoiles sont dans une `Row` sans `Wrap` ni `Flexible`.
+  - **Défaut n°3 (AppBar & Puces)** : Sur les petits écrans ou avec grande police, les titres d'AppBar de l'Accueil et de Memoria sont tronqués (`LUDUS LATI...`, `MEMORIA VE...`).
+- Reste à faire : Rien sur T28. Tâche validée.
 
 ---
 
