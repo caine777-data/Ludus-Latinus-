@@ -2205,7 +2205,7 @@ dans `scratch/t25_*`.
 
 ## T26 — Tournée d'essai de César, du Marché et de la Taverne (sans rien modifier)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : ces trois jeux ont été refaits (missions de César, Marché payé
 une fois, défi du jour) mais ils sont verrouillés pour le profil de test
@@ -2237,16 +2237,59 @@ temporaire, puis on remet le profil d'origine.
    l'appli et vérifie que l'accueil affiche de nouveau 5 leçons.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Le profil d'origine est restauré (capture de l'accueil à la fin).
-- [ ] Un tableau par jeu : ce qui est conforme, ce qui ne l'est pas, captures.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: tournée d'essai de César, du Marché et de la Taverne`.
+- [x] Le profil d'origine est restauré (capture de l'accueil à la fin).
+- [x] Un tableau par jeu : ce qui est conforme, ce qui ne l'est pas, captures.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: tournée d'essai de César, du Marché et de la Taverne`.
+
+### Tableaux comparatifs de conformité par jeu
+
+#### 1. Atelier de César (`L'Atelier Secret de César`)
+
+| Critère testé | Conforme ? | Constat & Comportement réel | Capture |
+|---|:---:|---|---|
+| **Clé absente de l'énoncé** | **OUI** | Les énoncés des missions 1 et 2 n'indiquent plus la clé numérique à appliquer (Mission 1 : *« Tourne la roue jusqu'à lire du latin »* ; Mission 2 : *« Trouve la clé »*). L'élève doit faire tourner la roue pour découvrir la bonne valeur. | `scratch/t26_cesar_init.png`<br>`scratch/t26_cesar_m2_init.png` |
+| **5 HS après erreur de traduction** | **OUI** | Mission 1 (clé 3) : sélection d'une traduction erronée -> encadré rouge *« Ce n'est pas ça : relis le latin mot à mot. »*. Choix consécutif de la bonne traduction -> validation à demi-tarif : 5 HS (affiché +15 HS sur la modal car +10 HS du défi du jour César complété simultanément ; solde passé de 442 à 457 HS). | `scratch/t26_cesar_m1_wrong.png`<br>`scratch/t26_cesar_m1_victory.png` |
+| **10 HS du premier coup** | **OUI** | Mission 2 (clé 5) : clé ajustée à +5 via le bouton `+`, texte déchiffré en vert *« ALEA IACTA EST. RUBICONEM TRANSEO ! »*, choix direct de la bonne traduction (*« Le sort en est jeté. Je franchis le Rubicon ! »*) -> exactement **+10 HS** remportés au premier coup (solde passé de 457 à 467 HS). | `scratch/t26_cesar_m2_key5.png`<br>`scratch/t26_cesar_m2_victory.png` |
+| **Mission cochée** | **OUI** | Dès validation, les onglets de mission affichent une coche verte : `✓ Mission 1`, `✓ Mission 2`. | `scratch/t26_cesar_m1_checked.png`<br>`scratch/t26_cesar_no_repay.png` |
+| **Non-recomposition / non-repaie** | **OUI** | En quittant l'Atelier vers Ludi puis en y revenant, les missions 1 et 2 restent cochées et affichent directement le message traduit sans reproposer de QCM ni reverser de sesterces. Solde intact à 467 HS. | `scratch/t26_cesar_no_repay.png` |
+
+#### 2. Marché de Trajan
+
+| Critère testé | Conforme ? | Constat & Comportement réel | Capture |
+|---|:---:|---|---|
+| **Étal 1 réussi du 1er coup (+5 HS)** | **OUI** | Étal 1 (*Amphora olei*, 25 HS) : composition canonique `XXV` puis appui sur *✓ PAYER (25 HS)* -> message vert *« Optime ! Tu as composé XXV (25 HS). (+5 HS) »*. Solde passé de 467 à 472 HS (+5 HS). | `scratch/t26_marche_etal1_win.png` |
+| **Étal 2 raté puis réussi (0 HS après erreur)** | **OUI** | Étal 2 (*Toga lanea*, 40 HS) : saisie d'un montant erroné `X` (10 HS) -> message rouge *« Tu as composé X (10 HS). Il faut XL (40 HS) ! »*. Saisie ensuite de la bonne valeur `XL` -> message vert *« Optime ! Tu as composé XL (40 HS). (pas de sesterces après une erreur) »*. Solde inchangé à 472 HS (+0 HS). | `scratch/t26_marche_etal2_error.png`<br>`scratch/t26_marche_etal2_success_no_gain.png` |
+| **Mode rendu de monnaie : somme cachée** | **OUI** | Dans l'onglet *Rendu*, Centurio Lucius achète *Rudis lignea* pour 18 HS et donne 25 HS. La fiche indique *« Prix : 18 HS • Donné : 25 HS »*. La différence (7 HS / `VII`) n'est nulle part révélée : l'élève doit obligatoirement calculer le reste de tête. | `scratch/t26_marche_rendu.png` |
+| **Étal revu plus tard (« déjà payé »)** | **OUI** | Après sortie vers Ludi et réouverture du Marché, l'Étal 1 (*Amphora olei*, 25 HS) est reproposé. Recomposition de `XXV` -> message *« Optime ! Tu as composé XXV (25 HS). (déjà payé) »*. Solde inchangé à 472 HS (+0 HS). | `scratch/t26_marche_deja_paye.png` |
+
+#### 3. Taverne des Dés (`Alea Iacta Est`)
+
+| Critère testé | Conforme ? | Constat & Comportement réel | Capture |
+|---|:---:|---|---|
+| **Lancers récompensés (1 à 3)** | **OUI** | Compteur initial : *« Lancers récompensés aujourd'hui : 3 / 3 »*.<br>- Lancer 1 (Coup de Vénus IV-VI-I-V) : +50 HS, compteur 2 / 3 (solde 472 -> 522 HS).<br>- Lancer 2 (Paire Romaine V-I-V-III) : +15 HS, compteur 1 / 3 (solde 522 -> 537 HS).<br>- Lancer 3 (Paire Romaine VI-VI-III-III) : +15 HS, compteur *« Lancers récompensés épuisés : reviens demain ! »* (solde 537 -> 552 HS). | `scratch/t26_taverne_init.png`<br>`scratch/t26_taverne_roll1.png`<br>`scratch/t26_taverne_roll2.png`<br>`scratch/t26_taverne_roll3.png` |
+| **Plafond strict de 3 lancers / jour** | **OUI** | Au 4e lancer, bien que le tirage obtienne un Coup de Vénus (I-III-IV-II), aucun gain n'est accordé (+0 HS), le solde reste figé à 552 HS et la notice s'affiche : *« (Les 3 lancers récompensés du jour sont épuisés : reviens demain pour gagner des sesterces.) »*. | `scratch/t26_taverne_cap.png` |
+
+#### 4. Restauration de l'état initial
+
+| Élément | Valeur avant T26 | Valeur restaurée après T26 | Conforme ? | Capture |
+|---|:---:|:---:|:---:|---|
+| **Héros & Sesterces** | Marcus, 442 HS | Marcus, 442 HS | **OUI** | `scratch/t26_final_home.png` |
+| **Leçons complétées** | 5 leçons (`m1-01` à `m1-05`) | 5 leçons (`m1-01` à `m1-05`) | **OUI** | `scratch/t26_final_home.png` |
+| **Verrouillage Ludi** | César, Marché et Taverne verrouillés | César, Marché et Taverne verrouillés | **OUI** | `scratch/t26_final_home.png` |
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier de code modifié).
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - Sauvegarde initiale du profil : `adb shell run-as com.luduslatinus.app cat app_flutter/ludus_latinus_save.json > scratch/t26_profil_avant.json` (profil Marcus, 442 HS, 5 leçons).
+  - Injection profil débloqué (20 leçons) : `adb push scratch/t26_profil_temp.json /data/local/tmp/save.json` puis `adb shell run-as com.luduslatinus.app cp /data/local/tmp/save.json app_flutter/ludus_latinus_save.json`.
+  - Parcours complet interactif des 3 mini-jeux avec vérification de tous les cas nominaux et d'erreur.
+  - Restauration du profil d'origine : `adb push scratch/t26_profil_avant.json /data/local/tmp/save.json` puis `adb shell run-as com.luduslatinus.app cp /data/local/tmp/save.json app_flutter/ludus_latinus_save.json` et relance de l'app.
+  - Capture de l'accueil final restauré (`scratch/t26_final_home.png`) : 5 / 113 leçons conquises, 442 HS.
+  - `adb shell settings get system pointer_location` / `show_touches` : tous deux à 0.
+- Doutes, questions pour l'architecte : Aucun. Les comportements de game design et de rétribution des trois jeux sont parfaitement cohérents et fonctionnels.
+- Reste à faire : Rien sur T26. Tâche validée.
 
 ---
 
