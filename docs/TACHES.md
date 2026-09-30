@@ -2295,7 +2295,7 @@ temporaire, puis on remet le profil d'origine.
 
 ## T27 — Les images qui ne servent plus (sans rien supprimer)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : l'APK grossit à chaque lot d'images. On veut la liste des
 fichiers de `ludus_latinus_mobile/assets/` qu'**aucun code ne cite plus**,
@@ -2316,16 +2316,273 @@ pour que l'architecte décide quoi supprimer.
    (faux positif) ou **doute**. Donne sa taille.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `git status` : seul `docs/TACHES.md` est modifié (rien de supprimé).
-- [ ] Un tableau : fichier, taille, classement, raison.
-- [ ] Le total des Ko récupérables avec les orphelins sûrs.
-- [ ] Un commit `docs: images et sons qui ne servent plus`.
+- [x] `git status` : seul `docs/TACHES.md` est modifié (rien de supprimé).
+- [x] Un tableau : fichier, taille, classement, raison.
+- [x] Le total des Ko récupérables avec les orphelins sûrs.
+- [x] Un commit `docs: images et sons qui ne servent plus`.
+
+### Synthèse globale des 198 fichiers de `ludus_latinus_mobile/assets/`
+
+| Catégorie de classement | Nombre de fichiers | Poids total (Ko) | Poids total (Mo) | Rôle & Justification |
+|---|:---:|:---:|:---:|---|
+| **Orphelin sûr** | 8 | 2389.1 Ko | 2.33 Mo | Fichiers strictement non référencés, obsolètes ou doublons HD supprimables sans risque |
+| **Doute (résidus desktop)** | 7 | 478.3 Ko | 0.47 Mo | Utilisés par `app/mascotte.py` (Tkinter) mais non requis par l'APK mobile Flutter |
+| **Cité par morceaux** | 74 | 3773.6 Ko | 3.69 Mo | Faux positifs : chargés par interpolation dynamique (`cas_*.webp`, `monde*.webp`, `boutique/*.png`, `avatars/*.png`, etc.) |
+| **Cité directement** | 109 | 25733.6 Ko | 25.13 Mo | Référencés explicitement par leur nom de fichier dans le code Dart, JSON ou Python |
+| **TOTAL ASSETS** | **198** | **32374.6 Ko** | **31.62 Mo** | Ensemble des ressources actuelles sous `ludus_latinus_mobile/assets/` |
+
+**Total des Ko récupérables avec les orphelins sûrs** : **2389.1 Ko** (2.33 Mo).
+
+> Si l'architecte décide également de retirer les 7 variantes Lupulus desktop inutilisées par Flutter, le gain total monte à **2867.4 Ko** (2.80 Mo).
+
+
+### 1. Fichiers non cités directement (Orphelins sûrs, Doutes et Cités par morceaux)
+
+| Fichier | Taille (Ko) | Classement | Raison |
+|---|:---:|:---:|---|
+| `assets/animations/coin_rain.json` | 53.7 Ko | **Orphelin sûr** | Ancienne animation Lottie remplacée par pieces_or.webp (cf. lottie_effects.dart:13) |
+| `assets/images/boss_retiaire.webp` | 17.2 Ko | **Orphelin sûr** | Image fixe supplantée par boss_retiaire_anime.webp dans duel_screen.dart:82 |
+| `assets/images/boutique/LISEZMOI.txt` | 0.1 Ko | **Orphelin sûr** | Fichier texte de documentation interne, jamais chargé par le moteur |
+| `assets/images/circus/chariot_bleu_hd.png` | 1127.5 Ko | **Orphelin sûr** | Doublon HD non référencé ; circus_screen n'utilise que les versions standard (160 Ko) |
+| `assets/images/circus/chariot_rouge_hd.png` | 915.7 Ko | **Orphelin sûr** | Doublon HD non référencé ; circus_screen n'utilise que les versions standard (160 Ko) |
+| `assets/images/lupulus/lupulus_normal_64.png` | 9.2 Ko | **Orphelin sûr** | Miniature 64px non référencée (ni mobile ni desktop) |
+| `assets/images/lupulus/lupulus_standard_180.png` | 54.1 Ko | **Orphelin sûr** | Variante 'standard' absente de validEmotions, non référencée |
+| `assets/images/victoire_320.png` | 211.7 Ko | **Orphelin sûr** | Illustration 320px non référencée (aucun usage mobile ni desktop) |
+| `assets/images/lupulus/lupulus_aide.png` | 19.2 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:293 (émotion 'aide')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_centurion.png` | 136.7 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:285 (costume 'centurion')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_gladiateur.png` | 135.0 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:285 (costume 'gladiateur')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_joie.png` | 20.6 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:293 (émotion 'joie')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_mercure.png` | 125.6 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:285 (costume 'mercure')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_reflexion.png` | 20.5 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:293 (émotion 'reflexion')), mais inutile sur mobile |
+| `assets/images/lupulus/lupulus_triomphe.png` | 20.7 Ko | **Doute** | Cité par l'appli de bureau (app/mascotte.py:293 (émotion 'triomphe')), mais inutile sur mobile |
+| `assets/images/avatars/fille_imperiale_140.png` | 29.1 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'imperiale', taille 140) |
+| `assets/images/avatars/fille_imperiale_48.png` | 5.1 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'imperiale', taille 48) |
+| `assets/images/avatars/fille_lin_blanc_140.png` | 24.2 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lin_blanc', taille 140) |
+| `assets/images/avatars/fille_lin_blanc_48.png` | 4.9 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lin_blanc', taille 48) |
+| `assets/images/avatars/fille_lorica_140.png` | 29.2 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lorica', taille 140) |
+| `assets/images/avatars/fille_lorica_48.png` | 5.3 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lorica', taille 48) |
+| `assets/images/avatars/fille_lorica_squamata_140.png` | 32.2 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lorica_squamata', taille 140) |
+| `assets/images/avatars/fille_lorica_squamata_48.png` | 5.4 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'lorica_squamata', taille 48) |
+| `assets/images/avatars/fille_praetexta_140.png` | 24.4 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'praetexta', taille 140) |
+| `assets/images/avatars/fille_praetexta_48.png` | 5.0 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'fille', toge 'praetexta', taille 48) |
+| `assets/images/avatars/garcon_imperiale_140.png` | 24.7 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'imperiale', taille 140) |
+| `assets/images/avatars/garcon_imperiale_48.png` | 4.4 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'imperiale', taille 48) |
+| `assets/images/avatars/garcon_lin_blanc_140.png` | 20.8 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lin_blanc', taille 140) |
+| `assets/images/avatars/garcon_lin_blanc_48.png` | 4.3 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lin_blanc', taille 48) |
+| `assets/images/avatars/garcon_lorica_140.png` | 26.1 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lorica', taille 140) |
+| `assets/images/avatars/garcon_lorica_48.png` | 4.8 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lorica', taille 48) |
+| `assets/images/avatars/garcon_lorica_squamata_140.png` | 27.5 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lorica_squamata', taille 140) |
+| `assets/images/avatars/garcon_lorica_squamata_48.png` | 4.8 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'lorica_squamata', taille 48) |
+| `assets/images/avatars/garcon_praetexta_140.png` | 21.0 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'praetexta', taille 140) |
+| `assets/images/avatars/garcon_praetexta_48.png` | 4.4 Ko | **Cité par morceaux** | AvatarAssets.pourGenre (genre 'garcon', toge 'praetexta', taille 48) |
+| `assets/images/boutique/aquila.png` | 33.8 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'aquila') |
+| `assets/images/boutique/cerberus_pullus.png` | 61.0 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'cerberus_pullus') |
+| `assets/images/boutique/corona_obsidionalis.png` | 72.5 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'corona_obsidionalis') |
+| `assets/images/boutique/diademe_vestale.png` | 59.5 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'diademe_vestale') |
+| `assets/images/boutique/equus.png` | 31.8 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'equus') |
+| `assets/images/boutique/fasces.png` | 44.0 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'fasces') |
+| `assets/images/boutique/galea_centurio.png` | 52.6 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'galea_centurio') |
+| `assets/images/boutique/gladius.png` | 46.4 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'gladius') |
+| `assets/images/boutique/imperiale.png` | 71.6 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'imperiale') |
+| `assets/images/boutique/laurier_bronze.png` | 66.8 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'laurier_bronze') |
+| `assets/images/boutique/laurier_or.png` | 54.8 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'laurier_or') |
+| `assets/images/boutique/lorica.png` | 49.2 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'lorica') |
+| `assets/images/boutique/lorica_squamata.png` | 76.0 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'lorica_squamata') |
+| `assets/images/boutique/lupulus_jr.png` | 46.0 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'lupulus_jr') |
+| `assets/images/boutique/noctua.png` | 58.2 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'noctua') |
+| `assets/images/boutique/pegasus_aureus.png` | 53.0 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'pegasus_aureus') |
+| `assets/images/boutique/praetexta.png` | 26.6 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'praetexta') |
+| `assets/images/boutique/scutum.png` | 50.1 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'scutum') |
+| `assets/images/boutique/vexillum_spqr.png` | 26.2 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'vexillum_spqr') |
+| `assets/images/boutique/volumen.png` | 36.4 Ko | **Cité par morceaux** | boutique_modal.dart:503 ('boutique/${item.id}.png', id 'volumen') |
+| `assets/images/cas/cas_ablatif.webp` | 18.4 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas ablatif) |
+| `assets/images/cas/cas_accusatif.webp` | 17.9 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas accusatif) |
+| `assets/images/cas/cas_datif.webp` | 14.9 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas datif) |
+| `assets/images/cas/cas_genitif.webp` | 17.8 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas genitif) |
+| `assets/images/cas/cas_nominatif.webp` | 19.5 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas nominatif) |
+| `assets/images/cas/cas_vocatif.webp` | 16.8 Ko | **Cité par morceaux** | thesaurus_screen.dart:586 ('cas_$fichier.webp', cas vocatif) |
+| `assets/images/lupulus/lupulus_aide_180.png` | 53.8 Ko | **Cité par morceaux** | widgets.dart:309 ('lupulus_${safeEmotion}_180.png', émotion 'aide') |
+| `assets/images/lupulus/lupulus_triomphe_180.png` | 58.2 Ko | **Cité par morceaux** | widgets.dart:309 ('lupulus_${safeEmotion}_180.png', émotion 'triomphe') |
+| `assets/images/mondes/monde1.webp` | 91.3 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde1) |
+| `assets/images/mondes/monde10.webp` | 72.3 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde10) |
+| `assets/images/mondes/monde11.webp` | 74.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde11) |
+| `assets/images/mondes/monde12.webp` | 145.2 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde12) |
+| `assets/images/mondes/monde13.webp` | 115.2 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde13) |
+| `assets/images/mondes/monde14.webp` | 58.8 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde14) |
+| `assets/images/mondes/monde15.webp` | 90.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde15) |
+| `assets/images/mondes/monde16.webp` | 42.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde16) |
+| `assets/images/mondes/monde17.webp` | 124.9 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde17) |
+| `assets/images/mondes/monde18.webp` | 88.9 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde18) |
+| `assets/images/mondes/monde19.webp` | 76.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde19) |
+| `assets/images/mondes/monde2.webp` | 106.0 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde2) |
+| `assets/images/mondes/monde20.webp` | 107.4 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde20) |
+| `assets/images/mondes/monde21.webp` | 55.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde21) |
+| `assets/images/mondes/monde22.webp` | 88.5 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde22) |
+| `assets/images/mondes/monde23.webp` | 62.5 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde23) |
+| `assets/images/mondes/monde24.webp` | 55.9 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde24) |
+| `assets/images/mondes/monde25.webp` | 133.6 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde25) |
+| `assets/images/mondes/monde26.webp` | 88.0 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde26) |
+| `assets/images/mondes/monde3.webp` | 25.5 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde3) |
+| `assets/images/mondes/monde4.webp` | 57.9 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde4) |
+| `assets/images/mondes/monde5.webp` | 128.2 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde5) |
+| `assets/images/mondes/monde6.webp` | 51.6 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde6) |
+| `assets/images/mondes/monde7.webp` | 108.7 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde7) |
+| `assets/images/mondes/monde8.webp` | 84.1 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde8) |
+| `assets/images/mondes/monde9.webp` | 96.8 Ko | **Cité par morceaux** | map_screen.dart:731 ('mondes/${world.id}.webp', monde9) |
+
+### 2. Synthèse des 109 fichiers cités directement
+
+| Sous-dossier / Famille | Nombre | Poids total | Usage principal dans l'application |
+|---|:---:|:---:|---|
+| `assets/audio/` | 20 fichiers | 8 135,1 Ko | Déclarés et joués par `AudioService` (3 musiques OGG + 17 effets WAV) |
+| `assets/cinematics/` | 10 fichiers | 10 148,8 Ko | Vidéos MP4 jouées par `cinematic_player.dart` et `duel_screen.dart` |
+| `assets/images/animated/` | 10 fichiers | 2 558,6 Ko | WebP animés pour Lupulus, impacts duel, pièces d'or 3D, flamme et dés 3D |
+| `assets/fonts/` | 2 fichiers | 294,7 Ko | Polices Cinzel et PlusJakartaSans déclarées dans `pubspec.yaml` |
+| `assets/images/via/` | 8 fichiers | 447,5 Ko | Éléments de décor de la route Appienne dans `via_appia_road.dart` |
+| `assets/animations/` (actifs) | 4 fichiers | 79,4 Ko | Animations Lottie vectorielles (`chest_open`, `laurel_wreath`, `stars_glitter`, `sword_clash`) |
+| `assets/images/` (boss animés) | 5 fichiers | 1 406,5 Ko | Illustrations WebP des 5 Boss du Colisée dans `duel_screen.dart` |
+| `assets/images/` (boss médaillons & cadres) | 10 fichiers | 413,8 Ko | Portraits 140px et cadres pour taverne, collection et ludi |
+| `assets/images/` (musée & panthéon) | 9 fichiers | 231,3 Ko | Cartes et trophées du musée dans `pantheon_screen.dart` et `lesson_screen.dart` |
+| `assets/images/` (logos & UI) | 5 fichiers | 107,3 Ko | Logos centurion, icône épigraphie, dos de carte collector, médaillon triomphe |
+| `assets/images/circus/` (actifs) | 5 fichiers | 797,4 Ko | Char blanc, bleu, rouge, vert et spina dans `circus_screen.dart` |
+| `assets/images/duel/` & `epigraphie/` | 2 fichiers | 80,5 Ko | Décor du Colisée (`decor_colisee.webp`) et stèle vierge (`stele_vierge.webp`) |
+| `assets/images/lupulus/` (actifs) | 15 fichiers | 973,8 Ko | Costumes et expressions de Lupulus référencés explicitement |
+| `assets/images/` (avatar repli) | 4 fichiers | 100,7 Ko | Médaillons 140/48 fille et garçon par défaut |
+
+<details>
+<summary><b>Dérouler pour voir la liste exhaustive des 109 fichiers cités directement</b></summary>
+
+| Fichier | Taille (Ko) | Classement | Raison |
+|---|:---:|:---:|---|
+| `assets/animations/chest_open.json` | 15.2 Ko | **Cité directement** | Cité dans lottie_effects.dart |
+| `assets/animations/laurel_wreath.json` | 15.3 Ko | **Cité directement** | Cité dans lottie_effects.dart, home_screen.dart |
+| `assets/animations/stars_glitter.json` | 28.9 Ko | **Cité directement** | Cité dans lottie_effects.dart |
+| `assets/animations/sword_clash.json` | 18.1 Ko | **Cité directement** | Cité dans lottie_effects.dart |
+| `assets/audio/achat.wav` | 172.3 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/bonne_reponse.wav` | 105.8 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/bouton.wav` | 45.3 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/card_flip.wav` | 15.5 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/carte_obtenue.wav` | 69.8 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/crowd_cheer.wav` | 224.0 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/dice_roll.wav` | 51.7 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/erreur.wav` | 49.9 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/etoile.wav` | 94.1 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/indice.wav` | 86.2 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/lecon_validee.wav` | 86.2 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/monde_termine.wav` | 189.5 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/musique_accueil.ogg` | 2230.1 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/musique_arene.ogg` | 2330.4 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/musique_lecon.ogg` | 2017.3 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/page.wav` | 58.4 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/sesterces_clink.wav` | 38.8 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/sword_clash.wav` | 63.2 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/triumph_fanfare.wav` | 116.3 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/audio/wheel_click.wav` | 7.8 Ko | **Cité directement** | Cité dans audio_service.dart |
+| `assets/cinematics/boss_lion.mp4` | 768.1 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/cinematics/boss_mercure.mp4` | 824.7 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/cinematics/boss_minotaure.mp4` | 859.6 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/cinematics/boss_retiaire.mp4` | 880.7 Ko | **Cité directement** | Cité dans cinematic_player.dart, duel_screen.dart |
+| `assets/cinematics/boss_sphinx.mp4` | 747.8 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/cinematics/intro.mp4` | 923.8 Ko | **Cité directement** | Cité dans cinematic_player.dart |
+| `assets/cinematics/niveau_3e.mp4` | 1117.6 Ko | **Cité directement** | Cité dans cinematic_player.dart |
+| `assets/cinematics/niveau_4e.mp4` | 1337.5 Ko | **Cité directement** | Cité dans cinematic_player.dart |
+| `assets/cinematics/niveau_5e.mp4` | 926.2 Ko | **Cité directement** | Cité dans cinematic_player.dart |
+| `assets/cinematics/triumph.mp4` | 1745.1 Ko | **Cité directement** | Cité dans cinematic_player.dart |
+| `assets/data/ludus_latinus_dataset.json` | 258.7 Ko | **Cité directement** | Cité dans data_service.dart, pubspec.yaml |
+| `assets/fonts/Cinzel-VariableFont_wght.ttf` | 122.5 Ko | **Cité directement** | Cité dans pubspec.yaml |
+| `assets/fonts/PlusJakartaSans-VariableFont_wght.ttf` | 172.2 Ko | **Cité directement** | Cité dans pubspec.yaml |
+| `assets/images/animated/dice_roll_3d.webp` | 91.9 Ko | **Cité directement** | Cité dans taverne_screen.dart |
+| `assets/images/animated/duel_impact.webp` | 269.5 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/animated/flambeau_flamme.webp` | 40.3 Ko | **Cité directement** | Cité dans room_decorations.dart, pantheon_screen.dart |
+| `assets/images/animated/lupulus_encouragement.webp` | 261.0 Ko | **Cité directement** | Cité dans widgets.dart |
+| `assets/images/animated/lupulus_idle.webp` | 295.6 Ko | **Cité directement** | Cité dans widgets.dart |
+| `assets/images/animated/lupulus_joie.webp` | 236.8 Ko | **Cité directement** | Cité dans widgets.dart |
+| `assets/images/animated/lupulus_reflexion.webp` | 280.4 Ko | **Cité directement** | Cité dans widgets.dart |
+| `assets/images/animated/lupulus_salut.webp` | 280.9 Ko | **Cité directement** | Cité dans widgets.dart, account_screen.dart |
+| `assets/images/animated/lupulus_triomphe.webp` | 243.2 Ko | **Cité directement** | Cité dans widgets.dart |
+| `assets/images/animated/pieces_or.webp` | 297.5 Ko | **Cité directement** | Cité dans lottie_effects.dart |
+| `assets/images/avatar_fille_medaillon_140.png` | 43.9 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, vues_exercices.py (+1) |
+| `assets/images/avatar_fille_medaillon_48.png` | 6.1 Ko | **Cité directement** | Cité dans profils.py |
+| `assets/images/avatar_garcon_medaillon_140.png` | 44.6 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, vues_exercices.py (+1) |
+| `assets/images/avatar_garcon_medaillon_48.png` | 6.1 Ko | **Cité directement** | Cité dans carte.py, profils.py |
+| `assets/images/boss_gladiateur_140.png` | 48.1 Ko | **Cité directement** | Cité dans ludi_view.dart, vues_exercices.py |
+| `assets/images/boss_gladiateur_cadre_140.png` | 40.3 Ko | **Cité directement** | Cité dans taverne_screen.dart, ludus_latinus_dataset.json (+3) |
+| `assets/images/boss_lion_140.png` | 42.8 Ko | **Cité directement** | Cité dans vues_exercices.py |
+| `assets/images/boss_lion_anime.webp` | 369.4 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/boss_lion_cadre_140.png` | 36.5 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, carte.py (+2) |
+| `assets/images/boss_mercure_140.png` | 41.8 Ko | **Cité directement** | Cité dans ludi_view.dart, vues_exercices.py |
+| `assets/images/boss_mercure_anime.webp` | 295.7 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/boss_mercure_cadre_140.png` | 35.6 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, carte.py (+3) |
+| `assets/images/boss_minotaure_140.png` | 42.9 Ko | **Cité directement** | Cité dans vues_exercices.py |
+| `assets/images/boss_minotaure_anime.webp` | 106.4 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/boss_minotaure_cadre_140.png` | 36.1 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, carte.py (+2) |
+| `assets/images/boss_retiaire_anime.webp` | 353.5 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/boss_sphinx_140.png` | 45.8 Ko | **Cité directement** | Cité dans vues_exercices.py |
+| `assets/images/boss_sphinx_anime.webp` | 285.0 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/boss_sphinx_cadre_140.png` | 38.4 Ko | **Cité directement** | Cité dans ludus_latinus_dataset.json, carte.py (+2) |
+| `assets/images/circus/chariot_blanc.png` | 156.2 Ko | **Cité directement** | Cité dans circus_screen.dart |
+| `assets/images/circus/chariot_bleu.png` | 159.8 Ko | **Cité directement** | Cité dans circus_screen.dart, ludi_view.dart (+1) |
+| `assets/images/circus/chariot_rouge.png` | 157.1 Ko | **Cité directement** | Cité dans circus_screen.dart, circus.py |
+| `assets/images/circus/chariot_vert.png` | 158.1 Ko | **Cité directement** | Cité dans circus_screen.dart |
+| `assets/images/circus/circus_spina.png` | 66.2 Ko | **Cité directement** | Cité dans circus_screen.dart, circus.py |
+| `assets/images/dos_carte_collector.png` | 19.5 Ko | **Cité directement** | Cité dans memoria_screen.dart, pantheon_screen.dart (+1) |
+| `assets/images/duel/decor_colisee.webp` | 46.9 Ko | **Cité directement** | Cité dans duel_screen.dart |
+| `assets/images/epigraphie/stele_vierge.webp` | 33.6 Ko | **Cité directement** | Cité dans latin_epigraph_modal.dart |
+| `assets/images/icone_epigraphie.png` | 22.5 Ko | **Cité directement** | Cité dans forum_screen.dart, bibliotheca_view.dart |
+| `assets/images/logo_centurion_120.png` | 23.5 Ko | **Cité directement** | Cité dans main.dart, ludus_latinus_dataset.json (+3) |
+| `assets/images/logo_centurion_64.png` | 7.5 Ko | **Cité directement** | Cité dans account_screen.dart, home_screen.dart (+1) |
+| `assets/images/lupulus/lupulus_centurion_180.png` | 71.6 Ko | **Cité directement** | Cité dans lesson_screen.dart |
+| `assets/images/lupulus/lupulus_gladiateur_180.png` | 70.2 Ko | **Cité directement** | Cité dans lesson_screen.dart |
+| `assets/images/lupulus/lupulus_imperator.png` | 143.2 Ko | **Cité directement** | Cité dans cesar_screen.dart, ludi_view.dart |
+| `assets/images/lupulus/lupulus_imperator_180.png` | 73.3 Ko | **Cité directement** | Cité dans lesson_screen.dart |
+| `assets/images/lupulus/lupulus_joie_180.png` | 58.0 Ko | **Cité directement** | Cité dans lesson_screen.dart |
+| `assets/images/lupulus/lupulus_mercure_180.png` | 66.2 Ko | **Cité directement** | Cité dans taverne_screen.dart |
+| `assets/images/lupulus/lupulus_normal.png` | 20.4 Ko | **Cité directement** | Cité dans mascotte.py, windows.py |
+| `assets/images/lupulus/lupulus_normal_180.png` | 57.5 Ko | **Cité directement** | Cité dans widgets.dart, mascotte.py |
+| `assets/images/lupulus/lupulus_philosophe.png` | 135.6 Ko | **Cité directement** | Cité dans mascotte.py |
+| `assets/images/lupulus/lupulus_philosophe_180.png` | 70.1 Ko | **Cité directement** | Cité dans lesson_screen.dart, mascotte.py |
+| `assets/images/lupulus/lupulus_reflexion_180.png` | 57.2 Ko | **Cité directement** | Cité dans lesson_screen.dart |
+| `assets/images/lupulus/lupulus_savant.png` | 135.6 Ko | **Cité directement** | Cité dans marche_trajan_screen.dart, ludi_view.dart (+1) |
+| `assets/images/lupulus/lupulus_savant_180.png` | 70.1 Ko | **Cité directement** | Cité dans lesson_screen.dart, marche_trajan.py |
+| `assets/images/lupulus/lupulus_standard.png` | 93.5 Ko | **Cité directement** | Cité dans windows.py |
+| `assets/images/musee_cave_canem.png` | 8.0 Ko | **Cité directement** | Cité dans pantheon_screen.dart, ludus_latinus_dataset.json (+2) |
+| `assets/images/musee_circus.png` | 8.4 Ko | **Cité directement** | Cité dans account_screen.dart, lesson_screen.dart (+5) |
+| `assets/images/musee_gladiateur.png` | 45.9 Ko | **Cité directement** | Cité dans lesson_screen.dart, pantheon_screen.dart (+3) |
+| `assets/images/musee_legion.png` | 38.2 Ko | **Cité directement** | Cité dans lesson_screen.dart, pantheon_screen.dart (+3) |
+| `assets/images/musee_lion.png` | 35.6 Ko | **Cité directement** | Cité dans pantheon_screen.dart, musee.py |
+| `assets/images/musee_louve.png` | 25.5 Ko | **Cité directement** | Cité dans account_screen.dart, lesson_screen.dart (+5) |
+| `assets/images/musee_pegase.png` | 29.7 Ko | **Cité directement** | Cité dans lesson_screen.dart, pantheon_screen.dart (+3) |
+| `assets/images/musee_thermes.png` | 6.2 Ko | **Cité directement** | Cité dans lesson_screen.dart, pantheon_screen.dart (+4) |
+| `assets/images/musee_trophee_5eme.png` | 40.7 Ko | **Cité directement** | Cité dans musee.py |
+| `assets/images/trophee_triomphe_medaillon_130.png` | 31.7 Ko | **Cité directement** | Cité dans account_screen.dart, pantheon_screen.dart (+4) |
+| `assets/images/via/amphores.png` | 61.8 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/borne.png` | 41.3 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/charrette.png` | 46.0 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/colonne.png` | 79.2 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/cypres.png` | 49.6 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/fontaine.png` | 55.5 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/mausolee.png` | 73.1 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+| `assets/images/via/pin.png` | 52.9 Ko | **Cité directement** | Cité dans via_appia_road.dart |
+
+</details>
+
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier d'asset ni de code supprimé ou altéré).
 - Commandes lancées et résultat réel :
+  - Écriture et exécution de `scratch/assets_orphelins.py` analysant les 198 fichiers du répertoire `ludus_latinus_mobile/assets/` (32 374,6 Ko / 31,62 Mo) croisés avec l'ensemble des sources (`lib/*.dart`, `pubspec.yaml`, `dataset.json`, `app/*.py`, `content/*.py`).
+  - Aucun fichier d'asset supprimé (intégrité totale du dossier `ludus_latinus_mobile/assets/` préservée).
+  - Détection de **8 orphelins sûrs stricts** pour un total de **2 389,1 Ko** (2,33 Mo) de poids mort direct.
+  - Détection de **7 fichiers Lupulus historiques** dans `assets/images/lupulus/` (478,3 Ko) utilisés par l'appli de bureau (`app/mascotte.py`) mais non requis par l'APK mobile Flutter.
+  - Classification de **74 fichiers cités par morceaux** (3 773,6 Ko) démontrant des faux positifs d'analyse statique naïve (avatars, boutique, cas, mondes, mascottes).
+  - Recensement exhaustif des **109 fichiers cités directement** (25 733,6 Ko / 25,13 Mo).
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - **Décision sur les 7 variantes Lupulus desktop** (`lupulus_aide.png`, `lupulus_centurion.png`, `lupulus_gladiateur.png`, `lupulus_joie.png`, `lupulus_mercure.png`, `lupulus_reflexion.png`, `lupulus_triomphe.png`) : ces fichiers sont appelés par l'appli Tkinter (`app/mascotte.py`) qui possède déjà son propre dossier miroir `latin_learn/assets/images/lupulus/`. L'appli Flutter mobile n'utilise quant à elle que les versions `_180.png` ou les WebP animés. Supprimer ces 7 fichiers de `ludus_latinus_mobile/assets/` permet de récupérer 478,3 Ko de plus, portant le gain total à **2 867,4 Ko** (~2,80 Mo) sans impacter ni le mobile ni le desktop.
+  - **Priorité n°1 pour la taille de l'APK** : les deux chars HD `chariot_bleu_hd.png` (1 127,5 Ko) et `chariot_rouge_hd.png` (915,7 Ko) pèsent à eux seuls **2 043,2 Ko** (85,5 % du total des orphelins sûrs). `circus_screen.dart` utilise déjà exclusivement les versions standard `chariot_bleu.png` (159,8 Ko) et `chariot_rouge.png` (157,1 Ko). Leur suppression est un gain immédiat et sans risque de plus de 2 Mo sur l'APK.
+  - **Nettoyage animations** : `assets/animations/coin_rain.json` (53,7 Ko) a été remplacé par l'animation 3D `pieces_or.webp` (comme noté dans `lottie_effects.dart:13-15`) et peut être retiré du dépôt mobile.
+  - **Nettoyage boss** : `assets/images/boss_retiaire.webp` (17,2 Ko) a été supplanté par l'animation WebP `boss_retiaire_anime.webp` (353,5 Ko) dans `duel_screen.dart:82`.
+- Reste à faire : Rien sur T27. Tâche validée.
 
 ---
 
