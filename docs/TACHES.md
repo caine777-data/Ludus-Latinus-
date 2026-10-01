@@ -2900,7 +2900,7 @@ Statut : VALIDÉ
 
 ## T31 — Le test anti-débordement du Duel et du Circus (reprise de T24)
 
-Statut : À FAIRE
+Statut : BLOQUÉ
 
 **Objectif** : T24 butait sur deux rangées de boutons trop larges. Elles sont
 corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
@@ -2927,14 +2927,69 @@ corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
 - [ ] Il **échoue** si tu remets `Row` à la place de `Wrap` dans le panneau
       de victoire du Duel (essaie en local, recopie l'erreur, puis annule
       avec `git checkout -- ludus_latinus_mobile/lib`).
-- [ ] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
+- [x] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
 - [ ] Un commit `test(mobile): la fin du Duel ne déborde pas sur petit écran`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md`
+  - Le code complet du test a été sauvegardé dans `scratch/fin_de_partie_test.dart` pour permettre à l'architecte de reproduire immédiatement le comportement sans impacter la suite de tests principale.
 - Commandes lancées et résultat réel :
+  - Rédaction et exécution du test sur écran `360 x 640` (`tester.view.physicalSize = const Size(720, 1280)`, `devicePixelRatio = 2.0`).
+  - `flutter test test/fin_de_partie_test.dart` : **Échec layout RenderFlex** dès l'affichage du quiz et après sélection d'une réponse :
+    ```
+    ══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+    The following assertion was thrown during layout:
+    A RenderFlex overflowed by 157 pixels on the bottom.
+
+    The overflowing RenderFlex has an orientation of Axis.vertical.
+    The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+    black striped pattern.
+    The specific RenderFlex in question is: RenderFlex#88544 DISPOSED:
+      constraints: BoxConstraints(w=328.0, h=247.0)
+      size: Size(328.0, 247.0)
+      direction: vertical
+      mainAxisAlignment: start
+      mainAxisSize: max
+      crossAxisAlignment: stretch
+      verticalDirection: down
+      spacing: 0.0
+
+    The relevant error-causing widget was:
+      Column
+      Column:file:///C:/Users/caine/Downloads/LATIN_LEARN/latin_learn/ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:1026:14
+    ```
+  - Échec du hit-test sur les réponses situées sur la 2e rangée :
+    ```
+    Warning: A call to tap() with finder "Found 1 widget with type "InkWell" that are ancestors of widget with text "Mars": [
+      InkWell(dependencies: [_ScrollableScope]),
+    ]" derived an Offset (Offset(264.5, 640.0)) that would not hit test on the specified widget.
+    Indeed, Offset(264.5, 640.0) is outside the bounds of the root of the render tree, Size(360.0, 640.0).
+    ```
+  - `flutter test` (suite complète de tests mobiles) : `00:05 +57: All tests passed!` (57/57 passés).
+  - `python -m unittest discover -s tests` : `Ran 250 tests in 14.457s - OK` (250/250 passés).
+- Diagnostic précis du blocage :
+  1. **Panneau de victoire (`_buildVictoryPanel`)** :
+     La correction apportée par l'architecte au commit `63fb54d` (remplacement de `Row` par `Wrap` à la ligne 1305 et défilement avec `SingleChildScrollView` à la ligne 1240) a bien résolu le débordement horizontal de 70 px de la barre d'actions finale.
+  2. **Débordement vertical dans `_buildQuizPanel` (`duel_screen.dart:1026:14`)** :
+     Sur un petit écran de 360 x 640 points, le panneau `_buildQuizPanel` dispose d'une hauteur maximale de `h = 247.0 px`. La `Column` non défilable contient :
+     - Sélecteur de posture `Row` (l. 1030) : ~35.5 px
+     - `SizedBox(height: 10)` : 10 px
+     - Énoncé de la question `Container` (l. 1101) : 62 à 90 px
+     - `SizedBox(height: 12)` : 12 px
+     - Bandeau de feedback après réponse `AnimatedContainer` (l. 1182) : ~60 px
+     Le cumul des éléments non flexibles dépasse la contrainte maximale de 247 px, déclenchant un débordement `RenderFlex` de 57 à 157 pixels sur le bas.
+  3. **Impossibilité de défiler avec `tester.ensureVisible(...)`** :
+     La grille des choix `GridView.count` (l. 1121) a `physics: const NeverScrollableScrollPhysics()` (l. 1126). Par conséquent, `Scrollable.ensureVisible` ne peut effectuer aucun défilement. Les choix de la deuxième ligne descendent à `y >= 640 dp` (hors de l'écran) et ne peuvent recevoir le tap au centre.
+  4. **Circus Maximus** :
+     La course repose sur un `Timer.periodic(const Duration(milliseconds: 50))` et un `AnimationController` avec `.repeat()`. L'exécution de 3 tours complets (~2600 ticks avec gestion des incidents) ne peut s'effectuer de manière déterministe dans un test de widgets sans refonte des timers.
+  5. **Application stricte de l'étape 3 de T31** :
+     Conformément à la consigne « *Si un débordement subsiste, ne corrige pas le code : recopie l'erreur et la ligne, passe la tâche à `BLOQUÉ`.* », la tâche est passée à `BLOQUÉ`.
 - Doutes, questions pour l'architecte :
+  - Pour résorber le débordement vertical de `_buildQuizPanel` sur petit écran : autoriser le défilement dans le quiz (retirer `NeverScrollableScrollPhysics` sur le `GridView`, ou envelopper le panneau dans un `SingleChildScrollView`), ou afficher le bandeau de feedback en `Overlay`/`SnackBar` temporaire plutôt que dans la `Column`.
 - Reste à faire :
+  - Arbitrage de l'architecte sur `duel_screen.dart:1026:14`.
+  - Poursuivre avec la tâche T32.
 
 ---
 
