@@ -2995,7 +2995,7 @@ corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
 
 ## T32 — Tournée sur un petit téléphone (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : T24 laisse penser que, sur un petit téléphone, des réponses du
 quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
@@ -3019,17 +3019,61 @@ quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
    l'étape 1.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau écran par écran : conforme ou non, défaut, capture.
-- [ ] Les réglages d'origine sont revenus (recopie les valeurs avant et
+- [x] Un tableau écran par écran : conforme ou non, défaut, capture.
+- [x] Les réglages d'origine sont revenus (recopie les valeurs avant et
       après).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: tournée sur petit téléphone`.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: tournée sur petit téléphone`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier d'application dans `lib/` n'a été modifié, respect strict de la consigne).
+- Réglages de l'émulateur (avant / pendant / après) :
+  - **Avant le test** :
+    - `adb shell wm size` : `Physical size: 1080x2400`
+    - `adb shell wm density` : `Physical density: 420`
+  - **Pendant le test (écran cible 360 x 640 points logiques @ 320 dpi)** :
+    - `adb shell wm size 720x1280` -> `Override size: 720x1280`
+    - `adb shell wm density 320` -> `Override density: 320`
+    - *(Vérification géométrique : 720 / (320 / 160) = 360 dp de largeur ; 1280 / (320 / 160) = 640 dp de hauteur).*
+  - **Après le test (restauration des réglages d'origine)** :
+    - Commandes exécutées : `adb shell wm size reset` puis `adb shell wm density reset`.
+    - `adb shell wm size` : `Physical size: 1080x2400` (aucun override résiduel).
+    - `adb shell wm density` : `Physical density: 420` (aucun override résiduel).
+    - Restauration de la sauvegarde utilisateur Marcus (`scratch/t32_save_backup.json` restauré via `run-as com.luduslatinus.app`).
 - Commandes lancées et résultat réel :
+  - Parcours complet de l'application sur l'émulateur en 360 x 640 dp.
+  - Inspection visuelle systématique des 12 écrans cibles (plus écran Ludi).
+  - Captures d'écran exportées dans `scratch/t32_*` et `scratch/ludi_screen.png`.
+- Tableau d'inspection écran par écran :
+
+| Écran | Conforme ? | Défauts observés (bande jaune/noire, coupures, boutons hors écran, scroll) | Capture |
+|---|---|---|---|
+| **Accueil** | Non (mineur) | Pas de bande jaune/noire. Titre d'en-tête tronqué : `LUDUS LATI...` au lieu de `LUDUS LATINUS`. Cartes profil Marcus, Lupulus et progression Via Appia bien dimensionnées. Sections basses (stats, quêtes) accessibles via défilement vertical naturel. | `scratch/t32_accueil.png` |
+| **Carte des mondes** | **Oui** | Pas de bande jaune/noire, pas de texte coupé. En-tête (sesterces, flamme) intact. Défilement vertical fluide de la Via Appia et des étapes (Milestone I à VI). Jalons cliquables. | `scratch/t32_carte.png` |
+| **Leçon Monde 1 — QCM** (`m1-01`) | **Oui** | Pas de bande jaune/noire. Consigne, carte question et les 4 choix de réponse ("Bonjour !", "Au revoir !", etc.) sont intégralement visibles sans aucun défilement. Bouton "Vérifier" accessible en bas. | `scratch/t32_lecon_qcm.png` |
+| **Leçon Monde 1 — Puzzle** (`m1-02`) | **Oui** | Pas de bande jaune/noire. Consigne, zone d'assemblage en pointillés, étiquettes de mots (`amice`, `Salve`, `!`) et bouton "Vérifier la phrase" visibles et cliquables sans défilement. | `scratch/t32_lecon_puzzle.png` |
+| **Leçon Monde 1 — Texte à trou** (`m1-03`) | **Oui** | Pas de bande jaune/noire. Consigne "Se présenter comme un Romain", phrase à trou `Romanus [sum] .`, options et bouton de validation parfaitement positionnés sans débordement. | `scratch/t32_lecon_trou.png` |
+| **Duel / Arène — Quiz** | **NON (Bloquant)** | **Les 4 réponses NE sont PAS visibles sans faire défiler**. La rangée du haut (2 réponses) est visible, mais la rangée du bas (2 réponses) est repoussée sous le bord inférieur de l'écran (hors écran à $y \ge 640\text{ dp}$). Comme la grille `GridView.count` utilise `physics: const NeverScrollableScrollPhysics()` (`duel_screen.dart:1126`), **il est impossible de faire défiler pour révéler les réponses du bas** (le joueur est bloqué si la bonne réponse s'y trouve). Titre d'AppBar tronqué en `COLOSS...`. De plus, après sélection, l'apparition du bandeau de feedback provoque un débordement RenderFlex de 157 px en bas. | `scratch/t32_duel_quiz.png` |
+| **Circus Maximus — Quiz en course** | Partiel | Pas de bande jaune/noire en course. Titre d'AppBar tronqué en `CIRCUS MA...`. Les 4 choix de réponse en 2 rangées au bas de la piste sont très proches du bord bas mais restent **entièrement visibles et cliquables sans défilement**. | `scratch/t32_circus_quiz.png` |
+| **Circus Maximus — Fin de course** | **Oui** | Pas de bande jaune/noire. Panneau de résultats et récompenses dans un conteneur défilable. Grâce au `Wrap` du commit `63fb54d`, les boutons "Quitter" et "Nouvelle Course" se disposent proprement sans débordement horizontal ; ils sont atteints par un léger scroll vers le bas. | `scratch/t32_circus_fin.png` |
+| **Memoria Velox** | **NON (Critique)** | **Bande jaune et noire présente** : `A RenderFlex overflowed by 69 pixels on the bottom` sur la carte centrale. Le bouton audio `Prononciation & API` est partiellement recouvert par la bande d'overflow. Titre d'AppBar tronqué en `MEMORIA V...`. Les 4 cartes de réponse en bas restent accessibles. | `scratch/t32_memoria.png` |
+| **Boutique (Taberna Romana)** | **Oui** | Pas de bande jaune/noire. Boîte modale bien ajustée. Solde, prévisualisation Marcus, puces de filtrage ("Toges", "Couronnes", etc.), articles et bouton d'achat utilisables et défilables verticalement. | `scratch/t32_boutique.png` |
+| **Thesaurus** | Partiel | Pas de bande jaune/noire. Recherche et filtres OK. Onglet supérieur légèrement rogné (`Conjugaison...`). Lemmes longs tronqués avec points de suspension (ex : `amica,...`). Détails et navigation fonctionnels sans overflow. | `scratch/t32_thesaurus.png` |
+| **Bibliotheca** | **Oui** | Pas de bande jaune/noire. Titre `BIBLIOTHECA` intact. Grille des 4 cartes (Thesaurus, Grammatica, Fabulae, Chronica) entièrement visible sans scroll et responsive. | `scratch/t32_bibliotheca.png` |
+| *(Complémentaire)* **Ludi (Jeux)** | **NON** | **Bande jaune et noire présente** : `BOTTOM OVERFLOWED BY 8.0 PIXELS` sur les cartes de mini-jeux verrouillés en bas de page (`Alea Iacta Est` et `Atelier de César`). | `scratch/ludi_screen.png` |
+
+- Synthèse des anomalies relevées sur écran 360 x 640 :
+  1. **Duel Quiz (`duel_screen.dart`)** : confirmation éclatante de l'intuition de T24/T31. Le quiz ne rentre pas dans les 247 dp disponibles sans scroll : 2 réponses sur 4 sont physiquement hors écran et non scrollables à cause de `NeverScrollableScrollPhysics`.
+  2. **Memoria Velox (`memoria_screen.dart`)** : la carte centrale déborde verticalement de 69 pixels sur petit écran et masque le bouton d'écoute.
+  3. **Ludi Screen (`ludi_screen.dart`)** : débordement vertical mineur de 8.0 pixels au bas de la liste des jeux.
+  4. **Titres AppBar** : la police romaine en majuscules combinée à la taille fixe déborde sur 360 dp de largeur (`LUDUS LATI...`, `COLOSS...`, `CIRCUS MA...`, `MEMORIA V...`).
 - Doutes, questions pour l'architecte :
+  - Sur le Duel : autoriser le défilement dans le quiz (`SingleChildScrollView` enveloppant ou suppression de `NeverScrollableScrollPhysics` sur le `GridView`) et réduire les espacements/paddings fixes verticaux.
+  - Sur Memoria : encapsuler le corps de la carte dans un défilement ou réduire la hauteur minimale réservée.
+  - Sur l'écran Ludi : ajuster la hauteur des cartes pour résorber les 8 px excédentaires.
 - Reste à faire :
+  - Poursuivre avec la tâche T33.
 
 ---
 
