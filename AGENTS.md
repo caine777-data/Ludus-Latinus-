@@ -201,7 +201,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (57 sur 57 le 01/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -316,6 +316,17 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **L'Épigraphie se mérite** (01/10/2026) — avant, la traduction complète
+  était affichée d'emblée et un seul bouton payait 15 HS. Maintenant
+  (`latin_epigraph_modal.dart`) : la traduction complète est cachée tant que
+  la stèle n'est pas déchiffrée ; le bouton « Estamper » ne s'active qu'une
+  fois chaque fragment examiné ; il lance trois questions (« Que signifie ce
+  fragment ? », choix tirés des autres fragments de la même stèle) ;
+  15 HS sans erreur, 8 HS après une erreur. Test :
+  `test/epigraphie_test.dart` (57 tests Flutter). Limite connue : fermer et
+  rouvrir la stèle remet le compteur d'erreurs à zéro. Pas encore vu à
+  l'écran : c'est dans T30.
 
 - **Exercices de 3e réécrits** (validés par Cédric le 01/10/2026) — les 16
   trous et puzzles des mondes 19 à 26 suivent le même principe que la 5e et

@@ -47,6 +47,155 @@ class LatinEpigraphModal extends StatefulWidget {
 class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
   int? _selectedTokenIndex;
 
+  // L'étude : chaque fragment doit avoir été examiné avant l'épreuve.
+  final Set<int> _examines = {};
+
+  // L'épreuve : retrouver le sens de trois fragments, sans la fiche sous les yeux.
+  bool _epreuve = false;
+  List<int> _questions = [];
+  int _numQuestion = 0;
+  int _erreurs = 0;
+  List<String> _choix = [];
+  String? _choixFaux;
+
+  int get _gainApresErreur => (widget.epigraph.recompense + 1) ~/ 2;
+
+  void _commencerEpreuve() {
+    final indices = List<int>.generate(widget.epigraph.tokens.length, (i) => i)..shuffle();
+    setState(() {
+      _epreuve = true;
+      _questions = indices.take(3).toList();
+      _numQuestion = 0;
+      _selectedTokenIndex = null;
+      _preparerChoix();
+    });
+  }
+
+  void _preparerChoix() {
+    final tokens = widget.epigraph.tokens;
+    final bonne = tokens[_questions[_numQuestion]].traduction;
+    final autres = tokens.map((t) => t.traduction).where((t) => t != bonne).toSet().toList()..shuffle();
+    _choix = [bonne, ...autres.take(3)]..shuffle();
+    _choixFaux = null;
+  }
+
+  void _repondre(String choix) {
+    final bonne = widget.epigraph.tokens[_questions[_numQuestion]].traduction;
+    if (choix != bonne) {
+      HapticFeedback.mediumImpact();
+      setState(() {
+        _erreurs++;
+        _choixFaux = choix;
+      });
+      return;
+    }
+    HapticFeedback.lightImpact();
+    if (_numQuestion < _questions.length - 1) {
+      setState(() {
+        _numQuestion++;
+        _preparerChoix();
+      });
+      return;
+    }
+    final gain = _erreurs == 0 ? widget.epigraph.recompense : _gainApresErreur;
+    widget.repo.decodeEpigraph(widget.epigraph.monumentId, gain);
+    AudioService().playSesterces();
+    AudioService().playTriumph();
+    RomanLottieEffects.showMonumentBlessing(context);
+    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+    setState(() => _epreuve = false);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: RomanColors.laurelGreen,
+        content: Text(
+          '🏛️ Épigraphe déchiffrée ! +$gain HS versés à ton trésor.',
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEpreuve() {
+    final token = widget.epigraph.tokens[_questions[_numQuestion]];
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFBEA),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'ÉPREUVE DU LAPICIDE : ${_numQuestion + 1} / ${_questions.length}',
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+              color: Color(0xFF7A5901),
+            ),
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            'Que signifie ce fragment ?',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            token.texteGraver,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontFamily: 'serif',
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.2,
+              color: RomanColors.imperialPurple,
+            ),
+          ),
+          const SizedBox(height: 10),
+          for (final choix in _choix)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: choix == _choixFaux ? Colors.red.shade800 : RomanColors.imperialPurple,
+                  backgroundColor: choix == _choixFaux ? const Color(0xFFFDECEA) : Colors.white,
+                  side: BorderSide(
+                    color: choix == _choixFaux ? Colors.red.shade400 : RomanColors.marbleBorder,
+                    width: 1.2,
+                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                ),
+                onPressed: () => _repondre(choix),
+                child: Text(choix, textAlign: TextAlign.center),
+              ),
+            ),
+          if (_choixFaux != null)
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4),
+              child: Text(
+                "Ce n'est pas ça. Essaie encore, ou retourne voir les fragments.",
+                style: TextStyle(fontSize: 12, color: Color(0xFFB71C1C)),
+              ),
+            ),
+          Text(
+            'Sans erreur : +${widget.epigraph.recompense} HS. Après une erreur : +$_gainApresErreur HS.',
+            style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Color(0xFF5A442E)),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () => setState(() => _epreuve = false),
+              child: const Text('Revoir les fragments'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDecoded = widget.repo.isEpigraphDecoded(widget.epigraph.monumentId);
@@ -234,10 +383,12 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                     ),
                   ),
                 ),
-                const Text(
-                  'Touchez un mot gravé ci-dessous pour révéler son secret lapidaire',
+                Text(
+                  isDecoded
+                      ? 'Touche un fragment pour revoir sa fiche.'
+                      : 'Examine chaque fragment, puis estampe la pierre : il faudra retrouver le sens de trois d\'entre eux.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 11,
                     fontStyle: FontStyle.italic,
                     color: Color(0xFF5A442E),
@@ -246,6 +397,10 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
 
                 const SizedBox(height: 16),
 
+                if (_epreuve) ...[
+                  _buildEpreuve(),
+                  const SizedBox(height: 14),
+                ] else ...[
                 // 2. Jetons de décryptage lapidaire
                 const Text(
                   'Fragments & Abréviations à déchiffrer :',
@@ -265,6 +420,13 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                     final isSelected = _selectedTokenIndex == index;
 
                     return ActionChip(
+                      avatar: !isDecoded && _examines.contains(index)
+                          ? Icon(
+                              Icons.check_circle,
+                              size: 16,
+                              color: isSelected ? Colors.white : RomanColors.laurelGreen,
+                            )
+                          : null,
                       label: Text(token.texteGraver),
                       backgroundColor: isSelected ? RomanColors.imperialPurple : Colors.white,
                       labelStyle: TextStyle(
@@ -283,6 +445,7 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                         AudioService().playCardFlip();
                         setState(() {
                           _selectedTokenIndex = index;
+                          _examines.add(index);
                         });
                       },
                     );
@@ -361,8 +524,9 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                   ),
                   const SizedBox(height: 14),
                 ],
+                ],
 
-                // 4. Traduction intégrale
+                // 4. Traduction intégrale : la récompense de l'épreuve, pas son corrigé.
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
@@ -388,12 +552,14 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        widget.epigraph.traductionComplete,
-                        style: const TextStyle(
+                        isDecoded
+                            ? widget.epigraph.traductionComplete
+                            : '🔒 Elle apparaîtra quand tu auras estampé la pierre.',
+                        style: TextStyle(
                           fontSize: 13.5,
                           fontStyle: FontStyle.italic,
                           fontWeight: FontWeight.w600,
-                          color: RomanColors.imperialPurple,
+                          color: isDecoded ? RomanColors.imperialPurple : const Color(0xFF7A6A58),
                           height: 1.4,
                         ),
                       ),
@@ -460,30 +626,19 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                 label: Text(
                   isDecoded
                       ? 'Inscription Déjà Archivée au Tabularium'
-                      : 'Estamper la Pierre (+${widget.epigraph.recompense} Sesterces)',
+                      : _epreuve
+                          ? 'Épreuve en cours'
+                          : _examines.length < widget.epigraph.tokens.length
+                              ? 'Examine chaque fragment (${_examines.length} / ${widget.epigraph.tokens.length})'
+                              : 'Estamper la Pierre (+${widget.epigraph.recompense} Sesterces)',
                   style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                 ),
-                onPressed: () {
-                  if (!isDecoded) {
-                    widget.repo.decodeEpigraph(widget.epigraph.monumentId, widget.epigraph.recompense);
-                    AudioService().playSesterces();
-                    AudioService().playTriumph();
-                    RomanLottieEffects.showMonumentBlessing(context);
-                    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-                    setState(() {});
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: RomanColors.laurelGreen,
-                        content: Text(
-                          '🏛️ Épigraphe déchiffrée avec succès ! +${widget.epigraph.recompense} HS versés à ton trésor.',
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    );
-                  } else {
-                    Navigator.pop(context);
-                  }
-                },
+                // Inactif tant que tous les fragments n'ont pas été examinés, et pendant l'épreuve.
+                onPressed: isDecoded
+                    ? () => Navigator.pop(context)
+                    : (_epreuve || _examines.length < widget.epigraph.tokens.length)
+                        ? null
+                        : _commencerEpreuve,
               ),
             ),
           ),

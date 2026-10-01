@@ -2785,9 +2785,20 @@ Statut : À FAIRE
 5. Refais les étapes 2 et 3 avec la police à 1.3 (les boutons peuvent passer
    sur deux lignes : c'est voulu).
 6. `adb shell settings put system font_scale 1.0` et vérifie la valeur.
+7. **Épigraphie** (refaite le 01/10, commit `feat(mobile): l'Épigraphie se
+   mérite`) : ouvre une stèle **non déchiffrée** depuis la Bibliotheca.
+   Vérifie et capture : la traduction complète est remplacée par un cadenas ;
+   le bouton du bas est grisé et compte les fragments examinés ; une fois
+   tous les fragments touchés, « Estamper la Pierre » lance trois questions ;
+   trompe-toi une fois exprès (le choix devient rouge), termine, et note les
+   sesterces gagnés (8 HS attendus après une erreur, 15 sans erreur) ; la
+   traduction complète apparaît ensuite. Rouvre la stèle : elle est
+   « déchiffrée » et ne repaie pas. **Le profil de test gagne ces sesterces :
+   note le solde avant et après, ne le restaure pas.**
 
 **Critères de réussite** (tous obligatoires) :
 - [ ] Un tableau : écran, police 1.0, police 1.3, conforme ou non, capture.
+- [ ] Le parcours de l'Épigraphie, étape par étape, avec captures.
 - [ ] `font_scale` remis à 1.0 (recopie la commande et le résultat).
 - [ ] `git status` : seul `docs/TACHES.md` est modifié.
 - [ ] Un commit `docs: vérification à l'écran des corrections du 1er octobre`.
