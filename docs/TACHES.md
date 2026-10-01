@@ -2762,7 +2762,7 @@ puzzle, le texte actuel et **une proposition**, que l'architecte relira.
 
 ## T30 — Vérifier à l'écran les corrections du 1er octobre (sans rien modifier)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : l'architecte a corrigé quatre défauts d'affichage (commit
 `63fb54d`) sans pouvoir les voir sur l'émulateur. Tu les vérifies, captures
@@ -2797,17 +2797,104 @@ Statut : À FAIRE
    note le solde avant et après, ne le restaure pas.**
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau : écran, police 1.0, police 1.3, conforme ou non, capture.
-- [ ] Le parcours de l'Épigraphie, étape par étape, avec captures.
-- [ ] `font_scale` remis à 1.0 (recopie la commande et le résultat).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: vérification à l'écran des corrections du 1er octobre`.
+- [x] Un tableau : écran, police 1.0, police 1.3, conforme ou non, capture.
+- [x] Le parcours de l'Épigraphie, étape par étape, avec captures.
+- [x] `font_scale` remis à 1.0 (recopie la commande et le résultat).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: vérification à l'écran des corrections du 1er octobre`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
-- Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `docs/TACHES.md` (aucun fichier d'application ou d'asset modifié).
+- Captures générées (dans `scratch/`) :
+  - `scratch/t30_norm_duel_victoire.png` : panneau de victoire Duel en police 1.0.
+  - `scratch/t30_norm_circus_victoire.png` : écran de victoire Circus en police 1.0.
+  - `scratch/t30_font13_thesaurus_cas.png` : 6 cartes des cas du Thesaurus en police 1.3.
+  - `scratch/t30_font13_lesson_header.png` : en-tête de la leçon 1 en police 1.3.
+  - `scratch/t30_font13_duel_victoire.png` : panneau de victoire Duel en police 1.3.
+  - `scratch/t30_font13_circus_victoire.png` : écran de victoire Circus en police 1.3.
+  - `scratch/t30_epigraphie_01_cadenas.png` : stèle non déchiffrée avec cadenas et compteur (0/6).
+  - `scratch/t30_epigraphie_02_fragments.png` : tous les fragments examinés (6/6) et bouton actif.
+  - `scratch/t30_epigraphie_03_erreur.png` : option erronée en rouge et message d'erreur.
+  - `scratch/t30_epigraphie_04_recompense.png` : fin d'estampage, déblocage traduction et +8 HS.
+  - `scratch/t30_epigraphie_05_dechiffree.png` : stèle archivée rouverte sans réestampage ni réattribution.
+
+### 1. Tableau comparatif des 4 corrections du 1er octobre
+
+| Écran / Composant | Police 1.0 | Police 1.3 | Conforme ? | Capture(s) & Diagnostic |
+|---|---|---|:---:|---|
+| **Duel : panneau de victoire** | Boutons « Quitter » et « Boss Suivant » entiers et alignés, aucun débordement. | Boutons enveloppés dans un `Wrap`, parfaitement lisibles, zéro bande jaune et noire. | **CONFORME** | `scratch/t30_norm_duel_victoire.png`<br>`scratch/t30_font13_duel_victoire.png` |
+| **Circus : écran de victoire** | Boutons « Quitter » et « Nouvelle Course » entiers, zéro débordement. | Boutons dans `SingleChildScrollView` avec `Wrap`, défilement fluide, tout est accessible sans débordement. | **CONFORME** | `scratch/t30_norm_circus_victoire.png`<br>`scratch/t30_font13_circus_victoire.png` |
+| **Thesaurus : cartes des cas** | Les 6 cartes s'affichent correctement. | La formule `height: 122 + textScaler.scale(84)` plafonne la carte à 206 dp (540 px à 420 dpi). Flutter déclenche toujours `BOTTOM OVERFLOWED BY 11 PIXELS` sur les cartes Nominatif, Vocatif et Accusatif. | **NON CONFORME** | `scratch/t30_font13_thesaurus_cas.png`<br>*Défaut persistant : la hauteur fixe allouée reste trop courte de 11 px pour le contenu interne.* |
+| **En-tête de leçon (Monde 1)** | Deux badges (« QCM Grammaire » et « Validée ») visibles. | Les badges sont devenus rétractables avec des `TextOverflow.ellipsis` (`[ 📜 QCM Grammaire & Vo... ] [ ✓ Validée ★★★ ]`). Zéro débordement (le débordement de 39 px de T28 est totalement résolu). | **CONFORME** | `scratch/t30_font13_lesson_header.png` |
+
+---
+
+### 2. Parcours Épigraphie (`feat(mobile): l'Épigraphie se mérite`)
+
+1. **Ouverture d'une stèle non déchiffrée** :
+   - Depuis la Bibliotheca, ouverture de la *Dédicace du Temple de Saturne*.
+   - La traduction complète est verrouillée : `🔒 Elle apparaîtra quand tu auras estampé la pierre.`
+   - Le bouton inférieur est désactivé et indique : `✏ Examine chaque fragment (0 / 6)`.
+   - Capture : `scratch/t30_epigraphie_01_cadenas.png`.
+2. **Examen des fragments** :
+   - Clic sur chaque fragment un par un (`SENATVS`, `POPVLVSQVE`, `ROMANVS`, `INCENDIO`, `CONSVMPTVM`, `RESTITVIT`).
+   - Chaque fragment cliqué passe à l'état validé avec coche verte (`✓`).
+   - Une fois tous les fragments examinés (6/6), le bouton principal s'illumine en or : `🖌 Estamper la Pierre (+15 Sesterces)`.
+   - Capture : `scratch/t30_epigraphie_02_fragments.png`.
+3. **Épreuve d'estampage du lapicide & Erreur volontaire** :
+   - Clic sur « Estamper la Pierre », lancement des 3 questions.
+   - Question 1 (`RESTITVIT`) : clic volontaire sur la réponse erronée `Romain`.
+   - Le bouton s'affiche immédiatement en fond rouge clair (`#FDECEA`) avec texte rouge foncé et bordure rouge, accompagné du message didactique : *"Ce n'est pas ça. Essaie encore, ou retourne voir les fragments."* et de la mention : *"Sans erreur : +15 HS. Après une erreur : +8 HS."*.
+   - Capture : `scratch/t30_epigraphie_03_erreur.png`.
+4. **Validation des questions et récompense** :
+   - Clic sur la bonne réponse `a reconstruit` (Q1), puis validation de la Q2 `et le Peuple` (`POPVLVSQVE`) et Q3 `par l'incendie` (`INCENDIO`).
+   - L'estampage réussit avec 2/3 au premier essai (1 erreur) : la récompense versée est de **+8 HS** (moitié arrondie supérieure de 15 HS).
+   - Pluie de particules de lauriers et animation de bénédiction.
+   - Le solde passe de **498 HS à 506 HS** (+8 HS).
+   - Le badge passe à `✓ DÉCHIFFRÉ` et la traduction française complète est déverrouillée : *« Le Sénat et le Peuple Romain ont reconstruit ce temple détruit par l'incendie. »*.
+   - Capture : `scratch/t30_epigraphie_04_recompense.png`.
+5. **Persistance sans réestampage ni réattribution** :
+   - Fermeture de la stèle via `✓ Inscription Déjà Archivée au Tabularium` (la tuile Bibliotheca affiche désormais `1 inscription(s) décodée(s)`).
+   - Réouverture de la stèle via Forum Imperiale > Temple de Saturne (`✓ Épigraphe Déchiffrée (Revoir la Pierre)`).
+   - La stèle s'ouvre directement avec le badge `✓ DÉCHIFFRÉ`, la traduction complète accessible immédiatement, et le bouton vert `✓ Inscription Déjà Archivée au Tabularium`.
+   - Aucun nouveau versement de sesterces : le solde reste strictement à **506 HS**.
+   - Capture : `scratch/t30_epigraphie_05_dechiffree.png`.
+
+---
+
+### 3. Réinitialisation de `font_scale`
+
+- Commande de remise à l'échelle normale :
+  ```powershell
+  adb shell settings put system font_scale 1.0
+  adb shell settings get system font_scale
+  ```
+- Résultat réel retourné :
+  ```
+  1.0
+  ```
+
+---
+
+### 4. Suivi du solde de Sesterces
+
+- Solde initial au début de T30 : **444 HS**
+- Après Duel en police 1.0 (+15 HS) : **459 HS**
+- Après Circus en police 1.0 (+12 HS) : **471 HS**
+- Après Duel en police 1.3 (+15 HS) : **486 HS**
+- Après Circus en police 1.3 (+12 HS) : **498 HS**
+- **Avant déchiffrage Épigraphie : 498 HS**
+- **Après déchiffrage Épigraphie (+8 HS suite à 1 erreur) : 506 HS**
+- Après fermeture et réouverture de la stèle déchiffrée : **506 HS** (invariant)
+
+---
+
+### 5. Doutes et questions pour l'architecte
+
+1. **Thesaurus en police 1.3 (défaut persistant)** : dans `thesaurus_screen.dart:563`, la hauteur calculée `122 + MediaQuery.textScalerOf(context).scale(84)` donne environ 206 dp sous font_scale 1.3, mais le contenu interne des cartes supérieures (Nominatif, Vocatif, Accusatif) réclame au moins 217 dp, provoquant `BOTTOM OVERFLOWED BY 11 PIXELS`. Prévoir une marge d'au moins 20 dp supplémentaires ou une hauteur intrinsèque.
+2. **Écran Ludi en police 1.3** : un débordement mineur (`BOTTOM OVERFLOWED BY 1.9 PIXELS`) apparaît sur les cartes verrouillées (« Alea Iacta Est », « Atelier de César », « Marché de Tra... »).
+- Reste à faire : Rien sur T30. Tâche terminée.
 
 ---
 
