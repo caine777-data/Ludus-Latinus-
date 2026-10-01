@@ -2074,7 +2074,9 @@ continue avec la suivante.
 
 ## T24 — Un test qui empêche le Duel et le Circus de déborder
 
-Statut : BLOQUÉ
+Statut : BLOQUÉ (repris en T31)
+
+> **Relecture de l'architecte (01/10/2026)** : diagnostic juste. Les deux rangées de boutons sont devenues des `Wrap` et le panneau de fin du Circus défile (commit `63fb54d`). Le test est redonné en T31.
 
 **Objectif** : T23 a trouvé un débordement que les tests ne voyaient pas. On
 ajoute des tests de widgets qui montent le panneau de victoire du Duel et
@@ -2152,7 +2154,9 @@ l'écran de fin du Circus sur un **petit écran** (360 x 640) : Flutter fait
 
 ## T25 — Tournée d'essai du Circus Maximus (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (01/10/2026)** : gains et bonus conformes. La remarque sur la course gagnée sans répondre est retenue : c'est T33. Le titre rogné est traité en T34.
 
 **Objectif** : le Circus a changé (récompense plafonnée, score en points)
 mais personne n'a joué une course entière sur l'émulateur.
@@ -2206,6 +2210,8 @@ dans `scratch/t25_*`.
 ## T26 — Tournée d'essai de César, du Marché et de la Taverne (sans rien modifier)
 
 Statut : VALIDÉ
+
+> **Relecture de l'architecte (01/10/2026)** : conforme, profil restauré. Rappel : seul l'architecte passe une tâche à `VALIDÉ`, l'exécutant s'arrête à `FAIT`.
 
 **Objectif** : ces trois jeux ont été refaits (missions de César, Marché payé
 une fois, défi du jour) mais ils sont verrouillés pour le profil de test
@@ -2296,6 +2302,8 @@ temporaire, puis on remet le profil d'origine.
 ## T27 — Les images qui ne servent plus (sans rien supprimer)
 
 Statut : VALIDÉ
+
+> **Relecture de l'architecte (01/10/2026)** : sept des huit orphelins sûrs sont supprimés (commit `63fb54d`, 2,4 Mo). `boss_retiaire.webp` reste : `scripts/assets/illustrations.py` le régénère. Les sept « doutes » restent, l'appli de bureau s'en sert.
 
 **Objectif** : l'APK grossit à chaque lot d'images. On veut la liste des
 fichiers de `ludus_latinus_mobile/assets/` qu'**aucun code ne cite plus**,
@@ -2590,6 +2598,8 @@ pour que l'architecte décide quoi supprimer.
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (01/10/2026)** : les deux débordements (cartes des cas, en-tête de leçon) sont corrigés dans le commit `63fb54d`, à vérifier à l'écran en T30. Les titres rognés sont traités en T34.
+
 **Objectif** : beaucoup d'écrans ont changé (Memoria, Thesaurus, Bibliotheca,
 Épigraphie, boutique, Paramètres). On veut une relecture visuelle, écran par
 écran, sur l'émulateur **et** avec une police agrandie.
@@ -2680,6 +2690,8 @@ Statut : VALIDÉ
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (01/10/2026)** : bon brouillon, repris par l'architecte. Deux défauts corrigés dans la version soumise à Cédric : les consignes qui redonnaient la réponse entre parenthèses (« (spes) », « (sit) ») et m20-03, dont la phrase était celle du trou précédent.
+
 **Objectif** : l'architecte va réécrire les exercices de 3e (mondes 19 à 26)
 comme la 5e et la 4e. Tu prépares le terrain : pour chaque trou et chaque
 puzzle, le texte actuel et **une proposition**, que l'architecte relira.
@@ -2746,3 +2758,285 @@ puzzle, le texte actuel et **une proposition**, que l'architecte relira.
   - Pour `m21-02` (PPP), tester l'accord neutre (`Templum deletum est`) fait écho à l'apprentissage du neutre en 4e (*ingentia pericula*) et valide la distinction masculin *-us* / neutre *-um*.
 - Reste à faire : Rien sur T29. Prêt pour la réécriture dans `content/` par l'architecte.
 
+---
+
+## T30 — Vérifier à l'écran les corrections du 1er octobre (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'architecte a corrigé quatre défauts d'affichage (commit
+`63fb54d`) sans pouvoir les voir sur l'émulateur. Tu les vérifies, captures
+à l'appui.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t30_*`.
+
+**Étapes** :
+1. Installe la version actuelle sur l'émulateur `Pixel_Ludus`
+   (section Commandes d'`AGENTS.md`).
+2. **Duel** : gagne contre Crixus. Capture le panneau de victoire : les
+   boutons « Quitter » et « Boss Suivant » sont entiers, sans bande jaune et
+   noire.
+3. **Circus** : gagne une course. Capture l'écran de fin : boutons
+   « Quitter » et « Nouvelle Course » entiers.
+4. `adb shell settings put system font_scale 1.3`, puis capture :
+   Thesaurus > Déclinaisons (les six cartes des cas, sans bande jaune et
+   noire) et l'en-tête d'une leçon du monde 1 (les deux badges du haut).
+5. Refais les étapes 2 et 3 avec la police à 1.3 (les boutons peuvent passer
+   sur deux lignes : c'est voulu).
+6. `adb shell settings put system font_scale 1.0` et vérifie la valeur.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : écran, police 1.0, police 1.3, conforme ou non, capture.
+- [ ] `font_scale` remis à 1.0 (recopie la commande et le résultat).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: vérification à l'écran des corrections du 1er octobre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T31 — Le test anti-débordement du Duel et du Circus (reprise de T24)
+
+Statut : À FAIRE
+
+**Objectif** : T24 butait sur deux rangées de boutons trop larges. Elles sont
+corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
+
+**Périmètre** :
+- `ludus_latinus_mobile/test/fin_de_partie_test.dart` (nouveau)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Reprends l'énoncé de T24 (étapes 1 à 5) : écran de 360 x 640 points, Duel
+   gagné, quota non atteint puis quota atteint, et le Circus si c'est
+   faisable.
+2. Si une réponse du quiz est hors de l'écran, fais-la défiler avec
+   `tester.ensureVisible(...)` avant d'appuyer. Ne change pas la taille de
+   l'écran pour contourner.
+3. Si un débordement subsiste, **ne corrige pas le code** : recopie l'erreur
+   et la ligne, passe la tâche à `BLOQUÉ`.
+4. `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Le test passe sur 360 x 640, et toute la suite passe (recopie la
+      dernière ligne de `flutter test`).
+- [ ] Il **échoue** si tu remets `Row` à la place de `Wrap` dans le panneau
+      de victoire du Duel (essaie en local, recopie l'erreur, puis annule
+      avec `git checkout -- ludus_latinus_mobile/lib`).
+- [ ] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `test(mobile): la fin du Duel ne déborde pas sur petit écran`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T32 — Tournée sur un petit téléphone (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : T24 laisse penser que, sur un petit téléphone, des réponses du
+quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
+360 x 640 points, avec la vraie police.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t32_*`.
+
+**Étapes** :
+1. Note les réglages actuels : `adb shell wm size` et `adb shell wm density`.
+2. `adb shell wm size 720x1280` puis `adb shell wm density 320`. Relance
+   l'appli.
+3. Parcours et capture : accueil, carte des mondes, une leçon de chaque type
+   du monde 1 (QCM, trou, puzzle), Duel (le quiz : les quatre réponses
+   sont-elles visibles sans faire défiler ?), Circus (quiz et fin de course),
+   Memoria, boutique, Thesaurus, Bibliotheca.
+4. Pour chaque écran, note : bande jaune et noire, texte coupé, bouton hors
+   de l'écran, élément qu'on ne peut atteindre qu'en faisant défiler.
+5. **Remets l'émulateur** : `adb shell wm size reset` et
+   `adb shell wm density reset`, puis vérifie avec les deux commandes de
+   l'étape 1.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau écran par écran : conforme ou non, défaut, capture.
+- [ ] Les réglages d'origine sont revenus (recopie les valeurs avant et
+      après).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée sur petit téléphone`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T33 — Circus : on ne gagne plus sans répondre
+
+Statut : À FAIRE
+
+**Objectif** : tu as montré en T25 qu'un joueur qui pose son téléphone gagne
+la course, parce que son char avance tout seul plus vite que le rival. On
+baisse sa vitesse de croisière pour que les bonnes réponses deviennent
+nécessaires.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart`
+  (**une seule ligne** : la valeur de `_playerSpeed`)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Remplace `_playerSpeed = 0.115` par `_playerSpeed = 0.085`. Ne touche à
+   rien d'autre : ni `_rivalSpeed`, ni les factions, ni les bonus.
+2. Sur l'émulateur, joue quatre courses et chronomètre-les :
+   - A. Veneti, **aucune réponse** : la course doit être **perdue**.
+   - B. Prasini, **toutes les réponses justes** : elle doit être **gagnée**.
+   - C. Albati, **une réponse juste sur deux** : note l'issue.
+   - D. Veneti, toutes justes sauf l'incident de virage raté : note l'issue.
+3. Si A est gagnée ou si B est perdue, essaie **une** autre valeur (entre
+   0.075 et 0.095), rejoue A et B, et note les deux valeurs testées.
+4. Si aucune valeur ne convient, remets 0.115 et passe la tâche à `BLOQUÉ`
+   avec tes mesures.
+5. `flutter analyze`, `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau des courses : faction, réponses données, issue, durée,
+      avance ou retard à l'arrivée, capture (`scratch/t33_*`).
+- [ ] A perdue et B gagnée avec la valeur retenue.
+- [ ] `git diff --stat` : une seule ligne de code changée.
+- [ ] Tous les tests Flutter passent.
+- [ ] Un commit `fix(mobile): le Circus ne se gagne plus sans répondre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T34 — Les titres d'écran qui se rognent en police agrandie
+
+Statut : À FAIRE
+
+**Objectif** : T25 et T28 ont montré des titres coupés (« LUDUS LATI... »,
+« MEMORIA VE... », « CIRCUS MAXIM... »). Un titre doit rétrécir plutôt que
+se couper.
+
+**Périmètre** :
+- `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart`
+  (le `title:` de l'`AppBar`, vers la ligne 90)
+- `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart`
+  (les `title: const Text('MEMORIA VELOX')`)
+- `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart`
+  (le `title:` de l'`AppBar`, vers la ligne 681)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Dans ces `AppBar` seulement, enveloppe le `Text` du titre dans
+   `FittedBox(fit: BoxFit.scaleDown, child: ...)`. Ne change ni le texte, ni
+   le style, ni les `actions`.
+2. `flutter analyze` (2 remarques attendues, celles de `themes.dart`),
+   `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+3. Sur l'émulateur, capture les trois écrans en `font_scale 1.0` puis `1.3`,
+   et remets `1.0`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Les trois titres s'affichent en entier en police 1.3 (captures
+      `scratch/t34_*`).
+- [ ] En police 1.0, rien n'a changé à l'œil (captures avant et après).
+- [ ] `flutter analyze` : pas de nouvelle remarque ; tous les tests passent.
+- [ ] `font_scale` remis à 1.0.
+- [ ] Un commit `fix(mobile): les titres d'écran rétrécissent au lieu de se couper`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T35 — Ce qui pèse dans l'appli (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'APK doit rester léger pour les téléphones des élèves. On
+veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; script dans `scratch/`.
+
+**Étapes** :
+1. Liste les 30 plus gros fichiers de `ludus_latinus_mobile/assets/`, avec
+   leur taille, leur format et leurs dimensions (images : largeur x hauteur ;
+   vidéos et sons : durée).
+2. Pour chaque image, cherche dans `lib/` la taille à laquelle elle est
+   affichée (`width`, `height`, `SizedBox`) : une image de 1024 px affichée
+   en 160 px est trop grosse.
+3. Pour chaque PNG de plus de 100 Ko, convertis une **copie** en WebP
+   (qualité 85) dans `scratch/t35/` avec Pillow et note le gain. Ne remplace
+   rien dans `assets/`.
+4. Donne le total par dossier (`images/`, `audio/`, `cinematics/`,
+   `animations/`, `data/`).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau des 30 fichiers : taille, dimensions, taille affichée,
+      gain estimé, risque (image détourée, animation, etc.).
+- [ ] Le total par dossier et le gain total estimé.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: ce qui pèse dans l'appli`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T36 — Brouillon d'un README à jour (sans toucher au README)
+
+Statut : À FAIRE
+
+**Objectif** : `README.md` décrit encore l'ancienne appli Python et « 7
+mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
+à la 3e. Tu proposes un nouveau texte, que l'architecte relira.
+
+**Périmètre** :
+- `docs/propositions/README_propose.md` (nouveau)
+- `docs/TACHES.md`
+
+**Étapes** :
+1. Lis `README.md`, `AGENTS.md` (sections 1, 2 et 4) et
+   `ludus_latinus_mobile/PUBLICATION.md`.
+2. Écris le brouillon : ce qu'est l'appli (une page), les 26 mondes par
+   classe (compte-les dans le dataset, ne les invente pas), les jeux (Duel,
+   Circus, César, Marché, Taverne, Memoria), comment récupérer l'APK et la
+   version Windows (onglet Actions, workflow « Ludus Latinus (Android &
+   Windows) », rubrique Artifacts), comment lancer en développement.
+3. Style : phrases courtes, pas de tiret long, pas de superlatifs, pas plus
+   d'un émoji par titre. Chaque chiffre cité doit venir d'un fichier : donne
+   ta source dans le compte rendu.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] `README.md` n'est pas modifié.
+- [ ] Le brouillon tient en moins de 150 lignes.
+- [ ] Le compte rendu liste chaque chiffre du brouillon avec sa source.
+- [ ] Un commit `docs: brouillon du README`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

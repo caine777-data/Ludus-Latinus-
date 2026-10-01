@@ -317,6 +317,23 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **T24 à T29 relues, série T30 à T36** (01/10/2026) — corrections tirées
+  des tournées de Gemini (commit `63fb54d`) : les boutons de fin du Duel et
+  du Circus sont dans un `Wrap`, le panneau de fin du Circus défile, la
+  hauteur des cartes des cas suit la taille de police
+  (`MediaQuery.textScalerOf`), les badges de l'en-tête de leçon sont
+  `Flexible`. Sept fichiers qu'aucun code ne citait sont supprimés (2,4 Mo).
+  **Ces corrections n'ont pas encore été vues à l'écran** : c'est T30.
+  Suite confiée : test anti-débordement (T31), tournée sur petit téléphone
+  (T32), Circus qu'on ne gagne plus sans répondre (T33), titres rognés
+  (T34), poids de l'appli (T35), brouillon du README (T36). Les exercices de
+  3e attendent la validation de Cédric.
+
+- **Branches** (01/10/2026) — `main` a été avancée jusqu'à la branche de
+  travail `fix/mobile-publiable-lisible` ; l'architecte la remet à niveau à
+  chaque étape. Les exécutants continuent de travailler sur la branche de
+  travail et ne poussent jamais sur `main`.
+
 - **Un seul workflow GitHub** (01/10/2026) — `tests.yml` et `build.yml`
   supprimés, leur contenu utile repris dans `appli.yml` : un job `contenu`
   (tests Python, ruff), un job `android` (qui lance désormais aussi
