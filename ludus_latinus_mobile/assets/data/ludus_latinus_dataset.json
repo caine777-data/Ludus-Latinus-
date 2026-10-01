@@ -3,12 +3,12 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-09-28 20:33:30",
+    "date_export": "2026-10-01 15:50:45",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
     "total_cartes_collection": 32,
-    "total_mots_thesaurus": 219,
+    "total_mots_thesaurus": 221,
     "total_monuments_forum": 6,
     "total_flashcards_srs": 29
   },
@@ -2001,28 +2001,28 @@
           "id": "m19-02",
           "type": "trou",
           "title": "La 5ème Déclinaison : Res & Dies",
-          "content": "## La déclinaison en -E-\nLa **5ème déclinaison** est la plus petite du latin mais contient des mots capitaux de la vie quotidienne et politique :\n\n- Son génitif singulier se termine en **-EI** :\n  - **Res, rei** (f.) : la chose, l'affaire (*➔ la Res Publica, la république !*)\n  - **Dies, diei** (m./f.) : le jour (*➔ diurne, midi*)\n  - **Spes, spei** (f.) : l'espoir, l'espérance\n  - **Fides, fidei** (f.) : la loyauté, la foi (*➔ fidélité*)\n\nExemple d'Auguste : *Res gestae* (« Les hauts faits accomplis »).\n\nComplète pour dire : « C'est un jour nouveau » (*Dies novus est*).",
-          "consigne": "Complète le mot 'jour' (dies) au nominatif :",
-          "avant": "Di",
-          "apres": " novus est.",
-          "solution": "es",
-          "latin_complet": "Dies novus est."
+          "content": "## La déclinaison en -E-\nLa **5ème déclinaison** est la plus petite du latin mais contient des mots capitaux de la vie quotidienne et politique :\n\n- Son génitif singulier se termine en **-EI** :\n  - **Res, rei** (f.) : la chose, l'affaire (*➔ la Res Publica, la république !*)\n  - **Dies, diei** (m./f.) : le jour (*➔ diurne, midi*)\n  - **Spes, spei** (f.) : l'espoir, l'espérance\n  - **Fides, fidei** (f.) : la loyauté, la foi (*➔ fidélité*)\n\nExemple d'Auguste : *Res gestae* (« Les hauts faits accomplis »).\n\nAutre exemple : *Dies novus est* = « C'est un jour nouveau ». À l'accusatif (COD), *dies* devient **diem**.\n\nApplique la même règle à *res* : dans la phrase suivante, *res publica* (la République) est COD.\n*Servo, -as, -are* = protéger, conserver.\nComplète pour dire : « Auguste protège la République ».",
+          "consigne": "Mets res à l'accusatif, sur le modèle dies ➔ diem :",
+          "avant": "Augustus r",
+          "apres": " publicam servat.",
+          "solution": "em",
+          "latin_complet": "Augustus rem publicam servat."
         },
         {
           "id": "m19-03",
           "type": "puzzle",
           "title": "Une Rome de Marbre",
-          "content": "## Les métamorphoses de la Ville Éternelle\nAprès un siècle de guerres intestines, **Auguste** instaure la *Pax Romana* (la paix romaine qui durera deux siècles).\n\nIl embellit magnifiquement la cité et déclara avec fierté :\n*« Urbem latericiam accepi, marmoream relinquo. »*\n(« J'ai reçu une ville de briques, je la laisse de marbre. »)\n\nReconstitue cette phrase célébrant la grandeur impériale :\n*« Augustus pacem populo dedit. »*\n*(Augustus = Auguste, pacem = la paix [Acc.], populo = au peuple [Dat.], dedit = a donné)*",
-          "latin": "Augustus pacem populo dedit.",
+          "content": "## Les métamorphoses de la Ville Éternelle\nAprès un siècle de guerres intestines, **Auguste** instaure la *Pax Romana* (la paix romaine qui durera deux siècles).\n\nIl embellit magnifiquement la cité et déclara avec fierté :\n*« Urbem latericiam accepi, marmoream relinquo. »*\n(« J'ai reçu une ville de briques, je la laisse de marbre. »)\n\nExemple : *« Augustus pacem populo dedit. »* = « Auguste a donné la paix au peuple. » (*populo* : datif, « à qui ? »)\n\nÀ toi ! Regarde bien la terminaison du datif : *civis, -is* (le citoyen) fait *civi* au singulier et *civibus* au pluriel.\n*Imperator, -oris* = l'empereur.",
+          "latin": "Imperator civibus pacem dedit.",
           "mots": [
-            "Auguste",
+            "L'empereur",
             "a donné",
             "la paix",
-            "au peuple.",
-            "Le sénat",
-            "délibère."
+            "aux citoyens.",
+            "au citoyen.",
+            "donne"
           ],
-          "solution": "Auguste a donné la paix au peuple."
+          "solution": "L'empereur a donné la paix aux citoyens."
         },
         {
           "id": "m19-04",
@@ -2096,28 +2096,29 @@
           "id": "m20-02",
           "type": "trou",
           "title": "Le Pronom Relatif au Féminin : Quae et Quam",
-          "content": "## Accorder avec un nom féminin\nSi l'antécédent est féminin (par exemple *urbs*, la ville) :\n- Sujet : *Urbs **quae** in colle stat.* (« La ville **qui** se dresse sur la colline. »)\n- COD : *Urbs **quam** Caesar condidit.* (« La ville **que** César a fondée. »)\n\nComplète la phrase pour dire : « La voie romaine qui mène à Rome » (*Via quae Romam ducit*).",
-          "consigne": "Complète le pronom relatif féminin 'qui' (quae) :",
-          "avant": "Via ",
-          "apres": " Romam ducit.",
-          "solution": "quae",
-          "latin_complet": "Via quae Romam ducit."
+          "content": "## Accorder avec un nom féminin\nSi l'antécédent est féminin (par exemple *urbs*, la ville) :\n- Sujet : *Urbs **quae** in colle stat.* (« La ville **qui** se dresse sur la colline. »)\n- COD : *Urbs **quam** Caesar condidit.* (« La ville **que** César a fondée. »)\n\nÀ toi ! *Aqua* (l'eau) est féminin. Dans la phrase suivante, c'est l'aqueduc qui fait l'action : l'eau est le COD de *ducit* (conduit).\nComplète pour dire : « L'eau que l'aqueduc conduit est bonne ».",
+          "consigne": "Choisis le pronom relatif féminin : sujet ou COD ?",
+          "avant": "Aqua ",
+          "apres": " aquaeductus ducit bona est.",
+          "solution": "quam",
+          "latin_complet": "Aqua quam aquaeductus ducit bona est."
         },
         {
           "id": "m20-03",
           "type": "puzzle",
           "title": "La Reine des Voies : La Via Appia",
-          "content": "## 80 000 km de routes pavées !\nPour relier Rome à toutes les provinces d'Europe, d'Asie et d'Afrique, les Romains ont bâti un réseau routier pavé colossal. D'où le proverbe : *« Tous les chemins mènent à Rome ! »*\n\nLa plus célèbre est la **Via Appia**, reliant Rome au port de Brindisi vers l'Orient.\n\nReconstitue cette phrase sur la renommée de cette route :\n*« Via Appia regina viarum est. »*\n*(Via Appia = la voie Appienne, regina = la reine, viarum = des routes [Gén. pl.], est = est)*",
-          "latin": "Via Appia regina viarum est.",
+          "content": "## 80 000 km de routes pavées !\nPour relier Rome à toutes les provinces d'Europe, d'Asie et d'Afrique, les Romains ont bâti un réseau routier pavé colossal. D'où le proverbe : *« Tous les chemins mènent à Rome ! »*\n\nLa plus célèbre est la **Via Appia**, reliant Rome au port de Brindisi vers l'Orient.\n\nExemple : *« Via Appia regina viarum est. »* = « La voie Appienne est la reine des routes. »\n\nÀ toi ! Une phrase avec un pronom relatif : *quae* (qui) ou *quam* (que) ?\n*Facio, -is, -ere, feci* = faire, construire ; *longus, -a, -um* = long.",
+          "latin": "Via quam Romani fecerunt longa est.",
           "mots": [
-            "La Voie Appienne",
-            "est",
-            "la reine",
-            "des routes.",
-            "Les légions",
-            "marchent."
+            "La route",
+            "que",
+            "les Romains",
+            "ont construite",
+            "est longue.",
+            "qui",
+            "Les routes"
           ],
-          "solution": "La Voie Appienne est la reine des routes."
+          "solution": "La route que les Romains ont construite est longue."
         },
         {
           "id": "m20-04",
@@ -2191,28 +2192,27 @@
           "id": "m21-02",
           "type": "trou",
           "title": "Accorder le PPP : Urbs Deleto ou Deleta ?",
-          "content": "## L'accord parfait\nComme le mot *urbs* (la ville) est féminin :\n- *Urbs deleta* = la ville détruite (au féminin en **-a**).\n- *Oppidum deletum* = la place forte détruite (au neutre en **-um**).\n- *Vicus deletus* = le village détruit (au masculin en **-us**).\n\nComplète pour dire : « Pompéi est une ville détruite par la cendre » (*Pompeii urbs deleta est*).",
-          "consigne": "Complète le PPP au féminin 'détruite' (deleta) :",
-          "avant": "Pompeii urbs delet",
+          "content": "## L'accord parfait\nComme le mot *urbs* (la ville) est féminin :\n- *Urbs deleta* = la ville détruite (au féminin en **-a**).\n- *Oppidum deletum* = la place forte détruite (au neutre en **-um**).\n- *Vicus deletus* = le village détruit (au masculin en **-us**).\n\nApplique la même règle à un autre participe : *captus, -a, -um* (pris), du verbe *capere* (prendre).\n*Oppidum* (la place forte) est neutre.\nComplète pour dire : « La place forte a été prise ».",
+          "consigne": "Accorde le participe avec oppidum (neutre) :",
+          "avant": "Oppidum capt",
           "apres": " est.",
-          "solution": "a",
-          "latin_complet": "Pompeii urbs deleta est."
+          "solution": "um",
+          "latin_complet": "Oppidum captum est."
         },
         {
           "id": "m21-03",
           "type": "puzzle",
           "title": "La Lettre de Pline le Jeune (79 ap. J.-C.)",
-          "content": "## Le témoignage du 24 août 79\nLe jeune Pline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.\n\nReconstitue cette phrase adaptée de sa célèbre lettre à l'historien Tacite :\n*« Mons Vesuvius nubem atram erigebat. »*\n*(Mons Vesuvius = le mont Vésuve, nubem atram = un nuage noir [Acc.], erigebat = dressait / projetait)*",
-          "latin": "Mons Vesuvius nubem atram erigebat.",
+          "content": "## Le témoignage du 24 août 79\nLe jeune Pline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.\n\nExemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuvius nubem atram erigebat. »* = « Le mont Vésuve dressait un nuage noir. »\n\nÀ toi ! Même adjectif, même temps (l'imparfait en *-bat*), autre phrase.\n*Cinis, -eris* (m.) = la cendre ; *tego, -is, -ere* = recouvrir ; *urbs, urbis* (f.) = la ville.",
+          "latin": "Cinis ater urbem tegebat.",
           "mots": [
-            "Le mont Vésuve",
-            "dressait",
-            "un nuage noir.",
-            "La cendre",
-            "tombait",
-            "sur la cité."
+            "La cendre noire",
+            "recouvrait",
+            "la ville.",
+            "recouvre",
+            "les villes."
           ],
-          "solution": "Le mont Vésuve dressait un nuage noir."
+          "solution": "La cendre noire recouvrait la ville."
         },
         {
           "id": "m21-04",
@@ -2286,27 +2286,28 @@
           "id": "m22-02",
           "type": "trou",
           "title": "Les Deux Mots qui Résument une Bataille",
-          "content": "## Déchiffrer les formules célèbres\nL'ablatif absolu permet aux auteurs romains d'exprimer des événements entiers en seulement deux mots !\n\n- *Bello confecto* = La guerre étant achevée / Une fois la guerre finie\n- *Sole oriente* = Le soleil se levant / Au lever du soleil\n- *Pace facta* = La paix ayant été conclue\n\nComplète l'ablatif absolu pour dire : « La paix ayant été conclue, les citoyens se réjouissent » (*Pace facta, cives gaudent*).",
-          "consigne": "Complète le participe à l'ablatif féminin 'faite/conclue' (facta) :",
-          "avant": "Pace fact",
-          "apres": ", cives gaudent.",
-          "solution": "a",
-          "latin_complet": "Pace facta, cives gaudent."
+          "content": "## Déchiffrer les formules célèbres\nL'ablatif absolu permet aux auteurs romains d'exprimer des événements entiers en seulement deux mots !\n\n- *Bello confecto* = La guerre étant achevée / Une fois la guerre finie\n- *Sole oriente* = Le soleil se levant / Au lever du soleil\n- *Pace facta* = La paix ayant été conclue\n\nLe participe s'accorde avec son nom, tous deux à l'ablatif : *bello confecto* (neutre), *pace facta* (féminin).\n\nÀ toi ! *Oppidum, -i* (n.) = la place forte ; *captus, -a, -um* = pris.\nComplète pour dire : « La place forte prise, les soldats se réjouissent ».",
+          "consigne": "Accorde le participe avec oppido (ablatif neutre) :",
+          "avant": "Oppido capt",
+          "apres": ", milites gaudent.",
+          "solution": "o",
+          "latin_complet": "Oppido capto, milites gaudent."
         },
         {
           "id": "m22-03",
           "type": "puzzle",
           "title": "Sous la Conduite de César (Caesare duce)",
-          "content": "## L'ablatif absolu sans participe !\nParfois, quand le verbe sous-entendu est le verbe « être » (qui n'a pas de participe présent en latin), l'ablatif absolu est formé de **deux noms à l'ablatif** :\n- *Caesare duce* = « César étant le chef » ➔ **« Sous la conduite de César »**\n- *Cicerone consule* = « Cicéron étant consul » ➔ **« Sous le consulat de Cicéron »**\n\nReconstitue cette phrase historique :\n*« Caesare duce, Romani vicerunt. »*\n*(Caesare duce = sous la conduite de César [Abl. Abs.], Romani = les Romains, vicerunt = ont vaincu)*",
-          "latin": "Caesare duce, Romani vicerunt.",
+          "content": "## L'ablatif absolu sans participe !\nParfois, quand le verbe sous-entendu est le verbe « être » (qui n'a pas de participe présent en latin), l'ablatif absolu est formé de **deux noms à l'ablatif** :\n- *Caesare duce* = « César étant le chef » ➔ **« Sous la conduite de César »**\n- *Cicerone consule* = « Cicéron étant consul » ➔ **« Sous le consulat de Cicéron »**\n\nExemple : *« Caesare duce, Romani vicerunt. »* = « Sous la conduite de César, les Romains ont vaincu. »\n\nÀ toi ! *Rex, regis* = le roi ; *parvus, -a, -um* = petit.",
+          "latin": "Romulo rege, Roma parva erat.",
           "mots": [
-            "Sous la conduite de César,",
-            "les Romains",
-            "ont vaincu.",
-            "La légion",
-            "défile."
+            "Sous le règne de Romulus,",
+            "Rome",
+            "était",
+            "petite.",
+            "est",
+            "Le roi Romulus"
           ],
-          "solution": "Sous la conduite de César, les Romains ont vaincu."
+          "solution": "Sous le règne de Romulus, Rome était petite."
         },
         {
           "id": "m22-04",
@@ -2380,28 +2381,27 @@
           "id": "m23-02",
           "type": "trou",
           "title": "Le Complément d'Agent (A / Ab + Ablatif)",
-          "content": "## Par qui ? (A ou AB)\nQuand l'action est accomplie par une personne vivante, on utilise toujours la préposition **A** (ou **AB**) avec l'ablatif :\n\n- *Urbs a civibus defenditur.* = « La ville est défendue par les citoyens. »\n- *Lex a consule legitur.* = « La loi est lue par le consul. »\n\nComplète pour dire : « La patrie est aimée de tous les Romains » (*Patria a Romanis amatur*).",
-          "consigne": "Complète le verbe passif 'est aimée' (amatur) :",
-          "avant": "Patria a Romanis ama",
+          "content": "## Par qui ? (A ou AB)\nQuand l'action est accomplie par une personne vivante, on utilise toujours la préposition **A** (ou **AB**) avec l'ablatif :\n\n- *Urbs a civibus defenditur.* = « La ville est défendue par les citoyens. »\n- *Lex a consule legitur.* = « La loi est lue par le consul. »\n\nAu passif, la 3e personne se termine par **-tur** au singulier (*defenditur*) et par **-ntur** au pluriel.\n\nÀ toi ! *Laudo, -as, -are* = louer, féliciter ; *dux, ducis* = le général.\nComplète pour dire : « Les braves soldats sont loués par le général ».",
+          "consigne": "Complète le verbe au passif : son sujet est au pluriel.",
+          "avant": "Fortes milites a duce lauda",
           "apres": ".",
-          "solution": "tur",
-          "latin_complet": "Patria a Romanis amatur."
+          "solution": "ntur",
+          "latin_complet": "Fortes milites a duce laudantur."
         },
         {
           "id": "m23-03",
           "type": "puzzle",
           "title": "Le Discours de Cicéron au Sénat",
-          "content": "## L'art oratoire au sommet\nEn 63 av. J.-C., le consul et grand orateur **Cicéron** prononce ses foudroyantes *Catilinaires* pour déjouer le complot de Catilina contre la République.\n\nReconstitue cette phrase sur la concorde et la paix :\n*« Pax et concordia a civibus quaeruntur. »*\n*(Pax et concordia = la paix et la concorde [Nom. pl.], a civibus = par les citoyens [Compl. d'agent], quaeruntur = sont recherchées [Passif pl.])*",
-          "latin": "Pax et concordia a civibus quaeruntur.",
+          "content": "## L'art oratoire au sommet\nEn 63 av. J.-C., le consul et grand orateur **Cicéron** prononce ses foudroyantes *Catilinaires* pour déjouer le complot de Catilina contre la République.\n\nExemple : *« Pax et concordia a civibus quaeruntur. »* = « La paix et la concorde sont recherchées par les citoyens. »\n\nÀ toi ! Qui fait l'action, qui la subit ? Regarde la fin du verbe et la préposition *a*.\n*Libertas, -atis* (f.) = la liberté ; *defendo, -is, -ere* = défendre.",
+          "latin": "Libertas a populo Romano defenditur.",
           "mots": [
-            "La paix et la concorde",
-            "sont recherchées",
-            "par les citoyens.",
-            "L'orateur",
-            "dénonce",
-            "le complot."
+            "La liberté",
+            "est défendue",
+            "par le peuple romain.",
+            "défend",
+            "le peuple romain."
           ],
-          "solution": "La paix et la concorde sont recherchées par les citoyens."
+          "solution": "La liberté est défendue par le peuple romain."
         },
         {
           "id": "m23-04",
@@ -2475,28 +2475,27 @@
           "id": "m24-02",
           "type": "trou",
           "title": "Les Verbes Déclaratifs : Dico, Scio, Audio",
-          "content": "## Qui déclenche une proposition infinitive ?\nTous les verbes de pensée, de parole ou de sensation :\n- **Dico** : je dis (que...)\n- **Scio** : je sais (que...)\n- **Puto** : je pense / j'estime (que...)\n- **Audio** : j'entends (dire que...)\n- **Video** : je vois (que...)\n\nComplète la phrase pour dire : « J'entends dire que l'ami arrive » (*Audio amicum venire*).",
-          "consigne": "Complète le verbe à l'infinitif 'arriver' (venire) :",
-          "avant": "Audio amicum ven",
-          "apres": ".",
-          "solution": "ire",
-          "latin_complet": "Audio amicum venire."
+          "content": "## Qui déclenche une proposition infinitive ?\nTous les verbes de pensée, de parole ou de sensation :\n- **Dico** : je dis (que...)\n- **Scio** : je sais (que...)\n- **Puto** : je pense / j'estime (que...)\n- **Audio** : j'entends (dire que...)\n- **Video** : je vois (que...)\n\nDans la proposition infinitive, le sujet se met à l'**accusatif** et le verbe à l'**infinitif** :\n*Scio consulem venire.* = « Je sais que le consul arrive. » (*consul* ➔ *consulem*)\n\nÀ toi ! *Amicus, -i* = l'ami.\nComplète pour dire : « Je pense que l'ami arrive ».",
+          "consigne": "Mets le sujet de l'infinitive au bon cas :",
+          "avant": "Puto amic",
+          "apres": " venire.",
+          "solution": "um",
+          "latin_complet": "Puto amicum venire."
         },
         {
           "id": "m24-03",
           "type": "puzzle",
           "title": "Une Rumeur au Palais Impérial",
-          "content": "## Ce que disent les citoyens\nLes courriers rapportent à Rome les nouvelles des provinces.\n\nReconstitue cette phrase contenant une proposition infinitive :\n*« Dicit consulem Romam venire. »*\n*(Dicit = il dit [que], consulem = le consul [Sujet à l'Acc.], Romam = à Rome, venire = venir [Infinitif])*",
-          "latin": "Dicit consulem Romam venire.",
+          "content": "## Ce que disent les citoyens\nLes courriers rapportent à Rome les nouvelles des provinces.\n\nExemple : *« Dicit consulem Romam venire. »* = « Il dit que le consul vient à Rome. »\n\nÀ toi ! L'infinitif présent indique une action qui se passe au même moment.\n*Nuntius, -i* = le messager ; *hostis, -is* = l'ennemi.",
+          "latin": "Nuntius dicit hostes venire.",
           "mots": [
-            "Il dit",
-            "que le consul",
-            "vient",
-            "à Rome.",
-            "La garde",
-            "attend."
+            "Le messager dit",
+            "que les ennemis",
+            "arrivent.",
+            "que l'ennemi",
+            "sont arrivés."
           ],
-          "solution": "Il dit que le consul vient à Rome."
+          "solution": "Le messager dit que les ennemis arrivent."
         },
         {
           "id": "m24-04",
@@ -2570,28 +2569,28 @@
           "id": "m25-02",
           "type": "trou",
           "title": "Dédale et Icare chez Ovide",
-          "content": "## Les Métamorphoses d'Ovide\nL'autre géant de la poésie romaine est **Ovide** (*Ovidius*). Dans ses *Métamorphoses*, il raconte 250 mythes de transformations divines.\n\nL'un des plus émouvants est celui de **Dédale et Icare** :\nPour s'échapper du labyrinthe de Crète, l'ingénieux Dédale fabrique des ailes de plumes collées avec de la cire d'abeille. Mais le jeune Icare, enivré par le vol, monte trop près du Soleil. La cire fond et il tombe dans la mer...\n\nComplète la formule de souhait au subjonctif : « Que tu sois heureux ! » (*Felix sis !*).",
-          "consigne": "Complète le verbe être au subjonctif 'que tu sois' (sis) :",
-          "avant": "Felix ",
-          "apres": " !",
-          "solution": "sis",
-          "latin_complet": "Felix sis !"
+          "content": "## Les Métamorphoses d'Ovide\nL'autre géant de la poésie romaine est **Ovide** (*Ovidius*). Dans ses *Métamorphoses*, il raconte 250 mythes de transformations divines.\n\nL'un des plus émouvants est celui de **Dédale et Icare** :\nPour s'échapper du labyrinthe de Crète, l'ingénieux Dédale fabrique des ailes de plumes collées avec de la cire d'abeille. Mais le jeune Icare, enivré par le vol, monte trop près du Soleil. La cire fond et il tombe dans la mer...\n\nPour exprimer un souhait, le latin emploie le subjonctif. Celui du verbe *esse* se forme sur **si-**, suivi des terminaisons habituelles (-m, -s, -t, -mus, -tis, -nt) :\n*Felix sis !* = « Que tu sois heureux ! »\n\nÀ toi ! *Poeta, -ae* (m.) = le poète.\nComplète pour dire : « Que le poète soit heureux ! ».",
+          "consigne": "Complète le subjonctif de esse à la 3e personne du singulier :",
+          "avant": "Felix s",
+          "apres": " poeta !",
+          "solution": "it",
+          "latin_complet": "Felix sit poeta !"
         },
         {
           "id": "m25-03",
           "type": "puzzle",
           "title": "Le Vers Immortel de Virgile",
-          "content": "## La musique des mots\nReconstitue l'ouverture légendaire de l'Énéide :\n*« Arma virumque cano. »*\n*(Arma = les armes [Neutre pl.], virumque = et le héros [Acc. + que = et], cano = je chante)*",
-          "latin": "Arma virumque cano.",
+          "content": "## La musique des mots\nL'ouverture légendaire de l'Énéide : *« Arma virumque cano. »* = « Je chante les armes et le héros. »\nLe petit mot **-que**, collé à la fin d'un mot, signifie « et » : *virumque* = *et virum*.\n\nÀ toi ! Regarde bien les terminaisons.\n*Poeta, -ae* (m.) = le poète ; *patria, -ae* = la patrie ; *vir, viri* = l'homme, le héros ; *cano, -is, -ere* = chanter.",
+          "latin": "Poeta patriam virosque canit.",
           "mots": [
-            "Je chante",
-            "les armes",
+            "Le poète",
+            "chante",
+            "la patrie",
+            "et les héros.",
             "et le héros.",
-            "Rome",
-            "naîtra",
-            "de Troie."
+            "chantent"
           ],
-          "solution": "Je chante les armes et le héros."
+          "solution": "Le poète chante la patrie et les héros."
         },
         {
           "id": "m25-04",
@@ -2665,28 +2664,27 @@
           "id": "m26-02",
           "type": "trou",
           "title": "L'Épreuve du Manuscrit Impérial",
-          "content": "## Déchiffrer la devise éternelle\nPour sceller ton parcours de latiniste du collège, complète la phrase :\n« Le peuple romain conserve la liberté et la paix »\n*(Populus Romanus libertatem et pacem servat)*.\n\n- *Populus Romanus* = le peuple romain (Nom. sg.)\n- *Libertatem* = la liberté (Acc. sg. en -em)\n- *Pacem* = la paix (Acc. sg. en -em)\n- *Servat* = conserve / protège (3e personne singulier du présent)",
-          "consigne": "Complète le verbe 'conserve' (servat) :",
-          "avant": "Populus Romanus libertatem et pacem ser",
+          "content": "## Déchiffrer la devise éternelle\nPour sceller ton parcours de latiniste du collège, lis cette devise :\n*Populus Romanus libertatem et pacem servat.* = « Le peuple romain conserve la liberté et la paix. »\n\n- *Populus Romanus* = le peuple romain (Nom. sg.)\n- *Libertatem* = la liberté (Acc. sg. en -em)\n- *Pacem* = la paix (Acc. sg. en -em)\n- *Servat* = conserve / protège (3e personne du singulier du présent)\n\nÀ toi ! Le sujet change : *cives Romani* (les citoyens romains) est au pluriel.\nComplète pour dire : « Les citoyens romains protègent la liberté ».",
+          "consigne": "Accorde le verbe avec son sujet au pluriel :",
+          "avant": "Cives Romani libertatem serv",
           "apres": ".",
-          "solution": "vat",
-          "latin_complet": "Populus Romanus libertatem et pacem servat."
+          "solution": "ant",
+          "latin_complet": "Cives Romani libertatem servant."
         },
         {
           "id": "m26-03",
           "type": "puzzle",
           "title": "Le Serment du Citoyen Émérite",
-          "content": "## La flamme de la connaissance\nReconstitue cette noble sentence qui traversera les siècles :\n\n*« Litterae et sapientia mentem hominis ornant. »*\n*(Litterae = les lettres et les livres, sapientia = la sagesse, mentem hominis = l'esprit de l'homme, ornant = embellissent)*",
-          "latin": "Litterae et sapientia mentem hominis ornant.",
+          "content": "## La flamme de la connaissance\nUne noble sentence qui traversera les siècles :\n\n*« Litterae et sapientia mentem hominis ornant. »* = « Les lettres et la sagesse embellissent l'esprit de l'homme. »\n\nÀ toi ! Deux sujets, un verbe : regarde sa terminaison.\n*Virtus, -utis* (f.) = le courage ; *res publica* = la République ; *servo, -as, -are* = protéger.",
+          "latin": "Virtus et sapientia rem publicam servant.",
           "mots": [
-            "Les lettres et la sagesse",
-            "embellissent",
-            "l'esprit de l'homme.",
-            "La gloire",
-            "demeure",
-            "éternelle."
+            "Le courage et la sagesse",
+            "protègent",
+            "la République.",
+            "protège",
+            "de la République."
           ],
-          "solution": "Les lettres et la sagesse embellissent l'esprit de l'homme."
+          "solution": "Le courage et la sagesse protègent la République."
         },
         {
           "id": "m26-04",
@@ -3308,7 +3306,7 @@
         "etym": "itinéraire, initié",
         "ex": "Quo vadis ?",
         "ex_fr": "Où vas-tu ?",
-        "monde": "monde24"
+        "monde": ""
       },
       {
         "latin": "legere (lego, legi, lectum)",
@@ -3488,7 +3486,7 @@
         "etym": "parcelle",
         "ex": "Parva scintilla magnum gignit ignem.",
         "ex_fr": "Une petite étincelle produit un grand feu.",
-        "monde": ""
+        "monde": "monde22"
       },
       {
         "latin": "pulcher, -chra, -chrum",
@@ -4621,6 +4619,16 @@
         "monde": "monde19"
       },
       {
+        "latin": "longus, -a, -um",
+        "cat": "Adjectif",
+        "genre": "1re classe",
+        "fr": "long",
+        "etym": "long, longueur, longitude",
+        "ex": "Via longa est.",
+        "ex_fr": "La route est longue.",
+        "monde": "monde20"
+      },
+      {
         "latin": "qui, quae, quod",
         "cat": "Pronom",
         "genre": "relatif",
@@ -4688,6 +4696,16 @@
         "etym": "atrabilaire",
         "ex": "Nubes atra caelum tegit.",
         "ex_fr": "Un nuage noir couvre le ciel.",
+        "monde": "monde21"
+      },
+      {
+        "latin": "tegere (tego, texi, tectum)",
+        "cat": "Verbe",
+        "genre": "3e conjugaison",
+        "fr": "couvrir, recouvrir",
+        "etym": "toit, protéger, tuile",
+        "ex": "Nubes caelum tegit.",
+        "ex_fr": "Le nuage couvre le ciel.",
         "monde": "monde21"
       },
       {

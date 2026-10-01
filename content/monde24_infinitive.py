@@ -51,12 +51,16 @@ Tous les verbes de pensée, de parole ou de sensation :
 - **Audio** : j'entends (dire que...)
 - **Video** : je vois (que...)
 
-Complète la phrase pour dire : « J'entends dire que l'ami arrive » (*Audio amicum venire*).""",
-            "consigne": "Complète le verbe à l'infinitif 'arriver' (venire) :",
-            "avant": "Audio amicum ven",
-            "apres": ".",
-            "solution": "ire",
-            "latin_complet": "Audio amicum venire.",
+Dans la proposition infinitive, le sujet se met à l'**accusatif** et le verbe à l'**infinitif** :
+*Scio consulem venire.* = « Je sais que le consul arrive. » (*consul* ➔ *consulem*)
+
+À toi ! *Amicus, -i* = l'ami.
+Complète pour dire : « Je pense que l'ami arrive ».""",
+            "consigne": "Mets le sujet de l'infinitive au bon cas :",
+            "avant": "Puto amic",
+            "apres": " venire.",
+            "solution": "um",
+            "latin_complet": "Puto amicum venire.",
         },
         {
             "id": "m24-03",
@@ -65,12 +69,13 @@ Complète la phrase pour dire : « J'entends dire que l'ami arrive » (*Audio am
             "content": """## Ce que disent les citoyens
 Les courriers rapportent à Rome les nouvelles des provinces.
 
-Reconstitue cette phrase contenant une proposition infinitive :
-*« Dicit consulem Romam venire. »*
-*(Dicit = il dit [que], consulem = le consul [Sujet à l'Acc.], Romam = à Rome, venire = venir [Infinitif])*""",
-            "latin": "Dicit consulem Romam venire.",
-            "mots": ["Il dit", "que le consul", "vient", "à Rome.", "La garde", "attend."],
-            "solution": "Il dit que le consul vient à Rome.",
+Exemple : *« Dicit consulem Romam venire. »* = « Il dit que le consul vient à Rome. »
+
+À toi ! L'infinitif présent indique une action qui se passe au même moment.
+*Nuntius, -i* = le messager ; *hostis, -is* = l'ennemi.""",
+            "latin": "Nuntius dicit hostes venire.",
+            "mots": ["Le messager dit", "que les ennemis", "arrivent.", "que l'ennemi", "sont arrivés."],
+            "solution": "Le messager dit que les ennemis arrivent.",
         },
         {
             "id": "m24-04",

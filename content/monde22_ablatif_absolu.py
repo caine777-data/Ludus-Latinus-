@@ -52,12 +52,15 @@ L'ablatif absolu permet aux auteurs romains d'exprimer des événements entiers 
 - *Sole oriente* = Le soleil se levant / Au lever du soleil
 - *Pace facta* = La paix ayant été conclue
 
-Complète l'ablatif absolu pour dire : « La paix ayant été conclue, les citoyens se réjouissent » (*Pace facta, cives gaudent*).""",
-            "consigne": "Complète le participe à l'ablatif féminin 'faite/conclue' (facta) :",
-            "avant": "Pace fact",
-            "apres": ", cives gaudent.",
-            "solution": "a",
-            "latin_complet": "Pace facta, cives gaudent.",
+Le participe s'accorde avec son nom, tous deux à l'ablatif : *bello confecto* (neutre), *pace facta* (féminin).
+
+À toi ! *Oppidum, -i* (n.) = la place forte ; *captus, -a, -um* = pris.
+Complète pour dire : « La place forte prise, les soldats se réjouissent ».""",
+            "consigne": "Accorde le participe avec oppido (ablatif neutre) :",
+            "avant": "Oppido capt",
+            "apres": ", milites gaudent.",
+            "solution": "o",
+            "latin_complet": "Oppido capto, milites gaudent.",
         },
         {
             "id": "m22-03",
@@ -68,12 +71,12 @@ Parfois, quand le verbe sous-entendu est le verbe « être » (qui n'a pas de pa
 - *Caesare duce* = « César étant le chef » ➔ **« Sous la conduite de César »**
 - *Cicerone consule* = « Cicéron étant consul » ➔ **« Sous le consulat de Cicéron »**
 
-Reconstitue cette phrase historique :
-*« Caesare duce, Romani vicerunt. »*
-*(Caesare duce = sous la conduite de César [Abl. Abs.], Romani = les Romains, vicerunt = ont vaincu)*""",
-            "latin": "Caesare duce, Romani vicerunt.",
-            "mots": ["Sous la conduite de César,", "les Romains", "ont vaincu.", "La légion", "défile."],
-            "solution": "Sous la conduite de César, les Romains ont vaincu.",
+Exemple : *« Caesare duce, Romani vicerunt. »* = « Sous la conduite de César, les Romains ont vaincu. »
+
+À toi ! *Rex, regis* = le roi ; *parvus, -a, -um* = petit.""",
+            "latin": "Romulo rege, Roma parva erat.",
+            "mots": ["Sous le règne de Romulus,", "Rome", "était", "petite.", "est", "Le roi Romulus"],
+            "solution": "Sous le règne de Romulus, Rome était petite.",
         },
         {
             "id": "m22-04",

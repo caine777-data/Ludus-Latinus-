@@ -38,32 +38,36 @@ Prépare-toi à gravir les marches sacrées du Forum pour le couronnement suprê
             "type": "trou",
             "title": "L'Épreuve du Manuscrit Impérial",
             "content": """## Déchiffrer la devise éternelle
-Pour sceller ton parcours de latiniste du collège, complète la phrase :
-« Le peuple romain conserve la liberté et la paix »
-*(Populus Romanus libertatem et pacem servat)*.
+Pour sceller ton parcours de latiniste du collège, lis cette devise :
+*Populus Romanus libertatem et pacem servat.* = « Le peuple romain conserve la liberté et la paix. »
 
 - *Populus Romanus* = le peuple romain (Nom. sg.)
 - *Libertatem* = la liberté (Acc. sg. en -em)
 - *Pacem* = la paix (Acc. sg. en -em)
-- *Servat* = conserve / protège (3e personne singulier du présent)""",
-            "consigne": "Complète le verbe 'conserve' (servat) :",
-            "avant": "Populus Romanus libertatem et pacem ser",
+- *Servat* = conserve / protège (3e personne du singulier du présent)
+
+À toi ! Le sujet change : *cives Romani* (les citoyens romains) est au pluriel.
+Complète pour dire : « Les citoyens romains protègent la liberté ».""",
+            "consigne": "Accorde le verbe avec son sujet au pluriel :",
+            "avant": "Cives Romani libertatem serv",
             "apres": ".",
-            "solution": "vat",
-            "latin_complet": "Populus Romanus libertatem et pacem servat.",
+            "solution": "ant",
+            "latin_complet": "Cives Romani libertatem servant.",
         },
         {
             "id": "m26-03",
             "type": "puzzle",
             "title": "Le Serment du Citoyen Émérite",
             "content": """## La flamme de la connaissance
-Reconstitue cette noble sentence qui traversera les siècles :
+Une noble sentence qui traversera les siècles :
 
-*« Litterae et sapientia mentem hominis ornant. »*
-*(Litterae = les lettres et les livres, sapientia = la sagesse, mentem hominis = l'esprit de l'homme, ornant = embellissent)*""",
-            "latin": "Litterae et sapientia mentem hominis ornant.",
-            "mots": ["Les lettres et la sagesse", "embellissent", "l'esprit de l'homme.", "La gloire", "demeure", "éternelle."],
-            "solution": "Les lettres et la sagesse embellissent l'esprit de l'homme.",
+*« Litterae et sapientia mentem hominis ornant. »* = « Les lettres et la sagesse embellissent l'esprit de l'homme. »
+
+À toi ! Deux sujets, un verbe : regarde sa terminaison.
+*Virtus, -utis* (f.) = le courage ; *res publica* = la République ; *servo, -as, -are* = protéger.""",
+            "latin": "Virtus et sapientia rem publicam servant.",
+            "mots": ["Le courage et la sagesse", "protègent", "la République.", "protège", "de la République."],
+            "solution": "Le courage et la sagesse protègent la République.",
         },
         {
             "id": "m26-04",

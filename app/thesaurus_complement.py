@@ -169,6 +169,7 @@ VOCABULAIRE_COMPLEMENTAIRE = [
     {"latin": "novus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "nouveau", "etym": "nouveau, novice, innover", "ex": "Dies novus est.", "ex_fr": "C'est un jour nouveau.", "monde": "monde19"},
 
     # Monde 20 · Les chemins de l'Empire
+    {"latin": "longus, -a, -um", "cat": "Adjectif", "genre": "1re classe", "fr": "long", "etym": "long, longueur, longitude", "ex": "Via longa est.", "ex_fr": "La route est longue.", "monde": "monde20"},
     {"latin": "qui, quae, quod", "cat": "Pronom", "genre": "relatif", "fr": "qui, que, lequel", "etym": "quiconque", "ex": "Via quae Romam ducit longa est.", "ex_fr": "La route qui mène à Rome est longue.", "monde": "monde20"},
     {"latin": "regina, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la reine", "etym": "reine, régner, régent", "ex": "Via Appia regina viarum est.", "ex_fr": "La Via Appia est la reine des routes.", "monde": "monde20"},
     {"latin": "collis, -is", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "la colline", "etym": "colline, col", "ex": "Urbs in colle stat.", "ex_fr": "La ville se dresse sur une colline.", "monde": "monde20"},
@@ -178,6 +179,7 @@ VOCABULAIRE_COMPLEMENTAIRE = [
     # Monde 21 · Pompéi
     {"latin": "nubes, -is", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "le nuage", "etym": "nuage, nuée, nébuleuse", "ex": "Nubes atra e monte oriebatur.", "ex_fr": "Un nuage noir s'élevait de la montagne.", "monde": "monde21"},
     {"latin": "ater, atra, atrum", "cat": "Adjectif", "genre": "1re classe", "fr": "noir, sombre", "etym": "atrabilaire", "ex": "Nubes atra caelum tegit.", "ex_fr": "Un nuage noir couvre le ciel.", "monde": "monde21"},
+    {"latin": "tegere (tego, texi, tectum)", "cat": "Verbe", "genre": "3e conjugaison", "fr": "couvrir, recouvrir", "etym": "toit, protéger, tuile", "ex": "Nubes caelum tegit.", "ex_fr": "Le nuage couvre le ciel.", "monde": "monde21"},
     {"latin": "delere (deleo, delevi, deletum)", "cat": "Verbe", "genre": "2e conjugaison", "fr": "détruire", "etym": "indélébile", "ex": "Pompeii urbs deleta est.", "ex_fr": "La ville de Pompéi a été détruite.", "monde": "monde21"},
     {"latin": "vicus, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le quartier, le village", "etym": "vicinal (chemin)", "ex": "Vicus cinere deletus est.", "ex_fr": "Le quartier a été détruit par la cendre.", "monde": "monde21"},
 

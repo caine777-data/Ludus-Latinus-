@@ -44,12 +44,15 @@ Quand l'action est accomplie par une personne vivante, on utilise toujours la pr
 - *Urbs a civibus defenditur.* = « La ville est défendue par les citoyens. »
 - *Lex a consule legitur.* = « La loi est lue par le consul. »
 
-Complète pour dire : « La patrie est aimée de tous les Romains » (*Patria a Romanis amatur*).""",
-            "consigne": "Complète le verbe passif 'est aimée' (amatur) :",
-            "avant": "Patria a Romanis ama",
+Au passif, la 3e personne se termine par **-tur** au singulier (*defenditur*) et par **-ntur** au pluriel.
+
+À toi ! *Laudo, -as, -are* = louer, féliciter ; *dux, ducis* = le général.
+Complète pour dire : « Les braves soldats sont loués par le général ».""",
+            "consigne": "Complète le verbe au passif : son sujet est au pluriel.",
+            "avant": "Fortes milites a duce lauda",
             "apres": ".",
-            "solution": "tur",
-            "latin_complet": "Patria a Romanis amatur.",
+            "solution": "ntur",
+            "latin_complet": "Fortes milites a duce laudantur.",
         },
         {
             "id": "m23-03",
@@ -58,12 +61,13 @@ Complète pour dire : « La patrie est aimée de tous les Romains » (*Patria a 
             "content": """## L'art oratoire au sommet
 En 63 av. J.-C., le consul et grand orateur **Cicéron** prononce ses foudroyantes *Catilinaires* pour déjouer le complot de Catilina contre la République.
 
-Reconstitue cette phrase sur la concorde et la paix :
-*« Pax et concordia a civibus quaeruntur. »*
-*(Pax et concordia = la paix et la concorde [Nom. pl.], a civibus = par les citoyens [Compl. d'agent], quaeruntur = sont recherchées [Passif pl.])*""",
-            "latin": "Pax et concordia a civibus quaeruntur.",
-            "mots": ["La paix et la concorde", "sont recherchées", "par les citoyens.", "L'orateur", "dénonce", "le complot."],
-            "solution": "La paix et la concorde sont recherchées par les citoyens.",
+Exemple : *« Pax et concordia a civibus quaeruntur. »* = « La paix et la concorde sont recherchées par les citoyens. »
+
+À toi ! Qui fait l'action, qui la subit ? Regarde la fin du verbe et la préposition *a*.
+*Libertas, -atis* (f.) = la liberté ; *defendo, -is, -ere* = défendre.""",
+            "latin": "Libertas a populo Romano defenditur.",
+            "mots": ["La liberté", "est défendue", "par le peuple romain.", "défend", "le peuple romain."],
+            "solution": "La liberté est défendue par le peuple romain.",
         },
         {
             "id": "m23-04",

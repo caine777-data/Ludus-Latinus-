@@ -41,12 +41,14 @@ Comme le mot *urbs* (la ville) est féminin :
 - *Oppidum deletum* = la place forte détruite (au neutre en **-um**).
 - *Vicus deletus* = le village détruit (au masculin en **-us**).
 
-Complète pour dire : « Pompéi est une ville détruite par la cendre » (*Pompeii urbs deleta est*).""",
-            "consigne": "Complète le PPP au féminin 'détruite' (deleta) :",
-            "avant": "Pompeii urbs delet",
+Applique la même règle à un autre participe : *captus, -a, -um* (pris), du verbe *capere* (prendre).
+*Oppidum* (la place forte) est neutre.
+Complète pour dire : « La place forte a été prise ».""",
+            "consigne": "Accorde le participe avec oppidum (neutre) :",
+            "avant": "Oppidum capt",
             "apres": " est.",
-            "solution": "a",
-            "latin_complet": "Pompeii urbs deleta est.",
+            "solution": "um",
+            "latin_complet": "Oppidum captum est.",
         },
         {
             "id": "m21-03",
@@ -55,12 +57,13 @@ Complète pour dire : « Pompéi est une ville détruite par la cendre » (*Pomp
             "content": """## Le témoignage du 24 août 79
 Le jeune Pline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.
 
-Reconstitue cette phrase adaptée de sa célèbre lettre à l'historien Tacite :
-*« Mons Vesuvius nubem atram erigebat. »*
-*(Mons Vesuvius = le mont Vésuve, nubem atram = un nuage noir [Acc.], erigebat = dressait / projetait)*""",
-            "latin": "Mons Vesuvius nubem atram erigebat.",
-            "mots": ["Le mont Vésuve", "dressait", "un nuage noir.", "La cendre", "tombait", "sur la cité."],
-            "solution": "Le mont Vésuve dressait un nuage noir.",
+Exemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuvius nubem atram erigebat. »* = « Le mont Vésuve dressait un nuage noir. »
+
+À toi ! Même adjectif, même temps (l'imparfait en *-bat*), autre phrase.
+*Cinis, -eris* (m.) = la cendre ; *tego, -is, -ere* = recouvrir ; *urbs, urbis* (f.) = la ville.""",
+            "latin": "Cinis ater urbem tegebat.",
+            "mots": ["La cendre noire", "recouvrait", "la ville.", "recouvre", "les villes."],
+            "solution": "La cendre noire recouvrait la ville.",
         },
         {
             "id": "m21-04",

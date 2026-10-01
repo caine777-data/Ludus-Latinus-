@@ -45,12 +45,16 @@ La **5ème déclinaison** est la plus petite du latin mais contient des mots cap
 
 Exemple d'Auguste : *Res gestae* (« Les hauts faits accomplis »).
 
-Complète pour dire : « C'est un jour nouveau » (*Dies novus est*).""",
-            "consigne": "Complète le mot 'jour' (dies) au nominatif :",
-            "avant": "Di",
-            "apres": " novus est.",
-            "solution": "es",
-            "latin_complet": "Dies novus est.",
+Autre exemple : *Dies novus est* = « C'est un jour nouveau ». À l'accusatif (COD), *dies* devient **diem**.
+
+Applique la même règle à *res* : dans la phrase suivante, *res publica* (la République) est COD.
+*Servo, -as, -are* = protéger, conserver.
+Complète pour dire : « Auguste protège la République ».""",
+            "consigne": "Mets res à l'accusatif, sur le modèle dies ➔ diem :",
+            "avant": "Augustus r",
+            "apres": " publicam servat.",
+            "solution": "em",
+            "latin_complet": "Augustus rem publicam servat.",
         },
         {
             "id": "m19-03",
@@ -63,12 +67,13 @@ Il embellit magnifiquement la cité et déclara avec fierté :
 *« Urbem latericiam accepi, marmoream relinquo. »*
 (« J'ai reçu une ville de briques, je la laisse de marbre. »)
 
-Reconstitue cette phrase célébrant la grandeur impériale :
-*« Augustus pacem populo dedit. »*
-*(Augustus = Auguste, pacem = la paix [Acc.], populo = au peuple [Dat.], dedit = a donné)*""",
-            "latin": "Augustus pacem populo dedit.",
-            "mots": ["Auguste", "a donné", "la paix", "au peuple.", "Le sénat", "délibère."],
-            "solution": "Auguste a donné la paix au peuple.",
+Exemple : *« Augustus pacem populo dedit. »* = « Auguste a donné la paix au peuple. » (*populo* : datif, « à qui ? »)
+
+À toi ! Regarde bien la terminaison du datif : *civis, -is* (le citoyen) fait *civi* au singulier et *civibus* au pluriel.
+*Imperator, -oris* = l'empereur.""",
+            "latin": "Imperator civibus pacem dedit.",
+            "mots": ["L'empereur", "a donné", "la paix", "aux citoyens.", "au citoyen.", "donne"],
+            "solution": "L'empereur a donné la paix aux citoyens.",
         },
         {
             "id": "m19-04",

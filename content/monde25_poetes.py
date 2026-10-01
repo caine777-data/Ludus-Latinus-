@@ -40,24 +40,30 @@ L'autre géant de la poésie romaine est **Ovide** (*Ovidius*). Dans ses *Métam
 L'un des plus émouvants est celui de **Dédale et Icare** :
 Pour s'échapper du labyrinthe de Crète, l'ingénieux Dédale fabrique des ailes de plumes collées avec de la cire d'abeille. Mais le jeune Icare, enivré par le vol, monte trop près du Soleil. La cire fond et il tombe dans la mer...
 
-Complète la formule de souhait au subjonctif : « Que tu sois heureux ! » (*Felix sis !*).""",
-            "consigne": "Complète le verbe être au subjonctif 'que tu sois' (sis) :",
-            "avant": "Felix ",
-            "apres": " !",
-            "solution": "sis",
-            "latin_complet": "Felix sis !",
+Pour exprimer un souhait, le latin emploie le subjonctif. Celui du verbe *esse* se forme sur **si-**, suivi des terminaisons habituelles (-m, -s, -t, -mus, -tis, -nt) :
+*Felix sis !* = « Que tu sois heureux ! »
+
+À toi ! *Poeta, -ae* (m.) = le poète.
+Complète pour dire : « Que le poète soit heureux ! ».""",
+            "consigne": "Complète le subjonctif de esse à la 3e personne du singulier :",
+            "avant": "Felix s",
+            "apres": " poeta !",
+            "solution": "it",
+            "latin_complet": "Felix sit poeta !",
         },
         {
             "id": "m25-03",
             "type": "puzzle",
             "title": "Le Vers Immortel de Virgile",
             "content": """## La musique des mots
-Reconstitue l'ouverture légendaire de l'Énéide :
-*« Arma virumque cano. »*
-*(Arma = les armes [Neutre pl.], virumque = et le héros [Acc. + que = et], cano = je chante)*""",
-            "latin": "Arma virumque cano.",
-            "mots": ["Je chante", "les armes", "et le héros.", "Rome", "naîtra", "de Troie."],
-            "solution": "Je chante les armes et le héros.",
+L'ouverture légendaire de l'Énéide : *« Arma virumque cano. »* = « Je chante les armes et le héros. »
+Le petit mot **-que**, collé à la fin d'un mot, signifie « et » : *virumque* = *et virum*.
+
+À toi ! Regarde bien les terminaisons.
+*Poeta, -ae* (m.) = le poète ; *patria, -ae* = la patrie ; *vir, viri* = l'homme, le héros ; *cano, -is, -ere* = chanter.""",
+            "latin": "Poeta patriam virosque canit.",
+            "mots": ["Le poète", "chante", "la patrie", "et les héros.", "et le héros.", "chantent"],
+            "solution": "Le poète chante la patrie et les héros.",
         },
         {
             "id": "m25-04",

@@ -317,6 +317,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Exercices de 3e réécrits** (validés par Cédric le 01/10/2026) — les 16
+  trous et puzzles des mondes 19 à 26 suivent le même principe que la 5e et
+  la 4e : le cours garde son exemple traduit, l'exercice applique la règle
+  à une autre phrase, les pièges des puzzles sont grammaticaux.
+  `tests/test_reponses_cachees.py` couvre maintenant les mondes 1 à 26.
+  Deux mots ajoutés au Thesaurus : *longus* (monde 20), *tegere* (monde 21).
+  Le brouillon T29 de Gemini annonçait à tort que tout le vocabulaire était
+  au Thesaurus : toujours revérifier ce genre d'affirmation.
+
 - **T24 à T29 relues, série T30 à T36** (01/10/2026) — corrections tirées
   des tournées de Gemini (commit `63fb54d`) : les boutons de fin du Duel et
   du Circus sont dans un `Wrap`, le panneau de fin du Circus défile, la
@@ -326,8 +335,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   **Ces corrections n'ont pas encore été vues à l'écran** : c'est T30.
   Suite confiée : test anti-débordement (T31), tournée sur petit téléphone
   (T32), Circus qu'on ne gagne plus sans répondre (T33), titres rognés
-  (T34), poids de l'appli (T35), brouillon du README (T36). Les exercices de
-  3e attendent la validation de Cédric.
+  (T34), poids de l'appli (T35), brouillon du README (T36).
 
 - **Branches** (01/10/2026) — `main` a été avancée jusqu'à la branche de
   travail `fix/mobile-publiable-lisible` ; l'architecte la remet à niveau à

@@ -43,12 +43,13 @@ Si l'antécédent est féminin (par exemple *urbs*, la ville) :
 - Sujet : *Urbs **quae** in colle stat.* (« La ville **qui** se dresse sur la colline. »)
 - COD : *Urbs **quam** Caesar condidit.* (« La ville **que** César a fondée. »)
 
-Complète la phrase pour dire : « La voie romaine qui mène à Rome » (*Via quae Romam ducit*).""",
-            "consigne": "Complète le pronom relatif féminin 'qui' (quae) :",
-            "avant": "Via ",
-            "apres": " Romam ducit.",
-            "solution": "quae",
-            "latin_complet": "Via quae Romam ducit.",
+À toi ! *Aqua* (l'eau) est féminin. Dans la phrase suivante, c'est l'aqueduc qui fait l'action : l'eau est le COD de *ducit* (conduit).
+Complète pour dire : « L'eau que l'aqueduc conduit est bonne ».""",
+            "consigne": "Choisis le pronom relatif féminin : sujet ou COD ?",
+            "avant": "Aqua ",
+            "apres": " aquaeductus ducit bona est.",
+            "solution": "quam",
+            "latin_complet": "Aqua quam aquaeductus ducit bona est.",
         },
         {
             "id": "m20-03",
@@ -59,12 +60,13 @@ Pour relier Rome à toutes les provinces d'Europe, d'Asie et d'Afrique, les Roma
 
 La plus célèbre est la **Via Appia**, reliant Rome au port de Brindisi vers l'Orient.
 
-Reconstitue cette phrase sur la renommée de cette route :
-*« Via Appia regina viarum est. »*
-*(Via Appia = la voie Appienne, regina = la reine, viarum = des routes [Gén. pl.], est = est)*""",
-            "latin": "Via Appia regina viarum est.",
-            "mots": ["La Voie Appienne", "est", "la reine", "des routes.", "Les légions", "marchent."],
-            "solution": "La Voie Appienne est la reine des routes.",
+Exemple : *« Via Appia regina viarum est. »* = « La voie Appienne est la reine des routes. »
+
+À toi ! Une phrase avec un pronom relatif : *quae* (qui) ou *quam* (que) ?
+*Facio, -is, -ere, feci* = faire, construire ; *longus, -a, -um* = long.""",
+            "latin": "Via quam Romani fecerunt longa est.",
+            "mots": ["La route", "que", "les Romains", "ont construite", "est longue.", "qui", "Les routes"],
+            "solution": "La route que les Romains ont construite est longue.",
         },
         {
             "id": "m20-04",

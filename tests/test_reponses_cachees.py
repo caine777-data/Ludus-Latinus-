@@ -1,5 +1,5 @@
 """
-Tests empêchant les exercices de 5e et de 4e (mondes 1 à 18) de redonner leur réponse.
+Tests empêchant les exercices du collège (mondes 1 à 26) de redonner leur réponse.
 
 Vérifie que :
 - les exercices à trou ne divulguent pas le mot attendu dans le cours ou la consigne ;
@@ -25,8 +25,8 @@ EXCEPTIONS = {
     "m10-03": "trous à choix (civilisation)",
 }
 
-# 5e (mondes 1 à 10) et 4e (mondes 11 à 18) sont réécrites ; la 3e viendra ensuite.
-MONDES_REECRITS = {f"monde{i}" for i in range(1, 19)}
+# 5e (mondes 1 à 10), 4e (mondes 11 à 18) et 3e (mondes 19 à 26) sont réécrites.
+MONDES_REECRITS = {f"monde{i}" for i in range(1, 27)}
 
 
 def normaliser(texte: str) -> str:
