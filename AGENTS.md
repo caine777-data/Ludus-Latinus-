@@ -207,11 +207,22 @@ et il est de ta responsabilité.
 
 ### Construction automatique (GitHub Actions)
 
-| Workflow | Quand | Produit |
+**Un seul workflow : `.github/workflows/appli.yml`.** Il se lance à chaque
+envoi de code, sur n'importe quelle branche (un envoi qui ne touche que
+`docs/` ou des `.md` ne déclenche rien), et à la main par « Run workflow ».
+
+| Job | Fait | Produit |
 |---|---|---|
-| `appli.yml` | à chaque envoi qui touche `ludus_latinus_mobile/` | `LudusLatinus.apk`, `LudusLatinus-PlayStore.aab`, `LudusLatinus-Windows.zip` |
-| `tests.yml` | à chaque envoi | tests Python + style (ruff) |
-| `build.yml` | **manuel seulement** | installateurs de l'ancienne appli Python |
+| `contenu` | tests Python, `main.py --check`, style (ruff) | rien |
+| `android` | `flutter analyze`, `flutter test`, puis compilation | `LudusLatinus.apk`, `LudusLatinus-PlayStore.aab` |
+| `windows` | compilation Flutter Windows | `LudusLatinus-Windows.zip` |
+
+Les trois jobs sont indépendants : un échec de `contenu` n'empêche pas
+d'obtenir l'APK. **Ne renomme pas `appli.yml`** : le numéro de version du Play
+Store est le numéro d'exécution de ce workflow, un renommage le remettrait à 1.
+Les anciens `tests.yml` et `build.yml` (installateurs de l'appli Python de
+bureau) sont supprimés : `DIFFUSION.md` et `packaging/` ne servent plus qu'à
+une construction en local.
 
 Flutter est figé à la même version qu'en local (`FLUTTER_VERSION` dans
 `appli.yml`) : si tu mets Flutter à jour sur le PC, mets aussi ce numéro à
@@ -305,6 +316,12 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Un seul workflow GitHub** (01/10/2026) — `tests.yml` et `build.yml`
+  supprimés, leur contenu utile repris dans `appli.yml` : un job `contenu`
+  (tests Python, ruff), un job `android` (qui lance désormais aussi
+  `flutter test`), un job `windows`. Déclenché à chaque envoi de code, plus
+  en double sur les pull requests. Voir la section 4.
 
 - **T23 validée et ses défauts corrigés** — les cinq boss testés sur
   l'émulateur. Le panneau de victoire du Duel défile (il ne déborde plus),

@@ -1,5 +1,11 @@
 # Diffuser Ludus Latinus
 
+> **Guide de l'ancienne application de bureau (Python/Tkinter).** Son workflow
+> GitHub `build.yml` a été supprimé : la partie 1 ci-dessous ne fonctionne
+> plus, seule la construction en local (partie 2) reste possible.
+> L'application à publier est l'appli Flutter : voir
+> `ludus_latinus_mobile/PUBLICATION.md`.
+
 Ce guide explique comment le code devient des fichiers d'installation
 téléchargeables, et comment les publier proprement. L'application reste
 **sans dépendance** pour l'utilisateur final : Python, tkinter et le

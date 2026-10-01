@@ -1,7 +1,11 @@
-name: Appli Ludus Latinus (Android & Windows)
+name: Ludus Latinus (Android & Windows)
 
-# À chaque modification de l'application mobile, trois fichiers à télécharger
-# dans l'onglet « Actions » de GitHub, rubrique « Artifacts » de l'exécution :
+# LE SEUL workflow du dépôt. Il se lance tout seul à chaque envoi de code, sur
+# n'importe quelle branche. Pour le lancer à la main : onglet « Actions » >
+# « Ludus Latinus (Android & Windows) » > « Run workflow », en choisissant la
+# branche de travail.
+#
+# Trois fichiers à télécharger, rubrique « Artifacts » de l'exécution :
 #
 #   LudusLatinus-APK        LudusLatinus.apk            à installer sur un téléphone
 #   LudusLatinus-PlayStore  LudusLatinus-PlayStore.aab  à envoyer sur la Play Console
@@ -11,13 +15,17 @@ name: Appli Ludus Latinus (Android & Windows)
 # (voir ludus_latinus_mobile/PUBLICATION.md), l'APK et l'AAB sont signés avec
 # la clé d'upload. Sinon ils sont signés avec une clé de test : parfaits pour
 # essayer l'app, refusés par le Play Store.
+#
+# Ne pas renommer ce fichier : le numéro de version envoyé au Play Store est le
+# numéro d'exécution de ce workflow, et un renommage le ferait repartir de 1.
 
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'ludus_latinus_mobile/**'
-      - '.github/workflows/appli.yml'
+    # Un envoi qui ne touche que la documentation ne reconstruit rien.
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
 
 # Un nouvel envoi sur la même branche annule la construction en cours.
 concurrency:
@@ -29,6 +37,34 @@ env:
   FLUTTER_VERSION: '3.47.4'
 
 jobs:
+  # Le contenu pédagogique (content/*.py) est la source des données de l'appli :
+  # ses tests et son style sont contrôlés ici. Un échec n'empêche pas les deux
+  # constructions ci-dessous.
+  contenu:
+    name: Contenu (tests Python + style)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Dépendances
+        run: |
+          sudo apt-get update && sudo apt-get install -y python3-tk xvfb
+          python -m pip install --upgrade pip Pillow ruff
+
+      - name: Tests
+        run: xvfb-run -a python -m unittest discover -s tests -v
+
+      - name: Contrôle de l'installation
+        run: python main.py --check
+
+      - name: Style
+        run: ruff check .
+
   android:
     name: Android (APK + Play Store)
     runs-on: ubuntu-latest
@@ -55,6 +91,9 @@ jobs:
 
       - name: Analyse du code
         run: flutter analyze --no-fatal-warnings --no-fatal-infos
+
+      - name: Tests
+        run: flutter test
 
       - name: Clé de signature Play Store
         env:
