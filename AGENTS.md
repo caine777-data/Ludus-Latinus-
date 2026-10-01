@@ -208,8 +208,9 @@ et il est de ta responsabilité.
 ### Construction automatique (GitHub Actions)
 
 **Un seul workflow : `.github/workflows/appli.yml`.** Il se lance à chaque
-envoi de code, sur n'importe quelle branche (un envoi qui ne touche que
-`docs/` ou des `.md` ne déclenche rien), et à la main par « Run workflow ».
+envoi de code sur toute branche sauf `main` (qui est une copie de la branche
+de travail ; un envoi qui ne touche que `docs/` ou des `.md` ne déclenche
+rien), et à la main par « Run workflow ».
 
 | Job | Fait | Produit |
 |---|---|---|

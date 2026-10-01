@@ -1,7 +1,7 @@
 name: Ludus Latinus (Android & Windows)
 
-# LE SEUL workflow du dépôt. Il se lance tout seul à chaque envoi de code, sur
-# n'importe quelle branche. Pour le lancer à la main : onglet « Actions » >
+# LE SEUL workflow du dépôt. Il se lance tout seul à chaque envoi de code sur
+# la branche de travail (pas sur main, qui en est la copie). Pour le lancer à la main : onglet « Actions » >
 # « Ludus Latinus (Android & Windows) » > « Run workflow », en choisissant la
 # branche de travail.
 #
@@ -22,6 +22,10 @@ name: Ludus Latinus (Android & Windows)
 on:
   workflow_dispatch:
   push:
+    # main est une copie de la branche de travail : la construire aussi
+    # ferait deux fois le même travail. Elle reste lançable à la main.
+    branches-ignore:
+      - main
     # Un envoi qui ne touche que la documentation ne reconstruit rien.
     paths-ignore:
       - '**.md'
