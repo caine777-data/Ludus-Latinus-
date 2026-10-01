@@ -1301,8 +1301,11 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Wrap : sur un écran étroit, le second bouton passe à la ligne.
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 16,
+            runSpacing: 8,
             children: [
               OutlinedButton(
                 onPressed: () => Navigator.pop(context),
@@ -1314,7 +1317,6 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 ),
                 child: const Text('Quitter'),
               ),
-              const SizedBox(width: 16),
               if (_victoire && _currentBossIndex < _bosses.length - 1)
                 ElevatedButton.icon(
                   onPressed: () {

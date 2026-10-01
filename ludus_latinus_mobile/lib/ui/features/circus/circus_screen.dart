@@ -1526,7 +1526,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
           ),
         ],
       ),
-      child: Column(
+      // Défile au lieu de déborder sur un petit écran.
+      child: SingleChildScrollView(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Illustration de triomphe romain
@@ -1615,8 +1617,11 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             ),
           ),
           const SizedBox(height: 18),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Wrap : sur un écran étroit, le second bouton passe à la ligne.
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 16,
+            runSpacing: 8,
             children: [
               OutlinedButton(
                 onPressed: () => Navigator.pop(context),
@@ -1628,7 +1633,6 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 ),
                 child: const Text('Quitter'),
               ),
-              const SizedBox(width: 16),
               ElevatedButton.icon(
                 onPressed: _restartRace,
                 icon: const Icon(Icons.replay),
@@ -1643,6 +1647,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             ],
           ),
         ],
+        ),
       ),
     );
   }

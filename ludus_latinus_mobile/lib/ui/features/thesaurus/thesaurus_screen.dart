@@ -558,7 +558,9 @@ class _CartesDesCas extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         SizedBox(
-          height: 206,
+          // 122 px d'image et de marges, le reste est du texte : il grandit
+          // avec la police choisie dans les réglages du téléphone.
+          height: 122 + MediaQuery.textScalerOf(context).scale(84),
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: _cas.length,

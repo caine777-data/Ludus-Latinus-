@@ -556,7 +556,8 @@ class _LessonScreenState extends State<LessonScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  Flexible(
+                    child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: _getLessonTypeColor(lesson.type).withValues(alpha: 0.12),
@@ -568,17 +569,23 @@ class _LessonScreenState extends State<LessonScreen> {
                       children: [
                         Text(_getLessonTypeIcon(lesson.type), style: const TextStyle(fontSize: 12)),
                         const SizedBox(width: 4),
-                        Text(
-                          _getLessonTypeTitle(lesson.type),
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color: _getLessonTypeColor(lesson.type),
+                        Flexible(
+                          child: Text(
+                            _getLessonTypeTitle(lesson.type),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              color: _getLessonTypeColor(lesson.type),
+                            ),
                           ),
                         ),
                       ],
                     ),
+                    ),
                   ),
+                  const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
