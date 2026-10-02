@@ -3530,7 +3530,7 @@ Statut : ANNULÉ
 
 ## T39 — Tournée des exercices de 3e (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : les 16 exercices de 3e ont été réécrits le 1er octobre
 (mondes 19 à 26). Personne ne les a joués à l'écran.
@@ -3553,14 +3553,58 @@ Statut : À FAIRE
 5. Restaure le profil d'origine et capture l'accueil.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau des 16 exercices : réponse cachée (oui/non), mots nouveaux
+- [x] Un tableau des 16 exercices : réponse cachée (oui/non), mots nouveaux
       expliqués, piège testé et message obtenu, défaut d'affichage, capture.
-- [ ] Le profil d'origine est restauré (capture de l'accueil).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: tournée des exercices de 3e`.
+- [x] Le profil d'origine est restauré (capture de l'accueil).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: tournée des exercices de 3e`.
+
+### Tableau des 16 exercices de 3e joués à l'écran (Mondes 19 à 26)
+
+| Leçon & Notion | Type | Réponse cachée ? | Vocabulaire nouveau traduit ? | Consigne claire ? | Piège testé & distracteurs | Message obtenu | Défaut d'affichage / Remarques | Capture |
+|---|:---:|:---:|:---:|:---:|---|---|---|---|
+| **m19-02**<br>L'Âge d'Or d'Auguste (Accusatif singulier) | Trou | **Oui** | **Oui** | **Oui** | Saisie `is` (désinence génitif/datif/ablatif au lieu de `em` pour `pacem`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Aucun défaut visuel. Bouton Valider réactif. | `scratch/t39_m19_02_submitted_error.png` |
+| **m19-03**<br>L'Empire Universel (Syntaxe & Temps) | Puzzle | **Oui** | **Oui** | **Oui** | *« L'empereur donne la paix au citoyen. »* (distracteurs *donne* au présent vs parfait, *au citoyen* au singulier) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage, étiquettes fluides. Solution : *« L'empereur a donné la paix aux citoyens. »* | `scratch/t39_m19_03_error.png` |
+| **m20-02**<br>Pronom relatif féminin (Quae / Quam) | Trou | **Oui** | **Oui** | **Oui** | Saisie `quae` (forme nominative au lieu de l'accusatif COD d'antécédent féminin `quam`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Titre de la borne tronqué sur la carte Via Appia : *« Le Pronom Relatif au Féminin : Quae et Q... »*. | `scratch/t39_m20_02_error.png` |
+| **m20-03**<br>Voies romaines (Relative & Sing/Plur) | Puzzle | **Oui** | **Oui** | **Oui** | *« La route les Romains ont construite Les routes »* (distracteur pluriel *Les routes*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« La route que les Romains ont construite est longue. »* | `scratch/t39_m20_03_error.png` |
+| **m21-02**<br>Accord du Participe Passé Passé (PPP) | Trou | **Oui** | **Oui** | **Oui** | Saisie `a` (accord féminin au lieu du neutre accusatif `oppidum deletum` -> `um`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Titre de la borne tronqué sur la carte Via Appia : *« Accorder le PPP : Urbs Deleto ou Dele... »*. | `scratch/t39_m21_02_error.png` |
+| **m21-03**<br>Pompéi & Imparfait descriptif | Puzzle | **Oui** | **Oui** | **Oui** | *« La cendre noire la ville. »* (omission volontaire du verbe conjugué) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« La cendre noire recouvrait la ville. »* | `scratch/t39_m21_03_error.png` |
+| **m22-02**<br>Ablatif absolu (Formation & Accord) | Trou | **Oui** | **Oui** | **Oui** | Saisie `o` (accord masculin au lieu du féminin singulier ablatif `hostium urbe victa` -> `a`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | 1. Titre borne tronqué sur la carte (*« Les Deux Mots qui Résument une Batail... »*).<br>2. Dans l'exercice, la fin de phrase `, milites gaudent.` passe à la ligne après le champ de saisie. | `scratch/t39_m22_02_error.png` |
+| **m22-03**<br>Ablatif absolu (Traduction temporelle) | Puzzle | **Oui** | **Oui** | **Oui** | *« Sous le règne de Romulus, Rome petite. Le roi Romulus »* (distracteur sujet nominatif *Le roi Romulus*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« Sous le règne de Romulus, Rome était petite. »* | `scratch/t39_m22_03_error.png` |
+| **m23-02**<br>Voix passive & Complément d'agent | Trou | **Oui** | **Oui** | **Oui** | Saisie `tur` (singulier 3e pers. au lieu du pluriel passif `ntur` pour `Fortes milites a duce laudantur`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | 1. Titre borne tronqué sur la carte (*« Le Complément d'Agent (A / Ab + Ab... »*).<br>2. Dans l'exercice, le champ de saisie et le point `[ ... ] .` passent à la ligne suivante sous `Fortes milites a duce lauda`. | `scratch/t39_m23_02_error.png` |
+| **m23-03**<br>Voix passive (Traduction par / de) | Puzzle | **Oui** | **Oui** | **Oui** | *« La liberté par le peuple romain. »* (omission du verbe passif *est défendue*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« La liberté est défendue par le peuple romain. »* | `scratch/t39_m23_03_error.png` |
+| **m24-02**<br>Proposition infinitive (Sujet à l'accusatif) | Trou | **Oui** | **Oui** | **Oui** | Saisie `us` (désinence nominative au lieu de l'accusatif sujet d'infinitive `um` dans `Audio amicum venire`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Titre de la borne tronqué sur la carte Via Appia : *« Les Verbes Déclaratifs : Dico, S... »*. | `scratch/t39_m24_02_error.png` |
+| **m24-03**<br>Proposition infinitive (Traduction que) | Puzzle | **Oui** | **Oui** | **Oui** | *« Le messager dit que l'ennemi sont arrivés. »* (distracteurs nombre/accord *l'ennemi*, *sont arrivés*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« Le messager dit que les ennemis arrivent. »* | `scratch/t39_m24_03_error.png` |
+| **m25-02**<br>Parfait de l'indicatif (3e pers. singulier) | Trou | **Oui** | **Oui** | **Oui** | Saisie `is` (au lieu de la désinence de parfait `it` dans `Poeta carmen cecinit`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Aucun défaut d'affichage. Titre et saisie bien alignés. | `scratch/t39_m25_02_error.png` |
+| **m25-03**<br>Poésie d'Auguste (Accord sujet et verbe) | Puzzle | **Oui** | **Oui** | **Oui** | *« Le poète chante la patrie »* (abandon en cours, distracteurs disponibles : *chantent*, *et le héros.*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« Le poète chante la patrie et les héros. »* | `scratch/t39_m25_03_error.png` |
+| **m26-02**<br>Présent de l'indicatif (3e pers. pluriel) | Trou | **Oui** | **Oui** | **Oui** | Saisie `at` (singulier 3e pers. au lieu du pluriel `ant` pour `Cives Romani libertatem servant`) | 🐺 *« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »* | Dans l'exercice, le champ de saisie et le point `[ ... ] .` passent à la ligne suivante sous `Cives Romani libertatem serv`. | `scratch/t39_m26_02_error.png` |
+| **m26-03**<br>Bilan républicain (Sujet coordonné & verbe) | Puzzle | **Oui** | **Oui** | **Oui** | *« Le courage et la sagesse protège »* (distracteurs *protège* au singulier, *de la République.*) | 🐺 *« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »* | Aucun défaut d'affichage. Solution : *« Le courage et la sagesse protègent la République. »* | `scratch/t39_m26_03_error.png` |
+
+### Restauration de l'état initial du profil
+
+| Indicateur profil | État avant T39 | État temporaire (test 3e) | État restauré après T39 | Conforme ? |
+|---|:---:|:---:|:---:|:---:|
+| **Nom du joueur** | Marcus | Marcus | Marcus | **OUI** |
+| **Rang / Titre** | Civis Romanus | Civis Romanus | Civis Romanus | **OUI** |
+| **Sesterces (HS)** | 556 HS | 556 HS | 556 HS | **OUI** |
+| **Leçons validées** | 5 / 113 leçons (`m1-01` à `m1-05`) | 95 / 113 leçons (mondes 1 à 18 + 3e) | 5 / 113 leçons (`m1-01` à `m1-05`) | **OUI** |
+| **Capture de confirmation** | `scratch/t39_profil_avant.json` | - | `scratch/t39_home_restored.png` | **OUI** |
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier sous `lib/` ni `assets/`).
 - Commandes lancées et résultat réel :
+  - Sauvegarde du profil original : `adb shell run-as com.luduslatinus.app cat app_flutter/ludus_latinus_save.json > scratch/t39_profil_avant.json` (Marcus, 556 HS, 5 leçons complétées).
+  - Génération du profil débloquant la 3e : ajout des identifiants des mondes 1 à 18 dans `completed`, injecté sur l'émulateur via `adb push scratch/t39_profil_temp.json /data/local/tmp/save.json` et `adb shell run-as com.luduslatinus.app cp /data/local/tmp/save.json app_flutter/ludus_latinus_save.json`.
+  - Exécution complète à l'écran des 16 leçons (Mondes 19 à 26, `_02` trou et `_03` puzzle) :
+    - Avant de répondre : inspection de la carte de cours préalable. La réponse n'est jamais divulguée directement, tous les mots nouveaux sont introduits et traduits, les consignes sont précises.
+    - Pour chaque exercice, soumission délibérée d'une réponse erronée / distracteur pour vérifier la robustesse du validateur et relever le message de rétroaction de Lupulus.
+    - Puis validation de la bonne réponse pour déverrouiller le jalon suivant le long de la Via Appia.
+  - Restauration du profil original à partir de `scratch/t39_profil_avant.json`, redémarrage de l'application et vérification écran (`scratch/t39_home_restored.png`) : retour à l'état exact initial (5 / 113 leçons, 556 HS).
+  - Vérification `git status` : seul `docs/TACHES.md` a été modifié.
 - Doutes, questions pour l'architecte :
+  - Deux remarques d'ergonomie et d'affichage relevées lors de la tournée :
+    1. **Troncature des titres sur la carte Via Appia** : les bornes milliaires ont une largeur contrainte à 135 px avec `maxLines: 2` et `TextOverflow.ellipsis`. Les titres de leçons dépassant une trentaine de caractères sont tronqués (ex. : `m20-02`, `m21-02`, `m22-02`, `m23-02`, `m24-02`).
+    2. **Retour à la ligne de la boîte de texte dans les exercices à trou** : lorsque la proposition précédant le trou est un peu longue, le champ de saisie passe sur la ligne suivante en emportant la ponctuation finale (constaté sur `m22-02`, `m23-02`, `m26-02`).
 - Reste à faire :
+  - Validation par l'architecte pour passage de `FAIT` à `VALIDÉ`.
