@@ -3209,7 +3209,7 @@ se couper.
 
 ## T35 — Ce qui pèse dans l'appli (sans rien modifier)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : l'APK doit rester léger pour les téléphones des élèves. On
 veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
@@ -3230,17 +3230,92 @@ veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
    `animations/`, `data/`).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau des 30 fichiers : taille, dimensions, taille affichée,
+- [x] Un tableau des 30 fichiers : taille, dimensions, taille affichée,
       gain estimé, risque (image détourée, animation, etc.).
-- [ ] Le total par dossier et le gain total estimé.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: ce qui pèse dans l'appli`.
+- [x] Le total par dossier et le gain total estimé.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: ce qui pèse dans l'appli`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier d'application ni d'asset n'a été modifié, respect strict de la consigne).
 - Commandes lancées et résultat réel :
+  - Écriture et exécution du script d'audit `scratch/audit_assets.py` (mesure des durées MP4/OGG/WAV via en-têtes binaires, lecture des dimensions PNG/WebP avec Pillow, conversion des copies de test dans `scratch/t35/`).
+  - Total des assets de `ludus_latinus_mobile/assets/` : **191 fichiers**, **30 005.1 Ko** (**29.30 Mo**).
+- Synthèse des volumes par dossier :
+
+| Dossier | Nombre de fichiers | Poids total (Ko) | Poids total (Mo) | Part du total |
+|---|:---:|:---:|:---:|:---:|
+| `images/` | 154 | 11 188.0 Ko | 10.93 Mo | 37.3 % |
+| `cinematics/` | 10 | 10 131.0 Ko | 9.89 Mo | 33.8 % |
+| `audio/` | 20 | 8 052.7 Ko | 7.86 Mo | 26.8 % |
+| `fonts/` | 2 | 294.7 Ko | 0.29 Mo | 1.0 % |
+| `data/` | 1 | 261.2 Ko | 0.26 Mo | 0.9 % |
+| `animations/` | 4 | 77.5 Ko | 0.08 Mo | 0.3 % |
+| **TOTAL** | **191** | **30 005.1 Ko** | **29.30 Mo** | **100 %** |
+
+- Test de conversion Pillow en WebP (qualité 85) sur les 10 PNG > 100 Ko (enregistrés dans `scratch/t35/`) :
+
+| Fichier PNG original | Poids PNG (Ko) | Dimensions | Poids WebP (Ko) | Gain mesuré (Ko) | Réduction (%) |
+|---|:---:|:---:|:---:|:---:|:---:|
+| `images/circus/chariot_blanc.png` | 156.2 Ko | 480 x 292 | 40.3 Ko | -115.9 Ko | **-74.2 %** |
+| `images/circus/chariot_bleu.png` | 159.8 Ko | 480 x 292 | 41.1 Ko | -118.7 Ko | **-74.3 %** |
+| `images/circus/chariot_rouge.png` | 157.1 Ko | 480 x 292 | 40.6 Ko | -116.5 Ko | **-74.2 %** |
+| `images/circus/chariot_vert.png` | 158.1 Ko | 480 x 292 | 41.5 Ko | -116.6 Ko | **-73.7 %** |
+| `images/lupulus/lupulus_centurion.png` | 136.7 Ko | 512 x 512 | 18.5 Ko | -118.2 Ko | **-86.5 %** |
+| `images/lupulus/lupulus_gladiateur.png` | 135.0 Ko | 512 x 512 | 18.3 Ko | -116.7 Ko | **-86.5 %** |
+| `images/lupulus/lupulus_imperator.png` | 143.2 Ko | 512 x 512 | 21.6 Ko | -121.5 Ko | **-84.9 %** |
+| `images/lupulus/lupulus_mercure.png` | 125.6 Ko | 512 x 512 | 15.9 Ko | -109.7 Ko | **-87.3 %** |
+| `images/lupulus/lupulus_philosophe.png` | 135.6 Ko | 512 x 512 | 19.9 Ko | -115.7 Ko | **-85.3 %** |
+| `images/lupulus/lupulus_savant.png` | 135.6 Ko | 512 x 512 | 19.9 Ko | -115.7 Ko | **-85.3 %** |
+| **Sous-total (10 PNG)** | **1 443.0 Ko** | — | **277.6 Ko** | **-1 165.4 Ko** | **-80.8 %** |
+
+- Tableau des 30 plus gros fichiers de l'application :
+
+| Rang | Fichier | Poids (Ko) | Format | Dimensions / Durée | Taille affichée (`lib/`) | Gain estimé | Risque & Nature |
+|:---:|---|:---:|:---:|:---:|---|:---:|---|
+| **1** | `audio/musique_arene.ogg` | 2 330.4 Ko | OGG | 177.0 s (2m56) | Audio de fond (`audio_service.dart`) | ~890 Ko (-38 %) | Faible (bitrate 72 kbps mono/stéréo imperceptible sur smartphone) |
+| **2** | `audio/musique_accueil.ogg` | 2 230.1 Ko | OGG | 175.2 s (2m55) | Audio de fond (`audio_service.dart`) | ~850 Ko (-38 %) | Faible (passage de ~110 kbps à ~70 kbps) |
+| **3** | `audio/musique_lecon.ogg` | 2 017.3 Ko | OGG | 169.7 s (2m49) | Audio de fond (`audio_service.dart`) | ~750 Ko (-37 %) | Faible (réduction de bitrate) |
+| **4** | `cinematics/triumph.mp4` | 1 745.1 Ko | MP4 | 6.0 s (2.3 Mbps) | Plein écran (`cinematic_player.dart`) | ~1 000 Ko (-57 %) | Faible (compression H.264 720p CRF 28) |
+| **5** | `cinematics/niveau_4e.mp4` | 1 337.5 Ko | MP4 | 6.0 s (1.8 Mbps) | Plein écran (`cinematic_player.dart`) | ~750 Ko (-56 %) | Faible (vidéo récompense passage de niveau) |
+| **6** | `cinematics/niveau_3e.mp4` | 1 117.6 Ko | MP4 | 6.0 s (1.5 Mbps) | Plein écran (`cinematic_player.dart`) | ~600 Ko (-54 %) | Faible (vidéo passage 3e) |
+| **7** | `cinematics/niveau_5e.mp4` | 926.2 Ko | MP4 | 6.0 s (1.2 Mbps) | Plein écran (`cinematic_player.dart`) | ~500 Ko (-54 %) | Faible (vidéo passage 5e) |
+| **8** | `cinematics/intro.mp4` | 923.8 Ko | MP4 | 6.0 s (1.2 Mbps) | Plein écran au 1er lancement | ~500 Ko (-54 %) | Faible (cinématique aigle introductive) |
+| **9** | `cinematics/boss_retiaire.mp4` | 880.7 Ko | MP4 | 4.0 s (1.8 Mbps) | Fenêtre duel modal (`duel_screen.dart`) | ~500 Ko (-57 %) | Faible (intro duel 4 s) |
+| **10** | `cinematics/boss_minotaure.mp4` | 859.6 Ko | MP4 | 4.0 s (1.7 Mbps) | Fenêtre duel modal (`duel_screen.dart`) | ~480 Ko (-56 %) | Faible (intro duel 4 s) |
+| **11** | `cinematics/boss_mercure.mp4` | 824.7 Ko | MP4 | 4.0 s (1.6 Mbps) | Fenêtre duel modal (`duel_screen.dart`) | ~460 Ko (-56 %) | Faible (intro duel 4 s) |
+| **12** | `cinematics/boss_lion.mp4` | 768.1 Ko | MP4 | 4.0 s (1.5 Mbps) | Fenêtre duel modal (`duel_screen.dart`) | ~420 Ko (-55 %) | Faible (intro duel 4 s) |
+| **13** | `cinematics/boss_sphinx.mp4` | 747.8 Ko | MP4 | 4.0 s (1.5 Mbps) | Fenêtre duel modal (`duel_screen.dart`) | ~410 Ko (-55 %) | Faible (intro duel 4 s) |
+| **14** | `images/boss_lion_anime.webp` | 369.4 Ko | WebP | 240 x 240 px | `taille` (max 100 x 100 dp, ~70-90 dp) | ~140 Ko (-38 %) | Moyen (WebP animé détouré ; risque de fluidité si sous-échantillonnage de trames) |
+| **15** | `images/boss_retiaire_anime.webp` | 353.5 Ko | WebP | 240 x 240 px | `taille` (max 100 x 100 dp, ~70-90 dp) | ~135 Ko (-38 %) | Moyen (WebP animé détouré) |
+| **16** | `images/animated/pieces_or.webp` | 297.5 Ko | WebP | 300 x 300 px | `width: screenWidth * 0.95` (~340 dp) | ~80 Ko (-27 %) | Faible (animation 3D sur fond transparent) |
+| **17** | `images/boss_mercure_anime.webp` | 295.7 Ko | WebP | 240 x 240 px | `taille` (max 100 x 100 dp) | ~110 Ko (-37 %) | Moyen (WebP animé détouré) |
+| **18** | `images/animated/lupulus_idle.webp` | 295.6 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp (`AnimatedLupulusAvatar`) | ~150 Ko (-51 %) | Faible (image 4x plus grande que son affichage mobile, redimensionnable à 100x100) |
+| **19** | `images/boss_sphinx_anime.webp` | 285.0 Ko | WebP | 240 x 240 px | `taille` (max 100 x 100 dp) | ~105 Ko (-37 %) | Moyen (WebP animé détouré) |
+| **20** | `images/animated/lupulus_salut.webp` | 280.9 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp | ~145 Ko (-52 %) | Faible (redimensionnable à 100x100 sans perte visible) |
+| **21** | `images/animated/lupulus_reflexion.webp` | 280.4 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp | ~145 Ko (-52 %) | Faible (redimensionnable à 100x100) |
+| **22** | `images/animated/duel_impact.webp` | 269.5 Ko | WebP | 320 x 320 px | `taille * 1.1` (~100 dp) | ~120 Ko (-45 %) | Faible (redimensionnable à 160x160) |
+| **23** | `data/ludus_latinus_dataset.json` | 261.2 Ko | JSON | Texte structuré | Base de cours (`data_service.dart`) | ~65 Ko (-25 %) | Zéro (minification sans impact fonctionnel) |
+| **24** | `images/animated/lupulus_encouragement.webp` | 261.0 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp | ~135 Ko (-52 %) | Faible (redimensionnable à 100x100) |
+| **25** | `images/animated/lupulus_triomphe.webp` | 243.2 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp | ~125 Ko (-51 %) | Faible (redimensionnable à 100x100) |
+| **26** | `images/animated/lupulus_joie.webp` | 236.8 Ko | WebP | 200 x 200 px | Cercle 54 x 54 dp | ~120 Ko (-51 %) | Faible (redimensionnable à 100x100) |
+| **27** | `audio/crowd_cheer.wav` | 224.0 Ko | WAV | 2.60 s (PCM 16b) | Effet sonore ponctuel (`audio_service.dart`) | ~193 Ko (-86 %) | Zéro (conversion WAV -> OGG Vorbis 96 kbps) |
+| **28** | `audio/monde_termine.wav` | 189.5 Ko | WAV | 2.20 s (PCM 16b) | Effet sonore jalon validé | ~163 Ko (-86 %) | Zéro (conversion WAV -> OGG Vorbis 96 kbps) |
+| **29** | `audio/achat.wav` | 172.3 Ko | WAV | 2.00 s (PCM 16b) | Effet sonore boutique/taverne | ~148 Ko (-86 %) | Zéro (conversion WAV -> OGG Vorbis 96 kbps) |
+| **30** | `fonts/PlusJakartaSans-VariableFont_wght.ttf` | 172.2 Ko | TTF | Police vectorielle | Police par défaut de l'interface | ~80 Ko (-46 %) | Faible (subsetting latin/français, vérifier diacritiques) |
+
+- Bilan et gisement total d'optimisation par dossier :
+  1. `cinematics/` (10.13 Mo) : **~5.6 Mo de gain** via compression vidéo H.264 (720p, CRF 28, 800-1000 kbps au lieu de 2+ Mbps).
+  2. `audio/` (8.05 Mo) : **~3.8 Mo de gain** (ré-encodage des 3 musiques OGG à 72 kbps = 2.5 Mo de gain ; conversion des 17 WAV en OGG = 1.3 Mo de gain).
+  3. `images/` (11.19 Mo) : **~5.5 Mo de gain** (conversion PNG -> WebP = 1.2 Mo de gain ; redimensionnement des WebP animés et des chars Circus affichés en miniature = ~1.8 Mo ; suppression des orphelins sûrs listés en T26 = ~2.5 Mo).
+  4. `fonts/` & `data/` (0.55 Mo) : **~0.15 Mo de gain** (subsetting font + minification JSON).
+  - **Gain global total estimé** : **~15.0 Mo**, soit une division par 2 du dossier `assets/` (de **29.3 Mo** à environ **14.3 Mo**).
 - Doutes, questions pour l'architecte :
+  - La conversion des 17 effets sonores WAV en OGG Vorbis offre 86% de réduction sans perte audible ; vérifier la compatibilité des lecteurs audio selon les plateformes cibles (Android/iOS/Windows).
+  - Les vidéos MP4 constituent le tiers du poids de l'APK : une compression en 720p avec un profil web adapté diviserait leur poids par deux sans altérer l'expérience élève.
 - Reste à faire :
+  - Poursuivre avec la tâche T36.
 
 ---
 
