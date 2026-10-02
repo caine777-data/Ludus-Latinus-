@@ -3617,7 +3617,7 @@ Statut : VALIDÉ
 
 ## T40 — Vérifier à l'écran les arènes et les questions des jeux (sans rien modifier)
 
-Statut : EN COURS
+Statut : FAIT
 
 **Objectif** : deux changements du 2 octobre sont à voir à l'écran.
 (1) Les arènes de fin de monde ont trois vies et affichent l'explication
@@ -3650,19 +3650,161 @@ les mondes que l'élève a atteints.
 6. Restaure le profil d'origine et capture l'accueil.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Le parcours de l'arène, étape par étape, avec captures.
-- [ ] Trois listes de 20 énoncés recopiés de l'écran, avec pour chacun le
+- [x] Le parcours de l'arène, étape par étape, avec captures.
+- [x] Trois listes de 20 énoncés recopiés de l'écran, avec pour chacun le
       monde du mot (cherche-le dans `app/thesaurus.py` et
       `app/thesaurus_complement.py`) et « attendu » ou « inattendu ».
-- [ ] Le profil d'origine est restauré (capture).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: vérification des arènes et des questions des jeux`.
+- [x] Le profil d'origine est restauré (capture).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: vérification des arènes et des questions des jeux`.
+
+### 1. Parcours de l'arène du Monde 1 (`m1-06`) : Mercure
+
+- **Sauvegarde initiale du profil** : profil extrait dans `scratch/t40_profil_avant.json` (héros Marcus, 556 HS, 5 leçons terminées `m1-01` à `m1-05`).
+- **Étape 1 — Une erreur volontaire** :
+  - Question posée : *« Que signifie vale ? »*
+  - Action : clic sur l'option erronée *« Bonjour »*.
+  - Résultat à l'écran : un cœur disparaît (affichage de deux cœurs rouges et un cœur vide : `❤️❤️🤍`). L'encadré d'erreur rouge apparaît avec le message textuel : *« Raté ! Il te reste 2 vies pour vaincre le boss. »*. La question reste affichée à l'écran sans passer prématurément à la suite.
+  - Capture : `scratch/t40_m1_06_one_mistake.png`.
+- **Étape 2 — Réponse correcte** :
+  - Action : sélection de la bonne réponse *« Porte-toi bien »*.
+  - Résultat à l'écran : le bouton d'option devient vert, l'encadré d'explication vert apparaît avec le texte : *« Touché ! Vale signifie 'porte-toi bien / au revoir'. »*, et le bouton doré *« Continuer le combat »* apparaît en bas.
+  - Captures : `scratch/t40_m1_06_correct.png`, `scratch/t40_m1_06_continue.png`.
+- **Étape 3 — Défaite (3 erreurs consécutives)** :
+  - Action : nouvelle tentative de l'arène en faisant trois erreurs successives pour épuiser les trois vies.
+  - Résultat à l'écran : les trois cœurs sont vides (`🤍🤍🤍`). Le panneau de défaite s'affiche avec le texte exact : *« Mercure aux sandales ailées t'a repoussé ! »*, sous-titre *« Tu n'as plus de vie... Réessaie pour triompher de l'arène ! »*, et le bouton *« 🔄 Retenter l'arène »*.
+  - Capture : `scratch/t40_m1_06_defeated.png`.
+- **Étape 4 — Retenter l'arène** :
+  - Action : clic sur le bouton *« 🔄 Retenter l'arène »* (coordonnées `(540, 2150)`).
+  - Résultat à l'écran : les trois cœurs sont réinitialisés (`❤️❤️❤️`), la jauge de PV du boss est remise à 3/3, et les questions sont réinitialisées avec un ordre des options reshufflé.
+  - Capture : `scratch/t40_m1_06_retried_ok.png`.
+- **Étape 5 — Victoire finale de l'arène** :
+  - Action : enchaînement des trois bonnes réponses successives.
+  - Résultat à l'écran : les PV du boss passent à 0/3 (*« 0/3 »*), l'animation de victoire se déclenche, transition par l'écran triomphal *« TRIUMPHUS »* (attribution de 3 étoiles et des sesterces), puis retour à la Via Appia où le Monde 1 est désormais marqué comme complété.
+  - Captures : `scratch/t40_q3_win.png`, `scratch/t40_m1_06_victory.png`, `scratch/t40_after_triumph.png`.
+
+---
+
+### 2. Liste 1 : Duel — Profil au Monde 1 (20 énoncés)
+
+Profil d'origine restauré pour ce test : 5 leçons complétées (`m1-01` à `m1-05`), `mondesAtteints` = `{monde1}` (rang 1).
+
+| N° | Énoncé recopié de l'écran | Mot / Thème identifié | Monde source (`thesaurus.py` / jeu) | Statut |
+|:---|:---|:---|:---|:---|
+| 1 | Comment dit-on « bonjour » en latin ? | `salve / salvete` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 2 | Que signifie « nomen » ? | `nomen, -inis` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 3 | Que signifie « lupa » ? | `lupa, -ae` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 4 | Comment dit-on « l'ami » en latin ? | `amicus, -i` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 5 | Quel cas sert à interpeller directement quelqu'un ? | Vocatif | Monde 1 / Fixe Duel rang 1 (`duel_screen.dart`) | **Attendu** |
+| 6 | Que signifie « via » ? | `via, -ae` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 7 | Qui est le dieu romain de la guerre ? | Mars | Monde 1 / Fixe Duel rang 1 (`duel_screen.dart`) | **Attendu** |
+| 8 | Que signifie « esse » ? | `esse` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 9 | Comment dit-on « au revoir, porte-toi bien » en latin ? | `vale / valete` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 10 | Que signifie « magister » ? | `magister, -tri` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 11 | Qui est le roi de l'Olympe brandissant la foudre ? | Jupiter | Monde 1 / Fixe Duel rang 1 (`duel_screen.dart`) | **Attendu** |
+| 12 | Comment dit-on « Rome » en latin ? | `Roma, -ae` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 13 | Que signifie « vale / valete » ? | `vale / valete` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 14 | Comment dit-on « le maître d'école » en latin ? | `magister, -tri` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 15 | Quel cas sert à interpeller directement quelqu'un ? | Vocatif | Monde 1 / Fixe Duel rang 1 (`duel_screen.dart`) | **Attendu** |
+| 16 | Que signifie « salve / salvete » ? | `salve / salvete` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 17 | Comment dit-on « être / exister » en latin ? | `esse` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 18 | Comment dit-on « la route, la rue » en latin ? | `via, -ae` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 19 | Que signifie « Roma » ? | `Roma, -ae` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 20 | Que signifie « amicus » ? | `amicus, -i` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+
+**Observation** : 100 % des questions posées proviennent du Monde 1 (ou des questions culturelles fixes de rang <= 1). Aucun mot des mondes supérieurs n'est apparu : **aucun** mot comme *« Rex »*, *« Hostis »*, *« Urbs »*, ni question sur l'*« imparfait »*. Les captures sont stockées dans `scratch/t40_duel_m1_q1.png` à `q20.png`.
+
+---
+
+### 3. Liste 2 : Duel — Profil avancé Mondes 1 à 12 (20 énoncés)
+
+Profil injecté : les 57 leçons des mondes 1 à 12 complétées (`m1-01` à `m12-04`), `mondesAtteints` = `{monde1, ..., monde12}` (rang 12).
+
+| N° | Énoncé recopié de l'écran | Mot / Thème identifié | Monde source (`thesaurus.py` / jeu) | Statut |
+|:---|:---|:---|:---|:---|
+| 1 | Qui est le dieu romain de la guerre ? | Mars | Monde 1 / 3 (Fixe Duel rang 1) | **Attendu** |
+| 2 | Que signifie « Lupus » ? | `lupus, -i` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 3 | Comment dit-on « le temps » en latin ? | `tempus, -oris` | Monde 11 (`app/thesaurus.py`) | **Attendu** |
+| 4 | Comment dit-on « être / exister » en latin ? | `esse` | Monde 1 / 5 (`app/thesaurus.py`) | **Attendu** |
+| 5 | Que désigne le « Pilum » lancé par les légionnaires ? | Pilum (armée) | Monde 9 (Fixe Duel rang 9) | **Attendu** |
+| 6 | Que signifie « Veni, vidi, vici » prononcé par César ? | Devise / César | Monde 12 (Fixe Duel rang 12) | **Attendu** |
+| 7 | Comment s'appelle le corps d'armée d'élite de 5000 soldats ? | Légion (`legio`) | Monde 9 (Fixe Duel rang 9) | **Attendu** |
+| 8 | Que signifie « Dux » ? | `dux, ducis` | Monde 12 (`app/thesaurus.py`) | **Attendu** |
+| 9 | Comment dit-on « le gladiateur » en latin ? | `gladiator, -oris` | Monde 6 (`thesaurus_complement.py`) | **Attendu** |
+| 10 | Comment dit-on « le sable, l'arène » en latin ? | `arena / harena` | Monde 6 (`thesaurus_complement.py`) | **Attendu** |
+| 11 | Que signifie « scribere » ? | `scribere` | Monde 5 (`app/thesaurus.py`) | **Attendu** |
+| 12 | Que signifie « capere » ? | `capere` | Monde 5 (`app/thesaurus.py`) | **Attendu** |
+| 13 | Quel est le cas du sujet et de son attribut en latin ? | Nominatif | Monde 4 (Fixe Duel rang 4) | **Attendu** |
+| 14 | Comment dit-on « l'ami » en latin ? | `amicus, -i` | Monde 1 (`app/thesaurus.py`) | **Attendu** |
+| 15 | Que signifie l'abréviation « SPQR » ? | SPQR (Sénat et Peuple) | Monde 12 (Fixe Duel rang 12) | **Attendu** |
+| 16 | Quel cas latin correspond au COI et à l'attribution ? | Datif | Monde 4 (Fixe Duel rang 4) | **Attendu** |
+| 17 | Que disaient les gladiateurs : « Ave Caesar, morituri te salutant » ? | Salut des gladiateurs | Monde 6 (Fixe Duel rang 6) | **Attendu** |
+| 18 | Que signifie « Miles » ? | `miles, -itis` | Monde 9 (`app/thesaurus.py`) | **Attendu** |
+| 19 | Qui est le roi de l'Olympe brandissant la foudre ? | Jupiter | Monde 3 (Fixe Duel rang 3) | **Attendu** |
+| 20 | Quel cas exprime les compléments de moyen, de temps et de lieu ? | Ablatif | Monde 4 (Fixe Duel rang 4) | **Attendu** |
+
+**Observation** : Le spectre des questions s'est élargi à l'ensemble des mondes 1 à 12 débloqués. Des mots des mondes avancés sont sortis comme attendu (ex. `dux` du Monde 12, `miles` du Monde 9, `tempus` du Monde 11, `scribere` et `capere` du Monde 5, `gladiator` du Monde 6). Aucun mot des mondes 13 à 26 n'a été tiré. Les captures sont stockées dans `scratch/t40_duel_m12_q1.png` à `q20.png`.
+
+---
+
+### 4. Liste 3 : Circus Maximus — Profil avancé Mondes 1 à 12 (20 énoncés)
+
+Même profil avancé (mondes 1 à 12).
+
+| N° | Énoncé recopié de l'écran | Mot / Thème identifié | Monde source (`thesaurus.py` / jeu) | Statut |
+|:---|:---|:---|:---|:---|
+| 1 | Que signifie « servus » ? | `servus, -i` | Monde 2 (`app/thesaurus.py`) | **Attendu** |
+| 2 | Que crie le public enthousiaste : « Vince ! » ? | Encouragement | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 3 | Que signifie « currus » ? | Char de course | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 4 | Que signifie « gloria » célébrée par la foule ? | Gloire | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 5 | Que portait l'aurige victorieux sur sa tête ? | Couronne de laurier | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 6 | Quel oiseau sacré représentait la puissance de Rome ? | `aquila` (aigle) | Monde 1 / Fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 7 | Que signifie « auriga » ? | Aurige / cocher | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 8 | Comment dit-on « le cheval » en latin ? | `equus, -i` | Monde 1 / 6 (`app/thesaurus.py`) | **Attendu** |
+| 9 | Quelle faction porte la couleur rouge au cirque ? | Russati (Rouges) | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 10 | Quel linge blanc le magistrat lâchait-il pour donner le départ ? | Mappa | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 11 | Comment dit-on « le ciel » en latin ? | `caelum, -i` | Monde 3 (`app/thesaurus.py`) | **Attendu** |
+| 12 | Quel dieu patron des chevaux protégeait les auriges ? | Neptune Équestre | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 13 | Que signifie « proelium » ? | `proelium, -i` | Monde 9 (`app/thesaurus.py`) | **Attendu** |
+| 14 | Comment appelle-t-on le terre-plein central du cirque ? | La Spina | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 15 | Que signifie « lente » dans la devise impériale « Festina lente » ? | Lentement | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+| 16 | Quel dieu de la guerre inspirait la vaillance des coureurs ? | Mars | Monde 1 / 3 / Fixe Cirque | **Attendu** |
+| 17 | Bourrasque de sable sur la Spina ! La poussière aveugle les chevaux à l'entrée du virage ! | Incident de course | Incident Cirque (`circus_screen.dart`) | **Attendu** |
+| 18 | Que signifie l'adverbe « fortiter » ? | `fortiter` | Monde 9 (`app/thesaurus.py`) | **Attendu** |
+| 19 | Tentative de dépassement agressif ! Un char rival tente de te serrer contre la bordure en marbre ! | Incident de course | Incident Cirque (`circus_screen.dart`) | **Attendu** |
+| 20 | Que crie la foule pour encourager : « Curre ! » ? | Cours ! (`currere`) | Question fixe Cirque (`circus_screen.dart`) | **Attendu** |
+
+**Observation** : Le deck du Circus Maximus combine harmonieusement les questions thématiques sur l'hippodrome (factions, spina, mappa, règles) et le vocabulaire issu des mondes atteints (avec des mots des mondes 1, 2, 3, 6, 9 et, au fil des tours supplémentaires observés en course, des mots comme `leo` du Monde 10, `heros` du Monde 11, `rex` du Monde 12). Aucun terme des mondes 13 à 26 n'apparaît. Les captures sont stockées dans `scratch/t40_circus_m12_q1.png` à `q20.png`.
+
+---
+
+### 5. Restauration du profil d'origine
+
+- Profil restauré depuis `scratch/t40_profil_avant.json` via commande ADB `run-as`.
+- Vérification à l'écran d'accueil de l'application :
+  - Nom du héros : **Marcus**
+  - Titre : **Civis Romanus**
+  - Solde : **556 HS**
+  - Progression globale : **5 / 113 leçons conquises**
+  - Progression 5ème : **5 / 49 leçons terminées**
+  - Quête quotidienne accomplie : Défi du Circus Maximus
+- Capture de confirmation : `scratch/t40_home_restored.png`.
+- Options de débogage Android réinitialisées à 0 : `pointer_location 0`, `show_touches 0`.
+
+---
 
 **Compte rendu** (rempli par l'exécutant) :
-- Fichiers modifiés :
+- Fichiers modifiés : `docs/TACHES.md` uniquement.
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `adb devices` : émulateur `emulator-5554` opérationnel.
+  - Sauvegarde et restauration du profil via `adb push` + `run-as com.luduslatinus.app cp ... app_flutter/ludus_latinus_save.json`.
+  - Scripts d'automatisation de captures et OCR Windows natif exécutés dans `scratch/`.
+  - Vérification de l'arène M1 (`m1-06`) : 3 vies visibles, explication verte après succès, panneau de défaite avec bouton « Retenter l'arène », réinitialisation et victoire complète.
+  - Duel M1 (20 questions) : 100% Monde 1 / rang 1.
+  - Duel M12 (20 questions) : Vocabulaire et culture des Mondes 1 à 12 (`dux`, `miles`, `SPQR`, etc.).
+  - Circus M12 (20 questions) : Mix de questions hippiques et vocabulaire Mondes 1 à 12.
+- Doutes, questions pour l'architecte : Aucun. Les deux fonctionnalités (arènes à 3 vies avec explication et restriction des questions des jeux aux mondes atteints) fonctionnent parfaitement à l'écran.
+- Reste à faire : Rien (tâche achevée et profil restauré).
 
 ---
 
