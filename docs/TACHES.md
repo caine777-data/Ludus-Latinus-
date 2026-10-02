@@ -3321,7 +3321,7 @@ veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
 
 ## T36 — Brouillon d'un README à jour (sans toucher au README)
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : `README.md` décrit encore l'ancienne appli Python et « 7
 mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
@@ -3344,13 +3344,38 @@ mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
    ta source dans le compte rendu.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] `README.md` n'est pas modifié.
-- [ ] Le brouillon tient en moins de 150 lignes.
-- [ ] Le compte rendu liste chaque chiffre du brouillon avec sa source.
-- [ ] Un commit `docs: brouillon du README`.
+- [x] `README.md` n'est pas modifié.
+- [x] Le brouillon tient en moins de 150 lignes (88 lignes mesurées).
+- [x] Le compte rendu liste chaque chiffre du brouillon avec sa source.
+- [x] Un commit `docs: brouillon du README`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/propositions/README_propose.md` (création du brouillon proposé, 88 lignes)
+  - `docs/TACHES.md` (mise à jour du compte rendu)
+  - Strict respect de la consigne : `README.md` à la racine n'a pas été touché.
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `python scratch/inspect_dataset.py` : comptage et structuration des 26 mondes et 113 leçons dans `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json`.
+  - `python -m unittest discover -s tests` : 250 tests exécutés avec succès (`Ran 250 tests in 11.372s, OK`).
+  - Vérification des contraintes stylistiques sur `docs/propositions/README_propose.md` :
+    - Longueur : 88 lignes (seuil maximal : 150 lignes).
+    - Ponctuation : aucun tiret long (`—`, `–` ou `--`).
+    - Émojis par titre : maximum 1 émoji par titre.
+    - Ton : phrases courtes et directes, zéro superlatif.
+- Recensement exhaustif des chiffres cités et sources des données :
+  - `26` (nombre total de mondes) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`metadata.total_mondes: 26`).
+  - `113` (nombre total de leçons) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`metadata.total_lecons: 113`).
+  - `5e`, `4e`, `3e` (classes du collège) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`classes[].id`: `5eme`, `4eme`, `3eme`).
+  - `10` (mondes en 5e) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`classes[0].mondes_ids`: 10 mondes, `monde1` à `monde10`).
+  - `49` (leçons en 5e) : somme calculée dans `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (6 + 5 + 5 + 5 + 5 + 4 + 4 + 5 + 5 + 5 = 49).
+  - `8` (mondes en 4e) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`classes[1].mondes_ids`: 8 mondes, `monde11` à `monde18`).
+  - `32` (leçons en 4e) : somme calculée dans `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (8 mondes × 4 leçons = 32).
+  - `8` (mondes en 3e) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`classes[2].mondes_ids`: 8 mondes, `monde19` à `monde26`).
+  - `32` (leçons en 3e) : somme calculée dans `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (8 mondes × 4 leçons = 32).
+  - Numéros des mondes (1 à 26) et nombre de leçons par monde (6, 5 ou 4) : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (`mondes[].id` et `len(mondes[].lessons)`).
+  - `six` (jeux antiques : Duel, Circus, César, Marché, Taverne, Memoria) : écrans fonctionnels dans `ludus_latinus_mobile/lib/ui/features/` et liste requise par l'étape 2 de T36.
+  - Étapes de téléchargement (1 à 4) : liste ordonnée des étapes GitHub Actions.
+  - `3.47+` (version Flutter minimale) : fixée à `3.47.4` dans `.github/workflows/appli.yml` (`FLUTTER_VERSION: '3.47.4'`).
+  - `3.10+` (version Python minimale) : documentée à la ligne 55 de `README.md` (`Python 3.10 ou plus`).
+- Doutes, questions pour l'architecte : Aucun doute. Le fichier `docs/propositions/README_propose.md` est prêt pour relecture et arbitrage par l'architecte.
+- Reste à faire : Aucune tâche en attente dans `docs/TACHES.md`.
