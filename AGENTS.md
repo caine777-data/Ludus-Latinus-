@@ -208,7 +208,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (59 sur 59 le 02/10/2026 ; 54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (64 sur 64 le 02/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -324,6 +324,24 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Jeux liés à la progression, arènes à enjeu** (02/10/2026) — deux points
+  de la phase 2. (1) Le Duel et le Circus : `VocabQuestion.pourJeu`
+  fabrique des questions de vocabulaire à partir du Thesaurus des mondes
+  atteints (`repo.mondesAtteints`). Chaque question fixe du Duel porte une
+  clé `monde` (rang du monde où sa notion est enseignée) et ne sort qu'une
+  fois ce monde atteint (`_questionsDuJoueur`) ; si le paquet a moins de
+  12 questions, il est complété par les mondes suivants les plus proches.
+  Le Circus garde ses 46 questions sur le cirque et y ajoute 24 questions de
+  vocabulaire atteint. (2) Les arènes de fin de monde
+  (`arena_challenge_widget.dart`) : trois vies, une erreur en coûte une, à
+  zéro l'arène se retente avec les réponses remélangées ; après une bonne
+  réponse, l'explication (clé `explanation`, jamais affichée jusqu'ici)
+  reste à l'écran jusqu'au bouton « Continuer le combat ». Tests :
+  `arene_test.dart` et deux cas dans `vocab_question_test.dart` (64 tests
+  Flutter). Restent de la phase 2 : déclinaisons en 5e et explications par
+  mauvaise réponse (contenu à valider par Cédric, brouillon en T43), carte
+  du Panthéon par monde (état des lieux en T42).
 
 - **Tournée de la 3e (T39) et deux retouches d'exercices** (02/10/2026) —
   les 16 exercices de 3e ont été joués à l'écran : aucun ne redonne sa

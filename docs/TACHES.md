@@ -3612,3 +3612,193 @@ Statut : VALIDÉ
     2. **Retour à la ligne de la boîte de texte dans les exercices à trou** : lorsque la proposition précédant le trou est un peu longue, le champ de saisie passe sur la ligne suivante en emportant la ponctuation finale (constaté sur `m22-02`, `m23-02`, `m26-02`).
 - Reste à faire :
   - Validation par l'architecte pour passage de `FAIT` à `VALIDÉ`.
+
+---
+
+## T40 — Vérifier à l'écran les arènes et les questions des jeux (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : deux changements du 2 octobre sont à voir à l'écran.
+(1) Les arènes de fin de monde ont trois vies et affichent l'explication
+après une bonne réponse. (2) Le Duel et le Circus posent des questions sur
+les mondes que l'élève a atteints.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t40_*`. Le profil est modifié **puis restauré** (méthode de T26).
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Installe la version actuelle. Sauvegarde le profil.
+2. **Arène du monde 1** (`m1-06`) : trompe-toi une fois (un cœur disparaît,
+   la question reste), réponds juste (l'explication verte et le bouton
+   « Continuer le combat » apparaissent). Puis recommence la leçon et
+   trompe-toi trois fois : le panneau « … t'a repoussé ! » et le bouton
+   « Retenter l'arène » doivent apparaître ; retente et gagne.
+3. **Duel, profil au monde 1** (le profil de test) : joue jusqu'à voir
+   20 questions. Recopie chaque énoncé. Attendu : du vocabulaire du monde 1
+   (amicus, lupa, nomen, salve, vale, magister, Roma, via, esse) et quelques
+   questions de culture des premiers mondes ; **pas** « Rex », « Hostis »,
+   « imparfait », « Urbs ».
+4. **Duel, profil avancé** : pousse un profil où `completed` contient toutes
+   les leçons des mondes 1 à 12. Rejoue 20 questions et recopie-les.
+   Attendu : des mots des mondes 1 à 12, et « Rex », « Dux », « Civis »
+   peuvent sortir.
+5. **Circus**, même profil avancé : recopie 20 questions. Attendu : un
+   mélange de questions sur le cirque et de vocabulaire des mondes atteints.
+6. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Le parcours de l'arène, étape par étape, avec captures.
+- [ ] Trois listes de 20 énoncés recopiés de l'écran, avec pour chacun le
+      monde du mot (cherche-le dans `app/thesaurus.py` et
+      `app/thesaurus_complement.py`) et « attendu » ou « inattendu ».
+- [ ] Le profil d'origine est restauré (capture).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: vérification des arènes et des questions des jeux`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T41 — Mesures de jeu sur les six jeux (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'architecte prépare un audit du plaisir de jeu. Il lui faut
+des **mesures**, pas des avis : combien de temps dure une partie, ce qu'on
+y fait, ce qui se répète.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures et vidéos
+dans `scratch/t41_*`. Le profil est modifié **puis restauré**.
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Sauvegarde le profil. Pousse un profil qui ouvre tous les jeux
+   (toutes les leçons des mondes 1 à 6). **N'achète rien.**
+2. Pour chacun des six jeux (Duel, Circus, César, Marché, Taverne, Memoria),
+   joue **trois parties complètes** et note pour chaque partie :
+   - la durée, du premier écran du jeu au retour au menu ;
+   - le nombre de questions ou d'actions demandées ;
+   - le nombre de questions vues deux fois dans la même partie ;
+   - le temps passé à attendre sans rien pouvoir faire (animations, vidéos,
+     dialogues qu'on ne peut pas passer) ;
+   - les sesterces gagnés ;
+   - ce qui change entre la 1re et la 3e partie (rien ? nouvelles questions ?
+     difficulté ?).
+3. Pour chaque jeu, note aussi, **sans juger** : ce qui se passe quand on
+   perd ; ce qu'on peut choisir (faction, posture, mise…) et si ce choix
+   change réellement quelque chose (teste-le) ; s'il y a un record, un
+   classement ou un objectif à long terme.
+4. Enregistre une vidéo d'une partie par jeu :
+   `adb shell screenrecord --time-limit 120 /sdcard/t41_<jeu>.mp4`, puis
+   `adb pull`.
+5. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par jeu avec les trois parties et les six mesures.
+- [ ] Pour chaque jeu, les réponses factuelles de l'étape 3.
+- [ ] Six vidéos dans `scratch/`.
+- [ ] Le profil d'origine est restauré (capture).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: mesures de jeu`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T42 — État des lieux du Panthéon (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : on veut qu'un monde terminé donne une carte du Panthéon.
+Avant de coder, il faut savoir ce qui existe.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement.
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Lis `ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart`.
+   Liste les cartes écrites en dur dans ce fichier (nom, rareté, image,
+   prix) et explique comment on en obtient une aujourd'hui.
+2. Lis la clé `cartes_collection` de
+   `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` et sa
+   source dans `content/cartes_data.py`. Liste les cartes (identifiant, nom,
+   catégorie, rareté, image). Dis si l'appli mobile lit cette clé
+   (`grep -rn "cartes_collection\|cartesCollection" ludus_latinus_mobile/lib`).
+3. Pour chaque image citée, dis si le fichier existe dans
+   `ludus_latinus_mobile/assets/images/` et si plusieurs cartes partagent la
+   même image.
+4. Propose un tableau **monde → carte** pour les 26 mondes : la carte dont
+   le sujet est enseigné dans ce monde (lis le titre et les leçons du monde).
+   Quand aucune carte ne convient, écris « à créer » et propose un sujet.
+5. Sur l'émulateur, capture l'écran du Panthéon tel qu'il est.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Les deux listes de cartes, avec leurs sources (fichier et ligne).
+- [ ] Le tableau des images : existe ou non, partagée ou non.
+- [ ] Le tableau monde → carte, 26 lignes.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: état des lieux du Panthéon`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T43 — Brouillon : une explication par mauvaise réponse (sans toucher au contenu)
+
+Statut : À FAIRE
+
+**Objectif** : dans les 28 leçons de type `quiz`, une mauvaise réponse
+affiche aujourd'hui la même explication quelle que soit l'erreur. On veut
+une phrase **par mauvaise réponse**, qui dise pourquoi elle est fausse sans
+donner la bonne. Tu prépares le brouillon ; l'architecte le relira et
+Cédric le validera.
+
+**Périmètre** :
+- `docs/propositions/explications_quiz.md` (nouveau)
+- `docs/TACHES.md`
+**Ne modifie pas `content/`.**
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Liste les 28 leçons `quiz` avec un script qui lit `content` (pas de
+   recopie à la main) : identifiant, question, options, bonne réponse,
+   explication actuelle.
+2. Pour chaque mauvaise option, écris une phrase de 20 mots au plus, qui
+   explique l'erreur à un élève de collège : ce que ce mot veut dire en
+   réalité, ou la confusion probable. **Elle ne doit pas contenir la bonne
+   réponse.**
+3. Si une mauvaise option est absurde (elle ne correspond à aucune confusion
+   plausible), signale-la : l'architecte la remplacera.
+4. Vérifie avec un script qu'aucune de tes phrases ne contient le texte de
+   la bonne réponse.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par leçon : option, juste ou fausse, phrase proposée.
+- [ ] La liste des options signalées comme absurdes.
+- [ ] La sortie du script de l'étape 4.
+- [ ] `content/` n'est pas modifié.
+- [ ] Un commit `docs: brouillon des explications par mauvaise réponse`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
