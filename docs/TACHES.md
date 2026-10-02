@@ -3398,7 +3398,9 @@ mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
 
 ## T37 — Vérifier à l'écran les corrections du 2 octobre (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (02/10/2026)** : conforme, réglages remis.
 
 **Objectif** : l'architecte a corrigé les défauts de T30 et T32. Il a vu le
 Duel, Ludi et Memoria en 360 x 640. Restent à voir : les cartes des cas en
@@ -3530,7 +3532,9 @@ Statut : ANNULÉ
 
 ## T39 — Tournée des exercices de 3e (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (02/10/2026)** : les 16 captures sont bonnes et le profil est restauré, mais **le tableau ne décrit pas ce que montrent tes captures** : m25-02 n'est pas « Poeta carmen cecinit » mais « Felix s… poeta ! », m22-02 n'est pas « hostium urbe victa » mais « Oppido capt… », m24-02 n'est pas « Audio amicum venire » mais « Puto amic… venire ». **Un compte rendu se recopie depuis l'écran, jamais de mémoire** (règle ajoutée à `AGENTS.md`, section 8). Suites données par l'architecte : la case de saisie des trous est à la taille de la réponse, et le puzzle distingue « mauvais ordre » de « mauvais mots ». Les titres coupés sur la carte restent ainsi : le titre complet s'affiche dans la leçon.
 
 **Objectif** : les 16 exercices de 3e ont été réécrits le 1er octobre
 (mondes 19 à 26). Personne ne les a joués à l'écran.

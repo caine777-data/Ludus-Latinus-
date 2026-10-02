@@ -325,6 +325,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Tournée de la 3e (T39) et deux retouches d'exercices** (02/10/2026) —
+  les 16 exercices de 3e ont été joués à l'écran : aucun ne redonne sa
+  réponse. Deux retouches : la case de saisie des trous
+  (`cloze_fill_widget.dart`) fait 72, 96 ou 120 px selon la longueur de la
+  réponse, au lieu de 120 toujours, ce qui évitait rarement un retour à la
+  ligne ; le puzzle (`word_puzzle_widget.dart`) dit « Les mots ne sont pas
+  tous les bons » quand une étiquette-piège est posée, et garde « pas le
+  bon ordre » quand seuls les mots sont mal rangés. Le tableau de T39
+  contenait des phrases inventées : voir la règle ajoutée en section 8.
+
 - **Petits téléphones et T30 à T36 relues** (02/10/2026) — la tournée T32
   en 360 x 640 a montré un blocage : au Duel, deux réponses sur quatre
   sortaient de l'écran, sans défilement possible. Corrigé et vu à l'écran
@@ -624,3 +634,9 @@ manque, ne modifie pas `AGENTS.md` : écris-le dans ton compte rendu, sous
 encore », « je n'ai pas pu vérifier sur l'émulateur ») est plus utile qu'un
 compte rendu rassurant. Ne prétends jamais avoir vérifié ce que tu n'as pas
 vérifié.
+
+**Ce que tu cites se recopie depuis l'écran ou le fichier, jamais de
+mémoire.** Une phrase latine, un message de Lupulus, un chiffre : rouvre la
+capture ou le fichier au moment d'écrire. En T39, les captures étaient
+justes mais le tableau citait des phrases absentes de l'appli. Et tu
+t'arrêtes au statut `FAIT` : seul l'architecte écrit `VALIDÉ`.

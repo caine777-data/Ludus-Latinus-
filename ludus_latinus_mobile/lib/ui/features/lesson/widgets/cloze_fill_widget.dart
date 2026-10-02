@@ -154,8 +154,13 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                       ),
                     ),
                   // Zone de saisie / trou
+                  // Case à la taille de la réponse (trois paliers, pour ne pas
+                  // trahir sa longueur exacte) : une case trop large renvoyait
+                  // la fin de la phrase à la ligne.
                   Container(
-                    width: 120,
+                    width: widget.solution.length <= 2
+                        ? 72
+                        : (widget.solution.length <= 4 ? 96 : 120),
                     height: 38,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(

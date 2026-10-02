@@ -112,8 +112,13 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
       widget.onMistake?.call();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
+      // Mêmes mots mais mal rangés, ou bien une étiquette-piège (ou un oubli) ?
+      final choisis = proposition.split(' ')..sort();
+      final attendus = expected.split(' ')..sort();
       setState(() {
-        _feedbackMessage = '« Ce n\'est pas tout à fait le bon ordre des mots. Réessaie ! »';
+        _feedbackMessage = choisis.join(' ') == attendus.join(' ')
+            ? '« Ce n\'est pas tout à fait le bon ordre des mots. Réessaie ! »'
+            : '« Les mots ne sont pas tous les bons. Regarde les terminaisons du latin ! »';
       });
     }
   }
