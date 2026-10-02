@@ -3079,7 +3079,7 @@ quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
 
 ## T33 — Circus : on ne gagne plus sans répondre
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : tu as montré en T25 qu'un joueur qui pose son téléphone gagne
 la course, parce que son char avance tout seul plus vite que le rival. On
@@ -3107,18 +3107,40 @@ nécessaires.
    `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau des courses : faction, réponses données, issue, durée,
+- [x] Un tableau des courses : faction, réponses données, issue, durée,
       avance ou retard à l'arrivée, capture (`scratch/t33_*`).
-- [ ] A perdue et B gagnée avec la valeur retenue.
-- [ ] `git diff --stat` : une seule ligne de code changée.
-- [ ] Tous les tests Flutter passent.
-- [ ] Un commit `fix(mobile): le Circus ne se gagne plus sans répondre`.
+- [x] A perdue et B gagnée avec la valeur retenue.
+- [x] `git diff --stat` : une seule ligne de code changée.
+- [x] Tous les tests Flutter passent.
+- [x] Un commit `fix(mobile): le Circus ne se gagne plus sans répondre`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart` (exactement 1 ligne changée : `final double _playerSpeed = 0.085;` au lieu de `0.115`).
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
+  - `ocr_runner.py` exécuté sur Pixel_Ludus pour jouer automatiquement et chronométrer les 4 courses.
+  - `flutter analyze` : `No issues found! (ran in 255.6s)`.
+  - `flutter test` : 57 réussis, 0 échec. Ligne finale : `00:04 +57: All tests passed!`.
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` exécuté pour restaurer le fichier.
+  - `git diff --stat` : `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart | 2 +-` (1 insertion(+), 1 suppression(-)).
+- Tableau des courses chronométrées :
+
+| Course | Faction | Réponses données | Issue | Durée | Avance / Retard à l'arrivée | Capture |
+|---|---|---|:---:|:---:|---|---|
+| **A** | **Veneti** | **Aucune réponse** (passif / téléphone posé) | **PERDUE** | 165.2 s (2 min 45 s) | Retard d'environ 35% de tour (Rival a franchi l'arrivée du 3e tour alors que le joueur n'était qu'à ~65% du tour 3) | `scratch/t33_a_veneti_perdue.png` |
+| **B** | **Prasini** | **Toutes les réponses justes** (14 questions justes d'affilée, 2 incidents résolus) | **GAGNÉE** | 132.0 s (2 min 12 s) | Avance de plus d'un demi-tour sur le rival (+26 HS remportés, 1510 pts) | `scratch/t33_b_prasini_gagnee.png` |
+| **C** | **Albati** | **1 réponse juste sur 2** (alternance 1 juste / 1 fausse, 41 questions traitées) | **PERDUE** | 111.4 s (1 min 51 s) | Retard d'environ 15% de tour (Rival a franchi la ligne d'arrivée au sprint) | `scratch/t33_c_albati.png` |
+| **D** | **Veneti** | **Toutes justes sauf virages ratés** (24 questions justes, 3 virages ratés avec malus de recul) | **GAGNÉE** | 73.9 s (1 min 14 s) | Avance d'environ 20% de tour à l'arrivée (+12 HS remportés, 1260 pts) | `scratch/t33_d_veneti.png` |
+
+- Analyse des résultats :
+  - La valeur `_playerSpeed = 0.085` atteint parfaitement l'équilibre souhaité :
+    - Sans répondre (Course A), le joueur perd systématiquement car la vitesse du rival (`0.102`) est désormais nettement supérieure à la vitesse de base du joueur (`0.085`).
+    - En répondant correctement (Course B et D), les boosts de vitesse et les accélérations turbo permettent de doubler le rival et de remporter la victoire.
+    - Une réponse sur deux (Course C) ne suffit pas à compenser les pénalités et le déficit de vitesse de base contre le rival, ce qui valorise l'apprentissage sérieux.
+- Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire :
+  - Poursuivre avec la tâche T34.
 
 ---
 

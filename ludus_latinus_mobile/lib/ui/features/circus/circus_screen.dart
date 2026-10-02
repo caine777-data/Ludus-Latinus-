@@ -81,7 +81,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   double _playerProgress = 0.0;
   double _rivalProgress = 0.0;
   // Calibrage pour enfants 11-15 ans : tour de ~25s, course totale de ~80s
-  final double _playerSpeed = 0.115;
+  final double _playerSpeed = 0.085;
   final double _rivalSpeed = 0.102;
 
   int _currentLap = 1;
