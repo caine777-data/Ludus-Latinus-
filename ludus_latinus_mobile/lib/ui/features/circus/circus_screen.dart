@@ -6,6 +6,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
+import '../../../data/models/vocab_question.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -416,9 +417,17 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   }
 
   void _loadNewQuestion() {
-    // Si la pioche est vide, on brasse à nouveau le deck complet de 46 questions
+    // Si la pioche est vide, on la refait : les 46 questions sur le cirque,
+    // plus du vocabulaire tiré du Thesaurus des mondes que l'élève a atteints.
     if (_questionDeck.isEmpty) {
-      _questionDeck = List<Map<String, dynamic>>.from(_allQuestions)..shuffle();
+      _questionDeck = [
+        ..._allQuestions,
+        ...VocabQuestion.pourJeu(
+          dictionary: widget.repo.thesaurus,
+          mondes: widget.repo.mondesAtteints,
+          count: 24,
+        ),
+      ]..shuffle();
     }
     // Dépilage sans remise : aucune répétition possible durant toute la course
     _currentQuestion = _questionDeck.removeAt(0);

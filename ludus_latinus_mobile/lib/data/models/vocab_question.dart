@@ -79,4 +79,54 @@ class VocabQuestion {
     }
     return questions;
   }
+
+  /// Questions de vocabulaire pour les mini-jeux (Duel, Circus), au format de
+  /// leurs questions fixes : `q`, `rep`, `fausses`, `explication`.
+  /// Seuls les mots des [mondes] déjà atteints sont interrogés ; les mauvaises
+  /// réponses viennent de la même catégorie, de préférence parmi ces mondes.
+  static List<Map<String, dynamic>> pourJeu({
+    required List<ThesaurusEntry> dictionary,
+    required Set<String> mondes,
+    int count = 16,
+    math.Random? random,
+  }) {
+    final rnd = random ?? math.Random();
+    final vus = <String>{};
+    final connus = dictionary
+        .where((e) => e.cat != 'Devise' && mondes.contains(e.monde) && vus.add(e.latin))
+        .toList()
+      ..shuffle(rnd);
+
+    final questions = <Map<String, dynamic>>[];
+    for (final e in connus) {
+      if (questions.length >= count) break;
+      final latinVersFrancais = questions.length.isEven;
+      final bonne = latinVersFrancais ? shortFrench(e) : shortLatin(e);
+      final memeCategorie = dictionary.where((d) => d != e && d.cat == e.cat && d.cat != 'Devise').toList()
+        ..shuffle(rnd);
+      // Les mots déjà rencontrés d'abord : un piège inconnu se repère trop bien.
+      final pieges = [
+        ...memeCategorie.where((d) => mondes.contains(d.monde)),
+        ...memeCategorie.where((d) => !mondes.contains(d.monde)),
+      ];
+      final fausses = <String>[];
+      for (final d in pieges) {
+        final v = latinVersFrancais ? shortFrench(d) : shortLatin(d);
+        if (v.toLowerCase() != bonne.toLowerCase() && !fausses.contains(v)) fausses.add(v);
+        if (fausses.length == 3) break;
+      }
+      if (fausses.length < 3) continue;
+      questions.add({
+        'q': latinVersFrancais
+            ? 'Que signifie « ${shortLatin(e)} » ?'
+            : 'Comment dit-on « ${shortFrench(e)} » en latin ?',
+        'rep': bonne,
+        'fausses': fausses,
+        'explication': e.ex.isEmpty
+            ? '${e.latin} : ${e.fr}.'
+            : '${e.latin} : ${e.fr}. ${e.ex} (${e.exFr})',
+      });
+    }
+    return questions;
+  }
 }

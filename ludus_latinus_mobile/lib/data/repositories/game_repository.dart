@@ -76,6 +76,23 @@ class GameRepository extends ChangeNotifier {
     ];
   }
 
+  /// Mondes où l'élève a validé au moins une leçon. Le premier monde compte
+  /// toujours : on y entre dès le premier lancement.
+  Set<String> get mondesAtteints => {
+        if (worlds.isNotEmpty) worlds.first.id,
+        for (final w in worlds)
+          if (w.lessons.any((l) => isLessonCompleted(l.id))) w.id,
+      };
+
+  /// Rang (1 pour le monde 1) du monde le plus avancé parmi [mondesAtteints].
+  int get rangMondeAtteint {
+    var rang = 1;
+    for (var i = 0; i < worlds.length; i++) {
+      if (worlds[i].lessons.any((l) => isLessonCompleted(l.id))) rang = i + 1;
+    }
+    return rang;
+  }
+
   /// Classe (5eme, 4eme, 3eme) d'un monde de la Via Appia.
   String? classeDuMonde(String mondeId) {
     for (final c in classes) {

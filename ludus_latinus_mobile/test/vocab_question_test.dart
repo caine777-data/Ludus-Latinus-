@@ -67,4 +67,27 @@ void main() {
     final mots = qs.map((q) => VocabQuestion.shortLatin(q.entry)).toSet();
     expect(mots.intersection({'pater', 'filius', 'hortus'}).length, 2);
   });
+
+  test('Mini-jeux : on n\'interroge que les mots des mondes atteints', () {
+    const atteints = {'monde1', 'monde2'};
+    final connus = <String>{
+      for (final e in dico)
+        if (atteints.contains(e.monde)) ...[VocabQuestion.shortLatin(e), VocabQuestion.shortFrench(e)],
+    };
+    for (var graine = 0; graine < 20; graine++) {
+      final qs = VocabQuestion.pourJeu(dictionary: dico, mondes: atteints, random: math.Random(graine));
+      expect(qs.length, greaterThanOrEqualTo(8));
+      for (final q in qs) {
+        expect(connus, contains(q['rep']), reason: q['q'] as String);
+        final choix = [q['rep'] as String, ...(q['fausses'] as List<String>)];
+        expect(choix.length, 4);
+        expect(choix.map((c) => c.toLowerCase()).toSet().length, 4, reason: q['q'] as String);
+        expect(q['explication'] as String, isNotEmpty);
+      }
+    }
+  });
+
+  test('Mini-jeux : sans monde atteint, aucune question n\'est fabriquée', () {
+    expect(VocabQuestion.pourJeu(dictionary: dico, mondes: const {}), isEmpty);
+  });
 }

@@ -6,6 +6,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
 import '../../core/widgets.dart';
 import '../../core/cinematic_player.dart';
+import '../../../data/models/vocab_question.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/avatar_assets.dart';
@@ -139,194 +140,228 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   List<Map<String, dynamic>> _duelDeck = [];
 
+  // `monde` : rang du monde où la notion est enseignée. Une question n'est
+  // posée qu'à l'élève qui a atteint ce monde (voir _questionsDuJoueur).
   final List<Map<String, dynamic>> _duelQuestions = [
     {
+      'monde': 4,
       'q': 'Que signifie « Lupus » ?',
       'rep': 'Le loup',
       'fausses': ['Le lièvre', 'La lune', 'Le lynx'],
       'explication': 'Lupus (m.) désigne le loup. La louve (lupa) allaita Romulus et Rémus.',
     },
     {
+      'monde': 4,
       'q': 'Quel est le cas du sujet et de son attribut en latin ?',
       'rep': 'Le Nominatif',
       'fausses': ['L\'Accusatif', 'L\'Ablatif', 'Le Datif'],
       'explication': 'Le nominatif est le premier cas de la déclinaison, fonction sujet.',
     },
     {
+      'monde': 4,
       'q': 'Quel cas latin exprime le Complément d\'Objet Direct (COD) ?',
       'rep': 'L\'Accusatif',
       'fausses': ['Le Génitif', 'Le Datif', 'L\'Ablatif'],
       'explication': 'L\'accusatif marque le patient ou but de l\'action (terminaison en -m au singulier).',
     },
     {
+      'monde': 11,
       'q': 'Quel cas latin exprime la possession (complément du nom) ?',
       'rep': 'Le Génitif',
       'fausses': ['Le Datif', 'L\'Ablatif', 'Le Vocatif'],
       'explication': 'Le génitif indique l\'appartenance (ex: Gladius Caesaris = le glaive de César).',
     },
     {
+      'monde': 12,
       'q': 'Quel cas latin correspond au COI et à l\'attribution ?',
       'rep': 'Le Datif',
       'fausses': ['L\'Accusatif', 'Le Nominatif', 'L\'Ablatif'],
       'explication': 'Le datif sert à indiquer à qui ou pour qui l\'action est faite.',
     },
     {
+      'monde': 12,
       'q': 'Quel cas exprime les compléments de moyen, de temps et de lieu ?',
       'rep': 'L\'Ablatif',
       'fausses': ['Le Vocatif', 'Le Génitif', 'L\'Accusatif'],
       'explication': 'L\'ablatif synthétise l\'instrumental, le séparatif et le locatif.',
     },
     {
+      'monde': 1,
       'q': 'Quel cas sert à interpeller directement quelqu\'un ?',
       'rep': 'Le Vocatif',
       'fausses': ['Le Datif', 'Le Nominatif', 'L\'Accusatif'],
       'explication': 'Exemple célèbre : « Ave, Caesar ! » ou « Tu quoque, mi fili ! ».',
     },
     {
+      'monde': 14,
       'q': 'Que signifie « Bellum » ?',
       'rep': 'La guerre',
       'fausses': ['La beauté', 'Le bœuf', 'La boisson'],
       'explication': 'Bellum (n.) donne « belligérant », « belliqueux » et « rébellion ».',
     },
     {
+      'monde': 19,
       'q': 'Que signifie « Pax » ?',
       'rep': 'La paix',
       'fausses': ['Le pain', 'Le mur', 'Le pas'],
       'explication': 'Pax Romana désignait la longue période de paix impériale.',
     },
     {
+      'monde': 3,
       'q': 'Qui est le dieu romain de la guerre ?',
       'rep': 'Mars',
       'fausses': ['Jupiter', 'Neptune', 'Vulcain'],
       'explication': 'Mars, équivalent d\'Arès chez les Grecs, est l\'ancêtre des Romains.',
     },
     {
+      'monde': 9,
       'q': 'Que signifie « Gladius » ?',
       'rep': 'Le glaive',
       'fausses': ['Le bouclier', 'Le casque', 'La lance'],
       'explication': 'L\'épée courte à double tranchant des légionnaires, d\'où « gladiateur ».',
     },
     {
+      'monde': 6,
       'q': 'Comment s\'appelle le grand bouclier rectangulaire romain ?',
       'rep': 'Le Scutum',
       'fausses': ['La Lorica', 'Le Pilum', 'La Galea'],
       'explication': 'Le scutum courbé protégeait le corps et formait la fameuse tortue.',
     },
     {
+      'monde': 9,
       'q': 'Que désigne le « Pilum » lancé par les légionnaires ?',
       'rep': 'Le javelot lourd',
       'fausses': ['La flèche', 'Le bouclier', 'La dague'],
       'explication': 'Le pilum avait une pointe en fer doux conçue pour se tordre après impact.',
     },
     {
+      'monde': 9,
       'q': 'Comment appelle-t-on le casque de bronze du guerrier romain ?',
       'rep': 'La Galea',
       'fausses': ['La Caliga', 'Le Sagum', 'La Balteus'],
       'explication': 'La galea protégeait la tête, les joues et la nuque.',
     },
     {
+      'monde': 12,
       'q': 'Que signifie « Rex » (3e déclinaison) ?',
       'rep': 'Le roi',
       'fausses': ['La loi', 'La reine', 'Le chef'],
       'explication': 'Rex (génitif regis) donne « royal », « régime » et « souverain ».',
     },
     {
+      'monde': 11,
       'q': 'Que signifie « Civis » ?',
       'rep': 'Le citoyen',
       'fausses': ['Le paysan', 'Le marchand', 'Le marin'],
       'explication': 'Civis donne citoyen, civil et civilité. « Civis Romanus sum ! ».',
     },
     {
+      'monde': 17,
       'q': 'Que signifie « Urbs » ?',
       'rep': 'La ville',
       'fausses': ['Le champ', 'La forêt', 'La colline'],
       'explication': 'Urbs désigne la ville fortifiée, et par excellence la cité de Rome.',
     },
     {
+      'monde': 5,
       'q': 'Que signifie « Miles » ?',
       'rep': 'Le soldat / guerrier',
       'fausses': ['Le maître', 'Le juge', 'Le médecin'],
       'explication': 'Miles (génitif militis) a donné le mot « militaire ».',
     },
     {
+      'monde': 12,
       'q': 'Que signifie « Dux » ?',
       'rep': 'Le chef / général',
       'fausses': ['Le prisonnier', 'L\'artisan', 'L\'esclave'],
       'explication': 'Dux (génitif ducis) vient de ducere (mener) et a donné « duc ».',
     },
     {
+      'monde': 13,
       'q': 'Que signifie « Hostis » ?',
       'rep': 'L\'ennemi',
       'fausses': ['L\'ami', 'L\'invité', 'Le voisin'],
       'explication': 'Hostis désignait l\'ennemi public en temps de guerre (d\'où « hostile »).',
     },
     {
+      'monde': 15,
       'q': 'Quel suffixe caractérise l\'imparfait latin ?',
       'rep': '-ba-',
       'fausses': ['-vi-', '-re-', '-isse-'],
       'explication': 'Exemples : amabam (j\'aimais), legebam (je lisais).',
     },
     {
+      'monde': 7,
       'q': 'Que signifie « Veni, vidi, vici » prononcé par César ?',
       'rep': 'Je suis venu, j\'ai vu, j\'ai vaincu',
       'fausses': ['Vivre, aimer, mourir', 'Parler, écouter, comprendre', 'Courir, sauter, gagner'],
       'explication': 'Trois parfaits historiques concis annonçant la victoire éclair de Zéla.',
     },
     {
+      'monde': 17,
       'q': 'Que signifie « Alea iacta est » ?',
       'rep': 'Le sort en est jeté',
       'fausses': ['La guerre commence', 'La paix est signée', 'Les dés sont perdus'],
       'explication': 'Phrase attribuée à César franchissant le fleuve Rubicon en 49 av. J.-C.',
     },
     {
+      'monde': 6,
       'q': 'Que disaient les gladiateurs : « Morituri te salutant » ?',
       'rep': 'Ceux qui vont mourir te saluent',
       'fausses': ['Nous combattons pour la gloire', 'Donne-nous la vie', 'Rome est invincible'],
       'explication': 'Salut traditionnel adressé à l\'empereur avant le combat à mort.',
     },
     {
+      'monde': 3,
       'q': 'Qui est le roi de l\'Olympe brandissant la foudre ?',
       'rep': 'Jupiter',
       'fausses': ['Pluton', 'Neptune', 'Saturne'],
       'explication': 'Jupiter (Zeus en grec), dieu suprême de la justice et du ciel.',
     },
     {
+      'monde': 3,
       'q': 'Quelle déesse romaine incarne la sagesse et la stratégie ?',
       'rep': 'Minerve',
       'fausses': ['Vénus', 'Diane', 'Cérès'],
       'explication': 'Minerve (Athéna), née tout armée de la tête de Jupiter.',
     },
     {
+      'monde': 9,
       'q': 'Comment s\'appelle le corps d\'armée d\'élite de 5000 soldats ?',
       'rep': 'La Légion (Legio)',
       'fausses': ['La Cohorte', 'La Centurie', 'Le Manipule'],
       'explication': 'La légion romaine était l\'unité tactique redoutable de la République et de l\'Empire.',
     },
     {
+      'monde': 9,
       'q': 'Quel officier commande une centurie d\'environ 80 hommes ?',
       'rep': 'Le Centurion',
       'fausses': ['Le Tribun', 'Le Légat', 'Le Préfet'],
       'explication': 'Le centurion portait un casque à crête transversale pour être repéré au combat.',
     },
     {
+      'monde': 9,
       'q': 'Comment appelle-t-on la célèbre formation sous les boucliers ?',
       'rep': 'La Tortue (Testudo)',
       'fausses': ['Le Hérisson', 'L\'Aigle', 'Le Bélier'],
       'explication': 'Les boucliers imbriqués au-dessus et sur les flancs repoussaient flèches et javelines.',
     },
     {
+      'monde': 12,
       'q': 'Que signifie l\'abréviation « SPQR » ?',
       'rep': 'Le Sénat et le Peuple Romain',
       'fausses': ['Rome Pour Toujours', 'Paix et Victoire Romaine', 'Gloire à l\'Empire'],
       'explication': 'Senatus Populusque Romanus, la formule souveraine de l\'État romain.',
     },
     {
+      'monde': 11,
       'q': 'Que signifie « Virtus » chez les Romains ?',
       'rep': 'Le courage viril et la vaillance',
       'fausses': ['La faiblesse', 'La fuite', 'L\'argent'],
       'explication': 'Virtus (de vir, l\'homme) désigne le courage indomptable au combat.',
     },
     {
+      'monde': 9,
       'q': 'Que désigne « Castra » en latin ?',
       'rep': 'Le camp militaire fortifié',
       'fausses': ['Le château', 'La maison de campagne', 'La prison'],
@@ -416,9 +451,34 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     });
   }
 
+  /// Le paquet de questions suit la progression : les questions fixes dont
+  /// le monde est atteint, plus du vocabulaire tiré du Thesaurus des mondes
+  /// atteints. Si le paquet est maigre (tout début), on le complète avec les
+  /// questions fixes des mondes suivants, les plus proches d'abord.
+  List<Map<String, dynamic>> _questionsDuJoueur() {
+    final rang = widget.repo.rangMondeAtteint;
+    final fixes = List<Map<String, dynamic>>.from(_duelQuestions)
+      ..sort((a, b) => (a['monde'] as int).compareTo(b['monde'] as int));
+    final deck = <Map<String, dynamic>>[
+      ...fixes.where((q) => (q['monde'] as int) <= rang),
+    ];
+    final enonces = deck.map((q) => (q['q'] as String).toLowerCase()).toSet();
+    for (final q in VocabQuestion.pourJeu(
+      dictionary: widget.repo.thesaurus,
+      mondes: widget.repo.mondesAtteints,
+    )) {
+      if (enonces.add((q['q'] as String).toLowerCase())) deck.add(q);
+    }
+    for (final q in fixes) {
+      if (deck.length >= 12) break;
+      if (!deck.contains(q)) deck.add(q);
+    }
+    return deck;
+  }
+
   void _nextQuestion() {
     if (_duelDeck.isEmpty) {
-      _duelDeck = List<Map<String, dynamic>>.from(_duelQuestions)..shuffle();
+      _duelDeck = _questionsDuJoueur()..shuffle();
     }
     _currentQ = _duelDeck.removeAt(0);
     final options = <String>[
