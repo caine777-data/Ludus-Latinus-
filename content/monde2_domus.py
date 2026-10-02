@@ -115,7 +115,7 @@ Pour gagner ta place de membre d'honneur de la cité romaine et empocher **50 Se
                 },
                 {
                     "question": "Que veut dire 'Cave canem' inscrit sur les mosaïques de Pompéi ?",
-                    "options": ["Bienvenue chez nous", "Attention au chien !", "Donnez à manger au chien", "Maison close"],
+                    "options": ["Bienvenue chez nous", "Attention au chien !", "Donnez à manger au chien", "Chien à vendre"],
                     "answer": 1,
                     "explanation": "Cave canem = Attention au chien !"
                 }

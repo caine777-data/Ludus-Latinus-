@@ -87,7 +87,7 @@ Voici la manœuvre du soldat romain :
 Repère les rôles :
 - *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)
 - *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)
-- *capit* = prend (L'action ➔ 🟢 Verbe)
+- *capit* = prend (L'action ➔ 🟡 Verbe)
 
 Attribue les couleurs avec le Décodeur !""",
             "mots": ["Miles", "gladium", "capit"],

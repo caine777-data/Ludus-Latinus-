@@ -325,6 +325,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Audit des leçons** (02/10/2026) — rapport :
+  `docs/audits/audit_lecons_2026-10-02.md`. Sept défauts, dont deux
+  majeurs : la 4e suppose acquises les 1re et 2e déclinaisons que la 5e
+  n'enseigne pas, et la grammaire s'arrête au monde 5. Corrigé le jour
+  même : une réponse déplacée en `m2-05`, et les couleurs annoncées par les
+  cinq décodeurs (désormais celles de l'écran : sujet bleu, COD rouge,
+  verbe doré). Les six propositions du rapport attendent la décision de
+  Cédric. L'audit des jeux viendra après les mesures de T41.
+
 - **Jeux liés à la progression, arènes à enjeu** (02/10/2026) — deux points
   de la phase 2. (1) Le Duel et le Circus : `VocabQuestion.pourJeu`
   fabrique des questions de vocabulaire à partir du Thesaurus des mondes

@@ -87,7 +87,7 @@ Voici une phrase romaine complète :
 Rappelle-toi les indices :
 - 🔵 **Sujet (Nominatif)** : C'est *Lupus* (le loup qui regarde).
 - 🔴 **COD (Accusatif)** : C'est *agnum* (l'agneau qui subit le regard, il se termine par **-m** !).
-- 🟢 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).
+- 🟡 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).
 
 Clique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exact !""",
             "mots": ["Lupus", "agnum", "videt"],

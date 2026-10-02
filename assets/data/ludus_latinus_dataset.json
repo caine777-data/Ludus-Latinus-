@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-01 15:50:45",
+    "date_export": "2026-10-02 15:47:24",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -292,7 +292,7 @@
                 "Bienvenue chez nous",
                 "Attention au chien !",
                 "Donnez à manger au chien",
-                "Maison close"
+                "Chien à vendre"
               ],
               "answer": 1,
               "explanation": "Cave canem = Attention au chien !"
@@ -460,7 +460,7 @@
           "id": "m4-04",
           "type": "decodeur",
           "title": "Le Décodeur de Cas en action !",
-          "content": "## Utilise le Décodeur de Cas !\n\nVoici une phrase romaine complète :\n*« Lupus agnum videt. »*\n\nRappelle-toi les indices :\n- 🔵 **Sujet (Nominatif)** : C'est *Lupus* (le loup qui regarde).\n- 🔴 **COD (Accusatif)** : C'est *agnum* (l'agneau qui subit le regard, il se termine par **-m** !).\n- 🟢 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).\n\nClique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exact !",
+          "content": "## Utilise le Décodeur de Cas !\n\nVoici une phrase romaine complète :\n*« Lupus agnum videt. »*\n\nRappelle-toi les indices :\n- 🔵 **Sujet (Nominatif)** : C'est *Lupus* (le loup qui regarde).\n- 🔴 **COD (Accusatif)** : C'est *agnum* (l'agneau qui subit le regard, il se termine par **-m** !).\n- 🟡 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).\n\nClique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exact !",
           "mots": [
             "Lupus",
             "agnum",
@@ -570,7 +570,7 @@
           "id": "m5-04",
           "type": "decodeur",
           "title": "Le Décodeur de l'Attaque !",
-          "content": "## Analyse la phrase du légionnaire\n\nVoici la manœuvre du soldat romain :\n*« Miles gladium capit. »*\n*(Le soldat prend son glaive)*\n\nRepère les rôles :\n- *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)\n- *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)\n- *capit* = prend (L'action ➔ 🟢 Verbe)\n\nAttribue les couleurs avec le Décodeur !",
+          "content": "## Analyse la phrase du légionnaire\n\nVoici la manœuvre du soldat romain :\n*« Miles gladium capit. »*\n*(Le soldat prend son glaive)*\n\nRepère les rôles :\n- *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)\n- *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)\n- *capit* = prend (L'action ➔ 🟡 Verbe)\n\nAttribue les couleurs avec le Décodeur !",
           "mots": [
             "Miles",
             "gladium",
@@ -902,7 +902,7 @@
           "id": "m8-04",
           "type": "decodeur",
           "title": "Le Décodeur du Marchand",
-          "content": "## Analyse la phrase romaine !\nActive les couleurs magiques du décodeur pour identifier :\n- 🟢 **Sujet (Nominatif)** : Qui fait l'action ?\n- 🔵 **COD (Accusatif)** : Qu'est-ce qui est vendu ?\n- 🔴 **Verbe** : L'action de vendre !",
+          "content": "## Analyse la phrase romaine !\nActive les couleurs magiques du décodeur pour identifier :\n- 🔵 **Sujet (Nominatif)** : Qui fait l'action ?\n- 🔴 **COD (Accusatif)** : Qu'est-ce qui est vendu ?\n- 🟡 **Verbe** : L'action de vendre !",
           "phrase_latine": "Mercator aquam vendit",
           "mots_francais": [
             "Le marchand",
@@ -1025,7 +1025,7 @@
           "id": "m9-04",
           "type": "decodeur",
           "title": "Le Décodeur de l'Attaque",
-          "content": "## Décrypte l'ordre de combat !\nTrouve la fonction de chaque élément :\n- 🟢 **Sujet** : Qui attaque ?\n- 🔵 **COD** : Quelle arme est lancée ?\n- 🔴 **Verbe** : L'action de lancer (*iacere*) !",
+          "content": "## Décrypte l'ordre de combat !\nTrouve la fonction de chaque élément :\n- 🔵 **Sujet** : Qui attaque ?\n- 🔴 **COD** : Quelle arme est lancée ?\n- 🟡 **Verbe** : L'action de lancer (*iacere*) !",
           "phrase_latine": "Miles pilum iacit",
           "mots_francais": [
             "Le soldat",
@@ -1148,7 +1148,7 @@
           "id": "m10-04",
           "type": "decodeur",
           "title": "Le Décodeur des Héros",
-          "content": "## Analyse le triomphe du héros antique !\nIdentifie chaque fonction grammaticale latine :\n- 🟢 **Sujet** : Qui triomphe ?\n- 🔵 **COD** : Quelle créature est vaincue ?\n- 🔴 **Verbe** : L'action de terrasser (*superare*) !",
+          "content": "## Analyse le triomphe du héros antique !\nIdentifie chaque fonction grammaticale latine :\n- 🔵 **Sujet** : Qui triomphe ?\n- 🔴 **COD** : Quelle créature est vaincue ?\n- 🟡 **Verbe** : L'action de terrasser (*superare*) !",
           "phrase_latine": "Hercules monstrum superat",
           "mots_francais": [
             "Hercule",

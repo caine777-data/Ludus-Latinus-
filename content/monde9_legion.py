@@ -66,9 +66,9 @@ La formation était si solide qu'on pouvait faire rouler un char au-dessus sans 
             "title": "Le Décodeur de l'Attaque",
             "content": """## Décrypte l'ordre de combat !
 Trouve la fonction de chaque élément :
-- 🟢 **Sujet** : Qui attaque ?
-- 🔵 **COD** : Quelle arme est lancée ?
-- 🔴 **Verbe** : L'action de lancer (*iacere*) !""",
+- 🔵 **Sujet** : Qui attaque ?
+- 🔴 **COD** : Quelle arme est lancée ?
+- 🟡 **Verbe** : L'action de lancer (*iacere*) !""",
             "phrase_latine": "Miles pilum iacit",
             "mots_francais": ["Le soldat", "le javelot", "lance"],
             "roles": {0: "sujet", 1: "cod", 2: "verbe"},

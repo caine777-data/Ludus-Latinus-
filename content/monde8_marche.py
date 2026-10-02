@@ -69,9 +69,9 @@ Comme ils n'avaient pas de savon, ils s'enduisaient d'huile d'olive puis raclaie
             "title": "Le Décodeur du Marchand",
             "content": """## Analyse la phrase romaine !
 Active les couleurs magiques du décodeur pour identifier :
-- 🟢 **Sujet (Nominatif)** : Qui fait l'action ?
-- 🔵 **COD (Accusatif)** : Qu'est-ce qui est vendu ?
-- 🔴 **Verbe** : L'action de vendre !""",
+- 🔵 **Sujet (Nominatif)** : Qui fait l'action ?
+- 🔴 **COD (Accusatif)** : Qu'est-ce qui est vendu ?
+- 🟡 **Verbe** : L'action de vendre !""",
             "phrase_latine": "Mercator aquam vendit",
             "mots_francais": ["Le marchand", "de l'eau", "vend"],
             "roles": {0: "sujet", 1: "cod", 2: "verbe"},

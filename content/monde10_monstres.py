@@ -65,9 +65,9 @@ Sur l'île de Sicile vivait Polyphème, un géant berger féroce appartenant au 
             "title": "Le Décodeur des Héros",
             "content": """## Analyse le triomphe du héros antique !
 Identifie chaque fonction grammaticale latine :
-- 🟢 **Sujet** : Qui triomphe ?
-- 🔵 **COD** : Quelle créature est vaincue ?
-- 🔴 **Verbe** : L'action de terrasser (*superare*) !""",
+- 🔵 **Sujet** : Qui triomphe ?
+- 🔴 **COD** : Quelle créature est vaincue ?
+- 🟡 **Verbe** : L'action de terrasser (*superare*) !""",
             "phrase_latine": "Hercules monstrum superat",
             "mots_francais": ["Hercule", "le monstre", "vainc"],
             "roles": {0: "sujet", 1: "cod", 2: "verbe"},
