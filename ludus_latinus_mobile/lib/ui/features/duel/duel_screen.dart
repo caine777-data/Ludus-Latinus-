@@ -398,6 +398,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     AudioService().leaveMusic(MusicTrack.arene);
     _pulseController.dispose();
     _assaut.dispose();
+    _quizScroll.dispose();
     super.dispose();
   }
 
@@ -549,9 +550,12 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         return Scaffold(
           backgroundColor: const Color(0xFF1B1622), // Ambiance nocturne au Colisée
           appBar: AppBar(
-            title: const Text(
+            title: const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
               'COLOSSEUM',
               style: TextStyle(letterSpacing: 1.4, fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
+            ),
             ),
             centerTitle: true,
             backgroundColor: const Color(0xFF2D1E3A),
@@ -1015,7 +1019,19 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     );
   }
 
+  final ScrollController _quizScroll = ScrollController();
+
   Widget _buildQuizPanel() {
+    // Après une réponse, on amène le bandeau d'explication à l'écran s'il est sous le pli.
+    if (_chosenAnswer != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_quizScroll.hasClients) return;
+        final bas = _quizScroll.position.maxScrollExtent;
+        if (bas > _quizScroll.offset) {
+          _quizScroll.animateTo(bas, duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
+        }
+      });
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -1023,7 +1039,12 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         color: Color(0xFFF9F6F0),
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      child: Column(
+      // Le panneau défile : sur un petit téléphone, rien ne sort de l'écran
+      // (ni les réponses du bas, ni le bandeau qui apparaît après la réponse).
+      child: LayoutBuilder(
+        builder: (context, contraintes) => SingleChildScrollView(
+          controller: _quizScroll,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Sélecteur de Posture de Combat (Stance)
@@ -1117,12 +1138,15 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           ),
           const SizedBox(height: 12),
 
-          Expanded(
+          SizedBox(
             child: GridView.count(
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 2.1,
+              // Cases plus basses quand la place manque, pour garder les
+              // quatre réponses visibles sans faire défiler.
+              childAspectRatio: contraintes.maxHeight < 300 ? 3.3 : 2.1,
+              shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: _shuffledChoices.map((choice) {
                 final isSelected = (_chosenAnswer == choice);
@@ -1224,6 +1248,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             ),
           ],
         ],
+        ),
+        ),
       ),
     );
   }

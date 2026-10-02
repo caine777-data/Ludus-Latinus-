@@ -1,77 +1,90 @@
-# Ludus Latinus — L'Aventure Romaine 🏛️
+# Ludus Latinus 🏛️
 
-**Application éducative pas à pas pour apprendre le latin au collège (niveau 5ᵉ)**  
-Conçue et réalisée avec passion — logiciel libre sous licence MIT.
+Application libre pour apprendre le latin au collège, de la 5e à la 3e.
 
----
+Le projet propose un parcours d'apprentissage sous forme de jeu sur la Via Appia. L'élève progresse avec la mascotte Lupulus, un louveteau en toge. Il gagne des sesterces, débloque des costumes d'avatar et maintient une série quotidienne.
 
-## 🌟 Le Concept
+## Programme du collège 📚
 
-**Ludus Latinus** transforme l'apprentissage du latin en une aventure captivante et interactive pour les collégiens :
-- **Narratif & immersif** : L'élève débute comme simple recrue (*Tiro*) dans la Rome antique sous l'empereur Auguste, et progresse en accomplissant des quêtes pour devenir *Discipulus*, *Legionarius*, *Centurio* ou *Triumphator*.
-- **Activités ludiques adaptées** : Fini le code abstrait ! L'application propose des **Puzzles de mots** (reconstitution de traduction façon Duolingo), des **Textes à trous** tolérants, le **Décodeur de Cas** (analyse visuelle en couleurs : Sujet 🔵, COD 🔴, Verbe 🟢) et des **Combats d'Arène** épiques contre des boss mythologiques (Lion de Némée, Sphinx, Minotaure, Hydre de Lerne).
-- **Gamification complète** :
-  - Série de jours (Streak 🔥) pour ancrer une habitude de 5 min/jour.
-  - Expérience (XP ⚡) et Rangs romains.
-  - **Sesterces d'or 🪙** gagnés à chaque réussite pour acheter de l'équipement dans la boutique de son **Avatar** (toges, couronnes de lauriers, bouclier scutum, glaive).
-  - **Musée des Curiosités Romaines 📜** débloquant des anecdotes insolites sur la vie quotidienne, Pompéi et les monstres antiques.
-  - Système de **Flashcards** et révision espacée.
-  - Célébration par **cascade de confettis vectoriels 🎉**.
-- **Dimension Sonore & Vocale 🔊** :
-  - Effets sonores gratifiants (arpèges de succès, pièces d'or, fanfares).
-  - Prononciation vocale des mots et phrases latines (*V* en [ou], *C* en [k]).
-  - Bouton Mute en 1 clic dans l'en-tête.
-- **Zéro dépendance** : 100 % Python standard (Tkinter, winsound), fonctionne directement sans aucune installation de bibliothèque tierce.
+Le curriculum compte 26 mondes et 113 leçons réparties sur trois niveaux scolaires :
 
----
+### Classe de 5e : Les Origines & La Cité (10 mondes, 49 leçons)
+1. Salve ! Premiers pas à Rome (6 leçons)
+2. Dans la Maison Romaine (5 leçons)
+3. Les Dieux de l'Olympe & Légendes (5 leçons)
+4. Les Cas & Travaux d'Hercule (5 leçons)
+5. Les Verbes au Présent & L'Action (5 leçons)
+6. Les Gladiateurs & le Colisée (4 leçons)
+7. Détective des Mots & Devises (4 leçons)
+8. La Cité de Rome, Marchés & Vie Quotidienne (5 leçons)
+9. L'Armée Romaine & les Légions (5 leçons)
+10. Monstres Fabuleux & Métamorphoses (5 leçons)
 
-## 📚 Les 7 Mondes du Curriculum (Programme officiel de 5ᵉ)
+### Classe de 4e : La République & L'Expansion (8 mondes, 32 leçons)
+11. Les Héros de la République (4 leçons)
+12. Le Sénat et le Peuple (SPQR) (4 leçons)
+13. Mare Nostrum & Les Conquêtes (4 leçons)
+14. Les Légions en Marche (4 leçons)
+15. Récits d'Autrefois : L'Imparfait (4 leçons)
+16. Veni, Vidi, Vici : Le Parfait (4 leçons)
+17. César et la Guerre des Gaules (4 leçons)
+18. Le Grand Triomphe de la République (4 leçons)
 
-1. **🏛️ Monde 1 · Salve ! Premiers pas à Rome**  
-   L'alphabet secret, la prononciation magique, saluer (*Salve ! Vale !*), se présenter (*Quis es ? Nomen mihi est...*), les chiffres romains secrets (I, V, X, L, C, M), la légende de Romulus, Rémus et la louve *Lupa*, et le défi de Mercure aux sandales ailées.
+### Classe de 3e : L'Empire & Les Grands Auteurs (8 mondes, 32 leçons)
+19. La Paix d'Auguste (Pax Romana) (4 leçons)
+20. Les Chemins de l'Empire (4 leçons)
+21. Sous la Cendre du Vésuve (4 leçons)
+22. Le Secret de l'Ablatif Absolu (4 leçons)
+23. Les Échos du Forum : La Voix Passive (4 leçons)
+24. La Proposition Infinitive (4 leçons)
+25. L'Or des Poètes : Virgile & Ovide (4 leçons)
+26. Le Grand Triomphe du Collège (4 leçons)
 
-2. **🏠 Monde 2 · Dans la maison romaine (*Domus & Familia*)**  
-   La famille (*pater, mater, filius, filia*), les animaux familiers (*canis, felis, equus*), l'école romaine et les tablettes de cire, les pièces de la domus (*atrium, impluvium, triclinium*), et le défi du Sphinx de l'Atrium.
+## Les jeux antiques ⚔️
 
-3. **⚡ Monde 3 · Les Dieux de l'Olympe & Légendes**  
-   Le panthéon romain (Jupiter, Minerve, Neptune, Mars, Vénus), le roi Midas et le toucher d'or, le vol d'Icare et les ailes de cire, le regard pétrifiant de Méduse, et le combat contre le Minotaure du Labyrinthe.
+L'application propose six jeux pour s'entraîner :
 
-4. **🦁 Monde 4 · Les Cas & Travaux d'Hercule**  
-   Pourquoi le latin change la fin des mots, le Nominatif (Sujet 🔵) vs l'Accusatif (COD 🔴 avec son -m), la 1ʳᵉ déclinaison (*puella, rosam*), le Décodeur de Cas en action, et le combat contre le Lion de Némée.
+- **Duel** : combats d'arène au Colisée contre des boss mythologiques (Minotaure, Sphinx, Lion de Némée, Rétiaire, Mercure).
+- **Circus** : courses de quadriges au Circus Maximus où chaque bonne réponse accélère le char.
+- **César** : atelier de cryptographie militaire pour décoder des messages secrets avec le chiffre de César.
+- **Marché** : boutique des marchés de Trajan avec calculs en chiffres romains et achats en sesterces.
+- **Taverne** : jeu de dés romains (*Alea iacta est*), trois lancers récompensés par jour.
+- **Memoria** : révision de vocabulaire par répétition espacée (*Memoria Velox*).
 
-5. **⚔️ Monde 5 · Les Verbes au Présent & L'Action**  
-   Le verbe ÊTRE (*sum, es, est, sumus, estis, sunt*), les verbes du 1er groupe (*amare*), les verbes d'action des héros (*pugnat, vincit, currit*), et le défi contre l'Hydre de Lerne.
+La Bibliotheca réunit les outils de révision : le Thesaurus (lexique, déclinaisons, conjugaisons), le Forum à restaurer et l'Épigraphie, où l'élève déchiffre des inscriptions gravées dans le marbre.
 
-6. **🛡️ Monde 6 · Les Gladiateurs & le Colisée**  
-   Rétiaires (trident et filet), Mirmillons (bouclier et casque à crête), courses de quadriges au Circus Maximus, le salut historique *« Ave Caesar, morituri te salutant ! »*, et le duel contre le Champion du Colisée.
+## Télécharger l'application 📦
 
-7. **📜 Monde 7 · Détective des Mots & Devises**  
-   Retrouver l'origine latine de 80% des mots français (*aqua, terra, manus, pes*), les préfixes magiques (*sub-, trans-, post-*), les citations immortelles (*Veni, vidi, vici*, *Alea jacta est*, *Carpe diem*), et le grand examen devant le Sénat de Rome.
+Les paquets prêts à l'emploi sont construits automatiquement par GitHub Actions :
 
----
+1. Ouvrez l'onglet **Actions** du dépôt GitHub.
+2. Cliquez sur le workflow **Ludus Latinus (Android & Windows)**.
+3. Choisissez la dernière exécution terminée.
+4. Téléchargez le fichier voulu dans la rubrique **Artifacts** (il faut être connecté à un compte GitHub) :
+   - `LudusLatinus.apk` : paquet à installer sur un téléphone Android.
+   - `LudusLatinus-Windows.zip` : archive à décompresser sur ordinateur Windows (lancer ensuite `LudusLatinus.exe`).
 
-## 🚀 Lancer l'application
+## Lancer en développement 💻
 
-Il suffit d'avoir Python 3.10 ou plus installé sur votre machine :
+Le projet principal utilise Flutter. L'ancienne version de bureau en Python reste disponible pour la consultation des données.
+
+### Application mobile (Flutter)
+
+Prérequis : Flutter SDK 3.47+ et un émulateur ou appareil Android.
+
+```bash
+cd ludus_latinus_mobile
+flutter pub get
+flutter analyze
+flutter test
+flutter run
+```
+
+### Application de bureau (Python)
+
+Prérequis : Python 3.10+ avec Tkinter.
 
 ```bash
 python main.py
+python -m unittest discover -s tests
 ```
-
-### Options utiles en ligne de commande :
-- `python main.py --version` : Affiche le nom et la version de l'application.
-- `python main.py --check` : Contrôle de santé complet de l'installation.
-- `python -m unittest discover tests` : Lance la suite complète de 143 tests unitaires.
-
----
-
-## 📸 Captures d'écran
-
-| Leçon & Puzzle de Traduction | Décodeur Grammatical de Cas |
-| :---: | :---: |
-| ![Puzzle Salve](assets/screenshots/01_puzzle_salve.png) | ![Décodeur](assets/screenshots/02_decodeur_cas.png) |
-
-| Combat d'Arène contre un Boss | Boutique & Avatar Romain | Musée des Curiosités |
-| :---: | :---: | :---: |
-| ![Arène](assets/screenshots/03_arene_boss.png) | ![Avatar](assets/screenshots/04_avatar_boutique.png) | ![Musée](assets/screenshots/05_musee_secrets.png) |
-

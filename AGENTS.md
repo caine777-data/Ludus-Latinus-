@@ -175,6 +175,13 @@ Chacun de ces pièges a déjà coûté du temps sur ce projet. Lis-les.
     décodée en cache et la reprend là où elle en était. Pour la rejouer
     depuis le début (l'impact d'épées du Duel à chaque coup), appelle
     `AssetImage(...).evict()` et donne au widget `Image` une nouvelle `key`.
+18. **Une hauteur fixe qui contient du texte casse en police agrandie.**
+    Pour la faire suivre la police, mesure le facteur sur une petite taille :
+    `MediaQuery.textScalerOf(context).scale(12) / 12`. Android agrandit moins
+    les grandes tailles : `scale(84)` ne bouge presque pas. Et un écran se
+    vérifie aussi en 360 x 640 (`adb shell wm size 720x1280` et
+    `wm density 320`, puis `reset`) : un `GridView` non défilable y pousse
+    ses dernières cases hors de l'écran.
 
 ---
 
@@ -201,7 +208,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (57 sur 57 le 01/10/2026 ; 54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (59 sur 59 le 02/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -317,6 +324,20 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Petits téléphones et T30 à T36 relues** (02/10/2026) — la tournée T32
+  en 360 x 640 a montré un blocage : au Duel, deux réponses sur quatre
+  sortaient de l'écran, sans défilement possible. Corrigé et vu à l'écran
+  par l'architecte : le panneau de quiz défile (`_quizScroll`), ses cases
+  s'aplatissent quand la hauteur manque, et il descend vers l'explication
+  après une réponse. Aussi : la carte de Memoria défile, les tuiles de Ludi
+  sont plus hautes sur écran étroit, le titre du Duel rétrécit. Cartes des
+  cas : voir le piège 18. Gemini a baissé la vitesse de croisière du Circus
+  (`_playerSpeed` 0.085 : on perd sans répondre) et mis les titres d'écran
+  dans des `FittedBox`. `test/fin_de_partie_test.dart` (écrit par Gemini)
+  garde la fin du Duel en 360 x 640 : 59 tests Flutter. `README.md` est
+  réécrit pour l'appli Flutter. Suite : T37 (vérification), T38 (sept PNG
+  en WebP), T39 (tournée des exercices de 3e).
 
 - **L'Épigraphie se mérite** (01/10/2026) — avant, la traduction complète
   était affichée d'emblée et un seul bouton payait 15 HS. Maintenant

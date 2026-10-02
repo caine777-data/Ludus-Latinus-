@@ -105,7 +105,8 @@ class LudiView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: isDesktop ? 3.2 : 1.28,
+                    // Tuiles un peu plus hautes sur un téléphone étroit, sinon leur texte déborde.
+                    childAspectRatio: isDesktop ? 3.2 : (constraints.maxWidth < 350 ? 1.12 : 1.28),
                     children: [
                       // 1. Circus Maximus
                       _buildGameTile(

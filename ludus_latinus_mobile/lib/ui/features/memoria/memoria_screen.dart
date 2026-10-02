@@ -778,7 +778,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             // Contenu de la face de carte
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-              child: Center(child: child),
+              // Défile si la carte est trop basse pour son contenu (petit téléphone).
+              child: Center(child: SingleChildScrollView(child: child)),
             ),
           ],
         ),

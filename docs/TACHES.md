@@ -2764,6 +2764,8 @@ puzzle, le texte actuel et **une proposition**, que l'architecte relira.
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (02/10/2026)** : bien vu pour les cartes des cas. La cause : Android agrandit moins les grandes tailles que les petites, donc `scale(84)` ne bougeait presque pas. La hauteur se calcule maintenant sur `scale(12) / 12`. À revoir à l'écran en T37.
+
 **Objectif** : l'architecte a corrigé quatre défauts d'affichage (commit
 `63fb54d`) sans pouvoir les voir sur l'émulateur. Tu les vérifies, captures
 à l'appui.
@@ -2900,7 +2902,9 @@ Statut : VALIDÉ
 
 ## T31 — Le test anti-débordement du Duel et du Circus (reprise de T24)
 
-Statut : BLOQUÉ
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (02/10/2026)** : diagnostic juste. Le panneau de quiz du Duel défile désormais, ses cases sont plus basses quand la place manque, et il descend tout seul vers l'explication après une réponse. Ton test est intégré tel quel dans `test/fin_de_partie_test.dart` (boucle portée à 6 coups : la question suivante met parfois deux tours à s'afficher). Vérifié par l'architecte sur l'émulateur en 360 x 640 : les quatre réponses sont visibles.
 
 **Objectif** : T24 butait sur deux rangées de boutons trop larges. Elles sont
 corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
@@ -2995,7 +2999,9 @@ corrigées (commit `63fb54d`). Tu réécris le test, qui doit maintenant passer.
 
 ## T32 — Tournée sur un petit téléphone (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (02/10/2026)** : tournée très utile. Corrigés et vus à l'écran en 360 x 640 par l'architecte : quiz du Duel, carte de Memoria (elle défile), tuiles de Ludi (plus hautes), titre COLOSSEUM.
 
 **Objectif** : T24 laisse penser que, sur un petit téléphone, des réponses du
 quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
@@ -3081,6 +3087,8 @@ quiz passent sous le bas de l'écran. On le vérifie sur l'émulateur réglé en
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (02/10/2026)** : une seule ligne changée, mesures claires. Retenu : 0.085.
+
 **Objectif** : tu as montré en T25 qu'un joueur qui pose son téléphone gagne
 la course, parce que son char avance tout seul plus vite que le rival. On
 baisse sa vitesse de croisière pour que les bonnes réponses deviennent
@@ -3148,6 +3156,8 @@ nécessaires.
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (02/10/2026)** : conforme. Même traitement appliqué au titre du Duel.
+
 **Objectif** : T25 et T28 ont montré des titres coupés (« LUDUS LATI... »,
 « MEMORIA VE... », « CIRCUS MAXIM... »). Un titre doit rétrécir plutôt que
 se couper.
@@ -3210,6 +3220,8 @@ se couper.
 ## T35 — Ce qui pèse dans l'appli (sans rien modifier)
 
 Statut : VALIDÉ
+
+> **Relecture de l'architecte (02/10/2026)** : bon inventaire. Suite donnée en T38 (les dix PNG) ; la musique et les vidéos attendent une décision de Cédric, car la qualité s'entend et se voit.
 
 **Objectif** : l'APK doit rester léger pour les téléphones des élèves. On
 veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
@@ -3323,6 +3335,8 @@ veut savoir où sont les mégaoctets et ce qu'on gagnerait à compresser.
 
 Statut : VALIDÉ
 
+> **Relecture de l'architecte (02/10/2026)** : brouillon repris dans `README.md` avec trois retouches (la Taverne n'a pas de paris, ajout de la Bibliotheca, compte GitHub nécessaire pour télécharger).
+
 **Objectif** : `README.md` décrit encore l'ancienne appli Python et « 7
 mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
 à la 3e. Tu proposes un nouveau texte, que l'architecte relira.
@@ -3379,3 +3393,130 @@ mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
   - `3.10+` (version Python minimale) : documentée à la ligne 55 de `README.md` (`Python 3.10 ou plus`).
 - Doutes, questions pour l'architecte : Aucun doute. Le fichier `docs/propositions/README_propose.md` est prêt pour relecture et arbitrage par l'architecte.
 - Reste à faire : Aucune tâche en attente dans `docs/TACHES.md`.
+
+---
+
+## T37 — Vérifier à l'écran les corrections du 2 octobre (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'architecte a corrigé les défauts de T30 et T32. Il a vu le
+Duel, Ludi et Memoria en 360 x 640. Restent à voir : les cartes des cas en
+police agrandie, et les mêmes écrans sur l'émulateur normal.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t37g_*`. **Rappel : tu t'arrêtes à `FAIT`, seul l'architecte passe
+une tâche à `VALIDÉ`.**
+
+**Étapes** :
+1. Installe la version actuelle sur `Pixel_Ludus`.
+2. Taille normale, police 1.0 : capture le quiz du Duel avant et après une
+   réponse (le bandeau d'explication doit être visible), Memoria, Ludi.
+3. `font_scale 1.3` : Thesaurus > Déclinaisons, les six cartes des cas (fais
+   défiler la rangée jusqu'à l'Ablatif) : aucune bande jaune et noire. Puis
+   le quiz du Duel : les quatre réponses restent atteignables.
+4. Remets `font_scale 1.0` et vérifie la valeur.
+5. Petit écran (`wm size 720x1280`, `wm density 320`) : après une réponse au
+   Duel, le bandeau d'explication doit apparaître sans que tu fasses défiler.
+   Puis `wm size reset` et `wm density reset`.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : écran, réglage, conforme ou non, capture.
+- [ ] `font_scale`, `wm size` et `wm density` remis (recopie les valeurs).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: vérification à l'écran des corrections du 2 octobre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T38 — Dix images PNG converties en WebP
+
+Statut : À FAIRE
+
+**Objectif** : ton audit T35 montre que dix PNG pèsent 1,4 Mo et tomberaient
+à 0,3 Mo en WebP. On les convertit, sans changer ce qu'on voit.
+
+**Périmètre** :
+- `ludus_latinus_mobile/assets/images/circus/chariot_{blanc,bleu,rouge,vert}.png`
+  (remplacés par des `.webp`)
+- `ludus_latinus_mobile/assets/images/lupulus/lupulus_{imperator,philosophe,savant}.png`
+  (remplacés par des `.webp`)
+- les fichiers de `ludus_latinus_mobile/lib/` qui citent ces sept noms
+- `docs/TACHES.md`
+
+**Ne touche pas** à `lupulus_centurion.png`, `lupulus_gladiateur.png` et
+`lupulus_mercure.png` : l'appli de bureau (`app/mascotte.py`) les lit.
+
+**Étapes** :
+1. Pour chacun des sept fichiers, cherche **toutes** les façons dont le code
+   construit son chemin (`grep -rn "chariot_" lib/`, `grep -rn "lupulus_" lib/`).
+   Attention aux chemins construits par morceaux (`'chariot_$couleur.png'`,
+   `'lupulus_${costume}.png'`) : si un même morceau de code sert aussi aux
+   trois fichiers à ne pas toucher, **arrête-toi et passe la tâche à
+   `BLOQUÉ`** en expliquant.
+2. Convertis avec Pillow : WebP qualité 90, `method=6`, en gardant la
+   transparence (mode RGBA). Supprime le PNG d'origine avec `git rm`.
+3. Mets les chemins à jour dans `lib/`.
+4. `flutter analyze`, `flutter test`, puis
+   `git checkout -- ludus_latinus_mobile/analysis_options.yaml`.
+5. Sur l'émulateur : capture le Circus (les quatre chars, en choisissant
+   chaque écurie) et trois leçons où Lupulus porte ces costumes. Compare avec
+   une capture d'avant : pas de fond noir, pas de bord crénelé.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : fichier, poids avant, poids après.
+- [ ] Aucune image manquante à l'écran (captures `scratch/t38_*`).
+- [ ] `grep -rn "chariot_.*png\|lupulus_imperator.png\|lupulus_philosophe.png\|lupulus_savant.png" ludus_latinus_mobile/lib`
+      ne renvoie rien.
+- [ ] Tous les tests Flutter passent (59 attendus).
+- [ ] Un commit `perf(mobile): sept images passées en WebP`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T39 — Tournée des exercices de 3e (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : les 16 exercices de 3e ont été réécrits le 1er octobre
+(mondes 19 à 26). Personne ne les a joués à l'écran.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t39_*`. Le profil de l'émulateur est modifié **puis restauré**
+(même méthode qu'en T26).
+
+**Étapes** :
+1. Sauvegarde le profil. Pousse une copie où `completed` contient toutes les
+   leçons des mondes 1 à 18, pour ouvrir la 3e. Relance l'appli.
+2. Pour chaque monde de 19 à 26, joue la leçon `-02` (trou) et la leçon `-03`
+   (puzzle). Avant de répondre, capture l'écran et note : le cours donne-t-il
+   la réponse ? Les mots nouveaux sont-ils expliqués ? La consigne est-elle
+   claire ?
+3. Dans chaque puzzle, essaie **d'abord** la phrase fausse la plus plausible
+   avec les étiquettes-pièges, et note le message affiché.
+4. Note tout texte coupé, toute étiquette trop longue, toute faute de
+   français.
+5. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau des 16 exercices : réponse cachée (oui/non), mots nouveaux
+      expliqués, piège testé et message obtenu, défaut d'affichage, capture.
+- [ ] Le profil d'origine est restauré (capture de l'accueil).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée des exercices de 3e`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
