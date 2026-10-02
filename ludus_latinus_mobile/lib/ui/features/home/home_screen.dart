@@ -87,7 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_appBarTitle),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(_appBarTitle),
+        ),
         actions: [
           // 1. Flamme de régularité (Streak)
           Container(

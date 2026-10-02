@@ -316,7 +316,12 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     final cards = _paquet;
     if (cards.isEmpty) {
       return Scaffold(
-        appBar: AppBar(title: const Text('MEMORIA VELOX')),
+        appBar: AppBar(
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text('MEMORIA VELOX'),
+          ),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(32),
@@ -338,7 +343,10 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MEMORIA VELOX'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text('MEMORIA VELOX'),
+        ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 14),

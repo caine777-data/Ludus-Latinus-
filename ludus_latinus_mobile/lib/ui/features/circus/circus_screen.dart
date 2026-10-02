@@ -678,13 +678,16 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         return Scaffold(
           backgroundColor: const Color(0xFFF9F6F0),
           appBar: AppBar(
-            title: const Text(
-              'CIRCUS MAXIMUS',
-              style: TextStyle(
-                letterSpacing: 1.5,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: Colors.white,
+            title: const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                'CIRCUS MAXIMUS',
+                style: TextStyle(
+                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
               ),
             ),
             centerTitle: true,

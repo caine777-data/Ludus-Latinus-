@@ -3146,7 +3146,7 @@ nécessaires.
 
 ## T34 — Les titres d'écran qui se rognent en police agrandie
 
-Statut : À FAIRE
+Statut : VALIDÉ
 
 **Objectif** : T25 et T28 ont montré des titres coupés (« LUDUS LATI... »,
 « MEMORIA VE... », « CIRCUS MAXIM... »). Un titre doit rétrécir plutôt que
@@ -3172,18 +3172,38 @@ se couper.
    et remets `1.0`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Les trois titres s'affichent en entier en police 1.3 (captures
+- [x] Les trois titres s'affichent en entier en police 1.3 (captures
       `scratch/t34_*`).
-- [ ] En police 1.0, rien n'a changé à l'œil (captures avant et après).
-- [ ] `flutter analyze` : pas de nouvelle remarque ; tous les tests passent.
-- [ ] `font_scale` remis à 1.0.
-- [ ] Un commit `fix(mobile): les titres d'écran rétrécissent au lieu de se couper`.
+- [x] En police 1.0, rien n'a changé à l'œil (captures avant et après).
+- [x] `flutter analyze` : pas de nouvelle remarque ; tous les tests passent.
+- [x] `font_scale` remis à 1.0.
+- [x] Un commit `fix(mobile): les titres d'écran rétrécissent au lieu de se couper`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart` (enveloppement de `Text(_appBarTitle)` dans `FittedBox(fit: BoxFit.scaleDown, child: ...)`).
+  - `ludus_latinus_mobile/lib/ui/features/memoria/memoria_screen.dart` (enveloppement des 2 occurrences `title: const Text('MEMORIA VELOX')` dans `const FittedBox(fit: BoxFit.scaleDown, child: Text('MEMORIA VELOX'))`).
+  - `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart` (enveloppement du titre `CIRCUS MAXIMUS` dans `const FittedBox(fit: BoxFit.scaleDown, child: ...)`).
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
+  - `flutter analyze` : exactement 2 remarques attendues (`deprecated_member_use` dans `lib\ui\core\themes.dart:70:9` et `120:9`). Aucune remarque dans les fichiers modifiés.
+  - `flutter test` : 57 réussis, 0 échec. Ligne finale : `00:04 +57: All tests passed!`.
+  - `git checkout -- ludus_latinus_mobile/analysis_options.yaml` : fichier restauré.
+  - Réglage et vérification de la police :
+    - `adb shell settings put system font_scale 1.3` suivi de `adb shell settings get system font_scale` -> `1.3`.
+    - Captures réalisées en 1.3 : `scratch/t34_home_font13.png`, `scratch/t34_memoria_font13.png`, `scratch/t34_circus_font13.png`.
+    - `adb shell settings put system font_scale 1.0` suivi de `adb shell settings get system font_scale` -> `1.0`.
+- Tableau comparatif des captures d'écran :
+
+| Écran | Titre attendu | Police 1.0 (avant) | Police 1.0 (après) | Conforme à l'œil 1.0 ? | Police 1.3 (avec FittedBox) | Titre entier en 1.3 ? |
+|---|---|---|---|:---:|---|:---:|
+| **Accueil (Cursus)** | `LUDUS LATINUS` | `scratch/t34_home_font10_avant.png` | `scratch/t34_home_font10_apres.png` | **Oui (identique)** | `scratch/t34_home_font13.png` | **Oui (intact)** |
+| **Memoria Velox** | `MEMORIA VELOX` | `scratch/t34_memoria_font10_avant.png` | `scratch/t34_memoria_font10_apres.png` | **Oui (identique)** | `scratch/t34_memoria_font13.png` | **Oui (intact)** |
+| **Circus Maximus** | `CIRCUS MAXIMUS` | `scratch/t34_circus_font10_avant.png` | `scratch/t34_circus_font10_apres.png` | **Oui (identique)** | `scratch/t34_circus_font13.png` | **Oui (intact)** |
+
+- Doutes, questions pour l'architecte : Aucun doute.
 - Reste à faire :
+  - Poursuivre avec la tâche T35.
 
 ---
 
