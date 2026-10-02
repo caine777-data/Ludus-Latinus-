@@ -336,8 +336,8 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   (`_playerSpeed` 0.085 : on perd sans répondre) et mis les titres d'écran
   dans des `FittedBox`. `test/fin_de_partie_test.dart` (écrit par Gemini)
   garde la fin du Duel en 360 x 640 : 59 tests Flutter. `README.md` est
-  réécrit pour l'appli Flutter. Suite : T37 (vérification), T38 (sept PNG
-  en WebP), T39 (tournée des exercices de 3e).
+  réécrit pour l'appli Flutter. Suite : T37 (vérification) et T39 (tournée des
+  exercices de 3e) ; T38 est annulée.
 
 - **L'Épigraphie se mérite** (01/10/2026) — avant, la traduction complète
   était affichée d'emblée et un seul bouton payait 15 HS. Maintenant
@@ -575,6 +575,11 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   la restituée, l'ecclésiastique restant en option. C'est cohérent : rien à
   trancher, sauf avis contraire de Cédric. Le défaut de syllabation de
   l'ecclésiastique (« vit.ʃi ») est corrigé (T12).
+- **Pas de recompression des médias** (02/10/2026). Cédric préfère garder
+  la qualité des musiques, des vidéos et des images telle quelle, même si
+  l'audit T35 chiffre un gain de plusieurs Mo. Ne réencode rien et ne
+  convertis aucun format pour gagner du poids ; T38 est annulée. Supprimer
+  un fichier que plus aucun code ne cite reste permis.
 
 ### Prochaines étapes envisagées (décidées par l'architecte)
 

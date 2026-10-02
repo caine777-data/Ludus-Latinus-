@@ -3436,7 +3436,9 @@ une tâche à `VALIDÉ`.**
 
 ## T38 — Dix images PNG converties en WebP
 
-Statut : À FAIRE
+Statut : ANNULÉ
+
+> **Décision de Cédric (02/10/2026)** : pas de recompression des médias, ni son, ni vidéo, ni image. **Ne fais pas cette tâche**, passe à T39.
 
 **Objectif** : ton audit T35 montre que dix PNG pèsent 1,4 Mo et tomberaient
 à 0,3 Mo en WebP. On les convertit, sans changer ce qu'on voit.
