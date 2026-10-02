@@ -3617,7 +3617,7 @@ Statut : VALIDÉ
 
 ## T40 — Vérifier à l'écran les arènes et les questions des jeux (sans rien modifier)
 
-Statut : À FAIRE
+Statut : EN COURS
 
 **Objectif** : deux changements du 2 octobre sont à voir à l'écran.
 (1) Les arènes de fin de monde ont trois vies et affichent l'explication
