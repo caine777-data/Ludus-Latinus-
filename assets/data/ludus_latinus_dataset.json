@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-02 19:32:39",
+    "date_export": "2026-10-02 19:44:51",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -1125,20 +1125,20 @@
         },
         {
           "id": "m10-04",
-          "type": "decodeur",
-          "title": "Le Décodeur des Héros",
-          "content": "## Analyse le triomphe du héros antique !\nIdentifie chaque fonction grammaticale latine :\n- 🔵 **Sujet** : Qui triomphe ?\n- 🔴 **COD** : Quelle créature est vaincue ?\n- 🟡 **Verbe** : L'action de terrasser (*superare*) !",
-          "phrase_latine": "Hercules monstrum superat",
-          "mots_francais": [
-            "Hercule",
-            "le monstre",
-            "vainc"
+          "type": "puzzle",
+          "title": "Les Six Cas : le Datif et l'Ablatif",
+          "content": "## Les deux derniers cas\nTu connais déjà quatre cas : le nominatif (sujet), le vocatif (appel), l'accusatif (COD) et le génitif (« de qui ? »). Voici les deux derniers.\n\n**Le DATIF : à qui ?** C'est le cas de celui qui reçoit.\n- Noms en **-a** : puell**ae** = à la jeune fille.\n- Noms en **-us** : serv**o** = à l'esclave.\n\nExemple : *Puella servo rosam dat.* = « La jeune fille donne une rose à l'esclave. »\n\n**L'ABLATIF : où ? avec quoi ?** Tu l'emploies depuis le monde 2 sans le savoir : *in horto* (dans le jardin), *in silva* (dans la forêt).\n- Noms en **-a** : in silv**a**.\n- Noms en **-us** : in hort**o**.\n\nTu connais maintenant les six cas du latin !\n\nÀ toi ! *Dat* = donne ; *gladius, -i* = le glaive ; *spelunca, -ae* = la grotte.",
+          "latin": "Ulixes amico gladium in spelunca dat.",
+          "mots": [
+            "Ulysse",
+            "donne",
+            "un glaive",
+            "à l'ami",
+            "dans la grotte.",
+            "de l'ami",
+            "des glaives"
           ],
-          "roles": {
-            "0": "sujet",
-            "1": "cod",
-            "2": "verbe"
-          }
+          "solution": "Ulysse donne un glaive à l'ami dans la grotte."
         },
         {
           "id": "m10-05",

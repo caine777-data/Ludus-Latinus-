@@ -66,16 +66,27 @@ Complète pour dire : « Ulysse voit une grande grotte ».""",
         },
         {
             "id": "m10-04",
-            "type": "decodeur",
-            "title": "Le Décodeur des Héros",
-            "content": """## Analyse le triomphe du héros antique !
-Identifie chaque fonction grammaticale latine :
-- 🔵 **Sujet** : Qui triomphe ?
-- 🔴 **COD** : Quelle créature est vaincue ?
-- 🟡 **Verbe** : L'action de terrasser (*superare*) !""",
-            "phrase_latine": "Hercules monstrum superat",
-            "mots_francais": ["Hercule", "le monstre", "vainc"],
-            "roles": {0: "sujet", 1: "cod", 2: "verbe"},
+            "type": "puzzle",
+            "title": "Les Six Cas : le Datif et l'Ablatif",
+            "content": """## Les deux derniers cas
+Tu connais déjà quatre cas : le nominatif (sujet), le vocatif (appel), l'accusatif (COD) et le génitif (« de qui ? »). Voici les deux derniers.
+
+**Le DATIF : à qui ?** C'est le cas de celui qui reçoit.
+- Noms en **-a** : puell**ae** = à la jeune fille.
+- Noms en **-us** : serv**o** = à l'esclave.
+
+Exemple : *Puella servo rosam dat.* = « La jeune fille donne une rose à l'esclave. »
+
+**L'ABLATIF : où ? avec quoi ?** Tu l'emploies depuis le monde 2 sans le savoir : *in horto* (dans le jardin), *in silva* (dans la forêt).
+- Noms en **-a** : in silv**a**.
+- Noms en **-us** : in hort**o**.
+
+Tu connais maintenant les six cas du latin !
+
+À toi ! *Dat* = donne ; *gladius, -i* = le glaive ; *spelunca, -ae* = la grotte.""",
+            "latin": "Ulixes amico gladium in spelunca dat.",
+            "mots": ["Ulysse", "donne", "un glaive", "à l'ami", "dans la grotte.", "de l'ami", "des glaives"],
+            "solution": "Ulysse donne un glaive à l'ami dans la grotte.",
         },
         {
             "id": "m10-05",

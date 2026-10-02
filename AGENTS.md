@@ -335,7 +335,13 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   *magnus* sont désormais rattachés aux mondes 8 et 10. Le test
   anti-réponse n'a plus que trois exceptions (`m1-02`, `m1-05`, `m7-03`).
   Dans un cours, n'imbrique pas le gras dans l'italique (`*mot**fin***`) :
-  écris `mot**fin**`. À voir à l'écran : T44.
+  écris `mot**fin**`. À voir à l'écran : T44. Complément du même jour, validé
+  par Cédric : `m10-04` n'est plus un décodeur mais un puzzle sur le datif
+  et l'ablatif (*Ulixes amico gladium in spelunca dat*), qui clôt la 5e sur
+  « tu connais maintenant les six cas ». L'ablatif y est présenté par
+  *in horto* et *in silva*, déjà connus ; le pluriel en *-is* et l'ablatif
+  de moyen sont laissés à la 4e. Il reste quatre décodeurs (mondes 4, 5, 8
+  et 9).
 
 - **Audit des leçons** (02/10/2026) — rapport :
   `docs/audits/audit_lecons_2026-10-02.md`. Sept défauts, dont deux

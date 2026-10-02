@@ -3805,7 +3805,7 @@ Cédric le validera.
 
 ---
 
-## T44 — Jouer les trois nouvelles leçons de déclinaison de 5e (sans rien modifier)
+## T44 — Jouer les quatre nouvelles leçons de déclinaison de 5e (sans rien modifier)
 
 Statut : À FAIRE
 
@@ -3824,8 +3824,10 @@ l'écran, jamais de mémoire.
    où `completed` contient toutes les leçons des mondes 1 à 7 et `m8-01`,
    `m8-02`.
 2. Joue `m8-03`, puis valide `m8-04` et `m8-05` pour avancer ; joue `m9-03`
-   de la même façon, puis `m10-03`.
-3. Pour chacune des trois leçons, capture le cours en entier (fais défiler)
+   de la même façon, puis `m10-03`. Joue aussi `m10-04` (puzzle sur le datif et
+   l'ablatif, ajouté le même jour) : essaie d'abord la phrase avec
+   l'étiquette « de l'ami », recopie le message, puis réussis.
+3. Pour chacune des quatre leçons, capture le cours en entier (fais défiler)
    et note : y a-t-il un astérisque `*` visible à l'écran ? Les terminaisons
    en gras sont-elles bien en gras ? Le cours tient-il sans paraître trop
    long (compte le nombre d'écrans à faire défiler) ?
