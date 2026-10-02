@@ -83,6 +83,9 @@ l'aigle des légions, absent du monde 9.
 
 ## Ce que je propose, dans l'ordre
 
+> Suivi : le point 1 est fait (validé par Cédric le 02/10/2026) dans `m8-03`,
+> `m9-03` et `m10-03`. Le défaut 2 est donc réduit, pas supprimé.
+
 1. **Enseigner les deux premières déclinaisons en 5e** (défaut 1). Trois
    leçons nouvelles ou réécrites dans les mondes 6 à 10, à la place des
    trois trous de culture (défaut 2) : le génitif (« la maison du père »),

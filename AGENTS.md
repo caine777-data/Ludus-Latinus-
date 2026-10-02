@@ -325,6 +325,18 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Les deux premières déclinaisons enseignées en 5e** (validé par Cédric
+  le 02/10/2026) — premier chantier de l'audit des leçons. Trois leçons
+  gardent leur histoire mais remplacent un choix de mot de culture par une
+  terminaison à écrire : `m8-03` le génitif (*Servus domini aquam portat*),
+  `m9-03` le pluriel (*Legionarii gladios portant*), `m10-03` l'accord de
+  l'adjectif (*Ulixes speluncam magnam videt*). Trois mots ajoutés au
+  Thesaurus (*portare*, *legionarius*, *spelunca*) ; *dominus*, *bonus* et
+  *magnus* sont désormais rattachés aux mondes 8 et 10. Le test
+  anti-réponse n'a plus que trois exceptions (`m1-02`, `m1-05`, `m7-03`).
+  Dans un cours, n'imbrique pas le gras dans l'italique (`*mot**fin***`) :
+  écris `mot**fin**`. À voir à l'écran : T44.
+
 - **Audit des leçons** (02/10/2026) — rapport :
   `docs/audits/audit_lecons_2026-10-02.md`. Sept défauts, dont deux
   majeurs : la 4e suppose acquises les 1re et 2e déclinaisons que la 5e

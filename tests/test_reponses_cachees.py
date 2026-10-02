@@ -15,14 +15,10 @@ from content import CURRICULUM
 # Exceptions autorisées à conserver la solution dans le cours :
 # - m1-02, m1-05 : découverte, avant l'apprentissage des cas
 # - m7-03 : devise à connaître (Veni, vidi, vici)
-# - m8-03, m9-03, m10-03 : trous à choix (civilisation : thermes, légion, monstres)
 EXCEPTIONS = {
     "m1-02": "découverte, avant les cas",
     "m1-05": "découverte, avant les cas",
     "m7-03": "devise à connaître",
-    "m8-03": "trous à choix (civilisation)",
-    "m9-03": "trous à choix (civilisation)",
-    "m10-03": "trous à choix (civilisation)",
 }
 
 # 5e (mondes 1 à 10), 4e (mondes 11 à 18) et 3e (mondes 19 à 26) sont réécrites.

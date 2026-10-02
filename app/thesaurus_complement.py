@@ -68,9 +68,11 @@ VOCABULAIRE_COMPLEMENTAIRE = [
     {"latin": "mercator, -oris", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "le marchand", "etym": "mercantile, commerce", "ex": "Mercator merces vendit.", "ex_fr": "Le marchand vend ses marchandises.", "monde": "monde8"},
     {"latin": "emere (emo, emi, emptum)", "cat": "Verbe", "genre": "3e groupe", "fr": "acheter", "etym": "exemption, préemption", "ex": "Mater panem emit.", "ex_fr": "La mère achète du pain.", "monde": "monde8"},
     {"latin": "vendere (vendo, vendidi, venditum)", "cat": "Verbe", "genre": "3e groupe", "fr": "vendre", "etym": "vendre, vendeur", "ex": "Agricola poma vendit.", "ex_fr": "Le paysan vend des fruits.", "monde": "monde8"},
+    {"latin": "portare (porto, portavi, portatum)", "cat": "Verbe", "genre": "1re conjugaison", "fr": "porter", "etym": "porter, transporter, portable", "ex": "Servus aquam portat.", "ex_fr": "L'esclave porte l'eau.", "monde": "monde8"},
     {"latin": "thermae, -arum", "cat": "Nom", "genre": "fém. pluriel 1re décl.", "fr": "les thermes, les bains publics", "etym": "thermal, thermomètre", "ex": "Romani in thermis lavant.", "ex_fr": "Les Romains se lavent aux thermes.", "monde": "monde8"},
 
     # Monde 9 · L'armée romaine
+    {"latin": "legionarius, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le légionnaire", "etym": "légionnaire, légion", "ex": "Legionarius gladium portat.", "ex_fr": "Le légionnaire porte un glaive.", "monde": "monde9"},
     {"latin": "legio, -onis", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "la légion", "etym": "légion, légionnaire", "ex": "Legio castra ponit.", "ex_fr": "La légion installe son camp.", "monde": "monde9"},
     {"latin": "castra, -orum", "cat": "Nom", "genre": "neutre pluriel 2e décl.", "fr": "le camp militaire", "etym": "Chester, Lancaster (villes anglaises)", "ex": "Milites in castris dormiunt.", "ex_fr": "Les soldats dorment au camp.", "monde": "monde9"},
     {"latin": "pilum, -i", "cat": "Nom", "genre": "neutre 2e décl.", "fr": "le javelot", "etym": "pilum", "ex": "Miles pilum iacit.", "ex_fr": "Le soldat lance son javelot.", "monde": "monde9"},
@@ -79,6 +81,7 @@ VOCABULAIRE_COMPLEMENTAIRE = [
     {"latin": "proelium, -i", "cat": "Nom", "genre": "neutre 2e décl.", "fr": "le combat, la bataille", "etym": "prélude (sens figuré)", "ex": "Proelium acre est.", "ex_fr": "La bataille est rude.", "monde": "monde9"},
 
     # Monde 10 · Monstres et métamorphoses
+    {"latin": "spelunca, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la grotte, la caverne", "etym": "spéléologie", "ex": "Cyclops in spelunca habitat.", "ex_fr": "Le Cyclope habite dans une grotte.", "monde": "monde10"},
     {"latin": "monstrum, -i", "cat": "Nom", "genre": "neutre 2e décl.", "fr": "le monstre, le prodige", "etym": "monstre, monstrueux, montrer", "ex": "Minotaurus monstrum est.", "ex_fr": "Le Minotaure est un monstre.", "monde": "monde10"},
     {"latin": "porta, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la porte", "etym": "porte, portail, portier", "ex": "Cerberus portas custodit.", "ex_fr": "Cerbère garde les portes.", "monde": "monde10"},
     {"latin": "custodire (custodio, custodivi, custoditum)", "cat": "Verbe", "genre": "4e groupe", "fr": "garder, surveiller", "etym": "custode", "ex": "Canis domum custodit.", "ex_fr": "Le chien garde la maison.", "monde": "monde10"},

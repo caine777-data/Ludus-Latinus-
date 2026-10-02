@@ -45,19 +45,24 @@ Ce soir, une seule porte reste ouverte. Reconstitue la phrase :""",
         {
             "id": "m10-03",
             "type": "trou",
-            "title": "Polyphème le Cyclope Géant (Cyclops)",
+            "title": "Polyphème le Cyclope : l'Adjectif s'accorde",
             "content": """## L'évasion de la grotte !
-Sur l'île de Sicile vivait Polyphème, un géant berger féroce appartenant au peuple des **Cyclopes** :
-- Il n'avait qu'un seul œil géant et rond au milieu du front.
-- Ulysse et ses compagnons se retrouvèrent piégés dans sa caverne.
-- Pour s'échapper, Ulysse fit boire au géant un vin doux très fort, puis le trompa en disant qu'il s'appelait **Nemo** (« Personne » en latin) !""",
-            "consigne": "Complète le nom latin du géant à œil unique :",
-            "phrase": "Le géant Polyphème appartient à la famille des {trou}.",
-            "options": ["Cyclopes", "Centaures", "Sirènes", "Gladiateurs"],
-            "solution": "Cyclopes",
-            "reponse": "Cyclopes",
-            "solution_complete": "Le géant Polyphème appartient à la famille des Cyclopes.",
-            "explication": "Cyclops vient du grec signifiant 'œil rond' !",
+En Sicile vit Polyphème, un Cyclope : un géant berger qui n'a qu'un œil, rond, au milieu du front. Ulysse et ses compagnons sont piégés dans sa caverne. Ulysse lui fait boire un vin très fort et lui dit s'appeler **Nemo** (« Personne ») !
+
+## Bon, bonne : l'adjectif s'accorde
+L'adjectif latin prend le genre, le nombre et le cas du nom qu'il accompagne. *Bonus* (bon) se décline comme *servus* au masculin et comme *rosa* au féminin :
+- Sujet : amicus bon**us** = un bon ami ; puella bon**a** = une bonne jeune fille.
+- COD : amicum bon**um** ; puellam bon**am**.
+
+Il existe une troisième forme, *bonum*, pour les noms neutres : tu la verras en 4e.
+
+À toi ! *Magnus, -a, -um* = grand, se décline comme *bonus* ; *spelunca, -ae* = la grotte.
+Complète pour dire : « Ulysse voit une grande grotte ».""",
+            "consigne": "Accorde « grande » avec speluncam :",
+            "avant": "Ulixes speluncam magn",
+            "apres": " videt.",
+            "solution": "am",
+            "latin_complet": "Ulixes speluncam magnam videt.",
         },
         {
             "id": "m10-04",

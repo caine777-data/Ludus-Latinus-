@@ -3,12 +3,12 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-02 15:47:24",
+    "date_export": "2026-10-02 19:32:39",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
     "total_cartes_collection": 32,
-    "total_mots_thesaurus": 221,
+    "total_mots_thesaurus": 224,
     "total_monuments_forum": 6,
     "total_flashcards_srs": 29
   },
@@ -883,20 +883,13 @@
         {
           "id": "m8-03",
           "type": "trou",
-          "title": "Détente aux Thermes Romains (Thermae)",
-          "content": "## Après le marché, direction les bains !\nLes Romains adoraient aller aux thermes (*thermae*) pour se laver, faire du sport et discuter politique :\n- Le **Frigidarium** : le bain d'eau glacée pour raffermir la peau.\n- Le **Tepidarium** : la salle tiède pour s'habituer à la température.\n- Le **Caldarium** : la grande salle d'eau très chaude chauffée par le sol (*hypocauste*).\n\nComme ils n'avaient pas de savon, ils s'enduisaient d'huile d'olive puis raclaient leur peau avec un instrument courbé en métal appelé le **strigile** !",
-          "consigne": "Complète le nom de la salle d'eau très chaude des thermes :",
-          "phrase": "Dans les thermes, la salle la plus chaude est le {trou}.",
-          "options": [
-            "Caldarium",
-            "Frigidarium",
-            "Aqueduc",
-            "Amphithéâtre"
-          ],
-          "solution": "Caldarium",
-          "reponse": "Caldarium",
-          "solution_complete": "Dans les thermes, la salle la plus chaude est le Caldarium.",
-          "explication": "Caldarium vient de 'calidus' qui signifie chaud (qui a donné 'calorique' et 'chaud') !"
+          "title": "Aux Thermes : le Génitif (à qui est-ce ?)",
+          "content": "## Après le marché, direction les bains !\nLes Romains vont aux thermes (*thermae*) pour se laver, faire du sport et discuter. On passe du bain froid (*frigidarium*) au bain tiède (*tepidarium*), puis au bain très chaud (*caldarium*). Pas de savon : on s'enduit d'huile, puis on racle la peau avec un **strigile**.\n\n## À qui est ce strigile ? Le génitif\nPour dire « de quelqu'un » ou « de quelque chose », le latin change encore la fin du mot. C'est le **GÉNITIF**, le cas du complément du nom.\n- Les noms en **-a** prennent **-ae** : rosa puell**ae** = la rose **de la** jeune fille.\n- Les noms en **-us** prennent **-i** : equus amic**i** = le cheval **de l'**ami.\n\nÀ toi ! *Servus, -i* = l'esclave ; *dominus, -i* = le maître ; *portat* = porte.\nComplète pour dire : « L'esclave du maître porte l'eau ».",
+          "consigne": "Mets dominus au génitif (« du maître ») :",
+          "avant": "Servus domin",
+          "apres": " aquam portat.",
+          "solution": "i",
+          "latin_complet": "Servus domini aquam portat."
         },
         {
           "id": "m8-04",
@@ -1006,20 +999,13 @@
         {
           "id": "m9-03",
           "type": "trou",
-          "title": "La Célèbre Tortue Romaine (Testudo)",
-          "content": "## Boucliers verrouillés !\nFace à une pluie de flèches ou pour approcher les remparts d'une forteresse, le centurion criait l'ordre : **TESTUDO !**\nLes légionnaires serraient les rangs :\n- Les soldats de devant plaçaient leurs boucliers devant eux.\n- Les soldats du milieu levaient leurs boucliers au-dessus de leur tête comme un toit hermétique.\n\nLa formation était si solide qu'on pouvait faire rouler un char au-dessus sans qu'elle ne cède !",
-          "consigne": "Complète le nom latin de la formation défensive en forme de tortue :",
-          "phrase": "Pour résister aux flèches, les soldats forment la {trou}.",
-          "options": [
-            "Testudo",
-            "Corona",
-            "Aquila",
-            "Domus"
-          ],
-          "solution": "Testudo",
-          "reponse": "Testudo",
-          "solution_complete": "Pour résister aux flèches, les soldats forment la Testudo.",
-          "explication": "Testudo signifie littéralement 'la tortue' en latin !"
+          "title": "La Tortue Romaine : le Pluriel",
+          "content": "## Boucliers verrouillés !\nFace à une pluie de flèches, le centurion crie : **TESTUDO !** (« la tortue »). Les légionnaires serrent les rangs. Ceux de devant tiennent leur bouclier devant eux, ceux du milieu le lèvent au-dessus de leur tête, comme un toit. La formation est si solide qu'un char peut rouler dessus !\n\n## Un soldat, des soldats : le pluriel\nTu sais reconnaître le sujet et le COD au singulier. Au pluriel, la fin du mot change encore :\n- Noms en **-a** : sujet *rosa* ➔ **rosae** ; COD *rosam* ➔ **rosas**.\n- Noms en **-us** : sujet *servus* ➔ **servi** ; COD *servum* ➔ **servos**.\n\nExemple : *Puellae rosas amant.* = « Les jeunes filles aiment les roses. »\nTu as reconnu *-ae* et *-i* : ce sont aussi les terminaisons du génitif. C'est le sens de la phrase qui tranche.\n\nÀ toi ! *Legionarius, -i* = le légionnaire ; *gladius, -i* = le glaive ; *portant* = portent.\nComplète pour dire : « Les légionnaires portent leurs glaives ».",
+          "consigne": "Mets gladius au COD pluriel :",
+          "avant": "Legionarii gladi",
+          "apres": " portant.",
+          "solution": "os",
+          "latin_complet": "Legionarii gladios portant."
         },
         {
           "id": "m9-04",
@@ -1129,20 +1115,13 @@
         {
           "id": "m10-03",
           "type": "trou",
-          "title": "Polyphème le Cyclope Géant (Cyclops)",
-          "content": "## L'évasion de la grotte !\nSur l'île de Sicile vivait Polyphème, un géant berger féroce appartenant au peuple des **Cyclopes** :\n- Il n'avait qu'un seul œil géant et rond au milieu du front.\n- Ulysse et ses compagnons se retrouvèrent piégés dans sa caverne.\n- Pour s'échapper, Ulysse fit boire au géant un vin doux très fort, puis le trompa en disant qu'il s'appelait **Nemo** (« Personne » en latin) !",
-          "consigne": "Complète le nom latin du géant à œil unique :",
-          "phrase": "Le géant Polyphème appartient à la famille des {trou}.",
-          "options": [
-            "Cyclopes",
-            "Centaures",
-            "Sirènes",
-            "Gladiateurs"
-          ],
-          "solution": "Cyclopes",
-          "reponse": "Cyclopes",
-          "solution_complete": "Le géant Polyphème appartient à la famille des Cyclopes.",
-          "explication": "Cyclops vient du grec signifiant 'œil rond' !"
+          "title": "Polyphème le Cyclope : l'Adjectif s'accorde",
+          "content": "## L'évasion de la grotte !\nEn Sicile vit Polyphème, un Cyclope : un géant berger qui n'a qu'un œil, rond, au milieu du front. Ulysse et ses compagnons sont piégés dans sa caverne. Ulysse lui fait boire un vin très fort et lui dit s'appeler **Nemo** (« Personne ») !\n\n## Bon, bonne : l'adjectif s'accorde\nL'adjectif latin prend le genre, le nombre et le cas du nom qu'il accompagne. *Bonus* (bon) se décline comme *servus* au masculin et comme *rosa* au féminin :\n- Sujet : amicus bon**us** = un bon ami ; puella bon**a** = une bonne jeune fille.\n- COD : amicum bon**um** ; puellam bon**am**.\n\nIl existe une troisième forme, *bonum*, pour les noms neutres : tu la verras en 4e.\n\nÀ toi ! *Magnus, -a, -um* = grand, se décline comme *bonus* ; *spelunca, -ae* = la grotte.\nComplète pour dire : « Ulysse voit une grande grotte ».",
+          "consigne": "Accorde « grande » avec speluncam :",
+          "avant": "Ulixes speluncam magn",
+          "apres": " videt.",
+          "solution": "am",
+          "latin_complet": "Ulixes speluncam magnam videt."
         },
         {
           "id": "m10-04",
@@ -2866,7 +2845,7 @@
         "etym": "dominer, domination, dame",
         "ex": "Dominus servos iubet.",
         "ex_fr": "Le maître ordonne aux serviteurs.",
-        "monde": "monde12"
+        "monde": "monde8"
       },
       {
         "latin": "domus, -us",
@@ -3426,7 +3405,7 @@
         "etym": "bon, bonté, bonus",
         "ex": "Bonus civis legibus paret.",
         "ex_fr": "Le bon citoyen obéit aux lois.",
-        "monde": "monde14"
+        "monde": "monde10"
       },
       {
         "latin": "brevis, -e",
@@ -3466,7 +3445,7 @@
         "etym": "magnifique, magnitude, majeur",
         "ex": "Alexander Magnus.",
         "ex_fr": "Alexandre le Grand.",
-        "monde": "monde16"
+        "monde": "monde10"
       },
       {
         "latin": "malus, -a, -um",
@@ -3999,6 +3978,16 @@
         "monde": "monde8"
       },
       {
+        "latin": "portare (porto, portavi, portatum)",
+        "cat": "Verbe",
+        "genre": "1re conjugaison",
+        "fr": "porter",
+        "etym": "porter, transporter, portable",
+        "ex": "Servus aquam portat.",
+        "ex_fr": "L'esclave porte l'eau.",
+        "monde": "monde8"
+      },
+      {
         "latin": "thermae, -arum",
         "cat": "Nom",
         "genre": "fém. pluriel 1re décl.",
@@ -4007,6 +3996,16 @@
         "ex": "Romani in thermis lavant.",
         "ex_fr": "Les Romains se lavent aux thermes.",
         "monde": "monde8"
+      },
+      {
+        "latin": "legionarius, -i",
+        "cat": "Nom",
+        "genre": "masc. 2e décl.",
+        "fr": "le légionnaire",
+        "etym": "légionnaire, légion",
+        "ex": "Legionarius gladium portat.",
+        "ex_fr": "Le légionnaire porte un glaive.",
+        "monde": "monde9"
       },
       {
         "latin": "legio, -onis",
@@ -4067,6 +4066,16 @@
         "ex": "Proelium acre est.",
         "ex_fr": "La bataille est rude.",
         "monde": "monde9"
+      },
+      {
+        "latin": "spelunca, -ae",
+        "cat": "Nom",
+        "genre": "fém. 1re décl.",
+        "fr": "la grotte, la caverne",
+        "etym": "spéléologie",
+        "ex": "Cyclops in spelunca habitat.",
+        "ex_fr": "Le Cyclope habite dans une grotte.",
+        "monde": "monde10"
       },
       {
         "latin": "monstrum, -i",

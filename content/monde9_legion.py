@@ -44,21 +44,25 @@ César envoie maintenant plusieurs légions. Reconstitue la phrase en français 
         {
             "id": "m9-03",
             "type": "trou",
-            "title": "La Célèbre Tortue Romaine (Testudo)",
+            "title": "La Tortue Romaine : le Pluriel",
             "content": """## Boucliers verrouillés !
-Face à une pluie de flèches ou pour approcher les remparts d'une forteresse, le centurion criait l'ordre : **TESTUDO !**
-Les légionnaires serraient les rangs :
-- Les soldats de devant plaçaient leurs boucliers devant eux.
-- Les soldats du milieu levaient leurs boucliers au-dessus de leur tête comme un toit hermétique.
+Face à une pluie de flèches, le centurion crie : **TESTUDO !** (« la tortue »). Les légionnaires serrent les rangs. Ceux de devant tiennent leur bouclier devant eux, ceux du milieu le lèvent au-dessus de leur tête, comme un toit. La formation est si solide qu'un char peut rouler dessus !
 
-La formation était si solide qu'on pouvait faire rouler un char au-dessus sans qu'elle ne cède !""",
-            "consigne": "Complète le nom latin de la formation défensive en forme de tortue :",
-            "phrase": "Pour résister aux flèches, les soldats forment la {trou}.",
-            "options": ["Testudo", "Corona", "Aquila", "Domus"],
-            "solution": "Testudo",
-            "reponse": "Testudo",
-            "solution_complete": "Pour résister aux flèches, les soldats forment la Testudo.",
-            "explication": "Testudo signifie littéralement 'la tortue' en latin !",
+## Un soldat, des soldats : le pluriel
+Tu sais reconnaître le sujet et le COD au singulier. Au pluriel, la fin du mot change encore :
+- Noms en **-a** : sujet *rosa* ➔ **rosae** ; COD *rosam* ➔ **rosas**.
+- Noms en **-us** : sujet *servus* ➔ **servi** ; COD *servum* ➔ **servos**.
+
+Exemple : *Puellae rosas amant.* = « Les jeunes filles aiment les roses. »
+Tu as reconnu *-ae* et *-i* : ce sont aussi les terminaisons du génitif. C'est le sens de la phrase qui tranche.
+
+À toi ! *Legionarius, -i* = le légionnaire ; *gladius, -i* = le glaive ; *portant* = portent.
+Complète pour dire : « Les légionnaires portent leurs glaives ».""",
+            "consigne": "Mets gladius au COD pluriel :",
+            "avant": "Legionarii gladi",
+            "apres": " portant.",
+            "solution": "os",
+            "latin_complet": "Legionarii gladios portant.",
         },
         {
             "id": "m9-04",

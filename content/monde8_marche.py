@@ -47,21 +47,22 @@ Traduis la phrase du marchand :""",
         {
             "id": "m8-03",
             "type": "trou",
-            "title": "Détente aux Thermes Romains (Thermae)",
+            "title": "Aux Thermes : le Génitif (à qui est-ce ?)",
             "content": """## Après le marché, direction les bains !
-Les Romains adoraient aller aux thermes (*thermae*) pour se laver, faire du sport et discuter politique :
-- Le **Frigidarium** : le bain d'eau glacée pour raffermir la peau.
-- Le **Tepidarium** : la salle tiède pour s'habituer à la température.
-- Le **Caldarium** : la grande salle d'eau très chaude chauffée par le sol (*hypocauste*).
+Les Romains vont aux thermes (*thermae*) pour se laver, faire du sport et discuter. On passe du bain froid (*frigidarium*) au bain tiède (*tepidarium*), puis au bain très chaud (*caldarium*). Pas de savon : on s'enduit d'huile, puis on racle la peau avec un **strigile**.
 
-Comme ils n'avaient pas de savon, ils s'enduisaient d'huile d'olive puis raclaient leur peau avec un instrument courbé en métal appelé le **strigile** !""",
-            "consigne": "Complète le nom de la salle d'eau très chaude des thermes :",
-            "phrase": "Dans les thermes, la salle la plus chaude est le {trou}.",
-            "options": ["Caldarium", "Frigidarium", "Aqueduc", "Amphithéâtre"],
-            "solution": "Caldarium",
-            "reponse": "Caldarium",
-            "solution_complete": "Dans les thermes, la salle la plus chaude est le Caldarium.",
-            "explication": "Caldarium vient de 'calidus' qui signifie chaud (qui a donné 'calorique' et 'chaud') !",
+## À qui est ce strigile ? Le génitif
+Pour dire « de quelqu'un » ou « de quelque chose », le latin change encore la fin du mot. C'est le **GÉNITIF**, le cas du complément du nom.
+- Les noms en **-a** prennent **-ae** : rosa puell**ae** = la rose **de la** jeune fille.
+- Les noms en **-us** prennent **-i** : equus amic**i** = le cheval **de l'**ami.
+
+À toi ! *Servus, -i* = l'esclave ; *dominus, -i* = le maître ; *portat* = porte.
+Complète pour dire : « L'esclave du maître porte l'eau ».""",
+            "consigne": "Mets dominus au génitif (« du maître ») :",
+            "avant": "Servus domin",
+            "apres": " aquam portat.",
+            "solution": "i",
+            "latin_complet": "Servus domini aquam portat.",
         },
         {
             "id": "m8-04",

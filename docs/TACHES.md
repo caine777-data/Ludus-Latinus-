@@ -3802,3 +3802,48 @@ Cédric le validera.
 - Commandes lancées et résultat réel :
 - Doutes, questions pour l'architecte :
 - Reste à faire :
+
+---
+
+## T44 — Jouer les trois nouvelles leçons de déclinaison de 5e (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : trois leçons de 5e ont été réécrites le 2 octobre pour
+enseigner le génitif (`m8-03`), le pluriel (`m9-03`) et l'accord de
+l'adjectif (`m10-03`). Il faut les voir à l'écran.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t44_*`. Le profil est modifié **puis restauré** (méthode de T26).
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis
+l'écran, jamais de mémoire.
+
+**Étapes** :
+1. Installe la version actuelle. Sauvegarde le profil, puis pousse un profil
+   où `completed` contient toutes les leçons des mondes 1 à 7 et `m8-01`,
+   `m8-02`.
+2. Joue `m8-03`, puis valide `m8-04` et `m8-05` pour avancer ; joue `m9-03`
+   de la même façon, puis `m10-03`.
+3. Pour chacune des trois leçons, capture le cours en entier (fais défiler)
+   et note : y a-t-il un astérisque `*` visible à l'écran ? Les terminaisons
+   en gras sont-elles bien en gras ? Le cours tient-il sans paraître trop
+   long (compte le nombre d'écrans à faire défiler) ?
+4. Dans chaque exercice, tape d'abord une mauvaise terminaison plausible
+   (`m8-03` : `um` ; `m9-03` : `i` ; `m10-03` : `a`) et recopie le message.
+   Puis tape la bonne et capture.
+5. Recopie les questions de vocabulaire posées après chaque exercice.
+6. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Pour chaque leçon : captures du cours, de l'erreur et de la réussite.
+- [ ] La réponse aux trois questions de l'étape 3, leçon par leçon.
+- [ ] Le profil d'origine est restauré (capture).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée des leçons de déclinaison de 5e`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
