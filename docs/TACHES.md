@@ -3398,7 +3398,7 @@ mondes de 5e ». L'appli est aujourd'hui en Flutter, avec 26 mondes de la 5e
 
 ## T37 — Vérifier à l'écran les corrections du 2 octobre (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : l'architecte a corrigé les défauts de T30 et T32. Il a vu le
 Duel, Ludi et Memoria en 360 x 640. Restent à voir : les cartes des cas en
@@ -3421,16 +3421,58 @@ une tâche à `VALIDÉ`.**
    Puis `wm size reset` et `wm density reset`.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau : écran, réglage, conforme ou non, capture.
-- [ ] `font_scale`, `wm size` et `wm density` remis (recopie les valeurs).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: vérification à l'écran des corrections du 2 octobre`.
+- [x] Un tableau : écran, réglage, conforme ou non, capture.
+- [x] `font_scale`, `wm size` et `wm density` remis (recopie les valeurs).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: vérification à l'écran des corrections du 2 octobre`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` (aucun fichier de code modifié)
 - Commandes lancées et résultat réel :
+  - `flutter build apk --debug` : compilation réussie en 11,1s.
+  - `adb install -r build/app/outputs/flutter-apk/app-debug.apk` : installation réussie (`Success`).
+  - Validation étape par étape sur l'émulateur `Pixel_Ludus` :
+    1. Taille normale (1080x2400, d420), police 1.0 :
+       - Quiz du Duel avant réponse : 4 choix et postures visibles sans défilement (`scratch/t37g_duel_before_normal.png`).
+       - Quiz du Duel après réponse : bonne réponse en vert, bandeau d'explication bien visible sous les choix (`scratch/t37g_duel_after_normal.png`).
+       - Memoria Velox : carte et 4 boutons de réponse sans débordement (`scratch/t37g_memoria_normal.png`).
+       - Ludi : en-tête et 6 tuiles conformes (`scratch/t37g_ludi_normal.png`).
+    2. Police agrandie (`font_scale 1.3`) :
+       - Thesaurus > Déclinaisons : défilement horizontal de la rangée des 6 cas jusqu'à l'Ablatif (`scratch/t37g_thesaurus_declinaisons_1.png`, `_2.png`, `_ablatif.png`). Aucune bande jaune et noire constatée.
+       - Quiz du Duel en police 1.3 : les 4 choix de réponse restent visibles et atteignables (`scratch/t37g_duel_font13.png`).
+       - Observation connexe : sur l'onglet Ludi en police 1.3, un léger débordement de 1.9 px apparaît au bas des 3 tuiles verrouillées en raison de la hauteur des textes descriptifs.
+    3. Rétablissement de la police : `font_scale` remis à 1.0 (vérifié : `1.0`).
+    4. Petit écran (720x1280, d320 = 360x640 dp), police 1.0 :
+       - Quiz du Duel avant réponse : 4 réponses visibles (`scratch/t37g_duel_small_before.png`).
+       - Quiz du Duel après réponse : le panneau s'anime automatiquement pour faire apparaître le bandeau d'explication au bas de l'écran sans intervention manuelle (`scratch/t37g_duel_small_after.png`).
+    5. Rétablissement de l'écran : `wm size reset` et `wm density reset`.
+- Tableau de vérification à l'écran :
+
+| Écran | Réglage | Conforme | Remarque / Observation | Capture |
+|---|---|:---:|---|---|
+| **Duel (Colosseum)** | 1080x2400, font 1.0 | **Oui** | 4 réponses visibles, posture sélectionnée, pas de débordement | `scratch/t37g_duel_before_normal.png` |
+| **Duel (Colosseum)** | 1080x2400, font 1.0 | **Oui** | Choix vert + bandeau d'explication apparu immédiatement sous la question | `scratch/t37g_duel_after_normal.png` |
+| **Memoria Velox** | 1080x2400, font 1.0 | **Oui** | Carte Lupa et 4 boutons intacts, aucun débordement | `scratch/t37g_memoria_normal.png` |
+| **Ludi & Arènes** | 1080x2400, font 1.0 | **Oui** | 6 tuiles parfaitement proportionnées | `scratch/t37g_ludi_normal.png` |
+| **Thesaurus (Cas)** | 1080x2400, font 1.3 | **Oui** | Rangée défilante horizontale : Nominatif, Vocatif, Accusatif sans bande jaune/noire | `scratch/t37g_thesaurus_declinaisons_1.png` |
+| **Thesaurus (Cas)** | 1080x2400, font 1.3 | **Oui** | Défilement vers Génitif et Datif, affichage net | `scratch/t37g_thesaurus_declinaisons_2.png` |
+| **Thesaurus (Cas)** | 1080x2400, font 1.3 | **Oui** | Carte de l'Ablatif atteinte et parfaitement affichée | `scratch/t37g_thesaurus_declinaisons_ablatif.png` |
+| **Duel (Colosseum)** | 1080x2400, font 1.3 | **Oui** | Les 4 réponses restent atteignables avec marge confortable en bas | `scratch/t37g_duel_font13.png` |
+| **Duel (Petit écran)** | 720x1280 d320, font 1.0 | **Oui** | Écran 360x640 dp : 4 réponses visibles | `scratch/t37g_duel_small_before.png` |
+| **Duel (Petit écran)** | 720x1280 d320, font 1.0 | **Oui** | Après réponse : défilement automatique, bandeau d'explication bien visible | `scratch/t37g_duel_small_after.png` |
+
+- Vérification des paramètres réinitialisés :
+  - `adb shell settings get system font_scale` : `1.0` (valeur initiale `1.0`)
+  - `adb shell wm size` : `Physical size: 1080x2400` (valeur initiale `1080x2400`)
+  - `adb shell wm density` : `Physical density: 420` (valeur initiale `420`)
+  - `adb shell settings get system pointer_location` : `0`
+  - `adb shell settings get system show_touches` : `0`
 - Doutes, questions pour l'architecte :
+  - Sur l'onglet Ludi avec `font_scale 1.3`, les cartes d'arcade verrouillées affichent un débordement minime (`BOTTOM OVERFLOWED BY 1.9 PIXELS`) lorsque les textes descriptifs font 2 lignes.
 - Reste à faire :
+  - Validation par l'architecte pour passage de `FAIT` à `VALIDÉ`.
+  - T38 étant marquée `ANNULÉ` par décision de Cédric, la tâche suivante sera T39.
 
 ---
 
