@@ -325,6 +325,13 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Audit des jeux, première partie** (03/10/2026) — rapport :
+  `docs/audits/audit_jeux_2026-10-03.md`, tiré du code ; les mesures de
+  T41 le compléteront. Principaux défauts : la Taverne rapporte environ
+  78 HS par jour au hasard, plus que les leçons ; César, le Marché et le
+  Panthéon n'ont plus rien à offrir une fois finis ; le Duel se gagne en
+  deux réponses. Six propositions, en attente de la décision de Cédric.
+
 - **Les deux premières déclinaisons enseignées en 5e** (validé par Cédric
   le 02/10/2026) — premier chantier de l'audit des leçons. Trois leçons
   gardent leur histoire mais remplacent un choix de mot de culture par une
