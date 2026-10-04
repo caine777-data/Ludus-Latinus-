@@ -4955,7 +4955,7 @@ l'étend aux autres écrans pour trouver les cas qu'on n'a pas encore vus.
 
 ## T47 — Les promesses que l'appli ne tient pas (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : la Taverne annonce une « Protection de Série » qui n'existe
 pas dans le code. Il y en a peut-être d'autres : un texte qui promet un
@@ -4979,15 +4979,83 @@ cesse de faire confiance au jeu.
    annoncé n'est pas celui du code).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau : texte exact, fichier et ligne, classement, preuve.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: promesses non tenues`.
+- [x] Un tableau : texte exact, fichier et ligne, classement, preuve.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: promesses non tenues`.
+
+### Tableau des promesses de l'application et du curriculum
+
+| Texte exact de la promesse | Fichier et ligne de l'annonce | Classement | Preuve dans le code (ou constat d'absence) |
+|---|---|---|---|
+| **1. Boutique & Goodies** | | | |
+| `bonus: '+1 moral chaque matin'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:272` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucune jauge ni mécanique de « moral » n'existe dans l'application mobile. Le champ `bonus` est purement textuel. |
+| `bonus: '+5 HS chaque jour'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:302` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun versement quotidien de 5 HS n'est déclenché par la possession de Cerberus Pullus. `git grep cerberus_pullus` ne renvoie que la déclaration du catalogue. |
+| `bonus: 'Protection inébranlable'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:230` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Le bouclier Scutum équipé n'accorde aucune réduction de dégâts ni protection dans les mini-jeux. |
+| `bonus: 'Puissance des légionnaires'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:220` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Le gladius d'honneur n'augmente aucune valeur d'attaque dans le Duel ou ailleurs. |
+| `bonus: 'Éloquence sénatoriale'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:210` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Purement cosmétique, aucune fonction ne lit l'accessoire `volumen`. |
+| `bonus: 'Pouvoir exécutif suprême'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:250` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Autorité martiale'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:158` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Gloire éternelle à Rome'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:168` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Gloire Militaire Suprême'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:188` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Aura Impériale Suprême'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:116` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Inspiration divine'` (description : « murmure la solution des déclinaisons ») | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:281-282` (affiché dans `boutique_modal.dart:541`) | **Fausse** | La chouette Noctua ne murmure aucune solution et n'affiche aucun indice. |
+| `bonus: 'Regard impérial perçant'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:292` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: 'Vitesse de triomphe'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:312` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Le cheval blanc n'accélère pas la vitesse au Circus Maximus (celle-ci dépend uniquement de la faction). |
+| `bonus: 'Ailes de la Victoire'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:322` (affiché dans `boutique_modal.dart:541`) | **Fausse** | Aucun effet dans le jeu. |
+| `bonus: '+10% Prestige'`, `'+15% Résistance au Circus'`, `'+20% Résistance au Colisée'`, `'+10% Sagesse grammaticale'`, `'+10% Prestige impérial'` | `ludus_latinus_mobile/lib/data/models/goodie_item.dart:96, 106, 126, 178, 240` | **Fausse** | Ces pourcentages sont masqués à l'affichage dans la modale par `if (item.bonus != null && !item.bonus!.contains('%'))` (`boutique_modal.dart:530`), mais ils existent dans le modèle de données et ne correspondent à aucun code de réduction de dégâts ou d'XP. |
+| **2. Monuments du Forum Romain** | | | |
+| `bonus: "🪙 Trésor Impérial : +20% de sesterces gagnés sur chaque exercice !"` | `app/forum_imperiale.py:34` et `ludus_latinus_dataset.json` (affiché `forum_screen.dart:427`) | **Inexacte** | Le bonus est bien codé dans `ludus_latinus_mobile/lib/data/repositories/game_repository.dart:130-131` (`final bonus = isMonumentRestored('templum_saturni') ? 0.20 : 0.0; gain = base + (base * bonus).round();`), mais il ne s'applique **que** lors de la validation d'une leçon (`completeLesson`) lors de sa toute première réussite. Il n'augmente pas les gains des exercices individuels ni ceux des jeux du Circus, de la Taverne, du Marché ou de César. |
+| `bonus: "💧 Source Divine : Rétablit l'énergie et la concentration."` | `app/forum_imperiale.py:24` (affiché `forum_screen.dart:427`) | **Fausse** | Aucune jauge d'énergie ni mécanisme de concentration n'est codé dans l'appli mobile. |
+| `bonus: "📜 Sagesse des Pères : +10% de bonus d'expérience sur les leçons d'histoire."` | `app/forum_imperiale.py:44` (affiché `forum_screen.dart:427`) | **Fausse** | Il n'existe aucun système d'expérience (XP) dans l'application mobile. |
+| `bonus: "🎖️ Gloire des Légions : Débloque le titre impérial « Patricien Bâtisseur »."` | `app/forum_imperiale.py:54` (affiché `forum_screen.dart:427`) | **Fausse** | Aucun titre « Patricien Bâtisseur » n'existe dans le profil (`profile.dart`) ni dans l'interface de l'application. |
+| `bonus: "🦉 Pensée Éclairée : T'offre 1 indice gratuit quotidien sur les exercices difficiles."` | `app/forum_imperiale.py:64` (affiché `forum_screen.dart:427`) | **Fausse** | Aucun système d'indice quotidien gratuit n'est implémenté dans les leçons mobiles. |
+| `bonus: "👑 Grand Bâtisseur : Débloque le Trophée d'or suprême « Forum Restitutum » !"` | `app/forum_imperiale.py:74` (affiché `forum_screen.dart:427`) | **Fausse** | Le Panthéon des trophées (`account_screen.dart:386`) possède un trophée « Bâtisseur » (condition : 1 monument restauré), mais aucun trophée « Forum Restitutum » n'est débloqué en terminant les 6 monuments ou les Rostres. |
+| **3. Leçons et Arènes de fin de monde** | | | |
+| « ...gagner l'accès au cœur de Rome ainsi qu'une bourse de **50 Sesterces 🪙**... » (m1-06) | `content/monde1_salve.py:121` | **Inexacte** | L'accès au monde 2 est débloqué (**Tenue**), mais la bourse ne verse que 10 HS (ou 12 avec Saturne) via `game_repository.dart:115` (`rewardForStars(3) = 10`), jamais 50 HS. |
+| « ...empocher **50 Sesterces 🪙**... » (m2-06, m3-06, m5-06, m6-06, m8-05, m9-05, m11-05, m12-05, m13-05, m14-05, m15-05, m16-05, m17-05, m19-05, m20-05, m21-05, m22-05, m23-05, m24-05, m25-05) | `content/monde*.py` (20 leçons d'arène) | **Inexacte** | Toutes les leçons d'arène appellent `completeLesson` dans `lesson_screen.dart:217` et `game_repository.dart:121`, qui verse au maximum 10 HS (ou 12 HS avec Saturne) à la première réussite, jamais 50 HS. |
+| « ...remporter **50 Sesterces 🪙** ainsi que sa peau légendaire ! » (m4-06) | `content/monde4_cas.py:104` | **Inexacte** (sesterces) / **Fausse** (objet) | Ne verse que 10 HS au lieu de 50 HS. L'objet « peau légendaire » n'existe nulle part dans l'inventaire ni dans la boutique. |
+| « ...décrocher la toge de **Triumphator** et une pluie royale de **50 Sesterces 🪙** ! » (m7-05) | `content/monde7_etymologie.py:80` | **Inexacte** (sesterces) / **Fausse** (objet) | Ne verse que 10 HS au lieu de 50 HS. La toge de Triumphator n'est pas débloquée à l'issue de la leçon. |
+| « ...vaincre le Boss Suprême et empocher **100 Sesterces Royaux 🪙** ! » (m10-05) | `content/monde10_monstres.py:97` | **Inexacte** | Ne verse que 10 HS (ou 12 HS) au lieu des 100 HS annoncés. |
+| « ...décrocher le **Grand Diplôme de 4ème** et **100 Sesterces 🪙** ! » (m18-05) | `content/monde18_triomphe_rep.py:71` | **Inexacte** (sesterces) / **Fausse** (diplôme) | Ne verse que 10 HS au lieu de 100 HS. Le diplôme impérial (`roman_diploma_dialog.dart`) dépend du Cursus Honorum général (`cursus_honorum.dart`), pas de l'achèvement spécifique de m18-05. |
+| « Face à l'Empereur Trajan, débloque le Grand Triomphe du Collège et la Toge Prétexte d'Or ! » / « ...te décerne la **Toge Prétexte d'Or** et **200 Sesterces 🪙** ! » (m26-04) | `content/monde26_triomphe_cycle4.py:5, 77` | **Inexacte** (sesterces) / **Fausse** (objet) | Ne verse que 10 HS au lieu de 200 HS. La toge prétexte (`praetexta`) n'est pas débloquée ni équipée automatiquement (elle est vendue 35 HS en boutique). |
+| **4. Colisée (Duel)** | | | |
+| `Ictus Gravis` : `'Dégâts infligés +45%, riposte subie +50%'` | `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:19` | **Tenue** | Réalisé : `duel_screen.dart:514` (`(35 * 1.45).round()` = 51 dégâts) et ligne 552 (`(baseRiposte * 1.50).round()`). |
+| `Scuti Paratio` : `'Riposte subie réduite de 50%, dégâts normaux'` | `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:27` | **Inexacte** | La riposte subie est bien réduite de 50 % (`duel_screen.dart:552`, `riposteMult: 0.50`), mais les dégâts ne sont pas « normaux » : `damageMult: 0.90` (ligne 28 et 514) réduit les dégâts infligés de 10 % (32 au lieu de 35). |
+| `Fuga Celox` : `'+10 pts et Coup Critique si réponse < 4s'` | `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:35` | **Tenue** | Réalisé dans `duel_screen.dart:516-520` : si `elapsedSec <= 4`, `degats = (degats * 1.25).round()` (coup critique) et `sestercesEarned += 10` (+10 pts). |
+| `'Chaque bonne réponse porte un coup critique à l\'adversaire.'` | `ludus_latinus_mobile/lib/ui/features/duel/duel_screen.dart:656` (dialogue « Règles de l'Arène ») | **Fausse** | Dans le code (`duel_screen.dart:516`), seule la posture Celox sous 4 secondes déclenche un coup critique. Avec les autres postures ou un temps > 4s, la bonne réponse n'est pas critique. |
+| **5. Circus Maximus** | | | |
+| Faction Veneti : `'Vitesse +15%'` | `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart:14` | **Tenue** | Réalisé : `circus_screen.dart:450` (`speed = _playerSpeed * _selectedFaction.speedMult` avec `speedMult: 1.15`). |
+| Faction Russati : `'Turbo +25%'` | `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart:15` | **Tenue** | Réalisé : `circus_screen.dart:452` (`speed *= (2.2 * _selectedFaction.turboMult)`) et ligne 604 (`_turboRemainingFrames = (34 * _selectedFaction.turboMult).round()`) avec `turboMult: 1.25`. |
+| Faction Prasini : `'Sesterces +30%'` | `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart:16` | **Tenue** | Réalisé : `circus_screen.dart:651` (`(GameRepository.gainCircus * _selectedFaction.sestercesMult).round()` avec `sestercesMult: 1.30`). |
+| Faction Albati : `'Seconde Chance'` | `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart:17` | **Tenue** | Réalisé : `circus_screen.dart:562-571` (`if (_shieldAvailable) { _shieldAvailable = false; ... }` pare le premier crash sans pénalité de progression). |
+| `'✓ Virage magistral ! Turbo impérial activé ! (+15 pts)'` | `ludus_latinus_mobile/lib/ui/features/circus/circus_screen.dart:558` | **Tenue** | Réalisé : `circus_screen.dart:551-552` (`_turboRemainingFrames = 30; _scoreSesterces += 15;`). |
+| **6. Taverne** | | | |
+| `'👑 Coup de Vénus'` • `'+$gainVenus HS'` (8 HS) | `ludus_latinus_mobile/lib/ui/features/taverne/taverne_screen.dart:894` | **Tenue** | Réalisé : `taverne_screen.dart:300` (`gain = gainVenus;` soit 8 HS) et versé ligne 90 (`widget.repo.addSesterces(gain);`). *(Note : l'ancienne mention '+50 HS & Bouclier' / 'Protection de série' a été retirée).* |
+| Combinaisons Tesserae : Carré (+30 HS), Sénat (+15 HS), Plébéien (+5 HS) | `ludus_latinus_mobile/lib/ui/features/taverne/taverne_screen.dart:892-895` | **Tenue** | Réalisé : lignes 309 (`gainCarre = 30`), 318 (`gainBrelan = 15`), 327 (`gainPaire = 5`) et versé ligne 90 si le calcul est correct. |
+| `'Tu as obtenu le Coup du Chien (Iactus Canis) ! Réponds correctement pour sauver ton honneur et remporter +20 HS de rachat :'` | `ludus_latinus_mobile/lib/ui/features/taverne/taverne_screen.dart:395` | **Inexacte** | Le gain de 20 HS n'est versé que si `_lancerRecompense` est vrai (`taverne_screen.dart:421`). Si les 3 lancers payés du jour sont épuisés, le texte annonce toujours « remporter +20 HS » mais la bourse ne reçoit 0 HS. |
+| **7. Épigraphes, Quêtes et Progression** | | | |
+| `'Sans erreur : +${widget.epigraph.recompense} HS. Après une erreur : +$_gainApresErreur HS.'` (15 HS / 8 HS) | `ludus_latinus_mobile/lib/ui/core/latin_epigraph_modal.dart:184` | **Tenue** | Réalisé : `latin_epigraph_modal.dart:100` (`final gain = _erreurs == 0 ? 15 : 8;`) et versé ligne 107 (`widget.repo.addSesterces(gain);`). |
+| `'JOUER · +${dailyQuest.recompense} HS'` (10 HS) | `ludus_latinus_mobile/lib/ui/features/home/home_screen.dart:531` | **Tenue** | Réalisé : `game_repository.dart:236` (`storageService.addSesterces(defi.recompense);`). |
+| Déblocage progressif des mini-jeux Ludi selon la progression | `ludus_latinus_mobile/lib/ui/features/home/views/ludi_view.dart:261` | **Tenue** | Réalisé : `profile.dart:302-334` vérifie le nombre de leçons terminées (Circus: 0, Colisée: 2, Marché: 4, Taverne: 6, César: 8, Memoria: 1). |
+| Trophées du Panthéon (Premier Pas, Centurion, Aurige, Bâtisseur) | `ludus_latinus_mobile/lib/ui/features/account/account_screen.dart:363-391` | **Tenue** | Réalisé : conditions exactes vérifiées sur `profile.completedLessons`, `profile.currentStreak()` et `profile.restoredMonuments`. |
+
+---
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` : statut passé à `FAIT`, critères cochés, tableau exhaustif des promesses recensées classées en Tenue, Fausse ou Inexacte avec leurs preuves dans le code.
 - Commandes lancées et résultat réel :
+  - `python scratch/scan_promises.py` : 435 occurrences brutes identifiées sur l'ensemble de `ludus_latinus_mobile/lib/` et `content/`.
+  - `python scratch/scan_content_promises.py` : 74 occurrences analysées dans `content/` (les 26 arènes de fin de monde promettent toutes 50, 100 ou 200 HS et des objets fictifs).
+  - `python scratch/scan_mobile_detailed.py` : 118 occurrences de chaînes et commentaires analysées dans le code Dart mobile.
+  - `python scratch/verify_references.py` : 45 références exactes (fichiers, lignes, libellés exacts) vérifiées et validées avec succès contre l'arborescence réelle.
+  - `git status` : seul `docs/TACHES.md` est modifié (le dossier `scratch/` étant ignoré par `.gitignore`).
 - Doutes, questions pour l'architecte :
+  - **Arènes (content/monde*.py)** : Toutes les 26 arènes de fin de monde annoncent dans leur texte introductif un gain spectaculaire (« bourse de 50 Sesterces », « 100 Sesterces Royaux », « 200 Sesterces », « Toge Prétexte d'Or », « peau légendaire »), mais `lesson_screen.dart` appelle le `completeLesson` standard qui ne verse que 10 HS (ou 12 avec Saturne) et aucun objet. Préconisation pour l'architecte/Cédric : soit harmoniser les textes du cours sur la récompense réelle du mobile (10 HS), soit créer une prime spécifique d'arène dans `completeLesson` (ex. 50 HS).
+  - **Goodies (boutique)** : La modale masque les pourcentages (`!item.bonus!.contains('%')`), mais affiche toujours des bonus non fonctionnels comme `+1 moral chaque matin` ou `+5 HS chaque jour` qui trompent le joueur.
+  - **Monuments du Forum** : Seul le Temple de Saturne (+20% sur la validation d'une leçon) produit un effet réel dans le code mobile. Les 5 autres monuments annoncent des bonus fictifs (énergie, XP inexistante, titre ou indice inexistant).
 - Reste à faire :
+  - Tâche T47 terminée. Prêt pour la suite.
 
 ---
 
