@@ -116,7 +116,9 @@ class BibliothecaView extends StatelessWidget {
                         imagePath: 'assets/images/musee_circus.png',
                         fallbackIcon: '🃏',
                         title: 'Memoria Velox',
-                        subtitle: '$srsCount mot(s) ancré(s) en mémoire',
+                        subtitle: repo.record('memoria') > 0
+                            ? '$srsCount mot(s) ancré(s) · record ${repo.record('memoria')}'
+                            : '$srsCount mot(s) ancré(s) en mémoire',
                         tagLabel: 'RÉVISION SRS',
                         tagColor: const Color(0xFF1E5B94),
                         onTap: () {

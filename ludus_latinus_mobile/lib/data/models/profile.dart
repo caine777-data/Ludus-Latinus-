@@ -130,6 +130,10 @@ class UserProfile {
 
   /// Exercices payés une seule fois (« marche:etal:3 »…).
   List<String> recompensesUniques;
+
+  /// Meilleur résultat par jeu : 'circus' (points), 'duel' et 'memoria'
+  /// (bonnes réponses d'affilée).
+  Map<String, int> records;
   List<String> decodedEpigraphs;
   bool isDarkMode;
   Map<String, String> equippedGoodies;
@@ -160,6 +164,7 @@ class UserProfile {
     Map<String, int>? recompensesJeux,
     List<int>? missionsCesar,
     List<String>? recompensesUniques,
+    Map<String, int>? records,
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
     Map<String, String>? equippedGoodies,
@@ -174,6 +179,7 @@ class UserProfile {
         recompensesJeux = recompensesJeux ?? {},
         missionsCesar = missionsCesar ?? [],
         recompensesUniques = recompensesUniques ?? [],
+        records = records ?? {},
         equippedGoodies = equippedGoodies ?? {
           'toge': 'lin_blanc',
           'couronne': 'aucune',
@@ -420,6 +426,7 @@ class UserProfile {
           ?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
       missionsCesar: (json['missions_cesar'] as List?)?.map((e) => (e as num).toInt()).toList(),
       recompensesUniques: (json['recompenses_uniques'] as List?)?.map((e) => e.toString()).toList(),
+      records: (json['records'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
       equippedGoodies: parsedEquipped,
@@ -449,6 +456,7 @@ class UserProfile {
       'recompenses_jeux': recompensesJeux,
       'missions_cesar': missionsCesar,
       'recompenses_uniques': recompensesUniques,
+      'records': records,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
       'equipped_goodies': equippedGoodies,

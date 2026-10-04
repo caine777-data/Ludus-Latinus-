@@ -297,6 +297,18 @@ class GameRepository extends ChangeNotifier {
 
   int recompensesRestantes(String jeu) => profile.recompensesRestantes(jeu);
 
+  /// Meilleur résultat de l'élève à ce jeu (0 s'il n'y a pas encore joué).
+  int record(String jeu) => profile.records[jeu] ?? 0;
+
+  /// Retient [valeur] si elle bat le record du jeu. Vrai si c'est un nouveau record.
+  bool enregistrerRecord(String jeu, int valeur) {
+    if (valeur <= record(jeu)) return false;
+    profile.records[jeu] = valeur;
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return true;
+  }
+
   /// Paie une partie gagnée d'un jeu d'arcade, dans la limite du jour.
   /// Renvoie le montant réellement versé (0 si le quota est atteint).
   /// Le défi du jour compte même quand le quota est atteint.

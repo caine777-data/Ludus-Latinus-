@@ -115,7 +115,9 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/circus/chariot_bleu.png',
                         fallbackIcon: '🐎',
                         title: 'Circus Maximus',
-                        subtitle: 'Course de chars & turbo',
+                        subtitle: repo.record('circus') > 0
+                            ? 'Record : ${repo.record('circus')} pts'
+                            : 'Course de chars & turbo',
                         tagLabel: 'COURSE',
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {
@@ -134,7 +136,9 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/boss_gladiateur_140.png',
                         fallbackIcon: '⚔️',
                         title: 'Colosseum Duellum',
-                        subtitle: 'Arène tactique des champions',
+                        subtitle: repo.record('duel') > 0
+                            ? 'Record : ${repo.record('duel')} d\'affilée'
+                            : 'Arène tactique des champions',
                         tagLabel: 'ARÈNE',
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {

@@ -504,6 +504,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     });
 
     if (isCorrect) {
+      _serie++;
+      if (widget.repo.enregistrerRecord('duel', _serie)) _nouveauRecord = true;
       HapticFeedback.heavyImpact();
       AudioService().playSwordClash();
       AudioService().playSesterces();
@@ -541,6 +543,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         return;
       }
     } else {
+      _serie = 0;
       HapticFeedback.vibrate();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
@@ -1090,6 +1093,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   final ScrollController _quizScroll = ScrollController();
 
+  // Bonnes réponses d'affilée, d'un boss à l'autre : le record du Duel.
+  int _serie = 0;
+  bool _nouveauRecord = false;
+
   Widget _buildQuizPanel() {
     // Après une réponse, on amène le bandeau d'explication à l'écran s'il est sous le pli.
     if (_chosenAnswer != null) {
@@ -1393,6 +1400,18 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   ),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            _nouveauRecord
+                ? '🏅 Nouveau record : ${widget.repo.record('duel')} bonnes réponses d\'affilée !'
+                : 'Ton record : ${widget.repo.record('duel')} bonnes réponses d\'affilée',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: _nouveauRecord ? FontWeight.bold : FontWeight.w600,
+              color: _nouveauRecord ? Colors.green.shade800 : Colors.black54,
             ),
           ),
           const SizedBox(height: 20),

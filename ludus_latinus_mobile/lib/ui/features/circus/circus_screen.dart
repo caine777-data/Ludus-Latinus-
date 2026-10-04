@@ -91,6 +91,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   bool _playerWon = false;
   // Score de la course, en points : ce n'est plus de l'argent.
   int _scoreSesterces = 0;
+  bool _nouveauRecord = false;
   // Sesterces vraiment versés à la fin (0 si perdu ou quota du jour atteint).
   int _recompense = 0;
   int _comboCount = 0;
@@ -640,6 +641,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     _gameLoopTimer?.cancel();
     _raceFinished = true;
     _playerWon = won;
+    _nouveauRecord = widget.repo.enregistrerRecord('circus', _scoreSesterces);
 
     if (won) {
       // Une course gagnée vaut une leçon réussie, et seulement 3 fois par jour.
@@ -1627,6 +1629,18 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                   ),
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            _nouveauRecord
+                ? '🏅 Nouveau record : $_scoreSesterces pts !'
+                : 'Ton record : ${widget.repo.record('circus')} pts',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: _nouveauRecord ? FontWeight.bold : FontWeight.w600,
+              color: _nouveauRecord ? Colors.green.shade800 : Colors.black54,
             ),
           ),
           const SizedBox(height: 18),

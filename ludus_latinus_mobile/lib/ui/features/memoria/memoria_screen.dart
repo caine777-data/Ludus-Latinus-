@@ -198,6 +198,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     if (juste) {
       _streak++;
       if (_streak > _maxStreak) _maxStreak = _streak;
+      widget.repo.enregistrerRecord('memoria', _streak);
       // Seule une carte à réviser rapporte : revoir en boucle une carte déjà
       // sue ne doit pas remplir la bourse.
       if (etaitAReviser) gain = GameRepository.gainMemoria;

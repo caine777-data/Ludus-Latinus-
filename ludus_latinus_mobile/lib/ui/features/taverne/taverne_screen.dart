@@ -8,6 +8,21 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
 /// La Taverne des Dés Romains (« Alea Iacta Est ») — Mini-jeu antique tactile.
+/// Un nombre en chiffres romains (jusqu'à 39 : le total de quatre dés va de 4 à 24).
+String chiffreRomain(int n) {
+  const valeurs = [10, 9, 5, 4, 1];
+  const lettres = ['X', 'IX', 'V', 'IV', 'I'];
+  var reste = n;
+  final b = StringBuffer();
+  for (var i = 0; i < valeurs.length; i++) {
+    while (reste >= valeurs[i]) {
+      b.write(lettres[i]);
+      reste -= valeurs[i];
+    }
+  }
+  return b.toString();
+}
+
 class TaverneScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -29,8 +44,58 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   bool _lancerRecompense = true;
   String? _gaiusReplique;
   String _resultTitle = 'Lance le cornet (Fritillus)';
-  String _resultDesc = 'Tente le Coup de Vénus (Iactus Venereus) pour remporter 50 HS !';
+  String _resultDesc = 'Compte bien tes dés : les sesterces ne sont versés qu\'à qui sait lire les chiffres romains !';
   int _lastGain = 0;
+
+  // Le gain d'un lancer n'est versé que si l'élève donne le total des dés en
+  // chiffres romains : sans cela, la Taverne payait au hasard, plus qu'une leçon.
+  int _gainEnAttente = 0;
+  int _totalAttendu = 0;
+  List<int> _choixTotal = [];
+  bool _gainDuelGaius = false;
+
+  static const int gainPaire = 5;
+  static const int gainVenus = 8;
+  static const int gainBrelan = 15;
+  static const int gainCarre = 30;
+
+
+  void _demanderTotal(int gain, {bool duelGaius = false}) {
+    final total = _diceValues.reduce((a, b) => a + b);
+    final rnd = math.Random();
+    final autres = <int>{};
+    while (autres.length < 3) {
+      final v = total + (rnd.nextInt(7) - 3);
+      if (v != total && v >= 4 && v <= 24) autres.add(v);
+    }
+    _gainEnAttente = gain;
+    _totalAttendu = total;
+    _gainDuelGaius = duelGaius;
+    _choixTotal = [total, ...autres]..shuffle(rnd);
+  }
+
+  void _repondreTotal(int choix) {
+    if (choix != _totalAttendu) {
+      HapticFeedback.mediumImpact();
+      AudioService().playError();
+      setState(() {
+        _lastGain = 0;
+        _gainEnAttente = 0;
+        _resultDesc = 'Le total était ${chiffreRomain(_totalAttendu)} (${_diceValues.map((d) => _romanDice[d]).join(' + ')}). '
+            'Pas de sesterces pour ce lancer : compte bien le prochain !';
+      });
+      return;
+    }
+    var gain = _gainEnAttente;
+    widget.repo.addSesterces(gain);
+    if (_gainDuelGaius) gain += widget.repo.accomplirDefi('taverne');
+    AudioService().playSesterces();
+    setState(() {
+      _lastGain = gain;
+      _gainEnAttente = 0;
+      _resultDesc = 'Exact : ${chiffreRomain(_totalAttendu)} ! +$gain HS versés dans ta bourse.';
+    });
+  }
 
   final Map<int, String> _romanDice = {
     1: 'I',
@@ -122,7 +187,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
   }
 
   void _rollDice() async {
-    if (_isRolling) return;
+    if (_isRolling || _gainEnAttente > 0) return;
 
     _lancerRecompense = widget.repo.consumeTaverneReward();
 
@@ -176,17 +241,18 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       final gaiusScore = _scoreCombo(_gaiusDiceValues);
 
       if (playerScore > gaiusScore) {
-        var gain = _lancerRecompense ? _gainVictoireGaius : 0;
-        if (gain > 0) widget.repo.addSesterces(gain);
-        gain += widget.repo.accomplirDefi('taverne');
+        final gain = _lancerRecompense ? _gainVictoireGaius : 0;
         AudioService().playTriumph();
         RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
         setState(() {
-          _lastGain = gain;
+          _lastGain = 0;
           _resultTitle = '🏆 Victoire contre Gaius l\'Aubergiste !';
-          _resultDesc = gain > 0
-              ? 'Tu bats le tavernier sur le marbre ! +$gain HS !'
-              : 'Tu bats le tavernier sur le marbre ! (Plus de récompense aujourd\'hui.)';
+          if (gain > 0) {
+            _demanderTotal(gain, duelGaius: true);
+            _resultDesc = 'Tu bats le tavernier ! Pour encaisser $gain HS, donne le total de tes dés.';
+          } else {
+            _resultDesc = 'Tu bats le tavernier sur le marbre ! (Plus de récompense aujourd\'hui.)';
+          }
           _gaiusReplique = '« Par Bacchus, quelle chance insolente ! »';
         });
       } else if (playerScore < gaiusScore) {
@@ -215,9 +281,9 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       counts[d] = (counts[d] ?? 0) + 1;
     }
 
-    int gain = 5;
+    int gain = 0;
     String title = 'Iactus Communis (Lancer classique)';
-    String desc = 'Tes dés retombent sur le comptoir en marbre. +5 HS remportés !';
+    String desc = 'Tes dés retombent sur le comptoir en marbre.';
 
     // Iactus Canis : 4 As (1-1-1-1)
     if (counts[1] == 4) {
@@ -230,17 +296,26 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     // Iactus Venereus : 4 faces distinctes
     else if (counts.keys.length == 4) {
       title = '👑 IACTUS VENEREUS (Coup de Vénus) !';
-      desc = 'Quatre faces toutes différentes ! La déesse Vénus te sourit : +50 HS et Protection de Série !';
-      gain = 50;
+      desc = 'Quatre faces toutes différentes ! La déesse Vénus te sourit.';
+      gain = gainVenus;
       HapticFeedback.heavyImpact();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     }
-    // Senatus : Carré ou Brelan (4 ou 3 identiques)
-    else if (counts.values.any((c) => c >= 3)) {
+    // Carré : quatre dés identiques (sauf les quatre As, le Coup du Chien)
+    else if (counts.values.any((c) => c == 4)) {
+      title = '🦅 Iactus Imperator (Carré Romain) !';
+      desc = 'Quatre dés identiques ! Un coup digne d\'un empereur.';
+      gain = gainCarre;
+      HapticFeedback.heavyImpact();
+      AudioService().playTriumph();
+      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+    }
+    // Senatus : Brelan (3 identiques)
+    else if (counts.values.any((c) => c == 3)) {
       title = '🏛️ Iactus Senatus (Brelan Romain) !';
-      desc = 'Trois dés identiques ! Les sénateurs applaudissent : +30 HS !';
-      gain = 30;
+      desc = 'Trois dés identiques ! Les sénateurs applaudissent.';
+      gain = gainBrelan;
       HapticFeedback.mediumImpact();
       AudioService().playSesterces();
       RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
@@ -248,8 +323,8 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     // Plebeius : Au moins une paire
     else if (counts.values.any((c) => c == 2)) {
       title = '🛡️ Iactus Plebeius (Paire Romaine)';
-      desc = 'Une paire de dés identiques. +15 HS remportés !';
-      gain = 15;
+      desc = 'Une paire de dés identiques.';
+      gain = gainPaire;
       AudioService().playSesterces();
     } else {
       AudioService().playSesterces();
@@ -260,11 +335,12 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
       desc = '$desc\n(Les 3 lancers récompensés du jour sont épuisés : reviens demain pour gagner des sesterces.)';
     }
     if (gain > 0) {
-      widget.repo.addSesterces(gain);
+      _demanderTotal(gain);
+      desc = '$desc Pour encaisser $gain HS, donne le total de tes dés.';
     }
 
     setState(() {
-      _lastGain = gain;
+      _lastGain = 0;
       _resultTitle = title;
       _resultDesc = desc;
     });
@@ -708,7 +784,7 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                         ),
                       ),
                     ),
-                    onPressed: _isRolling ? null : _rollDice,
+                    onPressed: _isRolling || _gainEnAttente > 0 ? null : _rollDice,
                   ),
                 ],
               ),
@@ -764,6 +840,39 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                     _resultDesc,
                     style: const TextStyle(fontSize: 12.5, color: Colors.black87, height: 1.35),
                   ),
+                  if (_gainEnAttente > 0) ...[
+                    const SizedBox(height: 10),
+                    Text(
+                      'Quel est le total de ${_diceValues.map((d) => _romanDice[d]).join(' + ')} ?',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: RomanColors.imperialPurple,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final choix in _choixTotal)
+                          OutlinedButton(
+                            onPressed: () => _repondreTotal(choix),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: RomanColors.imperialPurple,
+                              backgroundColor: Colors.white,
+                              side: const BorderSide(color: RomanColors.imperialGold, width: 1.4),
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            ),
+                            child: Text(
+                              chiffreRomain(choix),
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'serif'),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -780,10 +889,16 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
               ),
             ),
             const SizedBox(height: 8),
-            _buildRuleRow('👑 Coup de Vénus', '4 faces distinctes (ex: VI-V-III-I)', '+50 HS & Bouclier'),
-            _buildRuleRow('🏛️ Sénat (Brelan)', '3 dés de valeur identique', '+30 HS'),
-            _buildRuleRow('🛡️ Plébéien (Paire)', '2 dés de valeur identique', '+15 HS'),
+            _buildRuleRow('🦅 Carré', '4 dés identiques', '+$gainCarre HS'),
+            _buildRuleRow('🏛️ Sénat (Brelan)', '3 dés de valeur identique', '+$gainBrelan HS'),
+            _buildRuleRow('👑 Coup de Vénus', '4 faces distinctes (ex: VI-V-III-I)', '+$gainVenus HS'),
+            _buildRuleRow('🛡️ Plébéien (Paire)', '2 dés de valeur identique', '+$gainPaire HS'),
             _buildRuleRow('🐕 Coup du Chien', 'Quatre As (I-I-I-I)', 'Défi de Mercure'),
+            const SizedBox(height: 6),
+            const Text(
+              'Pour encaisser, il faut donner le total des quatre dés en chiffres romains.',
+              style: TextStyle(fontSize: 11.5, fontStyle: FontStyle.italic, color: Colors.black54),
+            ),
           ],
         ),
       ),
