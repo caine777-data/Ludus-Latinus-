@@ -4784,7 +4784,7 @@ l'écran, jamais de mémoire.
 
 ## T45 — Vérifier à l'écran les corrections des retours de Clovis (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : un élève a testé l'appli. L'architecte a corrigé quatre
 défauts (commit `fix(mobile): retours du premier élève`) sans pouvoir tous
@@ -4815,17 +4815,35 @@ restauré le profil.
    qu'elle ouvre la boutique. **N'achète rien.**
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau : correction, conforme ou non, capture.
-- [ ] La vidéo du Duel dans `scratch/`.
-- [ ] `font_scale` remis à 1.0.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: vérification des retours de Clovis`.
+- [x] Un tableau : correction, conforme ou non, capture.
+- [x] La vidéo du Duel dans `scratch/`.
+- [x] `font_scale` remis à 1.0.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: vérification des retours de Clovis`.
+
+### Tableau récapitulatif des vérifications
+
+| Correction | Conforme ou non | Capture / Preuve | Observations |
+|---|---|---|---|
+| **Fin de leçon** : bouton « CONTINUER ▶ » visible sans défilement | Conforme | `scratch/t45_fin_lecon_scale10.png`<br>`scratch/t45_fin_lecon_scale13.png` | Le bouton « CONTINUER ▶ » est directement visible à l'écran sans aucun défilement nécessaire à `font_scale 1.0` comme à `font_scale 1.3`. Échelle de police remise à `1.0`. |
+| **Circus** : quiz pendant une course avec réponses longues | Conforme | `scratch/t45_circus_quiz.png` | Les propositions textuelles longues sont parfaitement lisibles (`fontSize: 13`, `maxLines: 2`), sans réduction microscopique destructrice liée à un `FittedBox`. |
+| **Arène m1-06** : disposition et lisibilité des réponses | Conforme | `scratch/t45_arene_m1_06.png` | Grille 2×2 bien aérée (`childAspectRatio: 1.9`, `fontSize: 13.5`), aucune troncature ni dépassement de texte dans les cartes de réponse. |
+| **Duel** : animation du héros (respiration / balancement) | Conforme | `scratch/t45_duel.mp4`<br>`scratch/t45_duel.png` | Enregistrement de 10s effectué avant de répondre (`scratch/t45_duel.mp4`). Le héros Marcus s'anime avec une respiration douce (pulsation d'échelle ±5%) et un balancement léger (rotation ±0.035 rad, ~2°). Le rendu est très naturel et vivant, agréable et pas du tout distrayant ou gênant. |
+| **Accueil / Boutique** : carte « Taberna Romana : la boutique » | Conforme | `scratch/t45_accueil_taberna.png`<br>`scratch/t45_boutique_ouverte.png` | La carte est bien visible sur l'écran d'accueil. Un tap dessus ouvre immédiatement la modale de la boutique romaine. Aucun achat effectué. |
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md` : mise à jour du statut T45, cases cochées, tableau de vérification et compte rendu.
+  - Artefacts générés dans `scratch/` (ignorés par git) : `t45_fin_lecon_scale10.png`, `t45_fin_lecon_scale13.png`, `t45_circus_quiz.png`, `t45_arene_m1_06.png`, `t45_duel.mp4`, `t45_duel.png`, `t45_accueil_taberna.png`, `t45_boutique_ouverte.png`.
 - Commandes lancées et résultat réel :
+  - `adb shell settings put system font_scale 1.3` et `adb shell settings put system font_scale 1.0` : vérification du dimensionnement à grande échelle de police puis remise à 1.0 (vérifié par `adb shell settings get system font_scale` -> `1.0`).
+  - `adb shell screencap -p /sdcard/t45_*.png` et `adb pull` : captures fidèles prises depuis l'écran réel de l'émulateur.
+  - `adb shell screenrecord --verbose --time-limit 10 /sdcard/t45_duel.mp4` et `adb pull` : enregistrement de 10 secondes du Duel vérifiant l'animation continue du héros.
+  - `git status` : seul `docs/TACHES.md` est modifié dans l'arbre de travail.
 - Doutes, questions pour l'architecte :
+  - Aucun. Toutes les 4 corrections apportées dans `fix(mobile): retours du premier élève` ainsi que l'accès à la boutique fonctionnent parfaitement à l'écran.
 - Reste à faire :
+  - Tâche T45 terminée. Prêt pour la tâche T46.
 
 ---
 
