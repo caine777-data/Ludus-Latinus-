@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -368,12 +369,44 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   String get _cleNegociation => 'marche:nego:${_negociationIndex % kMissionsNegociation.length}';
 
   /// Paie l'exercice réussi et renvoie la fin du message à afficher.
+  /// Un exercice déjà payé revient avec un prix tiré au hasard : il se paie
+  /// alors comme une partie, trois fois par jour.
   String _payer(String cle, int montant) {
+    if (_ratesCetteVisite.contains(cle)) {
+      widget.repo.accomplirDefi('marche');
+      return ' (pas de sesterces après une erreur)';
+    }
+    if (widget.repo.estDejaPaye(cle)) {
+      final gain = widget.repo.payerPartie('marche', montant);
+      return gain > 0 ? ' (+$gain HS)' : ' (pour la gloire : 3 ventes payées par jour)';
+    }
     widget.repo.accomplirDefi('marche');
-    if (_ratesCetteVisite.contains(cle)) return ' (pas de sesterces après une erreur)';
-    if (widget.repo.estDejaPaye(cle)) return ' (déjà payé)';
     return ' (+${widget.repo.payerUneFois(cle, montant)} HS)';
   }
+
+  // Prix tirés au hasard pour les étals et les clients déjà payés.
+  final Map<String, (int, int)> _tirages = {};
+  final math.Random _hasard = math.Random();
+
+  int get _prixEtal {
+    if (!widget.repo.estDejaPaye(_cleEtal)) return _articleActuel.prix;
+    return _tirages.putIfAbsent(_cleEtal, () => (_hasard.nextInt(149) + 2, 0)).$1;
+  }
+
+  (int, int) get _prixEtDonne {
+    final client = _clientActuel;
+    if (!widget.repo.estDejaPaye(_cleRendu)) return (client.prixArticle, client.sommeDonnee);
+    return _tirages.putIfAbsent(_cleRendu, () {
+      final prix = _hasard.nextInt(88) + 3;
+      // Le client tend une pièce ronde au-dessus du prix : 10, 20, 50 ou 100.
+      final donne = [10, 20, 50, 100].firstWhere((d) => d > prix);
+      return (prix, donne);
+    });
+  }
+
+  int get _prixClient => _prixEtDonne.$1;
+  int get _donneClient => _prixEtDonne.$2;
+  int get _renduAttendu => _donneClient - _prixClient;
 
   MissionNegociation get _negociationActuelle =>
       kMissionsNegociation[_negociationIndex % kMissionsNegociation.length];
@@ -534,7 +567,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
 
     if (_modeRenduMonnaie) {
       final client = _clientActuel;
-      final attendu = client.renduAttendu;
+      final attendu = _renduAttendu;
       final attenduRomain = _convertirArabeEnRomain(attendu);
 
       if (valeurSaisie == attendu && _saisieRomaine == attenduRomain) {
@@ -551,6 +584,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
         Future.delayed(const Duration(milliseconds: 1800), () {
           if (!mounted) return;
           setState(() {
+            _tirages.remove(_cleRendu);
             _clientIndex = (_clientIndex + 1) % kClientsMarche.length;
             _saisieRomaine = '';
             _messageFeedback = null;
@@ -571,13 +605,13 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
         AudioService().playError();
         setState(() {
           _feedbackSucces = false;
-          _messageFeedback = 'Calcul incorrect : ${client.sommeDonnee} HS donnés - ${client.prixArticle} HS = $attendu HS ($attenduRomain) à rendre !';
+          _messageFeedback = 'Calcul incorrect : $_donneClient HS donnés - $_prixClient HS = $attendu HS ($attenduRomain) à rendre !';
         });
       }
       return;
     }
 
-    final prixAttendu = _articleActuel.prix;
+    final prixAttendu = _prixEtal;
     final attenduRomain = _convertirArabeEnRomain(prixAttendu);
 
     if (valeurSaisie == prixAttendu && _saisieRomaine == attenduRomain) {
@@ -594,6 +628,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
       Future.delayed(const Duration(milliseconds: 1600), () {
         if (!mounted) return;
         setState(() {
+          _tirages.remove(_cleEtal);
           _articleIndex = (_articleIndex + 1) % kArticlesMarche.length;
           _saisieRomaine = '';
           _messageFeedback = null;
@@ -1000,7 +1035,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '« J\'achète ${_clientActuel.articleNom} (${_clientActuel.prixArticle} HS). Voici ${_clientActuel.sommeDonnee} HS, rends-moi la monnaie ! »',
+                              '« J\'achète ${_clientActuel.articleNom} ($_prixClient HS). Voici $_donneClient HS, rends-moi la monnaie ! »',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -1088,7 +1123,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                               border: Border.all(color: RomanColors.imperialGold),
                             ),
                             child: Text(
-                              '${article.prix} SESTERCES',
+                              '$_prixEtal SESTERCES',
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -1107,7 +1142,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                             children: [
                               Text('Article : ${_clientActuel.articleNom}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: RomanColors.imperialPurple)),
                               const SizedBox(height: 2),
-                              Text('Prix : ${_clientActuel.prixArticle} HS • Donné : ${_clientActuel.sommeDonnee} HS', style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                              Text('Prix : $_prixClient HS • Donné : $_donneClient HS', style: const TextStyle(fontSize: 12, color: Colors.black54)),
                             ],
                           ),
                         ],
@@ -1167,7 +1202,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: valeurSaisie == article.prix
+                        color: valeurSaisie == _prixEtal
                             ? RomanColors.laurelGreen
                             : RomanColors.charcoal,
                       ),
@@ -1262,7 +1297,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                       child: RomanButton(
                         text: _modeRenduMonnaie
                             ? '✓ RENDRE LA MONNAIE'
-                            : '✓ PAYER (${article.prix} HS)',
+                            : '✓ PAYER ($_prixEtal HS)',
                         onPressed: _saisieRomaine.isEmpty ? null : _validerPaiement,
                       ),
                     ),

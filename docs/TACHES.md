@@ -4214,3 +4214,57 @@ faits comparables.
 - Commandes lancées et résultat réel :
 - Doutes, questions pour l'architecte :
 - Reste à faire :
+
+---
+
+## T50 — Jouer la nouvelle Taverne, César, le Marché et les records (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : trois jeux ont changé le 4 octobre. La Taverne demande le
+total des dés en chiffres romains avant de payer ; César a un « Message
+libre ∞ » sans fin ; le Marché tire des prix au hasard une fois un étal
+payé ; le Circus, le Duel et Memoria retiennent un record. Rien n'a été vu
+à l'écran.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t50_*`. Le profil est modifié **puis restauré** (méthode de T26).
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis
+l'écran, jamais de mémoire. **N'achète rien.**
+
+**Étapes** :
+1. Installe la version actuelle ; sauvegarde le profil, pousse un profil qui
+   ouvre tous les jeux (toutes les leçons des mondes 1 à 18).
+2. **Taverne** : fais 4 lancers. Pour chacun, recopie les dés, la question
+   posée, les 4 choix ; réponds juste au 1er, faux au 2e, juste au 3e.
+   Note les sesterces avant et après chaque lancer. Au 4e (plus de lancer
+   payé), vérifie qu'aucune question n'est posée. Joue aussi une manche
+   contre Gaius et gagne-la si possible.
+3. **César** : ouvre l'onglet « Message libre ∞ », trouve la clé, recopie le
+   message en clair et les trois traductions proposées. Réussis, puis
+   touche « Intercepter un nouveau message » : la phrase et la clé
+   changent-elles ? Fais-en trois, puis un quatrième (attendu : « Pour la
+   gloire : 3 messages payés par jour »).
+4. **Marché** : réussis l'étal 1, quitte, reviens : le prix de l'étal 1
+   a-t-il changé ? Réussis-le et note le gain. Même chose pour le premier
+   client du mode Rendu.
+5. **Records** : fais une course de Circus, un duel, une session de
+   Memoria. Capture la fin de chaque partie (ligne « record ») et les tuiles
+   de Ludi et de la Bibliotheca.
+6. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par jeu : action, ce qui est affiché (recopié), sesterces
+      avant et après, conforme ou non, capture.
+- [ ] Toute anomalie notée avec sa capture (texte coupé, gain incohérent,
+      phrase latine mal découpée dans César).
+- [ ] Le profil d'origine est restauré (capture).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée des jeux refaits le 4 octobre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

@@ -118,7 +118,68 @@ class _CesarScreenState extends State<CesarScreen> with SingleTickerProviderStat
   final Map<int, List<String>> _optionsMission = {};
   final Set<int> _missionsRatees = {};
   String? _mauvaisChoix;
-  MissionCesar get _missionActuelle => kMissionsCesar[_missionIndex % kMissionsCesar.length];
+
+  // Après les 6 missions écrites, un « message libre » sans fin : une phrase
+  // latine d'une leçon déjà atteinte, chiffrée avec une clé tirée au hasard.
+  MissionCesar? _missionLibre;
+  bool _libreReussie = false;
+  static const int indexLibre = 6;
+
+  /// Les phrases (latin, traduction) des puzzles des mondes atteints.
+  List<(String, String)> get _phrasesAtteintes => [
+        for (final w in widget.repo.worlds)
+          if (widget.repo.mondesAtteints.contains(w.id))
+            for (final l in w.lessons)
+              if (l.type == 'puzzle' && (l.latin ?? '').isNotEmpty && (l.solution ?? '').isNotEmpty)
+                (l.latin!, l.solution!),
+      ];
+
+  MissionCesar? _fabriquerMissionLibre() {
+    final phrases = _phrasesAtteintes;
+    if (phrases.isEmpty) return null;
+    final rnd = math.Random();
+    final (latin, francais) = phrases[rnd.nextInt(phrases.length)];
+    final clair = latin.toUpperCase();
+    final cle = rnd.nextInt(25) + 1;
+    return MissionCesar(
+      titre: 'Message libre : un courrier intercepté',
+      dateContexte: 'Tiré de tes leçons',
+      explication: 'Un messager a été arrêté avec ce courrier chiffré. Trouve la clé, puis dis ce que '
+          'dit le message. Trois messages libres sont payés par jour.',
+      cle: cle,
+      messageChiffre: _appliquerDecalage(clair, cle),
+      messageClair: clair,
+      traduction: '« $francais »',
+      gain: GameRepository.gainMissionCesar,
+    );
+  }
+
+  List<MissionCesar> get _missions => [
+        ...kMissionsCesar,
+        if (_missionLibre != null) _missionLibre!,
+      ];
+
+  MissionCesar get _missionActuelle => _missions[_missionIndex.clamp(0, _missions.length - 1)];
+
+  bool _reussie(int index) =>
+      index == indexLibre ? _libreReussie : widget.repo.isMissionCesarReussie(index);
+
+  void _nouveauMessageLibre() {
+    setState(() {
+      _missionLibre = _fabriquerMissionLibre();
+      _libreReussie = false;
+      _optionsMission.remove(indexLibre);
+      _missionsRatees.remove(indexLibre);
+      _mauvaisChoix = null;
+      _cleActuelle = 1;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _missionLibre = _fabriquerMissionLibre();
+  }
 
   @override
   void dispose() {
@@ -205,19 +266,23 @@ $texteChiffre
   }
 
   /// La vraie traduction et deux traductions d'autres missions, mélangées.
+  /// Pour un message libre, les pièges sont d'autres phrases des leçons.
   List<String> _optionsPour(int index) => _optionsMission.putIfAbsent(index, () {
-        final bonne = kMissionsCesar[index].traduction;
-        final autres = [
-          for (final m in kMissionsCesar)
-            if (m.traduction != bonne) m.traduction
-        ]..shuffle();
+        final bonne = _missions[index].traduction;
+        final reserve = index == indexLibre
+            ? [for (final (_, fr) in _phrasesAtteintes) '« $fr »']
+            : [for (final m in kMissionsCesar) m.traduction];
+        final autres = reserve.where((t) => t != bonne).toSet().toList()..shuffle();
+        if (autres.length < 2) {
+          autres.addAll(kMissionsCesar.map((m) => m.traduction).where((t) => t != bonne && !autres.contains(t)));
+        }
         return [bonne, ...autres.take(2)]..shuffle();
       });
 
   void _choisirTraduction(String option) {
     final mission = _missionActuelle;
-    final index = _missionIndex % kMissionsCesar.length;
-    if (widget.repo.isMissionCesarReussie(index)) return;
+    final index = _missionIndex;
+    if (_reussie(index)) return;
     if (option != mission.traduction) {
       HapticFeedback.vibrate();
       AudioService().playError();
@@ -227,10 +292,15 @@ $texteChiffre
       });
       return;
     }
-    final gain = widget.repo.validerMissionCesar(
-      index,
-      _missionsRatees.contains(index) ? (mission.gain / 2).round() : mission.gain,
-    );
+    final montant = _missionsRatees.contains(index) ? (mission.gain / 2).round() : mission.gain;
+    final int gain;
+    if (index == indexLibre) {
+      // Message libre : payé comme une partie, trois fois par jour.
+      gain = widget.repo.payerPartie('cesar', montant);
+      _libreReussie = true;
+    } else {
+      gain = widget.repo.validerMissionCesar(index, montant);
+    }
     HapticFeedback.mediumImpact();
     AudioService().playTriumph();
     AudioService().playSesterces();
@@ -309,9 +379,11 @@ $texteChiffre
               children: [
                 const Text('🪙', style: TextStyle(fontSize: 16)),
                 const SizedBox(width: 6),
-                Text(
-                  '+$gain Sesterces remportés !',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.laurelGreen),
+                Flexible(
+                  child: Text(
+                    gain > 0 ? '+$gain Sesterces remportés !' : 'Pour la gloire : 3 messages payés par jour',
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.laurelGreen),
+                  ),
                 ),
               ],
             ),
@@ -619,14 +691,14 @@ $texteChiffre
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: List.generate(kMissionsCesar.length, (idx) {
+                    children: List.generate(_missions.length, (idx) {
                       final isSelected = _missionIndex == idx;
-                      final isDone = widget.repo.isMissionCesarReussie(idx);
+                      final isDone = _reussie(idx);
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: ChoiceChip(
                           avatar: isDone ? const Text('✓', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)) : null,
-                          label: Text('Mission ${idx + 1}'),
+                          label: Text(idx == indexLibre ? 'Message libre ∞' : 'Mission ${idx + 1}'),
                           selected: isSelected,
                           selectedColor: RomanColors.goldLight,
                           labelStyle: TextStyle(
@@ -739,7 +811,7 @@ $texteChiffre
                           ),
                         ),
                       ),
-                      if (estCleValide && !widget.repo.isMissionCesarReussie(_missionIndex)) ...[
+                      if (estCleValide && !_reussie(_missionIndex)) ...[
                         const SizedBox(height: 12),
                         const Text(
                           'QUE DIT LE MESSAGE ?',
@@ -771,7 +843,7 @@ $texteChiffre
                             style: TextStyle(fontSize: 12, color: Color(0xFF8B2500)),
                           ),
                       ],
-                      if (estCleValide && widget.repo.isMissionCesarReussie(_missionIndex)) ...[
+                      if (estCleValide && _reussie(_missionIndex)) ...[
                         const SizedBox(height: 8),
                         Text(
                           'Traduction : ${mission.traduction}',
@@ -779,6 +851,18 @@ $texteChiffre
                             fontSize: 12,
                             fontStyle: FontStyle.italic,
                             color: Color(0xFF1B5E20),
+                          ),
+                        ),
+                      ],
+                      if (_missionIndex == indexLibre && _libreReussie) ...[
+                        const SizedBox(height: 10),
+                        ElevatedButton.icon(
+                          onPressed: _nouveauMessageLibre,
+                          icon: const Icon(Icons.mail_outline),
+                          label: const Text('Intercepter un nouveau message'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: RomanColors.imperialPurple,
+                            foregroundColor: Colors.white,
                           ),
                         ),
                       ],

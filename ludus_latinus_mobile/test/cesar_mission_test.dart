@@ -57,4 +57,42 @@ void main() {
     expect(repo.profile.sesterces, GameRepository.gainMissionCesar ~/ 2);
     await tester.pumpAndSettle(const Duration(seconds: 5));
   });
+  testWidgets('Un message libre tiré des leçons, payé comme une partie', (tester) async {
+    tester.view.physicalSize = const Size(1080, 6000);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+    final data = DataService();
+    await tester.runAsync(data.loadDataset);
+    final repo = GameRepository(dataService: data, storageService: StorageService());
+    repo.profile.sesterces = 0;
+    await tester.pumpWidget(MaterialApp(home: CesarScreen(repo: repo)));
+    // L'onglet est au bout d'une rangée qui défile.
+    await tester.ensureVisible(find.text('Message libre ∞'));
+    await tester.pump();
+    await tester.tap(find.text('Message libre ∞'));
+    await tester.pump();
+
+    // La clé est inconnue : on tourne la roue jusqu'à voir apparaître les traductions.
+    for (var i = 0; i < 26 && find.text('QUE DIT LE MESSAGE ?').evaluate().isEmpty; i++) {
+      await tester.tap(find.byIcon(Icons.add_circle_outline));
+      await tester.pump();
+    }
+    expect(find.text('QUE DIT LE MESSAGE ?'), findsOneWidget);
+
+    // Les traductions proposées viennent des puzzles du monde 1, seul monde atteint.
+    final monde1 = repo.worlds.first.lessons.where((l) => l.type == 'puzzle').map((l) => '« ${l.solution} »').toList();
+    final bonne = monde1.firstWhere((t) => find.text(t).evaluate().isNotEmpty);
+    // Il peut y avoir deux puzzles au monde 1 : on cherche celle qui déclenche la victoire.
+    await tester.tap(find.text(bonne));
+    await tester.pump(const Duration(seconds: 1));
+    if (repo.profile.sesterces == 0) {
+      final autre = monde1.firstWhere((t) => t != bonne && find.text(t).evaluate().isNotEmpty);
+      await tester.tap(find.text(autre));
+      await tester.pump(const Duration(seconds: 1));
+      expect(repo.profile.sesterces, GameRepository.gainMissionCesar ~/ 2);
+    } else {
+      expect(repo.profile.sesterces, GameRepository.gainMissionCesar);
+    }
+    await tester.pumpAndSettle(const Duration(seconds: 5));
+  });
 }

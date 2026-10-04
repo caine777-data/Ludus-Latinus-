@@ -86,6 +86,9 @@ record, ni série, ni boss plus dur quand on gagne souvent.
 
 ## Propositions, dans l'ordre
 
+> Suivi (04/10/2026) : les propositions 1, 2 et 6 sont faites, validées par
+> Cédric. Restent la 3 (Panthéon, après T42), la 4 (Duel) et la 5 (Circus).
+
 1. **Taverne** : faire dépendre le gain d'une compétence. Chaque lancer
    affiche les dés en chiffres romains et demande leur total (en chiffres
    romains) : juste, le gain est versé ; faux, rien. Et rééquilibrer les

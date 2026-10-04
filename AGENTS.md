@@ -208,7 +208,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (69 sur 69 le 04/10/2026 ; 54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (73 sur 73 le 04/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -324,6 +324,23 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **Audit des jeux : propositions 1, 2 et 6** (validées par Cédric le
+  04/10/2026). (1) **Taverne** : le gain d'un lancer n'est versé que si
+  l'élève donne le total des quatre dés en chiffres romains (quatre choix) ;
+  barème baissé (paire 5, Vénus 8, brelan 15, carré 30 HS, environ 7 HS par
+  lancer au lieu de 26) ; la « Protection de Série », qui n'existait pas, est
+  retirée. Conversion : `chiffreRomain()` en tête de `taverne_screen.dart`.
+  (2) **César** : un 7e onglet « Message libre ∞ » chiffre une phrase d'un
+  puzzle des mondes atteints avec une clé au hasard, payé par
+  `payerPartie('cesar')` (3 par jour). **Marché** : un étal ou un client
+  déjà payé revient avec un prix tiré au hasard (`_tirages`), payé comme une
+  partie. (6) **Records** : `profile.records` (clé `records` du JSON),
+  `repo.record(jeu)` et `repo.enregistrerRecord(jeu, valeur)` ; points au
+  Circus, bonnes réponses d'affilée au Duel et à Memoria, affichés en fin de
+  partie et sur les tuiles. Tests : `taverne_test.dart`, `records_test.dart`,
+  un cas de plus dans `cesar_mission_test.dart` et `marche_paiement_test.dart`
+  (73 tests). Pas encore vu à l'écran : T50.
 
 - **Premiers retours d'un élève (Clovis)** (04/10/2026) — corrigés :
   (1) la fenêtre de fin de leçon était bornée à 9/16 de l'écran

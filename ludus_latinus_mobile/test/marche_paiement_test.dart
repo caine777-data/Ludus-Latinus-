@@ -38,11 +38,27 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 3));
   });
 
-  testWidgets('Un étal déjà payé ne rapporte plus rien', (tester) async {
+  String romain(int n) {
+    const valeurs = [100, 90, 50, 40, 10, 9, 5, 4, 1];
+    const lettres = ['C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+    final b = StringBuffer();
+    var reste = n;
+    for (var i = 0; i < valeurs.length; i++) {
+      while (reste >= valeurs[i]) {
+        b.write(lettres[i]);
+        reste -= valeurs[i];
+      }
+    }
+    return b.toString();
+  }
+
+  testWidgets('Un étal déjà payé revient avec un prix au hasard, payé comme une partie', (tester) async {
     final repo = await monter(tester, dejaPayes: ['marche:etal:0']);
-    await composer(tester, 'XXV');
-    expect(repo.profile.sesterces, 0);
-    expect(find.textContaining('déjà payé'), findsOneWidget);
+    final etiquette = find.textContaining(RegExp(r'^\d+ SESTERCES$'));
+    final prix = int.parse((tester.widget<Text>(etiquette).data ?? '').split(' ').first);
+    await composer(tester, romain(prix));
+    expect(repo.profile.sesterces, GameRepository.gainMarcheEtal);
+    expect(repo.recompensesRestantes('marche'), 2);
     await tester.pumpAndSettle(const Duration(seconds: 3));
   });
 
