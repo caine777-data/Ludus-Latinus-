@@ -4597,7 +4597,7 @@ SUCCESS: TOUTES LES VERIFICATIONS SONT VALIDEES !
 
 ## T44 — Jouer les quatre nouvelles leçons de déclinaison de 5e (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : trois leçons de 5e ont été réécrites le 2 octobre pour
 enseigner le génitif (`m8-03`), le pluriel (`m9-03`) et l'accord de
@@ -4628,17 +4628,157 @@ l'écran, jamais de mémoire.
 6. Restaure le profil d'origine et capture l'accueil.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Pour chaque leçon : captures du cours, de l'erreur et de la réussite.
-- [ ] La réponse aux trois questions de l'étape 3, leçon par leçon.
-- [ ] Le profil d'origine est restauré (capture).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: tournée des leçons de déclinaison de 5e`.
+- [x] Pour chaque leçon : captures du cours, de l'erreur et de la réussite.
+- [x] La réponse aux trois questions de l'étape 3, leçon par leçon.
+- [x] Le profil d'origine est restauré (capture).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: tournée des leçons de déclinaison de 5e`.
 
 **Compte rendu** (rempli par l'exécutant) :
-- Fichiers modifiés :
-- Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+- **Fichiers modifiés** :
+  - `docs/TACHES.md` (aucun fichier de code ou de contenu n'a été touché).
+- **Commandes lancées et résultat réel** :
+  - Sauvegarde du profil initial de Marcus (`sesterces: 556`, 5 leçons complétées) : `adb shell run-as com.luduslatinus.app cat app_flutter/ludus_latinus_save.json > scratch/t44_profil_avant.json`.
+  - Préparation et injection du profil de progression débloqué (mondes 1 à 7 + `m8-01`, `m8-02` complétés) dans `app_flutter/ludus_latinus_save.json`.
+  - Parcours complet des 4 leçons sur l'émulateur Android (`emulator-5554`) avec saisie d'erreurs plausibles, vérification des messages d'erreur, validation des bonnes réponses et passage des questions de vocabulaire.
+  - Déblocage intermédiaire des leçons via profil : injection de `m8-04`, `m8-05` pour accéder à `m9-03`, puis `m9-04`, `m9-05`, `m10-01`, `m10-02` pour accéder à `m10-03` et `m10-04`.
+  - Restauration finale du profil initial : `adb push scratch/t44_profil_avant.json /data/local/tmp/ludus_latinus_save.json`, copie via `run-as com.luduslatinus.app cp`, redémarrage complet de l'application et capture de confirmation `scratch/t44_accueil_restaure.png`.
+
+### Détail des leçons jouées et observations
+
+#### 1. Leçon `m8-03` — Aux Thermes : le Génitif (à qui est-ce ?)
+- **Captures du cours** : `scratch/t44_m8_03_cours_1.png` et `scratch/t44_m8_03_cours_2.png`.
+- **Réponses aux trois questions de l'étape 3** :
+  - *Astérisque `*` visible à l'écran ?* Non, aucun astérisque parasite visible.
+  - *Terminaisons bien en gras ?* Oui, les terminaisons `-ae` (`puellae`), `-i` (`domini`, `servi`), `-is` (`civis`) ainsi que les règles clés sont impeccablement mises en gras.
+  - *Longueur du cours / écrans à défiler ?* Le cours tient en 1 seul défilement court (environ 1,5 hauteur d'écran). Présentation concise et agréable.
+- **Exercice 1/4 (Déclinaison)** :
+  - Consigne : `Complète avec la terminaison du GÉNITIF :`
+  - Phrase : `Balnea domin... (Les bains du maître)`
+  - Mauvaise réponse testée : `um` (`Balnea dominum`)
+  - Capture de l'erreur : `scratch/t44_m8_03_erreur.png`
+  - Message d'erreur verbatim :
+    > « Ce n'est pas la bonne terminaison. Cherche la marque du génitif ! »
+  - Bonne réponse soumise : `i` (`Balnea domini`)
+  - Capture du succès : `scratch/t44_m8_03_succes.png`
+  - Explication verbatim :
+    > « Optime ! Le génitif singulier des noms en -us est en -i. Dominus -> domini (du maître). »
+- **Questions de vocabulaire** :
+  - Exercice 2/4 :
+    - Question : `Que signifie « balneum » ?`
+    - Options : A: `le combat` | B: `le bain, les thermes` | C: `la voix` | D: `le peuple`
+    - Réponse : B: `le bain, les thermes` → « Optime ! balneum, -i : le bain, les thermes »
+  - Exercice 3/4 :
+    - Question : `Comment dit-on « le vêtement » en latin ?`
+    - Options : A: `urbs` | B: `vestis` | C: `pater` | D: `gladius`
+    - Réponse : B: `vestis` → « Optime ! vestis, -is : le vêtement »
+  - Exercice 4/4 :
+    - Question : `Que signifie « fur » ?`
+    - Options : A: `le voleur` | B: `la colère` | C: `le fer / l'épée` | D: `le feu`
+    - Réponse : A: `le voleur` → « Optime ! fur, furis : le voleur »
+
+#### 2. Leçon `m9-03` — La Tortue Romaine : le Pluriel
+- **Captures du cours** : `scratch/t44_m9_03_cours_1.png` et `scratch/t44_m9_03_cours_2.png`.
+- **Réponses aux trois questions de l'étape 3** :
+  - *Astérisque `*` visible à l'écran ?* Non, aucun astérisque parasite visible.
+  - *Terminaisons bien en gras ?* Oui, les terminaisons de pluriel `-ae`, `-i`, `-es`, `-as`, `-os` sont nettement affichées en gras.
+  - *Longueur du cours / écrans à défiler ?* 1 seul défilement (environ 1,5 hauteur d'écran). Structure à puces claire et équilibrée.
+- **Exercice 1/4 (Déclinaison)** :
+  - Consigne : `Mets au NOMINATIF PLURIEL :`
+  - Phrase : `Milit... testudinem faciunt. (Les soldats forment la tortue.)`
+  - Mauvaise réponse testée : `i` (`Militi testudinem faciunt.`)
+  - Capture de l'erreur : `scratch/t44_m9_03_erreur.png`
+  - Message d'erreur verbatim :
+    > « Ce n'est pas la bonne terminaison. Cherche la marque du nominatif pluriel ! »
+  - Bonne réponse soumise : `es` (`Milites testudinem faciunt.`)
+  - Capture du succès : `scratch/t44_m9_03_succes.png`
+  - Explication verbatim :
+    > « Optime ! Miles, militis est de la 3e déclinaison : son nominatif pluriel est en -es. »
+- **Questions de vocabulaire** :
+  - Exercice 2/4 :
+    - Question : `Que signifie « scutum » ?`
+    - Options : A: `le bouclier` | B: `l'arc` | C: `le casque` | D: `la flèche`
+    - Réponse : A: `le bouclier` → « Optime ! scutum, -i : le bouclier »
+  - Exercice 3/4 :
+    - Question : `Comment dit-on « serré, épais » en latin ?`
+    - Options : A: `densus` | B: `altus` | C: `celer` | D: `longus`
+    - Réponse : A: `densus` → « Optime ! densus, -a, -um : serré, épais »
+  - Exercice 4/4 :
+    - Question : `Que signifie « murus » ?`
+    - Options : A: `le mur, le rempart` | B: `la mer` | C: `la mort` | D: `le retard`
+    - Réponse : A: `le mur, le rempart` → « Optime ! murus, -i : le mur, le rempart »
+
+#### 3. Leçon `m10-03` — Polyphème le Cyclope : l'Adjectif s'accorde
+- **Captures du cours** : `scratch/t44_m10_03_cours_1.png` et `scratch/t44_m10_03_cours_2.png`.
+- **Réponses aux trois questions de l'étape 3** :
+  - *Astérisque `*` visible à l'écran ?* Non, aucun astérisque parasite visible.
+  - *Terminaisons bien en gras ?* Oui, les terminaisons d'adjectifs (`-us`, `-a`, `-um`, `-am`) et les syntagmes (`spelunca magna`, `vinum dulce`) sont bien en gras.
+  - *Longueur du cours / écrans à défiler ?* 1 seul défilement (environ 1,5 écran). Très digeste.
+- **Exercice 1/4 (Déclinaison)** :
+  - Consigne : `Accorde l'adjectif avec le nom (masculin nominatif singulier) :`
+  - Phrase : `Cyclops est magn... (Le Cyclope est grand.)`
+  - Mauvaise réponse testée : `a` (`Cyclops est magna`)
+  - Capture de l'erreur : `scratch/t44_m10_03_erreur.png`
+  - Message d'erreur verbatim :
+    > « Ce n'est pas la bonne terminaison. Cherche la marque du masculin singulier ! »
+  - Bonne réponse soumise : `us` (`Cyclops est magnus`)
+  - Capture du succès : `scratch/t44_m10_03_succes.png`
+  - Explication verbatim :
+    > « Optime ! Cyclops est masculin : l'adjectif prend la terminaison -us au nominatif singulier. »
+- **Questions de vocabulaire** :
+  - Exercice 2/4 :
+    - Question : `Que signifie « oculus » ?`
+    - Options : A: `l'oreille` | B: `l'œil` | C: `la bouche` | D: `le nez`
+    - Réponse : B: `l'œil` → « Optime ! oculus, -i : l'œil »
+  - Exercice 3/4 :
+    - Question : `Comment dit-on « sauvage, féroce » en latin ?`
+    - Options : A: `ferox` | B: `pulcher` | C: `bonus` | D: `clarus`
+    - Réponse : A: `ferox` → « Optime ! ferox, ferocis : féroce, sauvage »
+  - Exercice 4/4 :
+    - Question : `Que signifie « caecus » ?`
+    - Options : A: `aveugle` | B: `sourd` | C: `muet` | D: `boiteux`
+    - Réponse : A: `aveugle` → « Optime ! caecus, -a, -um : aveugle »
+
+#### 4. Leçon `m10-04` — Les Six Cas : le Datif et l'Ablatif (puzzle)
+- **Captures du cours** : `scratch/t44_m10_04_cours_1.png` et `scratch/t44_m10_04_cours_2.png`.
+- **Réponses aux trois questions de l'étape 3** :
+  - *Astérisque `*` visible à l'écran ?* Non, aucun astérisque parasite visible.
+  - *Terminaisons bien en gras ?* Oui, les marques de cas (`-ae`, `-o`, `-a`, `-us`) et les exemples (`puellae`, `servo`, `in silva`, `in horto`) ressortent nettement en gras.
+  - *Longueur du cours / écrans à défiler ?* 1 seul défilement (environ 1,5 écran). Récapitulatif clair des 6 cas.
+- **Exercice 1/4 (Puzzle syntaxique)** :
+  - Phrase latine à ordonner en français : `Ulixes amico gladium in spelunca dat.`
+  - Mauvaise réponse testée (étiquette « de l'ami » au lieu de « à l'ami ») :
+    - Phrase formée : `Ulysse donne un glaive de l'ami dans la grotte.`
+    - Capture de l'erreur : `scratch/t44_m10_04_erreur.png`
+    - Message d'erreur verbatim :
+      > « Les mots ne sont pas tous les bons. Regarde les terminaisons du latin ! »
+  - Bonne réponse soumise :
+    - Phrase formée : `Ulysse donne un glaive à l'ami dans la grotte.`
+    - Capture du succès : `scratch/t44_m10_04_succes.png`
+    - Feedback verbatim :
+      > « Optime ! »
+- **Questions de vocabulaire** :
+  - Exercice 2/4 :
+    - Question : `Que signifie « spelunca » ?`
+    - Options : A: `l'enfant / le jeune garçon` | B: `la reine` | C: `la grotte, la caverne` | D: `le marbre`
+    - Réponse : C: `la grotte, la caverne` → « Optime ! spelunca, -ae : la grotte, la caverne »
+  - Exercice 3/4 :
+    - Question : `Comment dit-on « la porte » en latin ?`
+    - Options : A: `pes` | B: `porta` | C: `servus` | D: `gladiator`
+    - Réponse : B: `porta` → « Optime ! porta, -ae : la porte »
+  - Exercice 4/4 :
+    - Question : `Que signifie « custodire » ?`
+    - Options : A: `garder, surveiller` | B: `fonder` | C: `savoir` | D: `venir / arriver`
+    - Réponse : A: `garder, surveiller` → « Optime ! custodire (custodio, custodivi, custoditum) : garder, surveiller »
+
+### Restauration du profil
+- Le profil d'origine (`Marcus`, `556 sesterces`, `5 leçons complétées : m1-01 à m1-05`) a été réinjecté dans `app_flutter/ludus_latinus_save.json`.
+- Capture de confirmation de l'écran d'accueil restauré : `scratch/t44_accueil_restaure.png` (affiche bien Marcus, 556 HS, 5 / 113 leçons conquises, et la boutique prête à dépenser 556 sesterces).
+
+- **Doutes, questions pour l'architecte** :
+  - Aucun doute technique ou pédagogique. Les 4 leçons s'enchaînent de manière très fluide, les explications d'erreurs ciblent exactement la catégorie grammaticale requise (génitif, nominatif pluriel, accord d'adjectif, terminaisons), et le puzzle de `m10-04` bloque correctement la fausse attribution de cas (« de l'ami »).
+- **Reste à faire** :
+  - Tâche T44 terminée. Prêt pour la tâche suivante T45.
 
 ---
 
