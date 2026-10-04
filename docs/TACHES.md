@@ -3617,7 +3617,9 @@ Statut : VALIDÉ
 
 ## T40 — Vérifier à l'écran les arènes et les questions des jeux (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (04/10/2026)** : conforme. Pour T41, pense à restaurer le profil depuis `scratch/t40_profil_avant.json` (5 leçons, 556 HS) : l'émulateur est resté sur le profil de mesure (30 leçons).
 
 **Objectif** : deux changements du 2 octobre sont à voir à l'écran.
 (1) Les arènes de fin de monde ont trois vies et affichent l'explication
@@ -4032,6 +4034,180 @@ restauré le profil.
 - [ ] `font_scale` remis à 1.0.
 - [ ] `git status` : seul `docs/TACHES.md` est modifié.
 - [ ] Un commit `docs: vérification des retours de Clovis`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T46 — Chercher les textes écrasés sur les autres écrans
+
+Statut : À FAIRE
+
+**Objectif** : un élève a vu sur l'accueil des textes « écrits à la
+verticale » : une colonne écrasée par ses voisins, une lettre par ligne.
+Le test `ludus_latinus_mobile/test/textes_ecrases_test.dart` détecte ce
+défaut sur l'accueil (il a trouvé la carte du défi du jour, corrigée). On
+l'étend aux autres écrans pour trouver les cas qu'on n'a pas encore vus.
+
+**Périmètre** :
+- `ludus_latinus_mobile/test/textes_ecrases_test.dart` (tu ajoutes des cas)
+- `docs/TACHES.md`
+**Ne corrige aucun écran** : tu listes, l'architecte corrige.
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Lis le test existant et comprends comment il repère un texte écrasé.
+2. Ajoute les mêmes cinq réglages (largeur et police) pour : l'onglet
+   Bibliotheca, l'onglet Ludi, l'écran du compte (`account_screen.dart`),
+   la boutique (`BoutiqueModal`), Memoria, la carte de la Via Appia
+   (`map_screen.dart`). Pour les onglets, touche « Bibliotheca » ou « Ludi »
+   dans la barre du bas après avoir monté l'accueil.
+3. Lance `flutter test test/textes_ecrases_test.dart`. Pour chaque échec,
+   recopie le texte écrasé, sa taille, l'écran et le réglage, et le fichier
+   et la ligne du `Row` en cause (option `--plain-name` pour isoler un cas).
+4. Note à part les débordements (« RenderFlex overflowed ») : la police des
+   tests est plus large que la vraie, certains sont donc de fausses alertes.
+   Ne les compte pas comme des textes écrasés.
+5. Les cas qui échouent restent dans le test, marqués
+   `skip: 'à corriger par l\'architecte'`, pour que la suite reste verte.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : écran, réglage, texte écrasé, taille, fichier et ligne.
+- [ ] Un tableau séparé des débordements.
+- [ ] `flutter test` : toute la suite passe (les cas en échec sont `skip`).
+- [ ] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `test(mobile): textes écrasés sur les autres écrans`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T47 — Les promesses que l'appli ne tient pas (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : la Taverne annonce une « Protection de Série » qui n'existe
+pas dans le code. Il y en a peut-être d'autres : un texte qui promet un
+bonus, un objet, un effet que rien ne produit. Un élève qui le remarque
+cesse de faire confiance au jeu.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; script dans `scratch/`.
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Cherche dans `ludus_latinus_mobile/lib/` et dans `content/` les textes
+   qui annoncent un effet : « bonus », « +… % », « protection », « débloque »,
+   « gagne », « double », « critique », « bouclier », « récompense »,
+   « trésor », « diplôme », « accès ».
+2. Pour chacun, cherche dans le code ce qui le réalise. Exemple : la posture
+   « Fuga Celox » promet « +10 pts et Coup Critique si réponse < 4s » : trouve
+   la ligne qui le fait, ou écris qu'elle n'existe pas.
+3. Classe chaque promesse : **tenue** (avec fichier et ligne du code qui la
+   réalise), **fausse** (rien ne la réalise), **inexacte** (le chiffre
+   annoncé n'est pas celui du code).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : texte exact, fichier et ligne, classement, preuve.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: promesses non tenues`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T48 — Brouillon : des réponses de QCM qui ne se trahissent plus (sans toucher au contenu)
+
+Statut : À FAIRE
+
+**Objectif** : l'audit des leçons (`docs/audits/audit_lecons_2026-10-02.md`,
+défaut 5) a compté 26 questions où la bonne réponse est la seule à porter
+une précision entre parenthèses, et 42 où elle est nettement la plus longue.
+Un élève malin répond sans connaître la règle. Tu proposes une réécriture
+des options, que l'architecte relira et que Cédric validera.
+
+**Périmètre** :
+- `docs/propositions/options_qcm.md` (nouveau)
+- `docs/TACHES.md`
+**Ne modifie pas `content/`.**
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Avec un script qui lit `content` (pas de recopie à la main), liste les
+   questions de type `quiz` et d'arène où (a) seule la bonne option a des
+   parenthèses, ou (b) la bonne option est au moins 1,3 fois plus longue que
+   la deuxième plus longue.
+2. Pour chacune, propose de nouvelles options : soit une précision entre
+   parenthèses sur **chaque** option, soit sur **aucune** ; des longueurs
+   proches. Ne change pas la bonne réponse, ne change pas la question.
+3. Les mauvaises options doivent rester des erreurs plausibles d'élève
+   (une autre terminaison, un autre cas, un faux ami), jamais une blague.
+4. Vérifie avec un script que, dans tes propositions, plus aucune question
+   ne remplit (a) ou (b).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par question : identifiant, question, options actuelles,
+      options proposées.
+- [ ] La sortie du script de l'étape 4.
+- [ ] `content/` n'est pas modifié.
+- [ ] Un commit `docs: brouillon des options de QCM`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T49 — Une fiche pour observer un élève qui joue (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : Cédric fait tester l'appli à des élèves. Un retour d'élève a
+déjà révélé quatre défauts que les tournées n'avaient pas vus. On veut une
+fiche d'observation d'une page, pour que chaque séance de test rapporte des
+faits comparables.
+
+**Périmètre** :
+- `docs/propositions/fiche_observation_eleve.md` (nouveau)
+- `docs/TACHES.md`
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis l'écran ou le fichier, jamais de mémoire.
+
+**Étapes** :
+1. Lis `AGENTS.md` (sections 1 et 2) et le rapport
+   `docs/audits/audit_jeux_2026-10-03.md`.
+2. Écris une fiche à remplir pendant une séance de 15 minutes : classe de
+   l'élève ; téléphone ou PC ; ce qu'il fait d'abord sans consigne ; où il
+   hésite plus de cinq secondes ; ce qu'il ne comprend pas (recopier sa
+   phrase) ; quel jeu il relance de lui-même ; à quel moment il décroche ;
+   les textes qu'il lit et ceux qu'il saute ; ce qu'il dit à la fin.
+3. Ajoute cinq questions à poser à la fin, courtes, sans orienter la
+   réponse (pas « Tu as aimé le Duel ? » mais « Qu'est-ce que tu referais
+   demain ? »).
+4. Style : phrases courtes, pas de tiret long, pas de jargon (pas « UX »,
+   pas « feedback »). Une page imprimée au plus.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] La fiche tient sur une page (moins de 60 lignes).
+- [ ] Aucune question finale n'oriente la réponse (relis-les une à une
+      dans le compte rendu).
+- [ ] Un commit `docs: fiche d'observation d'un élève`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :

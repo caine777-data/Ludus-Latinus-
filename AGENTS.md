@@ -208,7 +208,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (64 sur 64 le 02/10/2026 ; 54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (69 sur 69 le 04/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -333,8 +333,12 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   13 px ; celles des arènes passent de 12 à 13,5 px ; (3) la boutique ne
   s'ouvrait qu'en touchant le compteur de sesterces : une carte « Taberna
   Romana » est ajoutée à l'accueil (vue à l'écran) ; (4) dans le Duel, le
-  héros respire et se balance comme les boss animés. Reste à identifier
-  les « textes écrits en diagonale » (capture demandée à Cédric). À
+  héros respire et se balance comme les boss animés. (5) Les textes « écrits
+  à la verticale » de l'accueil : la carte du défi du jour, dont le bouton
+  écrasait le titre et la consigne à une lettre par ligne ; le bouton passe
+  sous le texte. `test/textes_ecrases_test.dart` détecte ce défaut (un texte
+  de plus de 4 lettres dans moins de 48 points) sur cinq réglages de taille
+  et de police ; T46 l'étend aux autres écrans. À
   vérifier à l'écran : T45. **Retour d'élève > tournée d'exécutant** : en
   cas de conflit, le retour d'élève l'emporte.
 

@@ -377,14 +377,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Text(
-                          'LA VIA APPIA',
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 1.5,
-                            fontFamily: 'serif',
+                        const Flexible(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'LA VIA APPIA',
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                letterSpacing: 1.5,
+                                fontFamily: 'serif',
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -506,30 +511,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                     : dailyQuest.description,
                                 style: const TextStyle(fontSize: 11.5, color: Colors.black87),
                               ),
+                              // Le bouton passe sous le texte : à droite, il écrasait le
+                              // titre et la consigne jusqu'à une lettre par ligne sur
+                              // un téléphone étroit (retour d'élève, 04/10/2026).
+                              if (!isDone) ...[
+                                const SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: RomanColors.imperialPurple,
+                                      foregroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                    ),
+                                    // La prime est versée dans le jeu, une fois le défi réussi.
+                                    onPressed: () => _navigateToQuestTarget(context, dailyQuest.routeCible),
+                                    child: Text('JOUER · +${dailyQuest.recompense} HS'),
+                                  ),
+                                ),
+                              ],
                             ],
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        if (isDone)
+                        if (isDone) ...[
+                          const SizedBox(width: 8),
                           const RomanWaxSeal(
                             size: 40,
                             label: 'SPQR',
                             sealColor: RomanColors.laurelGreen,
                             stampColor: Color(0xFFFFDF85),
-                          )
-                        else
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: RomanColors.imperialPurple,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                              textStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                            ),
-                            // La prime est versée dans le jeu, une fois le défi réussi.
-                            onPressed: () => _navigateToQuestTarget(context, dailyQuest.routeCible),
-                            child: Text('JOUER · +${dailyQuest.recompense} HS'),
                           ),
+                        ],
                       ],
                     ),
                   );
