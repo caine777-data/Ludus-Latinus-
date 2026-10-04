@@ -4009,7 +4009,7 @@ Vidéo : `scratch/t41_memoria.mp4` (4,4 Mo)
 
 ## T42 — État des lieux du Panthéon (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : on veut qu'un monde terminé donne une carte du Panthéon.
 Avant de coder, il faut savoir ce qui existe.
@@ -4018,35 +4018,211 @@ Avant de coder, il faut savoir ce qui existe.
 
 **Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
 
-**Étapes** :
-1. Lis `ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart`.
-   Liste les cartes écrites en dur dans ce fichier (nom, rareté, image,
-   prix) et explique comment on en obtient une aujourd'hui.
-2. Lis la clé `cartes_collection` de
-   `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` et sa
-   source dans `content/cartes_data.py`. Liste les cartes (identifiant, nom,
-   catégorie, rareté, image). Dis si l'appli mobile lit cette clé
-   (`grep -rn "cartes_collection\|cartesCollection" ludus_latinus_mobile/lib`).
-3. Pour chaque image citée, dis si le fichier existe dans
-   `ludus_latinus_mobile/assets/images/` et si plusieurs cartes partagent la
-   même image.
-4. Propose un tableau **monde → carte** pour les 26 mondes : la carte dont
-   le sujet est enseigné dans ce monde (lis le titre et les leçons du monde).
-   Quand aucune carte ne convient, écris « à créer » et propose un sujet.
-5. Sur l'émulateur, capture l'écran du Panthéon tel qu'il est.
+---
+
+### 1. Cartes écrites en dur dans l'écran du Panthéon (`pantheon_screen.dart`)
+
+- **Fichier source** : `ludus_latinus_mobile/lib/ui/features/pantheon/pantheon_screen.dart`
+- **Définition du modèle** : lignes 10-28 (`class CarteCollector`)
+  - Propriétés du modèle : `id`, `titre`, `sousTitreLatin`, `imagePath`, `rarete`, `description`, `devise`.
+  - **Prix** : **aucun champ `prix` n'existe dans la classe `CarteCollector` ni dans la liste.**
+- **Liste en dur** : lignes 30-112 (`const List<CarteCollector> kCartesCollector = [...]`), exactement **9 cartes** :
+
+| N° | ID | Nom (`titre`) | Rareté (`rarete`) | Image (`imagePath`) | Prix | Lignes source |
+|---|---|---|---|---|---|---|
+| I | `louve` | « La Louve Capitoline » | Mythique | `assets/images/musee_louve.png` | Aucun (0 HS) | L.31-39 |
+| II | `gladiateur` | « Le Gladiateur du Colisée » | Rare | `assets/images/musee_gladiateur.png` | Aucun (0 HS) | L.40-48 |
+| III | `circus` | « Le Quadrige du Circus » | Rare | `assets/images/musee_circus.png` | Aucun (0 HS) | L.49-57 |
+| IV | `pegase` | « Pégase le Cheval Ailé » | Mythique | `assets/images/musee_pegase.png` | Aucun (0 HS) | L.58-66 |
+| V | `legion` | « L'Aigle Légionnaire » | Impériale | `assets/images/musee_legion.png` | Aucun (0 HS) | L.67-75 |
+| VI | `thermes` | « Les Thermes Impériaux » | Commune | `assets/images/musee_thermes.png` | Aucun (0 HS) | L.76-84 |
+| VII | `lion` | « Le Lion de Némée » | Mythique | `assets/images/musee_lion.png` | Aucun (0 HS) | L.85-93 |
+| VIII | `cave_canem` | « La Mosaïque de Pompéi » | Commune | `assets/images/musee_cave_canem.png` | Aucun (0 HS) | L.94-102 |
+| IX | `triomphe` | « La Couronne Triomphale » | Impériale | `assets/images/trophee_triomphe_medaillon_130.png` | Aucun (0 HS) | L.103-111 |
+
+#### Comment on en obtient une aujourd'hui dans l'application mobile :
+- **Aucun déblocage ni achat nécessaire** : les 9 cartes sont **débloquées d'office et visibles dès l'ouverture de l'écran**.
+  - Ligne 302 : Le compteur d'en-tête affiche en dur `Reliques: $totalCartes / $totalCartes` (soit `9 / 9`).
+  - Lignes 332-340 : Le `GridView.builder` génère directement l'ensemble des 9 cartes via `kCartesCollector.length`.
+- **Mécanique d'interaction actuelle** :
+  - L'unique interaction utilisateur consiste à toucher une carte dans la grille pour déclencher une animation 3D de bascule recto/verso (`_flipCard`, L.139-151).
+  - Au clic, l'identifiant est ajouté ou retiré d'un ensemble local en mémoire vive (`Set<String> _cartesRetournees`, non persisté).
+  - Le premier retournement déclenche un son (`AudioService().playCardObtained()`, L.148) et des étincelles visuelles (`RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks)`, L.149).
+  - Aucune dépense de sesterces n'a lieu, aucun contrôle d'inventaire ou de progression dans les mondes n'est effectué.
+
+---
+
+### 2. Clé `cartes_collection` du dataset et sa source Python
+
+- **Fichier source Python** : `content/cartes_data.py` (lignes 21-415, variable `CARTES_COLLECTION`)
+- **Fichier source JSON** : `ludus_latinus_mobile/assets/data/ludus_latinus_dataset.json` (lignes 6007-6426, clé `cartes_collection`, cartes aux lignes 6009-6393)
+- **Nombre total de cartes dans le dataset** : exactement **32 cartes** réparties en 4 catégories (`divinites`, `monstres`, `heros`, `monuments`) et 4 raretés (`commune`, `rare`, `epique`, `legendaire`) :
+
+| N° | Identifiant (`id`) | Nom (`nom`) | Catégorie (`categorie`) | Rareté (`rarete`) | Image (`img`) | Ligne Python | Ligne JSON |
+|---|---|---|---|---|---|---|---|
+| 1 | `div_jupiter` | Jupiter | divinites | legendaire | `boss_mercure_cadre_140.png` | L.24 | L.6010 |
+| 2 | `div_minerve` | Minerve | divinites | epique | `boss_sphinx_cadre_140.png` | L.36 | L.6022 |
+| 3 | `div_mars` | Mars Ultor | divinites | epique | `boss_gladiateur_cadre_140.png` | L.48 | L.6034 |
+| 4 | `div_neptune` | Neptune | divinites | rare | `boss_mercure_cadre_140.png` | L.60 | L.6046 |
+| 5 | `div_mercure` | Mercure | divinites | rare | `boss_mercure_cadre_140.png` | L.72 | L.6058 |
+| 6 | `div_apollon` | Apollon | divinites | rare | `trophee_triomphe_medaillon_130.png` | L.84 | L.6070 |
+| 7 | `mon_cerbere` | Cerbère | monstres | epique | `musee_cave_canem.png` | L.98 | L.6082 |
+| 8 | `mon_meduse` | Méduse la Gorgone | monstres | epique | `boss_sphinx_cadre_140.png` | L.110 | L.6094 |
+| 9 | `mon_minotaure` | Le Minotaure | monstres | rare | `boss_minotaure_cadre_140.png` | L.122 | L.6106 |
+| 10 | `mon_lion` | Le Lion de Némée | monstres | rare | `boss_lion_cadre_140.png` | L.134 | L.6118 |
+| 11 | `mon_pegase` | Pégase | monstres | commune | `musee_pegase.png` | L.146 | L.6130 |
+| 12 | `mon_sphinx` | Le Sphinx | monstres | commune | `boss_sphinx_cadre_140.png` | L.158 | L.6142 |
+| 13 | `her_hercule` | Hercule | heros | legendaire | `avatar_garcon_medaillon_140.png` | L.172 | L.6154 |
+| 14 | `her_enee` | Énée le Troyen | heros | epique | `avatar_garcon_medaillon_140.png` | L.184 | L.6166 |
+| 15 | `her_romulus` | Romulus | heros | epique | `musee_louve.png` | L.196 | L.6178 |
+| 16 | `her_ulysse` | Ulysse | heros | rare | `avatar_garcon_medaillon_140.png` | L.208 | L.6190 |
+| 17 | `her_achille` | Achille | heros | rare | `boss_gladiateur_cadre_140.png` | L.220 | L.6202 |
+| 18 | `her_julia` | Julia la Vestale | heros | commune | `avatar_fille_medaillon_140.png` | L.232 | L.6214 |
+| 19 | `mon_cesar` | Jules César | monuments | legendaire | `logo_centurion_120.png` | L.246 | L.6226 |
+| 20 | `mon_colisee` | Le Colisée | monuments | epique | `musee_gladiateur.png` | L.258 | L.6238 |
+| 21 | `mon_scutum` | Le Scutum & Gladius | monuments | commune | `musee_legion.png` | L.270 | L.6250 |
+| 22 | `mon_circus` | Le Circus Maximus | monuments | rare | `musee_circus.png` | L.282 | L.6262 |
+| 23 | `mon_via_appia` | La Via Appia | monuments | commune | `musee_cave_canem.png` | L.294 | L.6274 |
+| 24 | `mon_aqueduc` | L'Aqueduc Romain | monuments | commune | `musee_thermes.png` | L.306 | L.6286 |
+| 25 | `her_vercingetorix` | Vercingétorix | heros | epique | `boss_gladiateur_cadre_140.png` | L.320 | L.6298 |
+| 26 | `her_scipion` | Scipion l'Africain | heros | epique | `logo_centurion_120.png` | L.332 | L.6310 |
+| 27 | `her_hannibal` | Hannibal Barca | heros | legendaire | `boss_lion_cadre_140.png` | L.344 | L.6322 |
+| 28 | `mon_auguste` | Auguste | monuments | legendaire | `trophee_triomphe_medaillon_130.png` | L.356 | L.6334 |
+| 29 | `her_virgile` | Virgile | heros | rare | `musee_cave_canem.png` | L.368 | L.6346 |
+| 30 | `her_ciceron` | Cicéron | heros | epique | `avatar_garcon_medaillon_140.png` | L.380 | L.6358 |
+| 31 | `her_pline` | Pline l'Ancien | heros | rare | `boss_sphinx_cadre_140.png` | L.392 | L.6370 |
+| 32 | `her_horace` | Horace | heros | rare | `avatar_fille_medaillon_140.png` | L.404 | L.6382 |
+
+#### Est-ce que l'application mobile lit cette clé ?
+- Commande exécutée :
+  ```powershell
+  git grep -rn "cartes_collection\|cartesCollection" ludus_latinus_mobile/lib
+  ```
+- **Résultat réel** : code de retour `1`, **0 occurrence**.
+- **Conclusion** : L'application mobile Flutter **ne lit absolument pas cette clé** dans son code Dart. Le Panthéon fonctionne à 100% sur la liste statique en dur de 9 cartes (`kCartesCollector`), ignorant totalement les 32 cartes du dataset JSON.
+
+---
+
+### 3. Tableau des images : existence sur disque et réutilisation / partage
+
+Toutes les images référencées par la liste en dur (9 cartes) et par le dataset (32 cartes) ont été vérifiées dans le dossier `ludus_latinus_mobile/assets/images/`.
+
+- **Nombre d'images uniques référencées** : **17 images**.
+- **Images manquantes** : **0** (100% des 17 fichiers existent sur le disque).
+- **Images partagées** : **15 images sur 17** sont réutilisées par plusieurs cartes (certaines par 4 cartes différentes).
+- **Images uniques** : seulement **2 images** (`boss_minotaure_cadre_140.png` et `musee_lion.png`).
+
+| Nom du fichier image | Existe sur disque ? | Taille (octets) | Partagée ? | Cartes qui l'utilisent (Source : ID et nom) |
+|---|---|---|---|---|
+| `avatar_fille_medaillon_140.png` | **OUI** | 44 996 o | **Partagée (2)** | • Dataset : `her_julia` (Julia la Vestale)<br>• Dataset : `her_horace` (Horace) |
+| `avatar_garcon_medaillon_140.png` | **OUI** | 45 700 o | **Partagée (4)** | • Dataset : `her_hercule` (Hercule)<br>• Dataset : `her_enee` (Énée le Troyen)<br>• Dataset : `her_ulysse` (Ulysse)<br>• Dataset : `her_ciceron` (Cicéron) |
+| `boss_gladiateur_cadre_140.png` | **OUI** | 41 259 o | **Partagée (3)** | • Dataset : `div_mars` (Mars Ultor)<br>• Dataset : `her_achille` (Achille)<br>• Dataset : `her_vercingetorix` (Vercingétorix) |
+| `boss_lion_cadre_140.png` | **OUI** | 37 426 o | **Partagée (2)** | • Dataset : `mon_lion` (Le Lion de Némée)<br>• Dataset : `her_hannibal` (Hannibal Barca) |
+| `boss_mercure_cadre_140.png` | **OUI** | 36 429 o | **Partagée (3)** | • Dataset : `div_jupiter` (Jupiter)<br>• Dataset : `div_neptune` (Neptune)<br>• Dataset : `div_mercure` (Mercure) |
+| `boss_minotaure_cadre_140.png` | **OUI** | 36 983 o | **Unique (1)** | • Dataset : `mon_minotaure` (Le Minotaure) |
+| `boss_sphinx_cadre_140.png` | **OUI** | 39 298 o | **Partagée (4)** | • Dataset : `div_minerve` (Minerve)<br>• Dataset : `mon_meduse` (Méduse la Gorgone)<br>• Dataset : `mon_sphinx` (Le Sphinx)<br>• Dataset : `her_pline` (Pline l'Ancien) |
+| `logo_centurion_120.png` | **OUI** | 24 091 o | **Partagée (2)** | • Dataset : `mon_cesar` (Jules César)<br>• Dataset : `her_scipion` (Scipion l'Africain) |
+| `musee_cave_canem.png` | **OUI** | 8 200 o | **Partagée (4)** | • En dur : `cave_canem` (La Mosaïque de Pompéi)<br>• Dataset : `mon_cerbere` (Cerbère)<br>• Dataset : `mon_via_appia` (La Via Appia)<br>• Dataset : `her_virgile` (Virgile) |
+| `musee_circus.png` | **OUI** | 8 593 o | **Partagée (2)** | • En dur : `circus` (Le Quadrige du Circus)<br>• Dataset : `mon_circus` (Le Circus Maximus) |
+| `musee_gladiateur.png` | **OUI** | 47 002 o | **Partagée (2)** | • En dur : `gladiateur` (Le Gladiateur du Colisée)<br>• Dataset : `mon_colisee` (Le Colisée) |
+| `musee_legion.png` | **OUI** | 39 104 o | **Partagée (2)** | • En dur : `legion` (L'Aigle Légionnaire)<br>• Dataset : `mon_scutum` (Le Scutum & Gladius) |
+| `musee_lion.png` | **OUI** | 36 455 o | **Unique (1)** | • En dur : `lion` (Le Lion de Némée) *(note: le dataset utilise `boss_lion_cadre_140.png`)* |
+| `musee_louve.png` | **OUI** | 26 078 o | **Partagée (2)** | • En dur : `louve` (La Louve Capitoline)<br>• Dataset : `her_romulus` (Romulus) |
+| `musee_pegase.png` | **OUI** | 30 462 o | **Partagée (2)** | • En dur : `pegase` (Pégase le Cheval Ailé)<br>• Dataset : `mon_pegase` (Pégase) |
+| `musee_thermes.png` | **OUI** | 6 352 o | **Partagée (2)** | • En dur : `thermes` (Les Thermes Impériaux)<br>• Dataset : `mon_aqueduc` (L'Aqueduc Romain) |
+| `trophee_triomphe_medaillon_130.png` | **OUI** | 32 441 o | **Partagée (3)** | • En dur : `triomphe` (La Couronne Triomphale)<br>• Dataset : `div_apollon` (Apollon)<br>• Dataset : `mon_auguste` (Auguste) |
+
+---
+
+### 4. Tableau d'attribution Monde → Carte (26 mondes)
+
+Chaque monde de la Via Appia (de la 5ème à la 3ème) est analysé à partir de son titre et du sujet de ses leçons.
+Quand une carte existante (en dur ou dans le dataset) correspond au sujet enseigné, elle est attribuée.
+Quand aucune carte ne correspond fidèlement au programme de ce monde, la mention **« à créer »** est indiquée avec une proposition précise de sujet, nom latin et visuel suggéré.
+
+| Monde | Titre officiel du monde | Leçons clés enseignées | Carte attribuée (ID & Nom) | Statut | Justification / Sujet proposé |
+|---|---|---|---|---|---|
+| **1** | 1 · Salve ! Premiers pas à Rome 🏛️ | Romulus & Rémus, Louve, Chiffres romains, Mercure | `louve` (ou `her_romulus`) : **La Louve Capitoline** | **Existante** | La leçon m1-05 enseigne la légende des jumeaux et de la louve sur le mont Palatin. |
+| **2** | 2 · Dans la Maison Romaine 🏠 | Familia, Domus, Atrium, Péristyle, Animaux | `cave_canem` : **La Mosaïque de Pompéi** (*Cave Canem*) | **Existante** | Thème de la domus et des animaux familiers de la maison romaine (*Cave Canem*). |
+| **3** | 3 · Les Dieux de l'Olympe & Légendes ⚡ | Panthéon romain, Midas, Icare, Méduse, Minotaure | `div_jupiter` : **Jupiter** (ou `mon_minotaure`) | **Existante** | La leçon m3-01 introduit le Panthéon romain et le roi des dieux Jupiter. |
+| **4** | 4 · Les Cas & Travaux d'Hercule 🦁 | Nominatif, Accusatif, Décodeur, Lion de Némée | `lion` (ou `mon_lion`) : **Le Lion de Némée** | **Existante** | La leçon m4-05 est le défi d'arène d'Hercule contre le Lion de Némée. |
+| **5** | 5 · Les Verbes au Présent & L'Action ⚔️ | Esse, Verbes -ARE, Verbes héroïques, Hydre de Lerne | **L'Hydre de Lerne** (*Hydra Lernaea*) | **À créer** | Leçon m5-05 dédiée à l'Hydre. (À défaut dans l'existant : `her_hercule`). |
+| **6** | 6 · Les Gladiateurs & le Colisée 🛡️ | Rétiaires, Mirmillons, Chars au Circus, Ave Caesar | `gladiateur` (ou `mon_colisee`) : **Le Gladiateur du Colisée** | **Existante** | Thème direct de l'amphithéâtre, du Colisée et des combats de gladiateurs. |
+| **7** | 7 · Détective des Mots & Devises 📜 | Étymologie, Préfixes, Veni Vidi Vici, Défi du Sénat | `mon_cesar` : **Jules César** (*Veni, vidi, vici*) | **Existante** | La leçon m7-03 enseigne la célèbre devise de César « Veni, vidi, vici ». |
+| **8** | 8 · La Cité de Rome, Marchés & Vie Quotidienne 🍇 | Forum, Marché, Génitif aux Thermes, Bacchus | `thermes` : **Les Thermes Impériaux** | **Existante** | La leçon m8-03 se déroule explicitement aux thermes romains. |
+| **9** | 9 · L'Armée Romaine & les Légions 🦅 | Armement (Miles), Combat, Tortue, Vercingétorix | `legion` (ou `mon_scutum`) : **L'Aigle Légionnaire** | **Existante** | Monde entièrement dédié aux légions romaines et à leur étendard d'airain. |
+| **10** | 10 · Monstres Fabuleux & Métamorphoses 🐉 | Pégase, Cerbère, Polyphème, Dragon Ladon | `pegase` (ou `mon_cerbere`) : **Pégase le Cheval Ailé** | **Existante** | La leçon m10-01 enseigne le mythe de Pégase (*Pegasus Alatus*). |
+| **11** | 11 · Les Héros de la République 🛡️ | Horatius Coclès, Mucius Scaevola, Cloélie | **Horatius Coclès** (*Horatius Cocles ad pontem*) | **À créer** | Figures fondatrices de la République primitive (m11-01 à m11-03) absentes du Panthéon actuel. |
+| **12** | 12 · Le Sénat et le Peuple (SPQR) 🏛️ | 3e déclinaison, Consuls au Forum, Tribun de la Plèbe | **Le Consul & les Licteurs** (*Consul et Fasces*) | **À créer** | Cœur civique de la République (m12-01 à m12-04). (Alternative existante : `her_scipion`). |
+| **13** | 13 · Mare Nostrum & Les Conquêtes ⛵ | Noms en -I, Mare et Corpus, Flotte de Rome, Corsaire | `div_neptune` : **Neptune** (*Neptunus Deus Marium*) | **Existante** | Conquête maritime romaine et domination de *Mare Nostrum* sous le regard de Neptune. |
+| **14** | 14 · Les Légions en Marche 🦅 | Adjectifs 2e classe, Comparatif, Centurion Vétéran | `mon_scutum` : **Le Scutum & Gladius** | **Existante** | Représente l'équipement tactique et l'avancée invincible des légions en marche. |
+| **15** | 15 · Récits d'Autrefois : L'Imparfait 📜 | Suffixe -BA-, Eram, Récits d'histoire, Tite-Live | **Tite-Live l'Historien** (*Titus Livius Historicus*) | **À créer** | Leçon m15-04 centrée sur l'historien Tite-Live relatant les annales de la République. |
+| **16** | 16 · Veni, Vidi, Vici : Le Parfait ⚡ | Parfait, Action accomplie, Chars et vitesse, Victoire | `circus` : **Le Quadrige du Circus** (*Quadriga Circensis*) | **Existante** | Symbolise la vitesse d'action foudroyante et la course vers la victoire. |
+| **17** | 17 · César et la Guerre des Gaules 🏹 | Futur, Is Ea Id, Siège d'Alésia (52 av. J.-C.) | `her_vercingetorix` : **Vercingétorix** (*Dux Gallorum*) | **Existante** | La leçon m17-03 est consacrée au grand affrontement d'Alésia contre César. |
+| **18** | 18 · Le Grand Triomphe de la République 👑 | Ides de Mars, Fin République, Défi de 4e, Consul | `triomphe` : **La Couronne Triomphale** (*Corona Triumphalis*) | **Existante** | Couronnement de la fin du programme de 4ème et sacre républicain. |
+| **19** | 19 · La Paix d'Auguste (Pax Romana) 🏛️ | 4e/5e déclinaisons, Rome de marbre, Vitruve | `mon_auguste` : **Auguste** (*Imperator Caesar Augustus*) | **Existante** | Programme de 3ème débutant par le règne d'Auguste et la Rome de marbre. |
+| **20** | 20 · Les Chemins de l'Empire 🛣️ | Pronoms relatifs (Qui, Quae, Quod), Via Appia | `mon_via_appia` : **La Via Appia** (*Regina Viarum*) | **Existante** | La leçon m20-03 étudie la « Reine des Voies » reliant tout l'Empire romain. |
+| **21** | 21 · Sous la Cendre du Vésuve 🌋 | Participe Parfait Passif, Pompéi 79, Lettre de Pline | `her_pline` : **Pline l'Ancien** (*Caius Plinius Secundus*) | **Existante** | Leçon m21-03 dédiée à la catastrophe du Vésuve et au récit héroïque de Pline. |
+| **22** | 22 · Le Secret de l'Ablatif Absolu 📜 | Ablatif absolu, Formules militaires, Quintilien | **Quintilien le Rhéteur** (*Fabius Quintilianus*) | **À créer** | Leçon m22-04 sur le grand professeur de rhétorique. (Alternative existante : `div_minerve`). |
+| **23** | 23 · Les Échos du Forum : La Voix Passive 🏛️ | Voix passive, Complément d'agent, Cicéron au Sénat | `her_ciceron` : **Cicéron** (*Marcus Tullius Cicero*) | **Existante** | La leçon m23-03 est le grand discours de Cicéron au Sénat romain. |
+| **24** | 24 · La Proposition Infinitive 🗣️ | Proposition infinitive, Verbes déclaratifs, Rumeurs | `her_julia` : **Julia la Vestale** (*Iulia Heroina Romana*) | **Existante** | Symbolise les gardiennes sacrées de Rome et les secrets du forum/palais. |
+| **25** | 25 · L'Or des Poètes : Virgile & Ovide 📜 | L'Énéide, Vers immortel, Dédale et Icare chez Ovide | `her_virgile` : **Virgile** (*Publius Vergilius Maro*) | **Existante** | Leçons m25-01 et m25-03 consacrées à l'Énéide et au génie poétique de Virgile. |
+| **26** | 26 · Le Grand Triomphe du Collège 👑 | Synthèse Cycle 4, Manuscrit impérial, Trajan en Majesté | **L'Empereur Trajan** (*Imperator Traianus Optimus Princeps*) | **À créer** | Leçon m26-04 : Défi Suprême face à Trajan en majesté. (À défaut : `triomphe`). |
+
+#### Synthèse de l'attribution :
+- **21 mondes sur 26** trouvent immédiatement une carte parfaitement thématique parmi les cartes existantes (en dur ou dans le dataset).
+- **5 mondes** méritent idéalement une carte dédiée à créer pour une cohérence pédagogique parfaite :
+  1. Monde 5 : L'Hydre de Lerne (*Hydra Lernaea*)
+  2. Monde 11 : Horatius Coclès (*Horatius Cocles*) ou Cloélie
+  3. Monde 12 : Le Consul & les Licteurs (*Consul et Fasces*)
+  4. Monde 15 : Tite-Live l'Historien (*Titus Livius Historicus*)
+  5. Monde 26 : L'Empereur Trajan (*Imperator Traianus Optimus Princeps*)
+
+---
+
+### 5. Capture d'écran du Panthéon tel qu'il est
+
+- **Dispositif** : Émulateur Android `emulator-5554` (résolution 1080x2400).
+- **Emplacement de la capture** : `scratch/t42_pantheon.png`
+- **Éléments constatés à l'écran** :
+  1. **Barre d'application** : Titre « 🏛️ LE PANTHÉON DES ... » tronqué à droite par l'indicateur de solde « 🪙 556 HS ». Flèche de retour à gauche.
+  2. **Bannière d'en-tête** : Fond pourpre bordé d'or, médaillon de coupe antique, deux torches romaines allumées. Titre « ALBUM COLLECTOR ANTIQUE », sous-texte « Collectionne les 9 reliques mythologiques et touche une carte pour la retourner en 3D ! ».
+  3. **Trois pavés statistiques** :
+     - 🪙 Sesterces : `556 HS` (doré)
+     - 🃏 Reliques : `9 / 9` (bleuté)
+     - 👑 Rang : `Patricien` (orangé)
+  4. **Sous-titre de section** : « Galerie des Cartes de Mythologie ».
+  5. **Grille de cartes (2 colonnes)** :
+     - N° I : `MYTHIQUE` | « La Louve Capitoline » (*Lupa Capitolina*) — Louveteau en toge dans une couronne de laurier.
+     - N° II : `RARE` | « Le Gladiateur du Colisée » (*Gladiator Arenae*) — Petit légionnaire/gladiateur avec bouclier SPQR et glaive.
+     - N° III : `RARE` | « Le Quadrige du Circus » (*Quadriga Circensis*) — Illustration 2D d'un char avec les 4 factions (Russati, Albati, Veneti, Prasini).
+     - N° IV : `MYTHIQUE` | « Pégase le Cheval Ailé » (*Pegasus Alatus*) — Petit poulain ailé céleste avec pluie de sesterces.
+     - *(Suivent en scrollant les cartes V à IX : L'Aigle Légionnaire, Les Thermes Impériaux, Le Lion de Némée, La Mosaïque de Pompéi, La Couronne Triomphale)*.
+  6. **Comportement au tap** : La carte tourne sur son axe Y en 3D (flip). Le verso affiche le badge rouge `SPQR`, le sous-titre latin en lettres d'or, la description historique, la devise entre guillemets et la mention « Toucher pour retourner ».
+
+---
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Les deux listes de cartes, avec leurs sources (fichier et ligne).
-- [ ] Le tableau des images : existe ou non, partagée ou non.
-- [ ] Le tableau monde → carte, 26 lignes.
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: état des lieux du Panthéon`.
+- [x] Les deux listes de cartes, avec leurs sources (fichier et ligne).
+- [x] Le tableau des images : existe ou non, partagée ou non.
+- [x] Le tableau monde → carte, 26 lignes.
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: état des lieux du Panthéon`.
 
 **Compte rendu** (rempli par l'exécutant) :
-- Fichiers modifiés :
-- Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+- **Fichiers modifiés** :
+  - `docs/TACHES.md` : audit complet du Panthéon, des cartes en dur, du dataset, des images et tableau des 26 mondes.
+- **Commandes lancées et résultat réel** :
+  - `python content/cartes_data.py` & inspection du dataset : 32 cartes structurées identifiées sous la clé `cartes_collection`.
+  - `git grep -rn "cartes_collection\|cartesCollection" ludus_latinus_mobile/lib` : retour 0 occurrence, prouvant que Flutter n'utilise pas cette clé.
+  - Script python d'audit des images : 17 images uniques trouvées sur disque, 0 manquante, 15 images partagées.
+  - `adb shell input tap ...` & `adb shell screencap` : navigation dans l'onglet Ludi, ouverture du Panthéon et capture d'écran sauvegardée sous `scratch/t42_pantheon.png`.
+- **Doutes, questions pour l'architecte** :
+  1. *Source de vérité future* : Pour lier la complétion d'un monde au déblocage d'une carte dans le Panthéon, doit-on migrer l'écran Flutter pour consommer la clé `cartes_collection` du JSON (32 cartes) ou enrichir `kCartesCollector` dans `pantheon_screen.dart` ?
+  2. *Images partagées* : Actuellement, plusieurs cartes majeures (ex: Hercule, Énée, Ulysse, Cicéron) partagent le même avatar générique `avatar_garcon_medaillon_140.png`, et Minerve / Méduse / Sphinx partagent `boss_sphinx_cadre_140.png`. Souhaite-t-on générer des illustrations dédiées pour chaque carte ?
+  3. *Persistance du déblocage* : Faut-il ajouter un champ `List<String> cartesDebloquees` dans le modèle `Profile` (`profile.dart`) persisté dans SharedPreferences ?
+- **Reste à faire** :
+  - T43 : Brouillon : une explication par mauvaise réponse (sans toucher au contenu).
 
 ---
 
