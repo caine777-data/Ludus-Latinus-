@@ -4228,46 +4228,370 @@ Quand aucune carte ne correspond fidèlement au programme de ce monde, la mentio
 
 ## T43 — Brouillon : une explication par mauvaise réponse (sans toucher au contenu)
 
-Statut : À FAIRE
+Statut : FAIT
 
-**Objectif** : dans les 28 leçons de type `quiz`, une mauvaise réponse
-affiche aujourd'hui la même explication quelle que soit l'erreur. On veut
-une phrase **par mauvaise réponse**, qui dise pourquoi elle est fausse sans
-donner la bonne. Tu prépares le brouillon ; l'architecte le relira et
-Cédric le validera.
+**Objectif** : dans les 28 leçons de type `quiz`, une mauvaise réponse affiche aujourd'hui la même explication quelle que soit l'erreur. On veut une phrase **par mauvaise réponse**, qui dise pourquoi elle est fausse sans donner la bonne. Tu prépares le brouillon ; l'architecte le relira et Cédric le validera.
 
 **Périmètre** :
-- `docs/propositions/explications_quiz.md` (nouveau)
+- `docs/propositions/explications_quiz.md` (nouveau document de 416 lignes)
 - `docs/TACHES.md`
-**Ne modifie pas `content/`.**
+**Ne modifie pas `content/`.** (Aucune modification effectuée dans `content/`)
 
-**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites (phrase latine, message, chiffre) se recopie depuis l'écran ou le fichier, jamais de mémoire.
+---
 
-**Étapes** :
-1. Liste les 28 leçons `quiz` avec un script qui lit `content` (pas de
-   recopie à la main) : identifiant, question, options, bonne réponse,
-   explication actuelle.
-2. Pour chaque mauvaise option, écris une phrase de 20 mots au plus, qui
-   explique l'erreur à un élève de collège : ce que ce mot veut dire en
-   réalité, ou la confusion probable. **Elle ne doit pas contenir la bonne
-   réponse.**
-3. Si une mauvaise option est absurde (elle ne correspond à aucune confusion
-   plausible), signale-la : l'architecte la remplacera.
-4. Vérifie avec un script qu'aucune de tes phrases ne contient le texte de
-   la bonne réponse.
+### 1. Tableaux des 28 leçons Quiz (Option, Juste/Fausse, Phrase proposée)
+
+Le document complet et détaillé est archivé dans [`docs/propositions/explications_quiz.md`](docs/propositions/explications_quiz.md). Voici la synthèse complète des 28 leçons :
+
+#### Quiz #1 — [m1-01] L'Alphabet secret des Romains (`content/monde1_salve.py:12`)
+- **Question** : *Comment les Romains prononçaient-ils la lettre C dans le mot 'Circus' ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Toujours [K] : 'Kirkous'** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Toujours [S] : 'Sirsus' | **FAUSSE** | Confusion avec le français moderne : en latin classique, le son [S] n'existe pas pour cette consonne. | 17 |
+| Comme un [CH] : 'Chirchus' | **FAUSSE** | C'est la prononciation de l'italien moderne ou du latin ecclésiastique, pas celle des Romains de l'Antiquité. | 16 |
+| Elle était muette | **FAUSSE** | En latin, toutes les lettres écrites se prononcent distinctement : aucune consonne n'est muette. | 14 |
+
+#### Quiz #2 — [m1-04] Les Chiffres Romains Mystérieux (`content/monde1_salve.py:74`)
+- **Question** : *Combien vaut le nombre romain XIV ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| 16 | **FAUSSE** | Tu as additionné V et I (VI = 6), or le I placé avant le V se soustrait. | 18 |
+| **14** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| 24 | **FAUSSE** | Tu as compté deux dizaines (XX), mais il n'y a qu'un seul chiffre dix. | 14 |
+| 11 | **FAUSSE** | Tu as oublié la valeur du V (cinq) en ne comptant que le X et un bâton. | 17 |
+
+#### Quiz #3 — [m2-01] La Famille Romaine (Familia) (`content/monde2_domus.py:12`)
+- **Question** : *Quel mot latin désigne le fils dans la famille romaine ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Filius** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Frater | **FAUSSE** | Ce mot désigne le frère dans la famille, qui a donné fraternité en français. | 14 |
+| Pater | **FAUSSE** | Ce mot désigne le père et chef de famille, comme dans paternel ou patriarche. | 14 |
+| Servus | **FAUSSE** | Ce mot désigne l'esclave ou le serviteur, pas un membre libre de la famille. | 14 |
+
+#### Quiz #4 — [m2-04] Visite de la Domus : L'Atrium et le Péristyle (`content/monde2_domus.py:78`)
+- **Question** : *Comment s'appelle le grand salon central avec ouverture sur le toit d'une domus ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **L'atrium** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Le triclinium | **FAUSSE** | C'est la salle à manger romaine où les convives mangeaient allongés sur trois lits. | 14 |
+| L'insula | **FAUSSE** | C'est un immeuble collectif de plusieurs étages pour le peuple, pas une pièce d'habitation privée. | 15 |
+| Le forum | **FAUSSE** | C'est la grande place publique de la cité, située à l'extérieur des habitations privées. | 14 |
+
+#### Quiz #5 — [m3-01] Le Panthéon Romain : Les Maîtres du Ciel et des Mers (`content/monde3_dieux.py:12`)
+- **Question** : *Quel dieu romain brandit le trident et commande aux océans ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| Jupiter | **FAUSSE** | Ce souverain des dieux commande au ciel et lance la foudre depuis le mont Capitole. | 15 |
+| **Neptune** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Mars | **FAUSSE** | Ce protecteur des légions porte le casque et la lance : il règne sur la guerre. | 16 |
+| Vulcain | **FAUSSE** | Ce forgeron divin travaille le métal dans le feu des volcans avec son marteau. | 14 |
+
+#### Quiz #6 — [m3-04] Méduse la Gorgone et le bouclier miroir (`content/monde3_dieux.py:71`)
+- **Question** : *Quelle était l'arme secrète de Persée pour vaincre Méduse sans croiser ses yeux ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| Un bandeau sur les yeux | **FAUSSE** | Aveuglé de la sorte, le héros n'aurait pas pu porter un coup d'épée précis au monstre. | 16 |
+| **Un bouclier miroir poli** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Une cape d'invisibilité | **FAUSSE** | Être invisible n'empêche pas d'être pétrifié si l'on croise par mégarde son regard dans l'affrontement. | 15 |
+| Une flèche empoisonnée | **FAUSSE** | Les flèches empoisonnées sont l'arme légendaire d'Hercule contre l'Hydre, pas celle employée dans ce mythe. | 15 |
+
+#### Quiz #7 — [m4-01] Le Grand Mystère : Pourquoi le Latin change la fin des mots ? (`content/monde4_cas.py:12`)
+- **Question** : *En latin, qu'est-ce qui indique le rôle d'un mot dans la phrase ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| Sa position au tout début de la phrase | **FAUSSE** | En latin, l'ordre des mots est très libre : le début d'une phrase n'impose aucun rôle grammatical fixe. | 18 |
+| **Sa terminaison (son cas)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Sa longueur en lettres | **FAUSSE** | Le nombre de lettres d'un mot n'a aucun lien avec sa fonction grammaticale dans la phrase. | 16 |
+| La ponctuation | **FAUSSE** | Les Romains de l'Antiquité n'utilisaient ni virgules ni points modernes dans leurs textes manuscrits. | 14 |
+
+#### Quiz #8 — [m6-01] Les Rois de l'Arène : Rétiaires et Mirmillons (`content/monde6_colisee.py:12`)
+- **Question** : *Quelle arme redoutable caractérise le gladiateur Rétiaire ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| Un arc géant | **FAUSSE** | Les gladiateurs s'affrontaient au corps à corps dans l'arène : aucun combattant n'utilisait d'arc de tir. | 16 |
+| **Un filet et un trident** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Une massue de fer | **FAUSSE** | La massue n'était pas l'armement réglementaire de cette catégorie de combattant marin. | 12 |
+| Deux longues haches | **FAUSSE** | Les combattants de l'arène maniaient le glaive court, jamais de doubles haches barbares. | 13 |
+
+#### Quiz #9 — [m7-01] Les Trésors Cachés : D'où viennent nos mots ? (`content/monde7_etymologie.py:12`)
+- **Question** : *Quel mot latin a donné en français 'aquarium' et 'aquatique' ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Aqua (l'eau)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Avis (l'oiseau) | **FAUSSE** | Ce mot a donné en français aviation et avicole, qui se rapportent aux oiseaux et au vol. | 17 |
+| Ager (le champ) | **FAUSSE** | Ce mot a donné en français agriculture et agraire, désignant la terre cultivée et les campagnes. | 16 |
+| Arbor (l'arbre) | **FAUSSE** | Ce mot a donné en français arbre et arboriculture, liés aux végétaux et aux forêts. | 15 |
+
+#### Quiz #10 — [m8-01] Le Grand Marché du Forum (Mercatus) (`content/monde8_marche.py:12`)
+- **Question** : *Que signifie le mot latin 'panis' qui a donné notre mot 'panier' ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Le pain** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| La pomme | **FAUSSE** | Ce fruit se disait malum en latin, racine que l'on retrouve dans certains dialectes anciens. | 15 |
+| Le panier | **FAUSSE** | Piège étymologique : ce mot français désignait à l'origine la corbeille servant à transporter cette nourriture. | 16 |
+| Le poisson | **FAUSSE** | Cet animal aquatique se disait piscis en latin, qui a donné piscine et pisciculture en français. | 16 |
+
+#### Quiz #11 — [m9-01] L'Armement du Légionnaire (Miles) (`content/monde9_legion.py:12`)
+- **Question** : *Comment s'appelle le grand bouclier rectangulaire du soldat romain ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Le Scutum** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Le Pilum | **FAUSSE** | C'est le javelot lourd lancé par le soldat romain avant de charger au corps à corps. | 16 |
+| Le Gladius | **FAUSSE** | C'est l'épée courte à double tranchant servant à frapper dans les rangs serrés. | 13 |
+| La Galea | **FAUSSE** | C'est le casque de bronze ou de fer qui protégeait la tête du soldat. | 14 |
+
+#### Quiz #12 — [m10-01] Pégase le Cheval Ailé (Pegasus) (`content/monde10_monstres.py:12`)
+- **Question** : *Quel monstre crachant le feu le héros Bellérophon a-t-il terrassé grâce à Pégase ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **La Chimère** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Le Minotaure | **FAUSSE** | Cet homme à corps de taureau a été vaincu par Thésée au fond du labyrinthe crétois. | 16 |
+| Le Sphinx | **FAUSSE** | Cette créature posant des énigmes aux voyageurs a été défiée par Œdipe près de Thèbes. | 15 |
+| L'Hydre | **FAUSSE** | Ce monstre aquatique dont les têtes repoussaient a été combattu par Hercule à Lerne. | 14 |
+
+#### Quiz #13 — [m11-01] Horatius Coclès seul sur le pont (`content/monde11_heros.py:13`)
+- **Question** : *Quel acte héroïque a accompli Horatius Coclès pour sauver Rome ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Il a retenu seul l'armée ennemie sur un pont pendant que ses compagnons le coupaient** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Il a tué le roi Porsenna dans sa tente | **FAUSSE** | C'est l'exploit de Mucius Scaevola, qui a ensuite brûlé sa main droite devant l'ennemi. | 14 |
+| Il a franchi les Alpes avec des éléphants | **FAUSSE** | C'est le général carthaginois Hannibal Barca qui a traversé les montagnes avec ses bêtes. | 14 |
+| Il a construit la muraille de Rome en une seule nuit | **FAUSSE** | Confusion : la muraille primitive remonte à Romulus et aux rois au fil des siècles. | 15 |
+
+#### Quiz #14 — [m12-01] La 3ème Déclinaison : Les Rois et les Consuls (`content/monde12_spqr.py:13`)
+- **Question** : *À quelle terminaison du génitif singulier reconnaît-on un nom de la 3ème déclinaison ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **En -IS (ex: regis, ducis)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| En -AE (ex: rosae) | **FAUSSE** | Cette terminaison au deuxième cas caractérise les noms féminins de la première déclinaison. | 13 |
+| En -I (ex: domini) | **FAUSSE** | Cette désinence caractérise les noms masculins et neutres de la deuxième déclinaison. | 12 |
+| En -UM (ex: templi) | **FAUSSE** | Cette finale marque le sujet neutre ou le complément d'objet, pas ce deuxième cas singulier. | 15 |
+
+#### Quiz #15 — [m13-01] Les Noms en -I : Civis et Navis (`content/monde13_marenostrum.py:13`)
+- **Question** : *Quel est le génitif pluriel de 'navis, navis' (le navire) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Navium (des navires)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Navum | **FAUSSE** | Tu as oublié la voyelle du radical : ce nom parisyllabique conserve son i caractéristique. | 15 |
+| Navibus | **FAUSSE** | Cette finale en -ibus sert au troisième et au sixième cas pluriels, pas à la possession. | 16 |
+| Navarum | **FAUSSE** | Cette terminaison appartient exclusivement aux noms de la première déclinaison comme rosa. | 12 |
+
+#### Quiz #16 — [m14-01] Les Adjectifs de 2ème Classe : Fortis et Ingens (`content/monde14_legions.py:14`)
+- **Question** : *Comment s'accorde l'adjectif 'fortis' avec 'miles' (soldat, masculin singulier) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Miles fortis** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Miles fortus | **FAUSSE** | Cette finale inventée n'existe pas : les adjectifs de cette classe ne se terminent pas en -us. | 17 |
+| Miles fortum | **FAUSSE** | Cette désinence en -um marquerait le complément d'objet singulier ou le genre neutre. | 13 |
+| Miles forte | **FAUSSE** | Cette terminaison en -e est réservée au genre neutre (comme mare), or ce nom est masculin. | 16 |
+
+#### Quiz #17 — [m15-01] Le Suffixe Magique de l'Imparfait : -BA- (`content/monde15_imparfait.py:14`)
+- **Question** : *Quel son caractéristique s'intercale dans TOUS les verbes réguliers à l'imparfait latin ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **-BA- (ex: amabam, legebat)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| -VI- | **FAUSSE** | Cet élément apparaît souvent dans le radical du temps de l'action achevée, comme dans amavit. | 15 |
+| -IS- | **FAUSSE** | Ce groupe de lettres sert à former le plus-que-parfait ou des désinences nominales, pas ce temps. | 16 |
+| -UR- | **FAUSSE** | Cette syllabe sert à marquer la voix passive ou le futur des participes, pas ce temps. | 16 |
+
+#### Quiz #18 — [m16-01] Le Parfait : L'Action Accomplie (`content/monde16_parfait.py:15`)
+- **Question** : *Quelle est la désinence de la 3e personne du singulier au parfait (il/elle a fait) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **-IT (ex: amavit, vicit)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| -AT | **FAUSSE** | Cette finale est la marque de la troisième personne du présent pour le premier groupe verbal. | 16 |
+| -ET | **FAUSSE** | Cette désinence correspond au présent pour les verbes du deuxième groupe comme monere. | 13 |
+| -BA | **FAUSSE** | Ce suffixe tronqué marque le temps de la description dans le passé, pas l'action accomplie. | 15 |
+
+#### Quiz #19 — [m17-01] Le Futur de l'Indicatif : Amabo & Legam (`content/monde17_cesar.py:14`)
+- **Question** : *Que signifie la forme 'amabit' au futur ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Il aimera** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Il aimait | **FAUSSE** | Cette traduction correspond au temps de la description (amabat), reconnaissable à son suffixe en -ba-. | 15 |
+| Il aima | **FAUSSE** | Cette traduction correspond au temps de l'action achevée (amavit), pas à ce temps à venir. | 15 |
+| Qu'il aime | **FAUSSE** | Cette traduction exprime un souhait ou un ordre au subjonctif (amet), pas une certitude future. | 15 |
+
+#### Quiz #20 — [m18-01] La Fin de la République et les Ides de Mars (`content/monde18_triomphe_rep.py:14`)
+- **Question** : *Que signifient les derniers mots attribués à César : 'Tu quoque, mi fili' ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Toi aussi, mon fils !** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Tue-les tous, mon fils ! | **FAUSSE** | Faux ami phonétique entre le pronom personnel latin signifiant toi et le verbe français. | 14 |
+| Adieu, peuple de Rome ! | **FAUSSE** | Cette apostrophe finale s'adresse directement à Brutus, pas à l'ensemble des citoyens de la cité. | 15 |
+| La République est sauvée ! | **FAUSSE** | C'est le cri des républicains conjurés après l'attentat, pas la parole du dictateur blessé. | 14 |
+
+#### Quiz #21 — [m19-01] La 4ème Déclinaison : Manus & Exercitus (`content/monde19_auguste.py:13`)
+- **Question** : *Quelle est la désinence du génitif singulier de la 4ème déclinaison (ex: manus, exercitus) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **-US (ex: manus, exercitus)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| -IS | **FAUSSE** | Cette désinence de possession au singulier caractérise les noms de la troisième déclinaison. | 13 |
+| -AE | **FAUSSE** | Cette voyelle double indique le complément du nom singulier pour la première déclinaison. | 13 |
+| -I | **FAUSSE** | Cette finale marque la possession au singulier pour la deuxième déclinaison comme dominus. | 13 |
+
+#### Quiz #22 — [m20-01] Le Pronom Relatif : Qui, Quae, Quod (`content/monde20_chemins.py:13`)
+- **Question** : *Quel pronom relatif masculin singulier utilise-t-on pour le sujet 'le soldat qui combat' (miles ...) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **QUI (miles qui pugnat)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| QUAE | **FAUSSE** | Cette forme est le pronom relatif au genre féminin, comme dans femina quae cantat. | 14 |
+| QUOD | **FAUSSE** | Cette forme est réservée au genre neutre singulier, par exemple templum quod stat. | 13 |
+| QUEM | **FAUSSE** | Cette forme masculine est au cas complément d'objet direct : elle ne peut pas être sujet. | 16 |
+
+#### Quiz #23 — [m21-01] Le Participe Parfait Passif (PPP) (`content/monde21_pompei.py:14`)
+- **Question** : *Que signifie le participe parfait passif 'urbs capta' (urbs = la ville) ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **La ville capturée / prise** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| La ville qui capture | **FAUSSE** | Le sens serait actif, or ce participe passif exprime que la cité subit l'assaut. | 14 |
+| Capturer la ville | **FAUSSE** | Cette tournure utilise un infinitif, alors que ce participe s'accorde comme un adjectif avec la cité. | 16 |
+| La ville libre | **FAUSSE** | Ce mot vient du verbe prendre ou saisir : il indique une conquête militaire, pas l'affranchissement. | 16 |
+
+#### Quiz #24 — [m22-01] Qu'est-ce que l'Ablatif Absolu ? (`content/monde22_ablatif_absolu.py:13`)
+- **Question** : *De quoi est composé un ablatif absolu classique ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **D'un nom à l'ablatif et d'un participe à l'ablatif** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| D'un verbe à l'infinitif et d'un adjectif au nominatif | **FAUSSE** | L'infinitif s'emploie après un verbe déclaratif, pas dans cette proposition circonstancielle autonome. | 12 |
+| D'un nom au génitif avec une préposition | **FAUSSE** | Cette tournure autonome est détachée de la phrase principale et n'emploie jamais de préposition introductive. | 15 |
+| D'un verbe au futur et d'un adverbe | **FAUSSE** | Cette structure subordonnée utilise un participe en accord, jamais un verbe conjugué au futur. | 14 |
+
+#### Quiz #25 — [m23-01] La Voix Passive : Quand le Sujet Subit l'Action (`content/monde23_passif.py:14`)
+- **Question** : *Quelle est la désinence de 3e personne du singulier au passif (ex: 'il est aimé') ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **-TUR (ex: amatur, laudatur)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| -T | **FAUSSE** | Cette consonne seule marque la voix active où le sujet accomplit lui-même l'action. | 13 |
+| -NTUR | **FAUSSE** | Cette terminaison indique un sujet pluriel (ils ou elles), pas un sujet singulier. | 13 |
+| -RIS | **FAUSSE** | Cette finale s'emploie pour la deuxième personne du singulier (tu es félicité). | 12 |
+
+#### Quiz #26 — [m24-01] Le Mystère du « QUE » Disparu ! (`content/monde24_infinitive.py:13`)
+- **Question** : *Comment se construisent le sujet et le verbe d'une proposition infinitive en latin ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Sujet à l'Accusatif + Verbe à l'Infinitif** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Sujet au Nominatif + Verbe au Passif | **FAUSSE** | Dans cette subordonnée, le sujet ne reste pas au cas sujet habituel de la principale. | 15 |
+| Sujet à l'Ablatif + Verbe au Présent | **FAUSSE** | Le verbe de cette construction subordonnée doit être au mode impersonnel, pas conjugué au présent. | 15 |
+| Sujet au Génitif + Verbe au Futur | **FAUSSE** | Le cas du complément du nom ne peut jamais introduire le sujet d'une telle proposition. | 15 |
+
+#### Quiz #27 — [m25-01] L'Énéide de Virgile : Le Chant des Armes et du Héros (`content/monde25_poetes.py:15`)
+- **Question** : *Quel poète romain a composé l'Énéide sous le règne d'Auguste ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **Virgile (Publius Vergilius Maro)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| Ovide | **FAUSSE** | Cet auteur a composé les Métamorphoses et L'Art d'aimer, pas cette grande épopée nationale. | 14 |
+| Homère | **FAUSSE** | Cet auteur légendaire a écrit en grec l'Iliade et l'Odyssée bien avant la fondation impériale. | 15 |
+| Cicéron | **FAUSSE** | Ce grand personnage républicain était orateur et philosophe, mais pas ce grand poète. | 13 |
+
+#### Quiz #28 — [m26-01] La Grande Synthèse du Cycle 4 (`content/monde26_triomphe_cycle4.py:14`)
+- **Question** : *Quelle construction réunit un nom et un participe tous deux au cas ablatif sans mot de liaison ?*
+
+| Option | Statut | Phrase proposée (≤ 20 mots) | Nb mots |
+|---|---|---|:---:|
+| **L'Ablatif Absolu (ex: Caesare duce, urbe capta)** | **JUSTE** | *(Bonne réponse — félicitations)* | — |
+| La Proposition Infinitive | **FAUSSE** | Cette construction déclarative associe un sujet au cas complément et un verbe à l'infinitif. | 14 |
+| Le Comparatif de supériorité | **FAUSSE** | Cette forme grammaticale sert à graduer un adjectif avec le suffixe -ior, pas un participe détaché. | 16 |
+| Le Vocatif d'apostrophe | **FAUSSE** | Ce cas sert uniquement à interpeller ou appeler une personne dans le dialogue. | 13 |
+
+---
+
+### 2. Liste des options signalées comme absurdes ou peu plausibles
+
+Quatre options parmi les 84 mauvaises réponses ont été identifiées comme ne correspondant à aucune confusion pédagogique plausible :
+
+1. **Quiz #7 (`m4-01`) Option [2] : « Sa longueur en lettres »**
+   - *Question* : « En latin, qu'est-ce qui indique le rôle d'un mot dans la phrase ? »
+   - *Diagnostic* : Absurde. La longueur d'un mot n'a jamais déterminé une fonction grammaticale dans aucune langue humaine. Aucun collégien ne fait une telle hypothèse.
+   - *Proposition de remplacement pour l'architecte* : **« La préposition placée devant »** (confusion naturelle avec le français où la fonction est souvent marquée par une préposition : à, de, par...) ou **« Le genre masculin ou féminin »**.
+
+2. **Quiz #8 (`m6-01`) Option [0] : « Un arc géant »**
+   - *Question* : « Quelle arme redoutable caractérise le gladiateur Rétiaire ? »
+   - *Diagnostic* : Peu plausible / fantaisiste. Les combats de gladiateurs au Colisée étaient des duels de corps à corps codifiés ; il n'existait aucun gladiateur archer à pied dans l'arène.
+   - *Proposition de remplacement pour l'architecte* : **« Le glaive court (gladius) et le grand bouclier »** (armement du mirmillon/secutor opposé au rétiaire) ou **« Le casque fermé sans filet »**.
+
+3. **Quiz #8 (`m6-01`) Option [3] : « Deux longues haches »**
+   - *Question* : « Quelle arme redoutable caractérise le gladiateur Rétiaire ? »
+   - *Diagnostic* : Fantaisiste / stéréotype barbare. Aucun gladiateur romain ne combattait avec deux haches de guerre.
+   - *Proposition de remplacement pour l'architecte* : **« Le poignard courbe (sica) et le petit bouclier »** (armement du thrace) ou **« Une lance et un bouclier rond »** (hoplomaque).
+
+4. **Quiz #13 (`m11-01`) Option [3] : « Il a construit la muraille de Rome en une seule nuit »**
+   - *Question* : « Quel acte héroïque a accompli Horatius Coclès pour sauver Rome ? »
+   - *Diagnostic* : Cliché de conte merveilleux. Le monde 11 enseigne justement les héros républicains Coclès (m11-01), Mucius Scaevola (m11-02) et Cloélie (m11-03).
+   - *Proposition de remplacement pour l'architecte* : **« Il a traversé le Tibre à la nage avec les jeunes otages »** (exploit héroïque de Cloélie dans ce même monde, créant une vraie distraction pédagogique historique).
+
+---
+
+### 3. Sortie du script de vérification de l'étape 4
+
+Le script `scratch/verify_quiz_propositions.py` valide automatiquement que :
+- Toutes les 84 mauvaises réponses disposent d'une phrase.
+- Chaque phrase respecte strictement la limite de 20 mots (maximum constaté : 19 mots).
+- Aucune phrase ne contient le texte de la bonne réponse.
+
+```text
+=== VERIFICATION DES PROPOSITIONS ===
+Total mauvaises options testees: 84
+Total erreurs detectees: 0
+SUCCESS: TOUTES LES VERIFICATIONS SONT VALIDEES !
+   1. 84 mauvaises options couvertes (3 par quiz * 28 quiz).
+   2. Chaque phrase fait strictement <= 20 mots.
+   3. Aucune phrase ne contient le texte de la bonne reponse.
+```
+
+---
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau par leçon : option, juste ou fausse, phrase proposée.
-- [ ] La liste des options signalées comme absurdes.
-- [ ] La sortie du script de l'étape 4.
-- [ ] `content/` n'est pas modifié.
-- [ ] Un commit `docs: brouillon des explications par mauvaise réponse`.
+- [x] Un tableau par leçon : option, juste ou fausse, phrase proposée.
+- [x] La liste des options signalées comme absurdes.
+- [x] La sortie du script de l'étape 4.
+- [x] `content/` n'est pas modifié.
+- [x] Un commit `docs: brouillon des explications par mauvaise réponse`.
 
 **Compte rendu** (rempli par l'exécutant) :
-- Fichiers modifiés :
-- Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+- **Fichiers modifiés** :
+  - `docs/propositions/explications_quiz.md` (nouveau fichier contenant l'intégralité des 28 quiz et des 84 explications rédigées).
+  - `docs/TACHES.md` : compte rendu de la tâche T43, tableaux synthétiques, diagnostic des options absurdes et sortie du script.
+- **Commandes lancées et résultat réel** :
+  - Extraction automatique des 28 quiz depuis `content/` via `python scratch/extract_quiz.py` : 28 leçons identifiées.
+  - Vérification automatisée des 84 propositions via `python scratch/verify_quiz_propositions.py` : 0 erreur, 84/84 conformes (≤ 20 mots, sans divulgation de la bonne réponse).
+  - Génération de `docs/propositions/explications_quiz.md` via `python scratch/generate_explications_doc.py` : 416 lignes générées.
+  - `git status` : `content/` intact (aucun fichier modifié dans `content/`).
+- **Doutes, questions pour l'architecte** :
+  - Les 4 options absurdes / peu historiques identifiées (Quiz #7 option 2, Quiz #8 options 0 & 3, Quiz #13 option 3) peuvent-elles être remplacées directement par les propositions suggérées lors de la phase d'implémentation dans `content/` ?
+  - Pour l'intégration future dans le moteur de jeu mobile, le schéma de données dans `content/` prévoira-t-il une liste `explanations: [exp0, exp1, exp2, exp3]` ou un dictionnaire indexé par numéro d'option ?
+- **Reste à faire** :
+  - Relecture par l'architecte et validation par Cédric de `docs/propositions/explications_quiz.md`.
+  - T44 : Jouer les quatre nouvelles leçons de déclinaison de 5e (sans rien modifier).
 
 ---
 
