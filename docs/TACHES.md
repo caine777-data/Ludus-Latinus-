@@ -4849,7 +4849,7 @@ restauré le profil.
 
 ## T46 — Chercher les textes écrasés sur les autres écrans
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : un élève a vu sur l'accueil des textes « écrits à la
 verticale » : une colonne écrasée par ses voisins, une lettre par ligne.
@@ -4881,17 +4881,75 @@ l'étend aux autres écrans pour trouver les cas qu'on n'a pas encore vus.
    `skip: 'à corriger par l\'architecte'`, pour que la suite reste verte.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau : écran, réglage, texte écrasé, taille, fichier et ligne.
-- [ ] Un tableau séparé des débordements.
-- [ ] `flutter test` : toute la suite passe (les cas en échec sont `skip`).
-- [ ] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `test(mobile): textes écrasés sur les autres écrans`.
+- [x] Un tableau : écran, réglage, texte écrasé, taille, fichier et ligne.
+- [x] Un tableau séparé des débordements.
+- [x] `flutter test` : toute la suite passe (les cas en échec sont `skip`).
+- [x] `git status` : seuls le test et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `test(mobile): textes écrasés sur les autres écrans`.
+
+### Tableau 1 — Textes écrasés détectés (colonne de texte verticale < 48 pt)
+
+| Écran | Réglage | Texte écrasé | Taille réelle (largeur × hauteur) | Fichier et ligne du `Row` en cause | Contexte et diagnostic |
+|---|---|---|---|---|---|
+| **Compte** (`account_screen.dart`) | 320 pt, police ×1.0 | `« Taberna & Vestiaire Impérial »` | 37 × 280 pt | `lib/ui/features/account/account_screen.dart:254` | Carte « Taberna & Penderie » : le `Row` aligne le médaillon Lupulus (48 pt) + `Expanded(Column)` + `ElevatedButton.icon('Vestiaire')`. Sur écran étroit 320 pt, le bouton rigide réduit la largeur disponible de la colonne centrale à 37 pt, forçant le texte en colonne verticale. |
+| **Compte** (`account_screen.dart`) | 320 pt, police ×1.0 | `« Toge : lin blanc • 50 HS »` | 37 × 128 pt | `lib/ui/features/account/account_screen.dart:254` | Même `Row` : le sous-titre sous « Taberna & Vestiaire Impérial » est également écrasé à 37 pt de large. |
+| **Compte** (`account_screen.dart`) | 360 pt, police ×1.3 | `« Taberna & Vestiaire Impérial »` | 47 × 364 pt | `lib/ui/features/account/account_screen.dart:254` | Même `Row` : à police agrandie ×1.3, le bouton 'Vestiaire' prend plus d'espace et laisse seulement 47 pt à la colonne centrale (< seuil de 48 pt). |
+| **Compte** (`account_screen.dart`) | 360 pt, police ×1.3 | `« Toge : lin blanc • 50 HS »` | 47 × 168 pt | `lib/ui/features/account/account_screen.dart:254` | Même `Row` : le sous-titre est comprimé à 47 pt de large. |
+| **Compte** (`account_screen.dart`) | 360 pt, police ×1.6 | `« Taberna & Vestiaire Impérial »` | 17 × 800 pt | `lib/ui/features/account/account_screen.dart:254` | Même `Row` : à police ×1.6, le bouton 'Vestiaire' s'élargit drastiquement. L'`Expanded` central est compressé à 17 pt de large sur 800 pt de hauteur (une lettre par ligne). |
+| **Compte** (`account_screen.dart`) | 360 pt, police ×1.6 | `« Toge : lin blanc • 50 HS »` | 17 × 468 pt | `lib/ui/features/account/account_screen.dart:254` | Même `Row` : sous-titre écrasé à 17 pt de large sur 468 pt de hauteur. |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, police ×1.6 | `« TABERNA ROMANA »` | 26 × 481 pt | `lib/ui/features/boutique/boutique_modal.dart:168` | En-tête de la boutique : `Row` avec l'icône 🏛️ + `Expanded(Column)` + conteneur doré du compteur de sesterces (`RollingSestercesCounter` + icône d'aide). À police ×1.6, le compteur s'élargit et comprime le titre à 26 pt de large sur 481 pt de hauteur. |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, police ×1.6 | `« Boutique & Penderie Impériale • Équipe ton Héros »` | 26 × 1025 pt | `lib/ui/features/boutique/boutique_modal.dart:168` | Même `Row` : sous-titre comprimé à 26 pt de large sur 1025 pt de hauteur (colonne verticale totale). |
+
+*Note* : Aucun texte écrasé sur **Accueil**, **Bibliotheca**, **Memoria**, **Ludi**, ni sur la **Via Appia**.
+
+---
+
+### Tableau 2 — Débordements constatés (« RenderFlex overflowed »)
+
+| Écran | Réglage | Widget | Fichier et ligne | Débordement réel | Contexte / Cause |
+|---|---|---|---|---|---|
+| **Ludi** (`ludi_view.dart`) | 320 pt, ×1.0 | `Column` | `lib/ui/core/roman_lock_badge.dart:81:18` | 8.2 px en bas (×5 badges) | Cartes de mini-jeux verrouillés : le badge cadenas contient une colonne avec texte multiligne qui dépasse la hauteur fixe allouée au badge. |
+| **Ludi** (`ludi_view.dart`) | 360 pt, ×1.3 | `Column` | `lib/ui/core/roman_lock_badge.dart:81:18` | 3.3 px en bas (×5 badges) | Même badge cadenas : dépassement vertical à police ×1.3. |
+| **Ludi** (`ludi_view.dart`) | 412 pt, ×1.3 | `Column` | `lib/ui/core/roman_lock_badge.dart:81:18` | 0.65 px en bas (×5 badges) | Même badge cadenas : micro-dépassement vertical de 0.65 px à police ×1.3 sur écran large. |
+| **Ludi** (`ludi_view.dart`) | 360 pt, ×1.6 | `Column` | `lib/ui/core/roman_lock_badge.dart:81:18` | 15 px en bas (×5 badges) | Même badge cadenas : dépassement de 15 px à police ×1.6. |
+| **Compte** (`account_screen.dart`) | 320 pt, ×1.0 | `Row` | `lib/ui/features/account/account_screen.dart:193:21` | 62 px à droite | Rangée des 4 colonnes de statistiques (`Leçons`, `Sesterces`, `Série`, `Monuments`) dans un `Row(mainAxisAlignment: spaceAround)` sans flexibilité sur écran étroit (320 pt). |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.0 | `Row` | `lib/ui/features/account/account_screen.dart:193:21` | 22 px à droite | Même rangée des 4 statistiques : dépasse de 22 px à droite à 360 pt police standard. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.0 | `Row` | `lib/ui/features/account/account_screen.dart:336:27` | 237 px à droite | En-tête « Panthéon des Trophées » : le titre 🏆 + le texte « Touche un piédestal » dépassent la largeur de la carte. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.0 | `Row` | `lib/ui/features/account/account_screen.dart:360:21` | 72 px à droite | Rangée des 3 médaillons de trophées côte-à-côte dans un `Row` qui dépasse de 72 px. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.3 | `Column` | `lib/ui/core/roman_ornaments.dart:353:13` | 7.5 px en bas | Sceau de cire `RomanWaxSeal('SPQR')` : le texte centré déborde verticalement du sceau à police ×1.3. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.3 | `Row` | `lib/ui/features/account/account_screen.dart:193:21` | 114 px à droite | Rangée des 4 statistiques : dépasse de 114 px à droite. |
+| **Compte** (`account_screen.dart`) | 412 pt, ×1.3 | `Column` | `lib/ui/core/roman_ornaments.dart:353:13` | 7.5 px en bas | Sceau de cire `RomanWaxSeal('SPQR')` : texte déborde en bas de 7.5 px. |
+| **Compte** (`account_screen.dart`) | 412 pt, ×1.3 | `Row` | `lib/ui/features/account/account_screen.dart:193:21` | 62 px à droite | Rangée des 4 statistiques : dépasse de 62 px à droite. |
+| **Compte** (`account_screen.dart`) | 412 pt, ×1.3 | `Row` | `lib/ui/features/account/account_screen.dart:336:27` | 341 px à droite | En-tête Panthéon des Trophées : dépasse de 341 px à droite. |
+| **Compte** (`account_screen.dart`) | 412 pt, ×1.3 | `Row` | `lib/ui/features/account/account_screen.dart:360:21` | 118 px à droite | Rangée des 3 trophées : dépasse de 118 px à droite. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.6 | `Column` | `lib/ui/core/roman_ornaments.dart:353:13` | 18 px en bas | Sceau de cire `RomanWaxSeal('SPQR')` : texte déborde en bas de 18 px. |
+| **Compte** (`account_screen.dart`) | 360 pt, ×1.6 | `Row` | `lib/ui/features/account/account_screen.dart:193:21` | 205 px à droite | Rangée des 4 statistiques : dépasse de 205 px à droite. |
+| **Boutique** (`boutique_modal.dart`) | 320 pt, ×1.0 | `Row` | `lib/ui/features/boutique/boutique_modal.dart:407:16` | 22 px et 10 px à droite | Carte d'article en boutique : la rangée prix + bouton d'action déborde à droite sur écran 320 pt. |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, ×1.3 | `Row` | `lib/ui/features/boutique/boutique_modal.dart:407:16` | 10 à 39 px à droite | Même rangée prix + bouton sur plusieurs articles à police ×1.3. |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, ×1.3 | `Column` | `lib/ui/features/boutique/boutique_modal.dart:145:18` | 30 px en bas | Conteneur principal de la modale boutique : le contenu vertical dépasse de 30 px la hauteur limite (90% d'écran). |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, ×1.6 | `Row` | `lib/ui/features/boutique/boutique_modal.dart:326:17` | 31 px à droite | Rangée des 4 onglets de catégories de goodies (`Toges`, `Couronnes`, `Accessoires`, `Compagnons`). |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, ×1.6 | `Row` | `lib/ui/features/boutique/boutique_modal.dart:407:16` | 61 à 96 px à droite | Rangée prix + bouton sur les articles à police ×1.6. |
+| **Boutique** (`boutique_modal.dart`) | 360 pt, ×1.6 | `Column` | `lib/ui/features/boutique/boutique_modal.dart:145:18` | 1087 px en bas | Conteneur principal de la modale : la colonne d'en-tête et du catalogue déborde massivement en hauteur. |
+| **Via Appia** (`map_screen.dart`) | Tous les 5 réglages (320-412 pt, ×1.0-1.6) | `Row` | `lib/ui/features/map/map_screen.dart:160:17` | 52 à 275 px à droite | Barre fixe en haut : « Épopée Romaine : 0 / 0 leçons » et « 0% » dans un `Row(mainAxisAlignment: spaceBetween)` non flexible. |
+| **Via Appia** (`map_screen.dart`) | Tous les 5 réglages (320-412 pt, ×1.0-1.6) | `Row` | `lib/ui/features/map/map_screen.dart:206:23` | 141 à 410 px à droite | Légende des leçons : 4 pilules `_LessonLegendPill` côte-à-côte dans un `Row(mainAxisAlignment: spaceEvenly)` sans scroll ni wrap. |
+
+---
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `ludus_latinus_mobile/test/textes_ecrases_test.dart` : ajout des 30 cas de tests couvrant les 6 écrans supplémentaires (Bibliotheca, Ludi, Compte, Boutique, Memoria, Via Appia) pour les 5 configurations (320x1.0, 360x1.0, 360x1.3, 412x1.3, 360x1.6). Les cas en échec sont marqués `skip: true, // à corriger par l'architecte`.
+  - `docs/TACHES.md` : statut passé à `FAIT`, critères validés, tableaux détaillés des textes écrasés et des débordements RenderFlex.
 - Commandes lancées et résultat réel :
+  - `flutter test test/textes_ecrases_test.dart` : 18 tests réussis, 17 tests ignorés (`skip`), 0 échec.
+  - `flutter test` (suite complète de l'application) : 86 tests réussis, 17 ignorés, 0 échec.
+  - `git status` : seuls `ludus_latinus_mobile/test/textes_ecrases_test.dart` et `docs/TACHES.md` sont modifiés.
 - Doutes, questions pour l'architecte :
+  - Les deux écrans majeurs présentant des textes écrasés réels (colonnes verticales de largeur < 48 pt) sont **Compte** (`account_screen.dart:254`) et **Boutique** (`boutique_modal.dart:168`).
+  - Sur **Compte**, le bouton rigide `ElevatedButton.icon('Vestiaire')` comprime le `Expanded` central.
+  - Sur **Boutique**, le conteneur du compteur de sesterces (`RollingSestercesCounter`) comprime le titre `TABERNA ROMANA` à police ×1.6.
+  - Concernant les débordements `RenderFlex`, ils affectent principalement la barre de légende et progression de la **Via Appia** (`map_screen.dart:160` et `206`), les cartes verrouillées de **Ludi** (`roman_lock_badge.dart:81`), et les rangées de statistiques et trophées de **Compte** (`account_screen.dart:193`, `336`, `360`).
 - Reste à faire :
+  - Tâche T46 terminée. Prêt pour la tâche T47.
 
 ---
 
