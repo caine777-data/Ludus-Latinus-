@@ -306,7 +306,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 2.2,
+                childAspectRatio: 1.9,
               ),
               itemCount: options.length,
               itemBuilder: (context, pos) {
@@ -350,7 +350,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 13.5,
                         fontWeight: FontWeight.bold,
                         color: textColor,
                       ),

@@ -325,6 +325,19 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Premiers retours d'un élève (Clovis)** (04/10/2026) — corrigés :
+  (1) la fenêtre de fin de leçon était bornée à 9/16 de l'écran
+  (`showModalBottomSheet` sans `isScrollControlled`) et cachait le bouton
+  « Continuer » : elle défile maintenant ; (2) les réponses du Circus
+  rétrécissaient (`FittedBox`) jusqu'à être illisibles : deux lignes à
+  13 px ; celles des arènes passent de 12 à 13,5 px ; (3) la boutique ne
+  s'ouvrait qu'en touchant le compteur de sesterces : une carte « Taberna
+  Romana » est ajoutée à l'accueil (vue à l'écran) ; (4) dans le Duel, le
+  héros respire et se balance comme les boss animés. Reste à identifier
+  les « textes écrits en diagonale » (capture demandée à Cédric). À
+  vérifier à l'écran : T45. **Retour d'élève > tournée d'exécutant** : en
+  cas de conflit, le retour d'élève l'emporte.
+
 - **Audit des jeux, première partie** (03/10/2026) — rapport :
   `docs/audits/audit_jeux_2026-10-03.md`, tiré du code ; les mesures de
   T41 le compléteront. Principaux défauts : la Taverne rapporte environ

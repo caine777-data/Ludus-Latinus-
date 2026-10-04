@@ -253,20 +253,27 @@ class _LessonScreenState extends State<LessonScreen> {
     }
     final explanation = widget.lesson.explanation;
 
+    // isScrollControlled + défilement : sans eux, la fenêtre était bornée à
+    // 9/16 de l'écran et le bouton « Continuer » disparaissait sous le bord.
     showModalBottomSheet(
       context: context,
       isDismissible: false,
       enableDrag: false,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       builder: (_) => Container(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.9),
         padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
-        child: Column(
+        child: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+          child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
@@ -391,6 +398,8 @@ class _LessonScreenState extends State<LessonScreen> {
               },
             ),
           ],
+        ),
+        ),
         ),
       ),
     );

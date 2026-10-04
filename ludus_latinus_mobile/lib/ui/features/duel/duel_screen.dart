@@ -1032,11 +1032,20 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      image,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Center(
-                        child: Text('⚔️', style: TextStyle(fontSize: 32)),
+                    // Les boss ont un portrait animé ; le héros, une image fixe
+                    // (elle change avec sa tenue) : on l'anime en respiration.
+                    Transform.rotate(
+                      angle: sens < 0 ? math.sin(_pulseController.value * math.pi * 2) * 0.035 : 0,
+                      child: Transform.scale(
+                        scale: sens < 0 ? 1.0 + 0.05 * math.sin(_pulseController.value * math.pi) : 1.0,
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset(
+                          image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) => const Center(
+                            child: Text('⚔️', style: TextStyle(fontSize: 32)),
+                          ),
+                        ),
                       ),
                     ),
                     // Flash rouge du coup encaissé.

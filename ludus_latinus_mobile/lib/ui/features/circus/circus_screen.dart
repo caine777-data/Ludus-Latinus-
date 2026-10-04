@@ -1367,7 +1367,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             child: LayoutBuilder(
               builder: (context, constraints) {
                 final isWide = constraints.maxWidth >= 500;
-                final childAspectRatio = isWide ? 4.8 : 2.5;
+                final childAspectRatio = isWide ? 4.8 : 2.2;
 
                 return GridView.count(
                   crossAxisCount: 2,
@@ -1448,19 +1448,20 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                               ),
                             ),
                             const SizedBox(width: 8),
+                            // Deux lignes plutôt qu'un texte réduit jusqu'à
+                            // devenir illisible (FittedBox) sur les réponses longues.
                             Flexible(
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
+                              child: Text(
                                   answer,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                     color: btnText,
                                   ),
                                 ),
-                              ),
                             ),
                           ],
                         ),

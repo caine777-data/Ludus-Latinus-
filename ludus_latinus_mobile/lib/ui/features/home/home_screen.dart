@@ -418,6 +418,56 @@ class _HomeScreenState extends State<HomeScreen> {
 
               const SizedBox(height: 14),
 
+              // 2 bis. La boutique : jusqu'ici, seul le compteur de sesterces l'ouvrait,
+              // et un élève ne le devinait pas.
+              Material(
+                color: const Color(0xFFFFFBF0),
+                borderRadius: BorderRadius.circular(14),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: () {
+                    AudioService().playSesterces();
+                    BoutiqueModal.show(context, repo: widget.repo);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                    ),
+                    child: Row(
+                      children: [
+                        const Text('🛍️', style: TextStyle(fontSize: 24)),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Taberna Romana : la boutique',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: RomanColors.imperialPurple,
+                                ),
+                              ),
+                              const SizedBox(height: 2),
+                              Text(
+                                'Dépense tes ${profile.sesterces} sesterces : toges, couronnes, compagnons…',
+                                style: const TextStyle(fontSize: 12.5, color: Colors.black87),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Icon(Icons.chevron_right, color: RomanColors.imperialGold),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
               // 3. Carte « Défi du Jour » : payée quand le défi est réussi dans le jeu
               Builder(
                 builder: (context) {

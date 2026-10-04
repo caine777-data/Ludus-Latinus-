@@ -3991,3 +3991,50 @@ l'écran, jamais de mémoire.
 - Commandes lancées et résultat réel :
 - Doutes, questions pour l'architecte :
 - Reste à faire :
+
+---
+
+## T45 — Vérifier à l'écran les corrections des retours de Clovis (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : un élève a testé l'appli. L'architecte a corrigé quatre
+défauts (commit `fix(mobile): retours du premier élève`) sans pouvoir tous
+les voir : l'émulateur saturait.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t45_*`.
+
+**Rappels** : tu t'arrêtes à `FAIT`. Tout ce que tu cites se recopie depuis
+l'écran, jamais de mémoire. Fais cette tâche **après** avoir fini T41 et
+restauré le profil.
+
+**Étapes** :
+1. Installe la version actuelle. Si l'émulateur est lent, redémarre-le
+   avant (`adb reboot`, puis attends l'écran d'accueil d'Android).
+2. **Fin de leçon** : rejoue une leçon déjà réussie du monde 1 (par exemple
+   `m1-03`, réponse `sum`). Capture la fenêtre de fin : le bouton
+   « CONTINUER ▶ » est-il visible sans faire défiler ? Sinon, fais défiler et
+   capture. Recommence avec `font_scale 1.3`, puis remets 1.0.
+3. **Circus** : capture le quiz pendant une course avec des réponses
+   longues : le texte est-il lisible (pas plus petit que le reste) ?
+4. **Arène** `m1-06` : capture les réponses.
+5. **Duel** : enregistre 10 secondes (`adb shell screenrecord --time-limit 10
+   /sdcard/t45_duel.mp4`) avant de répondre : le héros doit bouger
+   (respiration, léger balancement). Dis s'il bouge et si c'est agréable ou
+   gênant.
+6. **Accueil** : capture la carte « Taberna Romana : la boutique » et vérifie
+   qu'elle ouvre la boutique. **N'achète rien.**
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau : correction, conforme ou non, capture.
+- [ ] La vidéo du Duel dans `scratch/`.
+- [ ] `font_scale` remis à 1.0.
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: vérification des retours de Clovis`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
