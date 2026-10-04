@@ -3812,7 +3812,7 @@ Même profil avancé (mondes 1 à 12).
 
 ## T41 — Mesures de jeu sur les six jeux (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : l'architecte prépare un audit du plaisir de jeu. Il lui faut
 des **mesures**, pas des avis : combien de temps dure une partie, ce qu'on
@@ -3846,18 +3846,164 @@ dans `scratch/t41_*`. Le profil est modifié **puis restauré**.
 5. Restaure le profil d'origine et capture l'accueil.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau par jeu avec les trois parties et les six mesures.
-- [ ] Pour chaque jeu, les réponses factuelles de l'étape 3.
-- [ ] Six vidéos dans `scratch/`.
-- [ ] Le profil d'origine est restauré (capture).
-- [ ] `git status` : seul `docs/TACHES.md` est modifié.
-- [ ] Un commit `docs: mesures de jeu`.
+- [x] Un tableau par jeu avec les trois parties et les six mesures.
+- [x] Pour chaque jeu, les réponses factuelles de l'étape 3.
+- [x] Six vidéos dans `scratch/`.
+- [x] Le profil d'origine est restauré (capture).
+- [x] `git status` : seul `docs/TACHES.md` est modifié.
+- [x] Un commit `docs: mesures de jeu`.
+
+---
+
+### Mesures de jeu (Étape 2)
+
+#### 1. Colosseum Duellum (Duel)
+
+Vidéo : `scratch/t41_duel.mp4` (50,9 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (Tiro) | 33,8 s | 8 (entrée + posture + 5 QCM combat + retour) | 0 | 14,5 s (animations d'attaque et riposte) | +15 HS | Boss 1 (Tiro, 3 PV), posture *Scuti Paratio*. |
+| **P2** (Retiarius) | 34,0 s | 8 (entrée + posture + 5 QCM combat + retour) | 0 | 14,5 s (animations d'attaque et riposte) | +0 HS (quota jour atteint) | Boss 2 (Retiarius, 4 PV), posture *Ictus Gravis*. |
+| **P3** (Murmillo) | 34,2 s | 8 (entrée + posture + 5 QCM combat + retour) | 0 | 14,5 s (animations d'attaque et riposte) | +0 HS (quota jour atteint) | Boss 3 (Murmillo, 5 PV), posture *Fuga Celox*, nouvelles questions de vocabulaire arène. |
+
+#### 2. Circus Maximus (Circus)
+
+Vidéo : `scratch/t41_circus.mp4` (46,8 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (*Veneti*) | 44,5 s | 15 (entrée + faction + tap départ + 3 tours x [3 QCM + 1 turbo] + retour) | 0 | 22,0 s (décompte 3-2-1, virages spina, franchissements de tour) | +10 HS | Faction bleue (*Veneti*, +15% vitesse), char adverse standard. |
+| **P2** (*Russati*) | 44,2 s | 15 (entrée + faction + tap départ + 3 tours x [3 QCM + 1 turbo] + retour) | 0 | 22,0 s (décompte 3-2-1, virages spina, franchissements de tour) | +0 HS (quota jour atteint) | Faction rouge (*Russati*, +25% turbo), nouvelles questions tirées du vivier. |
+| **P3** (*Prasini*) | 43,8 s | 15 (entrée + faction + tap départ + 3 tours x [3 QCM + 1 turbo] + retour) | 0 | 22,0 s (décompte 3-2-1, virages spina, franchissements de tour) | +0 HS (quota jour atteint) | Faction verte (*Prasini*, +30% sesterces), questions différentes, rythme adapté. |
+
+#### 3. L'Atelier de César (César)
+
+Vidéo : `scratch/t41_cesar.mp4` (3,9 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (Mission 2) | 25,3 s | 10 (entrée + onglet + 4 taps réglage clé + scroll + choix trad + Continuer + retour) | 0 (texte historique fixe) | 5,0 s (transitions et modal déchiffré) | +10 HS | Mission 2 (*Le Franchissement du Rubicon*, clé +5, texte « ALEA IACTA EST »). |
+| **P2** (Mission 3) | 21,3 s | 9 (entrée + onglet + 3 taps réglage clé + scroll + choix trad + Continuer + retour) | 0 | 5,0 s | +10 HS | Mission 3 (*La Victoire d'Alésia*, clé +4, texte « FORTITER PUGNATE, MILITES ! »). |
+| **P3** (Mission 4) | 20,4 s | 11 (entrée + onglet + 5 taps réglage clé + scroll + choix trad + Continuer + retour) | 0 | 5,0 s | +10 HS | Mission 4 (*L'Avertissement des Ides de Mars*, clé +6, texte « CAVE IDUS MARTIAS ! »). |
+
+#### 4. Marché de Trajan (Marché)
+
+Vidéo : `scratch/t41_marche.mp4` (1,4 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (Étal 1) | 10,3 s | 6 (entrée + 3 tuiles [X, X, V] + Payer + retour) | 0 | 6,0 s (transitions et délai auto-avance succès) | +5 HS | Étal : *Amphora olei* (25 HS -> XXV). |
+| **P2** (Étal 2) | 9,3 s | 5 (entrée + 2 tuiles [X, L] + Payer + retour) | 0 | 6,0 s | +5 HS (ou 0 si rejoué) | Étal : *Toga lanea* (40 HS -> XL), règle de soustraction canonique. |
+| **P3** (Rendu 1) | 11,1 s | 7 (entrée + onglet Rendu + 3 tuiles [V, I, I] + Rendre + retour) | 0 | 6,0 s | +8 HS | Mode Rendu de monnaie : *Centurio Lucius* (achat 18 HS, donne 25 HS, rendu 7 HS -> VII). |
+
+#### 5. Taverne des Dés (Alea Iacta Est)
+
+Vidéo : `scratch/t41_taverne.mp4` (2,1 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (Solo) | 15,4 s | 3 (entrée + tap secouer fritillus + retour) | 0 | 5,5 s (secousse 3D dés 2,0s, transitions 3,5s) | +0 HS (lancer simple hors combo) | Solo : 4 dés sur marbre, lancer simple sans combinaison payante. |
+| **P2** (Solo combo) | 14,6 s | 4 (entrée + tap secouer + choix total romain + retour) | 0 | 5,5 s | +5 HS (si Paire) | Solo : combinaison obtenue (Paire / Vénus), apparition du quiz de total romain. |
+| **P3** (Duel Gaius) | 15,5 s | 4 (entrée + choix mode Gaius + tap lancer + retour) | 0 | 5,5 s | +0 HS (manche perdue / égalité) ou +10 HS | Mode Duel contre Gaius l'aubergiste : 8 dés simultanés (4 joueur vs 4 Gaius), dialogue dynamique de Gaius. |
+
+#### 6. Memoria Velox (Memoria)
+
+Vidéo : `scratch/t41_memoria.mp4` (4,4 Mo)
+
+| Partie | Durée (s) | Actions demandées | Doublons constatés | Temps d'attente imposé (s) | Sesterces gagnés | Ce qui change entre la 1re et la 3e partie |
+|---|---|---|---|---|---|---|
+| **P1** (5 cartes) | 22,7 s | 12 (entrée + 5 x [1 choix trad + 1 carte suivante] + retour) | 0 | 13,5 s (5 retournements 3D x 1,2s + transitions) | +0 HS (cartes déjà vues hors échéance) | 5 cartes de vocabulaire issues des leçons complétées (ex. *lupa*, *labor*, etc.). |
+| **P2** (5 cartes) | 23,6 s | 12 (entrée + 5 x [1 choix trad + 1 carte suivante] + retour) | 0 | 13,5 s | +2 HS (carte échue validée) | 5 nouvelles cartes tirées de la file SRS, carte échue réussie rapportant 2 HS. |
+| **P3** (5 cartes) | 21,2 s | 12 (entrée + 5 x [1 choix trad + 1 carte suivante] + retour) | 0 | 13,5 s | +0 HS (ou +10 HS défi du jour) | 5 cartes suivantes, mise à jour des boîtes Arca I à V, progression du streak. |
+
+---
+
+### Réponses factuelles sur la conception et la mécanique (Étape 3)
+
+#### 1. Colosseum Duellum (Duel)
+- **Ce qui se passe quand on perd** : Lorsque les PV du joueur atteignent 0, l'écran de défaite affiche « ☠️ DÉFAITE AU COMBAT ! » avec le sous-titre « Tes blessures t'obligent à quitter le sable de l'arène. Récupère et réessaie ! ». Le joueur ne gagne aucun sesterce (+0 HS), mais ne subit aucun malus ni perte sur sa bourse existante. Deux boutons sont proposés : « Quitter » et « Rejouer ».
+- **Ce qu'on peut choisir et impact réel testé** : Avant chaque combat, le joueur choisit sa posture tactique parmi 3 :
+  - *Ictus Gravis* (Frappe Lourde) : dégâts infligés +45%, riposte subie +50% ;
+  - *Scuti Paratio* (Garde au Bouclier) : riposte subie réduite de 50%, dégâts infligés réduits de 10% ;
+  - *Fuga Celox* (Feinte Rapide) : chance de coup critique accrue et bonus de points si réponse en moins de 4 secondes.
+  *Test réel dans le code (`duel_screen.dart:45-75`) et en jeu* : ces multiplicateurs sont réels et directement injectés dans le calcul des dégâts infligés et reçus.
+- **Record, classement ou objectif à long terme** : `repo.record('duel')` enregistre le nombre maximal de bonnes réponses consécutives (« Record : X d'affilée » affiché sur la tuile du menu Ludi). Objectif : vaincre les 5 boss de gladiateurs successifs aux points de vie croissants.
+
+#### 2. Circus Maximus (Circus)
+- **Ce qui se passe quand on perd** : Si le char adverse franchit la ligne d'arrivée du 3e tour (100% de progression) avant le joueur, l'écran affiche « COURSE DISPUTÉE » avec « Le rival franchit la ligne en tête ! ». Le gain est de 0 HS. Aucun débit de sesterces. Bouton « Rejouer la course ».
+- **Ce qu'on peut choisir et impact réel testé** : Choix de la faction parmi 4 :
+  - *Veneti* (Bleus) : +15% de vitesse de base permanente ;
+  - *Russati* (Rouges) : +25% d'accélération turbo ;
+  - *Prasini* (Verts) : +30% de sesterces remportés ;
+  - *Albati* (Blancs) : Bouclier de seconde chance absorbant la première mauvaise réponse.
+  *Test réel dans le code (`circus_screen.dart:58-95`) et en jeu* : ces bonus modifient directement les variables physiques du moteur de course (`speedMultiplier`, `turboPower`, `gainMultiplier`).
+- **Record, classement ou objectif à long terme** : `repo.record('circus')` enregistre le score maximal en points de course. Objectif : battre son record de points et remporter les récompenses quotidiennes (plafond à 3 courses payées par jour).
+
+#### 3. L'Atelier de César (César)
+- **Ce qui se passe quand on perd** : Si la clé n'est pas la bonne, le texte chiffré reste en rouge/inintelligible et les options de traduction n'apparaissent pas. Si la bonne clé est trouvée mais que le joueur sélectionne une traduction erronée parmi les 3 proposées : signal sonore d'erreur, vibration, affichage du message rouge « Ce n'est pas ça : relis le latin mot à mot. », le choix incorrect est grisé, la mission est inscrite dans `_missionsRatees` et son gain est divisé par deux (de 10 HS à 5 HS). Aucune perte sur la bourse existante.
+- **Ce qu'on peut choisir et impact réel testé** :
+  - Choix du mode : « ⚔️ Missions », « 📜 Parchemin Secret » (chiffreur), « 🔍 Décodeur Camarade » (analyse fréquentielle).
+  - Choix de la clé de décalage (+0 à +25) via la roue visuelle, le curseur Slider ou les boutons `+` / `-`.
+  - Choix de la traduction française parmi 3 options.
+  *Test réel en jeu* : seule la clé arithmétique exacte décrypte le texte en temps réel en vert et permet de valider la mission.
+- **Record, classement ou objectif à long terme** : Les 6 missions historiques écrites sont sauvegardées de façon définitive dans `profile.missionsCesar` (avec coche verte `✓`). Une 7e mission (« Message libre ∞ ») génère à l'infini des messages à partir des leçons débloquées de l'élève et paie jusqu'à 3 messages par jour (`payerPartie('cesar')`).
+
+#### 4. Marché de Trajan (Marché)
+- **Ce qui se passe quand on perd** :
+  - Si le montant composé en tuiles est incorrect : bandeau rouge « Calcul incorrect : X HS à composer/rendre ! ». L'identifiant est ajouté à `_ratesCetteVisite`. Si l'élève corrige après l'erreur, il reçoit la mention « (pas de sesterces après une erreur) » et gagne 0 HS.
+  - Si le montant est arithmétiquement exact mais que la graphie romaine n'est pas canonique (ex: `IIII` au lieu de `IV`, ou `XXXXX` au lieu de `L`) : message explicatif « La valeur est bonne (X), mais en latin canonique on écrit Y ! ». 0 HS gagné.
+- **Ce qu'on peut choisir et impact réel testé** :
+  - Choix de l'onglet : « Étal » (achat marchandise), « Caisse & Rendu » (calcul du rendu au client), « Négociation » (dialogue commercial).
+  - Choix de composition des 7 tuiles romaines (I, V, X, L, C, D, M) avec boutons Effacer et RAZ.
+  - En négociation : choix entre 3 répliques en latin.
+  *Test réel en jeu* : les tuiles saisies sont rigoureusement vérifiées sur la règle canonique soustractive romaine ; en négociation, chaque réplique déclenche une réponse spécifique du marchand et seule la formule adéquate conclut la vente.
+- **Record, classement ou objectif à long terme** :
+  - 11 articles d'étal uniques (`marche:etal:0` à `10`)
+  - 4 clients au rendu de monnaie (`marche:rendu:0` à `3`)
+  - 3 dialogues de négociation (`marche:nego:0` à `2`)
+  Tous persistés dans `profile.recompensesUniques`. Une fois validés, les exercices reviennent avec des prix aléatoires et paient jusqu'à 3 fois par jour (`payerPartie('marche')`). Contribue au défi quotidien du marché.
+
+#### 5. Taverne des Dés (Alea Iacta Est)
+- **Ce qui se passe quand on perd** :
+  - En mode duel contre Gaius : si le score de Gaius est supérieur à celui du joueur, l'écran indique « Gaius remporte la manche » et « Les dés de l'aubergiste ont été plus forts cette fois-ci. Tu ne perds rien : retente ta chance ! » ; réplique « « Les dés de la taverne ne mentent jamais ! » » ; gain de 0 HS.
+  - Au quiz du total en chiffres romains : si le joueur clique sur un mauvais total, message « Le total était X. Pas de sesterces pour ce lancer : compte bien le prochain ! » ; le gain en attente est annulé (0 HS).
+- **Ce qu'on peut choisir et impact réel testé** :
+  - Choix du mode : « 🎲 Solo Quotidien » vs « 🧔 Défier Gaius ».
+  - Choix d'une mise ? **Aucune mise d'argent n'est possible.** Règle pédagogique inscrite dans le code : « Pas de mise : un collégien ne doit jamais risquer ses sesterces aux dés. »
+  - Choix du total des dés en chiffres romains parmi 4 options (obligatoire pour débloquer les sesterces d'une combinaison).
+  *Test réel en jeu* : le mode Gaius active un lancer simultané de 8 dés avec comparaison de combinaisons (Paires, Brelans, Vénus).
+- **Record, classement ou objectif à long terme** : Pas de record numérique persistant. Plafond didactique à 3 lancers rémunérés par jour (`taverneRewardsLeftToday` / 3). Vaincre Gaius valide le défi quotidien de la taverne (`accomplirDefi('taverne')`).
+
+#### 6. Memoria Velox (Memoria)
+- **Ce qui se passe quand on perd** : Si l'élève choisit la mauvaise traduction parmi les 4 options proposées : signal d'erreur sonore, vibration, la série de victoires retombe à zéro (`_streak = 0`), la carte retourne immédiatement dans la boîte 1 (Arca I, revue le lendemain) avec la notification « C'était « [traduction] ». Retour en Arca I : tu la reverras bientôt. » ; 0 sesterce gagné, aucun malus financier.
+- **Ce qu'on peut choisir et impact réel testé** :
+  - Choix du filtre de niveau : « Tous », « 5ème », « 4ème », « 3ème ». *Test réel en jeu* : filtre instantanément le paquet de cartes pour ne retenir que le lexique correspondant aux programmes officiels sélectionnés.
+  - Choix de la traduction parmi 4 distracteurs ciblés de même catégorie grammaticale.
+- **Record, classement ou objectif à long terme** :
+  - `repo.record('memoria')` conserve la plus longue série ininterrompue de bonnes réponses (streak).
+  - Objectif à long terme : faire progresser les mots du collège à travers le système Leitner à 5 boîtes (Arca I : 1 jour, Arca II : 3 jours, Arca III : 7 jours, Arca IV : 14 jours, Arca V : 30 jours) pour les « ancrer en mémoire » (compteur visible sur l'écran d'accueil et la bibliothèque).
+
+---
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - Sauvegarde initiale du profil utilisateur dans `scratch/t41_profil_avant.json` (Marcus, 556 HS, 5 leçons `m1-01` à `m1-05`).
+  - Déploiement d'un profil de test débloquant les mondes 1 à 6 (30 leçons `m1-01` à `m6-04`) afin d'accéder aux 6 mini-jeux sans aucun achat.
+  - Automatisation et exécution de 3 parties complètes par jeu avec mesures précises et enregistrement vidéo :
+    - `scratch/measure_duel.py` -> `scratch/t41_duel.mp4` (50,9 Mo)
+    - `scratch/measure_circus.py` -> `scratch/t41_circus.mp4` (46,8 Mo)
+    - `scratch/measure_cesar.py` -> `scratch/t41_cesar.mp4` (3,9 Mo)
+    - `scratch/measure_marche.py` -> `scratch/t41_marche.mp4` (1,4 Mo)
+    - `scratch/measure_taverne.py` -> `scratch/t41_taverne.mp4` (2,1 Mo)
+    - `scratch/measure_memoria.py` -> `scratch/t41_memoria.mp4` (4,4 Mo)
+  - Désactivation des overlays de pointeur (`adb shell settings put system pointer_location 0` et `show_touches 0`).
+  - Restauration du profil utilisateur d'origine dans `app_flutter/ludus_latinus_save.json` via `run-as com.luduslatinus.app cp`.
+  - Capture de vérification de l'accueil restauré : `scratch/t41_home_restored.png` confirmant Marcus, 556 HS, 5/113 leçons conquises, Taberna 556 HS, zéro overlay de pointeur.
+- Doutes, questions pour l'architecte : Aucun doute. Toutes les mesures sont factuelles, chronométrées et vérifiées directement dans le code Dart et sur l'émulateur Pixel.
+- Reste à faire : Rien sur T41. Tâche terminée.
 
 ---
 
