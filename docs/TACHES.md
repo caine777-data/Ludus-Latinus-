@@ -5124,7 +5124,7 @@ des options, que l'architecte relira et que Cédric validera.
 
 ## T49 — Une fiche pour observer un élève qui joue (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : Cédric fait tester l'appli à des élèves. Un retour d'élève a
 déjà révélé quatre défauts que les tournées n'avaient pas vus. On veut une
@@ -5152,16 +5152,31 @@ faits comparables.
    pas « feedback »). Une page imprimée au plus.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] La fiche tient sur une page (moins de 60 lignes).
-- [ ] Aucune question finale n'oriente la réponse (relis-les une à une
+- [x] La fiche tient sur une page (moins de 60 lignes).
+- [x] Aucune question finale n'oriente la réponse (relis-les une à une
       dans le compte rendu).
-- [ ] Un commit `docs: fiche d'observation d'un élève`.
+- [x] Un commit `docs: fiche d'observation d'un élève`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/propositions/fiche_observation_eleve.md` : création de la fiche d'observation d'une page imprimable (45 lignes au total, en dessous du seuil de 60 lignes).
+  - `docs/TACHES.md` : statut passé à `FAIT`, critères validés, compte rendu renseigné.
 - Commandes lancées et résultat réel :
+  - `python scratch/test_fiche.py` :
+    - Nombre de lignes : 45 (critère < 60 lignes validé).
+    - Aucun tiret long (aucun cadratin `—` ni demi-cadratin `–`).
+    - Aucun terme de jargon (pas d'UX, feedback, gameplay, wireframe).
+    - Présence de toutes les rubriques demandées : classe, support, premier geste sans consigne, hésitations > 5s, phrases mot à mot, jeu relancé spontanément, décrochage, lecture des textes, phrase de départ.
+- Relecture des cinq questions finales (garantie de neutralité) :
+  1. *« Qu'est-ce que tu as envie de refaire demain ? »* : question ouverte qui teste l'engagement spontané sans citer de jeu ni supposer que l'élève a apprécié la séance.
+  2. *« Qu'est-ce qui t'a paru difficile ou pas clair ? »* : question neutre sans présumer d'un écran ni suggérer où se situait la difficulté.
+  3. *« Y a-t-il eu un moment où tu as trouvé le temps long ? »* : question ouverte permettant d'identifier les temps morts, cinématiques ou dialogues sans incriminer un module précis.
+  4. *« Qu'est-ce que tu changerais si tu pouvais modifier le jeu ? »* : invitation libre à s'exprimer sans borner le sujet (graphisme, règles, sons).
+  5. *« Si tu devais expliquer ce jeu à un ami, que dirais-tu ? »* : permet de vérifier ce que l'élève retient spontanément du jeu (le latin, les sesterces, les combats) avec son propre vocabulaire, sans souffler d'axe.
 - Doutes, questions pour l'architecte :
+  - La fiche est prête à être imprimée ou utilisée sur support papier par Cédric lors de ses prochaines séances de test en collège.
 - Reste à faire :
+  - Tâche T49 terminée. Prêt pour la tâche T50.
 
 ---
 
