@@ -5061,7 +5061,7 @@ cesse de faire confiance au jeu.
 
 ## T48 — Brouillon : des réponses de QCM qui ne se trahissent plus (sans toucher au contenu)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : l'audit des leçons (`docs/audits/audit_lecons_2026-10-02.md`,
 défaut 5) a compté 26 questions où la bonne réponse est la seule à porter
@@ -5090,17 +5090,35 @@ des options, que l'architecte relira et que Cédric validera.
    ne remplit (a) ou (b).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Un tableau par question : identifiant, question, options actuelles,
+- [x] Un tableau par question : identifiant, question, options actuelles,
       options proposées.
-- [ ] La sortie du script de l'étape 4.
-- [ ] `content/` n'est pas modifié.
-- [ ] Un commit `docs: brouillon des options de QCM`.
+- [x] La sortie du script de l'étape 4.
+- [x] `content/` n'est pas modifié.
+- [x] Un commit `docs: brouillon des options de QCM`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/propositions/options_qcm.md` : création du document avec le tableau complet des 43 questions identifiées, les options actuelles et proposées avec comptage des caractères, les justifications pédagogiques et la sortie du script de vérification.
+  - `docs/TACHES.md` : statut passé à `FAIT`, critères validés, compte rendu rempli.
 - Commandes lancées et résultat réel :
+  - `python scratch/find_biased_qcm.py` : sur 110 questions de quiz et d'arène, exactement 43 questions identifiées (26 avec critère (a), 42 avec critère (b), 25 combinant les deux, 1 avec (a) seul, 17 avec (b) seul).
+  - `python scratch/verify_proposals.py` :
+    ```text
+    Total questions mapped: 110
+    Total proposals: 43
+    --- RÉSULTAT DE LA VÉRIFICATION ---
+    Questions restantes violant (a) : 0
+    Questions restantes violant (b) : 0
+    Total violations restantes : 0
+    SUCCÈS TOTAL : Plus aucune question sur les 110 ne remplit le critère (a) ou le critère (b) !
+    ```
+  - `git status` : `content/` n'a pas été touché. Seuls `docs/propositions/options_qcm.md` et `docs/TACHES.md` sont modifiés/ajoutés.
 - Doutes, questions pour l'architecte :
+  - Les mauvaises plaisanteries relevées dans l'audit (`m7-04` « Mange des carpes tous les jours », `m18-04` « Astérix », `m2-05` « Des ardoises magiques ») ont été remplacées par des distracteurs plausibles (ex. vrais chefs gaulois comme Vercassivellaunos et Ambiorix, maximes stoïciennes/épicuriennes, supports d'écriture réels de l'Antiquité).
+  - Pour les QCM grammaticaux (ex: `-TUR`, `-BA-`, `-IT`), les exemples divulgués entre parenthèses dans la seule bonne réponse ont été retirés, et des terminaisons concurrentes réelles du même mode/temps ont été fournies.
+  - Toutes les propositions attendent la relecture de l'architecte et la validation finale par Cédric avant tout report dans `content/`.
 - Reste à faire :
+  - Tâche T48 terminée. Prêt pour la tâche T49.
 
 ---
 
