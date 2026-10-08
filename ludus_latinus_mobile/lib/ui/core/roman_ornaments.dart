@@ -350,8 +350,10 @@ class RomanWaxSeal extends StatelessWidget {
             ),
 
             // Monogramme estampé SPQR & Couronne
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   Icons.shield_outlined,
@@ -376,6 +378,7 @@ class RomanWaxSeal extends StatelessWidget {
                   ),
                 ),
               ],
+              ),
             ),
           ],
         ),

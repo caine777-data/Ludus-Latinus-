@@ -83,10 +83,6 @@ void main() {
   // 3. Onglet Ludi
   group('Ludi', () {
     for (final (largeur, police) in cas) {
-      final aIgnorer = (largeur == 320 && police == 1.0) ||
-          (largeur == 360 && police == 1.3) ||
-          (largeur == 412 && police == 1.3) ||
-          (largeur == 360 && police == 1.6);
       testWidgets(
         'Ludi : aucun texte écrasé ($largeur points, police x$police)',
         (tester) async {
@@ -105,7 +101,6 @@ void main() {
           final ecrases = trouverEcrases();
           expect(ecrases, isEmpty, reason: ecrases.join('\n'));
         },
-        skip: aIgnorer, // à corriger par l'architecte
       );
     }
   });
@@ -129,7 +124,6 @@ void main() {
           final ecrases = trouverEcrases();
           expect(ecrases, isEmpty, reason: ecrases.join('\n'));
         },
-        skip: true, // à corriger par l'architecte
       );
     }
   });
@@ -137,9 +131,6 @@ void main() {
   // 5. La boutique (BoutiqueModal)
   group('Boutique', () {
     for (final (largeur, police) in cas) {
-      final aIgnorer = (largeur == 320 && police == 1.0) ||
-          (largeur == 360 && police == 1.3) ||
-          (largeur == 360 && police == 1.6);
       testWidgets(
         'Boutique : aucun texte écrasé ($largeur points, police x$police)',
         (tester) async {
@@ -156,7 +147,6 @@ void main() {
           final ecrases = trouverEcrases();
           expect(ecrases, isEmpty, reason: ecrases.join('\n'));
         },
-        skip: aIgnorer, // à corriger par l'architecte
       );
     }
   });
@@ -200,7 +190,6 @@ void main() {
           final ecrases = trouverEcrases();
           expect(ecrases, isEmpty, reason: ecrases.join('\n'));
         },
-        skip: true, // à corriger par l'architecte
       );
     }
   });

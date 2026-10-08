@@ -160,14 +160,17 @@ class _MapScreenState extends State<MapScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    Flexible(
+                      child: Text(
                       'Épopée Romaine : $completedCount / $totalLessons leçons',
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: RomanColors.imperialPurple,
                       ),
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     Text(
                       '${(progressRatio * 100).toInt()}%',
                       style: const TextStyle(
@@ -203,8 +206,10 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                const Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  spacing: 10,
+                  runSpacing: 4,
                   children: [
                     _LessonLegendPill(icon: '📜', label: 'Quiz Grammaire'),
                     _LessonLegendPill(icon: '🧩', label: 'Syntaxe'),

@@ -190,13 +190,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(height: 12),
                     const RomanMeanderDivider(height: 10, strokeWidth: 1.2, margin: EdgeInsets.symmetric(vertical: 4)),
                     const SizedBox(height: 6),
+                    // Chaque statistique a un quart de la largeur et se réduit si besoin.
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜'),
-                        _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙'),
-                        _buildStatCol('Série', '${profile.currentStreak()} j', '🔥'),
-                        _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️'),
+                        Expanded(child: _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜')),
+                        Expanded(child: _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙')),
+                        Expanded(child: _buildStatCol('Série', '${profile.currentStreak()} j', '🔥')),
+                        Expanded(child: _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️')),
                       ],
                     ),
                     const SizedBox(height: 14),
@@ -272,6 +272,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                         ),
                         const SizedBox(width: 12),
+                        // Le bouton est sous le texte : à côté, il écrasait la colonne.
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,11 +291,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                 'Toge : ${(profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' ')} • ${profile.sesterces} HS',
                                 style: const TextStyle(fontSize: 11.5, color: Color(0xFF7A5901), fontWeight: FontWeight.w600),
                               ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        ElevatedButton.icon(
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: RomanColors.imperialPurple,
                             foregroundColor: RomanColors.goldLight,
@@ -310,6 +310,10 @@ class _AccountScreenState extends State<AccountScreen> {
                             style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -333,19 +337,24 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    const Wrap(
+                      alignment: WrapAlignment.spaceBetween,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      runSpacing: 4,
                       children: [
                         Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Text('🏆 ', style: TextStyle(fontSize: 18)),
-                            Text(
-                              'Panthéon des Trophées',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'serif',
-                                color: RomanColors.charcoal,
+                            Flexible(
+                              child: Text(
+                                'Panthéon des Trophées',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'serif',
+                                  color: RomanColors.charcoal,
+                                ),
                               ),
                             ),
                           ],
@@ -357,8 +366,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       ],
                     ),
                     const SizedBox(height: 14),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    Wrap(
+                      alignment: WrapAlignment.spaceAround,
+                      runSpacing: 10,
                       children: [
                         _buildTrophyItem(
                           iconPath: 'assets/images/trophee_triomphe_medaillon_130.png',
@@ -572,7 +582,9 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   Widget _buildStatCol(String label, String value, String emoji) {
-    return Column(
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
       children: [
         Text(emoji, style: const TextStyle(fontSize: 18)),
         const SizedBox(height: 2),
@@ -589,6 +601,7 @@ class _AccountScreenState extends State<AccountScreen> {
           style: const TextStyle(fontSize: 10.5, color: Colors.black54),
         ),
       ],
+      ),
     );
   }
 

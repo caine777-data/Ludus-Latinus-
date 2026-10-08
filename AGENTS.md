@@ -325,6 +325,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Agents Sonnet 5.5 en renfort** (08/10/2026) — l'architecte peut confier
+  des chantiers bien délimités à des agents Sonnet 5.5, en parallèle, sur
+  des fichiers disjoints, sans commit de leur part : l'architecte relit et
+  committe. Premiers chantiers : débordements de l'écran du compte, de la
+  boutique et de la carte (plus aucun `skip` dans `textes_ecrases_test.dart` ;
+  le podium de la boutique défile désormais avec la liste) ; textes qui
+  mentaient (arènes « 50 à 200 sesterces », effets inventés du Forum) ;
+  relecture du brouillon T43. 106 tests Flutter. T41 à T50 relues et
+  validées (T41 et T50 avec réserve : citations inexactes).
+
 - **La Taverne devient « Ad XXI »** (08/10/2026) — retour de Clovis : il ne
   comprenait pas la Taverne (deux modes, cinq combinaisons aux noms latins,
   une question de total qui surgissait après le lancer). Elle est remplacée

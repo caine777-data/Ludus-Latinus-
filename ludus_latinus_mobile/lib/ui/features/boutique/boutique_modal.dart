@@ -165,103 +165,125 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Text('🏛️', style: TextStyle(fontSize: 22)),
-                        const SizedBox(width: 8),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'TABERNA ROMANA',
-                                style: TextStyle(
-                                  fontFamily: RomanFonts.imperial,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1.2,
-                                  color: RomanColors.imperialPurple,
-                                ),
-                              ),
-                              Text(
-                                'Boutique & Penderie Impériale • Équipe ton Héros',
-                                style: TextStyle(fontSize: 11, color: Colors.black54),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Compteur de Sesterces doré : le toucher explique l'abréviation HS.
-                        Tooltip(
-                          message: 'Pourquoi « HS » ?',
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(14),
-                            onTap: () => _expliquerHS(context),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                color: RomanColors.goldLight,
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RollingSestercesCounter(
-                                    value: profile.sesterces,
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF684900),
-                                    ),
+                    LayoutBuilder(builder: (context, contraintes) {
+                      // Étroit ou police agrandie : le compteur passe sous le titre.
+                      final facteurPolice = MediaQuery.textScalerOf(context).scale(16) / 16;
+                      final compact = contraintes.maxWidth < 360 || facteurPolice > 1.15;
+                      // Compteur de Sesterces doré : le toucher explique l'abréviation HS.
+                      final compteur = Tooltip(
+                        message: 'Pourquoi « HS » ?',
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(14),
+                          onTap: () => _expliquerHS(context),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            decoration: BoxDecoration(
+                              color: RomanColors.goldLight,
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                RollingSestercesCounter(
+                                  value: profile.sesterces,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF684900),
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Icon(Icons.help_outline_rounded, size: 15, color: Color(0xFF684900)),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(width: 4),
+                                const Icon(Icons.help_outline_rounded, size: 15, color: Color(0xFF684900)),
+                              ],
                             ),
                           ),
                         ),
-                        const SizedBox(width: 6),
-                        IconButton(
-                          icon: const Icon(Icons.close_rounded, color: RomanColors.charcoal),
-                          tooltip: 'Fermer',
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                      ],
-                    ),
+                      );
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('🏛️', style: TextStyle(fontSize: 22)),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'TABERNA ROMANA',
+                                  style: TextStyle(
+                                    fontFamily: RomanFonts.imperial,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                    color: RomanColors.imperialPurple,
+                                  ),
+                                ),
+                                const Text(
+                                  'Boutique & Penderie Impériale • Équipe ton Héros',
+                                  style: TextStyle(fontSize: 11, color: Colors.black54),
+                                ),
+                                if (compact) ...[
+                                  const SizedBox(height: 6),
+                                  compteur,
+                                ],
+                              ],
+                            ),
+                          ),
+                          if (!compact) ...[
+                            Padding(padding: const EdgeInsets.only(top: 8), child: compteur),
+                            const SizedBox(width: 6),
+                          ],
+                          IconButton(
+                            icon: const Icon(Icons.close_rounded, color: RomanColors.charcoal),
+                            tooltip: 'Fermer',
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        ],
+                      );
+                    }),
                   ],
                 ),
               ),
 
-              // 2. Podium d'Essayage de l'Avatar
-              _buildPodium(context, profile, avatarImg),
-
-              // 3. Barre d'Onglets des 4 Catégories
-              _buildCategoryTabs(),
-
-              const RomanMeanderDivider(
-                height: 8,
-                strokeWidth: 1.0,
-                margin: EdgeInsets.symmetric(vertical: 4),
-              ),
-
-              // 4. Grille des Articles de la Catégorie
+              // Tout le reste défile ensemble : police agrandie, rien n'est coupé.
               Expanded(
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 860),
-                    child: ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      itemCount: itemsFiltered.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
-                      itemBuilder: (context, index) {
-                        final item = itemsFiltered[index];
-                        final isEquipped = widget.repo.isGoodieEquipped(item.categorie, item.id);
-                        final isOwned = widget.repo.isGoodieOwned(item.id) || item.isGratuit;
-                        final canAfford = profile.sesterces >= item.prix;
+                    child: ListView(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      children: [
+                        // 2. Podium d'Essayage de l'Avatar
+                        _buildPodium(context, profile, avatarImg),
 
-                        return _buildItemCard(item, isEquipped, isOwned, canAfford);
-                      },
+                        // 3. Barre d'Onglets des 4 Catégories
+                        _buildCategoryTabs(),
+
+                        const RomanMeanderDivider(
+                          height: 8,
+                          strokeWidth: 1.0,
+                          margin: EdgeInsets.symmetric(vertical: 4),
+                        ),
+
+                        // 4. Grille des Articles de la Catégorie
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+                          child: Column(
+                            children: [
+                              for (var index = 0; index < itemsFiltered.length; index++) ...[
+                                if (index > 0) const SizedBox(height: 10),
+                                _buildItemCard(
+                                  itemsFiltered[index],
+                                  widget.repo.isGoodieEquipped(itemsFiltered[index].categorie, itemsFiltered[index].id),
+                                  widget.repo.isGoodieOwned(itemsFiltered[index].id) || itemsFiltered[index].isGratuit,
+                                  profile.sesterces >= itemsFiltered[index].prix,
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -323,7 +345,10 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  spacing: 6,
+                  runSpacing: 4,
                   children: [
                     Text(
                       '${profile.nomHeros}',
@@ -333,7 +358,6 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                         color: RomanColors.imperialPurple,
                       ),
                     ),
-                    const SizedBox(width: 6),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                       decoration: BoxDecoration(
@@ -409,12 +433,14 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           children: [
             Text(icon, style: const TextStyle(fontSize: 12)),
             const SizedBox(width: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 10.5,
-                fontWeight: isSelectedCat ? FontWeight.bold : FontWeight.w500,
-                color: isSelectedCat ? RomanColors.imperialPurple : RomanColors.charcoal,
+            Flexible(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: isSelectedCat ? FontWeight.bold : FontWeight.w500,
+                  color: isSelectedCat ? RomanColors.imperialPurple : RomanColors.charcoal,
+                ),
               ),
             ),
           ],
@@ -481,7 +507,13 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           ),
         ],
       ),
-      child: Row(
+      // Carte étroite ou police agrandie : le bouton passe sous le texte,
+      // sinon il écrase la colonne du nom et de la description.
+      child: LayoutBuilder(builder: (context, contraintes) {
+        final facteurPolice = MediaQuery.textScalerOf(context).scale(16) / 16;
+        final compact = contraintes.maxWidth / facteurPolice < 290;
+        return Row(
+        crossAxisAlignment: compact ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: [
           // Grande icône stylisée en médaillon
           Container(
@@ -566,15 +598,25 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                     height: 1.3,
                   ),
                 ),
+                if (compact) ...[
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: _buildActionButton(item, isEquipped, isOwned, canAfford),
+                  ),
+                ],
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          if (!compact) ...[
+            const SizedBox(width: 12),
 
-          // Bouton d'action (Équipé / Équiper / Acheter)
-          _buildActionButton(item, isEquipped, isOwned, canAfford),
+            // Bouton d'action (Équipé / Équiper / Acheter)
+            _buildActionButton(item, isEquipped, isOwned, canAfford),
+          ],
         ],
-      ),
+        );
+      }),
     );
   }
 

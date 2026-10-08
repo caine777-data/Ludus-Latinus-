@@ -78,8 +78,15 @@ class RomanLockOverlay extends StatelessWidget {
             border: Border.all(color: const Color(0x66A88942), width: 1.2),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Le contenu se réduit si la police agrandie dépasse la hauteur du badge.
+          child: LayoutBuilder(
+            builder: (context, contraintes) => Center(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: SizedBox(
+                  width: contraintes.maxWidth,
+                  child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 38,
@@ -136,6 +143,10 @@ class RomanLockOverlay extends StatelessWidget {
                 ),
               ),
             ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
       ),

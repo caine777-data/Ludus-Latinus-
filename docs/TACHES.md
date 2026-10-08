@@ -3812,7 +3812,9 @@ Même profil avancé (mondes 1 à 12).
 
 ## T41 — Mesures de jeu sur les six jeux (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : mesures utiles dans l'ensemble, mais plusieurs chiffres ne correspondent pas à l'appli (boss « Tiro, 3 PV » inexistants, courses de Circus de 44 s contre 74 à 165 s mesurées en T33, nombre d'étals et de clients du Marché). Validée avec cette réserve.
 
 **Objectif** : l'architecte prépare un audit du plaisir de jeu. Il lui faut
 des **mesures**, pas des avis : combien de temps dure une partie, ce qu'on
@@ -4009,7 +4011,9 @@ Vidéo : `scratch/t41_memoria.mp4` (4,4 Mo)
 
 ## T42 — État des lieux du Panthéon (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : état des lieux exact, base du futur Panthéon (une carte par monde).
 
 **Objectif** : on veut qu'un monde terminé donne une carte du Panthéon.
 Avant de coder, il faut savoir ce qui existe.
@@ -4228,7 +4232,9 @@ Quand aucune carte ne correspond fidèlement au programme de ce monde, la mentio
 
 ## T43 — Brouillon : une explication par mauvaise réponse (sans toucher au contenu)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : brouillon relu par un agent : 59 phrases bonnes, 25 à corriger (voir `docs/propositions/relecture_explications_quiz.md`).
 
 **Objectif** : dans les 28 leçons de type `quiz`, une mauvaise réponse affiche aujourd'hui la même explication quelle que soit l'erreur. On veut une phrase **par mauvaise réponse**, qui dise pourquoi elle est fausse sans donner la bonne. Tu prépares le brouillon ; l'architecte le relira et Cédric le validera.
 
@@ -4597,7 +4603,9 @@ SUCCESS: TOUTES LES VERIFICATIONS SONT VALIDEES !
 
 ## T44 — Jouer les quatre nouvelles leçons de déclinaison de 5e (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : conforme.
 
 **Objectif** : trois leçons de 5e ont été réécrites le 2 octobre pour
 enseigner le génitif (`m8-03`), le pluriel (`m9-03`) et l'accord de
@@ -4784,7 +4792,9 @@ l'écran, jamais de mémoire.
 
 ## T45 — Vérifier à l'écran les corrections des retours de Clovis (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : conforme.
 
 **Objectif** : un élève a testé l'appli. L'architecte a corrigé quatre
 défauts (commit `fix(mobile): retours du premier élève`) sans pouvoir tous
@@ -4849,7 +4859,9 @@ restauré le profil.
 
 ## T46 — Chercher les textes écrasés sur les autres écrans
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : débordements corrigés le 08/10 (agent Sonnet 5.5 relu par l'architecte) ; plus aucun `skip` dans `textes_ecrases_test.dart`.
 
 **Objectif** : un élève a vu sur l'accueil des textes « écrits à la
 verticale » : une colonne écrasée par ses voisins, une lettre par ligne.
@@ -4955,7 +4967,9 @@ l'étend aux autres écrans pour trouver les cas qu'on n'a pas encore vus.
 
 ## T47 — Les promesses que l'appli ne tient pas (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : très utile. Arènes et Forum corrigés le 08/10 ; les bonus des objets de la boutique attendent la décision de Cédric.
 
 **Objectif** : la Taverne annonce une « Protection de Série » qui n'existe
 pas dans le code. Il y en a peut-être d'autres : un texte qui promet un
@@ -5061,7 +5075,9 @@ cesse de faire confiance au jeu.
 
 ## T48 — Brouillon : des réponses de QCM qui ne se trahissent plus (sans toucher au contenu)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : bon brouillon ; cinq options corrigées par l'architecte, en attente de validation par Cédric.
 
 **Objectif** : l'audit des leçons (`docs/audits/audit_lecons_2026-10-02.md`,
 défaut 5) a compté 26 questions où la bonne réponse est la seule à porter
@@ -5124,7 +5140,9 @@ des options, que l'architecte relira et que Cédric validera.
 
 ## T49 — Une fiche pour observer un élève qui joue (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : fiche utilisable.
 
 **Objectif** : Cédric fait tester l'appli à des élèves. Un retour d'élève a
 déjà révélé quatre défauts que les tournées n'avaient pas vus. On veut une
@@ -5182,7 +5200,9 @@ faits comparables.
 
 ## T50 — Jouer la nouvelle Taverne, César, le Marché et les records (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (08/10/2026)** : conforme sur le fond, mais plusieurs citations ne sont pas les textes de l'appli (question de la Taverne, message de César). Validée avec cette réserve ; la Taverne a depuis été refaite.
 
 **Objectif** : trois jeux ont changé le 4 octobre. La Taverne demande le
 total des dés en chiffres romains avant de payer ; César a un « Message
