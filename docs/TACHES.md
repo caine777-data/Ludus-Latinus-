@@ -5350,3 +5350,58 @@ l'écran, jamais de mémoire. **N'achète rien.**
 - Reste à faire :
   - Tâche T50 terminée. Prêt pour la relecture de l'architecte.
 
+---
+
+## T51 — Tournée à l'écran des changements du 8 octobre (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : beaucoup de changements du 8 octobre n'ont été vérifiés que
+par les tests : la nouvelle Taverne « Ad XXI », les écrans du compte, de la
+boutique et de la carte remis en page, les textes corrigés des arènes et du
+Forum, les objets de la boutique sans faux bonus, et les explications
+propres à chaque mauvaise réponse des QCM.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t51_*`. Le profil est modifié **puis restauré** (méthode de T26).
+
+**Rappels, plus stricts que d'habitude** : dans tes deux dernières
+tournées (T41, T50), plusieurs citations ne correspondaient pas aux textes
+de l'appli. **Chaque texte cité doit être recopié en regardant la capture
+correspondante, au moment où tu écris.** Si tu n'as pas la capture, écris
+« non capturé » au lieu de citer. Tu t'arrêtes à `FAIT`. N'achète rien.
+
+**Étapes** :
+1. Installe la version actuelle. Sauvegarde le profil ; pousse un profil
+   avec toutes les leçons des mondes 1 à 6.
+2. **Taverne** : joue 5 manches. Pour chacune : dés tirés, totaux affichés
+   (recopiés), ton choix (encore un dé ou je m'arrête), dés et total de
+   Gaius, message de fin, sesterces avant et après. Dis franchement si les
+   règles se comprennent sans aide, et si c'est amusant.
+3. **QCM** : ouvre trois leçons de type QCM des mondes 1 à 6 (par exemple
+   `m1-01`, `m2-01`, `m3-01`). Choisis exprès une mauvaise réponse, capture
+   et recopie le message affiché ; puis une autre mauvaise réponse.
+4. **Arène** `m1-06` et **Forum** : capture le texte d'introduction de
+   l'arène et les bonus des six monuments (aucun ne doit promettre un
+   chiffre de sesterces faux ni un effet inexistant).
+5. **Boutique** : capture le haut de l'écran, deux objets, et vérifie qu'il
+   n'y a plus de ligne de bonus. **Compte** et **carte de la Via Appia** :
+   capture-les.
+6. Recommence l'étape 5 en petit écran (`wm size 720x1280`, `wm density
+   320`) puis avec `font_scale 1.3`. Remets tout (`wm size reset`,
+   `wm density reset`, `font_scale 1.0`).
+7. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par écran : réglage, conforme ou non, capture.
+- [ ] Les 5 manches de la Taverne, recopiées depuis les captures.
+- [ ] Ton avis franc sur la Taverne (compréhension, plaisir).
+- [ ] Réglages et profil d'origine remis (valeurs recopiées).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée des changements du 8 octobre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
