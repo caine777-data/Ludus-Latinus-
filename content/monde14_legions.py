@@ -83,7 +83,7 @@ Exemple : *« Miles Romanus fortissimus est. »* = « Le soldat romain est le pl
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Centurion Vétéran",
             "content": """## L'épreuve tactique sur le champ de Mars
-Le fier centurion de Scipion l'Africain évalue ta connaissance des légions. Réussis l'épreuve pour gagner **50 Sesterces 🪙** !""",
+Le fier centurion de Scipion l'Africain évalue ta connaissance des légions. Réussis l'épreuve pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Centurion Vétéran", "icone": "🎖️", "pv": 3},
             "questions": [
                 {

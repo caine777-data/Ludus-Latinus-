@@ -84,7 +84,7 @@ Exemple : *« Galli pro libertate pugnabant. »* = « Les Gaulois combattaient p
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : L'Aigle de la Xe Légion",
             "content": """## Face à l'élite des légionnaires de César
-Le porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. Triomphe pour remporter **50 Sesterces 🪙** !""",
+Le porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. Triomphe pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "L'Aigle de César", "icone": "🦅", "pv": 3},
             "questions": [
                 {

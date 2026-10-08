@@ -78,3 +78,21 @@ Questions restantes violant (b) [bonne réponse >= 1.3x plus longue que la 2e] :
 Total de violations restantes sur les 110 questions : 0
 SUCCÈS : 100% des questions du curriculum respectent les critères d'équité formelle !
 ```
+
+---
+
+## Relecture de l'architecte (08/10/2026)
+
+Brouillon retenu, sauf cinq propositions où une mauvaise réponse est juste
+ou presque. Corrections :
+
+| Identifiant | Option proposée par le brouillon | Problème | Remplacée par |
+|---|---|---|---|
+| `m1-06-q1` | À bientôt | *Vale* se dit en partant : « à bientôt » est presque juste | Bon appétit |
+| `m3-05-q3` | En statues de marbre | le marbre est une pierre : deux bonnes réponses | En arbres morts |
+| `m7-04-q1` | Saisis le moment présent | c'est le sens même de *Carpe diem* | Pense toujours à demain |
+| `m19-04-q3` | La Pax Augusta | expression réelle, l'autel d'Auguste s'appelle *Ara Pacis Augustae* | La Concordia |
+| `m23-04-q3` | Quintilien, Hortensius | Quintilien est le grand maître de rhétorique, Hortensius un grand orateur | Pompée, Brutus |
+
+Après validation par Cédric, l'architecte intègre les 43 réécritures dans
+`content/`.

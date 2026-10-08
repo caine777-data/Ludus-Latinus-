@@ -83,7 +83,7 @@ Exemple : *« Caesare duce, Romani vicerunt. »* = « Sous la conduite de César
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Rhéteur Quintilien",
             "content": """## L'épreuve du grand professeur de rhétorique
-Quintilien, précepteur des princes impériaux, examine ta compréhension de l'ablatif absolu. Triomphe pour empocher **50 Sesterces 🪙** !""",
+Quintilien, précepteur des princes impériaux, examine ta compréhension de l'ablatif absolu. Triomphe pour empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Quintilien le Rhéteur", "icone": "📜", "pv": 3},
             "questions": [
                 {

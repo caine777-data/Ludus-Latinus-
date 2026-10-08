@@ -92,7 +92,7 @@ Il offrit ensuite la tête de Méduse à la déesse Minerve, qui la fixa sur sa 
 
 Le féroce Minotaure, créature au corps d'homme et à tête de taureau, garde la sortie du labyrinthe !
 
-Retrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner **50 Sesterces 🪙** !""",
+Retrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Minotaure de Crète", "icone": "🐂", "pv": 3},
             "questions": [
                 {

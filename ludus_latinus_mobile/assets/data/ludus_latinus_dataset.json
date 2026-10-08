@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-02 19:44:51",
+    "date_export": "2026-10-08 14:02:59",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -148,7 +148,7 @@
           "id": "m1-06",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Épreuve de Mercure",
-          "content": "## Le messager des dieux te met au défi !\n\nMercure (*Mercurius*), reconnaissable à son casque et ses sandales ailées, bloque le passage vers le Forum !\n\nPour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse de **50 Sesterces 🪙**, réponds à ses questions sans faillir !",
+          "content": "## Le messager des dieux te met au défi !\n\nMercure (*Mercurius*), reconnaissable à son casque et ses sandales ailées, bloque le passage vers le Forum !\n\nPour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse de **sesterces 🪙**, réponds à ses questions sans faillir !",
           "boss": {
             "nom": "Mercure aux sandales ailées",
             "icone": "🪽",
@@ -257,7 +257,7 @@
           "id": "m2-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Sphinx de l'Atrium",
-          "content": "## Le Sphinx protecteur de la Domus\n\nPour gagner ta place de membre d'honneur de la cité romaine et empocher **50 Sesterces 🪙**, réponds sans hésiter aux énigmes du Sphinx !",
+          "content": "## Le Sphinx protecteur de la Domus\n\nPour gagner ta place de membre d'honneur de la cité romaine et empocher une bourse de **sesterces 🪙**, réponds sans hésiter aux énigmes du Sphinx !",
           "boss": {
             "nom": "Le Sphinx de l'Atrium",
             "icone": "🦁",
@@ -366,7 +366,7 @@
           "id": "m3-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Minotaure du Labyrinthe",
-          "content": "## Au fond du labyrinthe de Crète !\n\nLe féroce Minotaure, créature au corps d'homme et à tête de taureau, garde la sortie du labyrinthe !\n\nRetrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner **50 Sesterces 🪙** !",
+          "content": "## Au fond du labyrinthe de Crète !\n\nLe féroce Minotaure, créature au corps d'homme et à tête de taureau, garde la sortie du labyrinthe !\n\nRetrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Minotaure de Crète",
             "icone": "🐂",
@@ -476,7 +476,7 @@
           "id": "m4-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Lion de Némée",
-          "content": "## Le 1er Travail d'Hercule !\n\nLe redoutable **Lion de Némée** rugit devant toi. Ses griffes d'acier et sa peau impénétrable font trembler les bergers.\n\nUtilise ta maîtrise des cas latins pour terrasser la bête et remporter **50 Sesterces 🪙** ainsi que sa peau légendaire !",
+          "content": "## Le 1er Travail d'Hercule !\n\nLe redoutable **Lion de Némée** rugit devant toi. Ses griffes d'acier et sa peau impénétrable font trembler les bergers.\n\nUtilise ta maîtrise des cas latins pour terrasser la bête et remporter une bourse de **sesterces 🪙** et l'accès au monde suivant !",
           "boss": {
             "nom": "Le Lion de Némée",
             "icone": "🦁",
@@ -586,7 +586,7 @@
           "id": "m5-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Hydre de Lerne",
-          "content": "## Le 2e Travail d'Hercule !\n\nL'Hydre géante surgit des marais de Lerne ! À chaque tête tranchée, deux nouvelles repoussent...\n\nFrappe avec la précision d'un centurion pour vaincre l'Hydre et empocher **50 Sesterces 🪙** !",
+          "content": "## Le 2e Travail d'Hercule !\n\nL'Hydre géante surgit des marais de Lerne ! À chaque tête tranchée, deux nouvelles repoussent...\n\nFrappe avec la précision d'un centurion pour vaincre l'Hydre et empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "L'Hydre de Lerne",
             "icone": "🐉",
@@ -680,7 +680,7 @@
           "id": "m6-04",
           "type": "arene",
           "title": "⚔️ Combat d'Arène Ultime : Le Champion du Colisée",
-          "content": "## Le Maître de l'Arène s'avance !\n\nMaximus, le gladiateur mirmillon invaincu depuis 20 combats, se dresse au centre de la piste de sable doré.\n\nDémontre toute ta science du latin et tes réflexes pour décrocher la palme de victoire et empocher **50 Sesterces 🪙** !",
+          "content": "## Le Maître de l'Arène s'avance !\n\nMaximus, le gladiateur mirmillon invaincu depuis 20 combats, se dresse au centre de la piste de sable doré.\n\nDémontre toute ta science du latin et tes réflexes pour décrocher la palme de victoire et empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Maximus le Mirmillon du Colisée",
             "icone": "🛡️",
@@ -785,7 +785,7 @@
           "id": "m7-04",
           "type": "arene",
           "title": "⚔️ Le Grand Défi du Sénat : L'Épreuve Suprême",
-          "content": "## Devant l'Assemblée du Sénat de Rome !\n\nLes sénateurs et consuls en toge blanche bordée d'or sont réunis pour évaluer ton parcours.\n\nRéponds avec brio à leurs ultimes énigmes pour décrocher la toge de **Triumphator** et une pluie royale de **50 Sesterces 🪙** !",
+          "content": "## Devant l'Assemblée du Sénat de Rome !\n\nLes sénateurs et consuls en toge blanche bordée d'or sont réunis pour évaluer ton parcours.\n\nRéponds avec brio à leurs ultimes énigmes pour ouvrir la suite de ton voyage et gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Conseil des Sages du Sénat",
             "icone": "🏛️",
@@ -912,7 +912,7 @@
           "id": "m8-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Bacchus le Maître des Festins",
-          "content": "## L'épreuve du Dieu du Vin et de la Fête !\nBacchus te défie au milieu des vignes et des banquets.\nRéponds à ses énigmes sur la vie romaine pour remporter **50 Sesterces 🪙** !",
+          "content": "## L'épreuve du Dieu du Vin et de la Fête !\nBacchus te défie au milieu des vignes et des banquets.\nRéponds à ses énigmes sur la vie romaine pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Bacchus le Maître des Festins",
             "icone": "🍇",
@@ -1028,7 +1028,7 @@
           "id": "m9-05",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Chef Gaulois Vercingétorix",
-          "content": "## Le grand duel de la Guerre des Gaules !\nLe fier chef arverne se dresse devant toi avec son torque d'or et son épée longue.\nFais honneur à ta formation romaine pour remporter la victoire et **50 Sesterces 🪙** !",
+          "content": "## Le grand duel de la Guerre des Gaules !\nLe fier chef arverne se dresse devant toi avec son torque d'or et son épée longue.\nFais honneur à ta formation romaine pour remporter la victoire et une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Chef Gaulois Vercingétorix",
             "icone": "🗡️",
@@ -1144,7 +1144,7 @@
           "id": "m10-05",
           "type": "arene",
           "title": "⚔️ Combat Suprême : Le Dragon Ladon des Hespérides",
-          "content": "## L'ultime épreuve de l'Antiquité !\nLe colossal dragon **Ladon**, qui ne dort jamais et garde les pommes d'or divines de l'immortalité, déploie ses ailes gigantesques !\nRassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher **100 Sesterces Royaux 🪙** !",
+          "content": "## L'ultime épreuve de l'Antiquité !\nLe colossal dragon **Ladon**, qui ne dort jamais et garde les pommes d'or divines de l'immortalité, déploie ses ailes gigantesques !\nRassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Dragon Ladon des Hespérides",
             "icone": "🐉",
@@ -1250,7 +1250,7 @@
           "id": "m11-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Décurion Étrusque",
-          "content": "## L'ultime barrage du pont Sublicius\nLe décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus républicaines pour remporter **50 Sesterces 🪙** !",
+          "content": "## L'ultime barrage du pont Sublicius\nLe décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus républicaines pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Décurion Étrusque",
             "icone": "🛡️",
@@ -1345,7 +1345,7 @@
           "id": "m12-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Tribun de la Plèbe",
-          "content": "## Face au protecteur des citoyens modestes\nLe tribun de la plèbe veille sur les lois du Forum. Démontre ta maîtrise de la 3ème déclinaison pour gagner **50 Sesterces 🪙** !",
+          "content": "## Face au protecteur des citoyens modestes\nLe tribun de la plèbe veille sur les lois du Forum. Démontre ta maîtrise de la 3ème déclinaison pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Tribun de la Plèbe",
             "icone": "⚖️",
@@ -1440,7 +1440,7 @@
           "id": "m13-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Corsaire Carthaginois",
-          "content": "## Combat naval au large de la Sicile\nUne galère ennemie aborde ton navire de guerre ! Montre ta science des neutres et de la mer pour remporter **50 Sesterces 🪙** !",
+          "content": "## Combat naval au large de la Sicile\nUne galère ennemie aborde ton navire de guerre ! Montre ta science des neutres et de la mer pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Corsaire d'Hannibal",
             "icone": "⚓",
@@ -1535,7 +1535,7 @@
           "id": "m14-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Centurion Vétéran",
-          "content": "## L'épreuve tactique sur le champ de Mars\nLe fier centurion de Scipion l'Africain évalue ta connaissance des légions. Réussis l'épreuve pour gagner **50 Sesterces 🪙** !",
+          "content": "## L'épreuve tactique sur le champ de Mars\nLe fier centurion de Scipion l'Africain évalue ta connaissance des légions. Réussis l'épreuve pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Centurion Vétéran",
             "icone": "🎖️",
@@ -1629,7 +1629,7 @@
           "id": "m15-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Historien Tite-Live",
-          "content": "## L'épreuve du parchemin historique\nLe grand historien de Rome, Tite-Live (*Titus Livius*), vérifie si tu sais raconter les hauts faits de la République. Réponds juste pour gagner **50 Sesterces 🪙** !",
+          "content": "## L'épreuve du parchemin historique\nLe grand historien de Rome, Tite-Live (*Titus Livius*), vérifie si tu sais raconter les hauts faits de la République. Réponds juste pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Tite-Live l'Historien",
             "icone": "🖋️",
@@ -1723,7 +1723,7 @@
           "id": "m16-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Gladiateur Invaincu",
-          "content": "## Le choc des titans dans l'arène de Capoue\nLe champion des arènes met ta maîtrise du parfait à l'épreuve. Triomphe pour empocher **50 Sesterces 🪙** !",
+          "content": "## Le choc des titans dans l'arène de Capoue\nLe champion des arènes met ta maîtrise du parfait à l'épreuve. Triomphe pour empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Gladiateur Invaincu",
             "icone": "⚔️",
@@ -1817,7 +1817,7 @@
           "id": "m17-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Aigle de la Xe Légion",
-          "content": "## Face à l'élite des légionnaires de César\nLe porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. Triomphe pour remporter **50 Sesterces 🪙** !",
+          "content": "## Face à l'élite des légionnaires de César\nLe porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. Triomphe pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "L'Aigle de César",
             "icone": "🦅",
@@ -1912,7 +1912,7 @@
           "id": "m18-04",
           "type": "arene",
           "title": "👑 Épreuve Finale de 4ème : Le Consul Suprême",
-          "content": "## L'épreuve suprême du Capitole\nLe grand consul de la République romaine monte les marches du temple de Jupiter Capitolin. Réponds sans faute pour décrocher le **Grand Diplôme de 4ème** et **100 Sesterces 🪙** !",
+          "content": "## L'épreuve suprême du Capitole\nLe grand consul de la République romaine monte les marches du temple de Jupiter Capitolin. Réponds sans faute pour ouvrir la suite de ton voyage et empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Consul Suprême",
             "icone": "🏛️",
@@ -2007,7 +2007,7 @@
           "id": "m19-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Architecte Vitruve",
-          "content": "## Dans l'atelier du maître bâtisseur d'Auguste\nVitruve, le grand théoricien de l'architecture romaine, teste ta maîtrise des 4e et 5e déclinaisons. Réussis pour gagner **50 Sesterces 🪙** !",
+          "content": "## Dans l'atelier du maître bâtisseur d'Auguste\nVitruve, le grand théoricien de l'architecture romaine, teste ta maîtrise des 4e et 5e déclinaisons. Réussis pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Vitruve l'Architecte",
             "icone": "📐",
@@ -2103,7 +2103,7 @@
           "id": "m20-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Préfet des Voies Impériales",
-          "content": "## Au poste de garde de la Via Aurelia\nLe préfet des routes impériales vérifie ton laissez-passer grammatical. Réussis pour remporter **50 Sesterces 🪙** !",
+          "content": "## Au poste de garde de la Via Aurelia\nLe préfet des routes impériales vérifie ton laissez-passer grammatical. Réussis pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Préfet des Voies",
             "icone": "🏛️",
@@ -2197,7 +2197,7 @@
           "id": "m21-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Témoin de Pompéi",
-          "content": "## Parmi les ruines figées par le temps\nUn centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. Réponds juste pour remporter **50 Sesterces 🪙** !",
+          "content": "## Parmi les ruines figées par le temps\nUn centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. Réponds juste pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Témoin de Pompéi",
             "icone": "🏛️",
@@ -2292,7 +2292,7 @@
           "id": "m22-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Rhéteur Quintilien",
-          "content": "## L'épreuve du grand professeur de rhétorique\nQuintilien, précepteur des princes impériaux, examine ta compréhension de l'ablatif absolu. Triomphe pour empocher **50 Sesterces 🪙** !",
+          "content": "## L'épreuve du grand professeur de rhétorique\nQuintilien, précepteur des princes impériaux, examine ta compréhension de l'ablatif absolu. Triomphe pour empocher une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Quintilien le Rhéteur",
             "icone": "📜",
@@ -2386,7 +2386,7 @@
           "id": "m23-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Procureur du Barreau",
-          "content": "## Devant les juges du Tribunal de Rome\nLe procureur public de la Curie met à l'épreuve ton discernement de la voix passive. Remporte l'épreuve pour gagner **50 Sesterces 🪙** !",
+          "content": "## Devant les juges du Tribunal de Rome\nLe procureur public de la Curie met à l'épreuve ton discernement de la voix passive. Remporte l'épreuve pour gagner une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "L'Orateur du Barreau",
             "icone": "⚖️",
@@ -2480,7 +2480,7 @@
           "id": "m24-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Greffier Impérial",
-          "content": "## Dans les archives secrètes du Palatin\nLe greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maîtrise des propositions infinitives pour remporter **50 Sesterces 🪙** !",
+          "content": "## Dans les archives secrètes du Palatin\nLe greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maîtrise des propositions infinitives pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "Le Greffier Impérial",
             "icone": "🖋️",
@@ -2575,7 +2575,7 @@
           "id": "m25-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : La Muse Calliope",
-          "content": "## Au sommet du Mont Parnasse\nCalliope, muse protectrice de la poésie épique et de l'éloquence, teste ta sensibilité littéraire. Triomphe pour remporter **50 Sesterces 🪙** !",
+          "content": "## Au sommet du Mont Parnasse\nCalliope, muse protectrice de la poésie épique et de l'éloquence, teste ta sensibilité littéraire. Triomphe pour remporter une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "La Muse Calliope",
             "icone": "✨",
@@ -2669,7 +2669,7 @@
           "id": "m26-04",
           "type": "arene",
           "title": "👑 Défi Suprême : L'Empereur Trajan en Majesté",
-          "content": "## Le Triomphe de Rome — Fin du Cycle 4\nSous la colonne Trajane, en présence du Sénat au grand complet, l'Empereur Trajan (*Optimus Princeps*) te décerne la **Toge Prétexte d'Or** et **200 Sesterces 🪙** !",
+          "content": "## Le Triomphe de Rome — Fin du Cycle 4\nSous la colonne Trajane, en présence du Sénat au grand complet, l'Empereur Trajan (*Optimus Princeps*) te décerne une bourse de **sesterces 🪙** !",
           "boss": {
             "nom": "L'Empereur Trajan",
             "icone": "👑",
@@ -5642,7 +5642,7 @@
       "y": 270,
       "w": 90,
       "h": 70,
-      "bonus": "💧 Source Divine : Rétablit l'énergie et la concentration.",
+      "bonus": "💧 Autel de la Fontaine : une épigraphe latine à déchiffrer (jusqu'à 15 sesterces).",
       "description": "Bassin sacré au pied du Palatin où les jumeaux divins Castor et Pollux abreuvèrent leurs coursiers d'écume après la victoire du lac Régille.",
       "couleur_toit": "#3a75c4"
     },
@@ -5655,7 +5655,7 @@
       "y": 180,
       "w": 105,
       "h": 110,
-      "bonus": "🪙 Trésor Impérial : +20% de sesterces gagnés sur chaque exercice !",
+      "bonus": "🪙 Trésor Impérial : +20% de sesterces à la première réussite de chaque leçon.",
       "description": "L'un des plus anciens temples de Rome, abritant l'Aerarium populi Romani, le trésor public de la République où dormaient l'or et l'argent de l'Empire.",
       "couleur_toit": "#d4af37"
     },
@@ -5668,7 +5668,7 @@
       "y": 150,
       "w": 115,
       "h": 125,
-      "bonus": "📜 Sagesse des Pères : +10% de bonus d'expérience sur les leçons d'histoire.",
+      "bonus": "📜 Épigraphe du Sénat : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
       "description": "Le cœur politique de Rome fondé par Jules César et achevé par Auguste. C'est ici que les sénateurs en toge blanche débattaient du destin du monde.",
       "couleur_toit": "#8b2500"
     },
@@ -5681,7 +5681,7 @@
       "y": 190,
       "w": 100,
       "h": 105,
-      "bonus": "🎖️ Gloire des Légions : Débloque le titre impérial « Patricien Bâtisseur ».",
+      "bonus": "🎖️ Attique de l'Arc : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
       "description": "Arc triomphal monumental en marbre pentélique érigé à l'entrée est du Forum, célébrant les exploits romains et le triomphe de l'Empire.",
       "couleur_toit": "#a3702a"
     },
@@ -5694,7 +5694,7 @@
       "y": 160,
       "w": 100,
       "h": 115,
-      "bonus": "🦉 Pensée Éclairée : T'offre 1 indice gratuit quotidien sur les exercices difficiles.",
+      "bonus": "🦉 Dédicace de Minerve : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
       "description": "Sanctuaire dédié à Minerve, déesse de la sagesse, de la stratégie et de l'intelligence pratique. Ses colonnes corinthiennes veillent sur les étudiants.",
       "couleur_toit": "#2e6f40"
     },
@@ -5707,7 +5707,7 @@
       "y": 320,
       "w": 130,
       "h": 80,
-      "bonus": "👑 Grand Bâtisseur : Débloque le Trophée d'or suprême « Forum Restitutum » !",
+      "bonus": "👑 Tribune des Rostres : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
       "description": "La célèbre tribune des orateurs ornée des éperons de navires ennemis en bronze conquis à Actium. De là résonnaient les discours enflammés de Cicéron.",
       "couleur_toit": "#f3e5ab"
     }

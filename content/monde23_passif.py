@@ -74,7 +74,7 @@ Exemple : *« Pax et concordia a civibus quaeruntur. »* = « La paix et la conc
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Procureur du Barreau",
             "content": """## Devant les juges du Tribunal de Rome
-Le procureur public de la Curie met à l'épreuve ton discernement de la voix passive. Remporte l'épreuve pour gagner **50 Sesterces 🪙** !""",
+Le procureur public de la Curie met à l'épreuve ton discernement de la voix passive. Remporte l'épreuve pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "L'Orateur du Barreau", "icone": "⚖️", "pv": 3},
             "questions": [
                 {

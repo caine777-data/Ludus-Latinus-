@@ -70,7 +70,7 @@ Le petit mot **-que**, collé à la fin d'un mot, signifie « et » : *virumque*
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : La Muse Calliope",
             "content": """## Au sommet du Mont Parnasse
-Calliope, muse protectrice de la poésie épique et de l'éloquence, teste ta sensibilité littéraire. Triomphe pour remporter **50 Sesterces 🪙** !""",
+Calliope, muse protectrice de la poésie épique et de l'éloquence, teste ta sensibilité littéraire. Triomphe pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "La Muse Calliope", "icone": "✨", "pv": 3},
             "questions": [
                 {

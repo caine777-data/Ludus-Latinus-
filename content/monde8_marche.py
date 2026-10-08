@@ -83,7 +83,7 @@ Active les couleurs magiques du décodeur pour identifier :
             "title": "⚔️ Défi de l'Arène : Bacchus le Maître des Festins",
             "content": """## L'épreuve du Dieu du Vin et de la Fête !
 Bacchus te défie au milieu des vignes et des banquets.
-Réponds à ses énigmes sur la vie romaine pour remporter **50 Sesterces 🪙** !""",
+Réponds à ses énigmes sur la vie romaine pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Bacchus le Maître des Festins", "icone": "🍇", "pv": 3},
             "questions": [
                 {

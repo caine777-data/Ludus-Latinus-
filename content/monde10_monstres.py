@@ -94,7 +94,7 @@ Tu connais maintenant les six cas du latin !
             "title": "⚔️ Combat Suprême : Le Dragon Ladon des Hespérides",
             "content": """## L'ultime épreuve de l'Antiquité !
 Le colossal dragon **Ladon**, qui ne dort jamais et garde les pommes d'or divines de l'immortalité, déploie ses ailes gigantesques !
-Rassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher **100 Sesterces Royaux 🪙** !""",
+Rassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Dragon Ladon des Hespérides", "icone": "🐉", "pv": 4},
             "questions": [
                 {

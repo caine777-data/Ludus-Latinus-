@@ -76,7 +76,7 @@ Exemple : *« Romani in foro conveniebant. »* = « Les Romains se rassemblaient
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : L'Historien Tite-Live",
             "content": """## L'épreuve du parchemin historique
-Le grand historien de Rome, Tite-Live (*Titus Livius*), vérifie si tu sais raconter les hauts faits de la République. Réponds juste pour gagner **50 Sesterces 🪙** !""",
+Le grand historien de Rome, Tite-Live (*Titus Livius*), vérifie si tu sais raconter les hauts faits de la République. Réponds juste pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Tite-Live l'Historien", "icone": "🖋️", "pv": 3},
             "questions": [
                 {

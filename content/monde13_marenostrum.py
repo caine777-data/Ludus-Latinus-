@@ -75,7 +75,7 @@ Exemple : *« Naves Romanae in mari navigant. »* = « Les navires romains navig
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Corsaire Carthaginois",
             "content": """## Combat naval au large de la Sicile
-Une galère ennemie aborde ton navire de guerre ! Montre ta science des neutres et de la mer pour remporter **50 Sesterces 🪙** !""",
+Une galère ennemie aborde ton navire de guerre ! Montre ta science des neutres et de la mer pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Corsaire d'Hannibal", "icone": "⚓", "pv": 3},
             "questions": [
                 {

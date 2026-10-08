@@ -98,7 +98,7 @@ Les Romains les plus modestes ne vivaient pas dans une domus mais dans des immeu
             "title": "⚔️ Défi de l'Arène : Le Sphinx de l'Atrium",
             "content": """## Le Sphinx protecteur de la Domus
 
-Pour gagner ta place de membre d'honneur de la cité romaine et empocher **50 Sesterces 🪙**, réponds sans hésiter aux énigmes du Sphinx !""",
+Pour gagner ta place de membre d'honneur de la cité romaine et empocher une bourse de **sesterces 🪙**, réponds sans hésiter aux énigmes du Sphinx !""",
             "boss": {"nom": "Le Sphinx de l'Atrium", "icone": "🦁", "pv": 3},
             "questions": [
                 {

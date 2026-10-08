@@ -68,7 +68,7 @@ Exemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et l
             "type": "arene",
             "title": "👑 Épreuve Finale de 4ème : Le Consul Suprême",
             "content": """## L'épreuve suprême du Capitole
-Le grand consul de la République romaine monte les marches du temple de Jupiter Capitolin. Réponds sans faute pour décrocher le **Grand Diplôme de 4ème** et **100 Sesterces 🪙** !""",
+Le grand consul de la République romaine monte les marches du temple de Jupiter Capitolin. Réponds sans faute pour ouvrir la suite de ton voyage et empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Consul Suprême", "icone": "🏛️", "pv": 3},
             "questions": [
                 {

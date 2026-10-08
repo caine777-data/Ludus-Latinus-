@@ -75,7 +75,7 @@ Rappelle-toi la terminaison des verbes quand ils sont plusieurs (monde 5) :""",
 
 Maximus, le gladiateur mirmillon invaincu depuis 20 combats, se dresse au centre de la piste de sable doré.
 
-Démontre toute ta science du latin et tes réflexes pour décrocher la palme de victoire et empocher **50 Sesterces 🪙** !""",
+Démontre toute ta science du latin et tes réflexes pour décrocher la palme de victoire et empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Maximus le Mirmillon du Colisée", "icone": "🛡️", "pv": 4},
             "questions": [
                 {

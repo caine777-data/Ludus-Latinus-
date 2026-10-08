@@ -78,7 +78,7 @@ Complète la phrase latine pour dire : « Cloélie traverse le fleuve ».""",
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Décurion Étrusque",
             "content": """## L'ultime barrage du pont Sublicius
-Le décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus républicaines pour remporter **50 Sesterces 🪙** !""",
+Le décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus républicaines pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Décurion Étrusque", "icone": "🛡️", "pv": 3},
             "questions": [
                 {

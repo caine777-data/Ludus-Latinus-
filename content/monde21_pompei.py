@@ -70,7 +70,7 @@ Exemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuviu
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Témoin de Pompéi",
             "content": """## Parmi les ruines figées par le temps
-Un centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. Réponds juste pour remporter **50 Sesterces 🪙** !""",
+Un centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. Réponds juste pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Témoin de Pompéi", "icone": "🏛️", "pv": 3},
             "questions": [
                 {

@@ -82,7 +82,7 @@ Exemple : *« Dicit consulem Romam venire. »* = « Il dit que le consul vient �
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Greffier Impérial",
             "content": """## Dans les archives secrètes du Palatin
-Le greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maîtrise des propositions infinitives pour remporter **50 Sesterces 🪙** !""",
+Le greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maîtrise des propositions infinitives pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Greffier Impérial", "icone": "🖋️", "pv": 3},
             "questions": [
                 {

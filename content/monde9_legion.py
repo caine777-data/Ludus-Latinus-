@@ -83,7 +83,7 @@ Trouve la fonction de chaque élément :
             "title": "⚔️ Défi de l'Arène : Le Chef Gaulois Vercingétorix",
             "content": """## Le grand duel de la Guerre des Gaules !
 Le fier chef arverne se dresse devant toi avec son torque d'or et son épée longue.
-Fais honneur à ta formation romaine pour remporter la victoire et **50 Sesterces 🪙** !""",
+Fais honneur à ta formation romaine pour remporter la victoire et une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Chef Gaulois Vercingétorix", "icone": "🗡️", "pv": 3},
             "questions": [
                 {

@@ -101,7 +101,7 @@ Clique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exac
 
 Le redoutable **Lion de Némée** rugit devant toi. Ses griffes d'acier et sa peau impénétrable font trembler les bergers.
 
-Utilise ta maîtrise des cas latins pour terrasser la bête et remporter **50 Sesterces 🪙** ainsi que sa peau légendaire !""",
+Utilise ta maîtrise des cas latins pour terrasser la bête et remporter une bourse de **sesterces 🪙** et l'accès au monde suivant !""",
             "boss": {"nom": "Le Lion de Némée", "icone": "🦁", "pv": 3},
             "questions": [
                 {

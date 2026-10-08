@@ -21,7 +21,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "La Fontaine Sacrée de Juturne",
         "cout": 50,
         "x": 120, "y": 270, "w": 90, "h": 70,
-        "bonus": "💧 Source Divine : Rétablit l'énergie et la concentration.",
+        "bonus": "💧 Autel de la Fontaine : une épigraphe latine à déchiffrer (jusqu'à 15 sesterces).",
         "description": "Bassin sacré au pied du Palatin où les jumeaux divins Castor et Pollux abreuvèrent leurs coursiers d'écume après la victoire du lac Régille.",
         "couleur_toit": "#3a75c4"
     },
@@ -31,7 +31,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "Le Temple de Saturne (L'Aérarium)",
         "cout": 100,
         "x": 240, "y": 180, "w": 105, "h": 110,
-        "bonus": "🪙 Trésor Impérial : +20% de sesterces gagnés sur chaque exercice !",
+        "bonus": "🪙 Trésor Impérial : +20% de sesterces à la première réussite de chaque leçon.",
         "description": "L'un des plus anciens temples de Rome, abritant l'Aerarium populi Romani, le trésor public de la République où dormaient l'or et l'argent de l'Empire.",
         "couleur_toit": "#d4af37"
     },
@@ -41,7 +41,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "La Curie Julia (Le Sénat)",
         "cout": 150,
         "x": 380, "y": 150, "w": 115, "h": 125,
-        "bonus": "📜 Sagesse des Pères : +10% de bonus d'expérience sur les leçons d'histoire.",
+        "bonus": "📜 Épigraphe du Sénat : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
         "description": "Le cœur politique de Rome fondé par Jules César et achevé par Auguste. C'est ici que les sénateurs en toge blanche débattaient du destin du monde.",
         "couleur_toit": "#8b2500"
     },
@@ -51,7 +51,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "L'Arc de Triomphe de Titus",
         "cout": 250,
         "x": 525, "y": 190, "w": 100, "h": 105,
-        "bonus": "🎖️ Gloire des Légions : Débloque le titre impérial « Patricien Bâtisseur ».",
+        "bonus": "🎖️ Attique de l'Arc : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
         "description": "Arc triomphal monumental en marbre pentélique érigé à l'entrée est du Forum, célébrant les exploits romains et le triomphe de l'Empire.",
         "couleur_toit": "#a3702a"
     },
@@ -61,7 +61,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "Le Sanctuaire de Minerve",
         "cout": 350,
         "x": 655, "y": 160, "w": 100, "h": 115,
-        "bonus": "🦉 Pensée Éclairée : T'offre 1 indice gratuit quotidien sur les exercices difficiles.",
+        "bonus": "🦉 Dédicace de Minerve : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
         "description": "Sanctuaire dédié à Minerve, déesse de la sagesse, de la stratégie et de l'intelligence pratique. Ses colonnes corinthiennes veillent sur les étudiants.",
         "couleur_toit": "#2e6f40"
     },
@@ -71,7 +71,7 @@ MONUMENTS_FORUM = [
         "titre_fr": "La Tribune des Rostres & Colonnes d'Or",
         "cout": 500,
         "x": 420, "y": 320, "w": 130, "h": 80,
-        "bonus": "👑 Grand Bâtisseur : Débloque le Trophée d'or suprême « Forum Restitutum » !",
+        "bonus": "👑 Tribune des Rostres : une inscription latine à déchiffrer (jusqu'à 15 sesterces).",
         "description": "La célèbre tribune des orateurs ornée des éperons de navires ennemis en bronze conquis à Actium. De là résonnaient les discours enflammés de Cicéron.",
         "couleur_toit": "#f3e5ab"
     }

@@ -77,7 +77,7 @@ Et à la 3e personne ? *Vici* (j'ai vaincu) devient *vicit* (il a vaincu). Tradu
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Gladiateur Invaincu",
             "content": """## Le choc des titans dans l'arène de Capoue
-Le champion des arènes met ta maîtrise du parfait à l'épreuve. Triomphe pour empocher **50 Sesterces 🪙** !""",
+Le champion des arènes met ta maîtrise du parfait à l'épreuve. Triomphe pour empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Gladiateur Invaincu", "icone": "⚔️", "pv": 3},
             "questions": [
                 {

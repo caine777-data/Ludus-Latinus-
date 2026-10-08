@@ -73,7 +73,7 @@ Exemple : *« Via Appia regina viarum est. »* = « La voie Appienne est la rein
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Préfet des Voies Impériales",
             "content": """## Au poste de garde de la Via Aurelia
-Le préfet des routes impériales vérifie ton laissez-passer grammatical. Réussis pour remporter **50 Sesterces 🪙** !""",
+Le préfet des routes impériales vérifie ton laissez-passer grammatical. Réussis pour remporter une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Préfet des Voies", "icone": "🏛️", "pv": 3},
             "questions": [
                 {

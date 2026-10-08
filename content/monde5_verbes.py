@@ -101,7 +101,7 @@ Attribue les couleurs avec le Décodeur !""",
 
 L'Hydre géante surgit des marais de Lerne ! À chaque tête tranchée, deux nouvelles repoussent...
 
-Frappe avec la précision d'un centurion pour vaincre l'Hydre et empocher **50 Sesterces 🪙** !""",
+Frappe avec la précision d'un centurion pour vaincre l'Hydre et empocher une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "L'Hydre de Lerne", "icone": "🐉", "pv": 3},
             "questions": [
                 {

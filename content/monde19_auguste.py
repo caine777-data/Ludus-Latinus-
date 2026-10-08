@@ -80,7 +80,7 @@ Exemple : *« Augustus pacem populo dedit. »* = « Auguste a donné la paix au 
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : L'Architecte Vitruve",
             "content": """## Dans l'atelier du maître bâtisseur d'Auguste
-Vitruve, le grand théoricien de l'architecture romaine, teste ta maîtrise des 4e et 5e déclinaisons. Réussis pour gagner **50 Sesterces 🪙** !""",
+Vitruve, le grand théoricien de l'architecture romaine, teste ta maîtrise des 4e et 5e déclinaisons. Réussis pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Vitruve l'Architecte", "icone": "📐", "pv": 3},
             "questions": [
                 {

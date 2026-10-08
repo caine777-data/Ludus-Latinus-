@@ -77,7 +77,7 @@ Reconstitue cette citation légendaire en français :""",
 
 Les sénateurs et consuls en toge blanche bordée d'or sont réunis pour évaluer ton parcours.
 
-Réponds avec brio à leurs ultimes énigmes pour décrocher la toge de **Triumphator** et une pluie royale de **50 Sesterces 🪙** !""",
+Réponds avec brio à leurs ultimes énigmes pour ouvrir la suite de ton voyage et gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Conseil des Sages du Sénat", "icone": "🏛️", "pv": 4},
             "questions": [
                 {

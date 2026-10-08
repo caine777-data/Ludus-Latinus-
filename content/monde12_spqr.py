@@ -77,7 +77,7 @@ Exemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyen
             "type": "arene",
             "title": "⚔️ Défi de l'Arène : Le Tribun de la Plèbe",
             "content": """## Face au protecteur des citoyens modestes
-Le tribun de la plèbe veille sur les lois du Forum. Démontre ta maîtrise de la 3ème déclinaison pour gagner **50 Sesterces 🪙** !""",
+Le tribun de la plèbe veille sur les lois du Forum. Démontre ta maîtrise de la 3ème déclinaison pour gagner une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "Le Tribun de la Plèbe", "icone": "⚖️", "pv": 3},
             "questions": [
                 {

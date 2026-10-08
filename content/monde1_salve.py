@@ -118,7 +118,7 @@ Reconstitue cette phrase légendaire :
 
 Mercure (*Mercurius*), reconnaissable à son casque et ses sandales ailées, bloque le passage vers le Forum !
 
-Pour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse de **50 Sesterces 🪙**, réponds à ses questions sans faillir !""",
+Pour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse de **sesterces 🪙**, réponds à ses questions sans faillir !""",
             "boss": {"nom": "Mercure aux sandales ailées", "icone": "🪽", "pv": 3},
             "questions": [
                 {

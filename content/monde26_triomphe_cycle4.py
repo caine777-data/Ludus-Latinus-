@@ -2,7 +2,7 @@
 Monde 26 — Le Grand Triomphe du Cycle 4 (Brevet des Collèges & Maître de Rome).
 L'épreuve finale et suprême de tout le collège (5ème, 4ème, 3ème).
 Synthèse complète de la langue, de la mythologie et de l'histoire romaine.
-Face à l'Empereur Trajan, débloque le Grand Triomphe du Collège et la Toge Prétexte d'Or !
+Face à l'Empereur Trajan, mène à son terme le grand voyage à travers Rome !
 """
 
 LEVEL = {
@@ -74,7 +74,7 @@ Une noble sentence qui traversera les siècles :
             "type": "arene",
             "title": "👑 Défi Suprême : L'Empereur Trajan en Majesté",
             "content": """## Le Triomphe de Rome — Fin du Cycle 4
-Sous la colonne Trajane, en présence du Sénat au grand complet, l'Empereur Trajan (*Optimus Princeps*) te décerne la **Toge Prétexte d'Or** et **200 Sesterces 🪙** !""",
+Sous la colonne Trajane, en présence du Sénat au grand complet, l'Empereur Trajan (*Optimus Princeps*) te décerne une bourse de **sesterces 🪙** !""",
             "boss": {"nom": "L'Empereur Trajan", "icone": "👑", "pv": 4},
             "questions": [
                 {
