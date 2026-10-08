@@ -208,7 +208,7 @@ python main.py --check                     # contrôle de l'installation
 python scripts/exporter_dataset_mobile.py  # régénère le dataset du mobile
 ```
 
-**Tests Flutter : tous doivent passer** (73 sur 73 le 04/10/2026 ; 54 sur 54 depuis T12, le
+**Tests Flutter : tous doivent passer** (76 sur 76 le 08/10/2026 ; 54 sur 54 depuis T12, le
 27/09/2026). Il n'y a plus d'échec connu : tout échec est une régression,
 et il est de ta responsabilité.
 
@@ -324,6 +324,19 @@ refusé.
 ## 7. Dernières évolutions
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
+
+- **La Taverne devient « Ad XXI »** (08/10/2026) — retour de Clovis : il ne
+  comprenait pas la Taverne (deux modes, cinq combinaisons aux noms latins,
+  une question de total qui surgissait après le lancer). Elle est remplacée
+  par un seul jeu : l'élève ajoute des dés un par un et s'arrête quand il
+  veut ; le plus près de XXI gagne, au-dessus il perd ; Gaius tire ensuite
+  jusqu'à XVII au moins. Les totaux ne s'affichent qu'en chiffres romains
+  pendant la manche (les nombres arabes n'apparaissent qu'au résultat) :
+  **lire le latin est la façon de jouer, pas un péage avant la
+  récompense.** C'est la règle pour tous les jeux. Victoire : +8 HS, trois
+  fois par jour (`consumeTaverneReward`), et le défi du jour. Logique dans
+  la classe `PartieAdXXI`, testée dans `taverne_test.dart` (76 tests).
+  Pas encore vue à l'écran.
 
 - **Audit des jeux : propositions 1, 2 et 6** (validées par Cédric le
   04/10/2026). (1) **Taverne** : le gain d'un lancer n'est versé que si

@@ -7,8 +7,7 @@ import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
-/// La Taverne des Dés Romains (« Alea Iacta Est ») — Mini-jeu antique tactile.
-/// Un nombre en chiffres romains (jusqu'à 39 : le total de quatre dés va de 4 à 24).
+/// Un nombre en chiffres romains (jusqu'à 39, assez pour les totaux du jeu).
 String chiffreRomain(int n) {
   const valeurs = [10, 9, 5, 4, 1];
   const lettres = ['X', 'IX', 'V', 'IV', 'I'];
@@ -23,6 +22,61 @@ String chiffreRomain(int n) {
   return b.toString();
 }
 
+enum IssueManche { enCours, gagnee, perdue, egalite }
+
+/// « Ad XXI » : le joueur lance des dés un par un et s'arrête quand il veut ;
+/// le plus près de XXI gagne, au-dessus on perd. Les totaux ne s'affichent qu'en
+/// chiffres romains : les lire, c'est jouer. Gaius relance tant qu'il a moins
+/// de XVII. Logique séparée de l'écran pour être testée.
+class PartieAdXXI {
+  static const int cible = 21;
+  static const int seuilGaius = 17;
+
+  final math.Random _hasard;
+  final List<int> desJoueur = [];
+  final List<int> desGaius = [];
+  bool joueurArrete = false;
+
+  PartieAdXXI({math.Random? hasard}) : _hasard = hasard ?? math.Random() {
+    desJoueur
+      ..add(_de())
+      ..add(_de());
+  }
+
+  int _de() => _hasard.nextInt(6) + 1;
+
+  int get totalJoueur => desJoueur.fold(0, (a, b) => a + b);
+  int get totalGaius => desGaius.fold(0, (a, b) => a + b);
+  bool get joueurDepasse => totalJoueur > cible;
+
+  /// Le joueur prend un dé de plus. S'il dépasse XXI, sa manche s'arrête.
+  void encoreUnDe() {
+    if (joueurArrete) return;
+    desJoueur.add(_de());
+    if (joueurDepasse) joueurArrete = true;
+  }
+
+  void arreter() => joueurArrete = true;
+
+  /// Gaius joue un dé (s'il doit encore jouer). Vrai s'il a lancé.
+  bool tourDeGaius() {
+    if (!joueurArrete || joueurDepasse) return false;
+    if (desGaius.length >= 2 && totalGaius >= seuilGaius) return false;
+    desGaius.add(_de());
+    return true;
+  }
+
+  IssueManche get issue {
+    if (!joueurArrete) return IssueManche.enCours;
+    if (joueurDepasse) return IssueManche.perdue;
+    if (desGaius.length < 2 || totalGaius < seuilGaius) return IssueManche.enCours;
+    if (totalGaius > cible || totalJoueur > totalGaius) return IssueManche.gagnee;
+    if (totalJoueur < totalGaius) return IssueManche.perdue;
+    return IssueManche.egalite;
+  }
+}
+
+/// La Taverne des Dés : « Ad XXI » contre Gaius l'aubergiste.
 class TaverneScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -32,414 +86,73 @@ class TaverneScreen extends StatefulWidget {
   State<TaverneScreen> createState() => _TaverneScreenState();
 }
 
-class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProviderStateMixin {
-  late AnimationController _rollController;
+class _TaverneScreenState extends State<TaverneScreen> {
+  static const int gainVictoire = 8;
 
-  List<int> _diceValues = [1, 2, 3, 4];
-  List<int> _gaiusDiceValues = [3, 4, 5, 6];
-  bool _isRolling = false;
-  bool _modeDuelGaius = false;
-  // Pas de mise : un collégien ne doit jamais risquer ses sesterces aux dés.
-  static const int _gainVictoireGaius = 10;
-  bool _lancerRecompense = true;
-  String? _gaiusReplique;
-  String _resultTitle = 'Lance le cornet (Fritillus)';
-  String _resultDesc = 'Compte bien tes dés : les sesterces ne sont versés qu\'à qui sait lire les chiffres romains !';
-  int _lastGain = 0;
+  PartieAdXXI _partie = PartieAdXXI();
+  bool _gaiusJoue = false;
+  int _gainManche = 0;
+  bool _mancheComptee = false;
 
-  // Le gain d'un lancer n'est versé que si l'élève donne le total des dés en
-  // chiffres romains : sans cela, la Taverne payait au hasard, plus qu'une leçon.
-  int _gainEnAttente = 0;
-  int _totalAttendu = 0;
-  List<int> _choixTotal = [];
-  bool _gainDuelGaius = false;
+  static const Map<int, String> _faces = {1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI'};
 
-  static const int gainPaire = 5;
-  static const int gainVenus = 8;
-  static const int gainBrelan = 15;
-  static const int gainCarre = 30;
-
-
-  void _demanderTotal(int gain, {bool duelGaius = false}) {
-    final total = _diceValues.reduce((a, b) => a + b);
-    final rnd = math.Random();
-    final autres = <int>{};
-    while (autres.length < 3) {
-      final v = total + (rnd.nextInt(7) - 3);
-      if (v != total && v >= 4 && v <= 24) autres.add(v);
-    }
-    _gainEnAttente = gain;
-    _totalAttendu = total;
-    _gainDuelGaius = duelGaius;
-    _choixTotal = [total, ...autres]..shuffle(rnd);
-  }
-
-  void _repondreTotal(int choix) {
-    if (choix != _totalAttendu) {
-      HapticFeedback.mediumImpact();
-      AudioService().playError();
-      setState(() {
-        _lastGain = 0;
-        _gainEnAttente = 0;
-        _resultDesc = 'Le total était ${chiffreRomain(_totalAttendu)} (${_diceValues.map((d) => _romanDice[d]).join(' + ')}). '
-            'Pas de sesterces pour ce lancer : compte bien le prochain !';
-      });
-      return;
-    }
-    var gain = _gainEnAttente;
-    widget.repo.addSesterces(gain);
-    if (_gainDuelGaius) gain += widget.repo.accomplirDefi('taverne');
-    AudioService().playSesterces();
-    setState(() {
-      _lastGain = gain;
-      _gainEnAttente = 0;
-      _resultDesc = 'Exact : ${chiffreRomain(_totalAttendu)} ! +$gain HS versés dans ta bourse.';
-    });
-  }
-
-  final Map<int, String> _romanDice = {
-    1: 'I',
-    2: 'II',
-    3: 'III',
-    4: 'IV',
-    5: 'V',
-    6: 'VI',
-  };
-
-  static final List<Map<String, dynamic>> _dogQuestions = [
-    {
-      'q': 'Que signifie la célèbre formule de César : « Alea iacta est » ?',
-      'rep': 'Le sort en est jeté',
-      'fausses': ['Rome vaincra', 'Les jeux sont finis'],
-      'explication': 'Prononcé en 49 av. J.-C. lors du franchissement du fleuve Rubicon.',
-    },
-    {
-      'q': 'Comment les Romains appelaient-ils les dés cubiques à 6 faces numérotées ?',
-      'rep': 'Les Tesserae',
-      'fausses': ['Les Tali', 'Les Tabulae'],
-      'explication': 'Les tesserae étaient les dés cubiques réguliers numérotés de 1 à 6.',
-    },
-    {
-      'q': 'Comment s\'appelait le cornet cylindrique pour secouer et lancer les dés ?',
-      'rep': 'Le Fritillus',
-      'fausses': ['Le Calix', 'Le Pilum'],
-      'explication': 'Le fritillus évitait la triche en faisant rouler les dés dans son col étroit.',
-    },
-    {
-      'q': 'Quel dieu romain de la vigne et de la fête présidait aux réjouissances des tavernes ?',
-      'rep': 'Bacchus',
-      'fausses': ['Mars', 'Vulcain'],
-      'explication': 'Bacchus (Dionysos chez les Grecs) protégeait les tavernes et les banquets.',
-    },
-    {
-      'q': 'Quel dieu au casque ailé protégeait les voyageurs, marchands et joueurs de dés ?',
-      'rep': 'Mercure',
-      'fausses': ['Saturne', 'Neptune'],
-      'explication': 'Mercure (Hermès) était le dieu de l\'éloquence, du commerce et de la chance.',
-    },
-    {
-      'q': 'Dans le jeu des 4 osselets (tali), comment nommait-on le lancer parfait aux 4 faces distinctes ?',
-      'rep': 'Le Coup de Vénus (Venus)',
-      'fausses': ['Le Coup de Jupiter', 'Le Triomphe'],
-      'explication': 'Obtenir quatre faces différentes était le tirage royal béni par Vénus.',
-    },
-    {
-      'q': 'Comment se dit « Joue ! » à l\'impératif en latin ?',
-      'rep': 'Lude !',
-      'fausses': ['Dice !', 'Curre !'],
-      'explication': 'Du verbe ludere (jouer), qui a donné « ludique » et « Ludus Latinus » !',
-    },
-    {
-      'q': 'Quel fleuve frontière César a-t-il franchi en disant « Alea iacta est » ?',
-      'rep': 'Le Rubicon',
-      'fausses': ['Le Tibre', 'Le Nil'],
-      'explication': 'Franchir le Rubicon en armes constituait un acte de guerre civile irréversible.',
-    },
-    {
-      'q': 'Quelle monnaie de bronze les Romains pariaient-ils couramment à la taverne ?',
-      'rep': 'Le Sesterce (et l\'As)',
-      'fausses': ['Le Florin', 'Le Drachme'],
-      'explication': 'Le sesterce (HS) et l\'as étaient les monnaies de cuivre/bronze du quotidien.',
-    },
-    {
-      'q': 'Que signifie le mot latin « Taberna » ?',
-      'rep': 'L\'auberge / la boutique',
-      'fausses': ['Le temple', 'Le sénat'],
-      'explication': 'La taberna était l\'échoppe ou taverne ouvrant directement sur la rue romaine.',
-    },
-  ];
-
-  List<Map<String, dynamic>> _dogDeck = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _rollController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-  }
-
-  @override
-  void dispose() {
-    _rollController.dispose();
-    super.dispose();
-  }
-
-  void _rollDice() async {
-    if (_isRolling || _gainEnAttente > 0) return;
-
-    _lancerRecompense = widget.repo.consumeTaverneReward();
-
-    HapticFeedback.heavyImpact();
+  void _encoreUnDe() {
+    HapticFeedback.lightImpact();
     AudioService().playDiceRoll();
+    setState(() => _partie.encoreUnDe());
+    if (_partie.joueurArrete) _finDeManche();
+  }
+
+  Future<void> _jeMArrete() async {
+    HapticFeedback.selectionClick();
     setState(() {
-      _isRolling = true;
-      _gaiusReplique = null;
+      _partie.arreter();
+      _gaiusJoue = true;
     });
-
-    _rollController.forward(from: 0.0);
-
-    // Simulation de secousse
-    for (int i = 0; i < 7; i++) {
-      await Future.delayed(const Duration(milliseconds: 90));
-      HapticFeedback.lightImpact();
-      if (mounted) {
-        setState(() {
-          _diceValues = List.generate(4, (_) => math.Random().nextInt(6) + 1);
-          if (_modeDuelGaius) {
-            _gaiusDiceValues = List.generate(4, (_) => math.Random().nextInt(6) + 1);
-          }
-        });
-      }
+    // Gaius lance ses dés un par un, pour qu'on suive son total.
+    while (true) {
+      await Future.delayed(const Duration(milliseconds: 700));
+      if (!mounted) return;
+      final aLance = _partie.tourDeGaius();
+      if (!aLance) break;
+      AudioService().playDiceRoll();
+      setState(() {});
     }
-
-    _evaluateResult();
-
-    if (mounted) {
-      setState(() {
-        _isRolling = false;
-      });
-    }
+    if (!mounted) return;
+    setState(() => _gaiusJoue = false);
+    _finDeManche();
   }
 
-  int _scoreCombo(List<int> dice) {
-    final counts = <int, int>{};
-    for (var d in dice) {
-      counts[d] = (counts[d] ?? 0) + 1;
-    }
-    if (counts.keys.length == 4) return 1000 + dice.reduce((a, b) => a + b); // Venereus
-    if (counts.values.any((c) => c >= 4)) return 800; // Carré
-    if (counts.values.any((c) => c == 3)) return 600; // Brelan
-    if (counts.values.any((c) => c == 2)) return 400 + dice.reduce((a, b) => a + b); // Paire
-    return dice.reduce((a, b) => a + b);
-  }
-
-  void _evaluateResult() {
-    if (_modeDuelGaius) {
-      final playerScore = _scoreCombo(_diceValues);
-      final gaiusScore = _scoreCombo(_gaiusDiceValues);
-
-      if (playerScore > gaiusScore) {
-        final gain = _lancerRecompense ? _gainVictoireGaius : 0;
-        AudioService().playTriumph();
-        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-        setState(() {
-          _lastGain = 0;
-          _resultTitle = '🏆 Victoire contre Gaius l\'Aubergiste !';
-          if (gain > 0) {
-            _demanderTotal(gain, duelGaius: true);
-            _resultDesc = 'Tu bats le tavernier ! Pour encaisser $gain HS, donne le total de tes dés.';
-          } else {
-            _resultDesc = 'Tu bats le tavernier sur le marbre ! (Plus de récompense aujourd\'hui.)';
-          }
-          _gaiusReplique = '« Par Bacchus, quelle chance insolente ! »';
-        });
-      } else if (playerScore < gaiusScore) {
-        AudioService().playError();
-        HapticFeedback.vibrate();
-        setState(() {
-          _lastGain = 0;
-          _resultTitle = 'Gaius remporte la manche';
-          _resultDesc = 'Les dés de l\'aubergiste ont été plus forts cette fois-ci. Tu ne perds rien : retente ta chance !';
-          _gaiusReplique = '« Les dés de la taverne ne mentent jamais ! »';
-        });
-      } else {
-        AudioService().playSesterces();
-        setState(() {
-          _lastGain = 0;
-          _resultTitle = '⚖️ Égalité parfaite !';
-          _resultDesc = 'Vos figures sont de même valeur. Relance pour vous départager !';
-          _gaiusReplique = '« Bacchus partage la coupe ! On remet ça quand tu veux ! »';
-        });
+  void _finDeManche() {
+    if (_mancheComptee) return;
+    final issue = _partie.issue;
+    if (issue == IssueManche.enCours) return;
+    _mancheComptee = true;
+    var gain = 0;
+    if (issue == IssueManche.gagnee) {
+      if (widget.repo.taverneRewardsLeftToday > 0 && widget.repo.consumeTaverneReward()) {
+        widget.repo.addSesterces(gainVictoire);
+        gain = gainVictoire;
       }
-      return;
-    }
-
-    final counts = <int, int>{};
-    for (var d in _diceValues) {
-      counts[d] = (counts[d] ?? 0) + 1;
-    }
-
-    int gain = 0;
-    String title = 'Iactus Communis (Lancer classique)';
-    String desc = 'Tes dés retombent sur le comptoir en marbre.';
-
-    // Iactus Canis : 4 As (1-1-1-1)
-    if (counts[1] == 4) {
-      title = 'Iactus Canis (Coup du Chien) !';
-      desc = 'Quatre As ! Le coup le plus redouté des tavernes romaines.';
-      gain = 0;
-      AudioService().playError();
-      _showDogChallenge();
-    }
-    // Iactus Venereus : 4 faces distinctes
-    else if (counts.keys.length == 4) {
-      title = '👑 IACTUS VENEREUS (Coup de Vénus) !';
-      desc = 'Quatre faces toutes différentes ! La déesse Vénus te sourit.';
-      gain = gainVenus;
+      gain += widget.repo.accomplirDefi('taverne');
       HapticFeedback.heavyImpact();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-    }
-    // Carré : quatre dés identiques (sauf les quatre As, le Coup du Chien)
-    else if (counts.values.any((c) => c == 4)) {
-      title = '🦅 Iactus Imperator (Carré Romain) !';
-      desc = 'Quatre dés identiques ! Un coup digne d\'un empereur.';
-      gain = gainCarre;
-      HapticFeedback.heavyImpact();
-      AudioService().playTriumph();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-    }
-    // Senatus : Brelan (3 identiques)
-    else if (counts.values.any((c) => c == 3)) {
-      title = '🏛️ Iactus Senatus (Brelan Romain) !';
-      desc = 'Trois dés identiques ! Les sénateurs applaudissent.';
-      gain = gainBrelan;
+    } else if (issue == IssueManche.perdue) {
       HapticFeedback.mediumImpact();
-      AudioService().playSesterces();
-      RomanParticlesOverlay.show(context, type: ParticleType.marbleSparks);
+      AudioService().playError();
     }
-    // Plebeius : Au moins une paire
-    else if (counts.values.any((c) => c == 2)) {
-      title = '🛡️ Iactus Plebeius (Paire Romaine)';
-      desc = 'Une paire de dés identiques.';
-      gain = gainPaire;
-      AudioService().playSesterces();
-    } else {
-      AudioService().playSesterces();
-    }
-
-    if (!_lancerRecompense && gain > 0) {
-      gain = 0;
-      desc = '$desc\n(Les 3 lancers récompensés du jour sont épuisés : reviens demain pour gagner des sesterces.)';
-    }
-    if (gain > 0) {
-      _demanderTotal(gain);
-      desc = '$desc Pour encaisser $gain HS, donne le total de tes dés.';
-    }
-
-    setState(() {
-      _lastGain = 0;
-      _resultTitle = title;
-      _resultDesc = desc;
-    });
+    setState(() => _gainManche = gain);
   }
 
-  void _showDogChallenge() {
-    if (_dogDeck.isEmpty) {
-      _dogDeck = List<Map<String, dynamic>>.from(_dogQuestions)..shuffle();
-    }
-    final q = _dogDeck.removeAt(0);
-    final choices = <String>[q['rep'] as String, ...(q['fausses'] as List<String>)]..shuffle();
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Row(
-          children: [
-            Container(
-              width: 38,
-              height: 38,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: RomanColors.palatinCream,
-                border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/lupulus/lupulus_mercure_180.png',
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const Center(
-                    child: Text('🐕', style: TextStyle(fontSize: 20)),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Expanded(
-              child: Text(
-                '🐕 Défi de Mercure (Rachat)',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
-              ),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Tu as obtenu le Coup du Chien (Iactus Canis) ! Réponds correctement pour sauver ton honneur et remporter +20 HS de rachat :',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: RomanColors.goldLight,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: RomanColors.imperialGold),
-              ),
-              child: Text(
-                q['q'] as String,
-                style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
-              ),
-            ),
-          ],
-        ),
-        actions: choices.map((choice) {
-          final isRight = (choice == q['rep']);
-          return TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              if (isRight) {
-                AudioService().playTriumph();
-                RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-                if (_lancerRecompense) widget.repo.addSesterces(20);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: RomanColors.laurelGreen,
-                    content: Text('✓ Optime ! ${q['explication']}${_lancerRecompense ? ' (+20 HS)' : ''}'),
-                  ),
-                );
-              } else {
-                AudioService().playError();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.red.shade800,
-                    content: Text('❌ Manqué ! La réponse était : « ${q['rep']} ». ${q['explication']}'),
-                  ),
-                );
-              }
-            },
-            child: Text(choice, style: const TextStyle(fontWeight: FontWeight.bold)),
-          );
-        }).toList(),
-      ),
-    );
+  void _nouvelleManche() {
+    HapticFeedback.selectionClick();
+    setState(() {
+      _partie = PartieAdXXI();
+      _gainManche = 0;
+      _mancheComptee = false;
+      _gaiusJoue = false;
+    });
   }
 
   @override
@@ -447,11 +160,11 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
     return AnimatedBuilder(
       animation: widget.repo,
       builder: (context, _) {
-        final profile = widget.repo.profile;
-
+        final issue = _partie.issue;
+        final enCours = !_partie.joueurArrete;
         return Scaffold(
           appBar: AppBar(
-            title: const Text('TAVERNE DES DÉS'),
+            title: const FittedBox(fit: BoxFit.scaleDown, child: Text('TAVERNE DES DÉS')),
             actions: [
               Container(
                 margin: const EdgeInsets.only(right: 14),
@@ -461,537 +174,270 @@ class _TaverneScreenState extends State<TaverneScreen> with SingleTickerProvider
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${profile.sesterces} HS',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
-                    ),
-                  ],
+                child: Text(
+                  '🪙 ${widget.repo.profile.sesterces} HS',
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                 ),
               ),
             ],
           ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const RomanMeanderDivider(height: 12, color: RomanColors.imperialGold),
-            const SizedBox(height: 12),
-            // 1. Bannière d'Ambiance de la Taberna encadrée de flambeaux
-            RomanTorchPairHeader(
-              torchHeight: 70,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF4A180E), Color(0xFF260A04)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color(0x4DFF6F00),
-                      offset: Offset(0, 4),
-                      blurRadius: 16,
-                    )
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Alea Iacta Est',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.5,
-                        fontFamily: 'serif',
-                      ),
-                    ),
-                    const SizedBox(height: 3),
-                    const Text(
-                      '« Le sort en est jeté » • Comptoir des 4 Tesserae',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11.5, color: Color(0xFFE2C4A2)),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Secoue le fritillus et lance les dés gravés. Aligne des faces distinctes pour obtenir le Coup de Vénus !',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 11, color: Colors.white.withValues(alpha: 0.85), height: 1.3),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Sélecteur de Mode : Solo Quotidien vs Duel de Comptoir contre Gaius
-            Row(
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _modeDuelGaius = false;
-                        _gaiusReplique = null;
-                      });
-                      AudioService().playWheelClick();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: !_modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
-                      foregroundColor: !_modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
-                      side: const BorderSide(color: RomanColors.imperialPurple),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      elevation: !_modeDuelGaius ? 3 : 0,
-                    ),
-                    child: const Text('🎲 Solo Quotidien', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                  ),
+                _regles(),
+                const SizedBox(height: 14),
+                _zone(
+                  titre: 'Gaius l\'aubergiste',
+                  des: _partie.desGaius,
+                  total: _partie.totalGaius,
+                  gaius: true,
+                  vide: enCours ? 'Gaius attend que tu t\'arrêtes…' : null,
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _modeDuelGaius = true;
-                      });
-                      AudioService().playWheelClick();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _modeDuelGaius ? RomanColors.imperialPurple : Colors.white,
-                      foregroundColor: _modeDuelGaius ? Colors.white : RomanColors.imperialPurple,
-                      side: const BorderSide(color: RomanColors.imperialPurple),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      elevation: _modeDuelGaius ? 3 : 0,
-                    ),
-                    child: const Text('🧔 Défier Gaius', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                  ),
+                const SizedBox(height: 12),
+                _zone(
+                  titre: 'Toi',
+                  des: _partie.desJoueur,
+                  total: _partie.totalJoueur,
+                  gaius: false,
+                ),
+                const SizedBox(height: 14),
+                if (enCours) _boutonsDeJeu() else if (_gaiusJoue) _gaiusReflechit() else _resultat(issue),
+                const SizedBox(height: 14),
+                Text(
+                  widget.repo.taverneRewardsLeftToday > 0
+                      ? 'Victoires payées aujourd\'hui : encore ${widget.repo.taverneRewardsLeftToday} sur 3 (+$gainVictoire HS chacune)'
+                      : 'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12, color: Colors.black54),
                 ),
               ],
             ),
-
-            const SizedBox(height: 10),
-            Text(
-              widget.repo.taverneRewardsLeftToday > 0
-                  ? 'Lancers récompensés aujourd\'hui : ${widget.repo.taverneRewardsLeftToday} / 3'
-                  : 'Lancers récompensés épuisés : reviens demain !',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
-            ),
-
-            if (_modeDuelGaius) ...[
-              if (_gaiusReplique != null)
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF3E1F16),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: RomanColors.imperialGold),
-                  ),
-                  child: Text(
-                    '🧔 Gaius : $_gaiusReplique',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.amberAccent, fontStyle: FontStyle.italic, fontSize: 11.5, fontWeight: FontWeight.bold),
-                  ),
-                ),
-            ],
-
-            const SizedBox(height: 16),
-
-            // 2. Plateau en Marbre des 4 Dés Romains (Tabula Aleatoria)
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFFFCF9F3), Color(0xFFF3EDE2), Color(0xFFE8E0D2)],
-                ),
-                borderRadius: BorderRadius.circular(24),
-                border: Border.all(color: RomanColors.imperialGold, width: 2.2),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x24000000),
-                    offset: Offset(0, 8),
-                    blurRadius: 20,
-                  ),
-                  BoxShadow(
-                    color: Color(0x33D4AF37),
-                    offset: Offset(0, 2),
-                    blurRadius: 8,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  if (_isRolling)
-                    AnimatedBuilder(
-                      animation: _rollController,
-                      builder: (context, child) {
-                        final shakeAngle = math.sin(_rollController.value * math.pi * 8) * 0.12;
-                        final bounceY = (math.sin(_rollController.value * math.pi * 6)).abs() * 5.0;
-                        return Transform.translate(
-                          offset: Offset(0, -bounceY),
-                          child: Transform.rotate(
-                            angle: shakeAngle,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: RomanColors.imperialGold.withValues(alpha: 0.4),
-                                          blurRadius: 20,
-                                          spreadRadius: 4,
-                                        ),
-                                      ],
-                                    ),
-                                    child: Image.asset(
-                                      'assets/images/animated/dice_roll_3d.webp',
-                                      width: 86,
-                                      height: 86,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  const Text(
-                                    '🎲 Le fritillus secoue les tesserae...',
-                                    style: TextStyle(
-                                      fontSize: 12.5,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF7A4315),
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                  else ...[
-                    if (_modeDuelGaius) ...[
-                      // En-tête Gaius avec médaillon
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF3E1F16),
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 34,
-                              height: 34,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: RomanColors.imperialGold, width: 1.5),
-                              ),
-                              child: ClipOval(
-                                child: Image.asset(
-                                  'assets/images/boss_gladiateur_cadre_140.png',
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (_, __, ___) => const Text('🧔', style: TextStyle(fontSize: 20)),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    'GAIUS L\'AUBERGISTE',
-                                    style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold, color: Colors.amberAccent, letterSpacing: 0.8),
-                                  ),
-                                  Text(
-                                    _gaiusReplique ?? '« Par les dieux ! Que le meilleur cornet l\'emporte ! »',
-                                    style: const TextStyle(fontSize: 11, fontStyle: FontStyle.italic, color: Colors.white70),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(4, (index) {
-                          const angles = [-0.04, 0.05, -0.03, 0.04];
-                          return _build3DRomanDie(_gaiusDiceValues[index], isGaius: true, angle: angles[index]);
-                        }),
-                      ),
-                      const Divider(height: 24, thickness: 1.2),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('🛡️ TES DÉS (TIRO)', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
-                          Text('TON CORNET', style: TextStyle(fontSize: 9, color: RomanColors.laurelGreen, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(4, (index) {
-                        const angles = [-0.05, 0.04, -0.04, 0.06];
-                        return _build3DRomanDie(_diceValues[index], angle: angles[index]);
-                      }),
-                    ),
-                  ],
-                  const SizedBox(height: 20),
-                  // Bouton Lancer
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: RomanColors.imperialGold,
-                      foregroundColor: const Color(0xFF1E1408),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        side: const BorderSide(color: Color(0xFFE2B842), width: 1.5),
-                      ),
-                      elevation: 4,
-                    ),
-                    icon: Icon(_isRolling ? Icons.refresh : Icons.casino_outlined, size: 22),
-                    label: Flexible(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          _isRolling
-                              ? 'ROULEMENT DES DÉS...'
-                              : (_modeDuelGaius ? 'LANCER CONTRE GAIUS' : 'SECOUER LE FRITILLUS'),
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12.5, letterSpacing: 0.8),
-                        ),
-                      ),
-                    ),
-                    onPressed: _isRolling || _gainEnAttente > 0 ? null : _rollDice,
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // 3. Carte de Résultat
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: RomanColors.palatinCream,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          _resultTitle,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: RomanColors.imperialPurple,
-                            fontFamily: 'serif',
-                          ),
-                        ),
-                      ),
-                      if (_lastGain > 0)
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                          decoration: BoxDecoration(
-                            color: RomanColors.laurelGreen,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            '+$_lastGain HS',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    _resultDesc,
-                    style: const TextStyle(fontSize: 12.5, color: Colors.black87, height: 1.35),
-                  ),
-                  if (_gainEnAttente > 0) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      'Quel est le total de ${_diceValues.map((d) => _romanDice[d]).join(' + ')} ?',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: RomanColors.imperialPurple,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        for (final choix in _choixTotal)
-                          OutlinedButton(
-                            onPressed: () => _repondreTotal(choix),
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: RomanColors.imperialPurple,
-                              backgroundColor: Colors.white,
-                              side: const BorderSide(color: RomanColors.imperialGold, width: 1.4),
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                            ),
-                            child: Text(
-                              chiffreRomain(choix),
-                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'serif'),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ],
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // 4. Barème des Combinaisons Antiques
-            const Text(
-              'Règles des Dés Romains (Tesserae)',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: RomanColors.imperialPurple,
-              ),
-            ),
-            const SizedBox(height: 8),
-            _buildRuleRow('🦅 Carré', '4 dés identiques', '+$gainCarre HS'),
-            _buildRuleRow('🏛️ Sénat (Brelan)', '3 dés de valeur identique', '+$gainBrelan HS'),
-            _buildRuleRow('👑 Coup de Vénus', '4 faces distinctes (ex: VI-V-III-I)', '+$gainVenus HS'),
-            _buildRuleRow('🛡️ Plébéien (Paire)', '2 dés de valeur identique', '+$gainPaire HS'),
-            _buildRuleRow('🐕 Coup du Chien', 'Quatre As (I-I-I-I)', 'Défi de Mercure'),
-            const SizedBox(height: 6),
-            const Text(
-              'Pour encaisser, il faut donner le total des quatre dés en chiffres romains.',
-              style: TextStyle(fontSize: 11.5, fontStyle: FontStyle.italic, color: Colors.black54),
-            ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
       },
     );
   }
 
-  Widget _build3DRomanDie(int val, {bool isGaius = false, double angle = 0.0}) {
-    return Transform.rotate(
-      angle: angle,
-      child: Container(
-        width: isGaius ? 54 : 62,
-        height: isGaius ? 54 : 62,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isGaius
-                ? const [Color(0xFF7A4320), Color(0xFF4E260E)]
-                : const [Color(0xFFFFFDF8), Color(0xFFF4EAD7), Color(0xFFE5D5B5)],
-          ),
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: isGaius ? const Color(0xFF9E6534) : const Color(0xFFD4AF37),
-            width: 2.2,
-          ),
-          boxShadow: [
-            const BoxShadow(
-              color: Color(0x38000000),
-              offset: Offset(0, 5),
-              blurRadius: 7,
-            ),
-            BoxShadow(
-              color: isGaius ? const Color(0x22000000) : const Color(0x66FFFFFF),
-              offset: const Offset(0, -2),
-              blurRadius: 3,
-            ),
-          ],
+  Widget _regles() {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF4A180E), Color(0xFF260A04)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            // Liseré intérieur ciselé
-            Container(
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                border: Border.all(
-                  color: isGaius ? const Color(0x44FFE0B2) : const Color(0x44C5A059),
-                  width: 0.8,
-                ),
-              ),
-            ),
-            // Chiffre Romain gravé
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: RomanColors.imperialGold, width: 1.5),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '🎲 AD XXI : approche-toi de 21 sans le dépasser',
+            style: TextStyle(color: Color(0xFFFFE082), fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 8),
+          _Regle('1', 'Ajoute des dés un par un. Ton total s\'écrit en chiffres romains.'),
+          _Regle('2', 'Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.'),
+          _Regle('3', 'Gaius joue ensuite. Le plus près de XXI gagne.'),
+          SizedBox(height: 8),
+          Text(
+            'Aide : I = 1 · V = 5 · X = 10 · IV = 4 · IX = 9 · XXI = 21',
+            style: TextStyle(color: Colors.white70, fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _zone({
+    required String titre,
+    required List<int> des,
+    required int total,
+    required bool gaius,
+    String? vide,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: gaius ? const Color(0xFFF3E6D8) : RomanColors.palatinCream,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: gaius ? const Color(0xFF9E6534) : RomanColors.imperialGold, width: 1.2),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            titre,
+            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+          ),
+          const SizedBox(height: 8),
+          if (des.isEmpty)
+            Text(vide ?? '', style: const TextStyle(fontSize: 12.5, fontStyle: FontStyle.italic, color: Colors.black54))
+          else ...[
+            Wrap(spacing: 8, runSpacing: 8, children: [for (final d in des) _de(d, gaius: gaius)]),
+            const SizedBox(height: 10),
+            // Le total n'existe ici qu'en chiffres romains : le lire, c'est jouer.
             Text(
-              _romanDice[val] ?? '',
+              'Total : ${chiffreRomain(total)}',
               style: TextStyle(
-                fontSize: isGaius ? 19 : 24,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'serif',
-                letterSpacing: 0.5,
-                color: isGaius ? const Color(0xFFFFE4C4) : RomanColors.imperialPurple,
-                shadows: [
-                  Shadow(
-                    color: isGaius ? Colors.black45 : const Color(0x334A1525),
-                    offset: const Offset(0, 1.5),
-                    blurRadius: 2,
-                  ),
-                ],
+                letterSpacing: 1.2,
+                color: total > PartieAdXXI.cible ? const Color(0xFFB71C1C) : RomanColors.imperialPurple,
               ),
             ),
           ],
+        ],
+      ),
+    );
+  }
+
+  Widget _de(int valeur, {required bool gaius}) {
+    return Container(
+      width: 48,
+      height: 48,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: gaius
+              ? const [Color(0xFF7A4320), Color(0xFF4E260E)]
+              : const [Color(0xFFFFFDF8), Color(0xFFE5D5B5)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(11),
+        border: Border.all(color: gaius ? const Color(0xFF9E6534) : RomanColors.imperialGold, width: 2),
+        boxShadow: const [BoxShadow(color: Color(0x33000000), offset: Offset(0, 3), blurRadius: 5)],
+      ),
+      child: Text(
+        _faces[valeur] ?? '',
+        style: TextStyle(
+          fontSize: 19,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'serif',
+          color: gaius ? const Color(0xFFFFE4C4) : RomanColors.imperialPurple,
         ),
       ),
     );
   }
 
-  Widget _buildRuleRow(String combo, String detail, String gain) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(combo, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.charcoal)),
-          Expanded(
-            child: Text(
-              ' • $detail',
-              style: const TextStyle(fontSize: 11, color: Colors.black54),
-              overflow: TextOverflow.ellipsis,
+  Widget _boutonsDeJeu() {
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: _encoreUnDe,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: RomanColors.imperialGold,
+              foregroundColor: const Color(0xFF1E1408),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
             ),
+            child: const Text('🎲 Encore un dé', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
           ),
-          Text(gain, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.laurelGreen)),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: _jeMArrete,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: RomanColors.imperialPurple,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+            ),
+            child: const Text('✋ Je m\'arrête', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _gaiusReflechit() {
+    return const Text(
+      'Gaius lance ses dés…',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: RomanColors.imperialPurple),
+    );
+  }
+
+  Widget _resultat(IssueManche issue) {
+    final p = _partie;
+    final String titre;
+    final String detail;
+    final Color couleur;
+    switch (issue) {
+      case IssueManche.gagnee:
+        titre = '🏆 Tu bats Gaius !';
+        couleur = Colors.green.shade800;
+        detail = p.totalGaius > PartieAdXXI.cible
+            ? 'Gaius a dépassé XXI avec ${chiffreRomain(p.totalGaius)} (${p.totalGaius}).'
+            : 'Ton ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}) bat son ${chiffreRomain(p.totalGaius)} (${p.totalGaius}).';
+        break;
+      case IssueManche.perdue:
+        titre = p.joueurDepasse ? '💥 Trop loin !' : 'Gaius l\'emporte';
+        couleur = const Color(0xFFB71C1C);
+        detail = p.joueurDepasse
+            ? '${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}) dépasse XXI (21).'
+            : 'Son ${chiffreRomain(p.totalGaius)} (${p.totalGaius}) bat ton ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}).';
+        break;
+      case IssueManche.egalite:
+        titre = '⚖️ Égalité';
+        couleur = RomanColors.imperialPurple;
+        detail = 'Vous avez tous les deux ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}).';
+        break;
+      case IssueManche.enCours:
+        return const SizedBox.shrink();
+    }
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: couleur, width: 1.5),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(titre, textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: couleur)),
+          const SizedBox(height: 6),
+          Text(detail, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13.5, height: 1.35)),
+          if (_gainManche > 0) ...[
+            const SizedBox(height: 6),
+            Text(
+              '+$_gainManche HS',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: RomanColors.laurelGreen),
+            ),
+          ],
+          const SizedBox(height: 10),
+          RomanButton(text: '🎲 NOUVELLE MANCHE', onPressed: _nouvelleManche),
+        ],
+      ),
+    );
+  }
+}
+
+class _Regle extends StatelessWidget {
+  final String numero;
+  final String texte;
+
+  const _Regle(this.numero, this.texte);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('$numero. ', style: const TextStyle(color: Color(0xFFFFE082), fontWeight: FontWeight.bold, fontSize: 13)),
+          Expanded(child: Text(texte, style: const TextStyle(color: Colors.white, fontSize: 13, height: 1.3))),
         ],
       ),
     );
