@@ -6,6 +6,8 @@ class Lesson {
   final String content;
   final String? question;
   final List<String> options;
+  /// Une explication par option (même ordre que `options`), vide pour la bonne.
+  final List<String> explications;
   final int answer;
   final String? explanation;
   final String? latin;
@@ -26,6 +28,7 @@ class Lesson {
     required this.content,
     this.question,
     this.options = const [],
+    this.explications = const [],
     this.answer = 0,
     this.explanation,
     this.latin,
@@ -75,6 +78,7 @@ class Lesson {
       content: json['content'] as String? ?? '',
       question: json['question'] as String?,
       options: rawOptions.map((e) => e.toString()).toList(),
+      explications: ((json['explications'] as List<dynamic>?) ?? const []).map((e) => e?.toString() ?? '').toList(),
       answer: json['answer'] as int? ?? 0,
       explanation: json['explanation'] as String?,
       latin: json['latin'] as String? ?? json['phrase_latine'] as String?,

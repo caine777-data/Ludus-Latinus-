@@ -944,6 +944,14 @@ class _LessonScreenState extends State<LessonScreen> {
       advice = 'Observe la terminaison du mot : c\'est elle qui indique le singulier ou le pluriel.';
     }
 
+    // Explication propre à l'option réellement choisie (indice dans les données, pas dans _order).
+    String? explicationChoisie;
+    final choisie = selectedOption;
+    if (choisie != null && choisie >= 0 && choisie < lesson.explications.length) {
+      final e = lesson.explications[choisie].trim();
+      if (e.isNotEmpty) explicationChoisie = e;
+    }
+
     final remaining = _order.where((i) => !_eliminated.contains(i)).length;
     final canUseHint = remaining > 2;
 
@@ -1012,6 +1020,13 @@ class _LessonScreenState extends State<LessonScreen> {
             advice,
             style: const TextStyle(fontSize: 13.5, color: Color(0xFF66301D), height: 1.35),
           ),
+          if (explicationChoisie != null) ...[
+            const SizedBox(height: 6),
+            Text(
+              explicationChoisie,
+              style: const TextStyle(fontSize: 13.5, color: Color(0xFF66301D), height: 1.35),
+            ),
+          ],
           const SizedBox(height: 12),
           Wrap(
             spacing: 8,

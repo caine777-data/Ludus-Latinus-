@@ -557,28 +557,6 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                     color: RomanColors.charcoal,
                   ),
                 ),
-                // Les « bonus » affichés (+15 % Résistance…) n'ont aucun effet dans le jeu :
-                // on ne promet rien de faux à l'élève tant qu'ils ne sont pas codés.
-                if (item.bonus != null && !item.bonus!.contains('%'))
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: RomanColors.goldLight,
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: RomanColors.imperialGold, width: 0.8),
-                        ),
-                        child: Text(
-                          item.bonus!,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF684900),
-                          ),
-                        ),
-                      ),
-                  ),
                 const SizedBox(height: 4),
                 Text(
                   item.nomLatin,

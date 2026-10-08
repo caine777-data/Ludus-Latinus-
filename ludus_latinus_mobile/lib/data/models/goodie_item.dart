@@ -56,7 +56,6 @@ class GoodieItem {
   final int prix;
   final String icone;
   final String description;
-  final String? bonus;
 
   const GoodieItem({
     required this.id,
@@ -66,7 +65,6 @@ class GoodieItem {
     required this.prix,
     required this.icone,
     required this.description,
-    this.bonus,
   });
 
   bool get isGratuit => prix == 0;
@@ -83,7 +81,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 0,
     icone: '🏛️',
     description: 'La toge de laine écrue portée par tous les jeunes citoyens romains.',
-    bonus: 'Tenue de départ',
   ),
   GoodieItem(
     id: 'praetexta',
@@ -93,7 +90,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 35,
     icone: '🟣',
     description: 'Bordée d’une bande de pourpre phénicienne, symbole des enfants nobles et des magistrats.',
-    bonus: '+10% Prestige',
   ),
   GoodieItem(
     id: 'lorica',
@@ -103,7 +99,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 70,
     icone: '🛡️',
     description: 'Armure d’acier articulée portée par les légions romaines invincibles.',
-    bonus: '+15% Résistance au Circus',
   ),
   GoodieItem(
     id: 'imperiale',
@@ -113,7 +108,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 120,
     icone: '✨',
     description: 'Toge de pourpre entièrement brodée d’or, réservée aux généraux en plein Triomphe.',
-    bonus: 'Aura Impériale Suprême',
   ),
   GoodieItem(
     id: 'lorica_squamata',
@@ -123,7 +117,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 95,
     icone: '🛡️',
     description: 'Armure d’écailles de fer et d’airain portée par les officiers d’élite de l’Empereur.',
-    bonus: '+20% Résistance au Colisée',
   ),
 
   // 2. COURONNES & CASQUES (Coronae & Galeae)
@@ -135,7 +128,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 0,
     icone: '👤',
     description: 'Chevelure au vent, sans ornement particulier.',
-    bonus: 'Naturel',
   ),
   GoodieItem(
     id: 'laurier_bronze',
@@ -145,7 +137,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 25,
     icone: '🌿',
     description: 'Couronne de feuilles martelées offerte aux jeunes apprentis valeureux.',
-    bonus: 'Marque des premiers triomphes',
   ),
   GoodieItem(
     id: 'galea_centurio',
@@ -155,7 +146,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 60,
     icone: '🪖',
     description: 'Casque de bronze massif orné d’un panache de crin écarlate transversal.',
-    bonus: 'Autorité martiale',
   ),
   GoodieItem(
     id: 'laurier_or',
@@ -165,7 +155,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 85,
     icone: '🌿',
     description: 'Le symbole absolu de gloire des poètes illustres et des empereurs romains.',
-    bonus: 'Gloire éternelle à Rome',
   ),
   GoodieItem(
     id: 'diademe_vestale',
@@ -175,7 +164,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 110,
     icone: '💎',
     description: 'Fin diadème d’argent serti en hommage à la déesse de la sagesse et des arts.',
-    bonus: '+10% Sagesse grammaticale',
   ),
   GoodieItem(
     id: 'corona_obsidionalis',
@@ -185,7 +173,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 140,
     icone: '🌾',
     description: 'La plus sacrée des distinctions militaires romaines, tressée avec l’herbe du camp sauvé.',
-    bonus: 'Gloire Militaire Suprême',
   ),
 
   // 3. INSIGNES & ARMES (Insignia & Arma)
@@ -197,7 +184,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 0,
     icone: '✏️',
     description: 'Stylet de bronze permettant de graver la cire sur sa Tabula Cerata.',
-    bonus: 'Outil de base',
   ),
   GoodieItem(
     id: 'volumen',
@@ -207,7 +193,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 20,
     icone: '📜',
     description: 'Rouleau de papyrus précieux calligraphié par les érudits de la bibliothèque d’Alexandrie.',
-    bonus: 'Éloquence sénatoriale',
   ),
   GoodieItem(
     id: 'gladius',
@@ -217,7 +202,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 45,
     icone: '⚔️',
     description: 'Épée courte à double tranchant gravée au nom de la République romaine.',
-    bonus: 'Puissance des légionnaires',
   ),
   GoodieItem(
     id: 'scutum',
@@ -227,7 +211,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 75,
     icone: '🛡️',
     description: 'Grand bouclier rouge incurvé arborant les foudres d’or de Jupiter Capitolin.',
-    bonus: 'Protection inébranlable',
   ),
   GoodieItem(
     id: 'vexillum_spqr',
@@ -237,7 +220,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 95,
     icone: '🚩',
     description: 'Étendard flottant pourpre aux aigles d’or, guidant les cohortes vers le triomphe.',
-    bonus: '+10% Prestige impérial',
   ),
   GoodieItem(
     id: 'fasces',
@@ -247,7 +229,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 130,
     icone: '🏛️',
     description: 'Les faisceaux de verges entourant la hache, insigne suprême des consuls romains.',
-    bonus: 'Pouvoir exécutif suprême',
   ),
 
   // 4. COMPAGNONS ROMAINS (Comites)
@@ -259,7 +240,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 0,
     icone: '🐾',
     description: 'Tu parcours les rues de Rome en solitaire.',
-    bonus: 'Autonomie',
   ),
   GoodieItem(
     id: 'lupulus_jr',
@@ -269,7 +249,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 40,
     icone: '🐺',
     description: 'Le descendant fidèle de la Louve Capitoline, joueur et toujours prêt pour l’aventure.',
-    bonus: '+1 moral chaque matin',
   ),
   GoodieItem(
     id: 'noctua',
@@ -278,8 +257,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     categorie: GoodieCategory.compagnon,
     prix: 65,
     icone: '🦉',
-    description: 'Oiseau nocturne bienveillant qui murmure la solution des déclinaisons difficiles.',
-    bonus: 'Inspiration divine',
+    description: 'Oiseau nocturne de Minerve, déesse de la sagesse, réputé veiller sur les études des savants.',
   ),
   GoodieItem(
     id: 'aquila',
@@ -289,7 +267,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 90,
     icone: '🦅',
     description: 'Le rapace sacré planant au-dessus des aigles d’argent des cohortes.',
-    bonus: 'Regard impérial perçant',
   ),
   GoodieItem(
     id: 'cerberus_pullus',
@@ -298,8 +275,7 @@ const List<GoodieItem> kCatalogueBoutique = [
     categorie: GoodieCategory.compagnon,
     prix: 110,
     icone: '🐕',
-    description: 'Fidèle gardien protecteur veillant jalousement sur tes parchemins et tes sesterces.',
-    bonus: '+5 HS chaque jour',
+    description: 'Fidèle gardien à quatre pattes, compagnon des maisons romaines depuis des siècles.',
   ),
   GoodieItem(
     id: 'equus',
@@ -309,7 +285,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     prix: 125,
     icone: '🐎',
     description: 'Fier coursier blanc galopant sur le sable rouge du Circus Maximus.',
-    bonus: 'Vitesse de triomphe',
   ),
   GoodieItem(
     id: 'pegasus_aureus',
@@ -318,7 +293,6 @@ const List<GoodieItem> kCatalogueBoutique = [
     categorie: GoodieCategory.compagnon,
     prix: 160,
     icone: '🐎',
-    description: 'Coursier ailé né des mythes antiques, guidant ton esprit vers les cimes du Savoir.',
-    bonus: 'Ailes de la Victoire',
+    description: 'Coursier ailé né des mythes antiques, cher aux poètes et aux artistes.',
   ),
 ];
