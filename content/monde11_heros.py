@@ -28,13 +28,14 @@ Un soldat romain légendaire, **Horatius Coclès** (*Coclès* signifie « le bor
 - **MILES** (génitif *militis*) : le soldat
 - **VIRTUS** : le courage, la vaillance guerrière""",
             "question": "Quel acte héroïque a accompli Horatius Coclès pour sauver Rome ?",
-            "options": [
-                "Il a retenu seul l'armée ennemie sur un pont pendant que ses compagnons le coupaient",
-                "Il a tué le roi Porsenna dans sa tente",
-                "Il a franchi les Alpes avec des éléphants",
-                "Il a construit la muraille de Rome en une seule nuit"
-            ],
+            "options": ["Il a défendu seul le pont du Tibre contre l'armée ennemie", "Il a pénétré seul dans le camp ennemi pour frapper le roi", "Il a incendié la flotte ennemie sur le Tibre", "Il a gardé les portes de la ville pendant la fuite du peuple"],
             "answer": 0,
+            "explications": [
+                "",
+                "C'est l'audace de Mucius Scaevola, qui s'est glissé dans le camp de Porsenna pour tuer le roi.",
+                "Aucun navire n'est brûlé dans ce récit : relis ce que fait Horatius face à l'armée de Porsenna.",
+                "Les récits ne parlent d'aucune porte de la ville : ce n'est pas le lieu de l'exploit d'Horatius.",
+            ],
             "explanation": "Coclès est resté seul face à toute l'armée ennemie sur le pont Sublicius !",
         },
         {
@@ -89,23 +90,13 @@ Le décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus r
                 },
                 {
                     "question": "Pourquoi Mucius a-t-il été surnommé 'Scaevola' ?",
-                    "options": [
-                        "Parce qu'il a brûlé sa main droite dans le brasier et est devenu gaucher",
-                        "Parce qu'il combattait avec deux glaives",
-                        "Parce qu'il courait très vite",
-                        "Parce qu'il n'avait qu'un œil"
-                    ],
+                    "options": ["Il a laissé brûler sa main droite dans le feu et est devenu le Gaucher", "Il a combattu deux généraux ennemis à la fois avec son seul glaive", "Il a perdu son œil gauche lors du siège de la ville par Porsenna", "Il a brisé ses chaînes de prisonnier sans l'aide d'aucun soldat"],
                     "answer": 0,
                     "explanation": "Scaevola signifie 'le gaucher' en latin !"
                 },
                 {
                     "question": "Quel honneur exceptionnel les Romains ont-ils accordé à Cloélie ?",
-                    "options": [
-                        "Une statue équestre (à cheval) sur la Voie Sacrée",
-                        "Une couronne impériale en diamant",
-                        "Le commandement des légions",
-                        "Un temple sur le Capitole"
-                    ],
+                    "options": ["Une statue équestre sur la Voie Sacrée", "Une couronne triomphale de lauriers d'or", "Le droit de siéger au Sénat avec les pères", "Un monument de marbre blanc sur le Forum"],
                     "answer": 0,
                     "explanation": "Une statue équestre, honneur jusqu'alors réservé aux plus grands généraux romains !"
                 }

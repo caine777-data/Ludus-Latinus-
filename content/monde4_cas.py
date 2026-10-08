@@ -27,8 +27,14 @@ Grâce aux **terminaisons** (la fin du mot, qu'on appelle les **cas**) :
 
 *Lupus agnum videt* = *Agnum lupus videt* = « Le loup voit l'agneau » !""",
             "question": "En latin, qu'est-ce qui indique le rôle d'un mot dans la phrase ?",
-            "options": ["Sa position au tout début de la phrase", "Sa terminaison (son cas)", "Sa longueur en lettres", "La ponctuation"],
+            "options": ["Sa place dans la phrase", "Sa terminaison", "Sa première lettre", "La ponctuation"],
             "answer": 1,
+            "explications": [
+                "En latin, on peut déplacer les mots sans changer leur rôle : la place ne décide pas de la fonction.",
+                "",
+                "La première lettre d'un mot ne change pas quand sa fonction change : elle ne montre pas son rôle.",
+                "La ponctuation sépare les phrases, mais elle ne dit pas si un mot est sujet ou complément.",
+            ],
             "explanation": "C'est la terminaison (le cas) qui indique si un mot est Sujet ou COD !",
         },
         {

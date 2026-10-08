@@ -325,6 +325,21 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **QCM : options rééquilibrées et une explication par mauvaise réponse**
+  (validé par Cédric le 08/10/2026). 43 questions (quiz et arènes) ont des
+  options de longueur et de forme égales, sans blague. Les 28 leçons `quiz`
+  ont un champ `explications` : une chaîne par option, vide pour la bonne,
+  affichée par `lesson_screen.dart` sous le conseil de Lupulus quand
+  l'élève choisit cette mauvaise option. Règle : 20 mots au plus, jamais la
+  bonne réponse, rien de faux. L'export ne tient plus compte des
+  `explications` pour rattacher un mot du Thesaurus à un monde. Les objets
+  de la boutique n'ont plus de champ `bonus` (aucun n'avait d'effet).
+  Brouillons et relectures : `docs/propositions/options_qcm.md`,
+  `explications_quiz.md`, `relecture_explications_quiz.md`,
+  `integration_qcm_explications.md`. Panthéon proposé dans
+  `docs/propositions/pantheon_cartes.md` (en attente). Tournée à l'écran :
+  T51.
+
 - **Agents Sonnet 5.5 en renfort** (08/10/2026) — l'architecte peut confier
   des chantiers bien délimités à des agents Sonnet 5.5, en parallèle, sur
   des fichiers disjoints, sans commit de leur part : l'architecte relit et

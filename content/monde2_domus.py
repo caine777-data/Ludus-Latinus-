@@ -31,6 +31,12 @@ Tu reconnais déjà ces racines :
             "question": "Quel mot latin désigne le fils dans la famille romaine ?",
             "options": ["Filius", "Frater", "Pater", "Servus"],
             "answer": 0,
+            "explications": [
+                "",
+                "Ce mot désigne le frère dans la famille, qui a donné fraternité en français.",
+                "Ce mot désigne le père et chef de famille, comme dans paternel ou patriarche.",
+                "Servus désigne l'esclave de la maison : ce n'est pas le mot pour l'enfant du père de famille.",
+            ],
             "explanation": "Filius est le fils (qui a donné 'filial' en français) !",
         },
         {
@@ -90,6 +96,12 @@ Les Romains les plus modestes ne vivaient pas dans une domus mais dans des immeu
             "question": "Comment s'appelle le grand salon central avec ouverture sur le toit d'une domus ?",
             "options": ["L'atrium", "Le triclinium", "L'insula", "Le forum"],
             "answer": 0,
+            "explications": [
+                "",
+                "C'est la salle à manger romaine où les convives mangeaient allongés sur trois lits.",
+                "C'est un immeuble collectif de plusieurs étages pour le peuple, pas une pièce d'habitation privée.",
+                "C'est la grande place publique de la cité, située à l'extérieur des habitations privées.",
+            ],
             "explanation": "C'est bien l'atrium, la pièce maîtresse et lumineuse de la maison !",
         },
         {
@@ -109,7 +121,7 @@ Pour gagner ta place de membre d'honneur de la cité romaine et empocher une bou
                 },
                 {
                     "question": "Sur quoi écrivaient les écoliers romains ?",
-                    "options": ["Des tablettes de cire avec un stylet", "Des feuilles de papier", "Des ardoises magiques", "De la soie"],
+                    "options": ["Des tablettes de cire", "Des rouleaux de papyrus", "Des feuilles de parchemin", "Des plaques de calcaire"],
                     "answer": 0,
                     "explanation": "Ils écrivaient avec un stylet sur de la cire d'abeille."
                 },

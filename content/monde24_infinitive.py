@@ -37,6 +37,12 @@ Regarde la transformation :
                 "Sujet au Génitif + Verbe au Futur"
             ],
             "answer": 0,
+            "explications": [
+                "",
+                "Dans cette subordonnée, le sujet ne reste pas au cas sujet habituel de la principale.",
+                "Le sujet n'est jamais à l'ablatif ici. L'ablatif sert plutôt aux compléments de moyen, de lieu ou de temps.",
+                "Le cas du complément du nom ne peut jamais introduire le sujet d'une telle proposition.",
+            ],
             "explanation": "C'est la règle d'or : Sujet à l'Accusatif + Verbe à l'Infinitif !",
         },
         {
@@ -98,12 +104,7 @@ Le greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maî
                 },
                 {
                     "question": "Y a-t-il un mot équivalent à notre 'que' dans une proposition infinitive latine ?",
-                    "options": [
-                        "Non, la structure Accusatif + Infinitif exprime directement le lien",
-                        "Oui, le mot 'quod' est obligatoire",
-                        "Oui, le mot 'cum'",
-                        "Oui, le mot 'ut'"
-                    ],
+                    "options": ["Non, aucun mot de liaison n'est employé", "Oui, la conjonction 'quod' est obligatoire", "Oui, la proposition commence par 'ut'", "Oui, le relatif 'quem' introduit le verbe"],
                     "answer": 0,
                     "explanation": "Le latin classique n'utilise aucun mot de liaison : la structure Accusatif + Infinitif suffit !"
                 },

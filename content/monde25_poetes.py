@@ -26,8 +26,14 @@ Les tout premiers mots de l'Énéide, appris par cœur par tous les écoliers de
 *« **Arma virumque cano**... »*
 (« Je chante les armes et le héros... »).""",
             "question": "Quel poète romain a composé l'Énéide sous le règne d'Auguste ?",
-            "options": ["Virgile (Publius Vergilius Maro)", "Ovide", "Homère", "Cicéron"],
+            "options": ["Virgile", "Ovide", "Horace", "Lucrèce"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cet auteur a composé les Métamorphoses et L'Art d'aimer, pas cette grande épopée nationale.",
+                "Horace, poète du temps d'Auguste, a écrit des Odes et des Satires, pas l'Énéide.",
+                "Lucrèce est mort avant le règne d'Auguste et il a écrit De la nature, pas l'Énéide.",
+            ],
             "explanation": "C'est le poète Virgile qui a écrit les 12 chants de l'Énéide !",
         },
         {
@@ -75,7 +81,7 @@ Calliope, muse protectrice de la poésie épique et de l'éloquence, teste ta se
             "questions": [
                 {
                     "question": "Qui était le héros troyen fondateur dont Virgile chante les aventures dans l'Énéide ?",
-                    "options": ["Énée (Aeneas)", "Achille", "Ulysse", "Romulus"],
+                    "options": ["Énée", "Hector", "Priam", "Pâris"],
                     "answer": 0,
                     "explanation": "Énée est le héros troyen dont les descendants fonderont Rome."
                 },
@@ -87,7 +93,7 @@ Calliope, muse protectrice de la poésie épique et de l'éloquence, teste ta se
                 },
                 {
                     "question": "Que signifie la particule attachée '-que' dans 'virumque' ?",
-                    "options": ["Et ('virumque' = et l'homme / le héros)", "Non", "Mais", "Si"],
+                    "options": ["Et", "Ou", "Mais", "Car"],
                     "answer": 0,
                     "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans SPQR : Senatus Populus-que)."
                 }

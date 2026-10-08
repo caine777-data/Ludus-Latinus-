@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-08 14:02:59",
+    "date_export": "2026-10-08 19:51:53",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -85,6 +85,12 @@
             "Elle était muette"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Confusion avec le français moderne : en latin classique, le son [S] n'existe pas pour cette consonne.",
+            "C'est la prononciation de l'italien moderne ou du latin ecclésiastique, pas celle des Romains de l'Antiquité.",
+            "En latin, toutes les lettres écrites se prononcent distinctement : aucune consonne n'est muette."
+          ],
           "explanation": "Exactement ! En latin classique, le C claque toujours comme un [K] !"
         },
         {
@@ -126,6 +132,12 @@
             "11"
           ],
           "answer": 1,
+          "explications": [
+            "Tu as additionné V et I (VI = 6), or le I placé avant le V se soustrait.",
+            "",
+            "Tu as compté deux dizaines (XX), mais il n'y a qu'un seul chiffre dix.",
+            "Tu as oublié la valeur du V (cinq) en ne comptant que le X et un bâton."
+          ],
           "explanation": "Bravo ! X vaut 10 et IV vaut 4 (5 - 1), donc 10 + 4 = 14 !"
         },
         {
@@ -159,9 +171,9 @@
               "question": "Que veut dire 'Vale' quand tu quittes un ami romain ?",
               "options": [
                 "Bonjour",
-                "Au revoir / Porte-toi bien",
-                "Merci",
-                "À l'aide"
+                "Au revoir",
+                "Bonne nuit",
+                "Bon appétit"
               ],
               "answer": 1,
               "explanation": "Vale signifie 'porte-toi bien / au revoir'."
@@ -181,9 +193,9 @@
               "question": "Quel animal a sauvé Romulus et Rémus du fleuve ?",
               "options": [
                 "Une biche",
-                "Une louve (Lupa)",
-                "Une aigle",
-                "Un dauphin"
+                "Une louve",
+                "Une chèvre",
+                "Une ourse"
               ],
               "answer": 1,
               "explanation": "C'est bien la louve Lupa qui les a allaités !"
@@ -209,6 +221,12 @@
             "Servus"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Ce mot désigne le frère dans la famille, qui a donné fraternité en français.",
+            "Ce mot désigne le père et chef de famille, comme dans paternel ou patriarche.",
+            "Servus désigne l'esclave de la maison : ce n'est pas le mot pour l'enfant du père de famille."
+          ],
           "explanation": "Filius est le fils (qui a donné 'filial' en français) !"
         },
         {
@@ -251,6 +269,12 @@
             "Le forum"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "C'est la salle à manger romaine où les convives mangeaient allongés sur trois lits.",
+            "C'est un immeuble collectif de plusieurs étages pour le peuple, pas une pièce d'habitation privée.",
+            "C'est la grande place publique de la cité, située à l'extérieur des habitations privées."
+          ],
           "explanation": "C'est bien l'atrium, la pièce maîtresse et lumineuse de la maison !"
         },
         {
@@ -278,10 +302,10 @@
             {
               "question": "Sur quoi écrivaient les écoliers romains ?",
               "options": [
-                "Des tablettes de cire avec un stylet",
-                "Des feuilles de papier",
-                "Des ardoises magiques",
-                "De la soie"
+                "Des tablettes de cire",
+                "Des rouleaux de papyrus",
+                "Des feuilles de parchemin",
+                "Des plaques de calcaire"
               ],
               "answer": 0,
               "explanation": "Ils écrivaient avec un stylet sur de la cire d'abeille."
@@ -318,6 +342,12 @@
             "Vulcain"
           ],
           "answer": 1,
+          "explications": [
+            "Ce souverain des dieux commande au ciel et lance la foudre depuis le mont Capitole.",
+            "",
+            "Ce protecteur des légions porte le casque et la lance : il règne sur la guerre.",
+            "Ce forgeron divin travaille le métal dans le feu des volcans avec son marteau."
+          ],
           "explanation": "C'est Neptune, dieu des mers et des séismes avec son trident !"
         },
         {
@@ -360,6 +390,12 @@
             "Une flèche empoisonnée"
           ],
           "answer": 1,
+          "explications": [
+            "Aveuglé de la sorte, le héros n'aurait pas pu porter un coup d'épée précis au monstre.",
+            "",
+            "Persée avait bien un casque d'invisibilité, mais il ne le protégeait pas du regard pétrifiant de Méduse.",
+            "Une flèche ne protège pas du regard pétrifiant. Persée devait approcher Méduse de près, pas la viser de loin."
+          ],
           "explanation": "Exactement ! Son bouclier servait de miroir magique pour voir le monstre sans être pétrifié."
         },
         {
@@ -387,10 +423,10 @@
             {
               "question": "Pourquoi les ailes d'Icare ont-elles fondu ?",
               "options": [
-                "Il s'est approché trop près du soleil",
-                "Une flèche l'a touché",
-                "Il a plu trop fort",
-                "Le vent était trop violent"
+                "Il a volé trop près du soleil",
+                "Il a traversé un violent orage",
+                "La foudre a embrasé ses plumes",
+                "Le vent glacial a brisé la cire"
               ],
               "answer": 0,
               "explanation": "La cire tenant les plumes a fondu sous la chaleur du soleil !"
@@ -398,10 +434,10 @@
             {
               "question": "En quoi Méduse transformait-elle ceux qui croisaient son regard ?",
               "options": [
-                "En or",
-                "En poussière",
+                "En arbres morts",
+                "En piliers de sel",
                 "En statues de pierre",
-                "En serpents"
+                "En blocs de bronze"
               ],
               "answer": 2,
               "explanation": "Son regard pétrifiait instantanément en pierre !"
@@ -421,12 +457,18 @@
           "content": "## L'Ordre des Mots n'est pas ce que tu crois !\n\nEn français, l'ordre des mots décide de tout :\n- *« Le loup mange l'agneau »* ➔ c'est le loup qui est le mangeur (Sujet).\n- Si on inverse : *« L'agneau mange le loup »* ➔ la phrase devient complètement absurde !\n\nMais en LATIN, **l'ordre des mots est totalement libre** ! On peut écrire les mots dans n'importe quel ordre sans changer le sens de l'histoire !\n\n## Comment les Romains savaient-ils qui fait quoi ? 💡\nGrâce aux **terminaisons** (la fin du mot, qu'on appelle les **cas**) :\n- Le mot qui fait l'action porte l'étiquette du **Sujet** (le **NOMINATIF**).\n- Le mot qui subit l'action porte l'étiquette du **COD** (l'**ACCUSATIF**).\n\n*Lupus agnum videt* = *Agnum lupus videt* = « Le loup voit l'agneau » !",
           "question": "En latin, qu'est-ce qui indique le rôle d'un mot dans la phrase ?",
           "options": [
-            "Sa position au tout début de la phrase",
-            "Sa terminaison (son cas)",
-            "Sa longueur en lettres",
+            "Sa place dans la phrase",
+            "Sa terminaison",
+            "Sa première lettre",
             "La ponctuation"
           ],
           "answer": 1,
+          "explications": [
+            "En latin, on peut déplacer les mots sans changer leur rôle : la place ne décide pas de la fonction.",
+            "",
+            "La première lettre d'un mot ne change pas quand sa fonction change : elle ne montre pas son rôle.",
+            "La ponctuation sépare les phrases, mais elle ne dit pas si un mot est sujet ou complément."
+          ],
           "explanation": "C'est la terminaison (le cas) qui indique si un mot est Sujet ou COD !"
         },
         {
@@ -618,10 +660,10 @@
             {
               "question": "Que signifie le verbe 'vincit' ?",
               "options": [
-                "Il dort",
-                "Il vainc / il triomphe",
-                "Il mange",
-                "Il court"
+                "Il vit",
+                "Il vainc",
+                "Il vient",
+                "Il voit"
               ],
               "answer": 1,
               "explanation": "Vincit = il vainc (qui a donné victoire et vainqueur) !"
@@ -647,6 +689,12 @@
             "Deux longues haches"
           ],
           "answer": 1,
+          "explications": [
+            "Les gladiateurs s'affrontaient au corps à corps dans l'arène : aucun combattant n'utilisait d'arc de tir.",
+            "",
+            "La massue de fer n'était pas l'arme du rétiaire, un gladiateur léger qui misait sur la vitesse.",
+            "Aucune catégorie de gladiateur ne combattait avec deux haches : c'est une image de film plus que de l'arène."
+          ],
           "explanation": "Le Rétiaire combat avec son filet (rete) et son trident !"
         },
         {
@@ -752,6 +800,12 @@
             "Arbor (l'arbre)"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Ce mot a donné en français aviation et avicole, qui se rapportent aux oiseaux et au vol.",
+            "Ce mot a donné en français agriculture et agraire, désignant la terre cultivée et les campagnes.",
+            "Ce mot a donné en français arbre et arboriculture, liés aux végétaux et aux forêts."
+          ],
           "explanation": "Aqua signifie l'eau en latin !"
         },
         {
@@ -795,10 +849,10 @@
             {
               "question": "Que signifie la célèbre maxime 'Carpe diem' ?",
               "options": [
-                "Mange des carpes tous les jours",
-                "Cueille le jour présent (profite de l'instant)",
-                "Dors bien cette nuit",
-                "Attention au danger"
+                "Pense toujours à demain",
+                "Cueille le jour présent",
+                "Bannis la peine présente",
+                "Retiens le temps qui fuit"
               ],
               "answer": 1,
               "explanation": "Carpe diem = Cueille le jour présent / profite de la vie !"
@@ -829,9 +883,9 @@
               "question": "Que veut dire la formule 'Mens sana in corpore sano' ?",
               "options": [
                 "Un esprit sain dans un corps sain",
-                "Un grand corps sans tête",
-                "La santé avant tout",
-                "Toujours s'entraîner"
+                "Un corps robuste pour un esprit pur",
+                "La force du corps guide la pensée",
+                "Une vie paisible sans aucun souci"
               ],
               "answer": 0,
               "explanation": "Mens sana in corpore sano = Un esprit sain dans un corps sain !"
@@ -857,6 +911,12 @@
             "Le poisson"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "La pomme se disait malum ou pomum en latin, jamais panis.",
+            "Le panier est le mot français qui descend de panis : la question demande le sens du mot latin.",
+            "Cet animal aquatique se disait piscis en latin, qui a donné piscine et pisciculture en français."
+          ],
           "explanation": "Bravo ! 'Panis' est le pain, la nourriture essentielle du citoyen romain !"
         },
         {
@@ -944,10 +1004,10 @@
             {
               "question": "Que signifie 'pecunia' en latin ?",
               "options": [
-                "L'argent / la monnaie",
-                "Le poisson",
-                "La maison",
-                "Le cheval"
+                "L'argent",
+                "Le bétail",
+                "Le grenier",
+                "Le marché"
               ],
               "answer": 0,
               "explanation": "Parfait ! Pecunia = l'argent, qui a donné le mot français pécuniaire !"
@@ -973,6 +1033,12 @@
             "La Galea"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "C'est le javelot lourd lancé par le soldat romain avant de charger au corps à corps.",
+            "C'est l'épée courte à double tranchant servant à frapper dans les rangs serrés.",
+            "C'est le casque de bronze ou de fer qui protégeait la tête du soldat."
+          ],
           "explanation": "C'est bien le Scutum, qui protégeait presque tout le corps du légionnaire !"
         },
         {
@@ -1060,10 +1126,10 @@
             {
               "question": "Quel oiseau impérial servait d'emblème doré aux légions romaines ?",
               "options": [
-                "L'Aigle (Aquila)",
+                "L'Aigle",
                 "Le Faucon",
-                "La Colombe",
-                "Le Hibou"
+                "Le Vautour",
+                "L'Épervier"
               ],
               "answer": 0,
               "explanation": "L'Aigle (Aquila) était l'insigne sacré porté par l'aquilifer !"
@@ -1089,6 +1155,12 @@
             "L'Hydre"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cet être à tête de taureau a été vaincu par Thésée dans le labyrinthe de Crète.",
+            "Cette créature posant des énigmes aux voyageurs a été défiée par Œdipe près de Thèbes.",
+            "Ce monstre aquatique dont les têtes repoussaient a été combattu par Hercule à Lerne."
+          ],
           "explanation": "Exactement ! La Chimère fut vaincue d'en haut par les flèches de Bellérophon !"
         },
         {
@@ -1165,10 +1237,10 @@
             {
               "question": "Quelle particularité physique avaient les Cyclopes ?",
               "options": [
-                "Un seul œil au milieu du front",
-                "Trois bras",
-                "Des ailes de cire",
-                "Une queue de poisson"
+                "Un seul œil sur le front",
+                "Trois têtes de serpent",
+                "Cent bras et cinquante têtes",
+                "Des cornes de taureau sauvage"
               ],
               "answer": 0,
               "explanation": "Exactement ! Un seul grand œil rond !"
@@ -1211,12 +1283,18 @@
           "content": "## Rome menacée par le roi Porsenna\nEn 509 av. J.-C., les Romains chassent leur dernier roi tyrannique, Tarquin le Superbe, et fondent la **République** (*Res Publica* : la chose publique).\n\nMais les Étrusques, menés par le roi Porsenna, attaquent Rome pour rétablir la royauté !\n\nUn soldat romain légendaire, **Horatius Coclès** (*Coclès* signifie « le borgne »), accomplit un exploit digne des plus grands films d'action :\n- Seul au bout du pont de bois menant à Rome (le pont Sublicius), il bloque à lui tout seul l'armée ennemie entière !\n- Pendant ce temps, ses camarades détruisent le pont à coups de hache derrière lui.\n- Une fois le pont effondré, tout armé, il plonge dans le Tibre et regagne Rome à la nage sain et sauf !\n\n💡 **Vocabulaire républicain** :\n- **PONS** (génitif *pontis*) : le pont\n- **MILES** (génitif *militis*) : le soldat\n- **VIRTUS** : le courage, la vaillance guerrière",
           "question": "Quel acte héroïque a accompli Horatius Coclès pour sauver Rome ?",
           "options": [
-            "Il a retenu seul l'armée ennemie sur un pont pendant que ses compagnons le coupaient",
-            "Il a tué le roi Porsenna dans sa tente",
-            "Il a franchi les Alpes avec des éléphants",
-            "Il a construit la muraille de Rome en une seule nuit"
+            "Il a défendu seul le pont du Tibre contre l'armée ennemie",
+            "Il a pénétré seul dans le camp ennemi pour frapper le roi",
+            "Il a incendié la flotte ennemie sur le Tibre",
+            "Il a gardé les portes de la ville pendant la fuite du peuple"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "C'est l'audace de Mucius Scaevola, qui s'est glissé dans le camp de Porsenna pour tuer le roi.",
+            "Aucun navire n'est brûlé dans ce récit : relis ce que fait Horatius face à l'armée de Porsenna.",
+            "Les récits ne parlent d'aucune porte de la ville : ce n'est pas le lieu de l'exploit d'Horatius."
+          ],
           "explanation": "Coclès est resté seul face à toute l'armée ennemie sur le pont Sublicius !"
         },
         {
@@ -1271,10 +1349,10 @@
             {
               "question": "Pourquoi Mucius a-t-il été surnommé 'Scaevola' ?",
               "options": [
-                "Parce qu'il a brûlé sa main droite dans le brasier et est devenu gaucher",
-                "Parce qu'il combattait avec deux glaives",
-                "Parce qu'il courait très vite",
-                "Parce qu'il n'avait qu'un œil"
+                "Il a laissé brûler sa main droite dans le feu et est devenu le Gaucher",
+                "Il a combattu deux généraux ennemis à la fois avec son seul glaive",
+                "Il a perdu son œil gauche lors du siège de la ville par Porsenna",
+                "Il a brisé ses chaînes de prisonnier sans l'aide d'aucun soldat"
               ],
               "answer": 0,
               "explanation": "Scaevola signifie 'le gaucher' en latin !"
@@ -1282,10 +1360,10 @@
             {
               "question": "Quel honneur exceptionnel les Romains ont-ils accordé à Cloélie ?",
               "options": [
-                "Une statue équestre (à cheval) sur la Voie Sacrée",
-                "Une couronne impériale en diamant",
-                "Le commandement des légions",
-                "Un temple sur le Capitole"
+                "Une statue équestre sur la Voie Sacrée",
+                "Une couronne triomphale de lauriers d'or",
+                "Le droit de siéger au Sénat avec les pères",
+                "Un monument de marbre blanc sur le Forum"
               ],
               "answer": 0,
               "explanation": "Une statue équestre, honneur jusqu'alors réservé aux plus grands généraux romains !"
@@ -1306,12 +1384,18 @@
           "content": "## Le pilier grammatical de 4ème\nTu connais déjà la 1ère déclinaison (en *-a* comme *rosa*) et la 2ème (en *-us* comme *dominus*).\n\nEn 4ème, tu découvres la déclinaison la plus fréquente et la plus riche de toute la langue latine : la **3ème déclinaison** !\n\nDans le dictionnaire, un nom de la 3e déclinaison se reconnaît TOUJOURS à son **Génitif en -IS** :\n- **Rex, regis** (m.) : le roi\n- **Consul, consulis** (m.) : le consul (chef suprême de la République)\n- **Dux, ducis** (m.) : le chef, le général (*➔ a donné duc, conduire*)\n- **Miles, militis** (m.) : le soldat (*➔ militaire*)\n- **Vox, vocis** (f.) : la voix\n\n💡 **Astuce magique pour trouver le radical** :\nPrends le génitif singulier (*reg-is*) et retire la terminaison **-is**. Tu obtiens le radical : **REG-** ! C'est sur ce radical que tu colles toutes les autres terminaisons.",
           "question": "À quelle terminaison du génitif singulier reconnaît-on un nom de la 3ème déclinaison ?",
           "options": [
-            "En -IS (ex: regis, ducis)",
-            "En -AE (ex: rosae)",
-            "En -I (ex: domini)",
-            "En -UM (ex: templi)"
+            "En -IS",
+            "En -AE",
+            "En -I",
+            "En -UM"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "-ae est la marque du génitif des noms comme rosa, pas de ceux de la 3e déclinaison.",
+            "Cette désinence caractérise les noms masculins et neutres de la deuxième déclinaison.",
+            "-um marque le nominatif ou l'accusatif des noms neutres, ou un génitif pluriel, pas le génitif singulier."
+          ],
           "explanation": "Exactement ! Le génitif singulier en -is est la signature absolue de la 3e déclinaison !"
         },
         {
@@ -1401,12 +1485,18 @@
           "content": "## Les frères jumeaux (Parisyllabiques)\nDans la 3ème déclinaison, certains noms ont le **même nombre de syllabes** au nominatif et au génitif singulier. On les appelle les *parisyllabiques* (thèmes en -i) :\n- **Civis, civis** (m.) : le citoyen\n- **Navis, navis** (f.) : le navire, la trirème\n- **Hostis, hostis** (m.) : l'ennemi (*➔ hostile*)\n- **Ignis, ignis** (m.) : le feu\n\n💡 **La seule différence avec les autres noms de la 3e déclinaison** :\nAu génitif pluriel (complément du nom), ils prennent **-IUM** au lieu de -um !\n- *civium* = des citoyens\n- *navium* = des navires\n- *hostium* = des ennemis",
           "question": "Quel est le génitif pluriel de 'navis, navis' (le navire) ?",
           "options": [
-            "Navium (des navires)",
+            "Navium",
             "Navum",
             "Navibus",
             "Navarum"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Navum copie le modèle de regum, mais navis est un nom en -i qui suit une autre règle.",
+            "Navibus sert au datif et à l'ablatif pluriels, pas à exprimer le complément du nom.",
+            "-arum est la finale de rosa et des noms de la 1re déclinaison, pas de navis."
+          ],
           "explanation": "Les thèmes en -i font leur génitif pluriel en -ium !"
         },
         {
@@ -1450,10 +1540,10 @@
             {
               "question": "Quelle est la règle d'or de TOUS les noms neutres latins ?",
               "options": [
-                "Le Nominatif, le Vocatif et l'Accusatif sont toujours identiques",
-                "Ils n'existent qu'au singulier",
-                "Leur génitif finit toujours par -ae",
-                "Ils désignent uniquement des personnes"
+                "Leur nominatif et leur accusatif sont toujours identiques",
+                "Leur génitif et leur ablatif ont toujours la même terminaison",
+                "Leur pluriel se termine obligatoirement par la voyelle -i",
+                "Ils se déclinent uniquement au singulier dans tous les textes"
               ],
               "answer": 0,
               "explanation": "Les 3 cas directs (Nom., Voc., Acc.) sont toujours identiques pour les neutres !"
@@ -1472,10 +1562,10 @@
             {
               "question": "Que signifiait l'expression 'Mare Nostrum' pour les Romains ?",
               "options": [
-                "Notre Mer (la Méditerranée)",
-                "La Grande Eau",
-                "La Mer Rouge",
-                "L'Océan infini"
+                "Notre Mer",
+                "La Grande Mer",
+                "La Mer Noire",
+                "La Mer Profonde"
               ],
               "answer": 0,
               "explanation": "Mare Nostrum désignait la mer Méditerranée entièrement entourée de provinces romaines."
@@ -1502,6 +1592,12 @@
             "Miles forte"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "La finale -us appartient aux adjectifs comme bonus, bona, bonum, qui suivent un autre modèle que fortis.",
+            "-um est la finale de bonum, accusatif masculin ou neutre d'un autre modèle d'adjectifs, pas celle de fortis.",
+            "Cette terminaison en -e est réservée au genre neutre (comme mare), or ce nom est masculin."
+          ],
           "explanation": "Au masculin singulier nominatif, l'adjectif est 'fortis' : miles fortis !"
         },
         {
@@ -1545,10 +1641,10 @@
             {
               "question": "Quel suffixe forme le comparatif de supériorité (ex: plus fort) en latin ?",
               "options": [
-                "-IOR (ex: fortior)",
-                "-ISSIMUS",
-                "-UM",
-                "-IS"
+                "-ior",
+                "-issimus",
+                "-illimus",
+                "-errimus"
               ],
               "answer": 0,
               "explanation": "Le comparatif se forme toujours avec le suffixe -ior (-ius au neutre) !"
@@ -1556,10 +1652,10 @@
             {
               "question": "Que signifie l'adjectif 'clarissimus' ?",
               "options": [
-                "Le plus célèbre / très célèbre",
-                "Moins clair",
-                "Un peu célèbre",
-                "Pas célèbre du tout"
+                "Très célèbre",
+                "Moins célèbre",
+                "Aussi célèbre",
+                "Plus célèbre"
               ],
               "answer": 0,
               "explanation": "Le superlatif en -issimus exprime le très haut degré d'une qualité."
@@ -1591,12 +1687,18 @@
           "content": "## Raconter le passé en latin\nEn 5ème, tu as appris le Présent (*amo* = j'aime, *amas* = tu aimes, *amat* = il aime).\n\nEn 4ème, place aux temps du passé ! Et bonne nouvelle : l'**Imparfait** latin est le temps le plus simple et régulier de toute la langue latine !\n\nIl se forme en insérant le son magique **-BA-** entre le radical et les désinences personnelles :\n- *Amo* (j'aime) ➔ **ama-BA-m** (j'aimais)\n- *Amas* (tu aimes) ➔ **ama-BA-s** (tu aimais)\n- *Amat* (il aime) ➔ **ama-BA-t** (il aimait)\n- *Amamus* (nous aimons) ➔ **ama-BA-mus** (nous aimions)\n- *Amatis* (vous aimez) ➔ **ama-BA-tis** (vous aimiez)\n- *Amant* (ils aiment) ➔ **ama-BA-nt** (ils aimaient)\n\n💡 **Même règle pour les autres groupes** :\n- *Legere* (lire) ➔ *legebam, legebas, legebat...* (je lisais, tu lisais, il lisait...)\n- *Audire* (entendre) ➔ *audiebam, audiebas, audiebat...*",
           "question": "Quel son caractéristique s'intercale dans TOUS les verbes réguliers à l'imparfait latin ?",
           "options": [
-            "-BA- (ex: amabam, legebat)",
-            "-VI-",
-            "-IS-",
-            "-UR-"
+            "-ba-",
+            "-vi-",
+            "-era-",
+            "-re-"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cet élément apparaît souvent dans le radical du temps de l'action achevée, comme dans amavit.",
+            "-era- apparaît au plus-que-parfait (amaveram), un temps du passé différent de l'imparfait.",
+            "-re- termine l'infinitif présent de nombreux verbes, comme amare : ce n'est pas un signe d'imparfait."
+          ],
           "explanation": "Le suffixe -ba- est la marque universelle de l'imparfait régulier latin !"
         },
         {
@@ -1685,12 +1787,18 @@
           "content": "## Le roi des temps historiques !\nTandis que l'imparfait décrit une action qui durait dans le passé, le **Parfait** exprime une action ponctuelle et achevée.\n\nEn français, il se traduit selon le contexte :\n- Soit par un **Passé Simple** (*« il vainquit »*)\n- Soit par un **Passé Composé** (*« il a vaincu »*)\n\n🔥 **Les désinences magiques du parfait (les mêmes pour TOUS les verbes latins !)** :\n- 1ère sg : **-I** *(amav-i = j'aimai / j'ai aimé)*\n- 2ème sg : **-ISTI** *(amav-isti = tu aimas / tu as aimé)*\n- 3ème sg : **-IT** *(amav-it = il aima / il a aimé)*\n- 1ère pl : **-IMUS** *(amav-imus = nous aimâmes / nous avons aimé)*\n- 2ème pl : **-ISTIS** *(amav-istis = vous aimâtes / vous avez aimé)*\n- 3ème pl : **-ERUNT** *(amav-erunt = ils aimèrent / ils ont aimé)*",
           "question": "Quelle est la désinence de la 3e personne du singulier au parfait (il/elle a fait) ?",
           "options": [
-            "-IT (ex: amavit, vicit)",
-            "-AT",
-            "-ET",
-            "-BA"
+            "-it",
+            "-at",
+            "-et",
+            "-ut"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "-at termine le présent des verbes en -are : amat veut dire « il aime », pas « il a aimé ».",
+            "-et termine le présent de verbes comme videt (« il voit ») : ce n'est pas un parfait.",
+            "-ut ressemble au petit mot ut (comme, pour que), mais ce n'est pas une désinence verbale du parfait."
+          ],
           "explanation": "La 3e personne du singulier du parfait se termine toujours par -IT !"
         },
         {
@@ -1785,6 +1893,12 @@
             "Qu'il aime"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cette traduction correspond au temps de la description (amabat), reconnaissable à son suffixe en -ba-.",
+            "Cette traduction correspond au temps de l'action achevée (amavit), pas à ce temps à venir.",
+            "Cette traduction exprime un souhait ou un ordre au subjonctif (amet), pas une certitude future."
+          ],
           "explanation": "Le suffixe -bi- avec le -t de 3e personne singulier indique le futur : il aimera !"
         },
         {
@@ -1827,10 +1941,10 @@
             {
               "question": "Qui a rédigé les 'Commentaires sur la Guerre des Gaules' (De Bello Gallico) ?",
               "options": [
-                "Jules César",
+                "César",
                 "Cicéron",
                 "Virgile",
-                "Auguste"
+                "Pompée"
               ],
               "answer": 0,
               "explanation": "César a écrit le récit détaillé de ses campagnes militaires en Gaule."
@@ -1879,6 +1993,12 @@
             "La République est sauvée !"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Tu est un pronom latin sans lien avec le verbe français tuer : attention aux faux amis !",
+            "Cette apostrophe finale s'adresse directement à Brutus, pas à l'ensemble des citoyens de la cité.",
+            "C'est le cri des républicains conjurés après l'attentat, pas la parole du dictateur blessé."
+          ],
           "explanation": "Tu = toi, quoque = aussi, mi fili = mon fils (au vocatif) !"
         },
         {
@@ -1922,9 +2042,9 @@
             {
               "question": "Quel cas de la 3ème déclinaison possède toujours la désinence -IS au singulier ?",
               "options": [
-                "Le Génitif (complément du nom)",
-                "L'Accusatif (COD)",
-                "Le Datif (COI)",
+                "Le Génitif",
+                "L'Accusatif",
+                "Le Datif",
                 "L'Ablatif"
               ],
               "answer": 0,
@@ -1945,9 +2065,9 @@
               "question": "Quel grand chef a unifié la Gaule face à César en 52 av. J.-C. ?",
               "options": [
                 "Vercingétorix",
-                "Astérix",
-                "Brennus",
-                "Clovis"
+                "Vercassivellaunos",
+                "Ambiorix",
+                "Dumnorix"
               ],
               "answer": 0,
               "explanation": "Vercingétorix, chef des Arvernes, mena la coalition gauloise à Alésia !"
@@ -1968,12 +2088,18 @@
           "content": "## Bienvenue en 3ème : L'Ère Impériale !\nEn 3ème, tu découvres les deux dernières déclinaisons latines, très élégantes et compactes.\n\nLa **4ème déclinaison** regroupe des noms dont le génitif singulier se termine par **-US** (avec un son U long) :\n- **Manus, manus** (f.) : la main, ou la troupe armée (*➔ manuel, manufacture*)\n- **Exercitus, exercitus** (m.) : l'armée (*➔ exercice*)\n- **Domus, domus** (f.) : la maison\n- **Cornu, cornus** (n.) : la corne, l'aile d'une armée (*➔ cornemuse*)\n\n💡 **Règle de reconnaissance** :\nAu dictionnaire : *manus, -us* f. ou *exercitus, -us* m.\nLe nominatif et le génitif singulier se terminent tous deux en **-us** !",
           "question": "Quelle est la désinence du génitif singulier de la 4ème déclinaison (ex: manus, exercitus) ?",
           "options": [
-            "-US (ex: manus, exercitus)",
-            "-IS",
-            "-AE",
-            "-I"
+            "-us",
+            "-is",
+            "-ae",
+            "-ei"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cette désinence de possession au singulier caractérise les noms de la troisième déclinaison.",
+            "Cette voyelle double indique le complément du nom singulier pour la première déclinaison.",
+            "-ei est le génitif de la 5e déclinaison, comme res, rei : ce n'est pas celui de manus."
+          ],
           "explanation": "La 4e déclinaison se caractérise par son génitif singulier en -US !"
         },
         {
@@ -2017,10 +2143,10 @@
             {
               "question": "À quelle déclinaison appartient le mot 'res, rei' (la chose, l'affaire) ?",
               "options": [
-                "La 5ème déclinaison (génitif en -ei)",
-                "La 1ère déclinaison",
-                "La 2ème déclinaison",
-                "La 3ème déclinaison"
+                "La 5e déclinaison",
+                "La 1re déclinaison",
+                "La 3e déclinaison",
+                "La 4e déclinaison"
               ],
               "answer": 0,
               "explanation": "Res, rei appartient à la 5e déclinaison avec son génitif en -ei."
@@ -2028,10 +2154,10 @@
             {
               "question": "Que signifie le nom féminin de la 4e déclinaison 'manus' ?",
               "options": [
-                "La main (ou la troupe armée)",
+                "La main",
                 "Le matin",
-                "La mer",
-                "La maison"
+                "La maison",
+                "La menace"
               ],
               "answer": 0,
               "explanation": "Manus = la main (qui a donné manuel, manucure...)."
@@ -2039,10 +2165,10 @@
             {
               "question": "Comment s'appelle la longue période de paix instaurée par Auguste ?",
               "options": [
-                "La Pax Romana (Paix Romaine)",
+                "La Pax Romana",
                 "La Pax Deorum",
-                "L'Aura Populi",
-                "La Concordia Magna"
+                "La Concordia",
+                "La Lex Julia"
               ],
               "answer": 0,
               "explanation": "La Pax Romana est la période de stabilité et de prospérité ouverte par le règne d'Auguste."
@@ -2063,12 +2189,18 @@
           "content": "## Relier les phrases comme un orateur\nLe pronom relatif permet d'enrichir le style en reliant deux phrases :\n- « J'admire le soldat. Le soldat défend Rome » ➔ « J'admire le soldat **qui** défend Rome ».\n\nEn latin, le pronom relatif se décline ainsi au nominatif :\n- **QUI** (masculin) : qui / lequel\n- **QUAE** (féminin) : qui / laquelle\n- **QUOD** (neutre) : qui / ce qui / lequel\n\nÀ l'accusatif (quand il est COD de la relative) :\n- **QUEM** (masculin sg.) : que / qu'\n- **QUAM** (féminin sg.) : que / qu'\n- **QUOD** (neutre sg.) : que / ce que\n\n💡 **La règle d'or du pronom relatif en latin** :\nIl prend le **GENRE** et le **NOMBRE** du mot qu'il remplace (son antécédent), mais son **CAS** dépend de son rôle dans sa propre proposition !",
           "question": "Quel pronom relatif masculin singulier utilise-t-on pour le sujet 'le soldat qui combat' (miles ...) ?",
           "options": [
-            "QUI (miles qui pugnat)",
-            "QUAE",
-            "QUOD",
-            "QUEM"
+            "qui",
+            "quae",
+            "quod",
+            "quem"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cette forme est le pronom relatif au genre féminin, comme dans femina quae cantat.",
+            "Cette forme est réservée au genre neutre singulier, par exemple templum quod stat.",
+            "Cette forme masculine est au cas complément d'objet direct : elle ne peut pas être sujet."
+          ],
           "explanation": "Pour un nom masculin singulier sujet, on emploie 'qui' : miles qui pugnat !"
         },
         {
@@ -2113,10 +2245,10 @@
             {
               "question": "De quoi dépend le cas d'un pronom relatif en latin ?",
               "options": [
-                "De sa fonction (sujet, COD, etc.) à l'intérieur de la proposition relative",
-                "Uniquement de la terminaison du mot précédent",
-                "Il est toujours au nominatif",
-                "Du bon vouloir du locuteur"
+                "De sa fonction dans la proposition relative",
+                "Du cas du nom qu'il remplace dans la phrase",
+                "Du verbe principal placé devant la virgule",
+                "De la terminaison exacte du mot précédent"
               ],
               "answer": 0,
               "explanation": "Le cas dépend de la fonction du pronom dans sa propre proposition relative."
@@ -2165,6 +2297,12 @@
             "La ville libre"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Le sens serait actif, or ce participe passif exprime que la cité subit l'assaut.",
+            "Cette tournure utilise un infinitif, alors que ce participe s'accorde comme un adjectif avec la cité.",
+            "« Libre » se dit liber en latin ; rien dans capta n'évoque la liberté."
+          ],
           "explanation": "Capta est le PPP féminin s'accordant avec urbs : la ville ayant été prise / capturée."
         },
         {
@@ -2218,10 +2356,10 @@
             {
               "question": "Sur quelle forme verbale le Participe Parfait Passif (PPP) est-il bâti ?",
               "options": [
-                "Le supin (4e temps primitif, ex: amatum)",
-                "L'infinitif présent",
+                "Le supin",
                 "Le parfait",
-                "Le présent"
+                "Le présent",
+                "L'infinitif"
               ],
               "answer": 0,
               "explanation": "Le supin (en -um) fournit le radical du PPP (ex: scriptum -> scriptus, a, um)."
@@ -2259,6 +2397,12 @@
             "D'un verbe au futur et d'un adverbe"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Un adjectif au nominatif est le cas du sujet. Ici, aucun des deux mots n'est au cas sujet.",
+            "Le génitif n'est pas le cas de cette construction, et un génitif ne s'emploie jamais avec une préposition.",
+            "Cette construction ne contient aucun verbe conjugué : un futur et un adverbe ne suffisent pas à la former."
+          ],
           "explanation": "Nom à l'ablatif + participe à l'ablatif forme la proposition absolue !"
         },
         {
@@ -2302,10 +2446,10 @@
             {
               "question": "Comment se traduit fidèlement l'ablatif absolu 'Hostibus victis' ?",
               "options": [
-                "Les ennemis ayant été vaincus (une fois les ennemis vaincus)",
-                "L'ennemi combat courageusement",
-                "Pour vaincre les ennemis",
-                "Avec des armes ennemies"
+                "Une fois les ennemis vaincus",
+                "Pendant que l'ennemi combattait",
+                "Avant la défaite des ennemis",
+                "Pour faire fuir les ennemis"
               ],
               "answer": 0,
               "explanation": "Hostibus (Abl. pl.) + victis (PPP Abl. pl.) = une fois les ennemis vaincus."
@@ -2313,10 +2457,10 @@
             {
               "question": "Que signifie 'Cicerone consule' ?",
               "options": [
-                "Sous le consulat de Cicéron (Cicéron étant consul)",
-                "Cicéron parle au consul",
-                "Le consul condamne Cicéron",
-                "Cicéron cherche un consul"
+                "Sous le consulat de Cicéron",
+                "Sur l'ordre du consul Cicéron",
+                "Devant le tribunal de Cicéron",
+                "Pendant le discours de Cicéron"
               ],
               "answer": 0,
               "explanation": "C'est un ablatif absolu nominal : Cicéron étant consul."
@@ -2324,10 +2468,10 @@
             {
               "question": "Pourquoi dit-on que cette proposition est 'absolue' ?",
               "options": [
-                "Parce qu'elle est grammaticalement détachée (absolutus) du reste de la phrase",
-                "Parce qu'elle donne un ordre absolu",
-                "Parce qu'elle ne contient que des noms divins",
-                "Parce qu'elle est toujours vraie"
+                "Elle est détachée du reste de la phrase",
+                "Elle exprime une certitude incontestable",
+                "Elle dépend directement du verbe principal",
+                "Elle donne un ordre impératif et définitif"
               ],
               "answer": 0,
               "explanation": "Absolutus signifie délié / détaché des liens grammaticaux de la phrase principale."
@@ -2348,12 +2492,18 @@
           "content": "## Actif ou Passif ?\n- **À la voix active** : le sujet fait l'action ➔ *« Le maître loue l'élève »* (*Magister discipulum laudat*).\n- **À la voix passive** : le sujet subit l'action ➔ *« L'élève est loué par le maître »* (*Discipulus a magistro laudatur*).\n\nLes désinences personnelles passives au présent :\n- 1ère sg : **-OR** *(laudor = je suis loué)*\n- 2ème sg : **-RIS** *(laudaris = tu es loué)*\n- 3ème sg : **-TUR** *(laudatur = il est loué)*\n- 1ère pl : **-MUR** *(laudamur = nous sommes loués)*\n- 2ème pl : **-MINI** *(laudamini = vous êtes loués)*\n- 3ème pl : **-NTUR** *(laudantur = ils sont loués)*\n\n💡 **Le Complément d'Agent (par qui l'action est faite)** :\nIl s'exprime avec la préposition **A** (ou **AB** devant voyelle) suivie de l'**Ablatif** !\n*A magistro* = par le maître.",
           "question": "Quelle est la désinence de 3e personne du singulier au passif (ex: 'il est aimé') ?",
           "options": [
-            "-TUR (ex: amatur, laudatur)",
-            "-T",
-            "-NTUR",
-            "-RIS"
+            "-tur",
+            "-ntur",
+            "-ris",
+            "-mur"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cette terminaison indique un sujet pluriel (ils ou elles), pas un sujet singulier.",
+            "Cette finale s'emploie pour la deuxième personne du singulier (tu es félicité).",
+            "-mur est la désinence de la 1re personne du pluriel au passif, comme amamur (nous sommes aimés)."
+          ],
           "explanation": "La terminaison -tur indique la 3e personne singulier passive : amatur = il est aimé."
         },
         {
@@ -2418,10 +2568,10 @@
             {
               "question": "Qui était le plus grand orateur et maître de la rhétorique à Rome ?",
               "options": [
-                "Cicéron (Marcus Tullius Cicero)",
-                "Néron",
+                "Cicéron",
+                "Sénèque",
                 "Pompée",
-                "Romulus"
+                "Brutus"
               ],
               "answer": 0,
               "explanation": "Cicéron est considéré comme l'inégalable maître de l'éloquence latine."
@@ -2448,6 +2598,12 @@
             "Sujet au Génitif + Verbe au Futur"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Dans cette subordonnée, le sujet ne reste pas au cas sujet habituel de la principale.",
+            "Le sujet n'est jamais à l'ablatif ici. L'ablatif sert plutôt aux compléments de moyen, de lieu ou de temps.",
+            "Le cas du complément du nom ne peut jamais introduire le sujet d'une telle proposition."
+          ],
           "explanation": "C'est la règle d'or : Sujet à l'Accusatif + Verbe à l'Infinitif !"
         },
         {
@@ -2501,10 +2657,10 @@
             {
               "question": "Y a-t-il un mot équivalent à notre 'que' dans une proposition infinitive latine ?",
               "options": [
-                "Non, la structure Accusatif + Infinitif exprime directement le lien",
-                "Oui, le mot 'quod' est obligatoire",
-                "Oui, le mot 'cum'",
-                "Oui, le mot 'ut'"
+                "Non, aucun mot de liaison n'est employé",
+                "Oui, la conjonction 'quod' est obligatoire",
+                "Oui, la proposition commence par 'ut'",
+                "Oui, le relatif 'quem' introduit le verbe"
               ],
               "answer": 0,
               "explanation": "Le latin classique n'utilise aucun mot de liaison : la structure Accusatif + Infinitif suffit !"
@@ -2536,12 +2692,18 @@
           "content": "## Le poème national de Rome\nCommandée par l'empereur Auguste pour célébrer les origines divines de Rome, l'**Énéide** est le plus grand chef-d'œuvre poétique de l'Antiquité romaine.\n\nElle raconte l'histoire du prince troyen **Énée** (*Aeneas*), fils de la déesse Vénus, qui fuit Troie en flammes en portant son vieux père Anchise sur ses épaules et tenant son jeune fils Iule par la main.\n\nAprès un long voyage maritime plein de périls à travers la Méditerranée, Énée aborde en Italie pour y fonder la lignée qui donnera naissance à Rome.\n\nLes tout premiers mots de l'Énéide, appris par cœur par tous les écoliers de l'Empire :\n*« **Arma virumque cano**... »*\n(« Je chante les armes et le héros... »).",
           "question": "Quel poète romain a composé l'Énéide sous le règne d'Auguste ?",
           "options": [
-            "Virgile (Publius Vergilius Maro)",
+            "Virgile",
             "Ovide",
-            "Homère",
-            "Cicéron"
+            "Horace",
+            "Lucrèce"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Cet auteur a composé les Métamorphoses et L'Art d'aimer, pas cette grande épopée nationale.",
+            "Horace, poète du temps d'Auguste, a écrit des Odes et des Satires, pas l'Énéide.",
+            "Lucrèce est mort avant le règne d'Auguste et il a écrit De la nature, pas l'Énéide."
+          ],
           "explanation": "C'est le poète Virgile qui a écrit les 12 chants de l'Énéide !"
         },
         {
@@ -2585,10 +2747,10 @@
             {
               "question": "Qui était le héros troyen fondateur dont Virgile chante les aventures dans l'Énéide ?",
               "options": [
-                "Énée (Aeneas)",
-                "Achille",
-                "Ulysse",
-                "Romulus"
+                "Énée",
+                "Hector",
+                "Priam",
+                "Pâris"
               ],
               "answer": 0,
               "explanation": "Énée est le héros troyen dont les descendants fonderont Rome."
@@ -2607,10 +2769,10 @@
             {
               "question": "Que signifie la particule attachée '-que' dans 'virumque' ?",
               "options": [
-                "Et ('virumque' = et l'homme / le héros)",
-                "Non",
+                "Et",
+                "Ou",
                 "Mais",
-                "Si"
+                "Car"
               ],
               "answer": 0,
               "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans SPQR : Senatus Populus-que)."
@@ -2631,12 +2793,18 @@
           "content": "## Tu touches au but, jeune érudit !\nDe ton premier *« Salve ! »* en 5ème jusqu'aux chefs-d'œuvre de Virgile et à l'Ablatif Absolu en 3ème, tu as parcouru **1000 ans d'histoire et de langue romaine** :\n\n- **Les 5 déclinaisons** : *rosa* (1), *dominus/templum* (2), *rex/civis/mare* (3), *manus* (4), *res/dies* (5).\n- **Tous les cas** : Nominatif (Sujet), Vocatif (Appel), Accusatif (COD), Génitif (Complément du nom), Datif (COI), Ablatif (Complément circonstanciel).\n- **Tous les temps de l'indicatif** : Présent (*amat*), Imparfait (*amabat*), Parfait (*amavit*), Futur (*amabit*).\n- **Les constructions reines** : Participe Parfait Passif (*amatus*), Ablatif Absolu (*urbe capta*), Proposition Infinitive (*scio te venire*), Voix Passive (*laudatur*).\n\nPrépare-toi à gravir les marches sacrées du Forum pour le couronnement suprême !",
           "question": "Quelle construction réunit un nom et un participe tous deux au cas ablatif sans mot de liaison ?",
           "options": [
-            "L'Ablatif Absolu (ex: Caesare duce, urbe capta)",
-            "La Proposition Infinitive",
-            "Le Comparatif de supériorité",
-            "Le Vocatif d'apostrophe"
+            "L'Ablatif absolu",
+            "L'Accusatif de relation",
+            "La Proposition infinitive",
+            "Le Datif de possession"
           ],
           "answer": 0,
+          "explications": [
+            "",
+            "Le nom est à l'accusatif dans cette construction, alors que la question parle de deux mots à l'ablatif.",
+            "La proposition infinitive met son sujet à l'accusatif et son verbe à l'infinitif : aucun ablatif.",
+            "Le datif de possession dit à qui appartient une chose, avec le verbe être : il n'utilise pas deux ablatifs."
+          ],
           "explanation": "C'est l'Ablatif Absolu, véritable marque de fabrique du latin classique !"
         },
         {

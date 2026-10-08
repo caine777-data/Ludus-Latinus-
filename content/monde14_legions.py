@@ -30,6 +30,12 @@ Autre exemple très fréquent :
             "question": "Comment s'accorde l'adjectif 'fortis' avec 'miles' (soldat, masculin singulier) ?",
             "options": ["Miles fortis", "Miles fortus", "Miles fortum", "Miles forte"],
             "answer": 0,
+            "explications": [
+                "",
+                "La finale -us appartient aux adjectifs comme bonus, bona, bonum, qui suivent un autre modèle que fortis.",
+                "-um est la finale de bonum, accusatif masculin ou neutre d'un autre modèle d'adjectifs, pas celle de fortis.",
+                "Cette terminaison en -e est réservée au genre neutre (comme mare), or ce nom est masculin.",
+            ],
             "explanation": "Au masculin singulier nominatif, l'adjectif est 'fortis' : miles fortis !",
         },
         {
@@ -88,18 +94,13 @@ Le fier centurion de Scipion l'Africain évalue ta connaissance des légions. R�
             "questions": [
                 {
                     "question": "Quel suffixe forme le comparatif de supériorité (ex: plus fort) en latin ?",
-                    "options": ["-IOR (ex: fortior)", "-ISSIMUS", "-UM", "-IS"],
+                    "options": ["-ior", "-issimus", "-illimus", "-errimus"],
                     "answer": 0,
                     "explanation": "Le comparatif se forme toujours avec le suffixe -ior (-ius au neutre) !"
                 },
                 {
                     "question": "Que signifie l'adjectif 'clarissimus' ?",
-                    "options": [
-                        "Le plus célèbre / très célèbre",
-                        "Moins clair",
-                        "Un peu célèbre",
-                        "Pas célèbre du tout"
-                    ],
+                    "options": ["Très célèbre", "Moins célèbre", "Aussi célèbre", "Plus célèbre"],
                     "answer": 0,
                     "explanation": "Le superlatif en -issimus exprime le très haut degré d'une qualité."
                 },

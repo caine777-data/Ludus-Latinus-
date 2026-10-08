@@ -29,6 +29,12 @@ Exactement comme un adjectif ordinaire de 1ère classe en *-us, -a, -um* (comme 
             "question": "Que signifie le participe parfait passif 'urbs capta' (urbs = la ville) ?",
             "options": ["La ville capturée / prise", "La ville qui capture", "Capturer la ville", "La ville libre"],
             "answer": 0,
+            "explications": [
+                "",
+                "Le sens serait actif, or ce participe passif exprime que la cité subit l'assaut.",
+                "Cette tournure utilise un infinitif, alors que ce participe s'accorde comme un adjectif avec la cité.",
+                "« Libre » se dit liber en latin ; rien dans capta n'évoque la liberté.",
+            ],
             "explanation": "Capta est le PPP féminin s'accordant avec urbs : la ville ayant été prise / capturée.",
         },
         {
@@ -81,7 +87,7 @@ Un centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. R
                 },
                 {
                     "question": "Sur quelle forme verbale le Participe Parfait Passif (PPP) est-il bâti ?",
-                    "options": ["Le supin (4e temps primitif, ex: amatum)", "L'infinitif présent", "Le parfait", "Le présent"],
+                    "options": ["Le supin", "Le parfait", "Le présent", "L'infinitif"],
                     "answer": 0,
                     "explanation": "Le supin (en -um) fournit le radical du PPP (ex: scriptum -> scriptus, a, um)."
                 },

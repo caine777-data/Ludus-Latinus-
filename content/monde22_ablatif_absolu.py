@@ -39,6 +39,12 @@ En français, on traduit élégamment par :
                 "D'un verbe au futur et d'un adverbe"
             ],
             "answer": 0,
+            "explications": [
+                "",
+                "Un adjectif au nominatif est le cas du sujet. Ici, aucun des deux mots n'est au cas sujet.",
+                "Le génitif n'est pas le cas de cette construction, et un génitif ne s'emploie jamais avec une préposition.",
+                "Cette construction ne contient aucun verbe conjugué : un futur et un adverbe ne suffisent pas à la former.",
+            ],
             "explanation": "Nom à l'ablatif + participe à l'ablatif forme la proposition absolue !",
         },
         {
@@ -88,34 +94,19 @@ Quintilien, précepteur des princes impériaux, examine ta compréhension de l'a
             "questions": [
                 {
                     "question": "Comment se traduit fidèlement l'ablatif absolu 'Hostibus victis' ?",
-                    "options": [
-                        "Les ennemis ayant été vaincus (une fois les ennemis vaincus)",
-                        "L'ennemi combat courageusement",
-                        "Pour vaincre les ennemis",
-                        "Avec des armes ennemies"
-                    ],
+                    "options": ["Une fois les ennemis vaincus", "Pendant que l'ennemi combattait", "Avant la défaite des ennemis", "Pour faire fuir les ennemis"],
                     "answer": 0,
                     "explanation": "Hostibus (Abl. pl.) + victis (PPP Abl. pl.) = une fois les ennemis vaincus."
                 },
                 {
                     "question": "Que signifie 'Cicerone consule' ?",
-                    "options": [
-                        "Sous le consulat de Cicéron (Cicéron étant consul)",
-                        "Cicéron parle au consul",
-                        "Le consul condamne Cicéron",
-                        "Cicéron cherche un consul"
-                    ],
+                    "options": ["Sous le consulat de Cicéron", "Sur l'ordre du consul Cicéron", "Devant le tribunal de Cicéron", "Pendant le discours de Cicéron"],
                     "answer": 0,
                     "explanation": "C'est un ablatif absolu nominal : Cicéron étant consul."
                 },
                 {
                     "question": "Pourquoi dit-on que cette proposition est 'absolue' ?",
-                    "options": [
-                        "Parce qu'elle est grammaticalement détachée (absolutus) du reste de la phrase",
-                        "Parce qu'elle donne un ordre absolu",
-                        "Parce qu'elle ne contient que des noms divins",
-                        "Parce qu'elle est toujours vraie"
-                    ],
+                    "options": ["Elle est détachée du reste de la phrase", "Elle exprime une certitude incontestable", "Elle dépend directement du verbe principal", "Elle donne un ordre impératif et définitif"],
                     "answer": 0,
                     "explanation": "Absolutus signifie délié / détaché des liens grammaticaux de la phrase principale."
                 }

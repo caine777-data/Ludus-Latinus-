@@ -26,6 +26,12 @@ Exemples extraordinaires :
             "question": "Quel mot latin a donné en français 'aquarium' et 'aquatique' ?",
             "options": ["Aqua (l'eau)", "Avis (l'oiseau)", "Ager (le champ)", "Arbor (l'arbre)"],
             "answer": 0,
+            "explications": [
+                "",
+                "Ce mot a donné en français aviation et avicole, qui se rapportent aux oiseaux et au vol.",
+                "Ce mot a donné en français agriculture et agraire, désignant la terre cultivée et les campagnes.",
+                "Ce mot a donné en français arbre et arboriculture, liés aux végétaux et aux forêts.",
+            ],
             "explanation": "Aqua signifie l'eau en latin !",
         },
         {
@@ -82,7 +88,7 @@ Réponds avec brio à leurs ultimes énigmes pour ouvrir la suite de ton voyage 
             "questions": [
                 {
                     "question": "Que signifie la célèbre maxime 'Carpe diem' ?",
-                    "options": ["Mange des carpes tous les jours", "Cueille le jour présent (profite de l'instant)", "Dors bien cette nuit", "Attention au danger"],
+                    "options": ["Pense toujours à demain", "Cueille le jour présent", "Bannis la peine présente", "Retiens le temps qui fuit"],
                     "answer": 1,
                     "explanation": "Carpe diem = Cueille le jour présent / profite de la vie !"
                 },
@@ -100,7 +106,7 @@ Réponds avec brio à leurs ultimes énigmes pour ouvrir la suite de ton voyage 
                 },
                 {
                     "question": "Que veut dire la formule 'Mens sana in corpore sano' ?",
-                    "options": ["Un esprit sain dans un corps sain", "Un grand corps sans tête", "La santé avant tout", "Toujours s'entraîner"],
+                    "options": ["Un esprit sain dans un corps sain", "Un corps robuste pour un esprit pur", "La force du corps guide la pensée", "Une vie paisible sans aucun souci"],
                     "answer": 0,
                     "explanation": "Mens sana in corpore sano = Un esprit sain dans un corps sain !"
                 }

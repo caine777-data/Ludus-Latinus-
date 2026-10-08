@@ -28,6 +28,12 @@ L'alphabet latin est l'ancêtre direct de notre alphabet français ! Pourtant, �
             "question": "Comment les Romains prononçaient-ils la lettre C dans le mot 'Circus' ?",
             "options": ["Toujours [K] : 'Kirkous'", "Toujours [S] : 'Sirsus'", "Comme un [CH] : 'Chirchus'", "Elle était muette"],
             "answer": 0,
+            "explications": [
+                "",
+                "Confusion avec le français moderne : en latin classique, le son [S] n'existe pas pour cette consonne.",
+                "C'est la prononciation de l'italien moderne ou du latin ecclésiastique, pas celle des Romains de l'Antiquité.",
+                "En latin, toutes les lettres écrites se prononcent distinctement : aucune consonne n'est muette.",
+            ],
             "explanation": "Exactement ! En latin classique, le C claque toujours comme un [K] !",
         },
         {
@@ -91,6 +97,12 @@ Pas de 0, 1, 2, 3 à Rome ! Les Romains comptaient avec des lettres majuscules i
             "question": "Combien vaut le nombre romain XIV ?",
             "options": ["16", "14", "24", "11"],
             "answer": 1,
+            "explications": [
+                "Tu as additionné V et I (VI = 6), or le I placé avant le V se soustrait.",
+                "",
+                "Tu as compté deux dizaines (XX), mais il n'y a qu'un seul chiffre dix.",
+                "Tu as oublié la valeur du V (cinq) en ne comptant que le X et un bâton.",
+            ],
             "explanation": "Bravo ! X vaut 10 et IV vaut 4 (5 - 1), donc 10 + 4 = 14 !",
         },
         {
@@ -123,7 +135,7 @@ Pour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse d
             "questions": [
                 {
                     "question": "Que veut dire 'Vale' quand tu quittes un ami romain ?",
-                    "options": ["Bonjour", "Au revoir / Porte-toi bien", "Merci", "À l'aide"],
+                    "options": ["Bonjour", "Au revoir", "Bonne nuit", "Bon appétit"],
                     "answer": 1,
                     "explanation": "Vale signifie 'porte-toi bien / au revoir'."
                 },
@@ -135,7 +147,7 @@ Pour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse d
                 },
                 {
                     "question": "Quel animal a sauvé Romulus et Rémus du fleuve ?",
-                    "options": ["Une biche", "Une louve (Lupa)", "Une aigle", "Un dauphin"],
+                    "options": ["Une biche", "Une louve", "Une chèvre", "Une ourse"],
                     "answer": 1,
                     "explanation": "C'est bien la louve Lupa qui les a allaités !"
                 }

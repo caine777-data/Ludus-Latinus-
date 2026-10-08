@@ -26,6 +26,12 @@ La plupart des gladiateurs étaient de véritables stars très populaires à Rom
             "question": "Quelle arme redoutable caractérise le gladiateur Rétiaire ?",
             "options": ["Un arc géant", "Un filet et un trident", "Une massue de fer", "Deux longues haches"],
             "answer": 1,
+            "explications": [
+                "Les gladiateurs s'affrontaient au corps à corps dans l'arène : aucun combattant n'utilisait d'arc de tir.",
+                "",
+                "La massue de fer n'était pas l'arme du rétiaire, un gladiateur léger qui misait sur la vitesse.",
+                "Aucune catégorie de gladiateur ne combattait avec deux haches : c'est une image de film plus que de l'arène.",
+            ],
             "explanation": "Le Rétiaire combat avec son filet (rete) et son trident !",
         },
         {

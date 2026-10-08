@@ -28,8 +28,14 @@ Dans le dictionnaire, un nom de la 3e déclinaison se reconnaît TOUJOURS à son
 💡 **Astuce magique pour trouver le radical** :
 Prends le génitif singulier (*reg-is*) et retire la terminaison **-is**. Tu obtiens le radical : **REG-** ! C'est sur ce radical que tu colles toutes les autres terminaisons.""",
             "question": "À quelle terminaison du génitif singulier reconnaît-on un nom de la 3ème déclinaison ?",
-            "options": ["En -IS (ex: regis, ducis)", "En -AE (ex: rosae)", "En -I (ex: domini)", "En -UM (ex: templi)"],
+            "options": ["En -IS", "En -AE", "En -I", "En -UM"],
             "answer": 0,
+            "explications": [
+                "",
+                "-ae est la marque du génitif des noms comme rosa, pas de ceux de la 3e déclinaison.",
+                "Cette désinence caractérise les noms masculins et neutres de la deuxième déclinaison.",
+                "-um marque le nominatif ou l'accusatif des noms neutres, ou un génitif pluriel, pas le génitif singulier.",
+            ],
             "explanation": "Exactement ! Le génitif singulier en -is est la signature absolue de la 3e déclinaison !",
         },
         {

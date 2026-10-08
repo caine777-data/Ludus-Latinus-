@@ -24,6 +24,12 @@ Les Romains vénéraient douze grands dieux (*les dieux olympiens*). Leurs noms 
             "question": "Quel dieu romain brandit le trident et commande aux océans ?",
             "options": ["Jupiter", "Neptune", "Mars", "Vulcain"],
             "answer": 1,
+            "explications": [
+                "Ce souverain des dieux commande au ciel et lance la foudre depuis le mont Capitole.",
+                "",
+                "Ce protecteur des légions porte le casque et la lance : il règne sur la guerre.",
+                "Ce forgeron divin travaille le métal dans le feu des volcans avec son marteau.",
+            ],
             "explanation": "C'est Neptune, dieu des mers et des séismes avec son trident !",
         },
         {
@@ -82,6 +88,12 @@ Il offrit ensuite la tête de Méduse à la déesse Minerve, qui la fixa sur sa 
             "question": "Quelle était l'arme secrète de Persée pour vaincre Méduse sans croiser ses yeux ?",
             "options": ["Un bandeau sur les yeux", "Un bouclier miroir poli", "Une cape d'invisibilité", "Une flèche empoisonnée"],
             "answer": 1,
+            "explications": [
+                "Aveuglé de la sorte, le héros n'aurait pas pu porter un coup d'épée précis au monstre.",
+                "",
+                "Persée avait bien un casque d'invisibilité, mais il ne le protégeait pas du regard pétrifiant de Méduse.",
+                "Une flèche ne protège pas du regard pétrifiant. Persée devait approcher Méduse de près, pas la viser de loin.",
+            ],
             "explanation": "Exactement ! Son bouclier servait de miroir magique pour voir le monstre sans être pétrifié.",
         },
         {
@@ -103,13 +115,13 @@ Retrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner un
                 },
                 {
                     "question": "Pourquoi les ailes d'Icare ont-elles fondu ?",
-                    "options": ["Il s'est approché trop près du soleil", "Une flèche l'a touché", "Il a plu trop fort", "Le vent était trop violent"],
+                    "options": ["Il a volé trop près du soleil", "Il a traversé un violent orage", "La foudre a embrasé ses plumes", "Le vent glacial a brisé la cire"],
                     "answer": 0,
                     "explanation": "La cire tenant les plumes a fondu sous la chaleur du soleil !"
                 },
                 {
                     "question": "En quoi Méduse transformait-elle ceux qui croisaient son regard ?",
-                    "options": ["En or", "En poussière", "En statues de pierre", "En serpents"],
+                    "options": ["En arbres morts", "En piliers de sel", "En statues de pierre", "En blocs de bronze"],
                     "answer": 2,
                     "explanation": "Son regard pétrifiait instantanément en pierre !"
                 }

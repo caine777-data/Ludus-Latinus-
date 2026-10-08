@@ -30,8 +30,14 @@ En latin, le pronom relatif se décline ainsi au nominatif :
 💡 **La règle d'or du pronom relatif en latin** :
 Il prend le **GENRE** et le **NOMBRE** du mot qu'il remplace (son antécédent), mais son **CAS** dépend de son rôle dans sa propre proposition !""",
             "question": "Quel pronom relatif masculin singulier utilise-t-on pour le sujet 'le soldat qui combat' (miles ...) ?",
-            "options": ["QUI (miles qui pugnat)", "QUAE", "QUOD", "QUEM"],
+            "options": ["qui", "quae", "quod", "quem"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cette forme est le pronom relatif au genre féminin, comme dans femina quae cantat.",
+                "Cette forme est réservée au genre neutre singulier, par exemple templum quod stat.",
+                "Cette forme masculine est au cas complément d'objet direct : elle ne peut pas être sujet.",
+            ],
             "explanation": "Pour un nom masculin singulier sujet, on emploie 'qui' : miles qui pugnat !",
         },
         {
@@ -78,12 +84,7 @@ Le préfet des routes impériales vérifie ton laissez-passer grammatical. Réus
             "questions": [
                 {
                     "question": "De quoi dépend le cas d'un pronom relatif en latin ?",
-                    "options": [
-                        "De sa fonction (sujet, COD, etc.) à l'intérieur de la proposition relative",
-                        "Uniquement de la terminaison du mot précédent",
-                        "Il est toujours au nominatif",
-                        "Du bon vouloir du locuteur"
-                    ],
+                    "options": ["De sa fonction dans la proposition relative", "Du cas du nom qu'il remplace dans la phrase", "Du verbe principal placé devant la virgule", "De la terminaison exacte du mot précédent"],
                     "answer": 0,
                     "explanation": "Le cas dépend de la fonction du pronom dans sa propre proposition relative."
                 },

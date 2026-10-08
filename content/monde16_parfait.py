@@ -30,8 +30,14 @@ En français, il se traduit selon le contexte :
 - 2ème pl : **-ISTIS** *(amav-istis = vous aimâtes / vous avez aimé)*
 - 3ème pl : **-ERUNT** *(amav-erunt = ils aimèrent / ils ont aimé)*""",
             "question": "Quelle est la désinence de la 3e personne du singulier au parfait (il/elle a fait) ?",
-            "options": ["-IT (ex: amavit, vicit)", "-AT", "-ET", "-BA"],
+            "options": ["-it", "-at", "-et", "-ut"],
             "answer": 0,
+            "explications": [
+                "",
+                "-at termine le présent des verbes en -are : amat veut dire « il aime », pas « il a aimé ».",
+                "-et termine le présent de verbes comme videt (« il voit ») : ce n'est pas un parfait.",
+                "-ut ressemble au petit mot ut (comme, pour que), mais ce n'est pas une désinence verbale du parfait.",
+            ],
             "explanation": "La 3e personne du singulier du parfait se termine toujours par -IT !",
         },
         {

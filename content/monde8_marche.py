@@ -25,6 +25,12 @@ Les Romains mangeaient peu le matin : un morceau de pain (*panis*) frotté d'ail
             "question": "Que signifie le mot latin 'panis' qui a donné notre mot 'panier' ?",
             "options": ["Le pain", "La pomme", "Le panier", "Le poisson"],
             "answer": 0,
+            "explications": [
+                "",
+                "La pomme se disait malum ou pomum en latin, jamais panis.",
+                "Le panier est le mot français qui descend de panis : la question demande le sens du mot latin.",
+                "Cet animal aquatique se disait piscis en latin, qui a donné piscine et pisciculture en français.",
+            ],
             "explanation": "Bravo ! 'Panis' est le pain, la nourriture essentielle du citoyen romain !",
         },
         {
@@ -100,7 +106,7 @@ Réponds à ses énigmes sur la vie romaine pour remporter une bourse de **seste
                 },
                 {
                     "question": "Que signifie 'pecunia' en latin ?",
-                    "options": ["L'argent / la monnaie", "Le poisson", "La maison", "Le cheval"],
+                    "options": ["L'argent", "Le bétail", "Le grenier", "Le marché"],
                     "answer": 0,
                     "explanation": "Parfait ! Pecunia = l'argent, qui a donné le mot français pécuniaire !",
                 },

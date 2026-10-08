@@ -51,7 +51,9 @@ def _monde_du_mot(entree, curriculum):
     formes = [f for f in formes if len(f) >= 3]
     for monde in curriculum:
         for lecon in monde.get("lessons", []):
-            texte = json.dumps(lecon, ensure_ascii=False).lower()
+            # Les explications des mauvaises réponses citent des mots pas encore
+            # enseignés : elles ne comptent pas pour rattacher un mot à un monde.
+            texte = json.dumps({k: v for k, v in lecon.items() if k != "explications"}, ensure_ascii=False).lower()
             if any(re.search(r"(?<![a-zà-ÿ])" + re.escape(f) + r"(?![a-zà-ÿ])", texte) for f in formes):
                 return monde["id"]
     return ""

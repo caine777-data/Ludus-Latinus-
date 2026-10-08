@@ -31,6 +31,12 @@ Mais loin de sauver la République, cet assassinat déclenche de nouvelles guerr
                 "La République est sauvée !"
             ],
             "answer": 0,
+            "explications": [
+                "",
+                "Tu est un pronom latin sans lien avec le verbe français tuer : attention aux faux amis !",
+                "Cette apostrophe finale s'adresse directement à Brutus, pas à l'ensemble des citoyens de la cité.",
+                "C'est le cri des républicains conjurés après l'attentat, pas la parole du dictateur blessé.",
+            ],
             "explanation": "Tu = toi, quoque = aussi, mi fili = mon fils (au vocatif) !",
         },
         {
@@ -73,7 +79,7 @@ Le grand consul de la République romaine monte les marches du temple de Jupiter
             "questions": [
                 {
                     "question": "Quel cas de la 3ème déclinaison possède toujours la désinence -IS au singulier ?",
-                    "options": ["Le Génitif (complément du nom)", "L'Accusatif (COD)", "Le Datif (COI)", "L'Ablatif"],
+                    "options": ["Le Génitif", "L'Accusatif", "Le Datif", "L'Ablatif"],
                     "answer": 0,
                     "explanation": "Le génitif singulier en -is est l'indicateur universel de la 3e déclinaison !"
                 },
@@ -85,7 +91,7 @@ Le grand consul de la République romaine monte les marches du temple de Jupiter
                 },
                 {
                     "question": "Quel grand chef a unifié la Gaule face à César en 52 av. J.-C. ?",
-                    "options": ["Vercingétorix", "Astérix", "Brennus", "Clovis"],
+                    "options": ["Vercingétorix", "Vercassivellaunos", "Ambiorix", "Dumnorix"],
                     "answer": 0,
                     "explanation": "Vercingétorix, chef des Arvernes, mena la coalition gauloise à Alésia !"
                 }

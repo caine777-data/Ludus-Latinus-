@@ -30,8 +30,14 @@ Les désinences personnelles passives au présent :
 Il s'exprime avec la préposition **A** (ou **AB** devant voyelle) suivie de l'**Ablatif** !
 *A magistro* = par le maître.""",
             "question": "Quelle est la désinence de 3e personne du singulier au passif (ex: 'il est aimé') ?",
-            "options": ["-TUR (ex: amatur, laudatur)", "-T", "-NTUR", "-RIS"],
+            "options": ["-tur", "-ntur", "-ris", "-mur"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cette terminaison indique un sujet pluriel (ils ou elles), pas un sujet singulier.",
+                "Cette finale s'emploie pour la deuxième personne du singulier (tu es félicité).",
+                "-mur est la désinence de la 1re personne du pluriel au passif, comme amamur (nous sommes aimés).",
+            ],
             "explanation": "La terminaison -tur indique la 3e personne singulier passive : amatur = il est aimé.",
         },
         {
@@ -96,7 +102,7 @@ Le procureur public de la Curie met à l'épreuve ton discernement de la voix pa
                 },
                 {
                     "question": "Qui était le plus grand orateur et maître de la rhétorique à Rome ?",
-                    "options": ["Cicéron (Marcus Tullius Cicero)", "Néron", "Pompée", "Romulus"],
+                    "options": ["Cicéron", "Sénèque", "Pompée", "Brutus"],
                     "answer": 0,
                     "explanation": "Cicéron est considéré comme l'inégalable maître de l'éloquence latine."
                 }

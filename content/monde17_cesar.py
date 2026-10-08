@@ -36,6 +36,12 @@ Après le présent et les temps du passé, découvrons le **Futur** latin :
             "question": "Que signifie la forme 'amabit' au futur ?",
             "options": ["Il aimera", "Il aimait", "Il aima", "Qu'il aime"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cette traduction correspond au temps de la description (amabat), reconnaissable à son suffixe en -ba-.",
+                "Cette traduction correspond au temps de l'action achevée (amavit), pas à ce temps à venir.",
+                "Cette traduction exprime un souhait ou un ordre au subjonctif (amet), pas une certitude future.",
+            ],
             "explanation": "Le suffixe -bi- avec le -t de 3e personne singulier indique le futur : il aimera !",
         },
         {
@@ -89,7 +95,7 @@ Le porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. T
             "questions": [
                 {
                     "question": "Qui a rédigé les 'Commentaires sur la Guerre des Gaules' (De Bello Gallico) ?",
-                    "options": ["Jules César", "Cicéron", "Virgile", "Auguste"],
+                    "options": ["César", "Cicéron", "Virgile", "Pompée"],
                     "answer": 0,
                     "explanation": "César a écrit le récit détaillé de ses campagnes militaires en Gaule."
                 },

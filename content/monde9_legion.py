@@ -25,6 +25,12 @@ Un légionnaire portait sur son dos un sac de plus de 30 kg contenant son équip
             "question": "Comment s'appelle le grand bouclier rectangulaire du soldat romain ?",
             "options": ["Le Scutum", "Le Pilum", "Le Gladius", "La Galea"],
             "answer": 0,
+            "explications": [
+                "",
+                "C'est le javelot lourd lancé par le soldat romain avant de charger au corps à corps.",
+                "C'est l'épée courte à double tranchant servant à frapper dans les rangs serrés.",
+                "C'est le casque de bronze ou de fer qui protégeait la tête du soldat.",
+            ],
             "explanation": "C'est bien le Scutum, qui protégeait presque tout le corps du légionnaire !",
         },
         {
@@ -100,7 +106,7 @@ Fais honneur à ta formation romaine pour remporter la victoire et une bourse de
                 },
                 {
                     "question": "Quel oiseau impérial servait d'emblème doré aux légions romaines ?",
-                    "options": ["L'Aigle (Aquila)", "Le Faucon", "La Colombe", "Le Hibou"],
+                    "options": ["L'Aigle", "Le Faucon", "Le Vautour", "L'Épervier"],
                     "answer": 0,
                     "explanation": "L'Aigle (Aquila) était l'insigne sacré porté par l'aquilifer !",
                 },

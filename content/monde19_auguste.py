@@ -26,8 +26,14 @@ La **4ème déclinaison** regroupe des noms dont le génitif singulier se termin
 Au dictionnaire : *manus, -us* f. ou *exercitus, -us* m.
 Le nominatif et le génitif singulier se terminent tous deux en **-us** !""",
             "question": "Quelle est la désinence du génitif singulier de la 4ème déclinaison (ex: manus, exercitus) ?",
-            "options": ["-US (ex: manus, exercitus)", "-IS", "-AE", "-I"],
+            "options": ["-us", "-is", "-ae", "-ei"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cette désinence de possession au singulier caractérise les noms de la troisième déclinaison.",
+                "Cette voyelle double indique le complément du nom singulier pour la première déclinaison.",
+                "-ei est le génitif de la 5e déclinaison, comme res, rei : ce n'est pas celui de manus.",
+            ],
             "explanation": "La 4e déclinaison se caractérise par son génitif singulier en -US !",
         },
         {
@@ -85,19 +91,19 @@ Vitruve, le grand théoricien de l'architecture romaine, teste ta maîtrise des 
             "questions": [
                 {
                     "question": "À quelle déclinaison appartient le mot 'res, rei' (la chose, l'affaire) ?",
-                    "options": ["La 5ème déclinaison (génitif en -ei)", "La 1ère déclinaison", "La 2ème déclinaison", "La 3ème déclinaison"],
+                    "options": ["La 5e déclinaison", "La 1re déclinaison", "La 3e déclinaison", "La 4e déclinaison"],
                     "answer": 0,
                     "explanation": "Res, rei appartient à la 5e déclinaison avec son génitif en -ei."
                 },
                 {
                     "question": "Que signifie le nom féminin de la 4e déclinaison 'manus' ?",
-                    "options": ["La main (ou la troupe armée)", "Le matin", "La mer", "La maison"],
+                    "options": ["La main", "Le matin", "La maison", "La menace"],
                     "answer": 0,
                     "explanation": "Manus = la main (qui a donné manuel, manucure...)."
                 },
                 {
                     "question": "Comment s'appelle la longue période de paix instaurée par Auguste ?",
-                    "options": ["La Pax Romana (Paix Romaine)", "La Pax Deorum", "L'Aura Populi", "La Concordia Magna"],
+                    "options": ["La Pax Romana", "La Pax Deorum", "La Concordia", "La Lex Julia"],
                     "answer": 0,
                     "explanation": "La Pax Romana est la période de stabilité et de prospérité ouverte par le règne d'Auguste."
                 }

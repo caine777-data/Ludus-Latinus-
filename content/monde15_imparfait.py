@@ -31,8 +31,14 @@ Il se forme en insérant le son magique **-BA-** entre le radical et les désine
 - *Legere* (lire) ➔ *legebam, legebas, legebat...* (je lisais, tu lisais, il lisait...)
 - *Audire* (entendre) ➔ *audiebam, audiebas, audiebat...*""",
             "question": "Quel son caractéristique s'intercale dans TOUS les verbes réguliers à l'imparfait latin ?",
-            "options": ["-BA- (ex: amabam, legebat)", "-VI-", "-IS-", "-UR-"],
+            "options": ["-ba-", "-vi-", "-era-", "-re-"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cet élément apparaît souvent dans le radical du temps de l'action achevée, comme dans amavit.",
+                "-era- apparaît au plus-que-parfait (amaveram), un temps du passé différent de l'imparfait.",
+                "-re- termine l'infinitif présent de nombreux verbes, comme amare : ce n'est pas un signe d'imparfait.",
+            ],
             "explanation": "Le suffixe -ba- est la marque universelle de l'imparfait régulier latin !",
         },
         {

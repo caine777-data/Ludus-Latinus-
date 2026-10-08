@@ -23,6 +23,12 @@ Après ses exploits, Jupiter plaça Pégase dans le ciel : il est devenu une bri
             "question": "Quel monstre crachant le feu le héros Bellérophon a-t-il terrassé grâce à Pégase ?",
             "options": ["La Chimère", "Le Minotaure", "Le Sphinx", "L'Hydre"],
             "answer": 0,
+            "explications": [
+                "",
+                "Cet être à tête de taureau a été vaincu par Thésée dans le labyrinthe de Crète.",
+                "Cette créature posant des énigmes aux voyageurs a été défiée par Œdipe près de Thèbes.",
+                "Ce monstre aquatique dont les têtes repoussaient a été combattu par Hercule à Lerne.",
+            ],
             "explanation": "Exactement ! La Chimère fut vaincue d'en haut par les flèches de Bellérophon !",
         },
         {
@@ -105,7 +111,7 @@ Rassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher 
                 },
                 {
                     "question": "Quelle particularité physique avaient les Cyclopes ?",
-                    "options": ["Un seul œil au milieu du front", "Trois bras", "Des ailes de cire", "Une queue de poisson"],
+                    "options": ["Un seul œil sur le front", "Trois têtes de serpent", "Cent bras et cinquante têtes", "Des cornes de taureau sauvage"],
                     "answer": 0,
                     "explanation": "Exactement ! Un seul grand œil rond !",
                 },

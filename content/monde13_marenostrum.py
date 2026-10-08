@@ -26,8 +26,14 @@ Au génitif pluriel (complément du nom), ils prennent **-IUM** au lieu de -um !
 - *navium* = des navires
 - *hostium* = des ennemis""",
             "question": "Quel est le génitif pluriel de 'navis, navis' (le navire) ?",
-            "options": ["Navium (des navires)", "Navum", "Navibus", "Navarum"],
+            "options": ["Navium", "Navum", "Navibus", "Navarum"],
             "answer": 0,
+            "explications": [
+                "",
+                "Navum copie le modèle de regum, mais navis est un nom en -i qui suit une autre règle.",
+                "Navibus sert au datif et à l'ablatif pluriels, pas à exprimer le complément du nom.",
+                "-arum est la finale de rosa et des noms de la 1re déclinaison, pas de navis.",
+            ],
             "explanation": "Les thèmes en -i font leur génitif pluriel en -ium !",
         },
         {
@@ -80,12 +86,7 @@ Une galère ennemie aborde ton navire de guerre ! Montre ta science des neutres 
             "questions": [
                 {
                     "question": "Quelle est la règle d'or de TOUS les noms neutres latins ?",
-                    "options": [
-                        "Le Nominatif, le Vocatif et l'Accusatif sont toujours identiques",
-                        "Ils n'existent qu'au singulier",
-                        "Leur génitif finit toujours par -ae",
-                        "Ils désignent uniquement des personnes"
-                    ],
+                    "options": ["Leur nominatif et leur accusatif sont toujours identiques", "Leur génitif et leur ablatif ont toujours la même terminaison", "Leur pluriel se termine obligatoirement par la voyelle -i", "Ils se déclinent uniquement au singulier dans tous les textes"],
                     "answer": 0,
                     "explanation": "Les 3 cas directs (Nom., Voc., Acc.) sont toujours identiques pour les neutres !"
                 },
@@ -97,12 +98,7 @@ Une galère ennemie aborde ton navire de guerre ! Montre ta science des neutres 
                 },
                 {
                     "question": "Que signifiait l'expression 'Mare Nostrum' pour les Romains ?",
-                    "options": [
-                        "Notre Mer (la Méditerranée)",
-                        "La Grande Eau",
-                        "La Mer Rouge",
-                        "L'Océan infini"
-                    ],
+                    "options": ["Notre Mer", "La Grande Mer", "La Mer Noire", "La Mer Profonde"],
                     "answer": 0,
                     "explanation": "Mare Nostrum désignait la mer Méditerranée entièrement entourée de provinces romaines."
                 }

@@ -24,13 +24,14 @@ De ton premier *« Salve ! »* en 5ème jusqu'aux chefs-d'œuvre de Virgile et �
 
 Prépare-toi à gravir les marches sacrées du Forum pour le couronnement suprême !""",
             "question": "Quelle construction réunit un nom et un participe tous deux au cas ablatif sans mot de liaison ?",
-            "options": [
-                "L'Ablatif Absolu (ex: Caesare duce, urbe capta)",
-                "La Proposition Infinitive",
-                "Le Comparatif de supériorité",
-                "Le Vocatif d'apostrophe"
-            ],
+            "options": ["L'Ablatif absolu", "L'Accusatif de relation", "La Proposition infinitive", "Le Datif de possession"],
             "answer": 0,
+            "explications": [
+                "",
+                "Le nom est à l'accusatif dans cette construction, alors que la question parle de deux mots à l'ablatif.",
+                "La proposition infinitive met son sujet à l'accusatif et son verbe à l'infinitif : aucun ablatif.",
+                "Le datif de possession dit à qui appartient une chose, avec le verbe être : il n'utilise pas deux ablatifs.",
+            ],
             "explanation": "C'est l'Ablatif Absolu, véritable marque de fabrique du latin classique !",
         },
         {

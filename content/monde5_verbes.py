@@ -118,7 +118,7 @@ Frappe avec la précision d'un centurion pour vaincre l'Hydre et empocher une bo
                 },
                 {
                     "question": "Que signifie le verbe 'vincit' ?",
-                    "options": ["Il dort", "Il vainc / il triomphe", "Il mange", "Il court"],
+                    "options": ["Il vit", "Il vainc", "Il vient", "Il voit"],
                     "answer": 1,
                     "explanation": "Vincit = il vainc (qui a donné victoire et vainqueur) !"
                 }
