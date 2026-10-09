@@ -107,3 +107,42 @@ class TestReponsesCachees(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestDecodeurs(unittest.TestCase):
+    """Les décodeurs s'affichent, varient l'ordre des mots et ne donnent pas leur phrase."""
+
+    ROLES_CONNUS = {"sujet", "cod", "genitif", "verbe"}
+
+    def _decodeurs(self):
+        for level in CURRICULUM:
+            for lesson in level.get("lessons", []):
+                if lesson.get("type") == "decodeur":
+                    yield lesson
+
+    def test_chaque_decodeur_a_ses_mots_et_ses_roles(self):
+        """Sans champ « mots », l'appli n'affiche pas l'exercice (bug de m8-04 et m9-04)."""
+        for lesson in self._decodeurs():
+            with self.subTest(lesson=lesson["id"]):
+                mots = lesson.get("mots") or []
+                roles = lesson.get("roles") or {}
+                self.assertTrue(mots, "champ « mots » vide ou absent")
+                self.assertEqual(len(mots), len(roles))
+                self.assertTrue(set(roles.values()) <= self.ROLES_CONNUS)
+                self.assertTrue(lesson.get("traduction"), "traduction absente")
+
+    def test_ordre_des_mots_varie(self):
+        """L'élève ne doit pas pouvoir répondre « premier mot = sujet » partout."""
+        ordres = {
+            tuple(lesson["roles"][i] for i in sorted(lesson["roles"]))
+            for lesson in self._decodeurs()
+        }
+        self.assertGreater(len(ordres), 1)
+        commencent_par_le_sujet = [o for o in ordres if o[0] == "sujet"]
+        self.assertLess(len(commencent_par_le_sujet), len(ordres))
+
+    def test_le_cours_ne_contient_pas_la_phrase_a_decoder(self):
+        for lesson in self._decodeurs():
+            with self.subTest(lesson=lesson["id"]):
+                phrase = " ".join(lesson.get("mots") or [])
+                self.assertFalse(contient_texte(phrase, lesson.get("content", "")))

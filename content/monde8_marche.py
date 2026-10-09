@@ -75,13 +75,19 @@ Complète pour dire : « L'esclave du maître porte l'eau ».""",
             "type": "decodeur",
             "title": "Le Décodeur du Marchand",
             "content": """## Analyse la phrase romaine !
-Active les couleurs magiques du décodeur pour identifier :
-- 🔵 **Sujet (Nominatif)** : Qui fait l'action ?
-- 🔴 **COD (Accusatif)** : Qu'est-ce qui est vendu ?
-- 🟡 **Verbe** : L'action de vendre !""",
-            "phrase_latine": "Mercator aquam vendit",
-            "mots_francais": ["Le marchand", "de l'eau", "vend"],
-            "roles": {0: "sujet", 1: "cod", 2: "verbe"},
+
+Voici une phrase modèle :
+*« Servus aquam domini portat. »* = « L'esclave porte l'eau du maître. »
+
+- 🔵 **Sujet (Nominatif)** : *Servus*, terminaison **-us**.
+- 🔴 **COD (Accusatif)** : *aquam*, terminaison **-m**.
+- 🟢 **Complément du nom (Génitif)** : *domini*, terminaison **-i** : « du maître ».
+- 🟡 **Verbe** : *portat*, terminaison **-t**.
+
+À toi ! Décode la phrase du marchand : quatre mots, quatre rôles.""",
+            "mots": ["Mercator", "vinum", "domini", "vendit"],
+            "roles": {0: "sujet", 1: "cod", 2: "genitif", 3: "verbe"},
+            "traduction": "Le marchand vend le vin du maître.",
         },
         {
             "id": "m8-05",

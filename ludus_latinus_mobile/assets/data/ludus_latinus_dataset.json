@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-08 19:51:53",
+    "date_export": "2026-10-09 21:50:35",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -502,17 +502,18 @@
           "id": "m4-04",
           "type": "decodeur",
           "title": "Le Décodeur de Cas en action !",
-          "content": "## Utilise le Décodeur de Cas !\n\nVoici une phrase romaine complète :\n*« Lupus agnum videt. »*\n\nRappelle-toi les indices :\n- 🔵 **Sujet (Nominatif)** : C'est *Lupus* (le loup qui regarde).\n- 🔴 **COD (Accusatif)** : C'est *agnum* (l'agneau qui subit le regard, il se termine par **-m** !).\n- 🟡 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).\n\nClique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exact !",
+          "content": "## Utilise le Décodeur de Cas !\n\nVoici une phrase modèle :\n*« Lupus agnum videt. »* = « Le loup voit l'agneau. »\n\nLes indices :\n- 🔵 **Sujet (Nominatif)** : *Lupus*, terminaison **-us**.\n- 🔴 **COD (Accusatif)** : *agnum*, il se termine par **-m** !\n- 🟡 **Verbe (Action)** : *videt*, il se termine par **-t**.\n\nÀ toi ! Voici une nouvelle phrase. Attention, l'ordre a changé : ne regarde pas la place des mots, regarde leur fin. Touche chaque mot pour lui donner son rôle.",
           "mots": [
-            "Lupus",
-            "agnum",
+            "Puellam",
+            "lupus",
             "videt"
           ],
           "roles": {
-            "0": "sujet",
-            "1": "cod",
+            "0": "cod",
+            "1": "sujet",
             "2": "verbe"
-          }
+          },
+          "traduction": "Le loup voit la jeune fille."
         },
         {
           "id": "m4-05",
@@ -612,17 +613,18 @@
           "id": "m5-04",
           "type": "decodeur",
           "title": "Le Décodeur de l'Attaque !",
-          "content": "## Analyse la phrase du légionnaire\n\nVoici la manœuvre du soldat romain :\n*« Miles gladium capit. »*\n*(Le soldat prend son glaive)*\n\nRepère les rôles :\n- *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)\n- *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)\n- *capit* = prend (L'action ➔ 🟡 Verbe)\n\nAttribue les couleurs avec le Décodeur !",
+          "content": "## Analyse la phrase du légionnaire\n\nVoici une phrase modèle :\n*« Miles gladium capit. »* = « Le soldat prend son glaive. »\n\nLes rôles :\n- *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)\n- *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)\n- *capit* = prend (L'action, avec son **-t** ➔ 🟡 Verbe)\n\nÀ toi ! Dans cette nouvelle phrase, l'ordre des mots a changé. Regarde bien chaque terminaison, même celle d'un mot en **-a**.",
           "mots": [
-            "Miles",
-            "gladium",
-            "capit"
+            "Agricola",
+            "amat",
+            "equum"
           ],
           "roles": {
             "0": "sujet",
-            "1": "cod",
-            "2": "verbe"
-          }
+            "1": "verbe",
+            "2": "cod"
+          },
+          "traduction": "Le paysan aime le cheval."
         },
         {
           "id": "m5-05",
@@ -955,18 +957,20 @@
           "id": "m8-04",
           "type": "decodeur",
           "title": "Le Décodeur du Marchand",
-          "content": "## Analyse la phrase romaine !\nActive les couleurs magiques du décodeur pour identifier :\n- 🔵 **Sujet (Nominatif)** : Qui fait l'action ?\n- 🔴 **COD (Accusatif)** : Qu'est-ce qui est vendu ?\n- 🟡 **Verbe** : L'action de vendre !",
-          "phrase_latine": "Mercator aquam vendit",
-          "mots_francais": [
-            "Le marchand",
-            "de l'eau",
-            "vend"
+          "content": "## Analyse la phrase romaine !\n\nVoici une phrase modèle :\n*« Servus aquam domini portat. »* = « L'esclave porte l'eau du maître. »\n\n- 🔵 **Sujet (Nominatif)** : *Servus*, terminaison **-us**.\n- 🔴 **COD (Accusatif)** : *aquam*, terminaison **-m**.\n- 🟢 **Complément du nom (Génitif)** : *domini*, terminaison **-i** : « du maître ».\n- 🟡 **Verbe** : *portat*, terminaison **-t**.\n\nÀ toi ! Décode la phrase du marchand : quatre mots, quatre rôles.",
+          "mots": [
+            "Mercator",
+            "vinum",
+            "domini",
+            "vendit"
           ],
           "roles": {
             "0": "sujet",
             "1": "cod",
-            "2": "verbe"
-          }
+            "2": "genitif",
+            "3": "verbe"
+          },
+          "traduction": "Le marchand vend le vin du maître."
         },
         {
           "id": "m8-05",
@@ -1077,18 +1081,18 @@
           "id": "m9-04",
           "type": "decodeur",
           "title": "Le Décodeur de l'Attaque",
-          "content": "## Décrypte l'ordre de combat !\nTrouve la fonction de chaque élément :\n- 🔵 **Sujet** : Qui attaque ?\n- 🔴 **COD** : Quelle arme est lancée ?\n- 🟡 **Verbe** : L'action de lancer (*iacere*) !",
-          "phrase_latine": "Miles pilum iacit",
-          "mots_francais": [
-            "Le soldat",
-            "le javelot",
-            "lance"
+          "content": "## Décrypte l'ordre de combat !\n\nVoici une phrase modèle, au pluriel :\n*« Legionarii galeas portant. »* = « Les légionnaires portent les casques. »\n\n- 🔵 **Sujet pluriel** : *Legionarii*, terminaison **-i**.\n- 🔴 **COD pluriel** : *galeas*, terminaison **-as**.\n- 🟡 **Verbe pluriel** : *portant*, terminaison **-nt**.\n\nÀ toi ! L'ordre des mots a changé. Rappelle-toi que les noms en **-us** font leur COD pluriel en **-os**.",
+          "mots": [
+            "Equos",
+            "servi",
+            "vident"
           ],
           "roles": {
-            "0": "sujet",
-            "1": "cod",
+            "0": "cod",
+            "1": "sujet",
             "2": "verbe"
-          }
+          },
+          "traduction": "Les esclaves voient les chevaux."
         },
         {
           "id": "m9-05",

@@ -87,17 +87,18 @@ Complète la terminaison pour que « la forêt » (*silva*) devienne le COD :"""
             "title": "Le Décodeur de Cas en action !",
             "content": """## Utilise le Décodeur de Cas !
 
-Voici une phrase romaine complète :
-*« Lupus agnum videt. »*
+Voici une phrase modèle :
+*« Lupus agnum videt. »* = « Le loup voit l'agneau. »
 
-Rappelle-toi les indices :
-- 🔵 **Sujet (Nominatif)** : C'est *Lupus* (le loup qui regarde).
-- 🔴 **COD (Accusatif)** : C'est *agnum* (l'agneau qui subit le regard, il se termine par **-m** !).
-- 🟡 **Verbe (Action)** : C'est *videt* (l'action de voir, se termine par **-t**).
+Les indices :
+- 🔵 **Sujet (Nominatif)** : *Lupus*, terminaison **-us**.
+- 🔴 **COD (Accusatif)** : *agnum*, il se termine par **-m** !
+- 🟡 **Verbe (Action)** : *videt*, il se termine par **-t**.
 
-Clique sur chaque mot ci-dessous pour lui attribuer sa couleur et son rôle exact !""",
-            "mots": ["Lupus", "agnum", "videt"],
-            "roles": {0: "sujet", 1: "cod", 2: "verbe"},
+À toi ! Voici une nouvelle phrase. Attention, l'ordre a changé : ne regarde pas la place des mots, regarde leur fin. Touche chaque mot pour lui donner son rôle.""",
+            "mots": ["Puellam", "lupus", "videt"],
+            "roles": {0: "cod", 1: "sujet", 2: "verbe"},
+            "traduction": "Le loup voit la jeune fille.",
         },
         {
             "id": "m4-05",

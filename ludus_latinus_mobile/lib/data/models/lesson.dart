@@ -20,6 +20,8 @@ class Lesson {
   final Map<String, dynamic>? boss;
   final List<Map<String, dynamic>> questions;
   final Map<String, String> roles;
+  /// Traduction de la phrase d'un décodeur, montrée après la réussite.
+  final String? traduction;
 
   const Lesson({
     required this.id,
@@ -41,6 +43,7 @@ class Lesson {
     this.boss,
     this.questions = const [],
     this.roles = const {},
+    this.traduction,
   });
 
   String? get bossName => boss?['nom'] as String? ?? boss?['name'] as String?;
@@ -82,6 +85,7 @@ class Lesson {
       answer: json['answer'] as int? ?? 0,
       explanation: json['explanation'] as String?,
       latin: json['latin'] as String? ?? json['phrase_latine'] as String?,
+      traduction: json['traduction'] as String?,
       words: rawWords.map((e) => e.toString()).toList(),
       solution: json['solution'] as String? ?? json['reponse'] as String?,
       consigne: json['consigne'] as String?,

@@ -6,11 +6,14 @@ import '../../../core/game_juice.dart';
 import '../../../../data/services/audio_service.dart';
 
 /// Widget interactif pour les exercices de type 'decodeur' :
-/// Radiographie syntaxique et attribution tactile des fonctions grammaticales (Sujet, COD, Verbe).
+/// Radiographie syntaxique et attribution tactile des fonctions grammaticales
+/// (Sujet, COD, Verbe, et Complément du nom quand la phrase en contient un).
 class CaseDecoderWidget extends StatefulWidget {
   final List<String> words;
   final Map<String, String> expectedRoles;
   final String? latinPhrase;
+  /// Traduction affichée une fois la phrase décodée.
+  final String? traduction;
   final VoidCallback onCompleted;
   /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
   final VoidCallback? onMistake;
@@ -20,6 +23,7 @@ class CaseDecoderWidget extends StatefulWidget {
     required this.words,
     required this.expectedRoles,
     this.latinPhrase,
+    this.traduction,
     required this.onCompleted,
     this.onMistake,
   });
@@ -35,7 +39,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
   String? _feedbackMessage;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
-  final List<Map<String, dynamic>> _availableGrammarRoles = [
+  static final List<Map<String, dynamic>> _tousLesRoles = [
     {
       'id': 'sujet',
       'label': 'Sujet (Nominatif)',
@@ -49,12 +53,24 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
       'icon': '🔴',
     },
     {
+      'id': 'genitif',
+      'label': 'Compl. du nom (Génitif)',
+      'color': CaseColors.genitive,
+      'icon': '🟢',
+    },
+    {
       'id': 'verbe',
       'label': 'Verbe d\'action',
       'color': const Color(0xFFD4AF37),
-      'icon': '🟢',
+      'icon': '🟡',
     },
   ];
+
+  /// Le génitif n'est proposé que si la phrase en contient un : les mondes 4
+  /// et 5 ne l'ont pas encore appris.
+  late final List<Map<String, dynamic>> _availableGrammarRoles = _tousLesRoles
+      .where((r) => r['id'] != 'genitif' || widget.expectedRoles.values.contains('genitif'))
+      .toList();
 
   @override
   void initState() {
@@ -273,7 +289,24 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
 
             const SizedBox(height: 16),
 
-            // 3. Palette des 3 rôles grammaticaux
+            if (_isSuccess && (widget.traduction ?? '').trim().isNotEmpty) ...[
+              const SizedBox(height: 4),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F5E9),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.green.shade300),
+                ),
+                child: Text(
+                  '✅ Bien décodé ! Traduction : « ${widget.traduction!.trim()} »',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF1B5E20), height: 1.3),
+                ),
+              ),
+            ],
+
+            // 3. Palette des rôles grammaticaux
             if (!_isSuccess) ...[
               Text(
                 'ATTRIBUER AU MOT SÉLECTIONNÉ (« ${widget.words[_selectedWordIndex]} ») :',
@@ -285,10 +318,16 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                 ),
               ),
               const SizedBox(height: 8),
-              Row(
-                children: _availableGrammarRoles.map((role) {
+              LayoutBuilder(builder: (context, contraintes) {
+                // Quatre rôles : deux par ligne, pour que les libellés restent lisibles.
+                final parLigne = _availableGrammarRoles.length > 3 ? 2 : _availableGrammarRoles.length;
+                final largeur = contraintes.maxWidth / parLigne;
+                return Wrap(
+                  runSpacing: 8,
+                  children: _availableGrammarRoles.map((role) {
                   final color = role['color'] as Color;
-                  return Expanded(
+                  return SizedBox(
+                    width: largeur,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: ElevatedButton(
@@ -310,7 +349,8 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                     ),
                   );
                 }).toList(),
-              ),
+                );
+              }),
               const SizedBox(height: 14),
 
               // 4. Bouton de vérification

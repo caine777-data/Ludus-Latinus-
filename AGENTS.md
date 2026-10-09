@@ -325,6 +325,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Décodeurs refaits** (validé par Cédric le 09/10/2026, point 2 de
+  l'audit des leçons, `docs/propositions/decodeurs.md`). Les quatre
+  décodeurs (`m4-04`, `m5-04`, `m8-04`, `m9-04`) ont un cours avec une phrase
+  modèle et une **autre** phrase à décoder, dans un ordre de mots différent ;
+  champ `traduction` montré après la réussite. `m8-04` et `m9-04` ne
+  s'affichaient pas (pas de champ `mots`) : corrigé. Rôle `genitif` (🟢,
+  bouton proposé seulement si la phrase en contient un) ; le verbe est 🟡.
+  `tests/test_reponses_cachees.py` vérifie mots, rôles, traduction, ordre
+  varié et phrase absente du cours.
+
 - **Panthéon, Duel et Circus refaits** (validé par Cédric le 09/10/2026,
   propositions 3, 4 et 5 de l'audit des jeux). **Panthéon** : 26 cartes
   dans `assets/data/pantheon.json` (textes de

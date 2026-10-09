@@ -75,13 +75,18 @@ Complète pour dire : « Les légionnaires portent leurs glaives ».""",
             "type": "decodeur",
             "title": "Le Décodeur de l'Attaque",
             "content": """## Décrypte l'ordre de combat !
-Trouve la fonction de chaque élément :
-- 🔵 **Sujet** : Qui attaque ?
-- 🔴 **COD** : Quelle arme est lancée ?
-- 🟡 **Verbe** : L'action de lancer (*iacere*) !""",
-            "phrase_latine": "Miles pilum iacit",
-            "mots_francais": ["Le soldat", "le javelot", "lance"],
-            "roles": {0: "sujet", 1: "cod", 2: "verbe"},
+
+Voici une phrase modèle, au pluriel :
+*« Legionarii galeas portant. »* = « Les légionnaires portent les casques. »
+
+- 🔵 **Sujet pluriel** : *Legionarii*, terminaison **-i**.
+- 🔴 **COD pluriel** : *galeas*, terminaison **-as**.
+- 🟡 **Verbe pluriel** : *portant*, terminaison **-nt**.
+
+À toi ! L'ordre des mots a changé. Rappelle-toi que les noms en **-us** font leur COD pluriel en **-os**.""",
+            "mots": ["Equos", "servi", "vident"],
+            "roles": {0: "cod", 1: "sujet", 2: "verbe"},
+            "traduction": "Les esclaves voient les chevaux.",
         },
         {
             "id": "m9-05",

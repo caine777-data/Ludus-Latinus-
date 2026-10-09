@@ -80,18 +80,18 @@ Exemple : *« Miles fortiter pugnat. »* = « Le soldat combat courageusement. �
             "title": "Le Décodeur de l'Attaque !",
             "content": """## Analyse la phrase du légionnaire
 
-Voici la manœuvre du soldat romain :
-*« Miles gladium capit. »*
-*(Le soldat prend son glaive)*
+Voici une phrase modèle :
+*« Miles gladium capit. »* = « Le soldat prend son glaive. »
 
-Repère les rôles :
+Les rôles :
 - *Miles* = le soldat (Qui prend ? ➔ 🔵 Sujet / Nominatif)
 - *gladium* = le glaive (Qu'est-ce qui est pris ? Il y a le **-m** ! ➔ 🔴 COD / Accusatif)
-- *capit* = prend (L'action ➔ 🟡 Verbe)
+- *capit* = prend (L'action, avec son **-t** ➔ 🟡 Verbe)
 
-Attribue les couleurs avec le Décodeur !""",
-            "mots": ["Miles", "gladium", "capit"],
-            "roles": {0: "sujet", 1: "cod", 2: "verbe"},
+À toi ! Dans cette nouvelle phrase, l'ordre des mots a changé. Regarde bien chaque terminaison, même celle d'un mot en **-a**.""",
+            "mots": ["Agricola", "amat", "equum"],
+            "roles": {0: "sujet", 1: "verbe", 2: "cod"},
+            "traduction": "Le paysan aime le cheval.",
         },
         {
             "id": "m5-05",

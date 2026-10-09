@@ -830,6 +830,7 @@ class _LessonScreenState extends State<LessonScreen> {
         words: lesson.words,
         expectedRoles: lesson.roles,
         latinPhrase: lesson.latin,
+        traduction: lesson.traduction,
         onCompleted: _onMainDone,
         onMistake: () => _mistakes++,
       );
