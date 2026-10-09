@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
+import '../models/carte_pantheon.dart';
 import '../models/monument.dart';
 import '../models/profile.dart';
 import '../models/srs_card.dart';
@@ -19,6 +20,8 @@ class LessonResult {
   final bool improved;
   final bool worldCompleted;
   final String? worldTitle;
+  /// Carte du Panthéon gagnée avec ce monde terminé, s'il y en a une.
+  final CartePantheon? carteGagnee;
 
   const LessonResult({
     required this.stars,
@@ -28,6 +31,7 @@ class LessonResult {
     this.improved = false,
     required this.worldCompleted,
     this.worldTitle,
+    this.carteGagnee,
   });
 }
 
@@ -93,6 +97,29 @@ class GameRepository extends ChangeNotifier {
     return rang;
   }
 
+  /// Un monde est terminé quand toutes ses leçons sont validées.
+  bool isWorldCompleted(World world) =>
+      world.lessons.isNotEmpty && world.lessons.every((l) => isLessonCompleted(l.id));
+
+  /// Identifiants des mondes terminés.
+  Set<String> get mondesTermines => {
+        for (final w in worlds)
+          if (isWorldCompleted(w)) w.id,
+      };
+
+  List<CartePantheon> get cartesPantheon => dataService.cartesPantheon;
+
+  /// Carte du Panthéon rattachée à un monde (null si le monde n'en a pas).
+  CartePantheon? carteDuMonde(String worldId) {
+    for (final c in cartesPantheon) {
+      if (c.mondeId == worldId) return c;
+    }
+    return null;
+  }
+
+  /// Une carte est gagnée quand son monde est terminé.
+  bool isCarteGagnee(CartePantheon carte) => mondesTermines.contains(carte.mondeId);
+
   /// Classe (5eme, 4eme, 3eme) d'un monde de la Via Appia.
   String? classeDuMonde(String mondeId) {
     for (final c in classes) {
@@ -145,9 +172,7 @@ class GameRepository extends ChangeNotifier {
         break;
       }
     }
-    final worldCompleted = firstTime &&
-        world != null &&
-        world.lessons.every((l) => isLessonCompleted(l.id));
+    final worldCompleted = firstTime && world != null && isWorldCompleted(world);
 
     notifyListeners();
     return LessonResult(
@@ -158,6 +183,7 @@ class GameRepository extends ChangeNotifier {
       improved: !firstTime && stars > previousStars,
       worldCompleted: worldCompleted,
       worldTitle: world?.title,
+      carteGagnee: worldCompleted ? carteDuMonde(world.id) : null,
     );
   }
 

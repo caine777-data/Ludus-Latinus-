@@ -1,0 +1,3 @@
+Déposer ici les images des cartes du Panthéon : carte_monde01.png à carte_monde26.png.
+Tant qu'une image manque, l'écran affiche l'image du monde (assets/images/mondes/mondeN.webp).
+Ce fichier sert aussi à garder le dossier déclaré dans pubspec.yaml.

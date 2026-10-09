@@ -225,6 +225,12 @@ class _LessonScreenState extends State<LessonScreen> {
       );
       if (!mounted) return;
       AudioService().playWorldComplete();
+      if (result.carteGagnee != null) {
+        // La fanfare du monde d'abord, puis le tintement de la carte gagnée.
+        Future.delayed(const Duration(milliseconds: 2200), () {
+          if (mounted) AudioService().playCardObtained();
+        });
+      }
       RomanLottieEffects.showCoinShower(context);
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
     } else {
@@ -316,6 +322,28 @@ class _LessonScreenState extends State<LessonScreen> {
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13.5, color: Colors.black87, height: 1.35),
             ),
+            if (result.carteGagnee != null) ...[
+              const SizedBox(height: 10),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: RomanColors.goldLight,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: RomanColors.imperialGold),
+                ),
+                child: Text(
+                  'Nouvelle carte au Panthéon : ${result.carteGagnee!.nom}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 13.5,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF7A5901),
+                    height: 1.3,
+                  ),
+                ),
+              ),
+            ],
             if (explanation != null && explanation.trim().isNotEmpty) ...[
               const SizedBox(height: 10),
               Container(

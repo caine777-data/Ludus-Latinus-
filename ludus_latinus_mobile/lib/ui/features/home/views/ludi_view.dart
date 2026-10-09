@@ -214,8 +214,8 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
                         fallbackIcon: '🏆',
                         title: 'Le Panthéon',
-                        subtitle: 'Album des reliques & dieux',
-                        tagLabel: 'RELIQUES',
+                        subtitle: 'Une carte par monde terminé',
+                        tagLabel: 'CARTES',
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
                           AudioService().playTriumph();

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import '../models/carte_pantheon.dart';
 import '../models/monument.dart';
 import '../models/srs_card.dart';
 import '../models/thesaurus_entry.dart';
@@ -12,6 +13,7 @@ class DataService {
   List<ThesaurusEntry> thesaurus = [];
   List<ForumMonument> monuments = [];
   List<SrsCard> srsCards = [];
+  List<CartePantheon> cartesPantheon = [];
   Map<String, dynamic> rawData = {};
 
   bool isLoaded = false;
@@ -54,10 +56,25 @@ class DataService {
           .map((s) => SrsCard.fromJson(s as Map<String, dynamic>))
           .toList();
 
+      await _chargerPantheon();
+
       isLoaded = true;
     } catch (e) {
       // ignore: avoid_print
       print('Erreur lors du chargement du dataset Ludus Latinus : $e');
+    }
+  }
+
+  /// Cartes du Panthéon. Une erreur ici ne doit pas empêcher le jeu de démarrer.
+  Future<void> _chargerPantheon() async {
+    try {
+      final brut = await rootBundle.loadString('assets/data/pantheon.json');
+      final liste = (json.decode(brut) as Map<String, dynamic>)['cartes'] as List<dynamic>? ?? [];
+      cartesPantheon = liste.map((c) => CartePantheon.fromJson(c as Map<String, dynamic>)).toList()
+        ..sort((a, b) => a.monde.compareTo(b.monde));
+    } catch (e) {
+      // ignore: avoid_print
+      print('Erreur lors du chargement du Panthéon : $e');
     }
   }
 

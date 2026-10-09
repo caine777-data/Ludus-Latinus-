@@ -9,6 +9,7 @@ import 'package:ludus_latinus_mobile/ui/features/boutique/boutique_modal.dart';
 import 'package:ludus_latinus_mobile/ui/features/home/home_screen.dart';
 import 'package:ludus_latinus_mobile/ui/features/map/map_screen.dart';
 import 'package:ludus_latinus_mobile/ui/features/memoria/memoria_screen.dart';
+import 'package:ludus_latinus_mobile/ui/features/pantheon/pantheon_screen.dart';
 
 /// Un élève a vu des textes « écrits à la verticale » sur l'accueil : une
 /// colonne de texte écrasée par ses voisins jusqu'à n'avoir la place que d'une
@@ -189,6 +190,38 @@ void main() {
 
           final ecrases = trouverEcrases();
           expect(ecrases, isEmpty, reason: ecrases.join('\n'));
+        },
+      );
+    }
+  });
+
+  // 8. L'album du Panthéon (pantheon_screen.dart) : un monde terminé, les autres cachés
+  group('Panthéon', () {
+    for (final (largeur, police) in cas) {
+      testWidgets(
+        'Panthéon : aucun texte écrasé ($largeur points, police x$police)',
+        (tester) async {
+          tester.view.physicalSize = Size(largeur * 3, 2400);
+          tester.view.devicePixelRatio = 3.0;
+          addTearDown(tester.view.reset);
+          final repo = GameRepository(dataService: DataService(), storageService: StorageService());
+          await tester.runAsync(() => repo.dataService.loadDataset());
+          for (final l in repo.worlds[15].lessons) {
+            repo.profile.completedLessons.add(l.id);
+          }
+          await tester.pumpWidget(MediaQuery(
+            data: MediaQueryData(size: Size(largeur, 800), textScaler: TextScaler.linear(police)),
+            child: MaterialApp(home: PantheonScreen(repo: repo)),
+          ));
+          await tester.pump(const Duration(milliseconds: 500));
+          final ecrases = trouverEcrases();
+          expect(ecrases, isEmpty, reason: ecrases.join('\n'));
+          // Fait défiler jusqu'aux dernières cartes, cachées.
+          await tester.drag(find.byType(ListView), const Offset(0, -20000));
+          await tester.pump(const Duration(milliseconds: 500));
+          final ecrasesBas = trouverEcrases();
+          expect(ecrasesBas, isEmpty, reason: ecrasesBas.join('\n'));
+          expect(tester.takeException(), isNull);
         },
       );
     }

@@ -32,6 +32,8 @@ flutter:
     - assets/images/boutique/
     - assets/images/avatars/
     - assets/images/mondes/
+    - assets/images/pantheon/
+    - assets/data/pantheon.json
     - assets/images/via/
     - assets/images/duel/
     - assets/images/cas/
