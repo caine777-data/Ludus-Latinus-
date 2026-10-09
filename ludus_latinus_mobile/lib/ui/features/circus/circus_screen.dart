@@ -7,6 +7,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
 import '../../../data/models/vocab_question.dart';
+import 'circus_deck.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 
@@ -97,8 +98,8 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   int _comboCount = 0;
   int _turboRemainingFrames = 0;
 
-  // Deck de questions sans remise : impossible d'avoir des doublons dans la même partie
-  List<Map<String, dynamic>> _questionDeck = [];
+  // Pioche mêlant questions des mondes atteints (2/3) et du cirque (1/3), sans répétition rapprochée
+  CircusDeck? _deck;
 
   // Banque enrichie de 46 questions (Vocabulaire équestre, Culture, Grammaire & Mythologie)
   static final List<Map<String, dynamic>> _allQuestions = [
@@ -418,20 +419,17 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   }
 
   void _loadNewQuestion() {
-    // Si la pioche est vide, on la refait : les 46 questions sur le cirque,
-    // plus du vocabulaire tiré du Thesaurus des mondes que l'élève a atteints.
-    if (_questionDeck.isEmpty) {
-      _questionDeck = [
-        ..._allQuestions,
-        ...VocabQuestion.pourJeu(
-          dictionary: widget.repo.thesaurus,
-          mondes: widget.repo.mondesAtteints,
-          count: 24,
-        ),
-      ]..shuffle();
-    }
-    // Dépilage sans remise : aucune répétition possible durant toute la course
-    _currentQuestion = _questionDeck.removeAt(0);
+    // Deux tiers de questions des mondes atteints, un tiers sur le cirque,
+    // question par question (voir CircusDeck).
+    _deck ??= CircusDeck(
+      mondes: VocabQuestion.pourJeu(
+        dictionary: widget.repo.thesaurus,
+        mondes: widget.repo.mondesAtteints,
+        count: 60,
+      ),
+      cirque: _allQuestions,
+    );
+    _currentQuestion = _deck!.suivante();
     final options = <String>[
       _currentQuestion['rep'] as String,
       ...(_currentQuestion['fausses'] as List<String>),
