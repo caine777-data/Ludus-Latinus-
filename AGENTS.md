@@ -330,9 +330,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   dans `assets/data/pantheon.json` (textes de
   `docs/propositions/pantheon_cartes.md`, à garder identiques), une par
   monde ; gagnée quand `repo.isWorldCompleted(monde)`, rien de stocké dans
-  le profil ; face cachée sinon. Image `assets/images/pantheon/carte_mondeNN.png`,
-  repli sur `assets/images/mondes/mondeN.webp` tant que le PNG manque : déposer
-  les images suffit. `LessonResult.carteGagnee` affiche une bannière et joue
+  le profil ; face cachée sinon. Image `assets/images/pantheon/carte_mondeNN.jpg`
+  (les 26 livrées par Cédric le 09/10, copiées sans recompression), repli sur
+  `assets/images/mondes/mondeN.webp` si une image manque. `LessonResult.carteGagnee` affiche une bannière et joue
   `carte_obtenue.wav` à la fin d'un monde. Les 9 anciennes cartes figées,
   leurs raretés et le faux « Rang : Patricien » sont retirés. Le Panthéon est
   ouvert dès le départ (décision de Cédric du 09/10) : l'élève voit d'emblée
@@ -785,3 +785,11 @@ mémoire.** Une phrase latine, un message de Lupulus, un chiffre : rouvre la
 capture ou le fichier au moment d'écrire. En T39, les captures étaient
 justes mais le tableau citait des phrases absentes de l'appli. Et tu
 t'arrêtes au statut `FAIT` : seul l'architecte écrit `VALIDÉ`.
+
+**Toute capture citée doit exister dans `scratch/` au moment du commit.**
+En T51, le compte rendu citait une trentaine de captures absentes et
+décrivait des parties de Taverne qui ne pouvaient pas avoir eu lieu (mise,
+gain et messages inexistants dans le code). Avant de committer, lance
+`ls scratch/tNN_*` et vérifie que chaque nom cité y figure. Si une étape n'a
+pas pu être faite, écris-le : un compte rendu incomplet et vrai vaut mieux
+qu'un compte rendu complet et faux.

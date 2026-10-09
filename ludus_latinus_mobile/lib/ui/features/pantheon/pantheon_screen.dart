@@ -212,7 +212,9 @@ class _Verso extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monde = titreMonde.isEmpty ? '' : ' : $titreMonde';
+    // Le titre du monde commence déjà par son numéro (« 4 · Les Cas… ») : on l'enlève.
+    final titre = titreMonde.replaceFirst(RegExp(r'^\s*\d+\s*·\s*'), '');
+    final monde = titre.isEmpty ? '' : ' : $titre';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -246,7 +248,7 @@ class _DosDeCarte extends StatelessWidget {
   }
 }
 
-/// Illustration d'une carte : `carte_mondeNN.png` si elle existe, sinon l'image
+/// Illustration d'une carte : `carte_mondeNN.jpg` si elle existe, sinon l'image
 /// du monde, sinon une icône. Déposer les PNG dans `assets/images/pantheon/`
 /// suffit : aucun code à changer.
 class CarteImage extends StatelessWidget {

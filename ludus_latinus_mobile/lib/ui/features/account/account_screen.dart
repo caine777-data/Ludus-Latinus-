@@ -420,12 +420,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     const Row(
                       children: [
                         Text('🏛️ ', style: TextStyle(fontSize: 18)),
-                        Text(
-                          'Tessera Hospitalis (Jeton d’Hospitalité)',
-                          style: TextStyle(
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF7A5901),
+                        Expanded(
+                          child: Text(
+                            'Tessera Hospitalis (Jeton d’Hospitalité)',
+                            style: TextStyle(
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF7A5901),
+                            ),
                           ),
                         ),
                       ],
@@ -446,14 +448,20 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            profile.tesseraCode,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 2,
-                              color: RomanColors.charcoal,
-                              fontFamily: 'monospace',
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                profile.tesseraCode,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2,
+                                  color: RomanColors.charcoal,
+                                  fontFamily: 'monospace',
+                                ),
+                              ),
                             ),
                           ),
                           IconButton(
@@ -495,12 +503,14 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
                         SizedBox(width: 8),
-                        Text(
-                          'Sauvegarde & Compte Cloud',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: RomanColors.charcoal,
+                        Expanded(
+                          child: Text(
+                            'Sauvegarde & Compte Cloud',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: RomanColors.charcoal,
+                            ),
                           ),
                         ),
                       ],

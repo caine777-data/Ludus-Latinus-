@@ -5,182 +5,182 @@
       "nom": "La Louve du Capitole",
       "devise": "Lupa Romulum et Remum nutrit.",
       "traduction": "La louve nourrit Romulus et Rémus.",
-      "image": "assets/images/pantheon/carte_monde01.png"
+      "image": "assets/images/pantheon/carte_monde01.jpg"
     },
     {
       "monde": 2,
       "nom": "La Mosaïque du chien",
       "devise": "Cave canem !",
       "traduction": "Attention au chien !",
-      "image": "assets/images/pantheon/carte_monde02.png"
+      "image": "assets/images/pantheon/carte_monde02.jpg"
     },
     {
       "monde": 3,
       "nom": "Jupiter",
       "devise": "Iuppiter fulmine caelum regit.",
       "traduction": "Jupiter gouverne le ciel par la foudre.",
-      "image": "assets/images/pantheon/carte_monde03.png"
+      "image": "assets/images/pantheon/carte_monde03.jpg"
     },
     {
       "monde": 4,
       "nom": "Hercule",
       "devise": "Labor omnia vincit.",
       "traduction": "Le travail vient à bout de tout.",
-      "image": "assets/images/pantheon/carte_monde04.png"
+      "image": "assets/images/pantheon/carte_monde04.jpg"
     },
     {
       "monde": 5,
       "nom": "L'Hydre de Lerne",
       "devise": "Hydra multa capita habet.",
       "traduction": "L'Hydre a beaucoup de têtes.",
-      "image": "assets/images/pantheon/carte_monde05.png"
+      "image": "assets/images/pantheon/carte_monde05.jpg"
     },
     {
       "monde": 6,
       "nom": "Le Gladiateur",
       "devise": "Ave Caesar, morituri te salutant.",
       "traduction": "Salut César, ceux qui vont mourir te saluent.",
-      "image": "assets/images/pantheon/carte_monde06.png"
+      "image": "assets/images/pantheon/carte_monde06.jpg"
     },
     {
       "monde": 7,
       "nom": "Le Scribe",
       "devise": "Verba volant, scripta manent.",
       "traduction": "Les paroles s'envolent, les écrits restent.",
-      "image": "assets/images/pantheon/carte_monde07.png"
+      "image": "assets/images/pantheon/carte_monde07.jpg"
     },
     {
       "monde": 8,
       "nom": "Les Thermes",
       "devise": "Romani in thermis lavantur.",
       "traduction": "Les Romains se baignent aux thermes.",
-      "image": "assets/images/pantheon/carte_monde08.png"
+      "image": "assets/images/pantheon/carte_monde08.jpg"
     },
     {
       "monde": 9,
       "nom": "L'Aigle de la légion",
       "devise": "Aquila legionem ducit.",
       "traduction": "L'aigle conduit la légion.",
-      "image": "assets/images/pantheon/carte_monde09.png"
+      "image": "assets/images/pantheon/carte_monde09.jpg"
     },
     {
       "monde": 10,
       "nom": "Pégase",
       "devise": "Pegasus per caelum volat.",
       "traduction": "Pégase vole à travers le ciel.",
-      "image": "assets/images/pantheon/carte_monde10.png"
+      "image": "assets/images/pantheon/carte_monde10.jpg"
     },
     {
       "monde": 11,
       "nom": "Horatius Coclès",
       "devise": "Horatius solus pontem defendit.",
       "traduction": "Horatius défend le pont, seul.",
-      "image": "assets/images/pantheon/carte_monde11.png"
+      "image": "assets/images/pantheon/carte_monde11.jpg"
     },
     {
       "monde": 12,
       "nom": "Le Consul",
       "devise": "Consul rem publicam regit.",
       "traduction": "Le consul dirige la République.",
-      "image": "assets/images/pantheon/carte_monde12.png"
+      "image": "assets/images/pantheon/carte_monde12.jpg"
     },
     {
       "monde": 13,
       "nom": "Neptune",
       "devise": "Neptunus mare regit.",
       "traduction": "Neptune gouverne la mer.",
-      "image": "assets/images/pantheon/carte_monde13.png"
+      "image": "assets/images/pantheon/carte_monde13.jpg"
     },
     {
       "monde": 14,
       "nom": "Le Centurion",
       "devise": "Centurio milites ducit.",
       "traduction": "Le centurion conduit les soldats.",
-      "image": "assets/images/pantheon/carte_monde14.png"
+      "image": "assets/images/pantheon/carte_monde14.jpg"
     },
     {
       "monde": 15,
       "nom": "Tite-Live",
       "devise": "Livius historiam Romae scripsit.",
       "traduction": "Tite-Live a écrit l'histoire de Rome.",
-      "image": "assets/images/pantheon/carte_monde15.png"
+      "image": "assets/images/pantheon/carte_monde15.jpg"
     },
     {
       "monde": 16,
       "nom": "Jules César",
       "devise": "Veni, vidi, vici.",
       "traduction": "Je suis venu, j'ai vu, j'ai vaincu.",
-      "image": "assets/images/pantheon/carte_monde16.png"
+      "image": "assets/images/pantheon/carte_monde16.jpg"
     },
     {
       "monde": 17,
       "nom": "Vercingétorix",
       "devise": "Vercingetorix pro libertate pugnabat.",
       "traduction": "Vercingétorix combattait pour la liberté.",
-      "image": "assets/images/pantheon/carte_monde17.png"
+      "image": "assets/images/pantheon/carte_monde17.jpg"
     },
     {
       "monde": 18,
       "nom": "Le Triomphe",
       "devise": "Imperator triumphum agit.",
       "traduction": "Le général célèbre son triomphe.",
-      "image": "assets/images/pantheon/carte_monde18.png"
+      "image": "assets/images/pantheon/carte_monde18.jpg"
     },
     {
       "monde": 19,
       "nom": "Auguste",
       "devise": "Urbem latericiam accepi, marmoream relinquo.",
       "traduction": "J'ai reçu une ville de briques, je la laisse de marbre.",
-      "image": "assets/images/pantheon/carte_monde19.png"
+      "image": "assets/images/pantheon/carte_monde19.jpg"
     },
     {
       "monde": 20,
       "nom": "La Via Appia",
       "devise": "Omnes viae Romam ducunt.",
       "traduction": "Tous les chemins mènent à Rome.",
-      "image": "assets/images/pantheon/carte_monde20.png"
+      "image": "assets/images/pantheon/carte_monde20.jpg"
     },
     {
       "monde": 21,
       "nom": "Pline l'Ancien",
       "devise": "Nulla dies sine linea.",
       "traduction": "Pas un jour sans une ligne.",
-      "image": "assets/images/pantheon/carte_monde21.png"
+      "image": "assets/images/pantheon/carte_monde21.jpg"
     },
     {
       "monde": 22,
       "nom": "Sol Invictus",
       "devise": "Sol omnibus lucet.",
       "traduction": "Le soleil brille pour tous.",
-      "image": "assets/images/pantheon/carte_monde22.png"
+      "image": "assets/images/pantheon/carte_monde22.jpg"
     },
     {
       "monde": 23,
       "nom": "Cicéron",
       "devise": "O tempora, o mores !",
       "traduction": "Ô temps, ô mœurs !",
-      "image": "assets/images/pantheon/carte_monde23.png"
+      "image": "assets/images/pantheon/carte_monde23.jpg"
     },
     {
       "monde": 24,
       "nom": "Le Messager",
       "devise": "Nuntius celeriter currit.",
       "traduction": "Le messager court vite.",
-      "image": "assets/images/pantheon/carte_monde24.png"
+      "image": "assets/images/pantheon/carte_monde24.jpg"
     },
     {
       "monde": 25,
       "nom": "Virgile",
       "devise": "Arma virumque cano.",
       "traduction": "Je chante les armes et le héros.",
-      "image": "assets/images/pantheon/carte_monde25.png"
+      "image": "assets/images/pantheon/carte_monde25.jpg"
     },
     {
       "monde": 26,
       "nom": "Trajan",
       "devise": "Traianus, optimus princeps.",
       "traduction": "Trajan, le meilleur des empereurs.",
-      "image": "assets/images/pantheon/carte_monde26.png"
+      "image": "assets/images/pantheon/carte_monde26.jpg"
     }
   ]
 }

@@ -5356,6 +5356,16 @@ l'écran, jamais de mémoire. **N'achète rien.**
 
 Statut : FAIT
 
+> **Relecture de l'architecte (09/10/2026) : NON VALIDÉE.** Aucune des
+> captures citées (`scratch/t51_*.png`) n'existe : seuls les deux profils
+> JSON sont dans `scratch/`. Les 5 manches de la Taverne sont inventées :
+> le jeu n'a pas de mise, une victoire rapporte 8 HS (pas 10), les messages
+> cités n'existent pas dans le code, et Gaius s'y arrête à 16 alors qu'il
+> relance sous 17. Les citations des QCM sont exactes mais ont pu être lues
+> dans les données. Seul signalement retenu : le débordement de la Tessera
+> en police 1.3, corrigé par précaution. T52, elle, est appuyée sur de vraies
+> captures et validée.
+
 **Objectif** : beaucoup de changements du 8 octobre n'ont été vérifiés que
 par les tests : la nouvelle Taverne « Ad XXI », les écrans du compte, de la
 boutique et de la carte remis en page, les textes corrigés des arènes et du

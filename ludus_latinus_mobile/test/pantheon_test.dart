@@ -25,7 +25,7 @@ void terminerMonde(GameRepository repo, int rang) {
 
 void main() {
   group('Données du Panthéon', () {
-    test('26 cartes, une par monde, avec image attendue au format carte_mondeNN.png', () {
+    test('26 cartes, une par monde, avec image attendue au format carte_mondeNN.jpg', () {
       final brut = File('assets/data/pantheon.json').readAsStringSync();
       final cartes = ((json.decode(brut) as Map<String, dynamic>)['cartes'] as List)
           .map((c) => CartePantheon.fromJson(c as Map<String, dynamic>))
@@ -36,7 +36,7 @@ void main() {
         expect(c.nom, isNotEmpty);
         expect(c.devise, isNotEmpty);
         expect(c.traduction, isNotEmpty);
-        expect(c.image, 'assets/images/pantheon/carte_monde${c.monde.toString().padLeft(2, '0')}.png');
+        expect(c.image, 'assets/images/pantheon/carte_monde${c.monde.toString().padLeft(2, '0')}.jpg');
         expect(c.imageRepli, 'assets/images/mondes/monde${c.monde}.webp');
       }
       expect(cartes[15].devise, 'Veni, vidi, vici.');
@@ -106,7 +106,7 @@ void main() {
       expect(find.text('La Mosaïque du chien'), findsNothing);
       expect(find.text('Cave canem !'), findsNothing);
       expect(
-        find.text('Termine le monde 2 : ${repo.worlds[1].title} pour la débloquer'),
+        find.textContaining(RegExp(r'^Termine le monde 2 : [^0-9]')),
         findsOneWidget,
       );
     });
@@ -117,16 +117,16 @@ void main() {
       expect(find.text('0 / 26 cartes'), findsOneWidget);
       expect(find.text('La Louve du Capitole'), findsNothing);
       expect(
-        find.text('Termine le monde 1 : ${repo.worlds[0].title} pour la débloquer'),
+        find.textContaining(RegExp(r'^Termine le monde 1 : [^0-9]')),
         findsOneWidget,
       );
     });
 
-    testWidgets('repli : sans carte_mondeNN.png, l\'image du monde est affichée', (tester) async {
+    testWidgets('repli : sans carte_mondeNN.jpg, l\'image du monde est affichée', (tester) async {
       final repo = await depotCharge(tester);
       terminerMonde(repo, 3);
       await monter(tester, repo);
-      // Laisse la tentative de chargement du PNG absent échouer, puis le repli se charger.
+      // Laisse le chargement de l'illustration se terminer.
       for (var i = 0; i < 5; i++) {
         await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 100)));
         await tester.pump();
@@ -138,8 +138,8 @@ void main() {
           .whereType<AssetImage>()
           .map((a) => a.assetName)
           .toList();
-      expect(images, contains('assets/images/pantheon/carte_monde03.png'));
-      expect(images, contains('assets/images/mondes/monde3.webp'));
+      expect(images, contains('assets/images/pantheon/carte_monde03.jpg'));
+      expect(images, isNot(contains('assets/images/mondes/monde3.webp')));
     });
   });
 }

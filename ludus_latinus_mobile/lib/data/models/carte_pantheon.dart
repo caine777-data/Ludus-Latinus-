@@ -30,7 +30,7 @@ class CartePantheon {
       devise: json['devise'] as String? ?? '',
       traduction: json['traduction'] as String? ?? '',
       image: json['image'] as String? ??
-          'assets/images/pantheon/carte_monde${monde.toString().padLeft(2, '0')}.png',
+          'assets/images/pantheon/carte_monde${monde.toString().padLeft(2, '0')}.jpg',
     );
   }
 }
