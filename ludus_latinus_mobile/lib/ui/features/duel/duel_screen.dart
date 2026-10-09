@@ -10,53 +10,7 @@ import '../../../data/models/vocab_question.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/avatar_assets.dart';
-
-enum CombatStance {
-  gravis(
-    'Ictus Gravis',
-    'Attaque Lourde',
-    '⚔️',
-    'Dégâts infligés +45%, riposte subie +50%',
-    1.45,
-    1.50,
-  ),
-  scutum(
-    'Scuti Paratio',
-    'Parade au Scutum',
-    '🛡️',
-    'Riposte subie réduite de 50%, dégâts normaux',
-    0.90,
-    0.50,
-  ),
-  celox(
-    'Fuga Celox',
-    'Esquive Agile',
-    '💨',
-    '+10 pts et Coup Critique si réponse < 4s',
-    1.15,
-    1.00,
-  );
-
-  final String latin;
-  final String francais;
-  final String emoji;
-  final String description;
-  final double damageMult;
-  final double riposteMult;
-
-  const CombatStance(
-    this.latin,
-    this.francais,
-    this.emoji,
-    this.description,
-    this.damageMult,
-    this.riposteMult,
-  );
-
-  String get nom => francais;
-  String get titre => latin;
-}
-
+import 'duel_equilibre.dart';
 
 class DuelScreen extends StatefulWidget {
   final GameRepository repo;
@@ -82,8 +36,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'titre': 'Gladiateur Vétéran',
       'image': 'assets/images/boss_retiaire_anime.webp',
       'video': 'assets/cinematics/boss_retiaire.mp4',
-      'maxHp': 100,
-      'attaque': 20,
+      'maxHp': DuelEquilibre.pvBoss[0],
+      'attaque': DuelEquilibre.attaqueBoss[0],
       'citation': '« Mors aut gloria in harena ! »',
       'tauntBlesse': '« Bene pugnas, tiro ! Sed reticulum meum manet ! » (Bien battu ! Mais mon filet t\'attend !)',
       'tauntAttaque': '« Reticulum meum te capit ! Vae victis ! » (Mon filet te capture ! Malheur aux vaincus !)',
@@ -94,8 +48,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'titre': 'Fauve Légendaire',
       'image': 'assets/images/boss_lion_anime.webp',
       'video': 'assets/cinematics/boss_lion.mp4',
-      'maxHp': 120,
-      'attaque': 25,
+      'maxHp': DuelEquilibre.pvBoss[1],
+      'attaque': DuelEquilibre.attaqueBoss[1],
       'citation': '« Rugitus leonis terram commovet ! »',
       'tauntBlesse': '« Grrr ! Pellis mea invulnerabilis est ! » (Ma peau est invulnérable !)',
       'tauntAttaque': '« Ungues mei ferrum penetrant ! » (Mes griffes percent le fer !)',
@@ -106,8 +60,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'titre': 'Gardien du Labyrinthe',
       'image': 'assets/images/boss_minotaure_anime.webp',
       'video': 'assets/cinematics/boss_minotaure.mp4',
-      'maxHp': 140,
-      'attaque': 30,
+      'maxHp': DuelEquilibre.pvBoss[2],
+      'attaque': DuelEquilibre.attaqueBoss[2],
       'citation': '« Nullus exitus e labyrintho patet ! »',
       'tauntBlesse': '« Dolor me fortem reddit ! » (La douleur me rend plus fort !)',
       'tauntAttaque': '« Cornua mea te prosternent ! » (Mes cornes vont te terrasser !)',
@@ -118,8 +72,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'titre': 'Maître des Énigmes',
       'image': 'assets/images/boss_sphinx_anime.webp',
       'video': 'assets/cinematics/boss_sphinx.mp4',
-      'maxHp': 160,
-      'attaque': 35,
+      'maxHp': DuelEquilibre.pvBoss[3],
+      'attaque': DuelEquilibre.attaqueBoss[3],
       'citation': '« Solve aenigma aut peri ! »',
       'tauntBlesse': '« Ingenium tuum me miratur... » (Ton esprit m\'étonne...)',
       'tauntAttaque': '« Ignorantia tua te damnat ! » (Ton ignorance te condamne !)',
@@ -130,8 +84,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'titre': 'Messager des Dieux',
       'image': 'assets/images/boss_mercure_anime.webp',
       'video': 'assets/cinematics/boss_mercure.mp4',
-      'maxHp': 180,
-      'attaque': 40,
+      'maxHp': DuelEquilibre.pvBoss[4],
+      'attaque': DuelEquilibre.attaqueBoss[4],
       'citation': '« Celeritas deorum vincit omnia ! »',
       'tauntBlesse': '« Fulgur Iovis te adiuvat ! » (L\'éclair de Jupiter t\'assiste !)',
       'tauntAttaque': '« Tardus es sicut testudo ! » (Tu es lent comme une tortue !)',
@@ -369,8 +323,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     },
   ];
 
-  int _playerHp = 100;
-  int _bossHp = 100;
+  int _playerHp = DuelEquilibre.pvJoueur;
+  int _bossHp = DuelEquilibre.pvBoss[0];
   bool _combatFini = false;
   bool _victoire = false;
   // Score du combat, en points : ce n'est plus de l'argent.
@@ -440,7 +394,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   void _initBoss() {
     final boss = _bosses[_currentBossIndex];
     setState(() {
-      _playerHp = 100;
+      _playerHp = DuelEquilibre.pvJoueur;
+      _duelDeck = [];
       _bossHp = boss['maxHp'] as int;
       _combatFini = false;
       _victoire = false;
@@ -455,21 +410,45 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   /// le monde est atteint, plus du vocabulaire tiré du Thesaurus des mondes
   /// atteints. Si le paquet est maigre (tout début), on le complète avec les
   /// questions fixes des mondes suivants, les plus proches d'abord.
+  ///
+  /// Les derniers boss tirent d'abord dans les mondes les plus récents
+  /// (voir [DuelEquilibre.fenetreMondes]) ; le reste du paquet suit, pour ne
+  /// jamais manquer de questions si l'élève n'a atteint qu'un monde.
   List<Map<String, dynamic>> _questionsDuJoueur() {
+    final tous = _paquetComplet(widget.repo.mondesAtteints);
+    final fenetre = DuelEquilibre.fenetreMondes(_currentBossIndex);
+    if (fenetre == null) return tous..shuffle();
+    final rang = widget.repo.rangMondeAtteint;
+    final worlds = widget.repo.worlds;
+    final recents = <String>{
+      for (var i = 0; i < worlds.length; i++)
+        if (i + 1 > rang - fenetre && widget.repo.mondesAtteints.contains(worlds[i].id)) worlds[i].id,
+    };
+    final prioritaires = <Map<String, dynamic>>[
+      ..._paquetComplet(recents, rangMin: rang - fenetre + 1)
+    ];
+    if (prioritaires.length < 8) return tous..shuffle();
+    final pris = prioritaires.map((q) => (q['q'] as String).toLowerCase()).toSet();
+    final reste = tous.where((q) => !pris.contains((q['q'] as String).toLowerCase())).toList();
+    return [...prioritaires..shuffle(), ...reste..shuffle()];
+  }
+
+  List<Map<String, dynamic>> _paquetComplet(Set<String> mondes, {int? rangMin}) {
     final rang = widget.repo.rangMondeAtteint;
     final fixes = List<Map<String, dynamic>>.from(_duelQuestions)
       ..sort((a, b) => (a['monde'] as int).compareTo(b['monde'] as int));
     final deck = <Map<String, dynamic>>[
-      ...fixes.where((q) => (q['monde'] as int) <= rang),
+      ...fixes.where((q) =>
+          (q['monde'] as int) <= rang && (q['monde'] as int) >= (rangMin ?? 0)),
     ];
     final enonces = deck.map((q) => (q['q'] as String).toLowerCase()).toSet();
     for (final q in VocabQuestion.pourJeu(
       dictionary: widget.repo.thesaurus,
-      mondes: widget.repo.mondesAtteints,
+      mondes: mondes,
     )) {
       if (enonces.add((q['q'] as String).toLowerCase())) deck.add(q);
     }
-    for (final q in fixes) {
+    for (final q in rangMin != null ? const <Map<String, dynamic>>[] : fixes) {
       if (deck.length >= 12) break;
       if (!deck.contains(q)) deck.add(q);
     }
@@ -478,7 +457,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   void _nextQuestion() {
     if (_duelDeck.isEmpty) {
-      _duelDeck = _questionsDuJoueur()..shuffle();
+      _duelDeck = _questionsDuJoueur();
     }
     _currentQ = _duelDeck.removeAt(0);
     final options = <String>[
@@ -511,13 +490,13 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       AudioService().playSesterces();
       _lancerAssaut(heros: true);
 
-      int degats = (35 * _currentStance.damageMult).round();
       int sestercesEarned = 15;
-      final isCrit = (_currentStance == CombatStance.celox && elapsedSec <= 4);
+      final isCrit = (_currentStance == CombatStance.celox &&
+          elapsedSec <= DuelEquilibre.secondesCritique);
+      final degats = DuelEquilibre.degats(_currentStance, critique: isCrit);
 
       if (isCrit) {
-        degats = (degats * 1.25).round();
-        sestercesEarned += 10;
+        sestercesEarned += DuelEquilibre.bonusCritique;
         AudioService().playCrowdCheer();
         _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -548,8 +527,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
       _lancerAssaut(heros: false);
-      final baseRiposte = boss['attaque'] as int;
-      final riposte = (baseRiposte * _currentStance.riposteMult).round();
+      final riposte = DuelEquilibre.riposte(_currentStance, _currentBossIndex);
 
       setState(() {
         _playerHp = math.max(0, _playerHp - riposte);
@@ -562,7 +540,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           const SnackBar(
             backgroundColor: Colors.blueGrey,
             duration: Duration(seconds: 1),
-            content: Text('🛡️ Parade au Scutum : Dégâts réduits de moitié !'),
+            content: Text('🛡️ Parade au Scutum : riposte réduite de moitié !'),
           ),
         );
       }
@@ -624,7 +602,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             backgroundColor: const Color(0xFF2D1E3A),
             foregroundColor: Colors.white,
             actions: [
-              Container(
+              Flexible(
+                child: Container(
                 margin: const EdgeInsets.only(right: 6),
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -632,7 +611,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
-                child: Row(
+                // Police agrandie : le compteur rétrécit au lieu de déborder.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text('🪙', style: TextStyle(fontSize: 13)),
@@ -643,6 +625,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
+                ),
+              ),
               ),
               IconButton(
                 icon: const Icon(Icons.info_outline),
@@ -653,8 +637,9 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                       title: const Text('Règles de l\'Arène'),
                       content: const Text(
                         'Affronte les champions antiques du Colisée !\n\n'
-                        'Chaque bonne réponse porte un coup critique à l\'adversaire.\n'
-                        'Une erreur te fait subir la riposte du gladiateur.\n\n'
+                        'Une bonne réponse blesse l\'adversaire, une erreur te fait subir sa riposte.\n'
+                        'Choisis ta posture : l\'attaque lourde frappe fort mais la riposte '
+                        'est plus rude, la parade frappe peu mais protège.\n\n'
                         'Vaincs les 5 colosses pour graver ton nom au Panthéon !',
                       ),
                       actions: [
@@ -736,7 +721,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                     child: _jauge(
                       nom: heroName,
                       pv: _playerHp,
-                      pvMax: 100,
+                      pvMax: DuelEquilibre.pvJoueur,
                       couleur: _playerHp > 30 ? RomanColors.laurelGreen : const Color(0xFF8E1724),
                       bordure: RomanColors.imperialGold,
                       texte: const Color(0xFFFFE082),
@@ -830,9 +815,18 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         ),
       ),
     );
-    final chiffres = Text(
-      '$pv/$pvMax',
-      style: TextStyle(color: texte, fontWeight: FontWeight.bold, fontSize: 10),
+    // Trois chiffres de chaque côté (250/250) et police agrandie : le compte
+    // rétrécit au lieu de pousser le nom hors de la jauge.
+    final chiffres = ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 64),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Text(
+          '$pv/$pvMax',
+          maxLines: 1,
+          style: TextStyle(color: texte, fontWeight: FontWeight.bold, fontSize: 10),
+        ),
+      ),
     );
     return Container(
       padding: const EdgeInsets.all(8),
@@ -1193,7 +1187,14 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
               );
             }).toList(),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 6),
+          // Ce que fait la posture choisie, avec les vrais chiffres.
+          Text(
+            _currentStance.description,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 11, color: Colors.black87, height: 1.25),
+          ),
+          const SizedBox(height: 8),
 
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),

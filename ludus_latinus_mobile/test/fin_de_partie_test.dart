@@ -76,8 +76,8 @@ void main() {
   }
 
   Future<void> gagnerDuel(WidgetTester tester) async {
-    // Crixus a 100 PV. La posture Gravis par défaut inflige 51 dégâts par bonne réponse.
-    // Deux bonnes réponses suffisent pour terrasser le boss. La question suivante
+    // Crixus a 100 PV (DuelEquilibre.pvBoss). La posture Gravis par défaut inflige
+    // 50 dégâts par bonne réponse : deux bonnes réponses terrassent le boss. La question suivante
     // peut mettre plus d'un tour de boucle à s'afficher : on prévoit de la marge.
     for (int coup = 0; coup < 6; coup++) {
       if (find.textContaining("TRIOMPHE DANS L'ARÈNE").evaluate().isNotEmpty) {
