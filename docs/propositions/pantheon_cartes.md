@@ -1,6 +1,6 @@
 # Le Panthéon : une carte par monde terminé
 
-Proposition de l'architecte (08/10/2026), à valider par Cédric. Base :
+Proposition de l'architecte (08/10/2026), validée par Cédric le 09/10/2026. Base :
 l'état des lieux T42. Principe : terminer un monde fait gagner sa carte ;
 les autres restent face cachée, avec le nom du monde qui les débloque.
 Retournée, la carte montre son image, son nom, une devise latine courte
