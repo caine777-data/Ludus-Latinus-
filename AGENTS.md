@@ -325,6 +325,25 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Panthéon, Duel et Circus refaits** (validé par Cédric le 09/10/2026,
+  propositions 3, 4 et 5 de l'audit des jeux). **Panthéon** : 26 cartes
+  dans `assets/data/pantheon.json` (textes de
+  `docs/propositions/pantheon_cartes.md`, à garder identiques), une par
+  monde ; gagnée quand `repo.isWorldCompleted(monde)`, rien de stocké dans
+  le profil ; face cachée sinon. Image `assets/images/pantheon/carte_mondeNN.png`,
+  repli sur `assets/images/mondes/mondeN.webp` tant que le PNG manque : déposer
+  les images suffit. `LessonResult.carteGagnee` affiche une bannière et joue
+  `carte_obtenue.wav` à la fin d'un monde. Les 9 anciennes cartes figées,
+  leurs raretés et le faux « Rang : Patricien » sont retirés. **Duel** :
+  barème dans `duel/duel_equilibre.dart` (seule source des chiffres et des
+  textes des postures) ; boss à 100, 130, 160, 200, 250 PV ; lourde 50
+  dégâts et riposte x1,5, vive 35 (44 en moins de 4 s) et x1, parade 25 et
+  x0,5 ; les boss 3 à 5 piochent dans les 6, 4 puis 3 derniers mondes
+  atteints. **Circus** : `circus/circus_deck.dart`, par blocs de trois
+  questions, deux des mondes atteints et une du cirque, pas de répétition
+  dans les 8 dernières, repli sur le cirque si peu de mondes. Tournée à
+  l'écran : T52.
+
 - **QCM : options rééquilibrées et une explication par mauvaise réponse**
   (validé par Cédric le 08/10/2026). 43 questions (quiz et arènes) ont des
   options de longueur et de forme égales, sans blague. Les 28 leçons `quiz`
@@ -337,7 +356,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   Brouillons et relectures : `docs/propositions/options_qcm.md`,
   `explications_quiz.md`, `relecture_explications_quiz.md`,
   `integration_qcm_explications.md`. Panthéon proposé dans
-  `docs/propositions/pantheon_cartes.md` (en attente). Tournée à l'écran :
+  `docs/propositions/pantheon_cartes.md` (validé le 09/10). Tournée à l'écran :
   T51.
 
 - **Agents Sonnet 5.5 en renfort** (08/10/2026) — l'architecte peut confier
@@ -735,7 +754,7 @@ https://claude.ai/artifact/5G9NxprB69Ehc7Tng1oXSY). Dans l'ordre :
    ne plus écrire la réponse dans le cours ni la consigne ; une explication
    par mauvaise réponse ; arènes rééquilibrées et avec un vrai enjeu ;
    Circus et Duel qui tirent une partie de leurs questions des mondes
-   atteints ; une carte du Panthéon par monde terminé.
+   atteints ; une carte du Panthéon par monde terminé (faits le 09/10).
 3. **Phase 3, visuels Gemini** — cartes des six cas, en-têtes des
    leçons-récits de 4e et 3e, stèle vierge de l'Épigraphie.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).

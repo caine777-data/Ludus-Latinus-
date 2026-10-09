@@ -5405,3 +5405,62 @@ correspondante, au moment où tu écris.** Si tu n'as pas la capture, écris
 - Commandes lancées et résultat réel :
 - Doutes, questions pour l'architecte :
 - Reste à faire :
+
+---
+
+## T52 — Tournée à l'écran du Panthéon, du Duel et du Circus (sans rien modifier)
+
+Statut : À FAIRE (après T51)
+
+**Objectif** : le 9 octobre, trois jeux ont changé, vérifiés seulement par
+les tests. Le Panthéon est un album de 26 cartes, une par monde terminé.
+Les boss du Duel ont plus de PV et les trois postures ont des chiffres
+affichés. Le Circus pose deux questions des leçons pour une sur le cirque.
+
+**Périmètre** : écriture `docs/TACHES.md` seulement ; captures dans
+`scratch/t52_*`. Le profil est modifié **puis restauré** (méthode de T26).
+
+**Rappels** : chaque texte cité est recopié en regardant la capture, au
+moment où tu écris ; sans capture, écris « non capturé ». Tu t'arrêtes à
+`FAIT`. N'achète rien.
+
+**Étapes** :
+1. Installe la version actuelle. Sauvegarde le profil ; pousse un profil
+   avec toutes les leçons des mondes 1 et 2, et toutes celles du monde 3
+   **sauf la dernière**.
+2. **Panthéon** : capture le haut de l'album (compteur), la carte du monde
+   1 (gagnée) et celle du monde 4 (cachée). Recopie la devise et la
+   traduction de la carte 1, et la phrase de la carte cachée. Les images des
+   cartes ne sont pas encore livrées : l'image du monde sert de repli, c'est
+   normal.
+3. **Fin de monde** : fais la dernière leçon du monde 3. Capture la feuille
+   de résultat (la bannière « Nouvelle carte au Panthéon » doit apparaître)
+   et dis si tu entends un son de carte. Retourne au Panthéon : la carte 3
+   doit être gagnée.
+4. **Duel** : lis les textes des trois postures (capture de chacune).
+   Combats le premier boss avec l'attaque lourde, puis le deuxième avec la
+   parade. Pour chaque combat : PV du boss au départ, dégâts par bonne
+   réponse, dégâts reçus à une erreur faite exprès. Dis si ces chiffres
+   sont ceux des textes affichés.
+5. **Circus** : fais une course, recopie les 9 premières questions, et
+   classe chacune : « leçon » ou « cirque ». Il doit y avoir environ deux
+   « leçon » pour un « cirque ».
+6. Recommence les étapes 2 et 4 (captures seulement) en petit écran
+   (`wm size 720x1280`, `wm density 320`) puis avec `font_scale 1.3`.
+   Remets tout (`wm size reset`, `wm density reset`, `font_scale 1.0`).
+7. Restaure le profil d'origine et capture l'accueil.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Un tableau par écran : réglage, conforme ou non, capture.
+- [ ] Les chiffres du Duel relevés et comparés aux textes.
+- [ ] Les 9 questions du Circus recopiées et classées.
+- [ ] Ton avis franc : le Duel est-il plus intéressant, le Panthéon donne-t-il envie ?
+- [ ] Réglages et profil d'origine remis (valeurs recopiées).
+- [ ] `git status` : seul `docs/TACHES.md` est modifié.
+- [ ] Un commit `docs: tournée Panthéon, Duel et Circus`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
