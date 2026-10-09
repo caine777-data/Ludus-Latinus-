@@ -334,7 +334,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   repli sur `assets/images/mondes/mondeN.webp` tant que le PNG manque : déposer
   les images suffit. `LessonResult.carteGagnee` affiche une bannière et joue
   `carte_obtenue.wav` à la fin d'un monde. Les 9 anciennes cartes figées,
-  leurs raretés et le faux « Rang : Patricien » sont retirés. **Duel** :
+  leurs raretés et le faux « Rang : Patricien » sont retirés. Le Panthéon est
+  ouvert dès le départ (décision de Cédric du 09/10) : l'élève voit d'emblée
+  les 26 cartes cachées. **Duel** :
   barème dans `duel/duel_equilibre.dart` (seule source des chiffres et des
   textes des postures) ; boss à 100, 130, 160, 200, 250 PV ; lourde 50
   dégâts et riposte x1,5, vive 35 (44 en moins de 4 s) et x1, parade 25 et

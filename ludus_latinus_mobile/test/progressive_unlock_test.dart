@@ -11,7 +11,7 @@ void main() {
       expect(profile.isTaverneUnlocked, isFalse);
       expect(profile.isCesarUnlocked, isFalse);
       expect(profile.isMarcheTrajanUnlocked, isFalse);
-      expect(profile.isPantheonUnlocked, isFalse);
+      expect(profile.isPantheonUnlocked, isTrue);
 
       final circusStatus = profile.getUnlockStatusForGame('circus');
       expect(circusStatus.isUnlocked, isTrue);
@@ -71,7 +71,7 @@ void main() {
       expect(profile.getUnlockStatusForGame('marche').isUnlocked, isTrue);
     });
 
-    test('Panthéon débloqué dès 1 monument restauré', () {
+    test('Panthéon ouvert dès le départ, monument ou non', () {
       final profile = UserProfile(
         completedLessons: ['lesson_1'],
         restoredMonuments: ['curia_julia'],

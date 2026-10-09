@@ -316,8 +316,8 @@ class UserProfile {
   bool get isMarcheTrajanUnlocked => completedLessons.length >= 18;
   int get marcheTrajanRequiredLessons => 18;
 
-  bool get isPantheonUnlocked => restoredMonuments.isNotEmpty || completedLessons.length >= 4;
-  int get pantheonRequiredLessons => 4;
+  /// Ouvert dès le départ : les 26 cartes face cachée montrent ce qu'il y a à gagner.
+  bool get isPantheonUnlocked => true;
 
   ({bool isUnlocked, String reason, double progress}) getUnlockStatusForGame(String gameKey) {
     switch (gameKey) {
@@ -353,13 +353,6 @@ class UserProfile {
         return (
           isUnlocked: isMarcheTrajanUnlocked,
           reason: 'Termine 18 leçons pour ouvrir le Marché de Trajan',
-          progress: prog,
-        );
-      case 'pantheon':
-        final prog = (completedLessons.length / pantheonRequiredLessons).clamp(0.0, 1.0);
-        return (
-          isUnlocked: isPantheonUnlocked,
-          reason: 'Termine 4 leçons ou restaure 1 édifice du Forum',
           progress: prog,
         );
       default:
