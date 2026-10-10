@@ -325,6 +325,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Taverne vue à l'écran** (10/10/2026, tournée T53 d'un agent Sonnet,
+  `docs/audits/tournee_t53_taverne_qcm.md`, 55 vraies captures ; règles
+  et explications de QCM conformes). Corrigé ensuite : le gain détaille
+  la victoire (+8) et le défi du jour (+10) au lieu d'un « +18 » inexpliqué ;
+  les deux boutons sont fixés en bas de l'écran ; le texte du bas ne passe
+  plus sous la barre de gestes ; le cadre de Gaius explique qu'il ne joue
+  pas quand l'élève a dépassé XXI ; la règle 3 dit qu'il relance sous XVII
+  et qu'une égalité ne paie pas. Simulation : s'arrêter à 18 ou 19 gagne
+  une manche sur deux, s'arrêter à 15 seulement une sur six.
+
 - **Décodeurs refaits** (validé par Cédric le 09/10/2026, point 2 de
   l'audit des leçons, `docs/propositions/decodeurs.md`). Les quatre
   décodeurs (`m4-04`, `m5-04`, `m8-04`, `m9-04`) ont un cours avec une phrase
