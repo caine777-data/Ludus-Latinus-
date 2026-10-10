@@ -790,13 +790,76 @@ class _LessonScreenState extends State<LessonScreen> {
             const SizedBox(height: 16),
 
             // 3. Exercice Interactif Pédagogique (adapté selon le type : QCM, Puzzle, Trou, Décodeur, Arène)
-            KeyedSubtree(key: _exerciseKey, child: _buildExerciseStep(lesson)),
+            KeyedSubtree(
+              key: _exerciseKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Le cours est en haut d'une longue page : on le rouvre dans un
+                  // volet, sans perdre la question en cours.
+                  if (lesson.type != 'arene' && lesson.content.trim().isNotEmpty)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton.icon(
+                        onPressed: () => _revoirLeCours(lesson),
+                        icon: const Text('📖', style: TextStyle(fontSize: 16)),
+                        label: const Text(
+                          'Revoir le cours',
+                          style: TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                        ),
+                      ),
+                    ),
+                  _buildExerciseStep(lesson),
+                ],
+              ),
+            ),
             const SizedBox(height: 20),
           ],
         ),
       ),
     ),
   );
+  }
+
+  void _revoirLeCours(Lesson lesson) {
+    HapticFeedback.selectionClick();
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: RomanColors.palatinCream,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (context) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.75,
+        minChildSize: 0.4,
+        maxChildSize: 0.95,
+        builder: (context, controleur) => SafeArea(
+          top: false,
+          child: ListView(
+            controller: controleur,
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(2)),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                lesson.title,
+                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+              ),
+              const SizedBox(height: 10),
+              MarkdownLite(lesson.content),
+              const SizedBox(height: 16),
+              RomanButton(text: 'Retour à l\'exercice', onPressed: () => Navigator.of(context).pop()),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildExerciseStep(Lesson lesson) {

@@ -215,7 +215,8 @@ class ViaAppiaProp {
     ViaAppiaProp('assets/images/via/pin.png', 88),
     ViaAppiaProp('assets/images/via/borne.png', 42),
     ViaAppiaProp('assets/images/via/fontaine.png', 52),
-    ViaAppiaProp('assets/images/via/cypres.png', 92),
+    // cypres.png retiré le 10/10/2026 : montage raté (un cyprès collé entre deux
+    // moitiés de pin). À remettre quand Cédric aura généré un vrai cyprès.
     ViaAppiaProp('assets/images/via/amphores.png', 44),
     ViaAppiaProp('assets/images/via/mausolee.png', 58),
     ViaAppiaProp('assets/images/via/charrette.png', 40),

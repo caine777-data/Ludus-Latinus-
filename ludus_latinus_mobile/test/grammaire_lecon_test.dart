@@ -93,6 +93,24 @@ void main() {
     expect(find.text('Question principale ?'), findsNothing);
   });
 
+  testWidgets("Revoir le cours : le volet s'ouvre et se referme sur la question", (tester) async {
+    ecouterDebordements();
+    await monter(tester, lecon());
+    await choisir(tester, 'Bonne');
+    await tester.pump(const Duration(milliseconds: 600));
+
+    await tester.ensureVisible(find.text('Revoir le cours'));
+    await tester.tap(find.text('Revoir le cours'));
+    await tester.pumpAndSettle();
+    expect(find.text("Retour à l'exercice"), findsOneWidget);
+    expect(find.text('Contenu'), findsNWidgets(2));
+
+    await tester.tap(find.text("Retour à l'exercice"));
+    await tester.pumpAndSettle();
+    expect(find.text("Retour à l'exercice"), findsNothing);
+    expect(find.text('Exercice de grammaire'), findsOneWidget);
+  });
+
   testWidgets('Mauvaise réponse : son explication, puis la bonne fait avancer', (tester) async {
     ecouterDebordements();
     await monter(tester, lecon());
