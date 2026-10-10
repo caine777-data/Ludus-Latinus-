@@ -113,7 +113,7 @@ class BibliothecaView extends StatelessWidget {
                       // A. Memoria Velox (SRS)
                       _buildStudyTile(
                         context: context,
-                        imagePath: 'assets/images/musee_circus.png',
+                        imagePath: 'assets/images/musee_circus.jpg',
                         fallbackIcon: '🃏',
                         title: 'Memoria Velox',
                         subtitle: repo.record('memoria') > 0
@@ -133,7 +133,7 @@ class BibliothecaView extends StatelessWidget {
                       // B. Thesaurus (Dictionnaire & Tables)
                       _buildStudyTile(
                         context: context,
-                        imagePath: 'assets/images/musee_louve.png',
+                        imagePath: 'assets/images/musee_louve.jpg',
                         fallbackIcon: '📖',
                         title: 'Thesaurus',
                         subtitle: 'Lexique thématique & déclinaisons',
@@ -151,7 +151,7 @@ class BibliothecaView extends StatelessWidget {
                       // C. Forum Imperiale (Monuments & Civilisation)
                       _buildStudyTile(
                         context: context,
-                        imagePath: 'assets/images/musee_thermes.png',
+                        imagePath: 'assets/images/musee_thermes.jpg',
                         fallbackIcon: '🏛️',
                         title: 'Forum Imperiale',
                         subtitle: '$restoredCount / 6 édifice(s) restauré(s)',

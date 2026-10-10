@@ -385,14 +385,14 @@ class _AccountScreenState extends State<AccountScreen> {
                           unlocked: profile.completedLessons.length >= 5,
                         ),
                         _buildTrophyItem(
-                          iconPath: 'assets/images/musee_circus.png',
+                          iconPath: 'assets/images/musee_circus.jpg',
                           title: 'Aurige',
                           romanNum: 'III',
                           condition: 'Atteindre une série de 3 jours consécutifs.',
                           unlocked: profile.currentStreak() >= 3,
                         ),
                         _buildTrophyItem(
-                          iconPath: 'assets/images/musee_louve.png',
+                          iconPath: 'assets/images/musee_louve.jpg',
                           title: 'Bâtisseur',
                           romanNum: 'X',
                           condition: 'Restaurer au moins un monument du Forum.',

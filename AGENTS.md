@@ -328,7 +328,10 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 - **Revoir le cours** (10/10/2026) : un bouton « 📖 Revoir le cours » au-dessus
   de chaque exercice (sauf arène) rouvre le cours dans un volet, sans perdre
   la question. Le cyprès de la Via Appia (`via/cypres.png`, montage raté) est
-  retiré de la liste des décors en attendant une nouvelle image.
+  retiré de la liste des décors en attendant une nouvelle image. Les six illustrations
+  de leçons (`musee_gladiateur`, `legion`, `louve`, `pegase`, `circus`,
+  `thermes`) sont refaites par Cédric au style 3D des cartes, sans texte,
+  en JPG copiés tels quels.
 
 - **Deuxième question de grammaire** (validé par Cédric le 10/10/2026,
   point 6 de l'audit des leçons). Champ `grammaire` d'une leçon (question,

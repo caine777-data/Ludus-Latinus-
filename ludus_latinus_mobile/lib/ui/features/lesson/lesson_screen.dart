@@ -455,17 +455,17 @@ class _LessonScreenState extends State<LessonScreen> {
   String? _getLessonIllustration() {
     final title = widget.lesson.title.toLowerCase();
     if (title.contains('gladiat') || title.contains('arène')) {
-      return 'assets/images/musee_gladiateur.png';
+      return 'assets/images/musee_gladiateur.jpg';
     } else if (title.contains('légion') || title.contains('armée') || title.contains('milit')) {
-      return 'assets/images/musee_legion.png';
+      return 'assets/images/musee_legion.jpg';
     } else if (title.contains('louve') || title.contains('romulus') || title.contains('fondat')) {
-      return 'assets/images/musee_louve.png';
+      return 'assets/images/musee_louve.jpg';
     } else if (title.contains('circus') || title.contains('course') || title.contains('char')) {
-      return 'assets/images/musee_circus.png';
+      return 'assets/images/musee_circus.jpg';
     } else if (title.contains('therme') || title.contains('bain') || title.contains('vie')) {
-      return 'assets/images/musee_thermes.png';
+      return 'assets/images/musee_thermes.jpg';
     } else if (title.contains('dieu') || title.contains('mythe') || title.contains('pégase')) {
-      return 'assets/images/musee_pegase.png';
+      return 'assets/images/musee_pegase.jpg';
     }
     return null;
   }
