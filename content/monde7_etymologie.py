@@ -33,6 +33,17 @@ Exemples extraordinaires :
                 "Ce mot a donné en français arbre et arboriculture, liés aux végétaux et aux forêts.",
             ],
             "explanation": "Aqua signifie l'eau en latin !",
+            "grammaire": {
+                "question": "Quel mot latin se cache dans « oculiste », le médecin des yeux ?",
+                "options": ["Oculus (l'œil)", "Caput (la tête)", "Pes (le pied)", "Manus (la main)"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Ce mot a donné « capitaine » et « capital », qui parlent de la tête ou du chef.",
+                    "Ce mot a donné « pédale » et « piéton », qui parlent du pied.",
+                    "Ce mot a donné « manuel » et « manucure », qui parlent de la main.",
+                ],
+            },
         },
         {
             "id": "m7-02",
@@ -53,6 +64,17 @@ Complète le préfixe latin qui veut dire « sous » dans ce mot français :""",
             "apres": "marin (un engin qui va sous la mer).",
             "solution": "sub",
             "latin_complet": "Submarin.",
+            "grammaire": {
+                "question": "Dans « postface » (le texte qui vient en dernier dans un livre), que veut dire post- ?",
+                "options": ["Autour", "Sous", "Après", "À travers"],
+                "answer": 2,
+                "explications": [
+                    "C'est le sens de circum-, comme dans circonférence.",
+                    "C'est le sens de sub-, comme dans submerger.",
+                    "",
+                    "C'est le sens de trans-, comme dans transporter.",
+                ],
+            },
         },
         {
             "id": "m7-03",
@@ -79,6 +101,17 @@ Reconstitue cette citation légendaire en français :""",
             "latin": "Veni, vidi, vici.",
             "mots": ["Je suis venu,", "j'ai vu,", "j'ai vaincu.", "J'ai fui,", "j'ai couru,", "j'ai perdu."],
             "solution": "Je suis venu, j'ai vu, j'ai vaincu.",
+            "grammaire": {
+                "question": "Sur le modèle de « veni » (je suis venu), que veut dire « misi » ? (mittere = envoyer)",
+                "options": ["J'envoie.", "Il envoie.", "Il a envoyé.", "J'ai envoyé."],
+                "answer": 3,
+                "explications": [
+                    "« J'envoie » se dit mitto, avec la fin -o du présent.",
+                    "« Il envoie » se dit mittit, avec un -t.",
+                    "Ce passé parle d'une autre personne que celui qui parle.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m7-04",

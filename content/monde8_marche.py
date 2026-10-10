@@ -32,6 +32,17 @@ Les Romains mangeaient peu le matin : un morceau de pain (*panis*) frotté d'ail
                 "Cet animal aquatique se disait piscis en latin, qui a donné piscine et pisciculture en français.",
             ],
             "explanation": "Bravo ! 'Panis' est le pain, la nourriture essentielle du citoyen romain !",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « La jeune fille voit l'eau » ? (aqua = l'eau)",
+                "options": ["Puella aquam videt.", "Puellam aqua videt.", "Puella aqua videt.", "Puellam aquam videt."],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Les rôles sont inversés : ici, c'est l'eau qui voit.",
+                    "Aucun mot ne porte la fin du COD : on ne sait pas qui est vu.",
+                    "Deux mots portent la fin du COD, mais il faut aussi un sujet.",
+                ],
+            },
         },
         {
             "id": "m8-02",
@@ -49,6 +60,17 @@ Traduis la phrase du marchand :""",
             "mots": ["Le marchand", "vend", "du pain.", "L'enfant", "achète", "de l'eau."],
             "solution": "Le marchand vend du pain.",
             "hints": ["mercator = le marchand (sujet)", "vendere = vendre", "panis, -is = le pain (ici COD)"],
+            "grammaire": {
+                "question": "Dans « Mercator amicum videt. », qui est vu ?",
+                "options": ["Le marchand", "L'ami", "Les deux", "Personne"],
+                "answer": 1,
+                "explications": [
+                    "Ce mot n'a pas la fin du COD : c'est lui qui fait l'action.",
+                    "",
+                    "Le verbe n'a qu'un -t : un seul fait l'action, l'autre la subit.",
+                    "Le verbe a un complément : cherche le mot qui porte la fin du COD.",
+                ],
+            },
         },
         {
             "id": "m8-03",
@@ -69,6 +91,17 @@ Complète pour dire : « L'esclave du maître porte l'eau ».""",
             "apres": " aquam portat.",
             "solution": "i",
             "latin_complet": "Servus domini aquam portat.",
+            "grammaire": {
+                "question": "Comment dit-on « le bouclier de l'ami » ? (scutum = le bouclier)",
+                "options": ["Scutum amicus.", "Scutum amicae.", "Scutum amicum.", "Scutum amici."],
+                "answer": 3,
+                "explications": [
+                    "Cette fin est celle du sujet. Pour dire « de l'ami », il faut changer la fin.",
+                    "Cette fin est bien un génitif, mais celui d'un nom féminin : l'amie.",
+                    "La fin -m marque le COD, pas le complément du nom.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m8-04",
@@ -88,6 +121,17 @@ Voici une phrase modèle :
             "mots": ["Mercator", "vinum", "domini", "vendit"],
             "roles": {0: "sujet", 1: "cod", 2: "genitif", 3: "verbe"},
             "traduction": "Le marchand vend le vin du maître.",
+            "grammaire": {
+                "question": "Dans « Puer scutum amici videt. » (scutum = le bouclier), quel mot est au génitif ?",
+                "options": ["Puer", "Scutum", "Amici", "Videt"],
+                "answer": 2,
+                "explications": [
+                    "C'est le sujet : il fait l'action.",
+                    "C'est le COD : il subit l'action.",
+                    "",
+                    "C'est le verbe, reconnaissable à son -t.",
+                ],
+            },
         },
         {
             "id": "m8-05",

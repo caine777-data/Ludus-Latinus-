@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-10 07:47:06",
+    "date_export": "2026-10-10 08:37:55",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -1033,7 +1033,23 @@
             "La massue de fer n'était pas l'arme du rétiaire, un gladiateur léger qui misait sur la vitesse.",
             "Aucune catégorie de gladiateur ne combattait avec deux haches : c'est une image de film plus que de l'arène."
           ],
-          "explanation": "Le Rétiaire combat avec son filet (rete) et son trident !"
+          "explanation": "Le Rétiaire combat avec son filet (rete) et son trident !",
+          "grammaire": {
+            "question": "Dans « Gladiator harenam videt. » (harena = le sable), quel mot est le COD ?",
+            "options": [
+              "Harenam",
+              "Gladiator",
+              "Videt",
+              "Il n'y en a pas"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Ce mot n'a pas la fin du COD : c'est lui qui fait l'action.",
+              "C'est le verbe, reconnaissable à son -t. Il dit l'action.",
+              "Si : un mot subit l'action. Cherche la fin qui le marque."
+            ]
+          }
         },
         {
           "id": "m6-02",
@@ -1049,7 +1065,23 @@
             "courent",
             "s'arrête"
           ],
-          "solution": "Le cheval court rapidement."
+          "solution": "Le cheval court rapidement.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « L'enfant court » ?",
+            "options": [
+              "Puer curro.",
+              "Puer currunt.",
+              "Puer currit.",
+              "Puerum currit."
+            ],
+            "answer": 2,
+            "explications": [
+              "La fin -o veut dire « je » : celui qui parle, pas l'enfant.",
+              "Cette forme est celle de la phrase du cours sur les chevaux : elle parle de plusieurs.",
+              "",
+              "La fin -m est celle du COD, celui qui subit l'action. Ici l'enfant agit."
+            ]
+          }
         },
         {
           "id": "m6-03",
@@ -1060,7 +1092,23 @@
           "avant": "Morituri te salut",
           "apres": " !",
           "solution": "ant",
-          "latin_complet": "Ave Caesar, morituri te salutant !"
+          "latin_complet": "Ave Caesar, morituri te salutant !",
+          "grammaire": {
+            "question": "Que veut dire « Clamant. » ? (clamare = crier)",
+            "options": [
+              "Il crie.",
+              "Je crie.",
+              "Nous crions.",
+              "Ils crient."
+            ],
+            "answer": 3,
+            "explications": [
+              "Pour une seule personne, le verbe finit par -t.",
+              "« Je crie » se dit clamo : la fin -o désigne celui qui parle.",
+              "« Nous crions » se dit clamamus, avec la fin -mus.",
+              ""
+            ]
+          }
         },
         {
           "id": "m6-04",
@@ -1144,7 +1192,23 @@
             "Ce mot a donné en français agriculture et agraire, désignant la terre cultivée et les campagnes.",
             "Ce mot a donné en français arbre et arboriculture, liés aux végétaux et aux forêts."
           ],
-          "explanation": "Aqua signifie l'eau en latin !"
+          "explanation": "Aqua signifie l'eau en latin !",
+          "grammaire": {
+            "question": "Quel mot latin se cache dans « oculiste », le médecin des yeux ?",
+            "options": [
+              "Oculus (l'œil)",
+              "Caput (la tête)",
+              "Pes (le pied)",
+              "Manus (la main)"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Ce mot a donné « capitaine » et « capital », qui parlent de la tête ou du chef.",
+              "Ce mot a donné « pédale » et « piéton », qui parlent du pied.",
+              "Ce mot a donné « manuel » et « manucure », qui parlent de la main."
+            ]
+          }
         },
         {
           "id": "m7-02",
@@ -1155,7 +1219,23 @@
           "avant": "",
           "apres": "marin (un engin qui va sous la mer).",
           "solution": "sub",
-          "latin_complet": "Submarin."
+          "latin_complet": "Submarin.",
+          "grammaire": {
+            "question": "Dans « postface » (le texte qui vient en dernier dans un livre), que veut dire post- ?",
+            "options": [
+              "Autour",
+              "Sous",
+              "Après",
+              "À travers"
+            ],
+            "answer": 2,
+            "explications": [
+              "C'est le sens de circum-, comme dans circonférence.",
+              "C'est le sens de sub-, comme dans submerger.",
+              "",
+              "C'est le sens de trans-, comme dans transporter."
+            ]
+          }
         },
         {
           "id": "m7-03",
@@ -1171,7 +1251,23 @@
             "j'ai couru,",
             "j'ai perdu."
           ],
-          "solution": "Je suis venu, j'ai vu, j'ai vaincu."
+          "solution": "Je suis venu, j'ai vu, j'ai vaincu.",
+          "grammaire": {
+            "question": "Sur le modèle de « veni » (je suis venu), que veut dire « misi » ? (mittere = envoyer)",
+            "options": [
+              "J'envoie.",
+              "Il envoie.",
+              "Il a envoyé.",
+              "J'ai envoyé."
+            ],
+            "answer": 3,
+            "explications": [
+              "« J'envoie » se dit mitto, avec la fin -o du présent.",
+              "« Il envoie » se dit mittit, avec un -t.",
+              "Ce passé parle d'une autre personne que celui qui parle.",
+              ""
+            ]
+          }
         },
         {
           "id": "m7-04",
@@ -1255,7 +1351,23 @@
             "Le panier est le mot français qui descend de panis : la question demande le sens du mot latin.",
             "Cet animal aquatique se disait piscis en latin, qui a donné piscine et pisciculture en français."
           ],
-          "explanation": "Bravo ! 'Panis' est le pain, la nourriture essentielle du citoyen romain !"
+          "explanation": "Bravo ! 'Panis' est le pain, la nourriture essentielle du citoyen romain !",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « La jeune fille voit l'eau » ? (aqua = l'eau)",
+            "options": [
+              "Puella aquam videt.",
+              "Puellam aqua videt.",
+              "Puella aqua videt.",
+              "Puellam aquam videt."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Les rôles sont inversés : ici, c'est l'eau qui voit.",
+              "Aucun mot ne porte la fin du COD : on ne sait pas qui est vu.",
+              "Deux mots portent la fin du COD, mais il faut aussi un sujet."
+            ]
+          }
         },
         {
           "id": "m8-02",
@@ -1276,7 +1388,23 @@
             "mercator = le marchand (sujet)",
             "vendere = vendre",
             "panis, -is = le pain (ici COD)"
-          ]
+          ],
+          "grammaire": {
+            "question": "Dans « Mercator amicum videt. », qui est vu ?",
+            "options": [
+              "Le marchand",
+              "L'ami",
+              "Les deux",
+              "Personne"
+            ],
+            "answer": 1,
+            "explications": [
+              "Ce mot n'a pas la fin du COD : c'est lui qui fait l'action.",
+              "",
+              "Le verbe n'a qu'un -t : un seul fait l'action, l'autre la subit.",
+              "Le verbe a un complément : cherche le mot qui porte la fin du COD."
+            ]
+          }
         },
         {
           "id": "m8-03",
@@ -1287,7 +1415,23 @@
           "avant": "Servus domin",
           "apres": " aquam portat.",
           "solution": "i",
-          "latin_complet": "Servus domini aquam portat."
+          "latin_complet": "Servus domini aquam portat.",
+          "grammaire": {
+            "question": "Comment dit-on « le bouclier de l'ami » ? (scutum = le bouclier)",
+            "options": [
+              "Scutum amicus.",
+              "Scutum amicae.",
+              "Scutum amicum.",
+              "Scutum amici."
+            ],
+            "answer": 3,
+            "explications": [
+              "Cette fin est celle du sujet. Pour dire « de l'ami », il faut changer la fin.",
+              "Cette fin est bien un génitif, mais celui d'un nom féminin : l'amie.",
+              "La fin -m marque le COD, pas le complément du nom.",
+              ""
+            ]
+          }
         },
         {
           "id": "m8-04",
@@ -1306,7 +1450,23 @@
             "2": "genitif",
             "3": "verbe"
           },
-          "traduction": "Le marchand vend le vin du maître."
+          "traduction": "Le marchand vend le vin du maître.",
+          "grammaire": {
+            "question": "Dans « Puer scutum amici videt. » (scutum = le bouclier), quel mot est au génitif ?",
+            "options": [
+              "Puer",
+              "Scutum",
+              "Amici",
+              "Videt"
+            ],
+            "answer": 2,
+            "explications": [
+              "C'est le sujet : il fait l'action.",
+              "C'est le COD : il subit l'action.",
+              "",
+              "C'est le verbe, reconnaissable à son -t."
+            ]
+          }
         },
         {
           "id": "m8-05",
@@ -1379,7 +1539,23 @@
             "C'est l'épée courte à double tranchant servant à frapper dans les rangs serrés.",
             "C'est le casque de bronze ou de fer qui protégeait la tête du soldat."
           ],
-          "explanation": "C'est bien le Scutum, qui protégeait presque tout le corps du légionnaire !"
+          "explanation": "C'est bien le Scutum, qui protégeait presque tout le corps du légionnaire !",
+          "grammaire": {
+            "question": "Comment dit-on « le casque du légionnaire » ? (galea = le casque, legionarius = le légionnaire)",
+            "options": [
+              "Galea legionarius.",
+              "Galea legionarii.",
+              "Galea legionarium.",
+              "Galeae legionarius."
+            ],
+            "answer": 1,
+            "explications": [
+              "Les deux mots ont la fin du sujet : rien n'indique « de ».",
+              "",
+              "La fin -m marque le COD, pas le complément du nom.",
+              "Le génitif est sur l'autre mot : cela dirait « le légionnaire du casque »."
+            ]
+          }
         },
         {
           "id": "m9-02",
@@ -1400,7 +1576,23 @@
             "legiones = pluriel de legio",
             "-nt = ils, elles (plusieurs)",
             "fortiter = courageusement"
-          ]
+          ],
+          "grammaire": {
+            "question": "Quelle phrase veut dire « La légion crie » ? (legio au pluriel : legiones ; clamare = crier)",
+            "options": [
+              "Legiones clamat.",
+              "Legio clamant.",
+              "Legio clamat.",
+              "Legiones clamant."
+            ],
+            "answer": 2,
+            "explications": [
+              "Le sujet est au pluriel, mais le verbe a la fin du singulier.",
+              "Le sujet est au singulier, mais le verbe a la fin du pluriel.",
+              "",
+              "Les deux mots sont au pluriel : cela parle de plusieurs légions."
+            ]
+          }
         },
         {
           "id": "m9-03",
@@ -1411,7 +1603,23 @@
           "avant": "Legionarii gladi",
           "apres": " portant.",
           "solution": "os",
-          "latin_complet": "Legionarii gladios portant."
+          "latin_complet": "Legionarii gladios portant.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Les jeunes filles voient les agneaux » ?",
+            "options": [
+              "Puellae agnos vident.",
+              "Puellas agni vident.",
+              "Puellae agnum vident.",
+              "Puella agnos vident."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Les rôles sont inversés : ici, ce sont les agneaux qui voient.",
+              "La fin -um ne montre qu'un seul agneau.",
+              "Le sujet est au singulier, mais le verbe a la fin du pluriel."
+            ]
+          }
         },
         {
           "id": "m9-04",
@@ -1428,7 +1636,23 @@
             "1": "sujet",
             "2": "verbe"
           },
-          "traduction": "Les esclaves voient les chevaux."
+          "traduction": "Les esclaves voient les chevaux.",
+          "grammaire": {
+            "question": "Dans « Lupos agricolae vident. » (agricola = le paysan), quel mot est le sujet ?",
+            "options": [
+              "Lupos",
+              "Agricolae",
+              "Vident",
+              "On ne peut pas savoir"
+            ],
+            "answer": 1,
+            "explications": [
+              "C'est le premier mot, mais sa fin -os indique un COD pluriel.",
+              "",
+              "C'est le verbe, reconnaissable à sa fin -nt.",
+              "Si : la fin de chaque mot indique son rôle, même quand l'ordre change."
+            ]
+          }
         },
         {
           "id": "m9-05",
@@ -1501,7 +1725,23 @@
             "Cette créature posant des énigmes aux voyageurs a été défiée par Œdipe près de Thèbes.",
             "Ce monstre aquatique dont les têtes repoussaient a été combattu par Hercule à Lerne."
           ],
-          "explanation": "Exactement ! La Chimère fut vaincue d'en haut par les flèches de Bellérophon !"
+          "explanation": "Exactement ! La Chimère fut vaincue d'en haut par les flèches de Bellérophon !",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Les amis aiment les chevaux » ?",
+            "options": [
+              "Equi amicos amant.",
+              "Amici equum amant.",
+              "Amicus equos amat.",
+              "Amici equos amant."
+            ],
+            "answer": 3,
+            "explications": [
+              "Les rôles sont inversés : ici, ce sont les chevaux qui aiment.",
+              "Le COD est au singulier : la fin ne montre qu'un seul cheval.",
+              "Le sujet et le verbe sont au singulier, alors qu'il y a plusieurs amis.",
+              ""
+            ]
+          }
         },
         {
           "id": "m10-02",
@@ -1522,7 +1762,23 @@
             "Cerberus = Cerbère (sujet)",
             "portam : -am = un seul COD",
             "custodit : -t = il"
-          ]
+          ],
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Le chien garde les portes » ? (canis = le chien)",
+            "options": [
+              "Canis porta custodit.",
+              "Canis portam custodit.",
+              "Canis portae custodit.",
+              "Canis portas custodit."
+            ],
+            "answer": 3,
+            "explications": [
+              "Porta a la fin d'un sujet, mais le chien est déjà le sujet.",
+              "La fin -am ne montre qu'une seule porte.",
+              "Cette fin n'est pas celle d'un COD.",
+              ""
+            ]
+          }
         },
         {
           "id": "m10-03",
@@ -1533,7 +1789,23 @@
           "avant": "Ulixes speluncam magn",
           "apres": " videt.",
           "solution": "am",
-          "latin_complet": "Ulixes speluncam magnam videt."
+          "latin_complet": "Ulixes speluncam magnam videt.",
+          "grammaire": {
+            "question": "Complète pour dire « La grande louve voit l'agneau » : Lupa magn___ agnum videt.",
+            "options": [
+              "-a",
+              "-am",
+              "-us",
+              "-um"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Le genre est bon, mais -m marque un COD. Ici, la louve est le sujet.",
+              "Cette fin est masculine, alors que lupa est féminin.",
+              "Cette fin est masculine et sert pour un COD."
+            ]
+          }
         },
         {
           "id": "m10-04",
@@ -1550,7 +1822,23 @@
             "de l'ami",
             "des glaives"
           ],
-          "solution": "Ulysse donne un glaive à l'ami dans la grotte."
+          "solution": "Ulysse donne un glaive à l'ami dans la grotte.",
+          "grammaire": {
+            "question": "Complète pour dire « Le maître donne de l'eau à la jeune fille » : Dominus aquam puell___ dat.",
+            "options": [
+              "-a",
+              "-ae",
+              "-am",
+              "-o"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette fin ne marque pas celui qui reçoit. Ici, la jeune fille reçoit l'eau.",
+              "",
+              "Cette fin est celle du COD, qui subit l'action, pas de celui qui reçoit.",
+              "Cette fin va avec les noms en -us, pas avec les noms en -a."
+            ]
+          }
         },
         {
           "id": "m10-05",
@@ -3813,7 +4101,7 @@
         "etym": "mission, émettre, transmettre",
         "ex": "Litteras mittit.",
         "ex_fr": "Il envoie une lettre.",
-        "monde": ""
+        "monde": "monde7"
       },
       {
         "latin": "monere (moneo, monui, monitum)",

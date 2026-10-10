@@ -33,6 +33,17 @@ Un légionnaire portait sur son dos un sac de plus de 30 kg contenant son équip
                 "C'est le casque de bronze ou de fer qui protégeait la tête du soldat.",
             ],
             "explanation": "C'est bien le Scutum, qui protégeait presque tout le corps du légionnaire !",
+            "grammaire": {
+                "question": "Comment dit-on « le casque du légionnaire » ? (galea = le casque, legionarius = le légionnaire)",
+                "options": ["Galea legionarius.", "Galea legionarii.", "Galea legionarium.", "Galeae legionarius."],
+                "answer": 1,
+                "explications": [
+                    "Les deux mots ont la fin du sujet : rien n'indique « de ».",
+                    "",
+                    "La fin -m marque le COD, pas le complément du nom.",
+                    "Le génitif est sur l'autre mot : cela dirait « le légionnaire du casque ».",
+                ],
+            },
         },
         {
             "id": "m9-02",
@@ -47,6 +58,17 @@ César envoie maintenant plusieurs légions. Reconstitue la phrase en français 
             "mots": ["Les légions", "combattent", "courageusement.", "La légion", "combat", "fuient"],
             "solution": "Les légions combattent courageusement.",
             "hints": ["legiones = pluriel de legio", "-nt = ils, elles (plusieurs)", "fortiter = courageusement"],
+            "grammaire": {
+                "question": "Quelle phrase veut dire « La légion crie » ? (legio au pluriel : legiones ; clamare = crier)",
+                "options": ["Legiones clamat.", "Legio clamant.", "Legio clamat.", "Legiones clamant."],
+                "answer": 2,
+                "explications": [
+                    "Le sujet est au pluriel, mais le verbe a la fin du singulier.",
+                    "Le sujet est au singulier, mais le verbe a la fin du pluriel.",
+                    "",
+                    "Les deux mots sont au pluriel : cela parle de plusieurs légions.",
+                ],
+            },
         },
         {
             "id": "m9-03",
@@ -70,6 +92,17 @@ Complète pour dire : « Les légionnaires portent leurs glaives ».""",
             "apres": " portant.",
             "solution": "os",
             "latin_complet": "Legionarii gladios portant.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les jeunes filles voient les agneaux » ?",
+                "options": ["Puellae agnos vident.", "Puellas agni vident.", "Puellae agnum vident.", "Puella agnos vident."],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Les rôles sont inversés : ici, ce sont les agneaux qui voient.",
+                    "La fin -um ne montre qu'un seul agneau.",
+                    "Le sujet est au singulier, mais le verbe a la fin du pluriel.",
+                ],
+            },
         },
         {
             "id": "m9-04",
@@ -88,6 +121,17 @@ Voici une phrase modèle, au pluriel :
             "mots": ["Equos", "servi", "vident"],
             "roles": {0: "cod", 1: "sujet", 2: "verbe"},
             "traduction": "Les esclaves voient les chevaux.",
+            "grammaire": {
+                "question": "Dans « Lupos agricolae vident. » (agricola = le paysan), quel mot est le sujet ?",
+                "options": ["Lupos", "Agricolae", "Vident", "On ne peut pas savoir"],
+                "answer": 1,
+                "explications": [
+                    "C'est le premier mot, mais sa fin -os indique un COD pluriel.",
+                    "",
+                    "C'est le verbe, reconnaissable à sa fin -nt.",
+                    "Si : la fin de chaque mot indique son rôle, même quand l'ordre change.",
+                ],
+            },
         },
         {
             "id": "m9-05",

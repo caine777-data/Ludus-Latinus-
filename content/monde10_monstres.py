@@ -30,6 +30,17 @@ Après ses exploits, Jupiter plaça Pégase dans le ciel : il est devenu une bri
                 "Ce monstre aquatique dont les têtes repoussaient a été combattu par Hercule à Lerne.",
             ],
             "explanation": "Exactement ! La Chimère fut vaincue d'en haut par les flèches de Bellérophon !",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les amis aiment les chevaux » ?",
+                "options": ["Equi amicos amant.", "Amici equum amant.", "Amicus equos amat.", "Amici equos amant."],
+                "answer": 3,
+                "explications": [
+                    "Les rôles sont inversés : ici, ce sont les chevaux qui aiment.",
+                    "Le COD est au singulier : la fin ne montre qu'un seul cheval.",
+                    "Le sujet et le verbe sont au singulier, alors qu'il y a plusieurs amis.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m10-02",
@@ -47,6 +58,17 @@ Ce soir, une seule porte reste ouverte. Reconstitue la phrase :""",
             "mots": ["Cerbère", "garde", "la porte.", "les portes.", "gardent", "dévore"],
             "solution": "Cerbère garde la porte.",
             "hints": ["Cerberus = Cerbère (sujet)", "portam : -am = un seul COD", "custodit : -t = il"],
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le chien garde les portes » ? (canis = le chien)",
+                "options": ["Canis porta custodit.", "Canis portam custodit.", "Canis portae custodit.", "Canis portas custodit."],
+                "answer": 3,
+                "explications": [
+                    "Porta a la fin d'un sujet, mais le chien est déjà le sujet.",
+                    "La fin -am ne montre qu'une seule porte.",
+                    "Cette fin n'est pas celle d'un COD.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m10-03",
@@ -69,6 +91,17 @@ Complète pour dire : « Ulysse voit une grande grotte ».""",
             "apres": " videt.",
             "solution": "am",
             "latin_complet": "Ulixes speluncam magnam videt.",
+            "grammaire": {
+                "question": "Complète pour dire « La grande louve voit l'agneau » : Lupa magn___ agnum videt.",
+                "options": ["-a", "-am", "-us", "-um"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Le genre est bon, mais -m marque un COD. Ici, la louve est le sujet.",
+                    "Cette fin est masculine, alors que lupa est féminin.",
+                    "Cette fin est masculine et sert pour un COD.",
+                ],
+            },
         },
         {
             "id": "m10-04",
@@ -93,6 +126,17 @@ Tu connais maintenant les six cas du latin !
             "latin": "Ulixes amico gladium in spelunca dat.",
             "mots": ["Ulysse", "donne", "un glaive", "à l'ami", "dans la grotte.", "de l'ami", "des glaives"],
             "solution": "Ulysse donne un glaive à l'ami dans la grotte.",
+            "grammaire": {
+                "question": "Complète pour dire « Le maître donne de l'eau à la jeune fille » : Dominus aquam puell___ dat.",
+                "options": ["-a", "-ae", "-am", "-o"],
+                "answer": 1,
+                "explications": [
+                    "Cette fin ne marque pas celui qui reçoit. Ici, la jeune fille reçoit l'eau.",
+                    "",
+                    "Cette fin est celle du COD, qui subit l'action, pas de celui qui reçoit.",
+                    "Cette fin va avec les noms en -us, pas avec les noms en -a.",
+                ],
+            },
         },
         {
             "id": "m10-05",

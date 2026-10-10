@@ -33,6 +33,17 @@ La plupart des gladiateurs étaient de véritables stars très populaires à Rom
                 "Aucune catégorie de gladiateur ne combattait avec deux haches : c'est une image de film plus que de l'arène.",
             ],
             "explanation": "Le Rétiaire combat avec son filet (rete) et son trident !",
+            "grammaire": {
+                "question": "Dans « Gladiator harenam videt. » (harena = le sable), quel mot est le COD ?",
+                "options": ["Harenam", "Gladiator", "Videt", "Il n'y en a pas"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Ce mot n'a pas la fin du COD : c'est lui qui fait l'action.",
+                    "C'est le verbe, reconnaissable à son -t. Il dit l'action.",
+                    "Si : un mot subit l'action. Cherche la fin qui le marque.",
+                ],
+            },
         },
         {
             "id": "m6-02",
@@ -50,6 +61,17 @@ Mais un cheval s'échappe seul de la piste… Traduis (un seul cheval : *equus*)
             "latin": "Equus celeriter currit.",
             "mots": ["Le cheval", "court", "rapidement.", "Les chevaux", "courent", "s'arrête"],
             "solution": "Le cheval court rapidement.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « L'enfant court » ?",
+                "options": ["Puer curro.", "Puer currunt.", "Puer currit.", "Puerum currit."],
+                "answer": 2,
+                "explications": [
+                    "La fin -o veut dire « je » : celui qui parle, pas l'enfant.",
+                    "Cette forme est celle de la phrase du cours sur les chevaux : elle parle de plusieurs.",
+                    "",
+                    "La fin -m est celle du COD, celui qui subit l'action. Ici l'enfant agit.",
+                ],
+            },
         },
         {
             "id": "m6-03",
@@ -72,6 +94,17 @@ Rappelle-toi la terminaison des verbes quand ils sont plusieurs (monde 5) :""",
             "apres": " !",
             "solution": "ant",
             "latin_complet": "Ave Caesar, morituri te salutant !",
+            "grammaire": {
+                "question": "Que veut dire « Clamant. » ? (clamare = crier)",
+                "options": ["Il crie.", "Je crie.", "Nous crions.", "Ils crient."],
+                "answer": 3,
+                "explications": [
+                    "Pour une seule personne, le verbe finit par -t.",
+                    "« Je crie » se dit clamo : la fin -o désigne celui qui parle.",
+                    "« Nous crions » se dit clamamus, avec la fin -mus.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m6-04",
