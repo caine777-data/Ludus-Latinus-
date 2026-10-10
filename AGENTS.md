@@ -331,8 +331,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   remplacé le 10/10 par un cyprès détouré (avec l'accord de Cédric) depuis le JPG
   sur fond blanc livré par Gemini (Gemini ne sait pas faire de vraie transparence :
   il dessine un damier). Fond de la Via Appia : une peinture pâle par classe
-  (`via/fond_via_4e.jpg`, `fond_via_3e.jpg`, `_fondsParClasse` dans
-  `map_screen.dart`), repli sur le dessin d'origine ; celui de la 5e est attendu. Les six illustrations
+  (`via/fond_via_5e.jpg`, `_4e`, `_3e`, `_fondsParClasse` dans
+  `map_screen.dart`, « Tout le cycle » prend celui de la 5e), repli sur le
+  dessin d'origine. Vu à l'émulateur le 10/10 (`scratch/t55_via_*.png`). Les six illustrations
   de leçons (`musee_gladiateur`, `legion`, `louve`, `pegase`, `circus`,
   `thermes`) sont refaites par Cédric au style 3D des cartes, sans texte,
   en JPG copiés tels quels.

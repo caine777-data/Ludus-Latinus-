@@ -287,7 +287,7 @@ class _MapScreenState extends State<MapScreen> {
   /// 3 = 3e ; « Tout le cycle » prend celui de la 5e). Image absente : repli
   /// sur le dessin d'origine.
   static const Map<int, String> _fondsParClasse = {
-    // 1 (5e) : en attente de l'image de la campagne.
+    1: 'assets/images/via/fond_via_5e.jpg',
     2: 'assets/images/via/fond_via_4e.jpg',
     3: 'assets/images/via/fond_via_3e.jpg',
   };
