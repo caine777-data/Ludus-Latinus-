@@ -228,12 +228,9 @@ class _MapScreenState extends State<MapScreen> {
                 ? const Center(child: Text('Aucune étape trouvée pour ce cursus.'))
                 : Stack(
                     children: [
-                      // Arrière-plan subtil : collines et aqueduc
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: ViaAppiaBackgroundPainter(),
-                        ),
-                      ),
+                      // Arrière-plan : la peinture de la classe affichée (campagne,
+                      // République, Empire), sinon les collines et l'aqueduc dessinés.
+                      Positioned.fill(child: _fondDeLaClasse()),
                       // Liste défilante des mondes et bornes milliaires
                       // Tout est construit d'avance (113 bornes au plus) pour que la
                       // carte puisse défiler jusqu'au pion où qu'il soit.
@@ -283,6 +280,30 @@ class _MapScreenState extends State<MapScreen> {
           setState(() => _activeFilter = index);
         }
       },
+    );
+  }
+
+  /// Fonds peints par Cédric, un par classe (index du filtre : 1 = 5e, 2 = 4e,
+  /// 3 = 3e ; « Tout le cycle » prend celui de la 5e). Image absente : repli
+  /// sur le dessin d'origine.
+  static const Map<int, String> _fondsParClasse = {
+    // 1 (5e) : en attente de l'image de la campagne.
+    2: 'assets/images/via/fond_via_4e.jpg',
+    3: 'assets/images/via/fond_via_3e.jpg',
+  };
+
+  Widget _fondDeLaClasse() {
+    final repli = CustomPaint(painter: ViaAppiaBackgroundPainter());
+    final chemin = _fondsParClasse[_activeFilter == 0 ? 1 : _activeFilter];
+    if (chemin == null) return repli;
+    return Image.asset(
+      chemin,
+      fit: BoxFit.cover,
+      alignment: Alignment.topCenter,
+      // Un voile crème garde les cartes de leçons bien lisibles par-dessus.
+      color: RomanColors.palatinCream.withValues(alpha: 0.25),
+      colorBlendMode: BlendMode.srcOver,
+      errorBuilder: (context, error, stack) => repli,
     );
   }
 

@@ -330,7 +330,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   la question. Le cyprès de la Via Appia (`via/cypres.png`, montage raté) est
   remplacé le 10/10 par un cyprès détouré (avec l'accord de Cédric) depuis le JPG
   sur fond blanc livré par Gemini (Gemini ne sait pas faire de vraie transparence :
-  il dessine un damier). Les six illustrations
+  il dessine un damier). Fond de la Via Appia : une peinture pâle par classe
+  (`via/fond_via_4e.jpg`, `fond_via_3e.jpg`, `_fondsParClasse` dans
+  `map_screen.dart`), repli sur le dessin d'origine ; celui de la 5e est attendu. Les six illustrations
   de leçons (`musee_gladiateur`, `legion`, `louve`, `pegase`, `circus`,
   `thermes`) sont refaites par Cédric au style 3D des cartes, sans texte,
   en JPG copiés tels quels.
