@@ -40,6 +40,17 @@ Il se forme en insérant le son magique **-BA-** entre le radical et les désine
                 "-re- termine l'infinitif présent de nombreux verbes, comme amare : ce n'est pas un signe d'imparfait.",
             ],
             "explanation": "Le suffixe -ba- est la marque universelle de l'imparfait régulier latin !",
+            "grammaire": {
+                "question": "Quelle forme veut dire « nous marchions » ? (ambulare = marcher)",
+                "options": ["Ambulamus", "Ambulabant", "Ambulabamus", "Ambulabatis"],
+                "answer": 2,
+                "explications": [
+                    "Cette forme est au présent : il n'y a pas de -ba- dans le verbe.",
+                    "Cette fin parle de plusieurs autres personnes (« ils »), pas de « nous ».",
+                    "",
+                    "Cette fin s'adresse à plusieurs personnes (« vous »).",
+                ],
+            },
         },
         {
             "id": "m15-02",
@@ -62,6 +73,17 @@ Complète pour dire : « Les élèves étaient à l'école » (*in schola*).""",
             "apres": ".",
             "solution": "ant",
             "latin_complet": "Discipuli in schola erant.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Tu étais dans le jardin » ? (hortus = le jardin)",
+                "options": ["In horto eram.", "In horto erat.", "In horto es.", "In horto eras."],
+                "answer": 3,
+                "explications": [
+                    "La fin -m est celle de « je » : celui qui parle.",
+                    "La fin -t désigne une autre personne, pas celui à qui l'on parle.",
+                    "Ce verbe est au présent : il n'a pas le radical era-.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m15-03",
@@ -76,6 +98,17 @@ Exemple : *« Romani in foro conveniebant. »* = « Les Romains se rassemblaient
             "latin": "Romani in foro clamabant.",
             "mots": ["Les Romains", "criaient", "sur le forum.", "crient", "Le Romain"],
             "solution": "Les Romains criaient sur le forum.",
+            "grammaire": {
+                "question": "Laquelle de ces phrases est à l'imparfait ? (amare = aimer ; dominus = le maître)",
+                "options": ["Servus dominum amat.", "Servus dominum amabat.", "Servus dominum amavit.", "Servi dominum amant."],
+                "answer": 1,
+                "explications": [
+                    "Il n'y a pas de -ba- entre le radical et la fin : c'est le présent.",
+                    "",
+                    "Cette forme n'a pas le -ba- de l'imparfait : le -v- appartient à un autre temps.",
+                    "Cette forme est au présent et parle de plusieurs esclaves.",
+                ],
+            },
         },
         {
             "id": "m15-04",

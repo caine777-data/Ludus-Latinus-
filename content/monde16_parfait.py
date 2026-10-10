@@ -39,6 +39,17 @@ En français, il se traduit selon le contexte :
                 "-ut ressemble au petit mot ut (comme, pour que), mais ce n'est pas une désinence verbale du parfait.",
             ],
             "explanation": "La 3e personne du singulier du parfait se termine toujours par -IT !",
+            "grammaire": {
+                "question": "Quelle forme veut dire « tu as chanté » ? (cantare = chanter)",
+                "options": ["Cantavisti", "Cantavi", "Cantavit", "Cantabas"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette fin est celle de « j'ai chanté » : elle désigne celui qui parle.",
+                    "Cette fin désigne une autre personne, pas celui à qui l'on parle.",
+                    "Ce verbe a un -ba- : il dit que l'action durait, pas qu'elle est finie.",
+                ],
+            },
         },
         {
             "id": "m16-02",
@@ -60,6 +71,17 @@ Complète pour dire : « César et Pompée furent des chefs célèbres ».""",
             "apres": ".",
             "solution": "erunt",
             "latin_complet": "Caesar et Pompeius clari duces fuerunt.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Vous avez été des soldats » ?",
+                "options": ["Milites fuisti.", "Milites fuimus.", "Milites fuistis.", "Milites fuerunt."],
+                "answer": 2,
+                "explications": [
+                    "Cette fin désigne une seule personne (« tu »), pas plusieurs.",
+                    "La fin -mus désigne un groupe dont celui qui parle fait partie.",
+                    "",
+                    "La fin -erunt désigne d'autres personnes (« ils »), pas celles à qui l'on parle.",
+                ],
+            },
         },
         {
             "id": "m16-03",
@@ -77,6 +99,17 @@ Et à la 3e personne ? *Vici* (j'ai vaincu) devient *vicit* (il a vaincu). Tradu
             "latin": "Caesar Gallos vicit.",
             "mots": ["César", "a vaincu", "les Gaulois.", "vainc", "les Romains."],
             "solution": "César a vaincu les Gaulois.",
+            "grammaire": {
+                "question": "Que veut dire « Puer lupum vidit. » ? (videre = voir ; lupus = le loup)",
+                "options": ["L'enfant voit le loup.", "L'enfant voyait le loup.", "Le loup voit l'enfant.", "L'enfant a vu le loup."],
+                "answer": 3,
+                "explications": [
+                    "Le présent de ce verbe est videt, avec une autre voyelle.",
+                    "L'imparfait aurait le son -ba- dans le verbe.",
+                    "Les rôles sont inversés : la fin -m marque ce qui subit l'action.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m16-04",

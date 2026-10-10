@@ -43,6 +43,17 @@ Après le présent et les temps du passé, découvrons le **Futur** latin :
                 "Cette traduction exprime un souhait ou un ordre au subjonctif (amet), pas une certitude future.",
             ],
             "explanation": "Le suffixe -bi- avec le -t de 3e personne singulier indique le futur : il aimera !",
+            "grammaire": {
+                "question": "Quelle forme veut dire « vous chanterez » ? (cantare = chanter)",
+                "options": ["Cantabatis", "Cantabitis", "Cantatis", "Cantavistis"],
+                "answer": 1,
+                "explications": [
+                    "Le suffixe -ba- raconte le passé : il dit que l'action durait.",
+                    "",
+                    "Ce verbe n'a aucun suffixe : c'est le présent.",
+                    "Le -vi- appartient au temps de l'action achevée.",
+                ],
+            },
         },
         {
             "id": "m17-02",
@@ -68,6 +79,17 @@ Exemple : *Caesar Vercingetorigem vincet ? Caesar eum vincet.* = « César le va
             "apres": " capiet.",
             "solution": "eam",
             "latin_complet": "Caesar eam capiet.",
+            "grammaire": {
+                "question": "Complète pour dire « L'enfant le voit » : Puer lupum videt. Puer ___ videt.",
+                "options": ["eum", "eam", "id", "is"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme remplace un nom féminin, or lupus est masculin.",
+                    "Cette forme remplace un nom neutre.",
+                    "Cette forme est celle du sujet, alors qu'il faut remplacer le COD.",
+                ],
+            },
         },
         {
             "id": "m17-03",
@@ -84,6 +106,17 @@ Exemple : *« Galli pro libertate pugnabant. »* = « Les Gaulois combattaient p
             "latin": "Vercingetorix pro libertate pugnabat.",
             "mots": ["Vercingétorix", "combattait", "pour la liberté.", "combattaient", "César"],
             "solution": "Vercingétorix combattait pour la liberté.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les Gaulois ont envoyé des messagers » ? (mittere = envoyer, parfait misi ; nuntius = le messager)",
+                "options": ["Gallus nuntios miserunt.", "Galli nuntios misit.", "Galli nuntios miserunt.", "Galli nuntios mittebant."],
+                "answer": 2,
+                "explications": [
+                    "Le sujet est au singulier, mais le verbe a la fin du pluriel.",
+                    "Le sujet est au pluriel, mais le verbe a la fin du singulier.",
+                    "",
+                    "Le suffixe -ba- raconte une action qui durait, pas une action achevée.",
+                ],
+            },
         },
         {
             "id": "m17-04",

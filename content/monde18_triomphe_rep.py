@@ -38,6 +38,17 @@ Mais loin de sauver la République, cet assassinat déclenche de nouvelles guerr
                 "C'est le cri des républicains conjurés après l'attentat, pas la parole du dictateur blessé.",
             ],
             "explanation": "Tu = toi, quoque = aussi, mi fili = mon fils (au vocatif) !",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Brutus le verra » ? (le = César, un homme ; videre = voir)",
+                "options": ["Brutus is videbit.", "Brutus eum videbat.", "Brutus eam videbit.", "Brutus eum videbit."],
+                "answer": 3,
+                "explications": [
+                    "Cette forme est celle du sujet. Brutus est déjà le sujet de la phrase.",
+                    "Le suffixe -ba- raconte le passé, pas ce qui arrivera.",
+                    "Cette forme remplace un nom féminin, or César est un homme.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m18-02",
@@ -54,6 +65,17 @@ Complète la phrase latine pour dire : « Les soldats ont sauvé la patrie ».""
             "apres": ".",
             "solution": "erunt",
             "latin_complet": "Milites patriam servaverunt.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les citoyens ont défendu la patrie » ? (defendere = défendre, parfait defendi)",
+                "options": ["Cives patriam defendit.", "Cives patriam defenderunt.", "Cives patriam defendebant.", "Cives patriam defendunt."],
+                "answer": 1,
+                "explications": [
+                    "Le sujet est au pluriel, mais le verbe a la fin du singulier.",
+                    "",
+                    "Le suffixe -ba- raconte une action qui durait, pas une action achevée.",
+                    "Ce verbe est au présent : sa fin ne marque pas une action achevée.",
+                ],
+            },
         },
         {
             "id": "m18-03",
@@ -68,6 +90,17 @@ Exemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et l
             "latin": "Sapientia consulis rem publicam servavit.",
             "mots": ["La sagesse", "du consul", "a sauvé", "la République.", "sauve", "des consuls"],
             "solution": "La sagesse du consul a sauvé la République.",
+            "grammaire": {
+                "question": "Complète pour dire « la voix du chef » : Vox duc___. (dux = le chef)",
+                "options": ["-is", "-em", "-i", "-es"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette fin est celle du COD, qui subit l'action, pas du complément du nom.",
+                    "Cette fin marque celui qui reçoit, pas le complément du nom.",
+                    "Cette fin désigne plusieurs chefs, au sujet ou au COD.",
+                ],
+            },
         },
         {
             "id": "m18-04",

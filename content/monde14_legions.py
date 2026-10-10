@@ -37,6 +37,17 @@ Autre exemple très fréquent :
                 "Cette terminaison en -e est réservée au genre neutre (comme mare), or ce nom est masculin.",
             ],
             "explanation": "Au masculin singulier nominatif, l'adjectif est 'fortis' : miles fortis !",
+            "grammaire": {
+                "question": "Comment dit-on « une mère courageuse » ? (mater = la mère ; fortis, -e = courageux)",
+                "options": ["Mater forta.", "Mater fortis.", "Mater forte.", "Mater fortus."],
+                "answer": 1,
+                "explications": [
+                    "Cette fin est celle de bona, adjectif de 1re classe, qui ne se décline pas comme fortis.",
+                    "",
+                    "Cette fin sert pour un nom neutre.",
+                    "Cette fin est celle du masculin des adjectifs comme bonus.",
+                ],
+            },
         },
         {
             "id": "m14-02",
@@ -59,6 +70,17 @@ Complète pour dire : « Les soldats voient d'immenses dangers ».""",
             "apres": " pericula vident.",
             "solution": "ia",
             "latin_complet": "Milites ingentia pericula vident.",
+            "grammaire": {
+                "question": "Complète pour dire « Les légionnaires portent de courts javelots » : Legionarii brev___ pila portant. (brevis, -e = court)",
+                "options": ["-a", "-es", "-ium", "-ia"],
+                "answer": 3,
+                "explications": [
+                    "Cette fin est celle d'adjectifs comme bonus, d'un autre modèle.",
+                    "Cette fin va avec des noms masculins ou féminins au pluriel. Ici le nom est neutre.",
+                    "Cette fin est celle du génitif pluriel, qui dit « de ».",
+                    "",
+                ],
+            },
         },
         {
             "id": "m14-03",
@@ -83,6 +105,17 @@ Exemple : *« Miles Romanus fortissimus est. »* = « Le soldat romain est le pl
             "latin": "Legio Romana fortior est.",
             "mots": ["La légion", "romaine", "est", "plus courageuse.", "la plus courageuse.", "Le soldat"],
             "solution": "La légion romaine est plus courageuse.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « La forêt est très haute » ? (silva = la forêt ; altus = haut)",
+                "options": ["Silva altissima est.", "Silva altior est.", "Silva alta est.", "Silva altissimus est."],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme veut dire « plus haute » : elle compare avec une autre chose.",
+                    "Cet adjectif n'a aucun suffixe : il dit seulement « haute ».",
+                    "Cette fin est celle du masculin, or silva est féminin.",
+                ],
+            },
         },
         {
             "id": "m14-04",

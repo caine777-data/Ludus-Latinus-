@@ -37,6 +37,17 @@ Prends le génitif singulier (*reg-is*) et retire la terminaison **-is**. Tu obt
                 "-um marque le nominatif ou l'accusatif des noms neutres, ou un génitif pluriel, pas le génitif singulier.",
             ],
             "explanation": "Exactement ! Le génitif singulier en -is est la signature absolue de la 3e déclinaison !",
+            "grammaire": {
+                "question": "Quel est le radical de « pons, pontis » (le pont) ?",
+                "options": ["Pont-", "Pons-", "Pontis-", "Ponti-"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Tu as gardé le nominatif tel quel. Le radical se lit dans le génitif.",
+                    "Il reste la terminaison -is, qu'il faut retirer.",
+                    "Il reste le i de la terminaison -is.",
+                ],
+            },
         },
         {
             "id": "m12-02",
@@ -61,6 +72,17 @@ Complète pour mettre le mot *miles, militis* (le soldat) à l'accusatif singuli
             "apres": " convocat.",
             "solution": "em",
             "latin_complet": "Consul militem convocat.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le sénateur voit le roi » ? (senator, senatoris = le sénateur)",
+                "options": ["Senatorem rex videt.", "Senator rex videt.", "Senator regem videt.", "Senator regis videt."],
+                "answer": 2,
+                "explications": [
+                    "Les rôles sont inversés : la fin -em marque celui qui subit l'action.",
+                    "Aucun mot ne porte la fin du COD : on ne sait pas qui est vu.",
+                    "",
+                    "Cette fin est celle du génitif (« de »). Elle ne marque pas le COD.",
+                ],
+            },
         },
         {
             "id": "m12-03",
@@ -79,6 +101,17 @@ Exemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyen
             "latin": "Consul legem civibus dat.",
             "mots": ["Le consul", "donne", "une loi", "aux citoyens.", "des lois", "au citoyen."],
             "solution": "Le consul donne une loi aux citoyens.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le chef donne le pain au soldat » ? (panis = le pain)",
+                "options": ["Dux militem panem dat.", "Dux militi panem dat.", "Dux militis panem dat.", "Dux militibus panem dat."],
+                "answer": 1,
+                "explications": [
+                    "La fin -em marque un COD, mais le pain occupe déjà ce rôle.",
+                    "",
+                    "Cette fin dit « du soldat » : elle complète un nom au lieu de désigner celui qui reçoit.",
+                    "Cette fin est celle du pluriel : plusieurs soldats recevraient le pain.",
+                ],
+            },
         },
         {
             "id": "m12-04",

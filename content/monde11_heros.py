@@ -37,6 +37,17 @@ Un soldat romain légendaire, **Horatius Coclès** (*Coclès* signifie « le bor
                 "Les récits ne parlent d'aucune porte de la ville : ce n'est pas le lieu de l'exploit d'Horatius.",
             ],
             "explanation": "Coclès est resté seul face à toute l'armée ennemie sur le pont Sublicius !",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le soldat donne un glaive à l'ami » ? (dat = il donne ; gladius = le glaive)",
+                "options": ["Miles amicus gladium dat.", "Miles amici gladium dat.", "Miles amico gladium dat.", "Miles amicum gladium dat."],
+                "answer": 2,
+                "explications": [
+                    "Cette fin est celle du sujet : l'ami ferait l'action, comme le soldat.",
+                    "Cette fin dit « de l'ami » : elle complète un nom, elle ne désigne pas celui qui reçoit.",
+                    "",
+                    "La fin -m marque le COD, ce qui est donné. Le glaive occupe déjà ce rôle.",
+                ],
+            },
         },
         {
             "id": "m11-02",
@@ -54,6 +65,17 @@ Ses trois cents compagnons pourraient tous répondre au pluriel. Traduis leur r�
             "latin": "Cives Romani sumus.",
             "mots": ["Nous sommes", "citoyens", "romains.", "Je suis", "citoyen", "romain."],
             "solution": "Nous sommes citoyens romains.",
+            "grammaire": {
+                "question": "Complète pour dire « Nous sommes des amis » : Amici ___.",
+                "options": ["sum", "sumus", "estis", "sunt"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme veut dire « je suis » : un seul parle.",
+                    "",
+                    "Cette forme s'adresse à plusieurs personnes (« vous »), pas à un groupe dont tu fais partie.",
+                    "Cette forme parle de plusieurs autres personnes (« ils »).",
+                ],
+            },
         },
         {
             "id": "m11-03",
@@ -73,6 +95,17 @@ Complète la phrase latine pour dire : « Cloélie traverse le fleuve ».""",
             "apres": ".",
             "solution": "it",
             "latin_complet": "Cloelia fluvium transit.",
+            "grammaire": {
+                "question": "Que veut dire « Puella silvam transit. » ? (silva = la forêt ; transire = traverser)",
+                "options": ["La forêt traverse la jeune fille.", "Les jeunes filles traversent la forêt.", "Tu traverses la forêt.", "La jeune fille traverse la forêt."],
+                "answer": 3,
+                "explications": [
+                    "Les rôles sont inversés : la fin -m marque ce qui subit l'action.",
+                    "Le verbe finit par un seul -t : un seul fait l'action.",
+                    "Pour « tu », la fin du verbe serait -s. Ici elle est différente.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m11-04",

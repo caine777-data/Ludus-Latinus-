@@ -35,6 +35,17 @@ Au génitif pluriel (complément du nom), ils prennent **-IUM** au lieu de -um !
                 "-arum est la finale de rosa et des noms de la 1re déclinaison, pas de navis.",
             ],
             "explanation": "Les thèmes en -i font leur génitif pluriel en -ium !",
+            "grammaire": {
+                "question": "Comment dit-on « la voix des oiseaux » ? (vox = la voix ; avis, avis = l'oiseau, un nom en -i)",
+                "options": ["Vox avum.", "Vox avibus.", "Vox avarum.", "Vox avium."],
+                "answer": 3,
+                "explications": [
+                    "Ce génitif pluriel copie regum, mais avis fait partie d'une autre famille de noms.",
+                    "Cette fin sert pour celui qui reçoit ou pour une circonstance, pas pour dire « de ».",
+                    "Cette fin est celle du génitif pluriel des noms comme rosa.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m13-02",
@@ -58,6 +69,17 @@ Complète pour dire : « Le maître écrit les noms des élèves ».""",
             "apres": " discipulorum scribit.",
             "solution": "a",
             "latin_complet": "Magister nomina discipulorum scribit.",
+            "grammaire": {
+                "question": "Quelle forme veut dire « les têtes » ? (caput, capitis = la tête, un nom neutre)",
+                "options": ["Capita", "Capites", "Capiti", "Capitos"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette fin est celle des noms masculins ou féminins comme reges. Un neutre suit une autre règle.",
+                    "Cette forme est au singulier.",
+                    "Cette fin est celle du COD pluriel des noms comme servus.",
+                ],
+            },
         },
         {
             "id": "m13-03",
@@ -75,6 +97,17 @@ Exemple : *« Naves Romanae in mari navigant. »* = « Les navires romains navig
             "latin": "Navis Romana in mari navigat.",
             "mots": ["Le navire", "romain", "navigue", "sur la mer.", "Les navires", "naviguent"],
             "solution": "Le navire romain navigue sur la mer.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les chefs courent » ? (dux, ducis = le chef ; currere = courir)",
+                "options": ["Dux currunt.", "Ducem currit.", "Duces currunt.", "Duces currit."],
+                "answer": 2,
+                "explications": [
+                    "Le verbe est au pluriel, mais le sujet a la forme du singulier.",
+                    "La fin -em marque le COD : ce mot ne fait pas l'action.",
+                    "",
+                    "Le sujet est au pluriel, mais le verbe a la fin du singulier.",
+                ],
+            },
         },
         {
             "id": "m13-04",
