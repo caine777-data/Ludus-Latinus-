@@ -92,15 +92,10 @@ Un centurion de garde à Pompéi te soumet l'épreuve de la cendre volcanique. R
                     "explanation": "Le supin (en -um) fournit le radical du PPP (ex: scriptum -> scriptus, a, um)."
                 },
                 {
-                    "question": "Comment se traduit 'Epistula a Plinio scripta' ?",
-                    "options": [
-                        "La lettre écrite par Pline",
-                        "Pline écrit une lettre",
-                        "La lettre que Pline lira",
-                        "Pline reçoit une lettre"
-                    ],
-                    "answer": 0,
-                    "explanation": "Scripta est le PPP féminin qualifiant epistula : la lettre écrite."
+                    "question": "Quelle phrase veut dire « L'ennemi a été vaincu » ?",
+                    "options": ["Hostis victa est.", "Hostis victum est.", "Hostis victus est.", "Hostis victi sunt."],
+                    "answer": 2,
+                    "explanation": "« Hostis » est masculin : le participe prend -us, « victus ». « Victa » serait féminin, « victum » neutre, et « sunt » parlerait de plusieurs ennemis."
                 }
             ]
         }

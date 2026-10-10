@@ -112,10 +112,10 @@ Utilise ta maîtrise des cas latins pour terrasser la bête et remporter une bou
             "boss": {"nom": "Le Lion de Némée", "icone": "🦁", "pv": 3},
             "questions": [
                 {
-                    "question": "Dans 'Lupus agnum videt', qui est le mangeur/regardeur (le Sujet) ?",
-                    "options": ["Agnum", "Lupus", "Videt", "Aucun des deux"],
-                    "answer": 1,
-                    "explanation": "C'est Lupus qui est au Nominatif (Sujet) !"
+                    "question": "Dans « Rosam puella videt », quel mot est le sujet ?",
+                    "options": ["Rosam", "Videt", "Puella", "Impossible à dire"],
+                    "answer": 2,
+                    "explanation": "« Puella » est au nominatif : c'est le sujet. « Rosam » porte un -m : c'est le COD. L'ordre ne décide pas."
                 },
                 {
                     "question": "Par quelle lettre se terminent très souvent les noms au COD (Accusatif singulier) ?",
@@ -125,9 +125,9 @@ Utilise ta maîtrise des cas latins pour terrasser la bête et remporter une bou
                 },
                 {
                     "question": "Comment traduit-on : 'Puella rosam amat' ?",
-                    "options": ["La rose aime la fille", "La jeune fille aime la rose", "La fille cueille une rose", "La rose est rouge"],
-                    "answer": 1,
-                    "explanation": "Puella (Sujet) aime rosam (COD) = La jeune fille aime la rose !"
+                    "options": ["La rose voit la jeune fille", "La rose aime la jeune fille", "La jeune fille aime la rose", "La jeune fille voit la rose"],
+                    "answer": 2,
+                    "explanation": "« Puella » est le sujet, « rosam » (avec -m) est le COD, « amat » veut dire « aime »."
                 }
             ]
         }

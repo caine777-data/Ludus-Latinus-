@@ -95,7 +95,7 @@ Calliope, muse protectrice de la poésie épique et de l'éloquence, teste ta se
                     "question": "Que signifie la particule attachée '-que' dans 'virumque' ?",
                     "options": ["Et", "Ou", "Mais", "Car"],
                     "answer": 0,
-                    "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans SPQR : Senatus Populus-que)."
+                    "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans virumque)."
                 }
             ]
         }

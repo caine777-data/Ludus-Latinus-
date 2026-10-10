@@ -95,10 +95,10 @@ Le décurion de Porsenna te barre la route du Tibre. Fais triompher les vertus r
                     "explanation": "Scaevola signifie 'le gaucher' en latin !"
                 },
                 {
-                    "question": "Quel honneur exceptionnel les Romains ont-ils accordé à Cloélie ?",
-                    "options": ["Une statue équestre sur la Voie Sacrée", "Une couronne triomphale de lauriers d'or", "Le droit de siéger au Sénat avec les pères", "Un monument de marbre blanc sur le Forum"],
-                    "answer": 0,
-                    "explanation": "Une statue équestre, honneur jusqu'alors réservé aux plus grands généraux romains !"
+                    "question": "Quelle phrase veut dire « Vous êtes romains » ?",
+                    "options": ["Romani sumus.", "Romani sunt.", "Romani estis.", "Romanus es."],
+                    "answer": 2,
+                    "explanation": "« Estis » veut dire « vous êtes ». « Sumus » = nous sommes, « sunt » = ils sont, « es » = tu es (et « Romanus » est au singulier)."
                 }
             ]
         }

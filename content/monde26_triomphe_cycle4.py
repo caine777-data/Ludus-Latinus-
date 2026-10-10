@@ -21,6 +21,7 @@ De ton premier *« Salve ! »* en 5ème jusqu'aux chefs-d'œuvre de Virgile et �
 - **Tous les cas** : Nominatif (Sujet), Vocatif (Appel), Accusatif (COD), Génitif (Complément du nom), Datif (COI), Ablatif (Complément circonstanciel).
 - **Tous les temps de l'indicatif** : Présent (*amat*), Imparfait (*amabat*), Parfait (*amavit*), Futur (*amabit*).
 - **Les constructions reines** : Participe Parfait Passif (*amatus*), Ablatif Absolu (*urbe capta*), Proposition Infinitive (*scio te venire*), Voix Passive (*laudatur*).
+- Sous Trajan, en 117, l'empire atteint sa plus grande étendue, de la Bretagne à la Mésopotamie.
 
 Prépare-toi à gravir les marches sacrées du Forum pour le couronnement suprême !""",
             "question": "Quelle construction réunit un nom et un participe tous deux au cas ablatif sans mot de liaison ?",
@@ -86,31 +87,21 @@ Sous la colonne Trajane, en présence du Sénat au grand complet, l'Empereur Tra
                 },
                 {
                     "question": "Comment se traduit l'expression 'Scio urbem magnam esse' ?",
-                    "options": [
-                        "Je sais que la ville est grande",
-                        "La grande ville sait tout",
-                        "Je vois une grande ville",
-                        "La ville est devenue grande"
-                    ],
+                    "options": ["Je sais que la ville est grande", "La grande ville sait tout", "Je vois une grande ville", "La ville est devenue grande"],
                     "answer": 0,
-                    "explanation": "C'est une proposition infinitive : Scio = je sais (que), urbem magnam = la grande ville (Acc.), esse = est (Infinitif)."
+                    "explanation": "C'est une proposition infinitive : scio = je sais (que), urbem magnam = la grande ville (accusatif), esse = être (infinitif), d'où \"la ville est grande\"."
                 },
                 {
                     "question": "Quel empereur a porté l'Empire romain à sa plus grande étendue territoriale ?",
                     "options": ["Trajan", "Néron", "Romulus", "Jules César"],
                     "answer": 0,
-                    "explanation": "Sous l'empereur Trajan (98-117 ap. J.-C.), l'Empire s'étendait de l'Écosse à la Mésopotamie !"
+                    "explanation": "Sous l'empereur Trajan (98-117 ap. J.-C.), l'Empire s'étendait de la Bretagne à la Mésopotamie !"
                 },
                 {
-                    "question": "Que signifie la devise 'Ad astra per aspera' ?",
-                    "options": [
-                        "Vers les étoiles à travers les épreuves",
-                        "Le ciel appartient aux aigles",
-                        "La victoire pour les plus forts",
-                        "Partir sans jamais revenir"
-                    ],
-                    "answer": 0,
-                    "explanation": "Ad astra = vers les étoiles, per aspera = à travers les difficultés / épreuves !"
+                    "question": "Complète : « Le poète et le consul protègent la patrie ». Poeta et consul patriam ___.",
+                    "options": ["servat", "servas", "servant", "servamus"],
+                    "answer": 2,
+                    "explanation": "Deux sujets (« le poète » et « le consul ») : le verbe se met au pluriel, en -nt. « Servat » ne convient qu'à un seul sujet."
                 }
             ]
         }

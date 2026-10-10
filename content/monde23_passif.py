@@ -84,20 +84,15 @@ Le procureur public de la Curie met à l'épreuve ton discernement de la voix pa
             "boss": {"nom": "L'Orateur du Barreau", "icone": "⚖️", "pv": 3},
             "questions": [
                 {
-                    "question": "Comment se traduit 'Milites a duce laudantur' ?",
-                    "options": [
-                        "Les soldats sont loués par le chef",
-                        "Le chef loue les soldats",
-                        "Les soldats louent le chef",
-                        "Le chef combat avec les soldats"
-                    ],
-                    "answer": 0,
-                    "explanation": "Laudantur est au passif pluriel : les soldats sont loués (par le chef)."
+                    "question": "Quelle phrase veut dire « Le citoyen est loué par le consul » ?",
+                    "options": ["Civis consulem laudat.", "Consul civem laudatur.", "Civis a consule laudatur.", "Consul a cive laudatur."],
+                    "answer": 2,
+                    "explanation": "« Civis » est le sujet ; « laudatur » (-tur) est le passif ; « a consule » = par le consul. La phrase 3 inverse les rôles (« le consul est loué par le citoyen »)."
                 },
                 {
                     "question": "Quelle préposition introduit le complément d'agent en latin ?",
-                    "options": ["A ou AB (+ ablatif)", "IN (+ accusatif)", "CUM (+ ablatif)", "PRO (+ ablatif)"],
-                    "answer": 0,
+                    "options": ["AD ou APUD (+ accusatif)", "A ou AB (+ ablatif)", "CUM ou SINE (+ ablatif)", "PRO ou PRAE (+ ablatif)"],
+                    "answer": 1,
                     "explanation": "A ou AB devant voyelle, suivi de l'ablatif, introduit l'auteur de l'action subie."
                 },
                 {

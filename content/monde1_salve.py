@@ -135,21 +135,21 @@ Pour prouver ta valeur et gagner l'accès au cœur de Rome ainsi qu'une bourse d
             "questions": [
                 {
                     "question": "Que veut dire 'Vale' quand tu quittes un ami romain ?",
-                    "options": ["Bonjour", "Au revoir", "Bonne nuit", "Bon appétit"],
+                    "options": ["Bonjour", "Au revoir", "Bonne nuit", "Merci"],
                     "answer": 1,
                     "explanation": "Vale signifie 'porte-toi bien / au revoir'."
                 },
                 {
                     "question": "Comment s'écrit le chiffre 9 en chiffres romains ?",
-                    "options": ["VIIII", "IX", "XI", "VIV"],
+                    "options": ["VIII", "IX", "XI", "XIX"],
                     "answer": 1,
                     "explanation": "9 s'écrit IX (10 moins 1)."
                 },
                 {
-                    "question": "Quel animal a sauvé Romulus et Rémus du fleuve ?",
-                    "options": ["Une biche", "Une louve", "Une chèvre", "Une ourse"],
-                    "answer": 1,
-                    "explanation": "C'est bien la louve Lupa qui les a allaités !"
+                    "question": "Comment dit-on « Je suis un ami » en latin ?",
+                    "options": ["Amice sum.", "Amicus vale.", "Amicus sum.", "Salve amicus."],
+                    "answer": 2,
+                    "explanation": "« Sum » veut dire « je suis ». « Amice », avec -e, sert à appeler quelqu'un (« ô ami ») ; il ne peut pas être le sujet de la phrase."
                 }
             ]
         }

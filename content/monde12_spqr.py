@@ -71,6 +71,8 @@ Dans la République romaine, deux **consuls** élus pour un an dirigent l'État 
 
 Sur le Forum, le consul s'adresse aux citoyens avec autorité.
 
+Sur les monuments et les enseignes, Rome signe **SPQR** : *Senatus Populusque Romanus*, « le Sénat et le peuple romain » (*senatus* = le Sénat, *populus* = le peuple, *-que* = et).
+
 Exemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyens. »
 
 À toi ! Regarde bien les terminaisons de *lex, legis* (la loi) et de *civis* (le citoyen) :""",
@@ -87,15 +89,10 @@ Le tribun de la plèbe veille sur les lois du Forum. Démontre ta maîtrise de l
             "boss": {"nom": "Le Tribun de la Plèbe", "icone": "⚖️", "pv": 3},
             "questions": [
                 {
-                    "question": "Que signifient les célèbres initiales S.P.Q.R. ?",
-                    "options": [
-                        "Senatus Populusque Romanus (Le Sénat et le Peuple Romain)",
-                        "Semper Primus Quisque Romanus (Toujours premier, chaque Romain)",
-                        "Societas Publica Quiritium Romae",
-                        "Salus Populi Quotidie Regnat"
-                    ],
-                    "answer": 0,
-                    "explanation": "SPQR = Le Sénat et le Peuple Romain, devise officielle de la République !"
+                    "question": "Complète : « Le consul donne une loi au chef ». Consul legem ___ dat.",
+                    "options": ["ducem", "duce", "duci", "ducis"],
+                    "answer": 2,
+                    "explanation": "Le chef reçoit la loi : c'est le datif, en -i. Le radical de « dux, ducis » est duc- : duc + i = duci. « Ducem » serait un COD, « ducis » un génitif."
                 },
                 {
                     "question": "Quel est l'accusatif singulier (COD) de 'rex, regis' (le roi) ?",

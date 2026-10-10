@@ -325,6 +325,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Arènes revues** (validé par Cédric le 10/10/2026, point 3 de l'audit
+  des leçons, `docs/propositions/arenes_questions.md`). Chaque question
+  d'arène porte sur une notion enseignée dans le monde ou avant, et chaque
+  arène a au moins une question de grammaire. Plutôt que de retirer les
+  devises appréciées, on les a ajoutées au cours : trois devises en
+  `m7-03`, *Cave canem* en `m2-02`, l'aigle en `m9-01`, Trajan en `m26-01`,
+  *SPQR* en `m12-03`. Dix questions hors cours remplacées par de la
+  grammaire, sept erreurs corrigées (*esse* = « être », Bretagne et non
+  Écosse, quadrige, *le* scutum, etc.). *Ad astra per aspera* (pas antique)
+  est retiré. Le rattachement des mots du Thesaurus est inchangé.
+
 - **Taverne vue à l'écran** (10/10/2026, tournée T53 d'un agent Sonnet,
   `docs/audits/tournee_t53_taverne_qcm.md`, 55 vraies captures ; règles
   et explications de QCM conformes). Corrigé ensuite : le gain détaille

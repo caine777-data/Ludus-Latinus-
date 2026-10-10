@@ -86,21 +86,21 @@ Démontre toute ta science du latin et tes réflexes pour décrocher la palme de
             "questions": [
                 {
                     "question": "Quel gladiateur se bat avec un grand bouclier et un casque à crête ?",
-                    "options": ["Le Mirmillon", "Le Rétiaire", "Le Chariot", "L'Archer"],
-                    "answer": 0,
+                    "options": ["Le Rétiaire", "Le Thrace", "Le Mirmillon", "Le Cocher"],
+                    "answer": 2,
                     "explanation": "C'est le Mirmillon, le guerrier cuirassé !"
                 },
                 {
                     "question": "Comment s'appelle un char tiré par quatre chevaux ?",
                     "options": ["Un bige", "Un quadrige", "Une calèche", "Un fiacre"],
                     "answer": 1,
-                    "explanation": "Un quadrige (de quadri- = quatre et jumentum) !"
+                    "explanation": "Un quadrige : quadri- = quatre, et le joug qui attelle les chevaux."
                 },
                 {
-                    "question": "Dans le Circus Maximus, combien de spectateurs pouvaient prendre place ?",
-                    "options": ["Environ 5 000", "Plus de 150 000", "Environ 20 000", "500 personnes"],
-                    "answer": 1,
-                    "explanation": "Le Circus Maximus accueillait plus de 150 000 spectateurs romains !"
+                    "question": "Quelle phrase veut dire « Les Romains saluent » ?",
+                    "options": ["Romanus salutant.", "Romani salutat.", "Romani salutant.", "Romanus salutat."],
+                    "answer": 2,
+                    "explanation": "« Romani » est le pluriel de « Romanus », et le verbe prend -nt quand ils sont plusieurs : « salutant »."
                 },
                 {
                     "question": "Que veut dire la formule : 'Ave Caesar' ?",

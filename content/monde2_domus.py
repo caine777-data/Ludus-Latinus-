@@ -46,7 +46,7 @@ Tu reconnais déjà ces racines :
             "content": """## Les compagnons à 4 pattes des Romains
 
 Les Romains adoraient leurs animaux de compagnie :
-- **CANIS** : le chien *(qui monte la garde : Cave canem !)*
+- **CANIS** : le chien *(qui monte la garde : Cave canem = attention au chien !)*
 - **FELIS** : le chat
 - **EQUUS** : le cheval *(la monture noble)*
 - **AVIS** : l'oiseau
@@ -120,10 +120,10 @@ Pour gagner ta place de membre d'honneur de la cité romaine et empocher une bou
                     "explanation": "Mater est la mère !"
                 },
                 {
-                    "question": "Sur quoi écrivaient les écoliers romains ?",
-                    "options": ["Des tablettes de cire", "Des rouleaux de papyrus", "Des feuilles de parchemin", "Des plaques de calcaire"],
-                    "answer": 0,
-                    "explanation": "Ils écrivaient avec un stylet sur de la cire d'abeille."
+                    "question": "Dans « Mater in horto scribit », que montre la terminaison -t de « scribit » ?",
+                    "options": ["Je fais l'action", "Il ou elle fait l'action", "Plusieurs personnes font l'action", "L'action est déjà finie"],
+                    "answer": 1,
+                    "explanation": "-t marque « il » ou « elle » : « scribit » = elle écrit. Avec « scribo », on dirait « j'écris »."
                 },
                 {
                     "question": "Que veut dire 'Cave canem' inscrit sur les mosaïques de Pompéi ?",

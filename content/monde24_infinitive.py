@@ -92,21 +92,16 @@ Le greffier de l'Empereur retranscrit les dépêches officielles. Montre ta maî
             "boss": {"nom": "Le Greffier Impérial", "icone": "🖋️", "pv": 3},
             "questions": [
                 {
-                    "question": "Comment se traduit 'Scio te bonum discipulum esse' ?",
-                    "options": [
-                        "Je sais que tu es un bon élève",
-                        "Tu sais que je suis un bon élève",
-                        "Le maître punit le bon élève",
-                        "Soyez de bons élèves !"
-                    ],
-                    "answer": 0,
-                    "explanation": "Scio = je sais (que), te = tu (Acc.), esse = es (Infinitif), bonum discipulum = un bon élève."
+                    "question": "Comment se traduit « Scio Marcum bonum discipulum esse » ?",
+                    "options": ["Je sais que Marcus était un bon élève", "Marcus sait que je suis un bon élève", "Je sais que Marcus est un bon élève", "Je sais que Marcus sera un bon élève"],
+                    "answer": 2,
+                    "explanation": "« Scio » = je sais (que). « Marcum » est à l'accusatif : c'est le sujet de l'infinitive. « Esse » est l'infinitif présent (« être »), qui indique la même époque que « scio » : « est »."
                 },
                 {
-                    "question": "Y a-t-il un mot équivalent à notre 'que' dans une proposition infinitive latine ?",
-                    "options": ["Non, aucun mot de liaison n'est employé", "Oui, la conjonction 'quod' est obligatoire", "Oui, la proposition commence par 'ut'", "Oui, le relatif 'quem' introduit le verbe"],
-                    "answer": 0,
-                    "explanation": "Le latin classique n'utilise aucun mot de liaison : la structure Accusatif + Infinitif suffit !"
+                    "question": "Quel mot latin traduit le « que » d'une proposition infinitive ?",
+                    "options": ["Quod, placé avant le sujet", "Ut, placé avant le verbe", "Aucun, la structure suffit", "Quem, placé avant le verbe"],
+                    "answer": 2,
+                    "explanation": "Le latin n'emploie aucun mot de liaison : sujet à l'accusatif + verbe à l'infinitif suffisent."
                 },
                 {
                     "question": "Quel cas porte le sujet dans une proposition infinitive ?",

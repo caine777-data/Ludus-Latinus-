@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-09 21:50:35",
+    "date_export": "2026-10-10 07:34:57",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -173,7 +173,7 @@
                 "Bonjour",
                 "Au revoir",
                 "Bonne nuit",
-                "Bon appétit"
+                "Merci"
               ],
               "answer": 1,
               "explanation": "Vale signifie 'porte-toi bien / au revoir'."
@@ -181,24 +181,24 @@
             {
               "question": "Comment s'écrit le chiffre 9 en chiffres romains ?",
               "options": [
-                "VIIII",
+                "VIII",
                 "IX",
                 "XI",
-                "VIV"
+                "XIX"
               ],
               "answer": 1,
               "explanation": "9 s'écrit IX (10 moins 1)."
             },
             {
-              "question": "Quel animal a sauvé Romulus et Rémus du fleuve ?",
+              "question": "Comment dit-on « Je suis un ami » en latin ?",
               "options": [
-                "Une biche",
-                "Une louve",
-                "Une chèvre",
-                "Une ourse"
+                "Amice sum.",
+                "Amicus vale.",
+                "Amicus sum.",
+                "Salve amicus."
               ],
-              "answer": 1,
-              "explanation": "C'est bien la louve Lupa qui les a allaités !"
+              "answer": 2,
+              "explanation": "« Sum » veut dire « je suis ». « Amice », avec -e, sert à appeler quelqu'un (« ô ami ») ; il ne peut pas être le sujet de la phrase."
             }
           ]
         }
@@ -233,7 +233,7 @@
           "id": "m2-02",
           "type": "puzzle",
           "title": "Les Animaux de compagnie",
-          "content": "## Les compagnons à 4 pattes des Romains\n\nLes Romains adoraient leurs animaux de compagnie :\n- **CANIS** : le chien *(qui monte la garde : Cave canem !)*\n- **FELIS** : le chat\n- **EQUUS** : le cheval *(la monture noble)*\n- **AVIS** : l'oiseau\n\nExemple : *« Canis in horto est. »* = « Le chien est dans le jardin. »\n*(in horto = dans le jardin)*\n\nÀ toi : traduis une autre phrase en t'aidant de la liste des animaux.",
+          "content": "## Les compagnons à 4 pattes des Romains\n\nLes Romains adoraient leurs animaux de compagnie :\n- **CANIS** : le chien *(qui monte la garde : Cave canem = attention au chien !)*\n- **FELIS** : le chat\n- **EQUUS** : le cheval *(la monture noble)*\n- **AVIS** : l'oiseau\n\nExemple : *« Canis in horto est. »* = « Le chien est dans le jardin. »\n*(in horto = dans le jardin)*\n\nÀ toi : traduis une autre phrase en t'aidant de la liste des animaux.",
           "latin": "Felis in horto est.",
           "mots": [
             "Le chat",
@@ -300,15 +300,15 @@
               "explanation": "Mater est la mère !"
             },
             {
-              "question": "Sur quoi écrivaient les écoliers romains ?",
+              "question": "Dans « Mater in horto scribit », que montre la terminaison -t de « scribit » ?",
               "options": [
-                "Des tablettes de cire",
-                "Des rouleaux de papyrus",
-                "Des feuilles de parchemin",
-                "Des plaques de calcaire"
+                "Je fais l'action",
+                "Il ou elle fait l'action",
+                "Plusieurs personnes font l'action",
+                "L'action est déjà finie"
               ],
-              "answer": 0,
-              "explanation": "Ils écrivaient avec un stylet sur de la cire d'abeille."
+              "answer": 1,
+              "explanation": "-t marque « il » ou « elle » : « scribit » = elle écrit. Avec « scribo », on dirait « j'écris »."
             },
             {
               "question": "Que veut dire 'Cave canem' inscrit sur les mosaïques de Pompéi ?",
@@ -410,15 +410,15 @@
           },
           "questions": [
             {
-              "question": "Quel dieu romain est le maître de la foudre et le roi de l'Olympe ?",
+              "question": "Quelle phrase veut dire « Midas lit » ?",
               "options": [
-                "Mars",
-                "Jupiter",
-                "Apollon",
-                "Neptune"
+                "Midas lego.",
+                "Midas scribit.",
+                "Midas legit.",
+                "Midas sum."
               ],
-              "answer": 1,
-              "explanation": "C'est Jupiter (Zeus), roi de tous les dieux."
+              "answer": 2,
+              "explanation": "« legit » = il lit (-t = il ou elle). « Lego » = je lis, « scribit » = il écrit."
             },
             {
               "question": "Pourquoi les ailes d'Icare ont-elles fondu ?",
@@ -527,15 +527,15 @@
           },
           "questions": [
             {
-              "question": "Dans 'Lupus agnum videt', qui est le mangeur/regardeur (le Sujet) ?",
+              "question": "Dans « Rosam puella videt », quel mot est le sujet ?",
               "options": [
-                "Agnum",
-                "Lupus",
+                "Rosam",
                 "Videt",
-                "Aucun des deux"
+                "Puella",
+                "Impossible à dire"
               ],
-              "answer": 1,
-              "explanation": "C'est Lupus qui est au Nominatif (Sujet) !"
+              "answer": 2,
+              "explanation": "« Puella » est au nominatif : c'est le sujet. « Rosam » porte un -m : c'est le COD. L'ordre ne décide pas."
             },
             {
               "question": "Par quelle lettre se terminent très souvent les noms au COD (Accusatif singulier) ?",
@@ -551,13 +551,13 @@
             {
               "question": "Comment traduit-on : 'Puella rosam amat' ?",
               "options": [
-                "La rose aime la fille",
+                "La rose voit la jeune fille",
+                "La rose aime la jeune fille",
                 "La jeune fille aime la rose",
-                "La fille cueille une rose",
-                "La rose est rouge"
+                "La jeune fille voit la rose"
               ],
-              "answer": 1,
-              "explanation": "Puella (Sujet) aime rosam (COD) = La jeune fille aime la rose !"
+              "answer": 2,
+              "explanation": "« Puella » est le sujet, « rosam » (avec -m) est le COD, « amat » veut dire « aime »."
             }
           ]
         }
@@ -657,7 +657,7 @@
                 "-s"
               ],
               "answer": 1,
-              "explanation": "C'est bien -NT, exactement comme en français (ils aiment) !"
+              "explanation": "C'est bien -NT (par exemple « amant » = ils aiment) !"
             },
             {
               "question": "Que signifie le verbe 'vincit' ?",
@@ -740,12 +740,12 @@
             {
               "question": "Quel gladiateur se bat avec un grand bouclier et un casque à crête ?",
               "options": [
-                "Le Mirmillon",
                 "Le Rétiaire",
-                "Le Chariot",
-                "L'Archer"
+                "Le Thrace",
+                "Le Mirmillon",
+                "Le Cocher"
               ],
-              "answer": 0,
+              "answer": 2,
               "explanation": "C'est le Mirmillon, le guerrier cuirassé !"
             },
             {
@@ -757,18 +757,18 @@
                 "Un fiacre"
               ],
               "answer": 1,
-              "explanation": "Un quadrige (de quadri- = quatre et jumentum) !"
+              "explanation": "Un quadrige : quadri- = quatre, et le joug qui attelle les chevaux."
             },
             {
-              "question": "Dans le Circus Maximus, combien de spectateurs pouvaient prendre place ?",
+              "question": "Quelle phrase veut dire « Les Romains saluent » ?",
               "options": [
-                "Environ 5 000",
-                "Plus de 150 000",
-                "Environ 20 000",
-                "500 personnes"
+                "Romanus salutant.",
+                "Romani salutat.",
+                "Romani salutant.",
+                "Romanus salutat."
               ],
-              "answer": 1,
-              "explanation": "Le Circus Maximus accueillait plus de 150 000 spectateurs romains !"
+              "answer": 2,
+              "explanation": "« Romani » est le pluriel de « Romanus », et le verbe prend -nt quand ils sont plusieurs : « salutant »."
             },
             {
               "question": "Que veut dire la formule : 'Ave Caesar' ?",
@@ -825,7 +825,7 @@
           "id": "m7-03",
           "type": "puzzle",
           "title": "Les Devises Immortelles : Veni, Vidi, Vici",
-          "content": "## Le message le plus court et célèbre de l'Histoire\n\nEn 47 avant J.-C., après avoir remporté une bataille éclair en seulement quatre heures, **Jules César** envoya une lettre de trois mots seulement au Sénat de Rome :\n\n*« VENI, VIDI, VICI ! »*\n*(Prononcé à l'époque : « Ouéni, ouidi, ouiki ! »)*\n\nTrois verbes magiques au passé :\n- *Veni* = Je suis venu\n- *Vidi* = J'ai vu\n- *Vici* = J'ai vaincu\n\nReconstitue cette citation légendaire en français :",
+          "content": "## Le message le plus court et célèbre de l'Histoire\n\nEn 47 avant J.-C., après avoir remporté une bataille éclair en seulement quatre heures, **Jules César** envoya une lettre de trois mots seulement au Sénat de Rome :\n\n*« VENI, VIDI, VICI ! »*\n*(Prononcé à l'époque : « Ouéni, ouidi, ouiki ! »)*\n\nTrois verbes magiques au passé :\n- *Veni* = Je suis venu\n- *Vidi* = J'ai vu\n- *Vici* = J'ai vaincu\n\nTrois autres devises à retenir :\n- *Carpe diem* = « Cueille le jour présent » (profite du jour)\n- *Alea iacta est* = « Le sort en est jeté » (on dit aussi « les dés sont jetés »), mot de César au Rubicon\n- *Mens sana in corpore sano* = « Un esprit sain dans un corps sain »\n\nReconstitue cette citation légendaire en français :",
           "latin": "Veni, vidi, vici.",
           "mots": [
             "Je suis venu,",
@@ -860,7 +860,7 @@
               "explanation": "Carpe diem = Cueille le jour présent / profite de la vie !"
             },
             {
-              "question": "Que veut dire l'expression 'Alea jacta est' prononcée au passage du Rubicon ?",
+              "question": "Que veut dire l'expression 'Alea iacta est' prononcée au passage du Rubicon ?",
               "options": [
                 "La route est fermée",
                 "Les dés sont jetés",
@@ -868,18 +868,18 @@
                 "La paix est signée"
               ],
               "answer": 1,
-              "explanation": "Alea jacta est = Les dés sont jetés (le sort en est jeté) !"
+              "explanation": "Alea iacta est = Les dés sont jetés (le sort en est jeté) !"
             },
             {
-              "question": "Quel mot latin signifiant 'main' a donné les mots français 'manuel' et 'manipuler' ?",
+              "question": "Quelle forme veut dire « il vainc » (au présent) ?",
               "options": [
-                "Manus",
-                "Pater",
-                "Lupus",
-                "Oculus"
+                "Vici",
+                "Vidi",
+                "Vincit",
+                "Videt"
               ],
-              "answer": 0,
-              "explanation": "Manus est la main en latin !"
+              "answer": 2,
+              "explanation": "« Vincit » finit par -t : c'est « il vainc ». « Vici » est au passé : « j'ai vaincu ». « Vidi » = j'ai vu, « videt » = il voit."
             },
             {
               "question": "Que veut dire la formule 'Mens sana in corpore sano' ?",
@@ -984,15 +984,15 @@
           },
           "questions": [
             {
-              "question": "Que signifie le mot 'aqua' présent dans les 'aqueducs' ?",
+              "question": "Quelle phrase veut dire « L'enfant achète le pain du maître » ?",
               "options": [
-                "L'eau",
-                "Le feu",
-                "Le vin",
-                "La terre"
+                "Puer panem dominum emit.",
+                "Puer panem domini emit.",
+                "Puer panem dominus emit.",
+                "Puer panem domino emit."
               ],
-              "answer": 0,
-              "explanation": "Exactement ! Aqua = l'eau !"
+              "answer": 1,
+              "explanation": "-i est la marque du génitif : « domini » = du maître. « Dominum » serait un COD, « dominus » un sujet."
             },
             {
               "question": "Comment s'appelait l'instrument de métal servant à se nettoyer la peau aux thermes ?",
@@ -1028,7 +1028,7 @@
           "id": "m9-01",
           "type": "quiz",
           "title": "L'Armement du Légionnaire (Miles)",
-          "content": "## Dans les rangs de la Légion !\nLe légionnaire romain (*miles*) était le soldat le mieux équipé de l'Antiquité :\n- **Scutum** : le grand bouclier rectangulaire courbé en bois et cuir.\n- **Pilum** : le javelot lourd conçu pour plier à l'impact et bloquer le bouclier ennemi.\n- **Gladius** : le glaive court à double tranchant, parfait pour le combat rapproché.\n- **Galea** : le casque de bronze ou de fer avec protège-joues.\n- **Lorica** : la cuirasse articulée protégeant le torse.\n\n💡 **Le savais-tu ?**\nUn légionnaire portait sur son dos un sac de plus de 30 kg contenant son équipement, ses rations et ses outils de campement ! On les surnommait les « mulets de Marius » !",
+          "content": "## Dans les rangs de la Légion !\nLe légionnaire romain (*miles*) était le soldat le mieux équipé de l'Antiquité :\n- **Scutum** : le grand bouclier rectangulaire courbé en bois et cuir.\n- **Pilum** : le javelot lourd conçu pour plier à l'impact et bloquer le bouclier ennemi.\n- **Gladius** : le glaive court à double tranchant, parfait pour le combat rapproché.\n- **Galea** : le casque de bronze ou de fer avec protège-joues.\n- **Lorica** : la cuirasse articulée protégeant le torse.\n- **Aquila** : l'aigle, emblème de chaque légion, porté par l'*aquilifer*.\n\n💡 **Le savais-tu ?**\nUn légionnaire portait sur son dos un sac de plus de 30 kg contenant son équipement, ses rations et ses outils de campement ! On les surnommait les « mulets de Marius » !",
           "question": "Comment s'appelle le grand bouclier rectangulaire du soldat romain ?",
           "options": [
             "Le Scutum",
@@ -1106,29 +1106,29 @@
           },
           "questions": [
             {
-              "question": "Que signifie le mot latin 'miles' qui a donné le mot 'militaire' ?",
+              "question": "Quelle phrase veut dire « Les esclaves voient les roses » ?",
               "options": [
-                "Le soldat",
-                "Le roi",
-                "Le marchand",
-                "Le paysan"
+                "Servi rosam vident.",
+                "Rosae servos vident.",
+                "Servi rosas vident.",
+                "Servus rosas vident."
               ],
-              "answer": 0,
-              "explanation": "Exactement ! Miles = le soldat !"
+              "answer": 2,
+              "explanation": "« Servi » est le sujet pluriel (-i), « rosas » le COD pluriel (-as), « vident » veut dire « ils voient » (-nt). « Rosae servos vident » inverse les rôles (« les roses voient les esclaves »)."
             },
             {
               "question": "Quelle arme était le javelot lourd du légionnaire ?",
               "options": [
-                "Le Pilum",
                 "Le Gladius",
-                "La Scutum",
-                "La Toge"
+                "Le Pilum",
+                "Le Scutum",
+                "La Galea"
               ],
-              "answer": 0,
-              "explanation": "Bravo ! Le pilum était lancé à 20 mètres avant la charge au glaive."
+              "answer": 1,
+              "explanation": "Bravo ! Le pilum était lancé avant la charge au glaive."
             },
             {
-              "question": "Quel oiseau impérial servait d'emblème doré aux légions romaines ?",
+              "question": "Quel oiseau impérial servait d'emblème aux légions romaines ?",
               "options": [
                 "L'Aigle",
                 "Le Faucon",
@@ -1261,15 +1261,15 @@
               "explanation": "Oui ! 'Nemo' signifie 'Personne' en latin !"
             },
             {
-              "question": "Que protégeait le dragon Ladon dans le jardin des Hespérides ?",
+              "question": "Complète : « La jeune fille aime la grande rose ». Puella rosam ___ amat.",
               "options": [
-                "Les pommes d'or",
-                "Le cheval ailé",
-                "La toge pourpre",
-                "Le labyrinthe"
+                "magnum",
+                "magnus",
+                "magnam",
+                "magna"
               ],
-              "answer": 0,
-              "explanation": "Triomphe absolu ! Ladon veillait sur les pommes d'or de l'immortalité !"
+              "answer": 2,
+              "explanation": "« Rosam » est un COD féminin singulier (-am). L'adjectif prend la même terminaison : « magnam ». « Magna » serait un sujet féminin."
             }
           ]
         }
@@ -1362,15 +1362,15 @@
               "explanation": "Scaevola signifie 'le gaucher' en latin !"
             },
             {
-              "question": "Quel honneur exceptionnel les Romains ont-ils accordé à Cloélie ?",
+              "question": "Quelle phrase veut dire « Vous êtes romains » ?",
               "options": [
-                "Une statue équestre sur la Voie Sacrée",
-                "Une couronne triomphale de lauriers d'or",
-                "Le droit de siéger au Sénat avec les pères",
-                "Un monument de marbre blanc sur le Forum"
+                "Romani sumus.",
+                "Romani sunt.",
+                "Romani estis.",
+                "Romanus es."
               ],
-              "answer": 0,
-              "explanation": "Une statue équestre, honneur jusqu'alors réservé aux plus grands généraux romains !"
+              "answer": 2,
+              "explanation": "« Estis » veut dire « vous êtes ». « Sumus » = nous sommes, « sunt » = ils sont, « es » = tu es (et « Romanus » est au singulier)."
             }
           ]
         }
@@ -1417,7 +1417,7 @@
           "id": "m12-03",
           "type": "puzzle",
           "title": "Le Consul au Forum",
-          "content": "## Le pouvoir républicain en action\nDans la République romaine, deux **consuls** élus pour un an dirigent l'État et commandent les légions.\n\nSur le Forum, le consul s'adresse aux citoyens avec autorité.\n\nExemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyens. »\n\nÀ toi ! Regarde bien les terminaisons de *lex, legis* (la loi) et de *civis* (le citoyen) :",
+          "content": "## Le pouvoir républicain en action\nDans la République romaine, deux **consuls** élus pour un an dirigent l'État et commandent les légions.\n\nSur le Forum, le consul s'adresse aux citoyens avec autorité.\n\nSur les monuments et les enseignes, Rome signe **SPQR** : *Senatus Populusque Romanus*, « le Sénat et le peuple romain » (*senatus* = le Sénat, *populus* = le peuple, *-que* = et).\n\nExemple : *« Dux leges civibus dat. »* = « Le chef donne des lois aux citoyens. »\n\nÀ toi ! Regarde bien les terminaisons de *lex, legis* (la loi) et de *civis* (le citoyen) :",
           "latin": "Consul legem civibus dat.",
           "mots": [
             "Le consul",
@@ -1441,15 +1441,15 @@
           },
           "questions": [
             {
-              "question": "Que signifient les célèbres initiales S.P.Q.R. ?",
+              "question": "Complète : « Le consul donne une loi au chef ». Consul legem ___ dat.",
               "options": [
-                "Senatus Populusque Romanus (Le Sénat et le Peuple Romain)",
-                "Semper Primus Quisque Romanus (Toujours premier, chaque Romain)",
-                "Societas Publica Quiritium Romae",
-                "Salus Populi Quotidie Regnat"
+                "ducem",
+                "duce",
+                "duci",
+                "ducis"
               ],
-              "answer": 0,
-              "explanation": "SPQR = Le Sénat et le Peuple Romain, devise officielle de la République !"
+              "answer": 2,
+              "explanation": "Le chef reçoit la loi : c'est le datif, en -i. Le radical de « dux, ducis » est duc- : duc + i = duci. « Ducem » serait un COD, « ducis » un génitif."
             },
             {
               "question": "Quel est l'accusatif singulier (COD) de 'rex, regis' (le roi) ?",
@@ -1943,15 +1943,15 @@
           },
           "questions": [
             {
-              "question": "Qui a rédigé les 'Commentaires sur la Guerre des Gaules' (De Bello Gallico) ?",
+              "question": "Quelle phrase veut dire « Les Romains combattront » ?",
               "options": [
-                "César",
-                "Cicéron",
-                "Virgile",
-                "Pompée"
+                "Romani pugnabant.",
+                "Romani pugnabunt.",
+                "Romani pugnaverunt.",
+                "Romani pugnabit."
               ],
-              "answer": 0,
-              "explanation": "César a écrit le récit détaillé de ses campagnes militaires en Gaule."
+              "answer": 1,
+              "explanation": "Au futur, on insère -bu- devant -nt (comme « amabunt » = ils aimeront). « Pugnabant » = ils combattaient, « pugnaverunt » = ils ont combattu, « pugnabit » = il combattra (un seul sujet)."
             },
             {
               "question": "Comment se traduit 'Cras in Gallia erimus' (cras = demain) ?",
@@ -2258,18 +2258,18 @@
               "explanation": "Le cas dépend de la fonction du pronom dans sa propre proposition relative."
             },
             {
-              "question": "Quel célèbre aqueduc romain à 3 étages peut-on encore admirer en France (Gaule) ?",
+              "question": "Complète : « Le soldat que César voit est courageux ». Miles ___ Caesar videt fortis est.",
               "options": [
-                "Le Pont du Gard",
-                "Le Viaduc de Millau",
-                "Le Pont d'Avignon",
-                "L'Aqueduc de Lyon"
+                "qui",
+                "quam",
+                "quod",
+                "quem"
               ],
-              "answer": 0,
-              "explanation": "Le Pont du Gard, bâti sous Auguste pour alimenter la ville de Nîmes en eau !"
+              "answer": 3,
+              "explanation": "« Miles » est masculin singulier, et le relatif est le COD de « videt » : accusatif masculin, « quem ». « Qui » serait le sujet, « quam » conviendrait à un mot féminin, « quod » à un neutre."
             },
             {
-              "question": "Quelle forme du pronom relatif est au neutre ?",
+              "question": "Quelle forme du pronom relatif est au neutre singulier ?",
               "options": [
                 "QUOD",
                 "QUI",
@@ -2369,15 +2369,15 @@
               "explanation": "Le supin (en -um) fournit le radical du PPP (ex: scriptum -> scriptus, a, um)."
             },
             {
-              "question": "Comment se traduit 'Epistula a Plinio scripta' ?",
+              "question": "Quelle phrase veut dire « L'ennemi a été vaincu » ?",
               "options": [
-                "La lettre écrite par Pline",
-                "Pline écrit une lettre",
-                "La lettre que Pline lira",
-                "Pline reçoit une lettre"
+                "Hostis victa est.",
+                "Hostis victum est.",
+                "Hostis victus est.",
+                "Hostis victi sunt."
               ],
-              "answer": 0,
-              "explanation": "Scripta est le PPP féminin qualifiant epistula : la lettre écrite."
+              "answer": 2,
+              "explanation": "« Hostis » est masculin : le participe prend -us, « victus ». « Victa » serait féminin, « victum » neutre, et « sunt » parlerait de plusieurs ennemis."
             }
           ]
         }
@@ -2548,25 +2548,25 @@
           },
           "questions": [
             {
-              "question": "Comment se traduit 'Milites a duce laudantur' ?",
+              "question": "Quelle phrase veut dire « Le citoyen est loué par le consul » ?",
               "options": [
-                "Les soldats sont loués par le chef",
-                "Le chef loue les soldats",
-                "Les soldats louent le chef",
-                "Le chef combat avec les soldats"
+                "Civis consulem laudat.",
+                "Consul civem laudatur.",
+                "Civis a consule laudatur.",
+                "Consul a cive laudatur."
               ],
-              "answer": 0,
-              "explanation": "Laudantur est au passif pluriel : les soldats sont loués (par le chef)."
+              "answer": 2,
+              "explanation": "« Civis » est le sujet ; « laudatur » (-tur) est le passif ; « a consule » = par le consul. La phrase 3 inverse les rôles (« le consul est loué par le citoyen »)."
             },
             {
               "question": "Quelle préposition introduit le complément d'agent en latin ?",
               "options": [
+                "AD ou APUD (+ accusatif)",
                 "A ou AB (+ ablatif)",
-                "IN (+ accusatif)",
-                "CUM (+ ablatif)",
-                "PRO (+ ablatif)"
+                "CUM ou SINE (+ ablatif)",
+                "PRO ou PRAE (+ ablatif)"
               ],
-              "answer": 0,
+              "answer": 1,
               "explanation": "A ou AB devant voyelle, suivi de l'ablatif, introduit l'auteur de l'action subie."
             },
             {
@@ -2648,26 +2648,26 @@
           },
           "questions": [
             {
-              "question": "Comment se traduit 'Scio te bonum discipulum esse' ?",
+              "question": "Comment se traduit « Scio Marcum bonum discipulum esse » ?",
               "options": [
-                "Je sais que tu es un bon élève",
-                "Tu sais que je suis un bon élève",
-                "Le maître punit le bon élève",
-                "Soyez de bons élèves !"
+                "Je sais que Marcus était un bon élève",
+                "Marcus sait que je suis un bon élève",
+                "Je sais que Marcus est un bon élève",
+                "Je sais que Marcus sera un bon élève"
               ],
-              "answer": 0,
-              "explanation": "Scio = je sais (que), te = tu (Acc.), esse = es (Infinitif), bonum discipulum = un bon élève."
+              "answer": 2,
+              "explanation": "« Scio » = je sais (que). « Marcum » est à l'accusatif : c'est le sujet de l'infinitive. « Esse » est l'infinitif présent (« être »), qui indique la même époque que « scio » : « est »."
             },
             {
-              "question": "Y a-t-il un mot équivalent à notre 'que' dans une proposition infinitive latine ?",
+              "question": "Quel mot latin traduit le « que » d'une proposition infinitive ?",
               "options": [
-                "Non, aucun mot de liaison n'est employé",
-                "Oui, la conjonction 'quod' est obligatoire",
-                "Oui, la proposition commence par 'ut'",
-                "Oui, le relatif 'quem' introduit le verbe"
+                "Quod, placé avant le sujet",
+                "Ut, placé avant le verbe",
+                "Aucun, la structure suffit",
+                "Quem, placé avant le verbe"
               ],
-              "answer": 0,
-              "explanation": "Le latin classique n'utilise aucun mot de liaison : la structure Accusatif + Infinitif suffit !"
+              "answer": 2,
+              "explanation": "Le latin n'emploie aucun mot de liaison : sujet à l'accusatif + verbe à l'infinitif suffisent."
             },
             {
               "question": "Quel cas porte le sujet dans une proposition infinitive ?",
@@ -2779,7 +2779,7 @@
                 "Car"
               ],
               "answer": 0,
-              "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans SPQR : Senatus Populus-que)."
+              "explanation": "Le suffixe enclitique -que signifie 'et' (comme dans virumque)."
             }
           ]
         }
@@ -2794,7 +2794,7 @@
           "id": "m26-01",
           "type": "quiz",
           "title": "La Grande Synthèse du Cycle 4",
-          "content": "## Tu touches au but, jeune érudit !\nDe ton premier *« Salve ! »* en 5ème jusqu'aux chefs-d'œuvre de Virgile et à l'Ablatif Absolu en 3ème, tu as parcouru **1000 ans d'histoire et de langue romaine** :\n\n- **Les 5 déclinaisons** : *rosa* (1), *dominus/templum* (2), *rex/civis/mare* (3), *manus* (4), *res/dies* (5).\n- **Tous les cas** : Nominatif (Sujet), Vocatif (Appel), Accusatif (COD), Génitif (Complément du nom), Datif (COI), Ablatif (Complément circonstanciel).\n- **Tous les temps de l'indicatif** : Présent (*amat*), Imparfait (*amabat*), Parfait (*amavit*), Futur (*amabit*).\n- **Les constructions reines** : Participe Parfait Passif (*amatus*), Ablatif Absolu (*urbe capta*), Proposition Infinitive (*scio te venire*), Voix Passive (*laudatur*).\n\nPrépare-toi à gravir les marches sacrées du Forum pour le couronnement suprême !",
+          "content": "## Tu touches au but, jeune érudit !\nDe ton premier *« Salve ! »* en 5ème jusqu'aux chefs-d'œuvre de Virgile et à l'Ablatif Absolu en 3ème, tu as parcouru **1000 ans d'histoire et de langue romaine** :\n\n- **Les 5 déclinaisons** : *rosa* (1), *dominus/templum* (2), *rex/civis/mare* (3), *manus* (4), *res/dies* (5).\n- **Tous les cas** : Nominatif (Sujet), Vocatif (Appel), Accusatif (COD), Génitif (Complément du nom), Datif (COI), Ablatif (Complément circonstanciel).\n- **Tous les temps de l'indicatif** : Présent (*amat*), Imparfait (*amabat*), Parfait (*amavit*), Futur (*amabit*).\n- **Les constructions reines** : Participe Parfait Passif (*amatus*), Ablatif Absolu (*urbe capta*), Proposition Infinitive (*scio te venire*), Voix Passive (*laudatur*).\n- Sous Trajan, en 117, l'empire atteint sa plus grande étendue, de la Bretagne à la Mésopotamie.\n\nPrépare-toi à gravir les marches sacrées du Forum pour le couronnement suprême !",
           "question": "Quelle construction réunit un nom et un participe tous deux au cas ablatif sans mot de liaison ?",
           "options": [
             "L'Ablatif absolu",
@@ -2868,7 +2868,7 @@
                 "La ville est devenue grande"
               ],
               "answer": 0,
-              "explanation": "C'est une proposition infinitive : Scio = je sais (que), urbem magnam = la grande ville (Acc.), esse = est (Infinitif)."
+              "explanation": "C'est une proposition infinitive : scio = je sais (que), urbem magnam = la grande ville (accusatif), esse = être (infinitif), d'où \"la ville est grande\"."
             },
             {
               "question": "Quel empereur a porté l'Empire romain à sa plus grande étendue territoriale ?",
@@ -2879,18 +2879,18 @@
                 "Jules César"
               ],
               "answer": 0,
-              "explanation": "Sous l'empereur Trajan (98-117 ap. J.-C.), l'Empire s'étendait de l'Écosse à la Mésopotamie !"
+              "explanation": "Sous l'empereur Trajan (98-117 ap. J.-C.), l'Empire s'étendait de la Bretagne à la Mésopotamie !"
             },
             {
-              "question": "Que signifie la devise 'Ad astra per aspera' ?",
+              "question": "Complète : « Le poète et le consul protègent la patrie ». Poeta et consul patriam ___.",
               "options": [
-                "Vers les étoiles à travers les épreuves",
-                "Le ciel appartient aux aigles",
-                "La victoire pour les plus forts",
-                "Partir sans jamais revenir"
+                "servat",
+                "servas",
+                "servant",
+                "servamus"
               ],
-              "answer": 0,
-              "explanation": "Ad astra = vers les étoiles, per aspera = à travers les difficultés / épreuves !"
+              "answer": 2,
+              "explanation": "Deux sujets (« le poète » et « le consul ») : le verbe se met au pluriel, en -nt. « Servat » ne convient qu'à un seul sujet."
             }
           ]
         }
@@ -3257,7 +3257,7 @@
         "etym": "populaire, population, peuple",
         "ex": "Senatus Populusque Romanus.",
         "ex_fr": "Le Sénat et le Peuple Romain (SPQR).",
-        "monde": "monde25"
+        "monde": "monde12"
       },
       {
         "latin": "puella, -ae",
@@ -3657,7 +3657,7 @@
         "etym": "Paroles de César franchissant le Rubicon.",
         "ex": "Alea iacta est !",
         "ex_fr": "Le sort en est jeté !",
-        "monde": ""
+        "monde": "monde7"
       },
       {
         "latin": "Carpe diem",

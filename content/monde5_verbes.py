@@ -114,7 +114,7 @@ Frappe avec la précision d'un centurion pour vaincre l'Hydre et empocher une bo
                     "question": "Quelle est la terminaison des verbes latins pour 'ils / elles' au pluriel ?",
                     "options": ["-t", "-nt", "-mus", "-s"],
                     "answer": 1,
-                    "explanation": "C'est bien -NT, exactement comme en français (ils aiment) !"
+                    "explanation": "C'est bien -NT (par exemple « amant » = ils aiment) !"
                 },
                 {
                     "question": "Que signifie le verbe 'vincit' ?",

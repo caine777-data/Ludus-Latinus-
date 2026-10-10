@@ -89,13 +89,13 @@ Le préfet des routes impériales vérifie ton laissez-passer grammatical. Réus
                     "explanation": "Le cas dépend de la fonction du pronom dans sa propre proposition relative."
                 },
                 {
-                    "question": "Quel célèbre aqueduc romain à 3 étages peut-on encore admirer en France (Gaule) ?",
-                    "options": ["Le Pont du Gard", "Le Viaduc de Millau", "Le Pont d'Avignon", "L'Aqueduc de Lyon"],
-                    "answer": 0,
-                    "explanation": "Le Pont du Gard, bâti sous Auguste pour alimenter la ville de Nîmes en eau !"
+                    "question": "Complète : « Le soldat que César voit est courageux ». Miles ___ Caesar videt fortis est.",
+                    "options": ["qui", "quam", "quod", "quem"],
+                    "answer": 3,
+                    "explanation": "« Miles » est masculin singulier, et le relatif est le COD de « videt » : accusatif masculin, « quem ». « Qui » serait le sujet, « quam » conviendrait à un mot féminin, « quod » à un neutre."
                 },
                 {
-                    "question": "Quelle forme du pronom relatif est au neutre ?",
+                    "question": "Quelle forme du pronom relatif est au neutre singulier ?",
                     "options": ["QUOD", "QUI", "QUAE", "QUEM"],
                     "answer": 0,
                     "explanation": "Quod est la forme neutre (singulier nominatif et accusatif)."

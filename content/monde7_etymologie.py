@@ -70,6 +70,11 @@ Trois verbes magiques au passé :
 - *Vidi* = J'ai vu
 - *Vici* = J'ai vaincu
 
+Trois autres devises à retenir :
+- *Carpe diem* = « Cueille le jour présent » (profite du jour)
+- *Alea iacta est* = « Le sort en est jeté » (on dit aussi « les dés sont jetés »), mot de César au Rubicon
+- *Mens sana in corpore sano* = « Un esprit sain dans un corps sain »
+
 Reconstitue cette citation légendaire en français :""",
             "latin": "Veni, vidi, vici.",
             "mots": ["Je suis venu,", "j'ai vu,", "j'ai vaincu.", "J'ai fui,", "j'ai couru,", "j'ai perdu."],
@@ -93,16 +98,16 @@ Réponds avec brio à leurs ultimes énigmes pour ouvrir la suite de ton voyage 
                     "explanation": "Carpe diem = Cueille le jour présent / profite de la vie !"
                 },
                 {
-                    "question": "Que veut dire l'expression 'Alea jacta est' prononcée au passage du Rubicon ?",
+                    "question": "Que veut dire l'expression 'Alea iacta est' prononcée au passage du Rubicon ?",
                     "options": ["La route est fermée", "Les dés sont jetés", "L'armée fait demi-tour", "La paix est signée"],
                     "answer": 1,
-                    "explanation": "Alea jacta est = Les dés sont jetés (le sort en est jeté) !"
+                    "explanation": "Alea iacta est = Les dés sont jetés (le sort en est jeté) !"
                 },
                 {
-                    "question": "Quel mot latin signifiant 'main' a donné les mots français 'manuel' et 'manipuler' ?",
-                    "options": ["Manus", "Pater", "Lupus", "Oculus"],
-                    "answer": 0,
-                    "explanation": "Manus est la main en latin !"
+                    "question": "Quelle forme veut dire « il vainc » (au présent) ?",
+                    "options": ["Vici", "Vidi", "Vincit", "Videt"],
+                    "answer": 2,
+                    "explanation": "« Vincit » finit par -t : c'est « il vainc ». « Vici » est au passé : « j'ai vaincu ». « Vidi » = j'ai vu, « videt » = il voit."
                 },
                 {
                     "question": "Que veut dire la formule 'Mens sana in corpore sano' ?",

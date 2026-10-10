@@ -108,10 +108,10 @@ Retrouve ton chemin grâce au fil d'Ariane et triomphe du monstre pour gagner un
             "boss": {"nom": "Le Minotaure de Crète", "icone": "🐂", "pv": 3},
             "questions": [
                 {
-                    "question": "Quel dieu romain est le maître de la foudre et le roi de l'Olympe ?",
-                    "options": ["Mars", "Jupiter", "Apollon", "Neptune"],
-                    "answer": 1,
-                    "explanation": "C'est Jupiter (Zeus), roi de tous les dieux."
+                    "question": "Quelle phrase veut dire « Midas lit » ?",
+                    "options": ["Midas lego.", "Midas scribit.", "Midas legit.", "Midas sum."],
+                    "answer": 2,
+                    "explanation": "« legit » = il lit (-t = il ou elle). « Lego » = je lis, « scribit » = il écrit."
                 },
                 {
                     "question": "Pourquoi les ailes d'Icare ont-elles fondu ?",

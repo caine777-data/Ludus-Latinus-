@@ -122,10 +122,10 @@ Rassemble toute ta maîtrise du latin pour vaincre le Boss Suprême et empocher 
                     "explanation": "Oui ! 'Nemo' signifie 'Personne' en latin !",
                 },
                 {
-                    "question": "Que protégeait le dragon Ladon dans le jardin des Hespérides ?",
-                    "options": ["Les pommes d'or", "Le cheval ailé", "La toge pourpre", "Le labyrinthe"],
-                    "answer": 0,
-                    "explanation": "Triomphe absolu ! Ladon veillait sur les pommes d'or de l'immortalité !",
+                    "question": "Complète : « La jeune fille aime la grande rose ». Puella rosam ___ amat.",
+                    "options": ["magnum", "magnus", "magnam", "magna"],
+                    "answer": 2,
+                    "explanation": "« Rosam » est un COD féminin singulier (-am). L'adjectif prend la même terminaison : « magnam ». « Magna » serait un sujet féminin."
                 },
             ],
         },

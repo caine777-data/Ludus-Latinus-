@@ -99,10 +99,10 @@ Réponds à ses énigmes sur la vie romaine pour remporter une bourse de **seste
             "boss": {"nom": "Bacchus le Maître des Festins", "icone": "🍇", "pv": 3},
             "questions": [
                 {
-                    "question": "Que signifie le mot 'aqua' présent dans les 'aqueducs' ?",
-                    "options": ["L'eau", "Le feu", "Le vin", "La terre"],
-                    "answer": 0,
-                    "explanation": "Exactement ! Aqua = l'eau !",
+                    "question": "Quelle phrase veut dire « L'enfant achète le pain du maître » ?",
+                    "options": ["Puer panem dominum emit.", "Puer panem domini emit.", "Puer panem dominus emit.", "Puer panem domino emit."],
+                    "answer": 1,
+                    "explanation": "-i est la marque du génitif : « domini » = du maître. « Dominum » serait un COD, « dominus » un sujet."
                 },
                 {
                     "question": "Comment s'appelait l'instrument de métal servant à se nettoyer la peau aux thermes ?",

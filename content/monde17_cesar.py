@@ -94,10 +94,10 @@ Le porte-enseigne (*aquilifer*) de la 10e Légion favorite de César t'attend. T
             "boss": {"nom": "L'Aigle de César", "icone": "🦅", "pv": 3},
             "questions": [
                 {
-                    "question": "Qui a rédigé les 'Commentaires sur la Guerre des Gaules' (De Bello Gallico) ?",
-                    "options": ["César", "Cicéron", "Virgile", "Pompée"],
-                    "answer": 0,
-                    "explanation": "César a écrit le récit détaillé de ses campagnes militaires en Gaule."
+                    "question": "Quelle phrase veut dire « Les Romains combattront » ?",
+                    "options": ["Romani pugnabant.", "Romani pugnabunt.", "Romani pugnaverunt.", "Romani pugnabit."],
+                    "answer": 1,
+                    "explanation": "Au futur, on insère -bu- devant -nt (comme « amabunt » = ils aimeront). « Pugnabant » = ils combattaient, « pugnaverunt » = ils ont combattu, « pugnabit » = il combattra (un seul sujet)."
                 },
                 {
                     "question": "Comment se traduit 'Cras in Gallia erimus' (cras = demain) ?",

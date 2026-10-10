@@ -19,6 +19,7 @@ Le légionnaire romain (*miles*) était le soldat le mieux équipé de l'Antiqui
 - **Gladius** : le glaive court à double tranchant, parfait pour le combat rapproché.
 - **Galea** : le casque de bronze ou de fer avec protège-joues.
 - **Lorica** : la cuirasse articulée protégeant le torse.
+- **Aquila** : l'aigle, emblème de chaque légion, porté par l'*aquilifer*.
 
 💡 **Le savais-tu ?**
 Un légionnaire portait sur son dos un sac de plus de 30 kg contenant son équipement, ses rations et ses outils de campement ! On les surnommait les « mulets de Marius » !""",
@@ -98,22 +99,22 @@ Fais honneur à ta formation romaine pour remporter la victoire et une bourse de
             "boss": {"nom": "Le Chef Gaulois Vercingétorix", "icone": "🗡️", "pv": 3},
             "questions": [
                 {
-                    "question": "Que signifie le mot latin 'miles' qui a donné le mot 'militaire' ?",
-                    "options": ["Le soldat", "Le roi", "Le marchand", "Le paysan"],
-                    "answer": 0,
-                    "explanation": "Exactement ! Miles = le soldat !",
+                    "question": "Quelle phrase veut dire « Les esclaves voient les roses » ?",
+                    "options": ["Servi rosam vident.", "Rosae servos vident.", "Servi rosas vident.", "Servus rosas vident."],
+                    "answer": 2,
+                    "explanation": "« Servi » est le sujet pluriel (-i), « rosas » le COD pluriel (-as), « vident » veut dire « ils voient » (-nt). « Rosae servos vident » inverse les rôles (« les roses voient les esclaves »)."
                 },
                 {
                     "question": "Quelle arme était le javelot lourd du légionnaire ?",
-                    "options": ["Le Pilum", "Le Gladius", "La Scutum", "La Toge"],
-                    "answer": 0,
-                    "explanation": "Bravo ! Le pilum était lancé à 20 mètres avant la charge au glaive.",
+                    "options": ["Le Gladius", "Le Pilum", "Le Scutum", "La Galea"],
+                    "answer": 1,
+                    "explanation": "Bravo ! Le pilum était lancé avant la charge au glaive."
                 },
                 {
-                    "question": "Quel oiseau impérial servait d'emblème doré aux légions romaines ?",
+                    "question": "Quel oiseau impérial servait d'emblème aux légions romaines ?",
                     "options": ["L'Aigle", "Le Faucon", "Le Vautour", "L'Épervier"],
                     "answer": 0,
-                    "explanation": "L'Aigle (Aquila) était l'insigne sacré porté par l'aquilifer !",
+                    "explanation": "L'Aigle (Aquila) était l'insigne sacré porté par l'aquilifer !"
                 },
             ],
         },
