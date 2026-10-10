@@ -160,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
             tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
             onPressed: () {
               HapticFeedback.lightImpact();
-              AudioService().playCardFlip();
               widget.repo.toggleThemeMode();
             },
           ),
@@ -186,7 +185,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onDestinationSelected: (index) {
           if (_currentTabIndex != index) {
             HapticFeedback.selectionClick();
-            AudioService().playButton();
             setState(() => _currentTabIndex = index);
           }
         },
@@ -236,7 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
               // 1. Carte Héros Unifiée (Clic unique -> Ouvre Tabularium / Fiche de compte)
               InkWell(
                 onTap: () {
-                  AudioService().playCardFlip();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => AccountScreen(repo: widget.repo)),
@@ -258,7 +255,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                AudioService().playCardFlip();
                                 _showCursusHonorumModal(context, profile);
                               },
                               borderRadius: BorderRadius.circular(8),
@@ -405,7 +401,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       text: '▶ AVANCER SUR LA ROUTE',
                       isLarge: true,
                       onPressed: () {
-                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -857,7 +852,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        AudioService().playCardFlip();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -940,7 +934,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
               return InkWell(
                 onTap: () {
-                  AudioService().playCardFlip();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -1067,7 +1060,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showCursusHonorumModal(BuildContext context, UserProfile profile) {
-    AudioService().playCardFlip();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

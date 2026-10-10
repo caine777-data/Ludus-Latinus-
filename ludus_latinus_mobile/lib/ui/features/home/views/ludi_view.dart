@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
 import '../../../../data/repositories/game_repository.dart';
-import '../../../../data/services/audio_service.dart';
 import '../../circus/circus_screen.dart';
 import '../../duel/duel_screen.dart';
 import '../../taverne/taverne_screen.dart';
@@ -121,7 +120,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'COURSE',
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {
-                          AudioService().playCrowdCheer();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: repo)),
@@ -142,7 +140,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'ARÈNE',
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {
-                          AudioService().playSwordClash();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => DuelScreen(repo: repo)),
@@ -161,7 +158,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'DÉS',
                         tagColor: const Color(0xFF8E24AA),
                         onTap: () {
-                          AudioService().playDiceRoll();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => TaverneScreen(repo: repo)),
@@ -180,7 +176,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'ÉNIGME',
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
-                          AudioService().playWheelClick();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => CesarScreen(repo: repo)),
@@ -199,7 +194,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'COMMERCE',
                         tagColor: const Color(0xFF1E5B94),
                         onTap: () {
-                          AudioService().playSesterces();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => MarcheTrajanScreen(repo: repo)),
@@ -218,7 +212,6 @@ class LudiView extends StatelessWidget {
                         tagLabel: 'CARTES',
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
-                          AudioService().playTriumph();
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => PantheonScreen(repo: repo)),

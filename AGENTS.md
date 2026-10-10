@@ -325,6 +325,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Sons et départ du Circus** (10/10/2026, retour de Cédric) : plus de bruit
+  de carte ni de bouton pour changer d'onglet, ouvrir une page, une leçon ou la
+  boutique ; les tuiles de Ludi ne jouent plus de bruitage (les jeux ont leur
+  musique). Le Circus part après un décompte III, II, I, ITE ! (`_lancerDepart`),
+  en attendant une cinématique de départ.
+
 - **Revoir le cours** (10/10/2026) : un bouton « 📖 Revoir le cours » au-dessus
   de chaque exercice (sauf arène) rouvre le cours dans un volet, sans perdre
   la question. Le cyprès de la Via Appia (`via/cypres.png`, montage raté) est

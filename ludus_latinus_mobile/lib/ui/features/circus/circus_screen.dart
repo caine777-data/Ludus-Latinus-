@@ -394,6 +394,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
   late List<String> _shuffledAnswers;
   String? _selectedAnswer;
   Timer? _gameLoopTimer;
+  // Compte à rebours du départ : III, II, I, puis « ITE ! » (0). Null = course lancée.
+  int? _departDans;
+  Timer? _departTimer;
 
   @override
   void initState() {
@@ -406,7 +409,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
     _shieldAvailable = (_selectedFaction == CircusFaction.albati);
     _loadNewQuestion();
-    _startGameLoop();
+    _lancerDepart();
   }
 
   @override
@@ -414,6 +417,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     AudioService().leaveMusic(MusicTrack.arene);
     _incidentCountdownTimer?.cancel();
     _gameLoopTimer?.cancel();
+    _departTimer?.cancel();
     _animController.dispose();
     super.dispose();
   }
@@ -437,6 +441,83 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     options.shuffle();
     _shuffledAnswers = options;
     _selectedAnswer = null;
+  }
+
+  /// Les chars s'alignent : III, II, I, ITE ! puis la course part.
+  void _lancerDepart() {
+    _departTimer?.cancel();
+    // Appelé aussi depuis initState : on ne passe pas par setState à ce moment-là.
+    _departDans = 3;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() {});
+    });
+    AudioService().playWheelClick();
+    _departTimer = Timer.periodic(const Duration(milliseconds: 800), (t) {
+      if (!mounted) {
+        t.cancel();
+        return;
+      }
+      final suivant = (_departDans ?? 0) - 1;
+      if (suivant < 0) {
+        t.cancel();
+        setState(() => _departDans = null);
+        _startGameLoop();
+        return;
+      }
+      setState(() => _departDans = suivant);
+      if (suivant == 0) {
+        AudioService().playCrowdCheer();
+      } else {
+        AudioService().playWheelClick();
+      }
+    });
+  }
+
+  Widget _avecDepart(Widget course) {
+    final d = _departDans;
+    if (d == null) return course;
+    const chiffres = {3: 'III', 2: 'II', 1: 'I', 0: 'ITE !'};
+    return Stack(
+      children: [
+        course,
+        // Pendant le décompte, la piste est couverte : on ne répond pas avant le départ.
+        Positioned.fill(
+          child: AbsorbPointer(
+            child: Container(
+              color: const Color(0x99000000),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Les chars s\'alignent…',
+                    style: TextStyle(color: Colors.white70, fontSize: 16, fontStyle: FontStyle.italic),
+                  ),
+                  const SizedBox(height: 12),
+                  TweenAnimationBuilder<double>(
+                    key: ValueKey(d),
+                    tween: Tween(begin: 1.6, end: 1.0),
+                    duration: const Duration(milliseconds: 350),
+                    curve: Curves.easeOutBack,
+                    builder: (context, echelle, enfant) => Transform.scale(scale: echelle, child: enfant),
+                    child: Text(
+                      chiffres[d]!,
+                      style: TextStyle(
+                        color: d == 0 ? RomanColors.goldLight : Colors.white,
+                        fontSize: 72,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'serif',
+                        letterSpacing: 4,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   void _startGameLoop() {
@@ -676,7 +757,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       _shieldAvailable = (_selectedFaction == CircusFaction.albati);
       _loadNewQuestion();
     });
-    _startGameLoop();
+    _lancerDepart();
   }
 
   @override
@@ -729,7 +810,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               ),
             ],
           ),
-      body: RomanScreenShake(
+      body: _avecDepart(RomanScreenShake(
         key: _shakeKey,
         child: SafeArea(
           child: Center(
@@ -762,7 +843,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             ),
           ),
         ),
-      ),
+      )),
     );
       },
     );

@@ -65,7 +65,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _openLesson(Lesson lesson) async {
-    AudioService().playCardFlip();
     await Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson)),

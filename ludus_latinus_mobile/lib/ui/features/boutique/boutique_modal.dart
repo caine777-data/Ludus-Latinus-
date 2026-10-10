@@ -54,7 +54,6 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
   void _onCategoryChanged(GoodieCategory cat) {
     HapticFeedback.selectionClick();
-    AudioService().playPage();
     setState(() => _activeCategory = cat);
   }
 
