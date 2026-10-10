@@ -35,6 +35,22 @@ Les tout premiers mots de l'Énéide, appris par cœur par tous les écoliers de
                 "Lucrèce est mort avant le règne d'Auguste et il a écrit De la nature, pas l'Énéide.",
             ],
             "explanation": "C'est le poète Virgile qui a écrit les 12 chants de l'Énéide !",
+            "grammaire": {
+                "question": "Que veut dire « Urbe condita, Romulus rex fuit. » ? (condere = fonder ; rex = le roi)",
+                "options": [
+                    "Dans la ville fondée, Romulus fut roi.",
+                    "Romulus fonda la ville et fut roi.",
+                    "Romulus fut roi de la ville fondée.",
+                    "La ville ayant été fondée, Romulus fut roi.",
+                ],
+                "answer": 3,
+                "explications": [
+                    "Pour dire « dans », il faudrait la préposition in. Elle manque ici.",
+                    "Le seul verbe conjugué est fuit, « il fut ». Le verbe fonder n'y est pas conjugué.",
+                    "Pour dire « de la ville », il faudrait un génitif, et urbe n'en est pas un.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m25-02",
@@ -56,6 +72,17 @@ Complète pour dire : « Que le poète soit heureux ! ».""",
             "apres": " poeta !",
             "solution": "it",
             "latin_complet": "Felix sit poeta !",
+            "grammaire": {
+                "question": "Complète pour dire « Que je sois heureux ! » : Felix ___ !",
+                "options": ["sum", "sis", "sim", "sit"],
+                "answer": 2,
+                "explications": [
+                    "Cette forme est de l'indicatif : elle dit un fait, elle n'exprime pas un souhait.",
+                    "Cette forme s'adresse à « tu », pas à celui qui parle.",
+                    "",
+                    "Cette forme parle d'une 3e personne, pas de « je ».",
+                ],
+            },
         },
         {
             "id": "m25-03",
@@ -70,6 +97,22 @@ Le petit mot **-que**, collé à la fin d'un mot, signifie « et » : *virumque*
             "latin": "Poeta patriam virosque canit.",
             "mots": ["Le poète", "chante", "la patrie", "et les héros.", "et le héros.", "chantent"],
             "solution": "Le poète chante la patrie et les héros.",
+            "grammaire": {
+                "question": "Que veut dire « Puellae puerique rosas amant. » ? (pueri = les enfants)",
+                "options": [
+                    "Les roses aiment les jeunes filles et les enfants.",
+                    "Les jeunes filles des enfants aiment les roses.",
+                    "La jeune fille ou l'enfant aime les roses.",
+                    "Les jeunes filles et les enfants aiment les roses.",
+                ],
+                "answer": 3,
+                "explications": [
+                    "Rosas porte la fin du COD : les roses subissent l'action, elles ne la font pas.",
+                    "Le -que ajouté au mot n'exprime pas un complément du nom.",
+                    "Le petit mot -que ne propose pas un choix entre deux noms.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m25-04",

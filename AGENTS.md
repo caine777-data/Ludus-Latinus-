@@ -343,8 +343,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   4 options, `answer`, `explications` dont une seule vide) : posé juste
   après l'exercice principal, avant le vocabulaire, par
   `lesson/widgets/grammar_question_widget.dart` ; une erreur affiche son
-  explication et l'élève réessaie. Mondes 1 à 18 intégrés (5e et 4e,
-  `docs/propositions/grammaire_mondes_1_5.md`, `_6_10.md`, `_11_18.md`). Règles : une autre phrase que le
+  explication et l'élève réessaie. Les 26 mondes sont intégrés (87 questions,
+  `docs/propositions/grammaire_mondes_1_5.md`, `_6_10.md`, `_11_18.md`,
+  `_19_26.md`). Attention : la clé est `explications`, pas `explanations`. Règles : une autre phrase que le
   cours et l'exercice, vocabulaire déjà vu, aucune forme non enseignée dans
   une bonne réponse. `tests/test_grammaire_lecons.py` vérifie le format.
 

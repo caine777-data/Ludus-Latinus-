@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-10 15:38:14",
+    "date_export": "2026-10-10 16:14:26",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -3112,7 +3112,23 @@
             "Cette voyelle double indique le complément du nom singulier pour la première déclinaison.",
             "-ei est le génitif de la 5e déclinaison, comme res, rei : ce n'est pas celui de manus."
           ],
-          "explanation": "La 4e déclinaison se caractérise par son génitif singulier en -US !"
+          "explanation": "La 4e déclinaison se caractérise par son génitif singulier en -US !",
+          "grammaire": {
+            "question": "Quel nom est de la 4e déclinaison ? Un nom se reconnaît à son génitif (senatus = le sénat ; dominus = le maître de maison).",
+            "options": [
+              "dominus, domini",
+              "rex, regis",
+              "senatus, senatus",
+              "res, rei"
+            ],
+            "answer": 2,
+            "explications": [
+              "Ce génitif en -i est celui de la 2e déclinaison.",
+              "Ce génitif en -is est celui de la 3e déclinaison.",
+              "",
+              "Ce génitif en -ei est celui de la 5e déclinaison."
+            ]
+          }
         },
         {
           "id": "m19-02",
@@ -3123,7 +3139,23 @@
           "avant": "Augustus r",
           "apres": " publicam servat.",
           "solution": "em",
-          "latin_complet": "Augustus rem publicam servat."
+          "latin_complet": "Augustus rem publicam servat.",
+          "grammaire": {
+            "question": "Complète pour dire « Les Romains aiment la loyauté » : Romani ___ amant.",
+            "options": [
+              "fides",
+              "fidem",
+              "fidei",
+              "fidam"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme est celle du sujet. Ici, la loyauté est aimée : elle subit l'action.",
+              "",
+              "Cette fin est celle du génitif (« de la loyauté »), pas celle du COD.",
+              "Cette fin appartient à la 1re déclinaison, comme rosam. Les noms en -es n'en font pas partie."
+            ]
+          }
         },
         {
           "id": "m19-03",
@@ -3139,7 +3171,23 @@
             "au citoyen.",
             "donne"
           ],
-          "solution": "L'empereur a donné la paix aux citoyens."
+          "solution": "L'empereur a donné la paix aux citoyens.",
+          "grammaire": {
+            "question": "Complète pour dire « Le chef donne de l'argent au soldat » : Dux ___ pecuniam dat.",
+            "options": [
+              "militem",
+              "militis",
+              "militibus",
+              "militi"
+            ],
+            "answer": 3,
+            "explications": [
+              "Cette fin marque le COD. L'argent occupe déjà ce rôle dans la phrase.",
+              "Cette fin dit « du soldat » : elle complète un nom, elle ne désigne pas celui qui reçoit.",
+              "Cette fin est celle d'un pluriel : le chef ne donne qu'à un seul soldat.",
+              ""
+            ]
+          }
         },
         {
           "id": "m19-04",
@@ -3213,7 +3261,23 @@
             "Cette forme est réservée au genre neutre singulier, par exemple templum quod stat.",
             "Cette forme masculine est au cas complément d'objet direct : elle ne peut pas être sujet."
           ],
-          "explanation": "Pour un nom masculin singulier sujet, on emploie 'qui' : miles qui pugnat !"
+          "explanation": "Pour un nom masculin singulier sujet, on emploie 'qui' : miles qui pugnat !",
+          "grammaire": {
+            "question": "Que veut dire « Dux qui urbem videt fortis est. » ? (dux = le chef ; urbs = la ville)",
+            "options": [
+              "Le chef que la ville voit est courageux.",
+              "La ville que le chef voit est courageuse.",
+              "Le chef qui voit la ville est courageux.",
+              "Les chefs qui voient la ville sont courageux."
+            ],
+            "answer": 2,
+            "explications": [
+              "Urbem, avec sa fin -m, est le COD de videt : le relatif ne peut pas l'être aussi.",
+              "Qui, au masculin, ne peut pas reprendre un nom féminin comme la ville.",
+              "",
+              "Videt est au singulier : un seul chef agit."
+            ]
+          }
         },
         {
           "id": "m20-02",
@@ -3224,7 +3288,23 @@
           "avant": "Aqua ",
           "apres": " aquaeductus ducit bona est.",
           "solution": "quam",
-          "latin_complet": "Aqua quam aquaeductus ducit bona est."
+          "latin_complet": "Aqua quam aquaeductus ducit bona est.",
+          "grammaire": {
+            "question": "Complète pour dire « La reine qui voit la ville est belle » : Regina ___ urbem videt pulchra est.",
+            "options": [
+              "quae",
+              "qui",
+              "quam",
+              "quem"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Cette forme est masculine, alors que la reine est féminine.",
+              "Cette forme est celle du COD. Qui fait l'action de voir dans la relative ?",
+              "Cette forme est masculine, et elle marque aussi le COD."
+            ]
+          }
         },
         {
           "id": "m20-03",
@@ -3241,7 +3321,23 @@
             "qui",
             "Les routes"
           ],
-          "solution": "La route que les Romains ont construite est longue."
+          "solution": "La route que les Romains ont construite est longue.",
+          "grammaire": {
+            "question": "Complète pour dire « La place forte que les Romains défendent est grande » : Oppidum ___ Romani defendunt magnum est.",
+            "options": [
+              "quem",
+              "quod",
+              "quam",
+              "qui"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme est masculine ; elle irait avec un nom comme miles, pas avec un neutre.",
+              "",
+              "Cette forme est féminine ; elle irait avec un nom comme urbs.",
+              "Cette forme est masculine ; elle ne s'accorde pas avec un nom neutre."
+            ]
+          }
         },
         {
           "id": "m20-04",
@@ -3315,7 +3411,23 @@
             "Cette tournure utilise un infinitif, alors que ce participe s'accorde comme un adjectif avec la cité.",
             "« Libre » se dit liber en latin ; rien dans capta n'évoque la liberté."
           ],
-          "explanation": "Capta est le PPP féminin s'accordant avec urbs : la ville ayant été prise / capturée."
+          "explanation": "Capta est le PPP féminin s'accordant avec urbs : la ville ayant été prise / capturée.",
+          "grammaire": {
+            "question": "Quel est le participe parfait passif de mittere (mitto, misi, missum), « envoyé », au masculin ?",
+            "options": [
+              "missus",
+              "mittus",
+              "misus",
+              "mittatus"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Cette forme garde le radical du présent. Le PPP se construit sur une autre forme du dictionnaire.",
+              "Cette forme part du parfait (misi). Le PPP se construit sur une autre forme du dictionnaire.",
+              "Cette forme copie amatus avec le radical du présent. Le PPP part de la 4e forme du dictionnaire."
+            ]
+          }
         },
         {
           "id": "m21-02",
@@ -3326,7 +3438,23 @@
           "avant": "Oppidum capt",
           "apres": " est.",
           "solution": "um",
-          "latin_complet": "Oppidum captum est."
+          "latin_complet": "Oppidum captum est.",
+          "grammaire": {
+            "question": "Complète pour dire « Les villes ont été détruites » : Urbes ___ sunt.",
+            "options": [
+              "deleta",
+              "deleti",
+              "deletum",
+              "deletae"
+            ],
+            "answer": 3,
+            "explications": [
+              "Cette fin marque un féminin singulier. Ici, il y a plusieurs villes.",
+              "Cette fin est celle du masculin pluriel. Urbs est un nom féminin.",
+              "Cette fin est celle du neutre singulier. Ni le genre ni le nombre ne conviennent.",
+              ""
+            ]
+          }
         },
         {
           "id": "m21-03",
@@ -3341,7 +3469,23 @@
             "recouvre",
             "les villes."
           ],
-          "solution": "La cendre noire recouvrait la ville."
+          "solution": "La cendre noire recouvrait la ville.",
+          "grammaire": {
+            "question": "Complète pour dire « Les citoyens criaient sur le forum » : Cives in foro ___.",
+            "options": [
+              "clamant",
+              "clamabant",
+              "clamabunt",
+              "clamaverunt"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme est au présent : elle dit ce qui se passe maintenant.",
+              "",
+              "Cette forme est au futur : elle dit ce qui arrivera.",
+              "Cette forme est un passé ponctuel, qui ne montre pas une action qui durait."
+            ]
+          }
         },
         {
           "id": "m21-04",
@@ -3415,7 +3559,23 @@
             "Le génitif n'est pas le cas de cette construction, et un génitif ne s'emploie jamais avec une préposition.",
             "Cette construction ne contient aucun verbe conjugué : un futur et un adverbe ne suffisent pas à la former."
           ],
-          "explanation": "Nom à l'ablatif + participe à l'ablatif forme la proposition absolue !"
+          "explanation": "Nom à l'ablatif + participe à l'ablatif forme la proposition absolue !",
+          "grammaire": {
+            "question": "Quelle phrase contient un ablatif absolu ? (nauta = le marin ; navis = le navire ; fugere = fuir)",
+            "options": [
+              "Nauta navem deletam videt.",
+              "Nauta in nave fugit.",
+              "Navis deleta est.",
+              "Nave deleta, nauta fugit."
+            ],
+            "answer": 3,
+            "explications": [
+              "Ici le nom et le participe sont à l'accusatif : ils forment le COD du verbe.",
+              "Il y a un nom à l'ablatif après in, mais aucun participe à côté de lui.",
+              "Le nom et le participe sont au nominatif, avec est : c'est une phrase ordinaire.",
+              ""
+            ]
+          }
         },
         {
           "id": "m22-02",
@@ -3426,7 +3586,23 @@
           "avant": "Oppido capt",
           "apres": ", milites gaudent.",
           "solution": "o",
-          "latin_complet": "Oppido capto, milites gaudent."
+          "latin_complet": "Oppido capto, milites gaudent.",
+          "grammaire": {
+            "question": "Complète pour dire « La reine ayant été tuée, les soldats crient » : Regina ___, milites clamant. (necare = tuer)",
+            "options": [
+              "necato",
+              "necatae",
+              "necata",
+              "necatum"
+            ],
+            "answer": 2,
+            "explications": [
+              "Cette fin est celle du masculin ou du neutre. Regina est un nom féminin.",
+              "Cette fin est celle du génitif ou du pluriel. Ici, une seule reine à l'ablatif.",
+              "",
+              "Cette fin est celle de l'accusatif neutre, qui ne convient pas au féminin."
+            ]
+          }
         },
         {
           "id": "m22-03",
@@ -3442,7 +3618,23 @@
             "est",
             "Le roi Romulus"
           ],
-          "solution": "Sous le règne de Romulus, Rome était petite."
+          "solution": "Sous le règne de Romulus, Rome était petite.",
+          "grammaire": {
+            "question": "Que veut dire « Augusto imperatore, pax erat. » ? (imperator = l'empereur ; pax = la paix)",
+            "options": [
+              "Auguste étant empereur, la paix existait.",
+              "Auguste sera l'empereur de la paix.",
+              "Auguste donne la paix à l'empereur.",
+              "L'empereur d'Auguste faisait la paix."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Le verbe erat est à l'imparfait : il parle du passé, jamais du futur.",
+              "Le verbe de la phrase est erat, « il était ». Il ne veut pas dire « donne ».",
+              "Pour dire « d'Auguste », il faudrait le génitif. Et le verbe ne veut pas dire « faisait »."
+            ]
+          }
         },
         {
           "id": "m22-04",
@@ -3516,7 +3708,23 @@
             "Cette finale s'emploie pour la deuxième personne du singulier (tu es félicité).",
             "-mur est la désinence de la 1re personne du pluriel au passif, comme amamur (nous sommes aimés)."
           ],
-          "explanation": "La terminaison -tur indique la 3e personne singulier passive : amatur = il est aimé."
+          "explanation": "La terminaison -tur indique la 3e personne singulier passive : amatur = il est aimé.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Le chef est aimé par les soldats » ?",
+            "options": [
+              "Dux milites amat.",
+              "Dux a militibus amatur.",
+              "Milites a duce amantur.",
+              "Dux a militibus amantur."
+            ],
+            "answer": 1,
+            "explications": [
+              "Le verbe est à l'actif : le chef fait l'action au lieu de la subir.",
+              "",
+              "Les rôles sont inversés : ici ce sont les soldats qui sont aimés.",
+              "Le chef est seul, mais le verbe en -ntur est au pluriel."
+            ]
+          }
         },
         {
           "id": "m23-02",
@@ -3527,7 +3735,23 @@
           "avant": "Fortes milites a duce lauda",
           "apres": ".",
           "solution": "ntur",
-          "latin_complet": "Fortes milites a duce laudantur."
+          "latin_complet": "Fortes milites a duce laudantur.",
+          "grammaire": {
+            "question": "Complète pour dire « Les citoyens sont sauvés par le consul » : Cives ___ consule servantur.",
+            "options": [
+              "a",
+              "ad",
+              "in",
+              "pro"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Cette préposition se construit avec l'accusatif et marque un mouvement vers quelqu'un.",
+              "Cette préposition situe un lieu (« dans », « sur »). Elle n'introduit pas l'auteur de l'action.",
+              "Cette préposition veut dire « pour, à la place de ». Elle n'introduit pas l'auteur."
+            ]
+          }
         },
         {
           "id": "m23-03",
@@ -3542,7 +3766,23 @@
             "défend",
             "le peuple romain."
           ],
-          "solution": "La liberté est défendue par le peuple romain."
+          "solution": "La liberté est défendue par le peuple romain.",
+          "grammaire": {
+            "question": "Que veut dire « Pecunia a mercatore portatur. » ? (pecunia = l'argent ; mercator = le marchand ; portare = porter)",
+            "options": [
+              "Le marchand porte l'argent.",
+              "Le marchand est porté par l'argent.",
+              "L'argent est porté par les marchands.",
+              "L'argent est porté par le marchand."
+            ],
+            "answer": 3,
+            "explications": [
+              "Le verbe finit par -tur : le sujet subit l'action, il ne la fait pas.",
+              "Après a, le mot à l'ablatif est celui qui agit. Ici, c'est un autre mot.",
+              "Mercatore est au singulier : la fin -e va avec un seul marchand.",
+              ""
+            ]
+          }
         },
         {
           "id": "m23-04",
@@ -3616,7 +3856,23 @@
             "Le sujet n'est jamais à l'ablatif ici. L'ablatif sert plutôt aux compléments de moyen, de lieu ou de temps.",
             "Le cas du complément du nom ne peut jamais introduire le sujet d'une telle proposition."
           ],
-          "explanation": "C'est la règle d'or : Sujet à l'Accusatif + Verbe à l'Infinitif !"
+          "explanation": "C'est la règle d'or : Sujet à l'Accusatif + Verbe à l'Infinitif !",
+          "grammaire": {
+            "question": "Complète pour dire « Je sais que le soldat court » : Scio ___ currere.",
+            "options": [
+              "miles",
+              "militi",
+              "militem",
+              "militis"
+            ],
+            "answer": 2,
+            "explications": [
+              "Cette forme est le nominatif, cas du sujet d'une phrase simple.",
+              "Cette forme est un datif : celui qui reçoit. Personne ne reçoit rien ici.",
+              "",
+              "Cette forme est un génitif : « du soldat ». Elle complèterait un nom."
+            ]
+          }
         },
         {
           "id": "m24-02",
@@ -3627,7 +3883,23 @@
           "avant": "Puto amic",
           "apres": " venire.",
           "solution": "um",
-          "latin_complet": "Puto amicum venire."
+          "latin_complet": "Puto amicum venire.",
+          "grammaire": {
+            "question": "Complète pour dire « Je dis que les marins courent » : Dico ___ currere. (nauta = le marin)",
+            "options": [
+              "nautae",
+              "nautas",
+              "nautam",
+              "nauta"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme est le sujet d'une phrase simple, pas le sujet d'une proposition infinitive.",
+              "",
+              "Cette forme est au singulier. La phrase parle de plusieurs marins.",
+              "Cette forme est le nominatif singulier : un seul marin, sujet d'une phrase simple."
+            ]
+          }
         },
         {
           "id": "m24-03",
@@ -3642,7 +3914,23 @@
             "que l'ennemi",
             "sont arrivés."
           ],
-          "solution": "Le messager dit que les ennemis arrivent."
+          "solution": "Le messager dit que les ennemis arrivent.",
+          "grammaire": {
+            "question": "Que veut dire « Puto reginam ambulare. » ? (regina = la reine ; ambulare = se promener)",
+            "options": [
+              "Je pense que la reine se promène.",
+              "Je pense que la reine se promenait.",
+              "Je pense que les reines se promènent.",
+              "La reine pense que je me promène."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "L'infinitif présent ne marque pas une action passée par rapport à puto.",
+              "Reginam est au singulier : la fin -am désigne une seule reine.",
+              "Puto veut dire « je pense » : celui qui pense, c'est « je », pas la reine."
+            ]
+          }
         },
         {
           "id": "m24-04",
@@ -3716,7 +4004,23 @@
             "Horace, poète du temps d'Auguste, a écrit des Odes et des Satires, pas l'Énéide.",
             "Lucrèce est mort avant le règne d'Auguste et il a écrit De la nature, pas l'Énéide."
           ],
-          "explanation": "C'est le poète Virgile qui a écrit les 12 chants de l'Énéide !"
+          "explanation": "C'est le poète Virgile qui a écrit les 12 chants de l'Énéide !",
+          "grammaire": {
+            "question": "Que veut dire « Urbe condita, Romulus rex fuit. » ? (condere = fonder ; rex = le roi)",
+            "options": [
+              "Dans la ville fondée, Romulus fut roi.",
+              "Romulus fonda la ville et fut roi.",
+              "Romulus fut roi de la ville fondée.",
+              "La ville ayant été fondée, Romulus fut roi."
+            ],
+            "answer": 3,
+            "explications": [
+              "Pour dire « dans », il faudrait la préposition in. Elle manque ici.",
+              "Le seul verbe conjugué est fuit, « il fut ». Le verbe fonder n'y est pas conjugué.",
+              "Pour dire « de la ville », il faudrait un génitif, et urbe n'en est pas un.",
+              ""
+            ]
+          }
         },
         {
           "id": "m25-02",
@@ -3727,7 +4031,23 @@
           "avant": "Felix s",
           "apres": " poeta !",
           "solution": "it",
-          "latin_complet": "Felix sit poeta !"
+          "latin_complet": "Felix sit poeta !",
+          "grammaire": {
+            "question": "Complète pour dire « Que je sois heureux ! » : Felix ___ !",
+            "options": [
+              "sum",
+              "sis",
+              "sim",
+              "sit"
+            ],
+            "answer": 2,
+            "explications": [
+              "Cette forme est de l'indicatif : elle dit un fait, elle n'exprime pas un souhait.",
+              "Cette forme s'adresse à « tu », pas à celui qui parle.",
+              "",
+              "Cette forme parle d'une 3e personne, pas de « je »."
+            ]
+          }
         },
         {
           "id": "m25-03",
@@ -3743,7 +4063,23 @@
             "et le héros.",
             "chantent"
           ],
-          "solution": "Le poète chante la patrie et les héros."
+          "solution": "Le poète chante la patrie et les héros.",
+          "grammaire": {
+            "question": "Que veut dire « Puellae puerique rosas amant. » ? (pueri = les enfants)",
+            "options": [
+              "Les roses aiment les jeunes filles et les enfants.",
+              "Les jeunes filles des enfants aiment les roses.",
+              "La jeune fille ou l'enfant aime les roses.",
+              "Les jeunes filles et les enfants aiment les roses."
+            ],
+            "answer": 3,
+            "explications": [
+              "Rosas porte la fin du COD : les roses subissent l'action, elles ne la font pas.",
+              "Le -que ajouté au mot n'exprime pas un complément du nom.",
+              "Le petit mot -que ne propose pas un choix entre deux noms.",
+              ""
+            ]
+          }
         },
         {
           "id": "m25-04",
@@ -3817,7 +4153,23 @@
             "La proposition infinitive met son sujet à l'accusatif et son verbe à l'infinitif : aucun ablatif.",
             "Le datif de possession dit à qui appartient une chose, avec le verbe être : il n'utilise pas deux ablatifs."
           ],
-          "explanation": "C'est l'Ablatif Absolu, véritable marque de fabrique du latin classique !"
+          "explanation": "C'est l'Ablatif Absolu, véritable marque de fabrique du latin classique !",
+          "grammaire": {
+            "question": "Complète pour dire « Le poète que le consul loue est heureux » : Poeta ___ consul laudat felix est.",
+            "options": [
+              "quem",
+              "quam",
+              "qui",
+              "quae"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Cette forme est féminine. Le poète est un homme, même si son nom finit en -a.",
+              "Le sujet de laudat est déjà consul. Cette forme serait un sujet masculin.",
+              "Cette forme est féminine au nominatif. Elle ne va pas avec un poète."
+            ]
+          }
         },
         {
           "id": "m26-02",
@@ -3828,7 +4180,23 @@
           "avant": "Cives Romani libertatem serv",
           "apres": ".",
           "solution": "ant",
-          "latin_complet": "Cives Romani libertatem servant."
+          "latin_complet": "Cives Romani libertatem servant.",
+          "grammaire": {
+            "question": "Complète pour dire « Les poètes louent la victoire » : Poetae victoriam ___.",
+            "options": [
+              "laudat",
+              "laudant",
+              "laudas",
+              "laudatis"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette fin va avec un seul sujet. Ici, plusieurs poètes agissent.",
+              "",
+              "Cette fin va avec « tu ». Le sujet est un nom, pas « tu ».",
+              "Cette fin va avec « vous ». Le sujet est à la 3e personne."
+            ]
+          }
         },
         {
           "id": "m26-03",
@@ -3843,7 +4211,23 @@
             "protège",
             "de la République."
           ],
-          "solution": "Le courage et la sagesse protègent la République."
+          "solution": "Le courage et la sagesse protègent la République.",
+          "grammaire": {
+            "question": "Que veut dire « Gloria et victoria imperatorem ornant. » ? (ornare = embellir ; imperator = l'empereur)",
+            "options": [
+              "L'empereur embellit la gloire et la victoire.",
+              "La gloire embellit l'empereur de la victoire.",
+              "La gloire et la victoire embellissent l'empereur.",
+              "La gloire et la victoire ont embelli l'empereur."
+            ],
+            "answer": 2,
+            "explications": [
+              "Imperatorem a la fin -em du COD : il subit l'action, il ne la fait pas.",
+              "Ta traduction n'a qu'un seul sujet, alors que le verbe finit par -nt.",
+              "",
+              "Ornant est au présent. Rien dans le verbe ne marque un passé."
+            ]
+          }
         },
         {
           "id": "m26-04",

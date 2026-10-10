@@ -46,6 +46,22 @@ En français, on traduit élégamment par :
                 "Cette construction ne contient aucun verbe conjugué : un futur et un adverbe ne suffisent pas à la former.",
             ],
             "explanation": "Nom à l'ablatif + participe à l'ablatif forme la proposition absolue !",
+            "grammaire": {
+                "question": "Quelle phrase contient un ablatif absolu ? (nauta = le marin ; navis = le navire ; fugere = fuir)",
+                "options": [
+                    "Nauta navem deletam videt.",
+                    "Nauta in nave fugit.",
+                    "Navis deleta est.",
+                    "Nave deleta, nauta fugit.",
+                ],
+                "answer": 3,
+                "explications": [
+                    "Ici le nom et le participe sont à l'accusatif : ils forment le COD du verbe.",
+                    "Il y a un nom à l'ablatif après in, mais aucun participe à côté de lui.",
+                    "Le nom et le participe sont au nominatif, avec est : c'est une phrase ordinaire.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m22-02",
@@ -67,6 +83,17 @@ Complète pour dire : « La place forte prise, les soldats se réjouissent ».""
             "apres": ", milites gaudent.",
             "solution": "o",
             "latin_complet": "Oppido capto, milites gaudent.",
+            "grammaire": {
+                "question": "Complète pour dire « La reine ayant été tuée, les soldats crient » : Regina ___, milites clamant. (necare = tuer)",
+                "options": ["necato", "necatae", "necata", "necatum"],
+                "answer": 2,
+                "explications": [
+                    "Cette fin est celle du masculin ou du neutre. Regina est un nom féminin.",
+                    "Cette fin est celle du génitif ou du pluriel. Ici, une seule reine à l'ablatif.",
+                    "",
+                    "Cette fin est celle de l'accusatif neutre, qui ne convient pas au féminin.",
+                ],
+            },
         },
         {
             "id": "m22-03",
@@ -83,6 +110,22 @@ Exemple : *« Caesare duce, Romani vicerunt. »* = « Sous la conduite de César
             "latin": "Romulo rege, Roma parva erat.",
             "mots": ["Sous le règne de Romulus,", "Rome", "était", "petite.", "est", "Le roi Romulus"],
             "solution": "Sous le règne de Romulus, Rome était petite.",
+            "grammaire": {
+                "question": "Que veut dire « Augusto imperatore, pax erat. » ? (imperator = l'empereur ; pax = la paix)",
+                "options": [
+                    "Auguste étant empereur, la paix existait.",
+                    "Auguste sera l'empereur de la paix.",
+                    "Auguste donne la paix à l'empereur.",
+                    "L'empereur d'Auguste faisait la paix.",
+                ],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Le verbe erat est à l'imparfait : il parle du passé, jamais du futur.",
+                    "Le verbe de la phrase est erat, « il était ». Il ne veut pas dire « donne ».",
+                    "Pour dire « d'Auguste », il faudrait le génitif. Et le verbe ne veut pas dire « faisait ».",
+                ],
+            },
         },
         {
             "id": "m22-04",

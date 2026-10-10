@@ -39,6 +39,22 @@ Il s'exprime avec la préposition **A** (ou **AB** devant voyelle) suivie de l'*
                 "-mur est la désinence de la 1re personne du pluriel au passif, comme amamur (nous sommes aimés).",
             ],
             "explanation": "La terminaison -tur indique la 3e personne singulier passive : amatur = il est aimé.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le chef est aimé par les soldats » ?",
+                "options": [
+                    "Dux milites amat.",
+                    "Dux a militibus amatur.",
+                    "Milites a duce amantur.",
+                    "Dux a militibus amantur.",
+                ],
+                "answer": 1,
+                "explications": [
+                    "Le verbe est à l'actif : le chef fait l'action au lieu de la subir.",
+                    "",
+                    "Les rôles sont inversés : ici ce sont les soldats qui sont aimés.",
+                    "Le chef est seul, mais le verbe en -ntur est au pluriel.",
+                ],
+            },
         },
         {
             "id": "m23-02",
@@ -59,6 +75,17 @@ Complète pour dire : « Les braves soldats sont loués par le général ».""",
             "apres": ".",
             "solution": "ntur",
             "latin_complet": "Fortes milites a duce laudantur.",
+            "grammaire": {
+                "question": "Complète pour dire « Les citoyens sont sauvés par le consul » : Cives ___ consule servantur.",
+                "options": ["a", "ad", "in", "pro"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette préposition se construit avec l'accusatif et marque un mouvement vers quelqu'un.",
+                    "Cette préposition situe un lieu (« dans », « sur »). Elle n'introduit pas l'auteur de l'action.",
+                    "Cette préposition veut dire « pour, à la place de ». Elle n'introduit pas l'auteur.",
+                ],
+            },
         },
         {
             "id": "m23-03",
@@ -74,6 +101,22 @@ Exemple : *« Pax et concordia a civibus quaeruntur. »* = « La paix et la conc
             "latin": "Libertas a populo Romano defenditur.",
             "mots": ["La liberté", "est défendue", "par le peuple romain.", "défend", "le peuple romain."],
             "solution": "La liberté est défendue par le peuple romain.",
+            "grammaire": {
+                "question": "Que veut dire « Pecunia a mercatore portatur. » ? (pecunia = l'argent ; mercator = le marchand ; portare = porter)",
+                "options": [
+                    "Le marchand porte l'argent.",
+                    "Le marchand est porté par l'argent.",
+                    "L'argent est porté par les marchands.",
+                    "L'argent est porté par le marchand.",
+                ],
+                "answer": 3,
+                "explications": [
+                    "Le verbe finit par -tur : le sujet subit l'action, il ne la fait pas.",
+                    "Après a, le mot à l'ablatif est celui qui agit. Ici, c'est un autre mot.",
+                    "Mercatore est au singulier : la fin -e va avec un seul marchand.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m23-04",

@@ -15,12 +15,12 @@ def _lecons_avec_grammaire():
 
 
 class TestGrammaireLecons(unittest.TestCase):
-    def test_mondes_1_a_18_ont_leur_question(self):
+    def test_mondes_1_a_26_ont_leur_question(self):
         ids = {i for i, _ in _lecons_avec_grammaire()}
         attendus = {
             lecon["id"]
             for monde in CURRICULUM
-            if monde["id"] in {f"monde{n}" for n in range(1, 19)}
+            if monde["id"] in {f"monde{n}" for n in range(1, 27)}
             for lecon in monde["lessons"]
             if lecon.get("type") != "arene"
         }

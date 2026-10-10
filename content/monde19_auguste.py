@@ -35,6 +35,17 @@ Le nominatif et le génitif singulier se terminent tous deux en **-us** !""",
                 "-ei est le génitif de la 5e déclinaison, comme res, rei : ce n'est pas celui de manus.",
             ],
             "explanation": "La 4e déclinaison se caractérise par son génitif singulier en -US !",
+            "grammaire": {
+                "question": "Quel nom est de la 4e déclinaison ? Un nom se reconnaît à son génitif (senatus = le sénat ; dominus = le maître de maison).",
+                "options": ["dominus, domini", "rex, regis", "senatus, senatus", "res, rei"],
+                "answer": 2,
+                "explications": [
+                    "Ce génitif en -i est celui de la 2e déclinaison.",
+                    "Ce génitif en -is est celui de la 3e déclinaison.",
+                    "",
+                    "Ce génitif en -ei est celui de la 5e déclinaison.",
+                ],
+            },
         },
         {
             "id": "m19-02",
@@ -61,6 +72,17 @@ Complète pour dire : « Auguste protège la République ».""",
             "apres": " publicam servat.",
             "solution": "em",
             "latin_complet": "Augustus rem publicam servat.",
+            "grammaire": {
+                "question": "Complète pour dire « Les Romains aiment la loyauté » : Romani ___ amant.",
+                "options": ["fides", "fidem", "fidei", "fidam"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme est celle du sujet. Ici, la loyauté est aimée : elle subit l'action.",
+                    "",
+                    "Cette fin est celle du génitif (« de la loyauté »), pas celle du COD.",
+                    "Cette fin appartient à la 1re déclinaison, comme rosam. Les noms en -es n'en font pas partie.",
+                ],
+            },
         },
         {
             "id": "m19-03",
@@ -80,6 +102,17 @@ Exemple : *« Augustus pacem populo dedit. »* = « Auguste a donné la paix au 
             "latin": "Imperator civibus pacem dedit.",
             "mots": ["L'empereur", "a donné", "la paix", "aux citoyens.", "au citoyen.", "donne"],
             "solution": "L'empereur a donné la paix aux citoyens.",
+            "grammaire": {
+                "question": "Complète pour dire « Le chef donne de l'argent au soldat » : Dux ___ pecuniam dat.",
+                "options": ["militem", "militis", "militibus", "militi"],
+                "answer": 3,
+                "explications": [
+                    "Cette fin marque le COD. L'argent occupe déjà ce rôle dans la phrase.",
+                    "Cette fin dit « du soldat » : elle complète un nom, elle ne désigne pas celui qui reçoit.",
+                    "Cette fin est celle d'un pluriel : le chef ne donne qu'à un seul soldat.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m19-04",

@@ -39,6 +39,22 @@ Il prend le **GENRE** et le **NOMBRE** du mot qu'il remplace (son antécédent),
                 "Cette forme masculine est au cas complément d'objet direct : elle ne peut pas être sujet.",
             ],
             "explanation": "Pour un nom masculin singulier sujet, on emploie 'qui' : miles qui pugnat !",
+            "grammaire": {
+                "question": "Que veut dire « Dux qui urbem videt fortis est. » ? (dux = le chef ; urbs = la ville)",
+                "options": [
+                    "Le chef que la ville voit est courageux.",
+                    "La ville que le chef voit est courageuse.",
+                    "Le chef qui voit la ville est courageux.",
+                    "Les chefs qui voient la ville sont courageux.",
+                ],
+                "answer": 2,
+                "explications": [
+                    "Urbem, avec sa fin -m, est le COD de videt : le relatif ne peut pas l'être aussi.",
+                    "Qui, au masculin, ne peut pas reprendre un nom féminin comme la ville.",
+                    "",
+                    "Videt est au singulier : un seul chef agit.",
+                ],
+            },
         },
         {
             "id": "m20-02",
@@ -56,6 +72,17 @@ Complète pour dire : « L'eau que l'aqueduc conduit est bonne ».""",
             "apres": " aquaeductus ducit bona est.",
             "solution": "quam",
             "latin_complet": "Aqua quam aquaeductus ducit bona est.",
+            "grammaire": {
+                "question": "Complète pour dire « La reine qui voit la ville est belle » : Regina ___ urbem videt pulchra est.",
+                "options": ["quae", "qui", "quam", "quem"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme est masculine, alors que la reine est féminine.",
+                    "Cette forme est celle du COD. Qui fait l'action de voir dans la relative ?",
+                    "Cette forme est masculine, et elle marque aussi le COD.",
+                ],
+            },
         },
         {
             "id": "m20-03",
@@ -73,6 +100,17 @@ Exemple : *« Via Appia regina viarum est. »* = « La voie Appienne est la rein
             "latin": "Via quam Romani fecerunt longa est.",
             "mots": ["La route", "que", "les Romains", "ont construite", "est longue.", "qui", "Les routes"],
             "solution": "La route que les Romains ont construite est longue.",
+            "grammaire": {
+                "question": "Complète pour dire « La place forte que les Romains défendent est grande » : Oppidum ___ Romani defendunt magnum est.",
+                "options": ["quem", "quod", "quam", "qui"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme est masculine ; elle irait avec un nom comme miles, pas avec un neutre.",
+                    "",
+                    "Cette forme est féminine ; elle irait avec un nom comme urbs.",
+                    "Cette forme est masculine ; elle ne s'accorde pas avec un nom neutre.",
+                ],
+            },
         },
         {
             "id": "m20-04",

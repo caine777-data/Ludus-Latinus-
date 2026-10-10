@@ -44,6 +44,17 @@ Regarde la transformation :
                 "Le cas du complément du nom ne peut jamais introduire le sujet d'une telle proposition.",
             ],
             "explanation": "C'est la règle d'or : Sujet à l'Accusatif + Verbe à l'Infinitif !",
+            "grammaire": {
+                "question": "Complète pour dire « Je sais que le soldat court » : Scio ___ currere.",
+                "options": ["miles", "militi", "militem", "militis"],
+                "answer": 2,
+                "explications": [
+                    "Cette forme est le nominatif, cas du sujet d'une phrase simple.",
+                    "Cette forme est un datif : celui qui reçoit. Personne ne reçoit rien ici.",
+                    "",
+                    "Cette forme est un génitif : « du soldat ». Elle complèterait un nom.",
+                ],
+            },
         },
         {
             "id": "m24-02",
@@ -67,6 +78,17 @@ Complète pour dire : « Je pense que l'ami arrive ».""",
             "apres": " venire.",
             "solution": "um",
             "latin_complet": "Puto amicum venire.",
+            "grammaire": {
+                "question": "Complète pour dire « Je dis que les marins courent » : Dico ___ currere. (nauta = le marin)",
+                "options": ["nautae", "nautas", "nautam", "nauta"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme est le sujet d'une phrase simple, pas le sujet d'une proposition infinitive.",
+                    "",
+                    "Cette forme est au singulier. La phrase parle de plusieurs marins.",
+                    "Cette forme est le nominatif singulier : un seul marin, sujet d'une phrase simple.",
+                ],
+            },
         },
         {
             "id": "m24-03",
@@ -82,6 +104,22 @@ Exemple : *« Dicit consulem Romam venire. »* = « Il dit que le consul vient �
             "latin": "Nuntius dicit hostes venire.",
             "mots": ["Le messager dit", "que les ennemis", "arrivent.", "que l'ennemi", "sont arrivés."],
             "solution": "Le messager dit que les ennemis arrivent.",
+            "grammaire": {
+                "question": "Que veut dire « Puto reginam ambulare. » ? (regina = la reine ; ambulare = se promener)",
+                "options": [
+                    "Je pense que la reine se promène.",
+                    "Je pense que la reine se promenait.",
+                    "Je pense que les reines se promènent.",
+                    "La reine pense que je me promène.",
+                ],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "L'infinitif présent ne marque pas une action passée par rapport à puto.",
+                    "Reginam est au singulier : la fin -am désigne une seule reine.",
+                    "Puto veut dire « je pense » : celui qui pense, c'est « je », pas la reine.",
+                ],
+            },
         },
         {
             "id": "m24-04",

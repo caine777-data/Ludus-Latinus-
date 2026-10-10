@@ -34,6 +34,17 @@ Prépare-toi à gravir les marches sacrées du Forum pour le couronnement suprê
                 "Le datif de possession dit à qui appartient une chose, avec le verbe être : il n'utilise pas deux ablatifs.",
             ],
             "explanation": "C'est l'Ablatif Absolu, véritable marque de fabrique du latin classique !",
+            "grammaire": {
+                "question": "Complète pour dire « Le poète que le consul loue est heureux » : Poeta ___ consul laudat felix est.",
+                "options": ["quem", "quam", "qui", "quae"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme est féminine. Le poète est un homme, même si son nom finit en -a.",
+                    "Le sujet de laudat est déjà consul. Cette forme serait un sujet masculin.",
+                    "Cette forme est féminine au nominatif. Elle ne va pas avec un poète.",
+                ],
+            },
         },
         {
             "id": "m26-02",
@@ -55,6 +66,17 @@ Complète pour dire : « Les citoyens romains protègent la liberté ».""",
             "apres": ".",
             "solution": "ant",
             "latin_complet": "Cives Romani libertatem servant.",
+            "grammaire": {
+                "question": "Complète pour dire « Les poètes louent la victoire » : Poetae victoriam ___.",
+                "options": ["laudat", "laudant", "laudas", "laudatis"],
+                "answer": 1,
+                "explications": [
+                    "Cette fin va avec un seul sujet. Ici, plusieurs poètes agissent.",
+                    "",
+                    "Cette fin va avec « tu ». Le sujet est un nom, pas « tu ».",
+                    "Cette fin va avec « vous ». Le sujet est à la 3e personne.",
+                ],
+            },
         },
         {
             "id": "m26-03",
@@ -70,6 +92,22 @@ Une noble sentence qui traversera les siècles :
             "latin": "Virtus et sapientia rem publicam servant.",
             "mots": ["Le courage et la sagesse", "protègent", "la République.", "protège", "de la République."],
             "solution": "Le courage et la sagesse protègent la République.",
+            "grammaire": {
+                "question": "Que veut dire « Gloria et victoria imperatorem ornant. » ? (ornare = embellir ; imperator = l'empereur)",
+                "options": [
+                    "L'empereur embellit la gloire et la victoire.",
+                    "La gloire embellit l'empereur de la victoire.",
+                    "La gloire et la victoire embellissent l'empereur.",
+                    "La gloire et la victoire ont embelli l'empereur.",
+                ],
+                "answer": 2,
+                "explications": [
+                    "Imperatorem a la fin -em du COD : il subit l'action, il ne la fait pas.",
+                    "Ta traduction n'a qu'un seul sujet, alors que le verbe finit par -nt.",
+                    "",
+                    "Ornant est au présent. Rien dans le verbe ne marque un passé.",
+                ],
+            },
         },
         {
             "id": "m26-04",

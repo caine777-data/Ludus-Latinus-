@@ -36,6 +36,17 @@ Exactement comme un adjectif ordinaire de 1ère classe en *-us, -a, -um* (comme 
                 "« Libre » se dit liber en latin ; rien dans capta n'évoque la liberté.",
             ],
             "explanation": "Capta est le PPP féminin s'accordant avec urbs : la ville ayant été prise / capturée.",
+            "grammaire": {
+                "question": "Quel est le participe parfait passif de mittere (mitto, misi, missum), « envoyé », au masculin ?",
+                "options": ["missus", "mittus", "misus", "mittatus"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme garde le radical du présent. Le PPP se construit sur une autre forme du dictionnaire.",
+                    "Cette forme part du parfait (misi). Le PPP se construit sur une autre forme du dictionnaire.",
+                    "Cette forme copie amatus avec le radical du présent. Le PPP part de la 4e forme du dictionnaire.",
+                ],
+            },
         },
         {
             "id": "m21-02",
@@ -55,6 +66,17 @@ Complète pour dire : « La place forte a été prise ».""",
             "apres": " est.",
             "solution": "um",
             "latin_complet": "Oppidum captum est.",
+            "grammaire": {
+                "question": "Complète pour dire « Les villes ont été détruites » : Urbes ___ sunt.",
+                "options": ["deleta", "deleti", "deletum", "deletae"],
+                "answer": 3,
+                "explications": [
+                    "Cette fin marque un féminin singulier. Ici, il y a plusieurs villes.",
+                    "Cette fin est celle du masculin pluriel. Urbs est un nom féminin.",
+                    "Cette fin est celle du neutre singulier. Ni le genre ni le nombre ne conviennent.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m21-03",
@@ -70,6 +92,17 @@ Exemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuviu
             "latin": "Cinis ater urbem tegebat.",
             "mots": ["La cendre noire", "recouvrait", "la ville.", "recouvre", "les villes."],
             "solution": "La cendre noire recouvrait la ville.",
+            "grammaire": {
+                "question": "Complète pour dire « Les citoyens criaient sur le forum » : Cives in foro ___.",
+                "options": ["clamant", "clamabant", "clamabunt", "clamaverunt"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme est au présent : elle dit ce qui se passe maintenant.",
+                    "",
+                    "Cette forme est au futur : elle dit ce qui arrivera.",
+                    "Cette forme est un passé ponctuel, qui ne montre pas une action qui durait.",
+                ],
+            },
         },
         {
             "id": "m21-04",
