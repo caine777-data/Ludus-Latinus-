@@ -38,6 +38,17 @@ Tu reconnais déjà ces racines :
                 "Servus désigne l'esclave de la maison : ce n'est pas le mot pour l'enfant du père de famille.",
             ],
             "explanation": "Filius est le fils (qui a donné 'filial' en français) !",
+            "grammaire": {
+                "question": "Tu entres dans la domus et tu vois ta sœur, seule. Quelle salutation est correcte ?",
+                "options": ["Salvete, soror !", "Salve, soror !", "Vale, soror !", "Sum, soror !"],
+                "answer": 1,
+                "explications": [
+                    "Cette forme s'adresse à plusieurs personnes, or ta sœur est seule.",
+                    "",
+                    "Ce mot se dit en partant, pas en arrivant.",
+                    "Ce mot veut dire « je suis ». Ce n'est pas une salutation.",
+                ],
+            },
         },
         {
             "id": "m2-02",
@@ -58,6 +69,17 @@ Exemple : *« Canis in horto est. »* = « Le chien est dans le jardin. »
             "latin": "Felis in horto est.",
             "mots": ["Le chat", "est", "dans le jardin.", "Le chien", "Le cheval", "court"],
             "solution": "Le chat est dans le jardin.",
+            "grammaire": {
+                "question": "Que veut dire « Avis in horto est. » ?",
+                "options": ["L'oiseau est dans la maison.", "Le chien est dans le jardin.", "L'oiseau est près du jardin.", "L'oiseau est dans le jardin."],
+                "answer": 3,
+                "explications": [
+                    "Le mot horto désigne le jardin. Il ne désigne pas la maison.",
+                    "Regarde le premier mot : ce n'est pas celui du chien.",
+                    "Le petit mot in veut dire « dans ». Il ne veut pas dire « près de ».",
+                    "",
+                ],
+            },
         },
         {
             "id": "m2-03",
@@ -79,6 +101,17 @@ Complète la phrase pour dire : « L'élève lit sur la tablette ».""",
             "apres": ".",
             "solution": "it",
             "latin_complet": "Discipulus in tabula legit.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le père écrit » ?",
+                "options": ["Pater scribit.", "Pater scribo.", "Pater legit.", "Pater lego."],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "La terminaison -o veut dire « j'écris ». Pour « il écrit », il faut une autre fin.",
+                    "Le -t est juste, mais ce verbe ne veut pas dire « écrire ».",
+                    "Deux erreurs : la terminaison est celle de « je » et le verbe n'est pas le bon.",
+                ],
+            },
         },
         {
             "id": "m2-04",
@@ -103,6 +136,17 @@ Les Romains les plus modestes ne vivaient pas dans une domus mais dans des immeu
                 "C'est la grande place publique de la cité, située à l'extérieur des habitations privées.",
             ],
             "explanation": "C'est bien l'atrium, la pièce maîtresse et lumineuse de la maison !",
+            "grammaire": {
+                "question": "Complète pour dire « La sœur lit dans l'atrium » : Soror in atrio leg___",
+                "options": ["-a", "-o", "-it", "-ere"],
+                "answer": 2,
+                "explications": [
+                    "Cette fin ressemble à celle d'un nom féminin comme filia, pas à celle d'un verbe qui dit « elle ».",
+                    "Cette terminaison veut dire « je lis », or c'est la sœur qui lit.",
+                    "",
+                    "C'est la forme du dictionnaire (legere, lire). Elle ne dit pas qui fait l'action.",
+                ],
+            },
         },
         {
             "id": "m2-05",

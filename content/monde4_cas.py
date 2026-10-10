@@ -36,6 +36,17 @@ Grâce aux **terminaisons** (la fin du mot, qu'on appelle les **cas**) :
                 "La ponctuation sépare les phrases, mais elle ne dit pas si un mot est sujet ou complément.",
             ],
             "explanation": "C'est la terminaison (le cas) qui indique si un mot est Sujet ou COD !",
+            "grammaire": {
+                "question": "Que veut dire « Lupum agnus videt. » ? (videt = voit)",
+                "options": ["Le loup voit l'agneau.", "L'agneau voit le loup.", "Les deux se voient.", "On ne peut pas savoir."],
+                "answer": 1,
+                "explications": [
+                    "Tu as lu les mots dans l'ordre du français. En latin, c'est la terminaison qui décide.",
+                    "",
+                    "Un seul des deux fait l'action : les terminaisons disent lequel.",
+                    "Si : la terminaison de chaque nom indique son rôle, même quand l'ordre change.",
+                ],
+            },
         },
         {
             "id": "m4-02",
@@ -57,6 +68,17 @@ Reconstitue la traduction en français :""",
             "latin": "Puella in silva ambulat.",
             "mots": ["La jeune fille", "se promène", "dans la forêt.", "Le garçon", "chante", "la rose"],
             "solution": "La jeune fille se promène dans la forêt.",
+            "grammaire": {
+                "question": "Dans « In horto filia cantat. » (filia = la fille, cantat = chante), quel mot est le sujet ?",
+                "options": ["In", "horto", "filia", "cantat"],
+                "answer": 2,
+                "explications": [
+                    "In est un petit mot de lieu (« dans »). Il ne fait jamais l'action.",
+                    "Ce nom dit où se passe la scène. Il ne fait pas l'action.",
+                    "",
+                    "C'est le verbe : il dit l'action, mais ce n'est pas lui qui l'accomplit.",
+                ],
+            },
         },
         {
             "id": "m4-03",
@@ -80,6 +102,17 @@ Complète la terminaison pour que « la forêt » (*silva*) devienne le COD :"""
             "apres": " videt (Le garçon voit la forêt).",
             "solution": "am",
             "latin_complet": "Puer silvam videt.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Le loup voit la louve » ? (lupa = la louve)",
+                "options": ["Lupus lupa videt.", "Lupum lupa videt.", "Lupus lupas videt.", "Lupus lupam videt."],
+                "answer": 3,
+                "explications": [
+                    "La louve n'a pas de terminaison de COD : elle ressemble à un sujet, comme le loup.",
+                    "Les rôles sont inversés : ici, c'est la louve qui voit le loup.",
+                    "Ajouter un -s est une habitude du français. Ici, le COD prend une autre lettre.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m4-04",
@@ -99,6 +132,17 @@ Les indices :
             "mots": ["Puellam", "lupus", "videt"],
             "roles": {0: "cod", 1: "sujet", 2: "verbe"},
             "traduction": "Le loup voit la jeune fille.",
+            "grammaire": {
+                "question": "Dans « Lupam agnus videt. », quel mot est le sujet ?",
+                "options": ["Agnus", "Lupam", "Videt", "Impossible à dire"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "C'est le premier mot, mais sa terminaison -m est celle du COD, celui qui subit l'action.",
+                    "Le -t montre que c'est le verbe. Il dit l'action sans la faire lui-même.",
+                    "Si : la terminaison de chaque mot donne son rôle, même quand l'ordre est inhabituel.",
+                ],
+            },
         },
         {
             "id": "m4-05",

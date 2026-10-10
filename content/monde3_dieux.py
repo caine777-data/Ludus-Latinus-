@@ -31,6 +31,17 @@ Les Romains vénéraient douze grands dieux (*les dieux olympiens*). Leurs noms 
                 "Ce forgeron divin travaille le métal dans le feu des volcans avec son marteau.",
             ],
             "explanation": "C'est Neptune, dieu des mers et des séismes avec son trident !",
+            "grammaire": {
+                "question": "Que veut dire « Mars legit. » ?",
+                "options": ["Mars écrit.", "Moi, j'écris.", "Moi, je lis.", "Mars lit."],
+                "answer": 3,
+                "explications": [
+                    "Tu as confondu lire et écrire : relis les deux verbes de la leçon de l'école.",
+                    "Double erreur : le verbe n'est pas le bon et le -t ne désigne pas celui qui parle.",
+                    "Le verbe est bon, mais le -t ne désigne pas celui qui parle.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m3-02",
@@ -52,6 +63,17 @@ Traduis sa nouvelle envie :""",
             "latin": "Midas panem amat.",
             "mots": ["Midas", "aime", "le pain.", "l'or.", "l'eau.", "déteste"],
             "solution": "Midas aime le pain.",
+            "grammaire": {
+                "question": "Midas parle de lui-même. Comment dit-il « J'aime l'or » ? (aurum = l'or, amare = aimer)",
+                "options": ["Aurum amat.", "Aurum scribo.", "Aurum amo.", "Aurum legit."],
+                "answer": 2,
+                "explications": [
+                    "Le -t désigne une autre personne que celui qui parle.",
+                    "La terminaison -o est bonne, mais ce verbe ne veut pas dire « aimer ».",
+                    "",
+                    "Ce verbe n'est pas le bon, et son -t désigne une autre personne que celui qui parle.",
+                ],
+            },
         },
         {
             "id": "m3-03",
@@ -72,6 +94,17 @@ Mais enivré par la magie du vol, Icare monte de plus en plus haut vers le solei
             "apres": "em volat (Icare vole vers le soleil).",
             "solution": "sol",
             "latin_complet": "Icarus ad solem volat.",
+            "grammaire": {
+                "question": "Icare quitte son père Dédale, seul, et lui dit au revoir. Que dit-il ? (valete = au revoir à plusieurs personnes)",
+                "options": ["Salve !", "Vale !", "Salvete !", "Valete !"],
+                "answer": 1,
+                "explications": [
+                    "Ce mot sert à dire bonjour, pas à partir.",
+                    "",
+                    "Ce mot dit bonjour à plusieurs personnes : ni le bon moment, ni le bon nombre.",
+                    "Cet au revoir s'adresse à plusieurs personnes, mais Dédale est seul.",
+                ],
+            },
         },
         {
             "id": "m3-04",
@@ -95,6 +128,17 @@ Il offrit ensuite la tête de Méduse à la déesse Minerve, qui la fixa sur sa 
                 "Une flèche ne protège pas du regard pétrifiant. Persée devait approcher Méduse de près, pas la viser de loin.",
             ],
             "explanation": "Exactement ! Son bouclier servait de miroir magique pour voir le monstre sans être pétrifié.",
+            "grammaire": {
+                "question": "Minerve dit « Je suis une déesse ». Quelle phrase latine est correcte ? (dea = la déesse)",
+                "options": ["Dea sum.", "Dea est.", "Dea vale.", "Dea salve."],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Cette forme s'emploie pour « il » ou « elle », pas pour celui qui parle de lui.",
+                    "Ce mot sert à dire au revoir. Il n'exprime pas ce que l'on est.",
+                    "Ce mot sert à dire bonjour. Il n'exprime pas ce que l'on est.",
+                ],
+            },
         },
         {
             "id": "m3-05",

@@ -325,6 +325,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Deuxième question de grammaire** (validé par Cédric le 10/10/2026,
+  point 6 de l'audit des leçons). Champ `grammaire` d'une leçon (question,
+  4 options, `answer`, `explications` dont une seule vide) : posé juste
+  après l'exercice principal, avant le vocabulaire, par
+  `lesson/widgets/grammar_question_widget.dart` ; une erreur affiche son
+  explication et l'élève réessaie. Mondes 1 à 5 intégrés
+  (`docs/propositions/grammaire_mondes_1_5.md`) ; mondes 6 à 10 en
+  brouillon (`grammaire_mondes_6_10.md`). Règles : une autre phrase que le
+  cours et l'exercice, vocabulaire déjà vu, aucune forme non enseignée dans
+  une bonne réponse. `tests/test_grammaire_lecons.py` vérifie le format.
+
 - **Arènes revues** (validé par Cédric le 10/10/2026, point 3 de l'audit
   des leçons, `docs/propositions/arenes_questions.md`). Chaque question
   d'arène porte sur une notion enseignée dans le monde ou avant, et chaque

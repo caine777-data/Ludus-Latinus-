@@ -1,3 +1,34 @@
+/// Deuxième question de grammaire d'une leçon, posée après l'exercice principal.
+class GrammarQuestion {
+  final String question;
+  final List<String> options;
+  final int answer;
+
+  /// Une explication par option (même ordre que `options`), vide pour la bonne.
+  final List<String> explications;
+
+  const GrammarQuestion({
+    required this.question,
+    required this.options,
+    required this.answer,
+    this.explications = const [],
+  });
+
+  /// Null si le bloc est absent ou inutilisable (options manquantes, réponse hors liste).
+  static GrammarQuestion? fromJson(dynamic json) {
+    if (json is! Map) return null;
+    final options = ((json['options'] as List<dynamic>?) ?? const []).map((e) => e.toString()).toList();
+    final answer = json['answer'] as int? ?? 0;
+    if (options.length < 2 || answer < 0 || answer >= options.length) return null;
+    return GrammarQuestion(
+      question: json['question']?.toString() ?? '',
+      options: options,
+      answer: answer,
+      explications: ((json['explications'] as List<dynamic>?) ?? const []).map((e) => e?.toString() ?? '').toList(),
+    );
+  }
+}
+
 /// Représente une leçon ou un exercice interactif dans Ludus Latinus.
 class Lesson {
   final String id;
@@ -22,6 +53,8 @@ class Lesson {
   final Map<String, String> roles;
   /// Traduction de la phrase d'un décodeur, montrée après la réussite.
   final String? traduction;
+  /// Question de grammaire posée après l'exercice principal (absente par défaut).
+  final GrammarQuestion? grammaire;
 
   const Lesson({
     required this.id,
@@ -44,6 +77,7 @@ class Lesson {
     this.questions = const [],
     this.roles = const {},
     this.traduction,
+    this.grammaire,
   });
 
   String? get bossName => boss?['nom'] as String? ?? boss?['name'] as String?;
@@ -97,6 +131,7 @@ class Lesson {
           .whereType<Map<String, dynamic>>()
           .toList(),
       roles: parsedRoles,
+      grammaire: GrammarQuestion.fromJson(json['grammaire']),
     );
   }
 }

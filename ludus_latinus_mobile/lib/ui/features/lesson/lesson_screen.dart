@@ -16,6 +16,7 @@ import 'widgets/cloze_fill_widget.dart';
 import 'widgets/case_decoder_widget.dart';
 import 'widgets/arena_challenge_widget.dart';
 import 'widgets/vocab_question_widget.dart';
+import 'widgets/grammar_question_widget.dart';
 import '../../../data/models/vocab_question.dart';
 
 /// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
@@ -64,8 +65,13 @@ class _LessonScreenState extends State<LessonScreen> {
   bool _mainDone = false;
   int _vocabIndex = 0;
 
-  int get _totalSteps => 1 + _vocabQueue.length;
-  int get _currentStep => _mainDone ? _vocabIndex + 2 : 1;
+  // Question de grammaire facultative : juste après l'exercice principal.
+  bool _grammarDone = false;
+  bool get _hasGrammar => widget.lesson.grammaire != null;
+  bool get _inGrammar => _mainDone && _hasGrammar && !_grammarDone;
+
+  int get _totalSteps => 1 + (_hasGrammar ? 1 : 0) + _vocabQueue.length;
+  int get _currentStep => _mainDone ? _vocabIndex + 2 + (_hasGrammar ? 1 : 0) : 1;
 
   List<VocabQuestion> _buildVocabQueue() {
     final lesson = widget.lesson;
@@ -94,12 +100,23 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   void _onMainDone() {
-    if (_vocabQueue.isEmpty) {
+    if (!_hasGrammar && _vocabQueue.isEmpty) {
       _handleSuccess();
       return;
     }
     AudioService().playCorrect();
     setState(() => _mainDone = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToExercise());
+  }
+
+  void _onGrammarDone() {
+    if (_vocabQueue.isEmpty) {
+      _grammarDone = true;
+      _handleSuccess();
+      return;
+    }
+    AudioService().playCorrect();
+    setState(() => _grammarDone = true);
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToExercise());
   }
 
@@ -590,11 +607,15 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // Wrap : sur petit écran ou en police agrandie, la pastille des
+              // étoiles passe à la ligne au lieu d'écraser le type de leçon.
+              child: Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 6,
                 children: [
-                  Flexible(
-                    child: Container(
+                  Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
                       color: _getLessonTypeColor(lesson.type).withValues(alpha: 0.12),
@@ -620,9 +641,7 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                       ],
                     ),
-                    ),
                   ),
-                  const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
@@ -781,7 +800,16 @@ class _LessonScreenState extends State<LessonScreen> {
   }
 
   Widget _buildExerciseStep(Lesson lesson) {
-    if (_mainDone && _vocabIndex < _vocabQueue.length) {
+    if (_inGrammar) {
+      return GrammarQuestionWidget(
+        key: ValueKey('grammaire_${lesson.id}'),
+        question: lesson.grammaire!,
+        progressLabel: 'EXERCICE 2 / $_totalSteps • GRAMMAIRE',
+        onCompleted: _onGrammarDone,
+        onMistake: () => _mistakes++,
+      );
+    }
+    if (_mainDone && _grammarDone == _hasGrammar && _vocabIndex < _vocabQueue.length) {
       return VocabQuestionWidget(
         key: ValueKey('vocab_$_vocabIndex'),
         question: _vocabQueue[_vocabIndex],

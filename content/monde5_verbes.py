@@ -31,6 +31,17 @@ Reconstitue la traduction :""",
             "latin": "Romani sumus.",
             "mots": ["Nous sommes", "romains.", "Je suis", "Ils sont", "romain."],
             "solution": "Nous sommes romains.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Vous êtes élèves » ? (discipuli = élèves)",
+                "options": ["Discipuli sumus.", "Discipuli estis.", "Discipuli sunt.", "Discipuli es."],
+                "answer": 1,
+                "explications": [
+                    "Cette forme est celle de « nous », pas celle de « vous ».",
+                    "",
+                    "Cette forme est celle de « ils » ou « elles », pas celle de « vous ».",
+                    "Cette forme est celle de « tu », au singulier.",
+                ],
+            },
         },
         {
             "id": "m5-02",
@@ -54,6 +65,17 @@ Les autres verbes en **-ARE** suivent le même modèle. Avec *cantare* (chanter)
             "apres": ".",
             "solution": "ant",
             "latin_complet": "Pueri in horto cantant.",
+            "grammaire": {
+                "question": "Quelle forme veut dire « nous travaillons » ? (laborare = travailler)",
+                "options": ["Laborant", "Laborat", "Laboramus", "Laboratis"],
+                "answer": 2,
+                "explications": [
+                    "Cette forme parle de plusieurs autres personnes (« ils »), pas de « nous ».",
+                    "Cette forme parle d'une seule autre personne (« il » ou « elle »), pas de « nous ».",
+                    "",
+                    "Cette forme s'adresse à plusieurs personnes (« vous »), pas à un groupe dont tu fais partie.",
+                ],
+            },
         },
         {
             "id": "m5-03",
@@ -73,6 +95,17 @@ Exemple : *« Miles fortiter pugnat. »* = « Le soldat combat courageusement. �
             "latin": "Romani fortiter pugnant.",
             "mots": ["Les Romains", "combattent", "courageusement.", "Le Romain", "combat", "fuient"],
             "solution": "Les Romains combattent courageusement.",
+            "grammaire": {
+                "question": "Quelle phrase veut dire « Les Romains se promènent » ? (ambulare = se promener)",
+                "options": ["Romanus ambulat.", "Romani ambulat.", "Romani ambulant.", "Romanus ambulant."],
+                "answer": 2,
+                "explications": [
+                    "Le nom et le verbe sont au singulier, alors que la phrase parle de plusieurs Romains.",
+                    "Le sujet est au pluriel, mais le verbe garde sa terminaison du singulier.",
+                    "",
+                    "Le verbe est au pluriel, mais le sujet est au singulier : ils ne s'accordent pas.",
+                ],
+            },
         },
         {
             "id": "m5-04",
@@ -92,6 +125,17 @@ Les rôles :
             "mots": ["Agricola", "amat", "equum"],
             "roles": {0: "sujet", 1: "verbe", 2: "cod"},
             "traduction": "Le paysan aime le cheval.",
+            "grammaire": {
+                "question": "Dans « Rosam agricola amat. », quel mot est le COD ?",
+                "options": ["Agricola", "Amat", "Rosam", "Il n'y en a pas"],
+                "answer": 2,
+                "explications": [
+                    "Ce mot finit par -a, mais il fait l'action : il n'en est pas la cible.",
+                    "C'est le verbe, reconnaissable à son -t. Il dit l'action, il ne la subit pas.",
+                    "",
+                    "Si : un mot subit l'action. Cherche la terminaison qui le marque.",
+                ],
+            },
         },
         {
             "id": "m5-05",

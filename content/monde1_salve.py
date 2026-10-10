@@ -35,6 +35,17 @@ L'alphabet latin est l'ancêtre direct de notre alphabet français ! Pourtant, �
                 "En latin, toutes les lettres écrites se prononcent distinctement : aucune consonne n'est muette.",
             ],
             "explanation": "Exactement ! En latin classique, le C claque toujours comme un [K] !",
+            "grammaire": {
+                "question": "Comment les Romains prononçaient-ils le mot 'via' (la route) ?",
+                "options": ["Vi-a, avec le son [V]", "Oui-a, avec le son [OU]", "Bi-a, avec le son [B]", "Fi-a, avec le son [F]"],
+                "answer": 1,
+                "explications": [
+                    "C'est la façon de lire le V en français moderne, pas celle des Romains.",
+                    "",
+                    "B et V étaient deux lettres différentes : le V ne se prononçait pas comme un B.",
+                    "Le F est une autre lettre, avec son propre son. Le V ne se lisait pas comme lui.",
+                ],
+            },
         },
         {
             "id": "m1-02",
@@ -54,6 +65,17 @@ Dans la rue à Rome, tu croises un citoyen en toge. Comment le saluer poliment ?
             "latin": "Salve, amice !",
             "mots": ["Bonjour,", "ami !", "Au revoir,", "ennemi,", "le soldat"],
             "solution": "Bonjour, ami !",
+            "grammaire": {
+                "question": "Tu arrives devant trois amis et tu veux leur dire bonjour. Que dis-tu ?",
+                "options": ["Salve !", "Vale !", "Salvete !", "Amice !"],
+                "answer": 2,
+                "explications": [
+                    "Ce bonjour s'adresse à une seule personne. Ici, tu parles à un groupe.",
+                    "Ce mot sert à dire au revoir, pas bonjour.",
+                    "",
+                    "C'est le mot pour appeler un seul ami (« ô ami »). Ce n'est pas une salutation de groupe.",
+                ],
+            },
         },
         {
             "id": "m1-03",
@@ -75,6 +97,17 @@ Complète la phrase pour dire : « Je suis romain ».""",
             "apres": ".",
             "solution": "sum",
             "latin_complet": "Romanus sum.",
+            "grammaire": {
+                "question": "Que veut dire « Magister sum. » ? (magister = le maître d'école)",
+                "options": ["Tu es le maître d'école.", "Il est le maître d'école.", "Nous sommes les maîtres d'école.", "Je suis le maître d'école."],
+                "answer": 3,
+                "explications": [
+                    "Sum ne s'adresse pas à l'autre personne : la forme de « tu » est différente.",
+                    "Sum ne parle pas d'une troisième personne : la forme de « il » est différente.",
+                    "Sum est au singulier : il ne peut pas parler d'un groupe de personnes.",
+                    "",
+                ],
+            },
         },
         {
             "id": "m1-04",
@@ -104,6 +137,17 @@ Pas de 0, 1, 2, 3 à Rome ! Les Romains comptaient avec des lettres majuscules i
                 "Tu as oublié la valeur du V (cinq) en ne comptant que le X et un bâton.",
             ],
             "explanation": "Bravo ! X vaut 10 et IV vaut 4 (5 - 1), donc 10 + 4 = 14 !",
+            "grammaire": {
+                "question": "Combien vaut le nombre romain XIX ?",
+                "options": ["19", "21", "9", "11"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Tu as tout additionné : X + I + X. Un I placé avant un chiffre plus grand se soustrait.",
+                    "Tu as oublié le X du début, qui vaut dix de plus.",
+                    "Tu as oublié le dernier X. Les trois lettres comptent toutes.",
+                ],
+            },
         },
         {
             "id": "m1-05",
@@ -121,6 +165,17 @@ Reconstitue cette phrase légendaire :
             "latin": "Lupa pueros curat.",
             "mots": ["La louve", "prend soin", "des enfants.", "Le lion", "chasse", "au bois."],
             "solution": "La louve prend soin des enfants.",
+            "grammaire": {
+                "question": "Complète pour dire « Je suis une louve » : Lupa ___ .",
+                "options": ["sum", "curat", "vale", "salve"],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Ce verbe est celui de la légende : il veut dire « soigne », pas « je suis ».",
+                    "Ce mot sert à dire au revoir. Il n'exprime pas ce que l'on est.",
+                    "Ce mot sert à dire bonjour. Il n'exprime pas ce que l'on est.",
+                ],
+            },
         },
         {
             "id": "m1-06",

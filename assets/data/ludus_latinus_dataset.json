@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-10 07:34:57",
+    "date_export": "2026-10-10 07:47:06",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -91,7 +91,23 @@
             "C'est la prononciation de l'italien moderne ou du latin ecclésiastique, pas celle des Romains de l'Antiquité.",
             "En latin, toutes les lettres écrites se prononcent distinctement : aucune consonne n'est muette."
           ],
-          "explanation": "Exactement ! En latin classique, le C claque toujours comme un [K] !"
+          "explanation": "Exactement ! En latin classique, le C claque toujours comme un [K] !",
+          "grammaire": {
+            "question": "Comment les Romains prononçaient-ils le mot 'via' (la route) ?",
+            "options": [
+              "Vi-a, avec le son [V]",
+              "Oui-a, avec le son [OU]",
+              "Bi-a, avec le son [B]",
+              "Fi-a, avec le son [F]"
+            ],
+            "answer": 1,
+            "explications": [
+              "C'est la façon de lire le V en français moderne, pas celle des Romains.",
+              "",
+              "B et V étaient deux lettres différentes : le V ne se prononçait pas comme un B.",
+              "Le F est une autre lettre, avec son propre son. Le V ne se lisait pas comme lui."
+            ]
+          }
         },
         {
           "id": "m1-02",
@@ -106,7 +122,23 @@
             "ennemi,",
             "le soldat"
           ],
-          "solution": "Bonjour, ami !"
+          "solution": "Bonjour, ami !",
+          "grammaire": {
+            "question": "Tu arrives devant trois amis et tu veux leur dire bonjour. Que dis-tu ?",
+            "options": [
+              "Salve !",
+              "Vale !",
+              "Salvete !",
+              "Amice !"
+            ],
+            "answer": 2,
+            "explications": [
+              "Ce bonjour s'adresse à une seule personne. Ici, tu parles à un groupe.",
+              "Ce mot sert à dire au revoir, pas bonjour.",
+              "",
+              "C'est le mot pour appeler un seul ami (« ô ami »). Ce n'est pas une salutation de groupe."
+            ]
+          }
         },
         {
           "id": "m1-03",
@@ -117,7 +149,23 @@
           "avant": "Romanus ",
           "apres": ".",
           "solution": "sum",
-          "latin_complet": "Romanus sum."
+          "latin_complet": "Romanus sum.",
+          "grammaire": {
+            "question": "Que veut dire « Magister sum. » ? (magister = le maître d'école)",
+            "options": [
+              "Tu es le maître d'école.",
+              "Il est le maître d'école.",
+              "Nous sommes les maîtres d'école.",
+              "Je suis le maître d'école."
+            ],
+            "answer": 3,
+            "explications": [
+              "Sum ne s'adresse pas à l'autre personne : la forme de « tu » est différente.",
+              "Sum ne parle pas d'une troisième personne : la forme de « il » est différente.",
+              "Sum est au singulier : il ne peut pas parler d'un groupe de personnes.",
+              ""
+            ]
+          }
         },
         {
           "id": "m1-04",
@@ -138,7 +186,23 @@
             "Tu as compté deux dizaines (XX), mais il n'y a qu'un seul chiffre dix.",
             "Tu as oublié la valeur du V (cinq) en ne comptant que le X et un bâton."
           ],
-          "explanation": "Bravo ! X vaut 10 et IV vaut 4 (5 - 1), donc 10 + 4 = 14 !"
+          "explanation": "Bravo ! X vaut 10 et IV vaut 4 (5 - 1), donc 10 + 4 = 14 !",
+          "grammaire": {
+            "question": "Combien vaut le nombre romain XIX ?",
+            "options": [
+              "19",
+              "21",
+              "9",
+              "11"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Tu as tout additionné : X + I + X. Un I placé avant un chiffre plus grand se soustrait.",
+              "Tu as oublié le X du début, qui vaut dix de plus.",
+              "Tu as oublié le dernier X. Les trois lettres comptent toutes."
+            ]
+          }
         },
         {
           "id": "m1-05",
@@ -154,7 +218,23 @@
             "chasse",
             "au bois."
           ],
-          "solution": "La louve prend soin des enfants."
+          "solution": "La louve prend soin des enfants.",
+          "grammaire": {
+            "question": "Complète pour dire « Je suis une louve » : Lupa ___ .",
+            "options": [
+              "sum",
+              "curat",
+              "vale",
+              "salve"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Ce verbe est celui de la légende : il veut dire « soigne », pas « je suis ».",
+              "Ce mot sert à dire au revoir. Il n'exprime pas ce que l'on est.",
+              "Ce mot sert à dire bonjour. Il n'exprime pas ce que l'on est."
+            ]
+          }
         },
         {
           "id": "m1-06",
@@ -227,7 +307,23 @@
             "Ce mot désigne le père et chef de famille, comme dans paternel ou patriarche.",
             "Servus désigne l'esclave de la maison : ce n'est pas le mot pour l'enfant du père de famille."
           ],
-          "explanation": "Filius est le fils (qui a donné 'filial' en français) !"
+          "explanation": "Filius est le fils (qui a donné 'filial' en français) !",
+          "grammaire": {
+            "question": "Tu entres dans la domus et tu vois ta sœur, seule. Quelle salutation est correcte ?",
+            "options": [
+              "Salvete, soror !",
+              "Salve, soror !",
+              "Vale, soror !",
+              "Sum, soror !"
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme s'adresse à plusieurs personnes, or ta sœur est seule.",
+              "",
+              "Ce mot se dit en partant, pas en arrivant.",
+              "Ce mot veut dire « je suis ». Ce n'est pas une salutation."
+            ]
+          }
         },
         {
           "id": "m2-02",
@@ -243,7 +339,23 @@
             "Le cheval",
             "court"
           ],
-          "solution": "Le chat est dans le jardin."
+          "solution": "Le chat est dans le jardin.",
+          "grammaire": {
+            "question": "Que veut dire « Avis in horto est. » ?",
+            "options": [
+              "L'oiseau est dans la maison.",
+              "Le chien est dans le jardin.",
+              "L'oiseau est près du jardin.",
+              "L'oiseau est dans le jardin."
+            ],
+            "answer": 3,
+            "explications": [
+              "Le mot horto désigne le jardin. Il ne désigne pas la maison.",
+              "Regarde le premier mot : ce n'est pas celui du chien.",
+              "Le petit mot in veut dire « dans ». Il ne veut pas dire « près de ».",
+              ""
+            ]
+          }
         },
         {
           "id": "m2-03",
@@ -254,7 +366,23 @@
           "avant": "Discipulus in tabula leg",
           "apres": ".",
           "solution": "it",
-          "latin_complet": "Discipulus in tabula legit."
+          "latin_complet": "Discipulus in tabula legit.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Le père écrit » ?",
+            "options": [
+              "Pater scribit.",
+              "Pater scribo.",
+              "Pater legit.",
+              "Pater lego."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "La terminaison -o veut dire « j'écris ». Pour « il écrit », il faut une autre fin.",
+              "Le -t est juste, mais ce verbe ne veut pas dire « écrire ».",
+              "Deux erreurs : la terminaison est celle de « je » et le verbe n'est pas le bon."
+            ]
+          }
         },
         {
           "id": "m2-04",
@@ -275,7 +403,23 @@
             "C'est un immeuble collectif de plusieurs étages pour le peuple, pas une pièce d'habitation privée.",
             "C'est la grande place publique de la cité, située à l'extérieur des habitations privées."
           ],
-          "explanation": "C'est bien l'atrium, la pièce maîtresse et lumineuse de la maison !"
+          "explanation": "C'est bien l'atrium, la pièce maîtresse et lumineuse de la maison !",
+          "grammaire": {
+            "question": "Complète pour dire « La sœur lit dans l'atrium » : Soror in atrio leg___",
+            "options": [
+              "-a",
+              "-o",
+              "-it",
+              "-ere"
+            ],
+            "answer": 2,
+            "explications": [
+              "Cette fin ressemble à celle d'un nom féminin comme filia, pas à celle d'un verbe qui dit « elle ».",
+              "Cette terminaison veut dire « je lis », or c'est la sœur qui lit.",
+              "",
+              "C'est la forme du dictionnaire (legere, lire). Elle ne dit pas qui fait l'action."
+            ]
+          }
         },
         {
           "id": "m2-05",
@@ -348,7 +492,23 @@
             "Ce protecteur des légions porte le casque et la lance : il règne sur la guerre.",
             "Ce forgeron divin travaille le métal dans le feu des volcans avec son marteau."
           ],
-          "explanation": "C'est Neptune, dieu des mers et des séismes avec son trident !"
+          "explanation": "C'est Neptune, dieu des mers et des séismes avec son trident !",
+          "grammaire": {
+            "question": "Que veut dire « Mars legit. » ?",
+            "options": [
+              "Mars écrit.",
+              "Moi, j'écris.",
+              "Moi, je lis.",
+              "Mars lit."
+            ],
+            "answer": 3,
+            "explications": [
+              "Tu as confondu lire et écrire : relis les deux verbes de la leçon de l'école.",
+              "Double erreur : le verbe n'est pas le bon et le -t ne désigne pas celui qui parle.",
+              "Le verbe est bon, mais le -t ne désigne pas celui qui parle.",
+              ""
+            ]
+          }
         },
         {
           "id": "m3-02",
@@ -364,7 +524,23 @@
             "l'eau.",
             "déteste"
           ],
-          "solution": "Midas aime le pain."
+          "solution": "Midas aime le pain.",
+          "grammaire": {
+            "question": "Midas parle de lui-même. Comment dit-il « J'aime l'or » ? (aurum = l'or, amare = aimer)",
+            "options": [
+              "Aurum amat.",
+              "Aurum scribo.",
+              "Aurum amo.",
+              "Aurum legit."
+            ],
+            "answer": 2,
+            "explications": [
+              "Le -t désigne une autre personne que celui qui parle.",
+              "La terminaison -o est bonne, mais ce verbe ne veut pas dire « aimer ».",
+              "",
+              "Ce verbe n'est pas le bon, et son -t désigne une autre personne que celui qui parle."
+            ]
+          }
         },
         {
           "id": "m3-03",
@@ -375,7 +551,23 @@
           "avant": "Icarus ad ",
           "apres": "em volat (Icare vole vers le soleil).",
           "solution": "sol",
-          "latin_complet": "Icarus ad solem volat."
+          "latin_complet": "Icarus ad solem volat.",
+          "grammaire": {
+            "question": "Icare quitte son père Dédale, seul, et lui dit au revoir. Que dit-il ? (valete = au revoir à plusieurs personnes)",
+            "options": [
+              "Salve !",
+              "Vale !",
+              "Salvete !",
+              "Valete !"
+            ],
+            "answer": 1,
+            "explications": [
+              "Ce mot sert à dire bonjour, pas à partir.",
+              "",
+              "Ce mot dit bonjour à plusieurs personnes : ni le bon moment, ni le bon nombre.",
+              "Cet au revoir s'adresse à plusieurs personnes, mais Dédale est seul."
+            ]
+          }
         },
         {
           "id": "m3-04",
@@ -396,7 +588,23 @@
             "Persée avait bien un casque d'invisibilité, mais il ne le protégeait pas du regard pétrifiant de Méduse.",
             "Une flèche ne protège pas du regard pétrifiant. Persée devait approcher Méduse de près, pas la viser de loin."
           ],
-          "explanation": "Exactement ! Son bouclier servait de miroir magique pour voir le monstre sans être pétrifié."
+          "explanation": "Exactement ! Son bouclier servait de miroir magique pour voir le monstre sans être pétrifié.",
+          "grammaire": {
+            "question": "Minerve dit « Je suis une déesse ». Quelle phrase latine est correcte ? (dea = la déesse)",
+            "options": [
+              "Dea sum.",
+              "Dea est.",
+              "Dea vale.",
+              "Dea salve."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Cette forme s'emploie pour « il » ou « elle », pas pour celui qui parle de lui.",
+              "Ce mot sert à dire au revoir. Il n'exprime pas ce que l'on est.",
+              "Ce mot sert à dire bonjour. Il n'exprime pas ce que l'on est."
+            ]
+          }
         },
         {
           "id": "m3-05",
@@ -469,7 +677,23 @@
             "La première lettre d'un mot ne change pas quand sa fonction change : elle ne montre pas son rôle.",
             "La ponctuation sépare les phrases, mais elle ne dit pas si un mot est sujet ou complément."
           ],
-          "explanation": "C'est la terminaison (le cas) qui indique si un mot est Sujet ou COD !"
+          "explanation": "C'est la terminaison (le cas) qui indique si un mot est Sujet ou COD !",
+          "grammaire": {
+            "question": "Que veut dire « Lupum agnus videt. » ? (videt = voit)",
+            "options": [
+              "Le loup voit l'agneau.",
+              "L'agneau voit le loup.",
+              "Les deux se voient.",
+              "On ne peut pas savoir."
+            ],
+            "answer": 1,
+            "explications": [
+              "Tu as lu les mots dans l'ordre du français. En latin, c'est la terminaison qui décide.",
+              "",
+              "Un seul des deux fait l'action : les terminaisons disent lequel.",
+              "Si : la terminaison de chaque nom indique son rôle, même quand l'ordre change."
+            ]
+          }
         },
         {
           "id": "m4-02",
@@ -485,7 +709,23 @@
             "chante",
             "la rose"
           ],
-          "solution": "La jeune fille se promène dans la forêt."
+          "solution": "La jeune fille se promène dans la forêt.",
+          "grammaire": {
+            "question": "Dans « In horto filia cantat. » (filia = la fille, cantat = chante), quel mot est le sujet ?",
+            "options": [
+              "In",
+              "horto",
+              "filia",
+              "cantat"
+            ],
+            "answer": 2,
+            "explications": [
+              "In est un petit mot de lieu (« dans »). Il ne fait jamais l'action.",
+              "Ce nom dit où se passe la scène. Il ne fait pas l'action.",
+              "",
+              "C'est le verbe : il dit l'action, mais ce n'est pas lui qui l'accomplit."
+            ]
+          }
         },
         {
           "id": "m4-03",
@@ -496,7 +736,23 @@
           "avant": "Puer silv",
           "apres": " videt (Le garçon voit la forêt).",
           "solution": "am",
-          "latin_complet": "Puer silvam videt."
+          "latin_complet": "Puer silvam videt.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Le loup voit la louve » ? (lupa = la louve)",
+            "options": [
+              "Lupus lupa videt.",
+              "Lupum lupa videt.",
+              "Lupus lupas videt.",
+              "Lupus lupam videt."
+            ],
+            "answer": 3,
+            "explications": [
+              "La louve n'a pas de terminaison de COD : elle ressemble à un sujet, comme le loup.",
+              "Les rôles sont inversés : ici, c'est la louve qui voit le loup.",
+              "Ajouter un -s est une habitude du français. Ici, le COD prend une autre lettre.",
+              ""
+            ]
+          }
         },
         {
           "id": "m4-04",
@@ -513,7 +769,23 @@
             "1": "sujet",
             "2": "verbe"
           },
-          "traduction": "Le loup voit la jeune fille."
+          "traduction": "Le loup voit la jeune fille.",
+          "grammaire": {
+            "question": "Dans « Lupam agnus videt. », quel mot est le sujet ?",
+            "options": [
+              "Agnus",
+              "Lupam",
+              "Videt",
+              "Impossible à dire"
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "C'est le premier mot, mais sa terminaison -m est celle du COD, celui qui subit l'action.",
+              "Le -t montre que c'est le verbe. Il dit l'action sans la faire lui-même.",
+              "Si : la terminaison de chaque mot donne son rôle, même quand l'ordre est inhabituel."
+            ]
+          }
         },
         {
           "id": "m4-05",
@@ -580,7 +852,23 @@
             "Ils sont",
             "romain."
           ],
-          "solution": "Nous sommes romains."
+          "solution": "Nous sommes romains.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Vous êtes élèves » ? (discipuli = élèves)",
+            "options": [
+              "Discipuli sumus.",
+              "Discipuli estis.",
+              "Discipuli sunt.",
+              "Discipuli es."
+            ],
+            "answer": 1,
+            "explications": [
+              "Cette forme est celle de « nous », pas celle de « vous ».",
+              "",
+              "Cette forme est celle de « ils » ou « elles », pas celle de « vous ».",
+              "Cette forme est celle de « tu », au singulier."
+            ]
+          }
         },
         {
           "id": "m5-02",
@@ -591,7 +879,23 @@
           "avant": "Pueri in horto cant",
           "apres": ".",
           "solution": "ant",
-          "latin_complet": "Pueri in horto cantant."
+          "latin_complet": "Pueri in horto cantant.",
+          "grammaire": {
+            "question": "Quelle forme veut dire « nous travaillons » ? (laborare = travailler)",
+            "options": [
+              "Laborant",
+              "Laborat",
+              "Laboramus",
+              "Laboratis"
+            ],
+            "answer": 2,
+            "explications": [
+              "Cette forme parle de plusieurs autres personnes (« ils »), pas de « nous ».",
+              "Cette forme parle d'une seule autre personne (« il » ou « elle »), pas de « nous ».",
+              "",
+              "Cette forme s'adresse à plusieurs personnes (« vous »), pas à un groupe dont tu fais partie."
+            ]
+          }
         },
         {
           "id": "m5-03",
@@ -607,7 +911,23 @@
             "combat",
             "fuient"
           ],
-          "solution": "Les Romains combattent courageusement."
+          "solution": "Les Romains combattent courageusement.",
+          "grammaire": {
+            "question": "Quelle phrase veut dire « Les Romains se promènent » ? (ambulare = se promener)",
+            "options": [
+              "Romanus ambulat.",
+              "Romani ambulat.",
+              "Romani ambulant.",
+              "Romanus ambulant."
+            ],
+            "answer": 2,
+            "explications": [
+              "Le nom et le verbe sont au singulier, alors que la phrase parle de plusieurs Romains.",
+              "Le sujet est au pluriel, mais le verbe garde sa terminaison du singulier.",
+              "",
+              "Le verbe est au pluriel, mais le sujet est au singulier : ils ne s'accordent pas."
+            ]
+          }
         },
         {
           "id": "m5-04",
@@ -624,7 +944,23 @@
             "1": "verbe",
             "2": "cod"
           },
-          "traduction": "Le paysan aime le cheval."
+          "traduction": "Le paysan aime le cheval.",
+          "grammaire": {
+            "question": "Dans « Rosam agricola amat. », quel mot est le COD ?",
+            "options": [
+              "Agricola",
+              "Amat",
+              "Rosam",
+              "Il n'y en a pas"
+            ],
+            "answer": 2,
+            "explications": [
+              "Ce mot finit par -a, mais il fait l'action : il n'en est pas la cible.",
+              "C'est le verbe, reconnaissable à son -t. Il dit l'action, il ne la subit pas.",
+              "",
+              "Si : un mot subit l'action. Cherche la terminaison qui le marque."
+            ]
+          }
         },
         {
           "id": "m5-05",
