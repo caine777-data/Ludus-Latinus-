@@ -258,8 +258,8 @@ Déjà utilisé dans le cours et l'exercice : *Legionarii galeas portant*, *Equo
 
 ```python
 "grammaire": {
-    "question": "Dans « Lupos agricolae vident. » (agricola = le paysan), quel mot est le sujet ?",
-    "options": ["Lupos", "Agricolae", "Vident", "On ne peut pas savoir"],
+    "question": "Dans « Lupos pueri vident. » (pueri = les enfants), quel mot est le sujet ?",
+    "options": ["Lupos", "Pueri", "Vident", "On ne peut pas savoir"],
     "answer": 1,
     "explications": [
         "C'est le premier mot, mais sa fin -os indique un COD pluriel.",

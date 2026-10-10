@@ -122,8 +122,8 @@ Voici une phrase modèle, au pluriel :
             "roles": {0: "cod", 1: "sujet", 2: "verbe"},
             "traduction": "Les esclaves voient les chevaux.",
             "grammaire": {
-                "question": "Dans « Lupos agricolae vident. » (agricola = le paysan), quel mot est le sujet ?",
-                "options": ["Lupos", "Agricolae", "Vident", "On ne peut pas savoir"],
+                "question": "Dans « Lupos pueri vident. » (pueri = les enfants), quel mot est le sujet ?",
+                "options": ["Lupos", "Pueri", "Vident", "On ne peut pas savoir"],
                 "answer": 1,
                 "explications": [
                     "C'est le premier mot, mais sa fin -os indique un COD pluriel.",

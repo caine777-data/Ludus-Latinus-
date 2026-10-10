@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-10 08:37:55",
+    "date_export": "2026-10-10 08:59:09",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -1638,10 +1638,10 @@
           },
           "traduction": "Les esclaves voient les chevaux.",
           "grammaire": {
-            "question": "Dans « Lupos agricolae vident. » (agricola = le paysan), quel mot est le sujet ?",
+            "question": "Dans « Lupos pueri vident. » (pueri = les enfants), quel mot est le sujet ?",
             "options": [
               "Lupos",
-              "Agricolae",
+              "Pueri",
               "Vident",
               "On ne peut pas savoir"
             ],
