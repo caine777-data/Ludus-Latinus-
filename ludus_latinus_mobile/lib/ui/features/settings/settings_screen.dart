@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/cinematic_player.dart';
+import 'about_screen.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import 'hero_form.dart';
@@ -71,6 +72,17 @@ class SettingsScreen extends StatelessWidget {
             titre: 'Revoir l\'introduction',
             sousTitre: 'Elle se joue aussi à chaque démarrage',
             onTap: () => RomanCinematicOverlay.showIntro(context),
+          ),
+          const SizedBox(height: 22),
+          const _Titre('Application'),
+          _Reglage(
+            icone: Icons.info_outline_rounded,
+            titre: 'À propos',
+            sousTitre: 'Version et éditeur',
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AboutScreen()),
+            ),
           ),
         ],
       ),

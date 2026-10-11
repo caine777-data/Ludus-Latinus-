@@ -15,6 +15,7 @@ dependencies:
   path_provider: ^2.1.2
   video_player: ^2.14.0
   audioplayers: ^6.8.1
+  package_info_plus: ^10.2.2
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,7 @@ flutter:
     - assets/images/duel/
     - assets/images/cas/
     - assets/images/epigraphie/
+    - assets/images/studio/
     - assets/audio/
     - assets/animations/
     - assets/images/animated/

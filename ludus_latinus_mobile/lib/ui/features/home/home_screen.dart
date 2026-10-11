@@ -56,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
         widget.repo.markIntroSeen();
-        await RomanCinematicOverlay.showIntro(context);
+        // Ordre : animation du studio, puis intro, puis choix du héros.
+        // « Passer » sur le studio n'enchaîne que sur l'intro, il ne saute pas les deux.
+        await RomanCinematicOverlay.showStudioPuisIntro(context);
         // Premier lancement : l'élève choisit son héros juste après l'intro.
         if (mounted) await HeroCreationScreen.showIfNeeded(context, widget.repo);
       });

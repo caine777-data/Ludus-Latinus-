@@ -85,6 +85,8 @@ ludus_latinus_mobile/lib/
   ui/
     core/            Thème (RomanColors, RomanFonts), widgets communs, AvatarAssets
     features/        Un dossier par écran : home, map, lesson, boutique, duel…
+      settings/      settings_screen.dart (réglages, entrée « À propos ») et
+                     about_screen.dart (logo de l'éditeur, version lue par package_info_plus)
       map/           Via Appia : map_screen.dart (bornes, bannières des mondes)
                      et via_appia_road.dart (la chaussée pavée, peinte rangée par rangée,
                      et ViaAppiaProp : les éléments plantés au bord de la route)
@@ -94,12 +96,14 @@ assets/
   images/avatars/   <genre>_<toge>_<140|48>.png
   images/mondes/    monde<N>.webp    26 décors, bannières de la Via Appia
   images/via/       <nom>.png        8 éléments de bord de route, proportions réelles
+  images/studio/    logo_icare_dedale_<clair|sombre>.png  logo de l'éditeur (À propos)
   images/animated/  lupulus_<humeur>.webp  Lupulus animé (WebP transparent, en boucle) :
                     idle (= attente), joie, reflexion, salut, triomphe — voir LupulusMood
   (windows/          projet Windows versionné : exe LudusLatinus.exe, fenêtre portrait 460x900)
   audio/            bruitages WAV mono 44,1 kHz + 3 musiques OGG — voir AudioService
-  cinematics/       vidéos 9:16 avec bande-son : intro, triumph,
-                    boss_<retiaire|lion|minotaure|sphinx|mercure>, niveau_<5e|4e|3e>
+  cinematics/       vidéos 9:16 avec bande-son : icare_dedale (studio), intro, triumph,
+                    circus_depart, boss_<retiaire|lion|minotaure|sphinx|mercure>,
+                    niveau_<5e|4e|3e>
   fonts/
 ```
 
@@ -337,6 +341,20 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   n'importe qui de republier l'appli, y compris payante. Icare & Dédale est
   le studio d'édition de Cédric (nom affiché dans les stores). Modèle retenu :
   voir « Décisions de Cédric ». Le dépôt GitHub doit passer en privé.
+- **Éditeur Icare & Dédale** (11/10/2026). À chaque lancement, l'animation du
+  studio (`cinematics/icare_dedale.mp4`, fournie telle quelle) puis l'intro, dans
+  une seule page (`RomanCinematicOverlay.showStudioPuisIntro`) : « Passer » passe
+  du studio à l'intro, et l'accueil n'apparaît jamais entre les deux (un double
+  appui ouvrait la boutique dessous). Muette si le son est coupé, comme l'intro.
+  Paramètres → « À propos » (`settings/about_screen.dart`) : logo clair ou sombre
+  selon le thème, « Version X.Y.Z (N) » par `package_info_plus` (numéro du build
+  CI), « Édité par Icare & Dédale », copyright, bouton « Revoir l'animation du
+  studio ». Aucun nom de personne, e-mail ni lien. Le mode nuit étant désactivé
+  (`modeSombreDisponible = false`), le logo sombre n'est vérifié que par
+  `test/a_propos_test.dart`. Piège : après un ajout de dépendance, construire
+  sans `--no-pub` une fois, sinon `GeneratedPluginRegistrant` n'est pas régénéré
+  et le module ne répond pas (« Version … » restait affiché).
+
 - **Pas de voix dans l'appli** (11/10/2026). La fenêtre de prononciation ne
   joue qu'un clic par syllabe : son bouton s'appelle désormais « Battre le
   rythme des syllabes » (il promettait une récitation). *Caesar* restitué :

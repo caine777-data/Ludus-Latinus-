@@ -8,6 +8,7 @@ import 'themes.dart';
 
 /// Type de cinématique antique à afficher.
 enum CinematicType {
+  studio,
   intro,
   bossEntrance,
   triumph,
@@ -28,6 +29,13 @@ class CinematicConfig {
 
   static CinematicConfig forType(CinematicType type, {String? extraInfo, String? video}) {
     switch (type) {
+      case CinematicType.studio:
+        // Le nom du studio est déjà dans la vidéo : aucun texte par-dessus.
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/icare_dedale.mp4',
+          title: '',
+          subtitle: '',
+        );
       case CinematicType.intro:
         return const CinematicConfig(
           assetPath: 'assets/cinematics/intro.mp4',
@@ -187,7 +195,9 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
               ),
             ),
 
-          // Titre sur un dégradé sombre en bas, lisible sur toutes les images.
+          // Titre sur un dégradé sombre en bas, lisible sur toutes les images
+          // (absent quand la vidéo porte déjà son texte, comme celle du studio).
+          if (widget.config.title.isNotEmpty || widget.config.subtitle.isNotEmpty)
           Positioned(
             left: 0,
             right: 0,
@@ -250,6 +260,31 @@ class RomanCinematicOverlay {
     );
   }
 
+  /// Animation du studio Icare & Dédale seule (écran « À propos »).
+  static Future<void> showStudio(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.studio));
+
+  /// Démarrage : studio puis intro dans un seul écran. « Passer » fait passer
+  /// à la vidéo suivante ; l'accueil n'apparaît jamais entre les deux, sans quoi
+  /// un double appui sur « Passer » ouvrait ce qui se trouvait dessous.
+  static Future<void> showStudioPuisIntro(BuildContext context) {
+    final configs = [
+      CinematicConfig.forType(CinematicType.studio),
+      CinematicConfig.forType(CinematicType.intro),
+    ];
+    return Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: true,
+        transitionDuration: const Duration(milliseconds: 350),
+        pageBuilder: (ctx, _, __) => _SuiteDeCinematiques(
+          configs: configs,
+          onTerminee: () => Navigator.of(ctx).pop(),
+        ),
+        transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
+      ),
+    );
+  }
+
   /// Séquence d'introduction (premier lancement).
   static Future<void> showIntro(BuildContext context) =>
       _show(context, CinematicConfig.forType(CinematicType.intro));
@@ -285,6 +320,39 @@ class RomanCinematicOverlay {
         title: 'CLASSE DE ${niveau.titre.toUpperCase()}',
         subtitle: niveau.sousTitre,
       ),
+    );
+  }
+}
+
+/// Joue plusieurs cinématiques à la suite dans la même page.
+class _SuiteDeCinematiques extends StatefulWidget {
+  final List<CinematicConfig> configs;
+  final VoidCallback onTerminee;
+
+  const _SuiteDeCinematiques({required this.configs, required this.onTerminee});
+
+  @override
+  State<_SuiteDeCinematiques> createState() => _SuiteDeCinematiquesState();
+}
+
+class _SuiteDeCinematiquesState extends State<_SuiteDeCinematiques> {
+  int _index = 0;
+
+  void _suivante() {
+    if (_index + 1 >= widget.configs.length) {
+      widget.onTerminee();
+    } else {
+      setState(() => _index++);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RomanCinematicPlayer(
+      // Une clé par vidéo : le lecteur repart de zéro sur la suivante.
+      key: ValueKey(_index),
+      config: widget.configs[_index],
+      onCompleted: _suivante,
     );
   }
 }
