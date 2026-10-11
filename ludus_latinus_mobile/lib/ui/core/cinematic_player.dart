@@ -11,6 +11,7 @@ enum CinematicType {
   intro,
   bossEntrance,
   triumph,
+  circusDepart,
 }
 
 /// Configuration d'une courte vidéo cinématique (vidéos verticales 9:16 avec bande-son).
@@ -39,6 +40,12 @@ class CinematicConfig {
           assetPath: video ?? 'assets/cinematics/boss_retiaire.mp4',
           title: 'COLOSSEUM DUELLUM',
           subtitle: extraInfo != null ? 'Ton adversaire : $extraInfo' : '« Ave Caesar, morituri te salutant ! »',
+        );
+      case CinematicType.circusDepart:
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/circus_depart.mp4',
+          title: 'CIRCUS MAXIMUS',
+          subtitle: 'Les grilles s\'ouvrent : les chars s\'élancent !',
         );
       case CinematicType.triumph:
         return CinematicConfig(
@@ -250,6 +257,10 @@ class RomanCinematicOverlay {
   /// Entrée d'un champion au Colisée.
   static Future<void> showBossEntrance(BuildContext context, {String? bossName, String? video}) =>
       _show(context, CinematicConfig.forType(CinematicType.bossEntrance, extraInfo: bossName, video: video));
+
+  /// Départ d'une course au Circus Maximus.
+  static Future<void> showCircusDepart(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.circusDepart));
 
   /// Triomphe : fin d'un monde de la Via Appia.
   static Future<void> showTriumph(BuildContext context, {String? subtitle}) =>

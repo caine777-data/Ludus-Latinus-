@@ -6,6 +6,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
+import '../../core/cinematic_player.dart';
 import '../../../data/models/vocab_question.dart';
 import 'circus_deck.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -409,7 +410,12 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
     _shieldAvailable = (_selectedFaction == CircusFaction.albati);
     _loadNewQuestion();
-    _lancerDepart();
+    _departDans = 3;
+    // La cinématique de départ d'abord (l'élève peut la passer), puis le décompte.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await RomanCinematicOverlay.showCircusDepart(context);
+      if (mounted) _lancerDepart();
+    });
   }
 
   @override

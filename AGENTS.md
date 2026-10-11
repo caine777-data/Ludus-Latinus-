@@ -334,7 +334,8 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   de carte ni de bouton pour changer d'onglet, ouvrir une page, une leçon ou la
   boutique ; les tuiles de Ludi ne jouent plus de bruitage (les jeux ont leur
   musique). Le Circus part après un décompte III, II, I, ITE ! (`_lancerDepart`),
-  en attendant une cinématique de départ.
+  précédé de la cinématique `cinematics/circus_depart.mp4` (vidéo de Cédric, copiée
+  telle quelle, 9 Mo ; bouton Passer), vue à l'émulateur le 11/10.
 
 - **Revoir le cours** (10/10/2026) : un bouton « 📖 Revoir le cours » au-dessus
   de chaque exercice (sauf arène) rouvre le cours dans un volet, sans perdre
