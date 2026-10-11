@@ -1,0 +1,167 @@
+{
+  "@@locale": "fr",
+  "settingsTitle": "PARAMÈTRES",
+  "settingsSectionHero": "Ton héros",
+  "settingsSectionSound": "Son et musique",
+  "settingsSoundTitle": "Musique, bruitages et volume",
+  "settingsSoundMuted": "Le son est coupé",
+  "settingsSoundOn": "Le son est activé",
+  "settingsSectionDisplay": "Affichage",
+  "settingsNightMode": "Mode nuit",
+  "settingsSectionVideo": "Vidéo",
+  "settingsReplayIntro": "Revoir l'introduction",
+  "settingsReplayIntroHint": "Elle se joue aussi à chaque démarrage",
+  "heroCreationGreeting": "SALVE !",
+  "heroCreationLupulusIntro": "Je suis Lupulus, ton guide dans Rome.\nQui es-tu, jeune citoyen ?",
+  "heroCreationChangeLater": "Tu pourras changer ton héros plus tard dans les Paramètres.",
+  "heroCreationEnter": "ENTRER DANS ROME",
+  "heroCreationWriteName": "ÉCRIS TON PRÉNOM",
+  "heroFormRoman": "Un Romain",
+  "heroFormRomanFemale": "Une Romaine",
+  "heroFormFirstName": "Ton prénom",
+  "heroFormNameHintFemale": "Julia, Léa, Livia…",
+  "heroFormNameHintMale": "Marcus, Lucas, Titus…",
+  "appLoadError": "Erreur de chargement des parchemins",
+  "loadingQuote1": "« Festina lente » • Hâte-toi lentement",
+  "loadingQuote2": "« Per aspera ad astra » • Par des chemins ardus vers les étoiles",
+  "loadingQuote3": "« Veni, vidi, vici » • Je suis venu, j'ai vu, j'ai vaincu",
+  "loadingQuote4": "« Repetitio est mater studiorum » • La répétition est la mère des études",
+  "accountSyncDone": "⚡ Parchemins synchronisés avec les archives du Tabularium !",
+  "accountProfileUpdated": "Profil mis à jour : Salve, {name} !",
+  "@accountProfileUpdated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "accountTitle": "TABULARIUM",
+  "accountTooltipDayMode": "Mode Lux Romana (Jour)",
+  "accountTooltipNightMode": "Mode Noctis Romana (Nuit)",
+  "accountTooltipShop": "Taberna Romana (Boutique de Goodies)",
+  "accountTooltipAudio": "Harmonia Antiqua (Réglages Audio & Bruitages)",
+  "accountCitizenName": "Nom du citoyen",
+  "accountStudentFemaleHint": "Élève Julia • Touche l'avatar pour changer",
+  "accountStudentMaleHint": "Élève Marcus • Touche l'avatar pour changer",
+  "accountStatLessons": "Leçons",
+  "accountStatSesterces": "Sesterces",
+  "accountStatStreak": "Série",
+  "accountStatMonuments": "Monuments",
+  "accountSesterceAmount": "{amount} HS",
+  "@accountSesterceAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "accountDaysShort": "{days} j",
+  "@accountDaysShort": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "accountDiplomaButton": "DIPLÔME DU SÉNAT • TESTIMONIVM (SPQR)",
+  "accountWardrobeTitle": "Taberna & Vestiaire Impérial",
+  "accountTogeLine": "Toge : {toge} • {amount} HS",
+  "@accountTogeLine": {
+    "placeholders": {
+      "toge": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "accountWardrobeButton": "Vestiaire",
+  "accountTrophiesTitle": "Panthéon des Trophées",
+  "accountTrophiesHint": "Touche un piédestal",
+  "accountTrophyFirstStep": "Premier Pas",
+  "accountTrophyFirstStepCondition": "Terminer ta toute première leçon de latin.",
+  "accountTrophyCenturion": "Centurion",
+  "accountTrophyCenturionCondition": "Valider 5 leçons complètes du Ludus.",
+  "accountTrophyCharioteer": "Aurige",
+  "accountTrophyCharioteerCondition": "Atteindre une série de 3 jours consécutifs.",
+  "accountTrophyBuilder": "Bâtisseur",
+  "accountTrophyBuilderCondition": "Restaurer au moins un monument du Forum.",
+  "accountTesseraTitle": "Tessera Hospitalis (Jeton d’Hospitalité)",
+  "accountTesseraDescription": "Ce jeton secret permet de transférer immédiatement tous tes progrès vers un smartphone, une tablette ou ton ordinateur en classe.",
+  "accountTesseraCopy": "Copier la Tessera",
+  "accountTesseraCopied": "Tessera Hospitalis copiée dans le presse-papier !",
+  "accountCloudTitle": "Sauvegarde & Compte Cloud",
+  "accountCloudDescription": "Associe ton adresse courriel pour sauvegarder ta progression sur les serveurs du Tabularium.",
+  "accountEmailLabel": "Adresse courriel (email)",
+  "accountEmailHint": "eleve@latin.ac-paris.fr",
+  "accountSyncing": "Synchronisation...",
+  "accountSaveAndSync": "Enregistrer & Synchroniser",
+  "accountEmailInvalid": "Veuillez saisir une adresse courriel valide.",
+  "accountLastSync": "Dernière synchronisation : {date}",
+  "@accountLastSync": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "accountSyncDateSeparator": " à ",
+  "accountSyncNever": "Jamais",
+  "accountTrophyUnlocked": "Trophée débloqué et exposé au Panthéon !",
+  "accountTrophyCondition": "Condition : {condition}",
+  "@accountTrophyCondition": {
+    "placeholders": {
+      "condition": {
+        "type": "String"
+      }
+    }
+  },
+  "accountTrophyClose": "OPTICAS GRACIAS (Fermer)",
+  "shopNotEnough": "🪙 Sesterces insuffisants ! Il te manque {missing} HS. Réussis des leçons pour en amasser !",
+  "@shopNotEnough": {
+    "placeholders": {
+      "missing": {
+        "type": "int"
+      }
+    }
+  },
+  "shopBought": "Acquis & Équipé : {name} ({latinName}) !",
+  "@shopBought": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "latinName": {
+        "type": "String"
+      }
+    }
+  },
+  "shopEquipped": "Tenue modifiée : {name} équipé !",
+  "@shopEquipped": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "shopWhyHs": "Pourquoi « HS » ?",
+  "shopTitle": "TABERNA ROMANA",
+  "shopSubtitle": "Boutique & Penderie Impériale • Équipe ton Héros",
+  "commonClose": "Fermer",
+  "shopWorn": "Porté",
+  "shopEquip": "Équiper",
+  "shopPrice": "{price} HS",
+  "@shopPrice": {
+    "placeholders": {
+      "price": {
+        "type": "int"
+      }
+    }
+  },
+  "shopWhyHsOk": "Optime !",
+  "shopWhyHsBody": "Le sesterce (sestertius) était une pièce romaine qui valait deux as et demi.\n\nLes Romains l'écrivaient IIS : II pour « deux », et S pour semis, « demi ». Pour ne pas le confondre avec un nombre, ils barraient les deux I… et le signe a fini par ressembler à un H : HS.\n\nSous l'empereur Auguste, un légionnaire gagnait environ 900 sesterces par an.",
+  "settingsSectionApp": "Application",
+  "settingsAbout": "À propos",
+  "settingsAboutHint": "Version et éditeur"
+}

@@ -7,6 +7,7 @@ import 'about_screen.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import 'hero_form.dart';
+import '../../../l10n/l10n.dart';
 
 /// Paramètres : tous les réglages au même endroit (héros, son, intro).
 ///
@@ -28,11 +29,11 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = repo.profile;
     return Scaffold(
-      appBar: AppBar(title: const Text('PARAMÈTRES')),
+      appBar: AppBar(title: const Text(context.l10n.settingsTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const _Titre('Ton héros'),
+          const _Titre(context.l10n.settingsSectionHero),
           RomanParchmentCard(
             padding: const EdgeInsets.all(16),
             child: HeroForm(
@@ -45,40 +46,40 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
-          const _Titre('Son et musique'),
+          const _Titre(context.l10n.settingsSectionSound),
           _Reglage(
             icone: Icons.volume_up_rounded,
-            titre: 'Musique, bruitages et volume',
-            sousTitre: AudioService().isMuted ? 'Le son est coupé' : 'Le son est activé',
+            titre: context.l10n.settingsSoundTitle,
+            sousTitre: AudioService().isMuted ? context.l10n.settingsSoundMuted : context.l10n.settingsSoundOn,
             onTap: () => RomanAudioModal.show(context),
           ),
           if (GameRepository.modeSombreDisponible) ...[
             const SizedBox(height: 22),
-            const _Titre('Affichage'),
+            const _Titre(context.l10n.settingsSectionDisplay),
             AnimatedBuilder(
               animation: repo,
               builder: (context, _) => SwitchListTile.adaptive(
                 value: repo.isDarkMode,
                 onChanged: (_) => repo.toggleThemeMode(),
-                title: const Text('Mode nuit'),
+                title: const Text(context.l10n.settingsNightMode),
                 secondary: const Icon(Icons.nightlight_round, color: RomanColors.imperialPurple),
               ),
             ),
           ],
           const SizedBox(height: 22),
-          const _Titre('Vidéo'),
+          const _Titre(context.l10n.settingsSectionVideo),
           _Reglage(
             icone: Icons.play_circle_outline_rounded,
-            titre: 'Revoir l\'introduction',
-            sousTitre: 'Elle se joue aussi à chaque démarrage',
+            titre: context.l10n.settingsReplayIntro,
+            sousTitre: context.l10n.settingsReplayIntroHint,
             onTap: () => RomanCinematicOverlay.showIntro(context),
           ),
           const SizedBox(height: 22),
-          const _Titre('Application'),
+          const _Titre(context.l10n.settingsSectionApp),
           _Reglage(
             icone: Icons.info_outline_rounded,
-            titre: 'À propos',
-            sousTitre: 'Version et éditeur',
+            titre: context.l10n.settingsAbout,
+            sousTitre: context.l10n.settingsAboutHint,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const AboutScreen()),

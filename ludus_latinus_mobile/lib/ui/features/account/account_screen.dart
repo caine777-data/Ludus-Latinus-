@@ -7,7 +7,8 @@ import '../../core/roman_diploma_dialog.dart';
 import '../boutique/boutique_modal.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
-import '../../core/avatar_assets.dart';
+import '../../core/avatar_assets.dart';
+import '../../../l10n/l10n.dart';
 
 /// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l'élève (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
@@ -50,9 +51,9 @@ class _AccountScreenState extends State<AccountScreen> {
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           backgroundColor: RomanColors.laurelGreen,
-          content: Text('⚡ Parchemins synchronisés avec les archives du Tabularium !'),
+          content: Text(context.l10n.accountSyncDone),
         ),
       );
     }
@@ -66,7 +67,7 @@ class _AccountScreenState extends State<AccountScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: RomanColors.imperialPurple,
-          content: Text('Profil mis à jour : Salve, $newName !'),
+          content: Text(context.l10n.accountProfileUpdated(newName)),
         ),
       );
     }
@@ -94,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('TABULARIUM'),
+            title: Text(context.l10n.accountTitle),
             actions: [
               if (GameRepository.modeSombreDisponible)
               IconButton(
@@ -102,7 +103,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   widget.repo.isDarkMode ? Icons.wb_sunny_rounded : Icons.nightlight_round,
                   color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
                 ),
-                tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
+                tooltip: widget.repo.isDarkMode ? context.l10n.accountTooltipDayMode : context.l10n.accountTooltipNightMode,
                 onPressed: () {
                   HapticFeedback.lightImpact();
                   AudioService().playCardFlip();
@@ -111,12 +112,12 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.shopping_bag_outlined, color: RomanColors.imperialPurple, size: 24),
-                tooltip: 'Taberna Romana (Boutique de Goodies)',
+                tooltip: context.l10n.accountTooltipShop,
                 onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
               ),
               IconButton(
                 icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
-                tooltip: 'Harmonia Antiqua (Réglages Audio & Bruitages)',
+                tooltip: context.l10n.accountTooltipAudio,
                 onPressed: () => RomanAudioModal.show(context),
               ),
             ],
@@ -165,19 +166,19 @@ class _AccountScreenState extends State<AccountScreen> {
                                   fontFamily: 'serif',
                                   color: RomanColors.imperialPurple,
                                 ),
-                                decoration: const InputDecoration(
-                                  labelText: 'Nom du citoyen',
-                                  labelStyle: TextStyle(fontSize: 12),
+                                decoration: InputDecoration(
+                                  labelText: context.l10n.accountCitizenName,
+                                  labelStyle: const TextStyle(fontSize: 12),
                                   isDense: true,
-                                  suffixIcon: Icon(Icons.edit, size: 16),
+                                  suffixIcon: const Icon(Icons.edit, size: 16),
                                 ),
                                 onSubmitted: (_) => _saveProfileChanges(),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 profile.genre == 'fille'
-                                    ? 'Élève Julia • Touche l\'avatar pour changer'
-                                    : 'Élève Marcus • Touche l\'avatar pour changer',
+                                    ? context.l10n.accountStudentFemaleHint
+                                    : context.l10n.accountStudentMaleHint,
                                 style: const TextStyle(fontSize: 11, color: Colors.black54),
                               ),
                             ],
@@ -193,10 +194,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     // Chaque statistique a un quart de la largeur et se réduit si besoin.
                     Row(
                       children: [
-                        Expanded(child: _buildStatCol('Leçons', '${profile.completedLessons.length}', '📜')),
-                        Expanded(child: _buildStatCol('Sesterces', '${profile.sesterces} HS', '🪙')),
-                        Expanded(child: _buildStatCol('Série', '${profile.currentStreak()} j', '🔥')),
-                        Expanded(child: _buildStatCol('Monuments', '${profile.restoredMonuments.length}/6', '🏛️')),
+                        Expanded(child: _buildStatCol(context.l10n.accountStatLessons, '${profile.completedLessons.length}', '📜')),
+                        Expanded(child: _buildStatCol(context.l10n.accountStatSesterces, context.l10n.accountSesterceAmount(profile.sesterces), '🪙')),
+                        Expanded(child: _buildStatCol(context.l10n.accountStatStreak, context.l10n.accountDaysShort(profile.currentStreak()), '🔥')),
+                        Expanded(child: _buildStatCol(context.l10n.accountStatMonuments, '${profile.restoredMonuments.length}/6', '🏛️')),
                       ],
                     ),
                     const SizedBox(height: 14),
@@ -213,9 +214,9 @@ class _AccountScreenState extends State<AccountScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 11),
                         ),
                         icon: const Icon(Icons.workspace_premium_rounded, color: RomanColors.imperialGold, size: 20),
-                        label: const Text(
-                          'DIPLÔME DU SÉNAT • TESTIMONIVM (SPQR)',
-                          style: TextStyle(
+                        label: Text(
+                          context.l10n.accountDiplomaButton,
+                          style: const TextStyle(
                             fontFamily: 'serif',
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -277,9 +278,9 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Taberna & Vestiaire Impérial',
-                                style: TextStyle(
+                              Text(
+                                context.l10n.accountWardrobeTitle,
+                                style: const TextStyle(
                                   fontFamily: RomanFonts.imperial,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
@@ -288,7 +289,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               ),
                               const SizedBox(height: 3),
                               Text(
-                                'Toge : ${(profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' ')} • ${profile.sesterces} HS',
+                                context.l10n.accountTogeLine((profile.equippedGoodies['toge'] ?? 'lin blanc').replaceAll('_', ' '), profile.sesterces),
                                 style: const TextStyle(fontSize: 11.5, color: Color(0xFF7A5901), fontWeight: FontWeight.w600),
                               ),
                               const SizedBox(height: 8),
@@ -305,9 +306,9 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                           icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
-                          label: const Text(
-                            'Vestiaire',
-                            style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                          label: Text(
+                            context.l10n.accountWardrobeButton,
+                            style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
                                 ),
@@ -337,7 +338,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Wrap(
+                    Wrap(
                       alignment: WrapAlignment.spaceBetween,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       runSpacing: 4,
@@ -345,11 +346,11 @@ class _AccountScreenState extends State<AccountScreen> {
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('🏆 ', style: TextStyle(fontSize: 18)),
+                            const Text('🏆 ', style: TextStyle(fontSize: 18)),
                             Flexible(
                               child: Text(
-                                'Panthéon des Trophées',
-                                style: TextStyle(
+                                context.l10n.accountTrophiesTitle,
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'serif',
@@ -360,8 +361,8 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                         Text(
-                          'Touche un piédestal',
-                          style: TextStyle(fontSize: 10, color: Colors.black45, fontStyle: FontStyle.italic),
+                          context.l10n.accountTrophiesHint,
+                          style: const TextStyle(fontSize: 10, color: Colors.black45, fontStyle: FontStyle.italic),
                         ),
                       ],
                     ),
@@ -372,30 +373,30 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         _buildTrophyItem(
                           iconPath: 'assets/images/trophee_triomphe_medaillon_130.png',
-                          title: 'Premier Pas',
+                          title: context.l10n.accountTrophyFirstStep,
                           romanNum: 'I',
-                          condition: 'Terminer ta toute première leçon de latin.',
+                          condition: context.l10n.accountTrophyFirstStepCondition,
                           unlocked: profile.completedLessons.isNotEmpty,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/logo_centurion_64.png',
-                          title: 'Centurion',
+                          title: context.l10n.accountTrophyCenturion,
                           romanNum: 'V',
-                          condition: 'Valider 5 leçons complètes du Ludus.',
+                          condition: context.l10n.accountTrophyCenturionCondition,
                           unlocked: profile.completedLessons.length >= 5,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_circus.jpg',
-                          title: 'Aurige',
+                          title: context.l10n.accountTrophyCharioteer,
                           romanNum: 'III',
-                          condition: 'Atteindre une série de 3 jours consécutifs.',
+                          condition: context.l10n.accountTrophyCharioteerCondition,
                           unlocked: profile.currentStreak() >= 3,
                         ),
                         _buildTrophyItem(
                           iconPath: 'assets/images/musee_louve.jpg',
-                          title: 'Bâtisseur',
+                          title: context.l10n.accountTrophyBuilder,
                           romanNum: 'X',
-                          condition: 'Restaurer au moins un monument du Forum.',
+                          condition: context.l10n.accountTrophyBuilderCondition,
                           unlocked: profile.restoredMonuments.isNotEmpty,
                         ),
                       ],
@@ -417,13 +418,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Text('🏛️ ', style: TextStyle(fontSize: 18)),
+                        const Text('🏛️ ', style: TextStyle(fontSize: 18)),
                         Expanded(
                           child: Text(
-                            'Tessera Hospitalis (Jeton d’Hospitalité)',
-                            style: TextStyle(
+                            context.l10n.accountTesseraTitle,
+                            style: const TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF7A5901),
@@ -433,9 +434,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       ],
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Ce jeton secret permet de transférer immédiatement tous tes progrès vers un smartphone, une tablette ou ton ordinateur en classe.',
-                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
+                    Text(
+                      context.l10n.accountTesseraDescription,
+                      style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
                     ),
                     const SizedBox(height: 10),
                     Container(
@@ -466,15 +467,15 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.copy_rounded, color: RomanColors.imperialPurple, size: 20),
-                            tooltip: 'Copier la Tessera',
+                            tooltip: context.l10n.accountTesseraCopy,
                             onPressed: () {
                               HapticFeedback.lightImpact();
                               AudioService().playSesterces();
                               Clipboard.setData(ClipboardData(text: profile.tesseraCode));
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   backgroundColor: RomanColors.imperialPurple,
-                                  content: Text('Tessera Hospitalis copiée dans le presse-papier !'),
+                                  content: Text(context.l10n.accountTesseraCopied),
                                 ),
                               );
                             },
@@ -499,14 +500,14 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
-                        SizedBox(width: 8),
+                        const Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Sauvegarde & Compte Cloud',
-                            style: TextStyle(
+                            context.l10n.accountCloudTitle,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: RomanColors.charcoal,
@@ -516,17 +517,17 @@ class _AccountScreenState extends State<AccountScreen> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Associe ton adresse courriel pour sauvegarder ta progression sur les serveurs du Tabularium.',
-                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
+                    Text(
+                      context.l10n.accountCloudDescription,
+                      style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
                     ),
                     const SizedBox(height: 12),
                     TextField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        labelText: 'Adresse courriel (email)',
-                        hintText: 'eleve@latin.ac-paris.fr',
+                        labelText: context.l10n.accountEmailLabel,
+                        hintText: context.l10n.accountEmailHint,
                         isDense: true,
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                         prefixIcon: const Icon(Icons.email_outlined),
@@ -550,7 +551,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                                   )
                                 : const Icon(Icons.cloud_upload_outlined, size: 18),
-                            label: Text(_isSyncing ? 'Synchronisation...' : 'Enregistrer & Synchroniser'),
+                            label: Text(_isSyncing ? context.l10n.accountSyncing : context.l10n.accountSaveAndSync),
                             onPressed: _isSyncing
                                 ? null
                                 : () {
@@ -560,9 +561,9 @@ class _AccountScreenState extends State<AccountScreen> {
                                       _syncNow();
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
+                                        SnackBar(
                                           backgroundColor: Colors.redAccent,
-                                          content: Text('Veuillez saisir une adresse courriel valide.'),
+                                          content: Text(context.l10n.accountEmailInvalid),
                                         ),
                                       );
                                     }
@@ -575,7 +576,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       const SizedBox(height: 8),
                       Center(
                         child: Text(
-                          'Dernière synchronisation : ${profile.lastSyncDate != null && profile.lastSyncDate!.length >= 16 ? profile.lastSyncDate!.substring(0, 16).replaceAll('T', ' à ') : (profile.lastSyncDate ?? 'Jamais')}',
+                          context.l10n.accountLastSync(profile.lastSyncDate != null && profile.lastSyncDate!.length >= 16 ? profile.lastSyncDate!.substring(0, 16).replaceAll('T', context.l10n.accountSyncDateSeparator) : (profile.lastSyncDate ?? context.l10n.accountSyncNever)),
                           style: const TextStyle(fontSize: 11, color: Colors.black54, fontStyle: FontStyle.italic),
                         ),
                       ),
@@ -834,7 +835,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(width: 8),
                     Flexible(
                       child: Text(
-                        unlocked ? 'Trophée débloqué et exposé au Panthéon !' : 'Condition : $condition',
+                        unlocked ? context.l10n.accountTrophyUnlocked : context.l10n.accountTrophyCondition(condition),
                         style: TextStyle(
                           fontSize: 11.5,
                           fontWeight: FontWeight.bold,
@@ -857,7 +858,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
                 onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('OPTICAS GRACIAS (Fermer)'),
+                child: Text(context.l10n.accountTrophyClose),
               ),
             ],
           ),

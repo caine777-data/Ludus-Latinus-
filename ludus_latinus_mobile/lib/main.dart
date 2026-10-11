@@ -4,6 +4,7 @@ import 'data/repositories/game_repository.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
 import 'data/services/audio_service.dart';
+import 'l10n/l10n.dart';
 import 'ui/core/themes.dart';
 import 'ui/features/home/home_screen.dart';
 
@@ -33,18 +34,12 @@ class LudusLatinusApp extends StatefulWidget {
 
 class _LudusLatinusAppState extends State<LudusLatinusApp> {
   late Future<void> _initFuture;
-  final List<String> _latinQuotes = [
-    '« Festina lente » • Hâte-toi lentement',
-    '« Per aspera ad astra » • Par des chemins ardus vers les étoiles',
-    '« Veni, vidi, vici » • Je suis venu, j\'ai vu, j\'ai vaincu',
-    '« Repetitio est mater studiorum » • La répétition est la mère des études',
-  ];
-  late String _randomQuote;
+  late int _quoteIndex;
 
   @override
   void initState() {
     super.initState();
-    _randomQuote = _latinQuotes[math.Random().nextInt(_latinQuotes.length)];
+    _quoteIndex = math.Random().nextInt(4);
     _initFuture = widget.repository.initialize();
   }
 
@@ -56,6 +51,10 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
         return MaterialApp(
           title: 'Ludus Latinus',
           debugShowCheckedModeBanner: false,
+          // Interface en français pour l'instant ; les autres langues viendront.
+          locale: const Locale('fr'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
           theme: RomanTheme.lightTheme,
           darkTheme: RomanTheme.darkTheme,
           themeMode: widget.repository.isDarkMode ? ThemeMode.dark : ThemeMode.light,
@@ -119,7 +118,12 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
                       ),
                       const SizedBox(height: 28),
                       Text(
-                        _randomQuote,
+                        [
+                          context.l10n.loadingQuote1,
+                          context.l10n.loadingQuote2,
+                          context.l10n.loadingQuote3,
+                          context.l10n.loadingQuote4,
+                        ][_quoteIndex],
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 12.5,
@@ -154,9 +158,9 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
                     children: [
                       const Text('⚠️', style: TextStyle(fontSize: 48)),
                       const SizedBox(height: 12),
-                      const Text(
-                        'Erreur de chargement des parchemins',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      Text(
+                        context.l10n.appLoadError,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(

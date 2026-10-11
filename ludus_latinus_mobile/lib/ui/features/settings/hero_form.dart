@@ -4,7 +4,8 @@ import '../../../data/models/profile.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/avatar_assets.dart';
-import '../../core/themes.dart';
+import '../../core/themes.dart';
+import '../../../l10n/l10n.dart';
 
 /// Choix du héros : fille ou garçon, puis prénom.
 ///
@@ -54,9 +55,9 @@ class _HeroFormState extends State<HeroForm> {
       children: [
         Row(
           children: [
-            Expanded(child: _carteGenre('garcon', 'Un Romain')),
+            Expanded(child: _carteGenre('garcon', context.l10n.heroFormRoman)),
             const SizedBox(width: 12),
-            Expanded(child: _carteGenre('fille', 'Une Romaine')),
+            Expanded(child: _carteGenre('fille', context.l10n.heroFormRomanFemale)),
           ],
         ),
         const SizedBox(height: 18),
@@ -67,8 +68,8 @@ class _HeroFormState extends State<HeroForm> {
           textInputAction: TextInputAction.done,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           decoration: InputDecoration(
-            labelText: 'Ton prénom',
-            hintText: _genre == 'fille' ? 'Julia, Léa, Livia…' : 'Marcus, Lucas, Titus…',
+            labelText: context.l10n.heroFormFirstName,
+            hintText: _genre == 'fille' ? context.l10n.heroFormNameHintFemale : context.l10n.heroFormNameHintMale,
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),

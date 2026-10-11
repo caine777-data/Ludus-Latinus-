@@ -4,7 +4,8 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
-import 'hero_form.dart';
+import 'hero_form.dart';
+import '../../../l10n/l10n.dart';
 
 /// Premier lancement : l'élève choisit son héros avant d'entrer dans Rome.
 ///
@@ -53,10 +54,10 @@ class _HeroCreationScreenState extends State<HeroCreationScreen> {
             children: [
               const Center(child: AnimatedLupulusAvatar(size: 84, mood: LupulusMood.joie)),
               const SizedBox(height: 16),
-              const Text(
-                'SALVE !',
+              Text(
+                context.l10n.heroCreationGreeting,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: RomanFonts.imperial,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -65,10 +66,10 @@ class _HeroCreationScreenState extends State<HeroCreationScreen> {
                 ),
               ),
               const SizedBox(height: 6),
-              const Text(
-                'Je suis Lupulus, ton guide dans Rome.\nQui es-tu, jeune citoyen ?',
+              Text(
+                context.l10n.heroCreationLupulusIntro,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, height: 1.4, color: RomanColors.charcoal),
+                style: const TextStyle(fontSize: 16, height: 1.4, color: RomanColors.charcoal),
               ),
               const SizedBox(height: 26),
               HeroForm(
@@ -81,17 +82,17 @@ class _HeroCreationScreenState extends State<HeroCreationScreen> {
                 }),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Tu pourras changer ton héros plus tard dans les Paramètres.',
+              Text(
+                context.l10n.heroCreationChangeLater,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13, color: Colors.black54),
+                style: const TextStyle(fontSize: 13, color: Colors.black54),
               ),
               const SizedBox(height: 22),
               // Bouton grisé tant qu'aucun prénom n'est donné.
               Opacity(
                 opacity: _pret ? 1 : 0.45,
                 child: RomanButton(
-                  text: _pret ? 'ENTRER DANS ROME' : 'ÉCRIS TON PRÉNOM',
+                  text: _pret ? context.l10n.heroCreationEnter : context.l10n.heroCreationWriteName,
                   icon: Icons.arrow_forward_rounded,
                   isLarge: true,
                   onPressed: _pret ? _valider : null,

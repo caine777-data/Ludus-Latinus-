@@ -7,7 +7,8 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
-import '../../core/avatar_assets.dart';
+import '../../core/avatar_assets.dart';
+import '../../../l10n/l10n.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
 /// Permet au joueur de dépenser ses sesterces pour acheter et équiper des goodies.
@@ -65,7 +66,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
         SnackBar(
           backgroundColor: Colors.red.shade800,
           content: Text(
-            '🪙 Sesterces insuffisants ! Il te manque ${item.prix - solde} HS. Réussis des leçons pour en amasser !',
+            context.l10n.shopNotEnough(item.prix - solde),
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -88,7 +89,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Acquis & Équipé : ${item.nom} (${item.nomLatin}) !',
+                  context.l10n.shopBought(item.nom, item.nomLatin),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -108,7 +109,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
         duration: const Duration(seconds: 1),
         backgroundColor: RomanColors.imperialPurple,
         content: Text(
-          'Tenue modifiée : ${item.nom} équipé !',
+          context.l10n.shopEquipped(item.nom),
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -170,7 +171,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                       final compact = contraintes.maxWidth < 360 || facteurPolice > 1.15;
                       // Compteur de Sesterces doré : le toucher explique l'abréviation HS.
                       final compteur = Tooltip(
-                        message: 'Pourquoi « HS » ?',
+                        message: context.l10n.shopWhyHs,
                         child: InkWell(
                           borderRadius: BorderRadius.circular(14),
                           onTap: () => _expliquerHS(context),
@@ -208,9 +209,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'TABERNA ROMANA',
-                                  style: TextStyle(
+                                Text(
+                                  context.l10n.shopTitle,
+                                  style: const TextStyle(
                                     fontFamily: RomanFonts.imperial,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -218,9 +219,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                                     color: RomanColors.imperialPurple,
                                   ),
                                 ),
-                                const Text(
-                                  'Boutique & Penderie Impériale • Équipe ton Héros',
-                                  style: TextStyle(fontSize: 11, color: Colors.black54),
+                                Text(
+                                  context.l10n.shopSubtitle,
+                                  style: const TextStyle(fontSize: 11, color: Colors.black54),
                                 ),
                                 if (compact) ...[
                                   const SizedBox(height: 6),
@@ -235,7 +236,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                           ],
                           IconButton(
                             icon: const Icon(Icons.close_rounded, color: RomanColors.charcoal),
-                            tooltip: 'Fermer',
+                            tooltip: context.l10n.commonClose,
                             onPressed: () => Navigator.of(context).pop(),
                           ),
                         ],
@@ -606,14 +607,14 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: RomanColors.laurelGreen, width: 1.2),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.check_circle_rounded, color: RomanColors.laurelGreen, size: 16),
-            SizedBox(width: 4),
+            const Icon(Icons.check_circle_rounded, color: RomanColors.laurelGreen, size: 16),
+            const SizedBox(width: 4),
             Text(
-              'Porté',
-              style: TextStyle(
+              context.l10n.shopWorn,
+              style: const TextStyle(
                 fontSize: 11.5,
                 fontWeight: FontWeight.bold,
                 color: RomanColors.laurelGreen,
@@ -637,9 +638,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           elevation: 1,
         ),
         onPressed: () => _equiperObjet(item),
-        child: const Text(
-          'Équiper',
-          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+        child: Text(
+          context.l10n.shopEquip,
+          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
         ),
       );
     }
@@ -666,7 +667,7 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
           const Text('🪙', style: TextStyle(fontSize: 13)),
           const SizedBox(width: 4),
           Text(
-            '${item.prix} HS',
+            context.l10n.shopPrice(item.prix),
             style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
           ),
         ],
@@ -682,22 +683,18 @@ void _expliquerHS(BuildContext context) {
     context: context,
     builder: (ctx) => AlertDialog(
       backgroundColor: RomanColors.travertine,
-      title: const Text(
-        'Pourquoi « HS » ?',
-        style: TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+      title: Text(
+        context.l10n.shopWhyHs,
+        style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
       ),
-      content: const Text(
-        'Le sesterce (sestertius) était une pièce romaine qui valait deux as et demi.\n\n'
-        "Les Romains l'écrivaient IIS : II pour « deux », et S pour semis, « demi ». "
-        'Pour ne pas le confondre avec un nombre, ils barraient les deux I… '
-        'et le signe a fini par ressembler à un H : HS.\n\n'
-        "Sous l'empereur Auguste, un légionnaire gagnait environ 900 sesterces par an.",
-        style: TextStyle(fontSize: 14.5, height: 1.45),
+      content: Text(
+        context.l10n.shopWhyHsBody,
+        style: const TextStyle(fontSize: 14.5, height: 1.45),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(ctx),
-          child: const Text('Optime !'),
+          child: Text(context.l10n.shopWhyHsOk),
         ),
       ],
     ),
