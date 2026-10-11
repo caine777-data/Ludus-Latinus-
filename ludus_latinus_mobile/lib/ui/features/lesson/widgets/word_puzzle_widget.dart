@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
 import '../../../core/game_juice.dart';
-import '../../../../data/services/audio_service.dart';
+import '../../../../data/services/audio_service.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Widget interactif pour les exercices de type 'puzzle' :
 /// Reconstitution de phrase latine ou traduction française par jetons de mots cliquables.
@@ -86,9 +87,9 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
   void _verifySentence() {
     if (_selectedWords.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Touche des mots pour composer ta phrase avant de valider !'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(context.l10n.puzzleEmptyWarning),
+          duration: const Duration(seconds: 2),
         ),
       );
       return;
@@ -117,8 +118,8 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
       final attendus = expected.split(' ')..sort();
       setState(() {
         _feedbackMessage = choisis.join(' ') == attendus.join(' ')
-            ? '« Ce n\'est pas tout à fait le bon ordre des mots. Réessaie ! »'
-            : '« Les mots ne sont pas tous les bons. Regarde les terminaisons du latin ! »';
+            ? context.l10n.puzzleWrongOrder
+            : context.l10n.puzzleWrongWords;
       });
     }
   }
@@ -139,9 +140,9 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'PUZZLE DE SYNTAXE ROMAINE',
-                        style: TextStyle(
+                      Text(
+                        context.l10n.puzzleTitle,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.8,
@@ -152,7 +153,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                       if (widget.latinPhrase != null) ...[
                         const SizedBox(height: 2),
                         Text(
-                          'Traduis ou réordonne : « ${widget.latinPhrase} »',
+                          context.l10n.puzzleInstruction(widget.latinPhrase!),
                           style: const TextStyle(
                             fontSize: 13,
                             fontStyle: FontStyle.italic,
@@ -166,7 +167,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.refresh_rounded, size: 20, color: Colors.black54),
-                  tooltip: 'Réinitialiser les mots',
+                  tooltip: context.l10n.puzzleReset,
                   onPressed: _resetGame,
                 ),
               ],
@@ -197,11 +198,11 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                 ],
               ),
               child: _selectedWords.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Text(
-                        'Touche les mots ci-dessous pour assembler la phrase dans le bon ordre ✍️',
+                        context.l10n.puzzleTapWords,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12, color: Colors.black45, fontStyle: FontStyle.italic),
+                        style: const TextStyle(fontSize: 12, color: Colors.black45, fontStyle: FontStyle.italic),
                       ),
                     )
                   : Wrap(
@@ -268,9 +269,9 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
             const SizedBox(height: 14),
 
             // 3. Banque de mots disponibles
-            const Text(
-              'MOTS DISPONIBLES :',
-              style: TextStyle(
+            Text(
+              context.l10n.puzzleAvailableWords,
+              style: const TextStyle(
                 fontSize: 10.5,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 0.6,
@@ -313,7 +314,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
             // 4. Bouton de vérification
             if (!_isSuccess)
               RomanButton(
-                text: 'VÉRIFIER LA PHRASE ▶',
+                text: context.l10n.puzzleCheck,
                 backgroundColor: RomanColors.imperialPurple,
                 textColor: RomanColors.goldLight,
                 isLarge: true,

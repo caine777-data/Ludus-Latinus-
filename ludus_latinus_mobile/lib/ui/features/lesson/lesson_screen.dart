@@ -17,7 +17,8 @@ import 'widgets/case_decoder_widget.dart';
 import 'widgets/arena_challenge_widget.dart';
 import 'widgets/vocab_question_widget.dart';
 import 'widgets/grammar_question_widget.dart';
-import '../../../data/models/vocab_question.dart';
+import '../../../data/models/vocab_question.dart';
+import '../../../l10n/l10n.dart';
 
 /// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
 class LessonScreen extends StatefulWidget {
@@ -238,7 +239,7 @@ class _LessonScreenState extends State<LessonScreen> {
       HapticFeedback.heavyImpact();
       await RomanCinematicOverlay.showTriumph(
         context,
-        subtitle: result.worldTitle != null ? 'Monde terminé : ${result.worldTitle}' : 'Monde terminé !',
+        subtitle: result.worldTitle != null ? context.l10n.lessonWorldCompleteNamed(result.worldTitle!) : context.l10n.lessonWorldComplete,
       );
       if (!mounted) return;
       AudioService().playWorldComplete();
@@ -262,17 +263,17 @@ class _LessonScreenState extends State<LessonScreen> {
     final String title;
     final String subtitle;
     if (result.worldCompleted) {
-      title = 'MONDE TERMINÉ !';
-      subtitle = result.worldTitle ?? 'Toutes les leçons de ce monde sont validées.';
+      title = context.l10n.lessonWorldCompleteUpper;
+      subtitle = result.worldTitle ?? context.l10n.lessonWorldAllValidated;
     } else if (result.stars == 3) {
-      title = 'Optime !';
-      subtitle = 'Réussi du premier coup.';
+      title = context.l10n.lessonResultPerfect;
+      subtitle = context.l10n.lessonResultPerfectHint;
     } else if (result.stars == 2) {
-      title = 'Bene !';
-      subtitle = 'Réussi avec une aide. Refais la leçon plus tard pour décrocher 3 étoiles.';
+      title = context.l10n.lessonResultGood;
+      subtitle = context.l10n.lessonResultGoodHint;
     } else {
-      title = 'Leçon réussie';
-      subtitle = 'Il a fallu plusieurs essais : relis la leçon et retente-la bientôt.';
+      title = context.l10n.lessonResultPassed;
+      subtitle = context.l10n.lessonResultPassedHint;
     }
     final explanation = widget.lesson.explanation;
 
@@ -350,7 +351,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
                 child: Text(
-                  'Nouvelle carte au Panthéon : ${result.carteGagnee!.nom}',
+                  context.l10n.lessonNewCard(result.carteGagnee!.nom),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 13.5,
@@ -391,10 +392,10 @@ class _LessonScreenState extends State<LessonScreen> {
               ),
               child: Text(
                     (result.improved
-                        ? 'Nouveau record : ${result.stars} ★'
+                        ? context.l10n.lessonNewRecord(result.stars)
                         : (result.bestStars > result.stars
-                            ? 'Leçon déjà validée (record : ${result.bestStars} ★)'
-                            : 'Leçon déjà validée : pas de nouveaux sesterces')),
+                            ? context.l10n.lessonAlreadyDoneRecord(result.bestStars)
+                            : context.l10n.lessonAlreadyDoneNoReward)),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 13,
@@ -412,12 +413,12 @@ class _LessonScreenState extends State<LessonScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Progression du Cursus',
-                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                      Text(
+                        context.l10n.lessonCursusProgress,
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                       ),
                       Text(
-                        '${widget.repo.profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (s, w) => s + w.lessons.length)} leçons',
+                        context.l10n.lessonCursusCount(widget.repo.profile.completedLessons.length, widget.repo.worlds.fold<int>(0, (s, w) => s + w.lessons.length)),
                         style: const TextStyle(fontSize: 11, color: Colors.black54),
                       ),
                     ],
@@ -435,7 +436,7 @@ class _LessonScreenState extends State<LessonScreen> {
             ),
             const SizedBox(height: 18),
             RomanButton(
-              text: 'CONTINUER ▶',
+              text: context.l10n.lessonContinue,
               isLarge: true,
               onPressed: () {
                 Navigator.pop(context); // ferme la modale
@@ -473,17 +474,17 @@ class _LessonScreenState extends State<LessonScreen> {
   String _getLessonTypeTitle(String type) {
     switch (type) {
       case 'quiz':
-        return 'QCM Grammaire & Vocabulaire';
+        return context.l10n.lessonTypeQuiz;
       case 'puzzle':
-        return 'Syntaxe & Ordre des Mots';
+        return context.l10n.lessonTypePuzzle;
       case 'trou':
-        return 'Déclinaisons & Cas Latins';
+        return context.l10n.lessonTypeCloze;
       case 'arene':
-        return 'Épreuve d\'Arène / Combat';
+        return context.l10n.lessonTypeArena;
       case 'decodeur':
-        return 'Épigraphie & Décodage';
+        return context.l10n.lessonTypeDecoder;
       default:
-        return 'Leçon & Exercice';
+        return context.l10n.lessonTypeDefault;
     }
   }
 
@@ -538,13 +539,13 @@ class _LessonScreenState extends State<LessonScreen> {
   String _getLupulusGreetingForLesson(Lesson lesson) {
     final t = '${lesson.title} ${lesson.latin ?? ''}'.toLowerCase();
     if (t.contains('gladiat') || t.contains('combat')) {
-      return '« Salve pugnator ! Dans l\'arène, la précision du mot frappe aussi fort que le glaive ! »';
+      return context.l10n.lupulusGreetingGladiator;
     } else if (t.contains('légion') || t.contains('armée')) {
-      return '« Salve legionarie ! La discipline grammaticale est le bouclier des légions ! »';
+      return context.l10n.lupulusGreetingLegion;
     } else if (t.contains('dieu') || t.contains('mythe')) {
-      return '« Salve discipule ! Que Minerve et Apollon inspirent ta mémoire mythologique ! »';
+      return context.l10n.lupulusGreetingMyth;
     }
-    return '« Salve discipule ! Observe bien les racines latines, elles éclairent la langue française ! »';
+    return context.l10n.lupulusGreetingDefault;
   }
 
   @override
@@ -557,12 +558,12 @@ class _LessonScreenState extends State<LessonScreen> {
     return Scaffold(
       appBar: AppBar(
         // Le titre complet est affiché dans la page : la barre reste lisible.
-        title: const Text('LEÇON'),
+        title: Text(context.l10n.lessonLabel),
         actions: [
           if (hasLatin)
           IconButton(
             icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialPurple),
-            tooltip: 'Prononciation latine',
+            tooltip: context.l10n.lessonLatinPronunciation,
             onPressed: () {
               HapticFeedback.lightImpact();
               LatinPronunciationModal.show(context, lesson.latin!);
@@ -577,7 +578,7 @@ class _LessonScreenState extends State<LessonScreen> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 6, 16, 10),
                 child: RomanButton(
-                  text: 'À L\'EXERCICE ↓',
+                  text: context.l10n.lessonToExercise,
                   isLarge: true,
                   onPressed: _scrollToExercise,
                 ),
@@ -650,8 +651,8 @@ class _LessonScreenState extends State<LessonScreen> {
                     ),
                     child: Text(
                       bestStars > 0
-                          ? '✓ Validée ${'★' * bestStars}${'☆' * (3 - bestStars)}'
-                          : 'Jusqu\'à +${GameRepository.rewardForStars(3)} HS',
+                          ? context.l10n.lessonValidatedStars('★' * bestStars, '☆' * (3 - bestStars))
+                          : context.l10n.lessonUpToReward(GameRepository.rewardForStars(3)),
                       style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
@@ -773,9 +774,9 @@ class _LessonScreenState extends State<LessonScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         ),
                         icon: const Icon(Icons.record_voice_over_outlined, size: 16),
-                        label: const Text(
-                          'Prononciation',
-                          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+                        label: Text(
+                          context.l10n.lessonPronunciation,
+                          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
                         ),
                         onPressed: () {
                           LatinPronunciationModal.show(context, lesson.latin!);
@@ -803,9 +804,9 @@ class _LessonScreenState extends State<LessonScreen> {
                       child: TextButton.icon(
                         onPressed: () => _revoirLeCours(lesson),
                         icon: const Text('📖', style: TextStyle(fontSize: 16)),
-                        label: const Text(
-                          'Revoir le cours',
-                          style: TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                        label: Text(
+                          context.l10n.lessonReviewCourse,
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                         ),
                       ),
                     ),
@@ -854,7 +855,7 @@ class _LessonScreenState extends State<LessonScreen> {
               const SizedBox(height: 10),
               MarkdownLite(lesson.content),
               const SizedBox(height: 16),
-              RomanButton(text: 'Retour à l\'exercice', onPressed: () => Navigator.of(context).pop()),
+              RomanButton(text: context.l10n.lessonBackToExercise, onPressed: () => Navigator.of(context).pop()),
             ],
           ),
         ),
@@ -867,7 +868,7 @@ class _LessonScreenState extends State<LessonScreen> {
       return GrammarQuestionWidget(
         key: ValueKey('grammaire_${lesson.id}'),
         question: lesson.grammaire!,
-        progressLabel: 'EXERCICE 2 / $_totalSteps • GRAMMAIRE',
+        progressLabel: context.l10n.lessonProgressGrammar(_totalSteps),
         onCompleted: _onGrammarDone,
         onMistake: () => _mistakes++,
       );
@@ -876,7 +877,7 @@ class _LessonScreenState extends State<LessonScreen> {
       return VocabQuestionWidget(
         key: ValueKey('vocab_$_vocabIndex'),
         question: _vocabQueue[_vocabIndex],
-        progressLabel: 'EXERCICE $_currentStep / $_totalSteps • VOCABULAIRE',
+        progressLabel: context.l10n.lessonProgressVocab(_currentStep, _totalSteps),
         onAnswered: _onVocabAnswered,
       );
     }
@@ -887,7 +888,7 @@ class _LessonScreenState extends State<LessonScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8, left: 4),
             child: Text(
-              'EXERCICE 1 / $_totalSteps',
+              context.l10n.lessonProgressFirst(_totalSteps),
               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 0.8, color: RomanColors.goldDark),
             ),
           ),
@@ -949,7 +950,7 @@ class _LessonScreenState extends State<LessonScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            lesson.question ?? 'Choisis la bonne réponse :',
+            lesson.question ?? context.l10n.lessonChooseAnswer,
             style: const TextStyle(
               fontSize: 16,
               height: 1.3,
@@ -1035,7 +1036,7 @@ class _LessonScreenState extends State<LessonScreen> {
               child: TextButton.icon(
                 onPressed: _useHint,
                 icon: const Icon(Icons.lightbulb_outline_rounded, size: 18),
-                label: const Text('Indice : barrer une mauvaise réponse (−1 ★)'),
+                label: Text(context.l10n.lessonHintButton),
                 style: TextButton.styleFrom(
                   foregroundColor: const Color(0xFF7A5901),
                   textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
@@ -1053,15 +1054,15 @@ class _LessonScreenState extends State<LessonScreen> {
     final lesson = widget.lesson;
     final chosenOptText = (selectedOption != null && selectedOption! < lesson.options.length)
         ? lesson.options[selectedOption!]
-        : 'Réponse sélectionnée';
+        : context.l10n.lessonSelectedAnswer;
 
     // Rappel de méthode, jamais la solution.
-    String advice = 'Relis le passage de la leçon juste au-dessus : la réponse s\'y trouve.';
+    String advice = context.l10n.lessonAdviceReread;
     final lowerChosen = chosenOptText.toLowerCase();
     if (lowerChosen.contains('accusatif') || lowerChosen.contains('nominatif') || lowerChosen.contains('ablatif')) {
-      advice = 'Vérifie qui fait l\'action (nominatif) et qui la subit (accusatif), puis réessaie.';
+      advice = context.l10n.lessonAdviceCases;
     } else if (lowerChosen.contains('singulier') || lowerChosen.contains('pluriel')) {
-      advice = 'Observe la terminaison du mot : c\'est elle qui indique le singulier ou le pluriel.';
+      advice = context.l10n.lessonAdviceNumber;
     }
 
     // Explication propre à l'option réellement choisie (indice dans les données, pas dans _order).
@@ -1109,10 +1110,10 @@ class _LessonScreenState extends State<LessonScreen> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Pas tout à fait…',
-                  style: TextStyle(
+                  context.l10n.lessonNotQuite,
+                  style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'serif',
@@ -1127,9 +1128,9 @@ class _LessonScreenState extends State<LessonScreen> {
             text: TextSpan(
               style: const TextStyle(fontSize: 13.5, color: RomanColors.charcoal, height: 1.35),
               children: [
-                const TextSpan(text: 'Tu as choisi : '),
+                TextSpan(text: context.l10n.lessonYouChose),
                 TextSpan(
-                  text: '« $chosenOptText »',
+                  text: context.l10n.lessonChosenQuote(chosenOptText),
                   style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFB71C1C)),
                 ),
               ],
@@ -1155,7 +1156,7 @@ class _LessonScreenState extends State<LessonScreen> {
               ElevatedButton.icon(
                 onPressed: _retry,
                 icon: const Icon(Icons.refresh, size: 18),
-                label: const Text('Réessayer'),
+                label: Text(context.l10n.lessonRetry),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF94381E),
                   foregroundColor: Colors.white,
@@ -1171,7 +1172,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     _retry();
                   },
                   icon: const Icon(Icons.lightbulb_outline_rounded, size: 18),
-                  label: const Text('Réessayer avec un indice'),
+                  label: Text(context.l10n.lessonRetryWithHint),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: const Color(0xFF7A5901),
                     side: const BorderSide(color: RomanColors.imperialGold),
@@ -1328,7 +1329,7 @@ class _CoinRewardState extends State<_CoinReward> with SingleTickerProviderState
                   border: Border.all(color: RomanColors.imperialGold, width: 1.4),
                 ),
                 child: Text(
-                  '+${(widget.amount * Curves.easeOut.transform(((_c.value - 0.4) / 0.6).clamp(0.0, 1.0))).round()} HS',
+                  context.l10n.lessonRewardFloat((widget.amount * Curves.easeOut.transform(((_c.value - 0.4) / 0.6).clamp(0.0, 1.0))).round()),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF7A5901)),
                 ),
               ),

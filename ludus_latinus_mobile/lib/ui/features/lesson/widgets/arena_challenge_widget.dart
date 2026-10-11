@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
 import '../../../core/game_juice.dart';
-import '../../../../data/services/audio_service.dart';
+import '../../../../data/services/audio_service.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Widget interactif pour les exercices de type 'arene' (défis de fin de monde contre les boss)
 class ArenaChallengeWidget extends StatefulWidget {
@@ -135,11 +136,11 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
       return const SizedBox.shrink();
     }
 
-    final bossName = widget.boss?['nom'] as String? ?? 'Champion de l\'Arène';
+    final bossName = widget.boss?['nom'] as String? ?? context.l10n.arenaChampion;
     final bossIcon = widget.boss?['icone'] as String? ?? '⚔️';
     final currentQ = widget.questions[_currentQuestionIndex];
     final options = (currentQ['options'] as List<dynamic>? ?? []).map((e) => e.toString()).toList();
-    final questionText = currentQ['question'] as String? ?? 'Réponds à la provocation du Boss :';
+    final questionText = currentQ['question'] as String? ?? context.l10n.arenaAnswerProvocation;
     final expectedAnswer = currentQ['answer'] as int? ?? 0;
     final explication = currentQ['explanation'] as String? ?? '';
 
@@ -195,7 +196,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Text('Points de Vie : ', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                            Text(context.l10n.arenaBossHp, style: const TextStyle(color: Colors.white70, fontSize: 11)),
                             Text(
                               '$_bossHp / $_maxBossHp',
                               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11),
@@ -215,7 +216,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                         const SizedBox(height: 5),
                         Row(
                           children: [
-                            const Text('Tes vies : ', style: TextStyle(color: Colors.white70, fontSize: 11)),
+                            Text(context.l10n.arenaYourLives, style: const TextStyle(color: Colors.white70, fontSize: 11)),
                             for (var i = 0; i < viesAuDepart; i++)
                               Icon(
                                 i < _vies ? Icons.favorite : Icons.favorite_border,
@@ -257,7 +258,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      '$bossName t\'a repoussé !',
+                      context.l10n.arenaBossRepelled(bossName),
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 15,
@@ -266,17 +267,16 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Tu n\'as plus de vie. Relis le cours du monde si besoin, puis retente ta chance : '
-                      'les réponses auront changé de place.',
+                    Text(
+                      context.l10n.arenaNoLivesLeft,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12.5, height: 1.35, color: RomanColors.charcoal),
+                      style: const TextStyle(fontSize: 12.5, height: 1.35, color: RomanColors.charcoal),
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton.icon(
                       onPressed: _recommencer,
                       icon: const Icon(Icons.replay),
-                      label: const Text('Retenter l\'arène'),
+                      label: Text(context.l10n.arenaRetry),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: RomanColors.imperialPurple,
                         foregroundColor: Colors.white,
@@ -369,7 +369,7 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                   border: Border.all(color: RomanColors.laurelGreen),
                 ),
                 child: Text(
-                  explication.isEmpty ? 'Touché !' : 'Touché ! $explication',
+                  explication.isEmpty ? context.l10n.arenaHit : context.l10n.arenaHitWithExplanation(explication),
                   style: const TextStyle(fontSize: 12.5, height: 1.35, color: Color(0xFF1B5E20)),
                 ),
               ),
@@ -383,14 +383,14 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
                 ),
                 child: Text(
                   _bossHp <= 0 || _currentQuestionIndex >= widget.questions.length - 1
-                      ? 'Porter le coup final'
-                      : 'Continuer le combat',
+                      ? context.l10n.arenaFinalBlow
+                      : context.l10n.arenaContinueFight,
                 ),
               ),
             ] else if (_isAnswered && _selectedOption != expectedAnswer && _vies > 0) ...[
               const SizedBox(height: 10),
               Text(
-                'Raté ! Il te reste $_vies ${_vies > 1 ? 'vies' : 'vie'}. Essaie une autre réponse.',
+                context.l10n.arenaMissed(_vies),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w600, color: Color(0xFFB71C1C)),
               ),

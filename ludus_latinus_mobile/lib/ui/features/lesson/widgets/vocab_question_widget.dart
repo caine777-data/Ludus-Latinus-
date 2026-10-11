@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../../data/models/vocab_question.dart';
 import '../../../../data/services/audio_service.dart';
 import '../../../core/themes.dart';
-import '../../../core/widgets.dart';
+import '../../../core/widgets.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Question de vocabulaire à 4 choix. Après une erreur, la bonne réponse est
 /// montrée avec l'exemple du Thesaurus : la question sera reposée en fin de série.
@@ -125,7 +126,7 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _correct ? 'Optime !' : 'Retiens bien : la question reviendra à la fin.',
+                    _correct ? context.l10n.vocabCorrectTitle : context.l10n.vocabRememberHint,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -134,17 +135,17 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${q.entry.latin} : ${q.entry.fr}',
+                    context.l10n.vocabEntryLine(q.entry.latin, q.entry.fr),
                     style: const TextStyle(fontSize: 13.5, color: RomanColors.charcoal, height: 1.35),
                   ),
                   if (q.entry.ex.isNotEmpty)
                     Text(
-                      '« ${q.entry.ex} » ${q.entry.exFr}',
+                      context.l10n.vocabExampleLine(q.entry.ex, q.entry.exFr),
                       style: const TextStyle(fontSize: 13, fontStyle: FontStyle.italic, color: Colors.black54, height: 1.35),
                     ),
                   if (q.entry.etym.isNotEmpty)
                     Text(
-                      'En français : ${q.entry.etym}',
+                      context.l10n.vocabEtymology(q.entry.etym),
                       style: const TextStyle(fontSize: 13, color: Colors.black54, height: 1.35),
                     ),
                 ],
@@ -163,7 +164,7 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
                 textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, letterSpacing: 0.6),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
-              child: const Text('CONTINUER'),
+              child: Text(context.l10n.commonContinueUpper),
             ),
           ],
         ],

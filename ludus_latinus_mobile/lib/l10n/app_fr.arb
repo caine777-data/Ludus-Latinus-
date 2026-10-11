@@ -161,7 +161,266 @@
   },
   "shopWhyHsOk": "Optime !",
   "shopWhyHsBody": "Le sesterce (sestertius) était une pièce romaine qui valait deux as et demi.\n\nLes Romains l'écrivaient IIS : II pour « deux », et S pour semis, « demi ». Pour ne pas le confondre avec un nombre, ils barraient les deux I… et le signe a fini par ressembler à un H : HS.\n\nSous l'empereur Auguste, un légionnaire gagnait environ 900 sesterces par an.",
-  "settingsSectionApp": "Application",
-  "settingsAbout": "À propos",
-  "settingsAboutHint": "Version et éditeur"
+  "grammarExerciseTitle": "Exercice de grammaire",
+  "grammarTryAgain": "Pas tout à fait… Réessaie.",
+  "vocabCorrectTitle": "Optime !",
+  "vocabRememberHint": "Retiens bien : la question reviendra à la fin.",
+  "vocabEntryLine": "{latin} : {french}",
+  "@vocabEntryLine": {
+    "placeholders": {
+      "latin": {
+        "type": "String"
+      },
+      "french": {
+        "type": "String"
+      }
+    }
+  },
+  "vocabExampleLine": "« {example} » {translation}",
+  "@vocabExampleLine": {
+    "placeholders": {
+      "example": {
+        "type": "String"
+      },
+      "translation": {
+        "type": "String"
+      }
+    }
+  },
+  "vocabEtymology": "En français : {etymology}",
+  "@vocabEtymology": {
+    "placeholders": {
+      "etymology": {
+        "type": "String"
+      }
+    }
+  },
+  "commonContinueUpper": "CONTINUER",
+  "puzzleEmptyWarning": "Touche des mots pour composer ta phrase avant de valider !",
+  "puzzleWrongOrder": "« Ce n'est pas tout à fait le bon ordre des mots. Réessaie ! »",
+  "puzzleWrongWords": "« Les mots ne sont pas tous les bons. Regarde les terminaisons du latin ! »",
+  "puzzleTitle": "PUZZLE DE SYNTAXE ROMAINE",
+  "puzzleInstruction": "Traduis ou réordonne : « {phrase} »",
+  "@puzzleInstruction": {
+    "placeholders": {
+      "phrase": {
+        "type": "String"
+      }
+    }
+  },
+  "puzzleReset": "Réinitialiser les mots",
+  "puzzleTapWords": "Touche les mots ci-dessous pour assembler la phrase dans le bon ordre ✍️",
+  "puzzleAvailableWords": "MOTS DISPONIBLES :",
+  "puzzleCheck": "VÉRIFIER LA PHRASE ▶",
+  "clozeEmptyWarning": "Complète la case vide avant de vérifier !",
+  "clozeWrongEnding": "« Ce n'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »",
+  "clozeInstruction": "Complète la phrase latine avec la bonne forme :",
+  "clozeWriteEndingOnly": "✂️ Écris seulement la fin du mot",
+  "clozeWriteWholeWord": "✍️ Écris le mot entier",
+  "clozeAvailableOptions": "OPTIONS DISPONIBLES (CLIQUE POUR SÉLECTIONNER) :",
+  "clozeCheck": "VALIDER LA TERMINAISON ▶",
+  "decoderRoleSubject": "Sujet (Nominatif)",
+  "decoderRoleObject": "COD (Accusatif)",
+  "decoderRoleGenitive": "Compl. du nom (Génitif)",
+  "decoderRoleVerb": "Verbe d'action",
+  "decoderRoleQuestion": "Rôle ?",
+  "decoderUnknown": "Inconnu",
+  "decoderIncompleteWarning": "Attribue une fonction grammaticale à chaque mot avant de vérifier !",
+  "decoderWrongRole": "« Une des fonctions grammaticales n'est pas attribuée au bon mot. Observe bien les désinences ! »",
+  "decoderTitle": "LE DÉCODEUR DE CAS GRAMMATICAUX",
+  "decoderInstruction": "Sélectionne chaque mot et attribue-lui sa fonction dans la phrase.",
+  "decoderFunctionQuestion": "Fonction ?",
+  "decoderSuccess": "✅ Bien décodé ! Traduction : « {translation} »",
+  "@decoderSuccess": {
+    "placeholders": {
+      "translation": {
+        "type": "String"
+      }
+    }
+  },
+  "decoderAssignToWord": "ATTRIBUER AU MOT SÉLECTIONNÉ (« {word} ») :",
+  "@decoderAssignToWord": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "decoderCheck": "VÉRIFIER LE DÉCODAGE ▶",
+  "arenaChampion": "Champion de l'Arène",
+  "arenaAnswerProvocation": "Réponds à la provocation du Boss :",
+  "arenaBossHp": "Points de Vie : ",
+  "arenaYourLives": "Tes vies : ",
+  "arenaBossRepelled": "{boss} t'a repoussé !",
+  "@arenaBossRepelled": {
+    "placeholders": {
+      "boss": {
+        "type": "String"
+      }
+    }
+  },
+  "arenaNoLivesLeft": "Tu n'as plus de vie. Relis le cours du monde si besoin, puis retente ta chance : les réponses auront changé de place.",
+  "arenaRetry": "Retenter l'arène",
+  "arenaHitWithExplanation": "Touché ! {explanation}",
+  "@arenaHitWithExplanation": {
+    "placeholders": {
+      "explanation": {
+        "type": "String"
+      }
+    }
+  },
+  "arenaHit": "Touché !",
+  "arenaFinalBlow": "Porter le coup final",
+  "arenaContinueFight": "Continuer le combat",
+  "arenaMissed": "Raté ! Il te reste {lives} {lives, plural, one{vie} other{vies}}. Essaie une autre réponse.",
+  "@arenaMissed": {
+    "placeholders": {
+      "lives": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonWorldCompleteNamed": "Monde terminé : {world}",
+  "@lessonWorldCompleteNamed": {
+    "placeholders": {
+      "world": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonWorldComplete": "Monde terminé !",
+  "lessonWorldCompleteUpper": "MONDE TERMINÉ !",
+  "lessonWorldAllValidated": "Toutes les leçons de ce monde sont validées.",
+  "lessonResultPerfect": "Optime !",
+  "lessonResultPerfectHint": "Réussi du premier coup.",
+  "lessonResultGood": "Bene !",
+  "lessonResultGoodHint": "Réussi avec une aide. Refais la leçon plus tard pour décrocher 3 étoiles.",
+  "lessonResultPassed": "Leçon réussie",
+  "lessonResultPassedHint": "Il a fallu plusieurs essais : relis la leçon et retente-la bientôt.",
+  "lessonNewCard": "Nouvelle carte au Panthéon : {name}",
+  "@lessonNewCard": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonNewRecord": "Nouveau record : {stars} ★",
+  "@lessonNewRecord": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonAlreadyDoneRecord": "Leçon déjà validée (record : {stars} ★)",
+  "@lessonAlreadyDoneRecord": {
+    "placeholders": {
+      "stars": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonAlreadyDoneNoReward": "Leçon déjà validée : pas de nouveaux sesterces",
+  "lessonCursusProgress": "Progression du Cursus",
+  "lessonCursusCount": "{done} / {total} leçons",
+  "@lessonCursusCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonContinue": "CONTINUER ▶",
+  "lessonTypeQuiz": "QCM Grammaire & Vocabulaire",
+  "lessonTypePuzzle": "Syntaxe & Ordre des Mots",
+  "lessonTypeCloze": "Déclinaisons & Cas Latins",
+  "lessonTypeArena": "Épreuve d'Arène / Combat",
+  "lessonTypeDecoder": "Épigraphie & Décodage",
+  "lessonTypeDefault": "Leçon & Exercice",
+  "lupulusGreetingGladiator": "« Salve pugnator ! Dans l'arène, la précision du mot frappe aussi fort que le glaive ! »",
+  "lupulusGreetingLegion": "« Salve legionarie ! La discipline grammaticale est le bouclier des légions ! »",
+  "lupulusGreetingMyth": "« Salve discipule ! Que Minerve et Apollon inspirent ta mémoire mythologique ! »",
+  "lupulusGreetingDefault": "« Salve discipule ! Observe bien les racines latines, elles éclairent la langue française ! »",
+  "lessonLabel": "LEÇON",
+  "lessonLatinPronunciation": "Prononciation latine",
+  "lessonToExercise": "À L'EXERCICE ↓",
+  "lessonValidatedStars": "✓ Validée {filled}{empty}",
+  "@lessonValidatedStars": {
+    "placeholders": {
+      "filled": {
+        "type": "String"
+      },
+      "empty": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonUpToReward": "Jusqu'à +{amount} HS",
+  "@lessonUpToReward": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonPronunciation": "Prononciation",
+  "lessonReviewCourse": "Revoir le cours",
+  "lessonBackToExercise": "Retour à l'exercice",
+  "lessonProgressGrammar": "EXERCICE 2 / {total} • GRAMMAIRE",
+  "@lessonProgressGrammar": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonProgressVocab": "EXERCICE {current} / {total} • VOCABULAIRE",
+  "@lessonProgressVocab": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonProgressFirst": "EXERCICE 1 / {total}",
+  "@lessonProgressFirst": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "lessonChooseAnswer": "Choisis la bonne réponse :",
+  "lessonHintButton": "Indice : barrer une mauvaise réponse (−1 ★)",
+  "lessonSelectedAnswer": "Réponse sélectionnée",
+  "lessonAdviceReread": "Relis le passage de la leçon juste au-dessus : la réponse s'y trouve.",
+  "lessonAdviceCases": "Vérifie qui fait l'action (nominatif) et qui la subit (accusatif), puis réessaie.",
+  "lessonAdviceNumber": "Observe la terminaison du mot : c'est elle qui indique le singulier ou le pluriel.",
+  "lessonNotQuite": "Pas tout à fait…",
+  "lessonYouChose": "Tu as choisi : ",
+  "lessonChosenQuote": "« {text} »",
+  "@lessonChosenQuote": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonRetry": "Réessayer",
+  "lessonRetryWithHint": "Réessayer avec un indice",
+  "lessonRewardFloat": "+{amount} HS",
+  "@lessonRewardFloat": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  }
 }

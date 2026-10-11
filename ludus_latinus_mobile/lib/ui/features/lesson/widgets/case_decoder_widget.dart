@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
 import '../../../core/game_juice.dart';
-import '../../../../data/services/audio_service.dart';
+import '../../../../data/services/audio_service.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Widget interactif pour les exercices de type 'decodeur' :
 /// Radiographie syntaxique et attribution tactile des fonctions grammaticales
@@ -39,28 +40,28 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
   String? _feedbackMessage;
   final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
 
-  static final List<Map<String, dynamic>> _tousLesRoles = [
+  List<Map<String, dynamic>> get _tousLesRoles => [
     {
       'id': 'sujet',
-      'label': 'Sujet (Nominatif)',
+      'label': context.l10n.decoderRoleSubject,
       'color': CaseColors.nominative,
       'icon': '🔵',
     },
     {
       'id': 'cod',
-      'label': 'COD (Accusatif)',
+      'label': context.l10n.decoderRoleObject,
       'color': CaseColors.accusative,
       'icon': '🔴',
     },
     {
       'id': 'genitif',
-      'label': 'Compl. du nom (Génitif)',
+      'label': context.l10n.decoderRoleGenitive,
       'color': CaseColors.genitive,
       'icon': '🟢',
     },
     {
       'id': 'verbe',
-      'label': 'Verbe d\'action',
+      'label': context.l10n.decoderRoleVerb,
       'color': const Color(0xFFD4AF37),
       'icon': '🟡',
     },
@@ -68,7 +69,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
 
   /// Le génitif n'est proposé que si la phrase en contient un : les mondes 4
   /// et 5 ne l'ont pas encore appris.
-  late final List<Map<String, dynamic>> _availableGrammarRoles = _tousLesRoles
+  List<Map<String, dynamic>> get _availableGrammarRoles => _tousLesRoles
       .where((r) => r['id'] != 'genitif' || widget.expectedRoles.values.contains('genitif'))
       .toList();
 
@@ -103,10 +104,10 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
   }
 
   String _getLabelForRole(String? roleId) {
-    if (roleId == null) return 'Rôle ?';
+    if (roleId == null) return context.l10n.decoderRoleQuestion;
     final r = _availableGrammarRoles.firstWhere(
       (it) => it['id'] == roleId,
-      orElse: () => {'label': 'Inconnu'},
+      orElse: () => {'label': context.l10n.decoderUnknown},
     );
     return r['label'] as String;
   }
@@ -115,9 +116,9 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
     // Vérifier que tous les mots ont reçu un rôle
     if (_assignedRoles.values.any((r) => r == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Attribue une fonction grammaticale à chaque mot avant de vérifier !'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(context.l10n.decoderIncompleteWarning),
+          duration: const Duration(seconds: 2),
         ),
       );
       return;
@@ -146,7 +147,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {
-        _feedbackMessage = '« Une des fonctions grammaticales n\'est pas attribuée au bon mot. Observe bien les désinences ! »';
+        _feedbackMessage = context.l10n.decoderWrongRole;
       });
     }
   }
@@ -160,16 +161,16 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 1. En-tête
-            const Row(
+            Row(
               children: [
-                Text('🔬 ', style: TextStyle(fontSize: 18)),
+                const Text('🔬 ', style: TextStyle(fontSize: 18)),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'LE DÉCODEUR DE CAS GRAMMATICAUX',
-                        style: TextStyle(
+                        context.l10n.decoderTitle,
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.8,
@@ -177,10 +178,10 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                           fontFamily: 'serif',
                         ),
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Text(
-                        'Sélectionne chaque mot et attribue-lui sa fonction dans la phrase.',
-                        style: TextStyle(fontSize: 11.5, color: Colors.black54),
+                        context.l10n.decoderInstruction,
+                        style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                       ),
                     ],
                   ),
@@ -248,7 +249,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
-                            hasRole ? _getLabelForRole(role) : 'Fonction ?',
+                            hasRole ? _getLabelForRole(role) : context.l10n.decoderFunctionQuestion,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -299,7 +300,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                   border: Border.all(color: Colors.green.shade300),
                 ),
                 child: Text(
-                  '✅ Bien décodé ! Traduction : « ${widget.traduction!.trim()} »',
+                  context.l10n.decoderSuccess(widget.traduction!.trim()),
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF1B5E20), height: 1.3),
                 ),
@@ -309,7 +310,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
             // 3. Palette des rôles grammaticaux
             if (!_isSuccess) ...[
               Text(
-                'ATTRIBUER AU MOT SÉLECTIONNÉ (« ${widget.words[_selectedWordIndex]} ») :',
+                context.l10n.decoderAssignToWord(widget.words[_selectedWordIndex]),
                 style: const TextStyle(
                   fontSize: 10.5,
                   fontWeight: FontWeight.bold,
@@ -355,7 +356,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
 
               // 4. Bouton de vérification
               RomanButton(
-                text: 'VÉRIFIER LE DÉCODAGE ▶',
+                text: context.l10n.decoderCheck,
                 backgroundColor: RomanColors.imperialPurple,
                 textColor: RomanColors.goldLight,
                 isLarge: true,

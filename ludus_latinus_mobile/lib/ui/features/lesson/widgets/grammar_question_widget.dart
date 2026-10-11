@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../../data/models/lesson.dart';
 import '../../../../data/services/audio_service.dart';
 import '../../../core/themes.dart';
-import '../../../core/widgets.dart';
+import '../../../core/widgets.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Question de grammaire d'une leçon : un QCM à options mélangées. Une mauvaise
 /// réponse est marquée et son explication s'affiche ; l'élève réessaie jusqu'à
@@ -73,9 +74,9 @@ class _GrammarQuestionWidgetState extends State<GrammarQuestionWidget> {
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 0.8, color: RomanColors.goldDark),
           ),
           const SizedBox(height: 6),
-          const Text(
-            'Exercice de grammaire',
-            style: TextStyle(fontSize: 17, height: 1.3, fontWeight: FontWeight.bold, fontFamily: 'serif', color: RomanColors.imperialPurple),
+          Text(
+            context.l10n.grammarExerciseTitle,
+            style: const TextStyle(fontSize: 17, height: 1.3, fontWeight: FontWeight.bold, fontFamily: 'serif', color: RomanColors.imperialPurple),
           ),
           const SizedBox(height: 6),
           Text(
@@ -144,9 +145,9 @@ class _GrammarQuestionWidgetState extends State<GrammarQuestionWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Pas tout à fait… Réessaie.',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF94381E)),
+                  Text(
+                    context.l10n.grammarTryAgain,
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF94381E)),
                   ),
                   if (explication.isNotEmpty) ...[
                     const SizedBox(height: 4),

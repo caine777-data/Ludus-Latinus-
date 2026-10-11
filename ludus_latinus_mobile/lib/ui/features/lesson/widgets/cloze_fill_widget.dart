@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
 import '../../../core/game_juice.dart';
-import '../../../../data/services/audio_service.dart';
+import '../../../../data/services/audio_service.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Widget interactif pour les exercices de type 'trou' :
 /// Complétion de texte, recherche de cas, désinence ou radical manquant.
@@ -63,9 +64,9 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
 
     if (input.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Complète la case vide avant de vérifier !'),
-          duration: Duration(seconds: 2),
+        SnackBar(
+          content: Text(context.l10n.clozeEmptyWarning),
+          duration: const Duration(seconds: 2),
         ),
       );
       return;
@@ -91,7 +92,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {
         _feedbackMessage =
-            '« Ce n\'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »';
+            context.l10n.clozeWrongEnding;
       });
     }
   }
@@ -121,7 +122,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 Expanded(
                   child: Text(
                     widget.consigne ??
-                        'Complète la phrase latine avec la bonne forme :',
+                        context.l10n.clozeInstruction,
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -145,8 +146,8 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 ),
                 child: Text(
                   finDeMot
-                      ? '✂️ Écris seulement la fin du mot'
-                      : '✍️ Écris le mot entier',
+                      ? context.l10n.clozeWriteEndingOnly
+                      : context.l10n.clozeWriteWholeWord,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -299,9 +300,9 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
             // 3. Options rapides de désinences (si présentes dans la leçon)
             if (widget.options.isNotEmpty && !_isSuccess) ...[
               const SizedBox(height: 14),
-              const Text(
-                'OPTIONS DISPONIBLES (CLIQUE POUR SÉLECTIONNER) :',
-                style: TextStyle(
+              Text(
+                context.l10n.clozeAvailableOptions,
+                style: const TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.bold,
                     color: Colors.black54,
@@ -347,7 +348,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
             // 4. Bouton de validation
             if (!_isSuccess)
               RomanButton(
-                text: 'VALIDER LA TERMINAISON ▶',
+                text: context.l10n.clozeCheck,
                 backgroundColor: RomanColors.imperialPurple,
                 textColor: RomanColors.goldLight,
                 isLarge: true,

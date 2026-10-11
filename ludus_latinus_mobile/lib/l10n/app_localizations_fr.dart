@@ -301,4 +301,375 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get shopWhyHsBody =>
       'Le sesterce (sestertius) était une pièce romaine qui valait deux as et demi.\n\nLes Romains l\'écrivaient IIS : II pour « deux », et S pour semis, « demi ». Pour ne pas le confondre avec un nombre, ils barraient les deux I… et le signe a fini par ressembler à un H : HS.\n\nSous l\'empereur Auguste, un légionnaire gagnait environ 900 sesterces par an.';
+
+  @override
+  String get grammarExerciseTitle => 'Exercice de grammaire';
+
+  @override
+  String get grammarTryAgain => 'Pas tout à fait… Réessaie.';
+
+  @override
+  String get vocabCorrectTitle => 'Optime !';
+
+  @override
+  String get vocabRememberHint =>
+      'Retiens bien : la question reviendra à la fin.';
+
+  @override
+  String vocabEntryLine(String latin, String french) {
+    return '$latin : $french';
+  }
+
+  @override
+  String vocabExampleLine(String example, String translation) {
+    return '« $example » $translation';
+  }
+
+  @override
+  String vocabEtymology(String etymology) {
+    return 'En français : $etymology';
+  }
+
+  @override
+  String get commonContinueUpper => 'CONTINUER';
+
+  @override
+  String get puzzleEmptyWarning =>
+      'Touche des mots pour composer ta phrase avant de valider !';
+
+  @override
+  String get puzzleWrongOrder =>
+      '« Ce n\'est pas tout à fait le bon ordre des mots. Réessaie ! »';
+
+  @override
+  String get puzzleWrongWords =>
+      '« Les mots ne sont pas tous les bons. Regarde les terminaisons du latin ! »';
+
+  @override
+  String get puzzleTitle => 'PUZZLE DE SYNTAXE ROMAINE';
+
+  @override
+  String puzzleInstruction(String phrase) {
+    return 'Traduis ou réordonne : « $phrase »';
+  }
+
+  @override
+  String get puzzleReset => 'Réinitialiser les mots';
+
+  @override
+  String get puzzleTapWords =>
+      'Touche les mots ci-dessous pour assembler la phrase dans le bon ordre ✍️';
+
+  @override
+  String get puzzleAvailableWords => 'MOTS DISPONIBLES :';
+
+  @override
+  String get puzzleCheck => 'VÉRIFIER LA PHRASE ▶';
+
+  @override
+  String get clozeEmptyWarning => 'Complète la case vide avant de vérifier !';
+
+  @override
+  String get clozeWrongEnding =>
+      '« Ce n\'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »';
+
+  @override
+  String get clozeInstruction =>
+      'Complète la phrase latine avec la bonne forme :';
+
+  @override
+  String get clozeWriteEndingOnly => '✂️ Écris seulement la fin du mot';
+
+  @override
+  String get clozeWriteWholeWord => '✍️ Écris le mot entier';
+
+  @override
+  String get clozeAvailableOptions =>
+      'OPTIONS DISPONIBLES (CLIQUE POUR SÉLECTIONNER) :';
+
+  @override
+  String get clozeCheck => 'VALIDER LA TERMINAISON ▶';
+
+  @override
+  String get decoderRoleSubject => 'Sujet (Nominatif)';
+
+  @override
+  String get decoderRoleObject => 'COD (Accusatif)';
+
+  @override
+  String get decoderRoleGenitive => 'Compl. du nom (Génitif)';
+
+  @override
+  String get decoderRoleVerb => 'Verbe d\'action';
+
+  @override
+  String get decoderRoleQuestion => 'Rôle ?';
+
+  @override
+  String get decoderUnknown => 'Inconnu';
+
+  @override
+  String get decoderIncompleteWarning =>
+      'Attribue une fonction grammaticale à chaque mot avant de vérifier !';
+
+  @override
+  String get decoderWrongRole =>
+      '« Une des fonctions grammaticales n\'est pas attribuée au bon mot. Observe bien les désinences ! »';
+
+  @override
+  String get decoderTitle => 'LE DÉCODEUR DE CAS GRAMMATICAUX';
+
+  @override
+  String get decoderInstruction =>
+      'Sélectionne chaque mot et attribue-lui sa fonction dans la phrase.';
+
+  @override
+  String get decoderFunctionQuestion => 'Fonction ?';
+
+  @override
+  String decoderSuccess(String translation) {
+    return '✅ Bien décodé ! Traduction : « $translation »';
+  }
+
+  @override
+  String decoderAssignToWord(String word) {
+    return 'ATTRIBUER AU MOT SÉLECTIONNÉ (« $word ») :';
+  }
+
+  @override
+  String get decoderCheck => 'VÉRIFIER LE DÉCODAGE ▶';
+
+  @override
+  String get arenaChampion => 'Champion de l\'Arène';
+
+  @override
+  String get arenaAnswerProvocation => 'Réponds à la provocation du Boss :';
+
+  @override
+  String get arenaBossHp => 'Points de Vie : ';
+
+  @override
+  String get arenaYourLives => 'Tes vies : ';
+
+  @override
+  String arenaBossRepelled(String boss) {
+    return '$boss t\'a repoussé !';
+  }
+
+  @override
+  String get arenaNoLivesLeft =>
+      'Tu n\'as plus de vie. Relis le cours du monde si besoin, puis retente ta chance : les réponses auront changé de place.';
+
+  @override
+  String get arenaRetry => 'Retenter l\'arène';
+
+  @override
+  String arenaHitWithExplanation(String explanation) {
+    return 'Touché ! $explanation';
+  }
+
+  @override
+  String get arenaHit => 'Touché !';
+
+  @override
+  String get arenaFinalBlow => 'Porter le coup final';
+
+  @override
+  String get arenaContinueFight => 'Continuer le combat';
+
+  @override
+  String arenaMissed(int lives) {
+    String _temp0 = intl.Intl.pluralLogic(
+      lives,
+      locale: localeName,
+      other: 'vies',
+      one: 'vie',
+    );
+    return 'Raté ! Il te reste $lives $_temp0. Essaie une autre réponse.';
+  }
+
+  @override
+  String lessonWorldCompleteNamed(String world) {
+    return 'Monde terminé : $world';
+  }
+
+  @override
+  String get lessonWorldComplete => 'Monde terminé !';
+
+  @override
+  String get lessonWorldCompleteUpper => 'MONDE TERMINÉ !';
+
+  @override
+  String get lessonWorldAllValidated =>
+      'Toutes les leçons de ce monde sont validées.';
+
+  @override
+  String get lessonResultPerfect => 'Optime !';
+
+  @override
+  String get lessonResultPerfectHint => 'Réussi du premier coup.';
+
+  @override
+  String get lessonResultGood => 'Bene !';
+
+  @override
+  String get lessonResultGoodHint =>
+      'Réussi avec une aide. Refais la leçon plus tard pour décrocher 3 étoiles.';
+
+  @override
+  String get lessonResultPassed => 'Leçon réussie';
+
+  @override
+  String get lessonResultPassedHint =>
+      'Il a fallu plusieurs essais : relis la leçon et retente-la bientôt.';
+
+  @override
+  String lessonNewCard(String name) {
+    return 'Nouvelle carte au Panthéon : $name';
+  }
+
+  @override
+  String lessonNewRecord(int stars) {
+    return 'Nouveau record : $stars ★';
+  }
+
+  @override
+  String lessonAlreadyDoneRecord(int stars) {
+    return 'Leçon déjà validée (record : $stars ★)';
+  }
+
+  @override
+  String get lessonAlreadyDoneNoReward =>
+      'Leçon déjà validée : pas de nouveaux sesterces';
+
+  @override
+  String get lessonCursusProgress => 'Progression du Cursus';
+
+  @override
+  String lessonCursusCount(int done, int total) {
+    return '$done / $total leçons';
+  }
+
+  @override
+  String get lessonContinue => 'CONTINUER ▶';
+
+  @override
+  String get lessonTypeQuiz => 'QCM Grammaire & Vocabulaire';
+
+  @override
+  String get lessonTypePuzzle => 'Syntaxe & Ordre des Mots';
+
+  @override
+  String get lessonTypeCloze => 'Déclinaisons & Cas Latins';
+
+  @override
+  String get lessonTypeArena => 'Épreuve d\'Arène / Combat';
+
+  @override
+  String get lessonTypeDecoder => 'Épigraphie & Décodage';
+
+  @override
+  String get lessonTypeDefault => 'Leçon & Exercice';
+
+  @override
+  String get lupulusGreetingGladiator =>
+      '« Salve pugnator ! Dans l\'arène, la précision du mot frappe aussi fort que le glaive ! »';
+
+  @override
+  String get lupulusGreetingLegion =>
+      '« Salve legionarie ! La discipline grammaticale est le bouclier des légions ! »';
+
+  @override
+  String get lupulusGreetingMyth =>
+      '« Salve discipule ! Que Minerve et Apollon inspirent ta mémoire mythologique ! »';
+
+  @override
+  String get lupulusGreetingDefault =>
+      '« Salve discipule ! Observe bien les racines latines, elles éclairent la langue française ! »';
+
+  @override
+  String get lessonLabel => 'LEÇON';
+
+  @override
+  String get lessonLatinPronunciation => 'Prononciation latine';
+
+  @override
+  String get lessonToExercise => 'À L\'EXERCICE ↓';
+
+  @override
+  String lessonValidatedStars(String filled, String empty) {
+    return '✓ Validée $filled$empty';
+  }
+
+  @override
+  String lessonUpToReward(int amount) {
+    return 'Jusqu\'à +$amount HS';
+  }
+
+  @override
+  String get lessonPronunciation => 'Prononciation';
+
+  @override
+  String get lessonReviewCourse => 'Revoir le cours';
+
+  @override
+  String get lessonBackToExercise => 'Retour à l\'exercice';
+
+  @override
+  String lessonProgressGrammar(int total) {
+    return 'EXERCICE 2 / $total • GRAMMAIRE';
+  }
+
+  @override
+  String lessonProgressVocab(int current, int total) {
+    return 'EXERCICE $current / $total • VOCABULAIRE';
+  }
+
+  @override
+  String lessonProgressFirst(int total) {
+    return 'EXERCICE 1 / $total';
+  }
+
+  @override
+  String get lessonChooseAnswer => 'Choisis la bonne réponse :';
+
+  @override
+  String get lessonHintButton => 'Indice : barrer une mauvaise réponse (−1 ★)';
+
+  @override
+  String get lessonSelectedAnswer => 'Réponse sélectionnée';
+
+  @override
+  String get lessonAdviceReread =>
+      'Relis le passage de la leçon juste au-dessus : la réponse s\'y trouve.';
+
+  @override
+  String get lessonAdviceCases =>
+      'Vérifie qui fait l\'action (nominatif) et qui la subit (accusatif), puis réessaie.';
+
+  @override
+  String get lessonAdviceNumber =>
+      'Observe la terminaison du mot : c\'est elle qui indique le singulier ou le pluriel.';
+
+  @override
+  String get lessonNotQuite => 'Pas tout à fait…';
+
+  @override
+  String get lessonYouChose => 'Tu as choisi : ';
+
+  @override
+  String lessonChosenQuote(String text) {
+    return '« $text »';
+  }
+
+  @override
+  String get lessonRetry => 'Réessayer';
+
+  @override
+  String get lessonRetryWithHint => 'Réessayer avec un indice';
+
+  @override
+  String lessonRewardFloat(int amount) {
+    return '+$amount HS';
+  }
 }
