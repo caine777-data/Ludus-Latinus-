@@ -422,5 +422,353 @@
         "type": "int"
       }
     }
-  }
+  },
+  "homeClass5": "5ème • Origines",
+  "homeClass4": "4ème • République",
+  "homeClass3": "3ème • Empire",
+  "homeBarLibrary": "BIBLIOTHECA",
+  "homeBarGames": "LUDI",
+  "homeBarTitle": "LUDUS LATINUS",
+  "homeSettingsTooltip": "Paramètres",
+  "homeTabCursus": "Cursus",
+  "homeTabLibrary": "Bibliotheca",
+  "homeTabGames": "Ludi",
+  "homeLessonsConquered": "{done} / {total} leçons conquises",
+  "@homeLessonsConquered": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeLupulusSalve": "« Salve {name} ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »",
+  "@homeLupulusSalve": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLupulusSalute": "🐺 Lupulus t'adresse son salut légionnaire : \"Per aspera ad astra !\"",
+  "homeViaAppia": "LA VIA APPIA",
+  "homeViaAppiaSubtitle": "26 mondes du collège, de la 5e à la 3e",
+  "homeAdvanceOnRoad": "▶ AVANCER SUR LA ROUTE",
+  "homeShopTitle": "Taberna Romana : la boutique",
+  "homeShopHint": "Dépense tes {amount} sesterces : toges, couronnes, compagnons…",
+  "@homeShopHint": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "homeQuestDone": "Défi accompli ! Reviens demain pour une nouvelle quête.",
+  "homeQuestPlay": "JOUER · +{amount} HS",
+  "@homeQuestPlay": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "homeLessonTypeArena": "Épreuve d'Arène",
+  "homeOfficialLessons": "LEÇONS OFFICIELLES • {className}",
+  "@homeOfficialLessons": {
+    "placeholders": {
+      "className": {
+        "type": "String"
+      }
+    }
+  },
+  "homeCurriculum": "Programme du collège : grammaire, textes et exercices",
+  "homeLessonsDone": "{done} / {total} leçons terminées",
+  "@homeLessonsDone": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "homeValidated": "✓ VALIDÉE {stars}",
+  "@homeValidated": {
+    "placeholders": {
+      "stars": {
+        "type": "String"
+      }
+    }
+  },
+  "homeNextLesson": "▶ LEÇON SUIVANTE",
+  "homeInteractiveExercise": "Exercice interactif du collège.",
+  "homeReviseLesson": "RÉVISER LA LEÇON",
+  "homeStartLesson": "COMMENCER LA LEÇON ▶",
+  "homeViaAppiaName": "Via Appia",
+  "homeAllLessonsOfLevel": "Toutes les leçons de ce niveau :",
+  "homeLessonCount": "{count} leçons",
+  "@homeLessonCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeHere": "📍 ICI",
+  "homeDone": "Validée",
+  "homeExplore": "Explorer",
+  "cursusTitle": "CURSUS HONORUM",
+  "cursusSubtitle": "Carrière des Honneurs Romains",
+  "cursusCurrentRank": "TON RANG ACTUEL : {rank}",
+  "@cursusCurrentRank": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      }
+    }
+  },
+  "cursusNextRank": "Prochain rang : {rank} ({lessons} leçons, {monuments} édifice(s), {sesterces} HS)",
+  "@cursusNextRank": {
+    "placeholders": {
+      "rank": {
+        "type": "String"
+      },
+      "lessons": {
+        "type": "int"
+      },
+      "monuments": {
+        "type": "int"
+      },
+      "sesterces": {
+        "type": "int"
+      }
+    }
+  },
+  "cursusTop": "👑 Tu as atteint le sommet du Cursus Honorum !",
+  "cursusYou": "TOI",
+  "cursusRequired": "Requis : {lessons} leçons • {monuments} édifice(s) • {sesterces} HS",
+  "@cursusRequired": {
+    "placeholders": {
+      "lessons": {
+        "type": "int"
+      },
+      "monuments": {
+        "type": "int"
+      },
+      "sesterces": {
+        "type": "int"
+      }
+    }
+  },
+  "ludiTitle": "LUDI & ARÈNES DE L'EMPIRE",
+  "ludiSubtitle": "« Panem et circenses » • Du pain et des jeux !\nDéfis chronométrés, courses épiques et tavernes antiques.",
+  "ludiRecordPoints": "Record : {points} pts",
+  "@ludiRecordPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "ludiCircusSubtitle": "Course de chars & turbo",
+  "ludiCircusTag": "COURSE",
+  "ludiRecordStreak": "Record : {count} d'affilée",
+  "@ludiRecordStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ludiDuelSubtitle": "Arène tactique des champions",
+  "ludiDuelTag": "ARÈNE",
+  "ludiTavernSubtitle": "Taverne & dés romains",
+  "ludiTavernTag": "DÉS",
+  "ludiCaesarSubtitle": "Cryptographie militaire",
+  "ludiCaesarTag": "ÉNIGME",
+  "ludiMarketSubtitle": "Chiffres romains & étal",
+  "ludiMarketTag": "COMMERCE",
+  "ludiPantheonSubtitle": "Une carte par monde terminé",
+  "ludiPantheonTag": "CARTES",
+  "ludiDidYouKnow": "Le Saviez-vous ?",
+  "ludiDidYouKnowBody": "Chaque nouvelle ville conquise sur la Via Appia déverrouille de nouveaux quartiers de loisirs. Avance dans tes leçons pour tout débloquer ! ({count} leçons terminées).",
+  "@ludiDidYouKnowBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryTitle": "BIBLIOTHECA ROMANA",
+  "librarySubtitle": "« Littera scripta manet » • Les écrits restent.\nOutils de référence, mémoire espacée et trésors épigraphiques.",
+  "libraryMemoriaRecord": "{count} mot(s) ancré(s) · record {record}",
+  "@libraryMemoriaRecord": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "record": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryMemoriaCount": "{count} mot(s) ancré(s) en mémoire",
+  "@libraryMemoriaCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryMemoriaTag": "RÉVISION SRS",
+  "libraryThesaurusSubtitle": "Lexique thématique & déclinaisons",
+  "libraryThesaurusTag": "DICTIONNAIRE",
+  "libraryForumCount": "{count} / 6 édifice(s) restauré(s)",
+  "@libraryForumCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryForumTag": "PATRIMOINE",
+  "libraryEpigraphyTitle": "Épigraphie",
+  "libraryEpigraphyCount": "{count} inscription(s) décodée(s)",
+  "@libraryEpigraphyCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "libraryEpigraphyTag": "STÈLES",
+  "libraryExportTitle": "TABULAE MEMORIALES (FICHES A4)",
+  "libraryExportBody": "Exporte la table des 5 déclinaisons et tes flashcards au format papier A4 pour réviser hors-écran.",
+  "libraryTipTitle": "Conseil Didactique de Lupulus",
+  "libraryTipBody": "Réviser 5 minutes par jour avec Memoria Velox est 3 fois plus efficace qu'une heure le week-end. Active la répétition espacée !",
+  "exportCopied": "Fiche A4 copiée au format HTML ! Ouvre ton navigateur et imprime (Ctrl+P / Imprimer en PDF).",
+  "exportTitle": "Tabulae Memoriales",
+  "exportSubtitle": "Fiches de Révision & Flashcards A4 Imprimables",
+  "exportTabDeclensions": "📖 Déclinaisons",
+  "exportTabFlashcards": "✂️ Flashcards",
+  "exportTabRecords": "📜 Palmarès",
+  "exportCopyButton": "COPIER LA FICHE A4 (HTML / PDF)",
+  "exportColumnCase": "Cas",
+  "exportColumnSingular": "Singulier",
+  "exportColumnPlural": "Pluriel",
+  "exportFlashcardsIntro": "Planche de révision découpable prête à l'impression :",
+  "exportRankTitle": "Titre républicain : {title}",
+  "@exportRankTitle": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "exportTreasure": "🪙 Trésor accumulé",
+  "exportMonuments": "🏛️ Monuments restaurés",
+  "exportMonumentsCount": "{count} / 6 édifices",
+  "@exportMonumentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportEpigraphs": "🔍 Stèles lapidaires décodées",
+  "exportEpigraphsCount": "{count} inscriptions",
+  "@exportEpigraphsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportCards": "🃏 Cartes ancrées en mémoire SRS",
+  "exportCardsCount": "{count} fiches",
+  "@exportCardsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportStreak": "🔥 Série d'assiduité quotidienne",
+  "exportStreakCount": "{count} jour(s) consécutif(s)",
+  "@exportStreakCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "lupulusAdviceTitle": "Lupulus te conseille",
+  "diplomaStatLessons": "📖 Leçons",
+  "diplomaStatForum": "🏛️ Forum",
+  "diplomaStatTreasure": "🪙 Trésor",
+  "diplomaStatStreak": "🔥 Ferveur",
+  "diplomaCopy": "Copier l'Eloge",
+  "diplomaCopiedText": "🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\nProclamé pour : {name}\nRang du Cursus Honorum : {rank}\nAccomplissements : {lessons} leçons maîtrisées, {monuments} monuments restaurés au Forum.\n{date}",
+  "@diplomaCopiedText": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "rank": {
+        "type": "String"
+      },
+      "lessons": {
+        "type": "int"
+      },
+      "monuments": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "diplomaCopied": "📜 Éloge impérial copié dans le presse-papier !",
+  "diplomaRecognition": "Reconnaissance",
+  "audioTab": "SON",
+  "audioTitle": "HARMONIA ANTIQUA",
+  "audioSubtitle": "Sons & Résonances de l'Empire",
+  "audioSoundsTitle": "Sonorités de Rome",
+  "audioMuted": "Sourdine activée (silence du temple)",
+  "audioSoundsOn": "Bruitages authentiques actifs",
+  "audioMasterVolume": "Volume Maître",
+  "audioMusic": "Musique",
+  "audioMusicOn": "Ambiance de lyre et de flûte",
+  "audioMusicOff": "Musique coupée",
+  "audioHaptics": "Retours Haptiques",
+  "audioHapticsOn": "Vibrations du glaive & des victoires",
+  "audioHapticsOff": "Vibrations désactivées",
+  "audioTestBench": "BANC D'ESSAI ACOUSTIQUE",
+  "audioSfxCoins": "Sesterces d'Or",
+  "audioSfxCoinsDesc": "Tintement de pièces impériales",
+  "audioSfxDice": "Alea & Fritillus",
+  "audioSfxDiceDesc": "Roulement des osselets et dés",
+  "audioSfxTriumph": "Fanfare de Triomphe",
+  "audioSfxTriumphDesc": "Tubae & buccinae de victoire",
+  "audioSfxColosseum": "Colosseum",
+  "audioSfxColosseumDesc": "Clameur de la plèbe romaine",
+  "audioSfxSword": "Glaive & Scutum",
+  "audioSfxSwordDesc": "Choc métallique d'acier et bronze",
+  "audioSfxCaesar": "Roue de César",
+  "audioSfxCaesarDesc": "Engrenage mécanique chiffré",
+  "audioSfxParchment": "Parchemin & Carte",
+  "audioSfxParchmentDesc": "Froissement velouté du vélin",
+  "questCompleteTitle": "DÉFI DU JOUR ACCOMPLI !",
+  "questCompleteReward": "+{amount} SESTERCES",
+  "@questCompleteReward": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "questCollect": "RÉCOLTER LE TRÉSOR"
 }

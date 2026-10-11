@@ -672,4 +672,476 @@ class AppLocalizationsFr extends AppLocalizations {
   String lessonRewardFloat(int amount) {
     return '+$amount HS';
   }
+
+  @override
+  String get homeClass5 => '5ème • Origines';
+
+  @override
+  String get homeClass4 => '4ème • République';
+
+  @override
+  String get homeClass3 => '3ème • Empire';
+
+  @override
+  String get homeBarLibrary => 'BIBLIOTHECA';
+
+  @override
+  String get homeBarGames => 'LUDI';
+
+  @override
+  String get homeBarTitle => 'LUDUS LATINUS';
+
+  @override
+  String get homeSettingsTooltip => 'Paramètres';
+
+  @override
+  String get homeTabCursus => 'Cursus';
+
+  @override
+  String get homeTabLibrary => 'Bibliotheca';
+
+  @override
+  String get homeTabGames => 'Ludi';
+
+  @override
+  String homeLessonsConquered(int done, int total) {
+    return '$done / $total leçons conquises';
+  }
+
+  @override
+  String homeLupulusSalve(String name) {
+    return '« Salve $name ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »';
+  }
+
+  @override
+  String get homeLupulusSalute =>
+      '🐺 Lupulus t\'adresse son salut légionnaire : \"Per aspera ad astra !\"';
+
+  @override
+  String get homeViaAppia => 'LA VIA APPIA';
+
+  @override
+  String get homeViaAppiaSubtitle => '26 mondes du collège, de la 5e à la 3e';
+
+  @override
+  String get homeAdvanceOnRoad => '▶ AVANCER SUR LA ROUTE';
+
+  @override
+  String get homeShopTitle => 'Taberna Romana : la boutique';
+
+  @override
+  String homeShopHint(int amount) {
+    return 'Dépense tes $amount sesterces : toges, couronnes, compagnons…';
+  }
+
+  @override
+  String get homeQuestDone =>
+      'Défi accompli ! Reviens demain pour une nouvelle quête.';
+
+  @override
+  String homeQuestPlay(int amount) {
+    return 'JOUER · +$amount HS';
+  }
+
+  @override
+  String get homeLessonTypeArena => 'Épreuve d\'Arène';
+
+  @override
+  String homeOfficialLessons(String className) {
+    return 'LEÇONS OFFICIELLES • $className';
+  }
+
+  @override
+  String get homeCurriculum =>
+      'Programme du collège : grammaire, textes et exercices';
+
+  @override
+  String homeLessonsDone(int done, int total) {
+    return '$done / $total leçons terminées';
+  }
+
+  @override
+  String homeValidated(String stars) {
+    return '✓ VALIDÉE $stars';
+  }
+
+  @override
+  String get homeNextLesson => '▶ LEÇON SUIVANTE';
+
+  @override
+  String get homeInteractiveExercise => 'Exercice interactif du collège.';
+
+  @override
+  String get homeReviseLesson => 'RÉVISER LA LEÇON';
+
+  @override
+  String get homeStartLesson => 'COMMENCER LA LEÇON ▶';
+
+  @override
+  String get homeViaAppiaName => 'Via Appia';
+
+  @override
+  String get homeAllLessonsOfLevel => 'Toutes les leçons de ce niveau :';
+
+  @override
+  String homeLessonCount(int count) {
+    return '$count leçons';
+  }
+
+  @override
+  String get homeHere => '📍 ICI';
+
+  @override
+  String get homeDone => 'Validée';
+
+  @override
+  String get homeExplore => 'Explorer';
+
+  @override
+  String get cursusTitle => 'CURSUS HONORUM';
+
+  @override
+  String get cursusSubtitle => 'Carrière des Honneurs Romains';
+
+  @override
+  String cursusCurrentRank(String rank) {
+    return 'TON RANG ACTUEL : $rank';
+  }
+
+  @override
+  String cursusNextRank(
+      String rank, int lessons, int monuments, int sesterces) {
+    return 'Prochain rang : $rank ($lessons leçons, $monuments édifice(s), $sesterces HS)';
+  }
+
+  @override
+  String get cursusTop => '👑 Tu as atteint le sommet du Cursus Honorum !';
+
+  @override
+  String get cursusYou => 'TOI';
+
+  @override
+  String cursusRequired(int lessons, int monuments, int sesterces) {
+    return 'Requis : $lessons leçons • $monuments édifice(s) • $sesterces HS';
+  }
+
+  @override
+  String get ludiTitle => 'LUDI & ARÈNES DE L\'EMPIRE';
+
+  @override
+  String get ludiSubtitle =>
+      '« Panem et circenses » • Du pain et des jeux !\nDéfis chronométrés, courses épiques et tavernes antiques.';
+
+  @override
+  String ludiRecordPoints(int points) {
+    return 'Record : $points pts';
+  }
+
+  @override
+  String get ludiCircusSubtitle => 'Course de chars & turbo';
+
+  @override
+  String get ludiCircusTag => 'COURSE';
+
+  @override
+  String ludiRecordStreak(int count) {
+    return 'Record : $count d\'affilée';
+  }
+
+  @override
+  String get ludiDuelSubtitle => 'Arène tactique des champions';
+
+  @override
+  String get ludiDuelTag => 'ARÈNE';
+
+  @override
+  String get ludiTavernSubtitle => 'Taverne & dés romains';
+
+  @override
+  String get ludiTavernTag => 'DÉS';
+
+  @override
+  String get ludiCaesarSubtitle => 'Cryptographie militaire';
+
+  @override
+  String get ludiCaesarTag => 'ÉNIGME';
+
+  @override
+  String get ludiMarketSubtitle => 'Chiffres romains & étal';
+
+  @override
+  String get ludiMarketTag => 'COMMERCE';
+
+  @override
+  String get ludiPantheonSubtitle => 'Une carte par monde terminé';
+
+  @override
+  String get ludiPantheonTag => 'CARTES';
+
+  @override
+  String get ludiDidYouKnow => 'Le Saviez-vous ?';
+
+  @override
+  String ludiDidYouKnowBody(int count) {
+    return 'Chaque nouvelle ville conquise sur la Via Appia déverrouille de nouveaux quartiers de loisirs. Avance dans tes leçons pour tout débloquer ! ($count leçons terminées).';
+  }
+
+  @override
+  String get libraryTitle => 'BIBLIOTHECA ROMANA';
+
+  @override
+  String get librarySubtitle =>
+      '« Littera scripta manet » • Les écrits restent.\nOutils de référence, mémoire espacée et trésors épigraphiques.';
+
+  @override
+  String libraryMemoriaRecord(int count, int record) {
+    return '$count mot(s) ancré(s) · record $record';
+  }
+
+  @override
+  String libraryMemoriaCount(int count) {
+    return '$count mot(s) ancré(s) en mémoire';
+  }
+
+  @override
+  String get libraryMemoriaTag => 'RÉVISION SRS';
+
+  @override
+  String get libraryThesaurusSubtitle => 'Lexique thématique & déclinaisons';
+
+  @override
+  String get libraryThesaurusTag => 'DICTIONNAIRE';
+
+  @override
+  String libraryForumCount(int count) {
+    return '$count / 6 édifice(s) restauré(s)';
+  }
+
+  @override
+  String get libraryForumTag => 'PATRIMOINE';
+
+  @override
+  String get libraryEpigraphyTitle => 'Épigraphie';
+
+  @override
+  String libraryEpigraphyCount(int count) {
+    return '$count inscription(s) décodée(s)';
+  }
+
+  @override
+  String get libraryEpigraphyTag => 'STÈLES';
+
+  @override
+  String get libraryExportTitle => 'TABULAE MEMORIALES (FICHES A4)';
+
+  @override
+  String get libraryExportBody =>
+      'Exporte la table des 5 déclinaisons et tes flashcards au format papier A4 pour réviser hors-écran.';
+
+  @override
+  String get libraryTipTitle => 'Conseil Didactique de Lupulus';
+
+  @override
+  String get libraryTipBody =>
+      'Réviser 5 minutes par jour avec Memoria Velox est 3 fois plus efficace qu\'une heure le week-end. Active la répétition espacée !';
+
+  @override
+  String get exportCopied =>
+      'Fiche A4 copiée au format HTML ! Ouvre ton navigateur et imprime (Ctrl+P / Imprimer en PDF).';
+
+  @override
+  String get exportTitle => 'Tabulae Memoriales';
+
+  @override
+  String get exportSubtitle => 'Fiches de Révision & Flashcards A4 Imprimables';
+
+  @override
+  String get exportTabDeclensions => '📖 Déclinaisons';
+
+  @override
+  String get exportTabFlashcards => '✂️ Flashcards';
+
+  @override
+  String get exportTabRecords => '📜 Palmarès';
+
+  @override
+  String get exportCopyButton => 'COPIER LA FICHE A4 (HTML / PDF)';
+
+  @override
+  String get exportColumnCase => 'Cas';
+
+  @override
+  String get exportColumnSingular => 'Singulier';
+
+  @override
+  String get exportColumnPlural => 'Pluriel';
+
+  @override
+  String get exportFlashcardsIntro =>
+      'Planche de révision découpable prête à l\'impression :';
+
+  @override
+  String exportRankTitle(String title) {
+    return 'Titre républicain : $title';
+  }
+
+  @override
+  String get exportTreasure => '🪙 Trésor accumulé';
+
+  @override
+  String get exportMonuments => '🏛️ Monuments restaurés';
+
+  @override
+  String exportMonumentsCount(int count) {
+    return '$count / 6 édifices';
+  }
+
+  @override
+  String get exportEpigraphs => '🔍 Stèles lapidaires décodées';
+
+  @override
+  String exportEpigraphsCount(int count) {
+    return '$count inscriptions';
+  }
+
+  @override
+  String get exportCards => '🃏 Cartes ancrées en mémoire SRS';
+
+  @override
+  String exportCardsCount(int count) {
+    return '$count fiches';
+  }
+
+  @override
+  String get exportStreak => '🔥 Série d\'assiduité quotidienne';
+
+  @override
+  String exportStreakCount(int count) {
+    return '$count jour(s) consécutif(s)';
+  }
+
+  @override
+  String get lupulusAdviceTitle => 'Lupulus te conseille';
+
+  @override
+  String get diplomaStatLessons => '📖 Leçons';
+
+  @override
+  String get diplomaStatForum => '🏛️ Forum';
+
+  @override
+  String get diplomaStatTreasure => '🪙 Trésor';
+
+  @override
+  String get diplomaStatStreak => '🔥 Ferveur';
+
+  @override
+  String get diplomaCopy => 'Copier l\'Eloge';
+
+  @override
+  String diplomaCopiedText(
+      String name, String rank, int lessons, int monuments, String date) {
+    return '🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\nProclamé pour : $name\nRang du Cursus Honorum : $rank\nAccomplissements : $lessons leçons maîtrisées, $monuments monuments restaurés au Forum.\n$date';
+  }
+
+  @override
+  String get diplomaCopied => '📜 Éloge impérial copié dans le presse-papier !';
+
+  @override
+  String get diplomaRecognition => 'Reconnaissance';
+
+  @override
+  String get audioTab => 'SON';
+
+  @override
+  String get audioTitle => 'HARMONIA ANTIQUA';
+
+  @override
+  String get audioSubtitle => 'Sons & Résonances de l\'Empire';
+
+  @override
+  String get audioSoundsTitle => 'Sonorités de Rome';
+
+  @override
+  String get audioMuted => 'Sourdine activée (silence du temple)';
+
+  @override
+  String get audioSoundsOn => 'Bruitages authentiques actifs';
+
+  @override
+  String get audioMasterVolume => 'Volume Maître';
+
+  @override
+  String get audioMusic => 'Musique';
+
+  @override
+  String get audioMusicOn => 'Ambiance de lyre et de flûte';
+
+  @override
+  String get audioMusicOff => 'Musique coupée';
+
+  @override
+  String get audioHaptics => 'Retours Haptiques';
+
+  @override
+  String get audioHapticsOn => 'Vibrations du glaive & des victoires';
+
+  @override
+  String get audioHapticsOff => 'Vibrations désactivées';
+
+  @override
+  String get audioTestBench => 'BANC D\'ESSAI ACOUSTIQUE';
+
+  @override
+  String get audioSfxCoins => 'Sesterces d\'Or';
+
+  @override
+  String get audioSfxCoinsDesc => 'Tintement de pièces impériales';
+
+  @override
+  String get audioSfxDice => 'Alea & Fritillus';
+
+  @override
+  String get audioSfxDiceDesc => 'Roulement des osselets et dés';
+
+  @override
+  String get audioSfxTriumph => 'Fanfare de Triomphe';
+
+  @override
+  String get audioSfxTriumphDesc => 'Tubae & buccinae de victoire';
+
+  @override
+  String get audioSfxColosseum => 'Colosseum';
+
+  @override
+  String get audioSfxColosseumDesc => 'Clameur de la plèbe romaine';
+
+  @override
+  String get audioSfxSword => 'Glaive & Scutum';
+
+  @override
+  String get audioSfxSwordDesc => 'Choc métallique d\'acier et bronze';
+
+  @override
+  String get audioSfxCaesar => 'Roue de César';
+
+  @override
+  String get audioSfxCaesarDesc => 'Engrenage mécanique chiffré';
+
+  @override
+  String get audioSfxParchment => 'Parchemin & Carte';
+
+  @override
+  String get audioSfxParchmentDesc => 'Froissement velouté du vélin';
+
+  @override
+  String get questCompleteTitle => 'DÉFI DU JOUR ACCOMPLI !';
+
+  @override
+  String questCompleteReward(int amount) {
+    return '+$amount SESTERCES';
+  }
+
+  @override
+  String get questCollect => 'RÉCOLTER LE TRÉSOR';
 }

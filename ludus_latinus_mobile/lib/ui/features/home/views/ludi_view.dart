@@ -8,7 +8,8 @@ import '../../duel/duel_screen.dart';
 import '../../taverne/taverne_screen.dart';
 import '../../cesar/cesar_screen.dart';
 import '../../marche/marche_trajan_screen.dart';
-import '../../pantheon/pantheon_screen.dart';
+import '../../pantheon/pantheon_screen.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Onglet 3 : Ludi & Arènes — Mini-jeux d'arcade romaine soumis au déblocage progressif (Progressive Disclosure).
 class LudiView extends StatelessWidget {
@@ -62,13 +63,13 @@ class LudiView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'LUDI & ARÈNES DE L\'EMPIRE',
-                            style: TextStyle(
+                            context.l10n.ludiTitle,
+                            style: const TextStyle(
                               fontFamily: 'serif',
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -76,10 +77,10 @@ class LudiView extends StatelessWidget {
                               letterSpacing: 1.5,
                             ),
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           Text(
-                            '« Panem et circenses » • Du pain et des jeux !\nDéfis chronométrés, courses épiques et tavernes antiques.',
-                            style: TextStyle(
+                            context.l10n.ludiSubtitle,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               color: Color(0xFFFFEAEA),
                               height: 1.3,
@@ -115,9 +116,9 @@ class LudiView extends StatelessWidget {
                         fallbackIcon: '🐎',
                         title: 'Circus Maximus',
                         subtitle: repo.record('circus') > 0
-                            ? 'Record : ${repo.record('circus')} pts'
-                            : 'Course de chars & turbo',
-                        tagLabel: 'COURSE',
+                            ? context.l10n.ludiRecordPoints(repo.record('circus'))
+                            : context.l10n.ludiCircusSubtitle,
+                        tagLabel: context.l10n.ludiCircusTag,
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {
                           Navigator.push(
@@ -135,9 +136,9 @@ class LudiView extends StatelessWidget {
                         fallbackIcon: '⚔️',
                         title: 'Colosseum Duellum',
                         subtitle: repo.record('duel') > 0
-                            ? 'Record : ${repo.record('duel')} d\'affilée'
-                            : 'Arène tactique des champions',
-                        tagLabel: 'ARÈNE',
+                            ? context.l10n.ludiRecordStreak(repo.record('duel'))
+                            : context.l10n.ludiDuelSubtitle,
+                        tagLabel: context.l10n.ludiDuelTag,
                         tagColor: const Color(0xFFB3261E),
                         onTap: () {
                           Navigator.push(
@@ -154,8 +155,8 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/boss_mercure_140.png',
                         fallbackIcon: '🎲',
                         title: 'Alea Iacta Est',
-                        subtitle: 'Taverne & dés romains',
-                        tagLabel: 'DÉS',
+                        subtitle: context.l10n.ludiTavernSubtitle,
+                        tagLabel: context.l10n.ludiTavernTag,
                         tagColor: const Color(0xFF8E24AA),
                         onTap: () {
                           Navigator.push(
@@ -172,8 +173,8 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/lupulus/lupulus_imperator.png',
                         fallbackIcon: '📜',
                         title: 'Atelier de César',
-                        subtitle: 'Cryptographie militaire',
-                        tagLabel: 'ÉNIGME',
+                        subtitle: context.l10n.ludiCaesarSubtitle,
+                        tagLabel: context.l10n.ludiCaesarTag,
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
                           Navigator.push(
@@ -190,8 +191,8 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/lupulus/lupulus_savant.png',
                         fallbackIcon: '🏺',
                         title: 'Marché de Trajan',
-                        subtitle: 'Chiffres romains & étal',
-                        tagLabel: 'COMMERCE',
+                        subtitle: context.l10n.ludiMarketSubtitle,
+                        tagLabel: context.l10n.ludiMarketTag,
                         tagColor: const Color(0xFF1E5B94),
                         onTap: () {
                           Navigator.push(
@@ -208,8 +209,8 @@ class LudiView extends StatelessWidget {
                         imagePath: 'assets/images/trophee_triomphe_medaillon_130.png',
                         fallbackIcon: '🏆',
                         title: 'Le Panthéon',
-                        subtitle: 'Une carte par monde terminé',
-                        tagLabel: 'CARTES',
+                        subtitle: context.l10n.ludiPantheonSubtitle,
+                        tagLabel: context.l10n.ludiPantheonTag,
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
                           Navigator.push(
@@ -241,9 +242,9 @@ class LudiView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Le Saviez-vous ?',
-                            style: TextStyle(
+                          Text(
+                            context.l10n.ludiDidYouKnow,
+                            style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
                               color: RomanColors.imperialPurple,
@@ -251,7 +252,7 @@ class LudiView extends StatelessWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            'Chaque nouvelle ville conquise sur la Via Appia déverrouille de nouveaux quartiers de loisirs. Avance dans tes leçons pour tout débloquer ! (${profile.completedLessons.length} leçons terminées).',
+                            context.l10n.ludiDidYouKnowBody(profile.completedLessons.length),
                             style: const TextStyle(fontSize: 11, color: Colors.black87),
                           ),
                         ],

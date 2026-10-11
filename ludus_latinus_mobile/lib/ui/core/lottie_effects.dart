@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'themes.dart';
-import '../../data/services/audio_service.dart';
+import '../../data/services/audio_service.dart';
+import '../../l10n/l10n.dart';
 
 /// Gestionnaire d'effets visuels et animations vectorielles Lottie 60 FPS.
 class RomanLottieEffects {
@@ -142,10 +143,10 @@ class RomanLottieEffects {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'DÉFI DU JOUR ACCOMPLI !',
+                Text(
+                  context.l10n.questCompleteTitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Trajan',
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
@@ -182,7 +183,7 @@ class RomanLottieEffects {
                       const Text('🪙', style: TextStyle(fontSize: 22)),
                       const SizedBox(width: 8),
                       Text(
-                        '+$sestercesReward SESTERCES',
+                        context.l10n.questCompleteReward(sestercesReward),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -209,9 +210,9 @@ class RomanLottieEffects {
                       onClaim();
                       showCoinShower(context);
                     },
-                    child: const Text(
-                      'RÉCOLTER LE TRÉSOR',
-                      style: TextStyle(
+                    child: Text(
+                      context.l10n.questCollect,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.8,

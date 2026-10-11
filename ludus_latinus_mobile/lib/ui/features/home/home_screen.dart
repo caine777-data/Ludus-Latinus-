@@ -27,6 +27,7 @@ import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
 import '../settings/hero_creation_screen.dart';
 import '../settings/settings_screen.dart';
+import '../../../l10n/l10n.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentTabIndex = 0; // 0 = Cursus, 1 = Bibliotheca, 2 = Ludi
   int _selectedClassIndex = 0; // 0 = 5ème, 1 = 4ème, 2 = 3ème
-  final List<String> _classTitles = ['5ème • Origines', '4ème • République', '3ème • Empire'];
+  List<String> get _classTitles => [context.l10n.homeClass5, context.l10n.homeClass4, context.l10n.homeClass3];
 
   // Statique : survit aux reconstructions et navigations, réinitialisé à chaque fermeture du process.
   static bool _introJoueeCeLancement = false;
@@ -74,11 +75,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String get _appBarTitle {
     switch (_currentTabIndex) {
       case 1:
-        return 'BIBLIOTHECA';
+        return context.l10n.homeBarLibrary;
       case 2:
-        return 'LUDI';
+        return context.l10n.homeBarGames;
       default:
-        return 'LUDUS LATINUS';
+        return context.l10n.homeBarTitle;
     }
   }
 
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text('🔥', style: TextStyle(fontSize: 12)),
                 const SizedBox(width: 3),
                 Text(
-                  '${profile.currentStreak()} j',
+                  context.l10n.accountDaysShort(profile.currentStreak()),
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -159,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
               size: 20,
             ),
-            tooltip: widget.repo.isDarkMode ? 'Mode Lux Romana (Jour)' : 'Mode Noctis Romana (Nuit)',
+            tooltip: widget.repo.isDarkMode ? context.l10n.accountTooltipDayMode : context.l10n.accountTooltipNightMode,
             onPressed: () {
               HapticFeedback.lightImpact();
               widget.repo.toggleThemeMode();
@@ -172,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: widget.repo.isDarkMode ? RomanColors.imperialGold : RomanColors.imperialPurple,
               size: 22,
             ),
-            tooltip: 'Paramètres',
+            tooltip: context.l10n.homeSettingsTooltip,
             onPressed: () => SettingsScreen.show(context, widget.repo),
           ),
         ],
@@ -190,21 +191,21 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() => _currentTabIndex = index);
           }
         },
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.explore_outlined, color: Colors.black54),
-            selectedIcon: Icon(Icons.explore_rounded, color: RomanColors.imperialPurple),
-            label: 'Cursus',
+            icon: const Icon(Icons.explore_outlined, color: Colors.black54),
+            selectedIcon: const Icon(Icons.explore_rounded, color: RomanColors.imperialPurple),
+            label: context.l10n.homeTabCursus,
           ),
           NavigationDestination(
-            icon: Icon(Icons.auto_stories_outlined, color: Colors.black54),
-            selectedIcon: Icon(Icons.auto_stories_rounded, color: RomanColors.imperialPurple),
-            label: 'Bibliotheca',
+            icon: const Icon(Icons.auto_stories_outlined, color: Colors.black54),
+            selectedIcon: const Icon(Icons.auto_stories_rounded, color: RomanColors.imperialPurple),
+            label: context.l10n.homeTabLibrary,
           ),
           NavigationDestination(
-            icon: Icon(Icons.shield_outlined, color: Colors.black54),
-            selectedIcon: Icon(Icons.shield_rounded, color: RomanColors.imperialPurple),
-            label: 'Ludi',
+            icon: const Icon(Icons.shield_outlined, color: Colors.black54),
+            selectedIcon: const Icon(Icons.shield_rounded, color: RomanColors.imperialPurple),
+            label: context.l10n.homeTabGames,
           ),
         ],
       ),
@@ -299,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              '${profile.completedLessons.length} / ${widget.repo.worlds.fold<int>(0, (sum, w) => sum + w.lessons.length)} leçons conquises',
+                              context.l10n.homeLessonsConquered(profile.completedLessons.length, widget.repo.worlds.fold<int>(0, (sum, w) => sum + w.lessons.length)),
                               style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                             ),
                           ],
@@ -320,12 +321,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 // 2. Mascotte Lupulus vivante avec bulle de dialogue
                 LupulusDialogue(
                   emotion: 'normal',
-                  message: '« Salve ${profile.nomHeros} ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »',
+                  message: context.l10n.homeLupulusSalve(profile.nomHeros),
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('🐺 Lupulus t\'adresse son salut légionnaire : "Per aspera ad astra !"'),
-                        duration: Duration(seconds: 2),
+                      SnackBar(
+                        content: Text(context.l10n.homeLupulusSalute),
+                        duration: const Duration(seconds: 2),
                       ),
                     );
                   },
@@ -375,12 +376,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Flexible(
+                        Flexible(
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
-                              'LA VIA APPIA',
-                              style: TextStyle(
+                              context.l10n.homeViaAppia,
+                              style: const TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -393,14 +394,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      '26 mondes du collège, de la 5e à la 3e',
+                    Text(
+                      context.l10n.homeViaAppiaSubtitle,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
+                      style: const TextStyle(fontSize: 12, color: Color(0xFFE5D5C5)),
                     ),
                     const SizedBox(height: 16),
                     RomanButton(
-                      text: '▶ AVANCER SUR LA ROUTE',
+                      text: context.l10n.homeAdvanceOnRoad,
                       isLarge: true,
                       onPressed: () {
                         Navigator.push(
@@ -445,9 +446,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Taberna Romana : la boutique',
-                                style: TextStyle(
+                              Text(
+                                context.l10n.homeShopTitle,
+                                style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                   color: RomanColors.imperialPurple,
@@ -455,7 +456,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Dépense tes ${profile.sesterces} sesterces : toges, couronnes, compagnons…',
+                                context.l10n.homeShopHint(profile.sesterces),
                                 style: const TextStyle(fontSize: 12.5, color: Colors.black87),
                               ),
                             ],
@@ -504,7 +505,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 isDone
-                                    ? 'Défi accompli ! Reviens demain pour une nouvelle quête.'
+                                    ? context.l10n.homeQuestDone
                                     : dailyQuest.description,
                                 style: const TextStyle(fontSize: 11.5, color: Colors.black87),
                               ),
@@ -525,7 +526,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     // La prime est versée dans le jeu, une fois le défi réussi.
                                     onPressed: () => _navigateToQuestTarget(context, dailyQuest.routeCible),
-                                    child: Text('JOUER · +${dailyQuest.recompense} HS'),
+                                    child: Text(context.l10n.homeQuestPlay(dailyQuest.recompense)),
                                   ),
                                 ),
                               ],
@@ -614,17 +615,17 @@ class _HomeScreenState extends State<HomeScreen> {
   String _getLessonTypeTitle(String type) {
     switch (type) {
       case 'quiz':
-        return 'QCM Grammaire & Vocabulaire';
+        return context.l10n.lessonTypeQuiz;
       case 'puzzle':
-        return 'Syntaxe & Ordre des Mots';
+        return context.l10n.lessonTypePuzzle;
       case 'trou':
-        return 'Déclinaisons & Cas Latins';
+        return context.l10n.lessonTypeCloze;
       case 'arene':
-        return 'Épreuve d\'Arène';
+        return context.l10n.homeLessonTypeArena;
       case 'decodeur':
-        return 'Épigraphie & Décodage';
+        return context.l10n.lessonTypeDecoder;
       default:
-        return 'Leçon & Exercice';
+        return context.l10n.lessonTypeDefault;
     }
   }
 
@@ -706,7 +707,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'LEÇONS OFFICIELLES • ${_classTitles[_selectedClassIndex].toUpperCase()}',
+                      context.l10n.homeOfficialLessons(_classTitles[_selectedClassIndex].toUpperCase()),
                       style: const TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.bold,
@@ -716,9 +717,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    const Text(
-                      'Programme du collège : grammaire, textes et exercices',
-                      style: TextStyle(fontSize: 11, color: Colors.black54),
+                    Text(
+                      context.l10n.homeCurriculum,
+                      style: const TextStyle(fontSize: 11, color: Colors.black54),
                     ),
                     const SizedBox(height: 6),
                     Container(
@@ -729,7 +730,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: Border.all(color: RomanColors.imperialGold, width: 1),
                       ),
                       child: Text(
-                        '$completedInClass / $totalInClass leçons terminées',
+                        context.l10n.homeLessonsDone(completedInClass, totalInClass),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -813,7 +814,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
-                      isActiveCompleted ? '✓ VALIDÉE ${_stars(activeLesson.id)}' : '▶ LEÇON SUIVANTE',
+                      isActiveCompleted ? context.l10n.homeValidated(_stars(activeLesson.id)) : context.l10n.homeNextLesson,
                       style: TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.bold,
@@ -841,7 +842,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 activeLesson.content.isNotEmpty
                     ? MarkdownLite.plainText(activeLesson.content)
-                    : (activeLesson.question ?? 'Exercice interactif du collège.'),
+                    : (activeLesson.question ?? context.l10n.homeInteractiveExercise),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 12.5, color: Colors.black54, height: 1.35),
@@ -866,7 +867,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         size: 20,
                       ),
                       label: Text(
-                        isActiveCompleted ? 'RÉVISER LA LEÇON' : 'COMMENCER LA LEÇON ▶',
+                        isActiveCompleted ? context.l10n.homeReviseLesson : context.l10n.homeStartLesson,
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -891,7 +892,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                     icon: const Icon(Icons.map_outlined, size: 16),
-                    label: const Text('Via Appia', style: TextStyle(fontSize: 11)),
+                    label: Text(context.l10n.homeViaAppiaName, style: const TextStyle(fontSize: 11)),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: RomanColors.imperialPurple,
                       side: const BorderSide(color: RomanColors.imperialPurple),
@@ -911,12 +912,12 @@ class _HomeScreenState extends State<HomeScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'Toutes les leçons de ce niveau :',
-              style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black54),
+            Text(
+              context.l10n.homeAllLessonsOfLevel,
+              style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Colors.black54),
             ),
             Text(
-              '${classLessons.length} leçons',
+              context.l10n.homeLessonCount(classLessons.length),
               style: const TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
             ),
           ],
@@ -989,7 +990,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (isDone)
                             Text(_stars(l.id), style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold))
                           else if (isCurrent)
-                            const Text('📍 ICI', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
+                            Text(context.l10n.homeHere, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
                         ],
                       ),
                       Text(
@@ -1011,7 +1012,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 3),
                           Text(
-                            isDone ? 'Validée' : 'Explorer',
+                            isDone ? context.l10n.homeDone : context.l10n.homeExplore,
                             style: TextStyle(
                               fontSize: 9.5,
                               color: isDone ? Colors.green.shade700 : RomanColors.imperialPurple,
@@ -1107,13 +1108,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const Text('🦅', style: TextStyle(fontSize: 22)),
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'CURSUS HONORUM',
-                            style: TextStyle(
+                            context.l10n.cursusTitle,
+                            style: const TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5,
@@ -1121,8 +1122,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Text(
-                            'Carrière des Honneurs Romains',
-                            style: TextStyle(
+                            context.l10n.cursusSubtitle,
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'serif',
@@ -1180,7 +1181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'TON RANG ACTUEL : ${currentRank.titre.toUpperCase()}',
+                            context.l10n.cursusCurrentRank(currentRank.titre.toUpperCase()),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -1196,8 +1197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 4),
                           Text(
                             nextRank != null
-                                ? 'Prochain rang : ${nextRank.titre} (${nextRank.leconsRequises} leçons, ${nextRank.monumentsRequis} édifice(s), ${nextRank.sestercesRequis} HS)'
-                                : '👑 Tu as atteint le sommet du Cursus Honorum !',
+                                ? context.l10n.cursusNextRank(nextRank.titre, nextRank.leconsRequises, nextRank.monumentsRequis, nextRank.sestercesRequis)
+                                : context.l10n.cursusTop,
                             style: const TextStyle(fontSize: 11, color: Color(0xFFFFD54F), fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -1278,9 +1279,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: RomanColors.imperialPurple,
                                           borderRadius: BorderRadius.circular(8),
                                         ),
-                                        child: const Text(
-                                          'TOI',
-                                          style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                                        child: Text(
+                                          context.l10n.cursusYou,
+                                          style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                     ],
@@ -1292,7 +1293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Requis : ${rank.leconsRequises} leçons • ${rank.monumentsRequis} édifice(s) • ${rank.sestercesRequis} HS',
+                                  context.l10n.cursusRequired(rank.leconsRequises, rank.monumentsRequis, rank.sestercesRequis),
                                   style: const TextStyle(fontSize: 10, color: Colors.black54),
                                 ),
                               ],

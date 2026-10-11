@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'themes.dart';
+import 'themes.dart';
+import '../../l10n/l10n.dart';
 export 'roman_ornaments.dart';
 export 'roman_audio_modal.dart';
 export 'room_decorations.dart';
@@ -357,9 +358,9 @@ class LupulusDialogue extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Lupulus te conseille',
-                    style: TextStyle(
+                  Text(
+                    context.l10n.lupulusAdviceTitle,
+                    style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.4,

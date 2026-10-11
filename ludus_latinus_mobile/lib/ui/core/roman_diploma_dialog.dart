@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../data/models/profile.dart';
 import '../../data/services/audio_service.dart';
 import 'themes.dart';
-import 'roman_ornaments.dart';
+import 'roman_ornaments.dart';
+import '../../l10n/l10n.dart';
 
 /// Dialogue solennel de remise de Diplome Imperial du Senat Romain (Cursus Honorum).
 class RomanDiplomaDialog extends StatelessWidget {
@@ -227,10 +228,10 @@ class RomanDiplomaDialog extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _buildStatItem('📖 Leçons', '${profile.completedLessons.length}'),
-                          _buildStatItem('🏛️ Forum', '${profile.restoredMonuments.length}'),
-                          _buildStatItem('🪙 Trésor', '${profile.sesterces} HS'),
-                          _buildStatItem('🔥 Ferveur', '${profile.currentStreak()} j'),
+                          _buildStatItem(context.l10n.diplomaStatLessons, '${profile.completedLessons.length}'),
+                          _buildStatItem(context.l10n.diplomaStatForum, '${profile.restoredMonuments.length}'),
+                          _buildStatItem(context.l10n.diplomaStatTreasure, context.l10n.accountSesterceAmount(profile.sesterces)),
+                          _buildStatItem(context.l10n.diplomaStatStreak, context.l10n.accountDaysShort(profile.currentStreak())),
                         ],
                       ),
                     ),
@@ -309,21 +310,16 @@ class RomanDiplomaDialog extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
                             icon: const Icon(Icons.copy_rounded, size: 16),
-                            label: const Text('Copier l\'Eloge', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            label: Text(context.l10n.diplomaCopy, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () {
-                              final eloge = '🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\n'
-                                  'Proclamé pour : ${profile.nomHeros}\n'
-                                  'Rang du Cursus Honorum : ${rank.titre}\n'
-                                  'Accomplissements : ${profile.completedLessons.length} leçons maîtrisées, '
-                                  '${profile.restoredMonuments.length} monuments restaurés au Forum.\n'
-                                  '$dateRomaine';
+                              final eloge = context.l10n.diplomaCopiedText(profile.nomHeros, rank.titre, profile.completedLessons.length, profile.restoredMonuments.length, dateRomaine);
                               Clipboard.setData(ClipboardData(text: eloge));
                               HapticFeedback.lightImpact();
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('📜 Éloge impérial copié dans le presse-papier !'),
+                                SnackBar(
+                                  content: Text(context.l10n.diplomaCopied),
                                   backgroundColor: RomanColors.laurelGreen,
-                                  duration: Duration(seconds: 2),
+                                  duration: const Duration(seconds: 2),
                                 ),
                               );
                             },
@@ -339,7 +335,7 @@ class RomanDiplomaDialog extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 10),
                             ),
                             icon: const Icon(Icons.check_rounded, size: 16),
-                            label: const Text('Reconnaissance', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            label: Text(context.l10n.diplomaRecognition, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                             onPressed: () => Navigator.pop(context),
                           ),
                         ),
@@ -355,7 +351,7 @@ class RomanDiplomaDialog extends StatelessWidget {
                 right: 8,
                 child: IconButton(
                   icon: const Icon(Icons.close_rounded, size: 20, color: RomanColors.charcoal),
-                  tooltip: 'Fermer',
+                  tooltip: context.l10n.commonClose,
                   onPressed: () => Navigator.pop(context),
                 ),
               ),

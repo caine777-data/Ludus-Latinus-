@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'themes.dart';
 import 'roman_ornaments.dart';
-import '../../data/services/audio_service.dart';
+import '../../data/services/audio_service.dart';
+import '../../l10n/l10n.dart';
 
 /// Modale de réglage et de banc d'essai sonore antique pour Ludus Latinus.
 /// Habillée avec le parchemin d'Herculanum, les méandres romains et les sceaux impériaux.
@@ -66,11 +67,11 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
-                  const RomanWaxSeal(
+                  RomanWaxSeal(
                     size: 40,
-                    label: 'SON',
-                    sealColor: Color(0xFF8B1A1A),
-                    stampColor: Color(0xFFFFDF85),
+                    label: context.l10n.audioTab,
+                    sealColor: const Color(0xFF8B1A1A),
+                    stampColor: const Color(0xFFFFDF85),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -78,7 +79,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'HARMONIA ANTIQUA',
+                          context.l10n.audioTitle,
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.5,
@@ -86,7 +87,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           ),
                         ),
                         Text(
-                          "Sons & Résonances de l'Empire",
+                          context.l10n.audioSubtitle,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: RomanColors.charcoal,
                             fontStyle: FontStyle.italic,
@@ -97,7 +98,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.close_rounded, color: RomanColors.imperialPurple),
-                    tooltip: 'Fermer',
+                    tooltip: context.l10n.commonClose,
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -149,7 +150,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Sonorités de Rome',
+                                      context.l10n.audioSoundsTitle,
                                       style: theme.textTheme.bodyLarge?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: RomanColors.imperialPurple,
@@ -157,8 +158,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                     ),
                                     Text(
                                       _audio.isMuted
-                                          ? 'Sourdine activée (silence du temple)'
-                                          : 'Bruitages authentiques actifs',
+                                          ? context.l10n.audioMuted
+                                          : context.l10n.audioSoundsOn,
                                       style: theme.textTheme.bodySmall?.copyWith(
                                         color: RomanColors.charcoal,
                                       ),
@@ -190,7 +191,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           Row(
                             children: [
                               Text(
-                                'Volume Maître',
+                                context.l10n.audioMasterVolume,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   color: RomanColors.imperialPurple,
@@ -261,14 +262,14 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Musique',
+                                      context.l10n.audioMusic,
                                       style: theme.textTheme.bodyLarge?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: RomanColors.imperialPurple,
                                       ),
                                     ),
                                     Text(
-                                      _audio.musicEnabled ? 'Ambiance de lyre et de flûte' : 'Musique coupée',
+                                      _audio.musicEnabled ? context.l10n.audioMusicOn : context.l10n.audioMusicOff,
                                       style: theme.textTheme.bodySmall?.copyWith(color: RomanColors.charcoal),
                                     ),
                                   ],
@@ -326,7 +327,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Retours Haptiques',
+                                      context.l10n.audioHaptics,
                                       style: theme.textTheme.bodyLarge?.copyWith(
                                         fontWeight: FontWeight.bold,
                                         color: RomanColors.imperialPurple,
@@ -334,8 +335,8 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                                     ),
                                     Text(
                                       _audio.hapticsEnabled
-                                          ? 'Vibrations du glaive & des victoires'
-                                          : 'Vibrations désactivées',
+                                          ? context.l10n.audioHapticsOn
+                                          : context.l10n.audioHapticsOff,
                                       style: theme.textTheme.bodySmall?.copyWith(
                                         color: RomanColors.charcoal,
                                       ),
@@ -372,7 +373,7 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
                           const Icon(Icons.music_note_rounded, size: 18, color: RomanColors.goldDark),
                           const SizedBox(width: 6),
                           Text(
-                            "BANC D'ESSAI ACOUSTIQUE",
+                            context.l10n.audioTestBench,
                             style: theme.textTheme.labelLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.2,
@@ -399,44 +400,44 @@ class _RomanAudioModalState extends State<RomanAudioModal> {
   Widget _buildSoundboardList(BuildContext context) {
     final sounds = [
       {
-        'title': "Sesterces d'Or",
-        'subtitle': 'Tintement de pièces impériales',
+        'title': context.l10n.audioSfxCoins,
+        'subtitle': context.l10n.audioSfxCoinsDesc,
         'icon': Icons.monetization_on_rounded,
         'action': () => _audio.playSesterces(),
       },
       {
-        'title': 'Alea & Fritillus',
-        'subtitle': 'Roulement des osselets et dés',
+        'title': context.l10n.audioSfxDice,
+        'subtitle': context.l10n.audioSfxDiceDesc,
         'icon': Icons.casino_rounded,
         'action': () => _audio.playDiceRoll(),
       },
       {
-        'title': 'Fanfare de Triomphe',
-        'subtitle': 'Tubae & buccinae de victoire',
+        'title': context.l10n.audioSfxTriumph,
+        'subtitle': context.l10n.audioSfxTriumphDesc,
         'icon': Icons.emoji_events_rounded,
         'action': () => _audio.playTriumph(),
       },
       {
-        'title': 'Colosseum',
-        'subtitle': 'Clameur de la plèbe romaine',
+        'title': context.l10n.audioSfxColosseum,
+        'subtitle': context.l10n.audioSfxColosseumDesc,
         'icon': Icons.stadium_rounded,
         'action': () => _audio.playCrowdCheer(),
       },
       {
-        'title': 'Glaive & Scutum',
-        'subtitle': "Choc métallique d'acier et bronze",
+        'title': context.l10n.audioSfxSword,
+        'subtitle': context.l10n.audioSfxSwordDesc,
         'icon': Icons.shield_rounded,
         'action': () => _audio.playSwordClash(),
       },
       {
-        'title': 'Roue de César',
-        'subtitle': 'Engrenage mécanique chiffré',
+        'title': context.l10n.audioSfxCaesar,
+        'subtitle': context.l10n.audioSfxCaesarDesc,
         'icon': Icons.settings_suggest_rounded,
         'action': () => _audio.playWheelClick(),
       },
       {
-        'title': 'Parchemin & Carte',
-        'subtitle': 'Froissement velouté du vélin',
+        'title': context.l10n.audioSfxParchment,
+        'subtitle': context.l10n.audioSfxParchmentDesc,
         'icon': Icons.history_edu_rounded,
         'action': () => _audio.playCardFlip(),
       },

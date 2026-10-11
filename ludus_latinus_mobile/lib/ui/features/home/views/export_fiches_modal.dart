@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import '../../../../data/repositories/game_repository.dart';
 import '../../../../data/services/audio_service.dart';
 import '../../../core/themes.dart';
-import '../../../core/widgets.dart';
+import '../../../core/widgets.dart';
+import '../../../../l10n/l10n.dart';
 
 class ExportFichesModal extends StatefulWidget {
   final GameRepository repo;
@@ -334,21 +335,21 @@ class _ExportFichesModalState extends State<ExportFichesModal>
     AudioService().playTriumph();
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Row(
           children: [
-            Text('📋', style: TextStyle(fontSize: 20)),
-            SizedBox(width: 10),
+            const Text('📋', style: TextStyle(fontSize: 20)),
+            const SizedBox(width: 10),
             Expanded(
               child: Text(
-                'Fiche A4 copiée au format HTML ! Ouvre ton navigateur et imprime (Ctrl+P / Imprimer en PDF).',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                context.l10n.exportCopied,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
         backgroundColor: RomanColors.imperialPurple,
-        duration: Duration(seconds: 4),
+        duration: const Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -392,13 +393,13 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                   child: const Text('🖨️', style: TextStyle(fontSize: 24)),
                 ),
                 const SizedBox(width: 14),
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Tabulae Memoriales',
-                        style: TextStyle(
+                        context.l10n.exportTitle,
+                        style: const TextStyle(
                           fontFamily: 'serif',
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -406,8 +407,8 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                         ),
                       ),
                       Text(
-                        'Fiches de Révision & Flashcards A4 Imprimables',
-                        style: TextStyle(fontSize: 12, color: RomanColors.charcoal),
+                        context.l10n.exportSubtitle,
+                        style: const TextStyle(fontSize: 12, color: RomanColors.charcoal),
                       ),
                     ],
                   ),
@@ -429,10 +430,10 @@ class _ExportFichesModalState extends State<ExportFichesModal>
             labelColor: RomanColors.imperialPurple,
             unselectedLabelColor: Colors.black54,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-            tabs: const [
-              Tab(text: '📖 Déclinaisons', icon: Icon(Icons.table_chart_rounded, size: 20)),
-              Tab(text: '✂️ Flashcards', icon: Icon(Icons.style_rounded, size: 20)),
-              Tab(text: '📜 Palmarès', icon: Icon(Icons.military_tech_rounded, size: 20)),
+            tabs: [
+              Tab(text: context.l10n.exportTabDeclensions, icon: const Icon(Icons.table_chart_rounded, size: 20)),
+              Tab(text: context.l10n.exportTabFlashcards, icon: const Icon(Icons.style_rounded, size: 20)),
+              Tab(text: context.l10n.exportTabRecords, icon: const Icon(Icons.military_tech_rounded, size: 20)),
             ],
           ),
 
@@ -463,7 +464,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                 children: [
                   Expanded(
                     child: RomanButton(
-                      text: 'COPIER LA FICHE A4 (HTML / PDF)',
+                      text: context.l10n.exportCopyButton,
                       icon: Icons.print_rounded,
                       onPressed: _copierDocumentHtml,
                     ),
@@ -509,20 +510,20 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                 Table(
                   border: TableBorder.all(color: const Color(0xFFDCCDB7)),
                   children: [
-                    const TableRow(
-                      decoration: BoxDecoration(color: Color(0xFFF3E8FF)),
+                    TableRow(
+                      decoration: const BoxDecoration(color: Color(0xFFF3E8FF)),
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Text('Cas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                          padding: const EdgeInsets.all(6),
+                          child: Text(context.l10n.exportColumnCase, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Text('Singulier', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                          padding: const EdgeInsets.all(6),
+                          child: Text(context.l10n.exportColumnSingular, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Text('Pluriel', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                          padding: const EdgeInsets.all(6),
+                          child: Text(context.l10n.exportColumnPlural, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
                       ],
                     ),
@@ -558,9 +559,9 @@ class _ExportFichesModalState extends State<ExportFichesModal>
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        const Text(
-          'Planche de révision découpable prête à l\'impression :',
-          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+        Text(
+          context.l10n.exportFlashcardsIntro,
+          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
         ),
         const SizedBox(height: 10),
         GridView.builder(
@@ -653,7 +654,7 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                           ),
                         ),
                         Text(
-                          'Titre républicain : ${profile.cursusRank.titre}',
+                          context.l10n.exportRankTitle(profile.cursusRank.titre),
                           style: const TextStyle(fontSize: 12, color: RomanColors.charcoal),
                         ),
                       ],
@@ -662,11 +663,11 @@ class _ExportFichesModalState extends State<ExportFichesModal>
                 ],
               ),
               const Divider(height: 24),
-              _buildPalmaresRow('🪙 Trésor accumulé', '${profile.sesterces} HS'),
-              _buildPalmaresRow('🏛️ Monuments restaurés', '${profile.restoredMonuments.length} / 6 édifices'),
-              _buildPalmaresRow('🔍 Stèles lapidaires décodées', '${profile.decodedEpigraphs.length} inscriptions'),
-              _buildPalmaresRow('🃏 Cartes ancrées en mémoire SRS', '${profile.srsScores.length} fiches'),
-              _buildPalmaresRow('🔥 Série d\'assiduité quotidienne', '${profile.currentStreak()} jour(s) consécutif(s)'),
+              _buildPalmaresRow(context.l10n.exportTreasure, context.l10n.accountSesterceAmount(profile.sesterces)),
+              _buildPalmaresRow(context.l10n.exportMonuments, context.l10n.exportMonumentsCount(profile.restoredMonuments.length)),
+              _buildPalmaresRow(context.l10n.exportEpigraphs, context.l10n.exportEpigraphsCount(profile.decodedEpigraphs.length)),
+              _buildPalmaresRow(context.l10n.exportCards, context.l10n.exportCardsCount(profile.srsScores.length)),
+              _buildPalmaresRow(context.l10n.exportStreak, context.l10n.exportStreakCount(profile.currentStreak())),
             ],
           ),
         ),

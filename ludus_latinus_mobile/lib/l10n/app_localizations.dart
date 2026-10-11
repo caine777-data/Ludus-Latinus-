@@ -1203,6 +1203,829 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'+{amount} HS'**
   String lessonRewardFloat(int amount);
+
+  /// No description provided for @homeClass5.
+  ///
+  /// In fr, this message translates to:
+  /// **'5ème • Origines'**
+  String get homeClass5;
+
+  /// No description provided for @homeClass4.
+  ///
+  /// In fr, this message translates to:
+  /// **'4ème • République'**
+  String get homeClass4;
+
+  /// No description provided for @homeClass3.
+  ///
+  /// In fr, this message translates to:
+  /// **'3ème • Empire'**
+  String get homeClass3;
+
+  /// No description provided for @homeBarLibrary.
+  ///
+  /// In fr, this message translates to:
+  /// **'BIBLIOTHECA'**
+  String get homeBarLibrary;
+
+  /// No description provided for @homeBarGames.
+  ///
+  /// In fr, this message translates to:
+  /// **'LUDI'**
+  String get homeBarGames;
+
+  /// No description provided for @homeBarTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'LUDUS LATINUS'**
+  String get homeBarTitle;
+
+  /// No description provided for @homeSettingsTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paramètres'**
+  String get homeSettingsTooltip;
+
+  /// No description provided for @homeTabCursus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cursus'**
+  String get homeTabCursus;
+
+  /// No description provided for @homeTabLibrary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bibliotheca'**
+  String get homeTabLibrary;
+
+  /// No description provided for @homeTabGames.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ludi'**
+  String get homeTabGames;
+
+  /// No description provided for @homeLessonsConquered.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} / {total} leçons conquises'**
+  String homeLessonsConquered(int done, int total);
+
+  /// No description provided for @homeLupulusSalve.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Salve {name} ! Rome ne s’est pas faite en un jour. Poursuis ta marche triomphale ! »'**
+  String homeLupulusSalve(String name);
+
+  /// No description provided for @homeLupulusSalute.
+  ///
+  /// In fr, this message translates to:
+  /// **'🐺 Lupulus t\'adresse son salut légionnaire : \"Per aspera ad astra !\"'**
+  String get homeLupulusSalute;
+
+  /// No description provided for @homeViaAppia.
+  ///
+  /// In fr, this message translates to:
+  /// **'LA VIA APPIA'**
+  String get homeViaAppia;
+
+  /// No description provided for @homeViaAppiaSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'26 mondes du collège, de la 5e à la 3e'**
+  String get homeViaAppiaSubtitle;
+
+  /// No description provided for @homeAdvanceOnRoad.
+  ///
+  /// In fr, this message translates to:
+  /// **'▶ AVANCER SUR LA ROUTE'**
+  String get homeAdvanceOnRoad;
+
+  /// No description provided for @homeShopTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Taberna Romana : la boutique'**
+  String get homeShopTitle;
+
+  /// No description provided for @homeShopHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépense tes {amount} sesterces : toges, couronnes, compagnons…'**
+  String homeShopHint(int amount);
+
+  /// No description provided for @homeQuestDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défi accompli ! Reviens demain pour une nouvelle quête.'**
+  String get homeQuestDone;
+
+  /// No description provided for @homeQuestPlay.
+  ///
+  /// In fr, this message translates to:
+  /// **'JOUER · +{amount} HS'**
+  String homeQuestPlay(int amount);
+
+  /// No description provided for @homeLessonTypeArena.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épreuve d\'Arène'**
+  String get homeLessonTypeArena;
+
+  /// No description provided for @homeOfficialLessons.
+  ///
+  /// In fr, this message translates to:
+  /// **'LEÇONS OFFICIELLES • {className}'**
+  String homeOfficialLessons(String className);
+
+  /// No description provided for @homeCurriculum.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme du collège : grammaire, textes et exercices'**
+  String get homeCurriculum;
+
+  /// No description provided for @homeLessonsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} / {total} leçons terminées'**
+  String homeLessonsDone(int done, int total);
+
+  /// No description provided for @homeValidated.
+  ///
+  /// In fr, this message translates to:
+  /// **'✓ VALIDÉE {stars}'**
+  String homeValidated(String stars);
+
+  /// No description provided for @homeNextLesson.
+  ///
+  /// In fr, this message translates to:
+  /// **'▶ LEÇON SUIVANTE'**
+  String get homeNextLesson;
+
+  /// No description provided for @homeInteractiveExercise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exercice interactif du collège.'**
+  String get homeInteractiveExercise;
+
+  /// No description provided for @homeReviseLesson.
+  ///
+  /// In fr, this message translates to:
+  /// **'RÉVISER LA LEÇON'**
+  String get homeReviseLesson;
+
+  /// No description provided for @homeStartLesson.
+  ///
+  /// In fr, this message translates to:
+  /// **'COMMENCER LA LEÇON ▶'**
+  String get homeStartLesson;
+
+  /// No description provided for @homeViaAppiaName.
+  ///
+  /// In fr, this message translates to:
+  /// **'Via Appia'**
+  String get homeViaAppiaName;
+
+  /// No description provided for @homeAllLessonsOfLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toutes les leçons de ce niveau :'**
+  String get homeAllLessonsOfLevel;
+
+  /// No description provided for @homeLessonCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} leçons'**
+  String homeLessonCount(int count);
+
+  /// No description provided for @homeHere.
+  ///
+  /// In fr, this message translates to:
+  /// **'📍 ICI'**
+  String get homeHere;
+
+  /// No description provided for @homeDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Validée'**
+  String get homeDone;
+
+  /// No description provided for @homeExplore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Explorer'**
+  String get homeExplore;
+
+  /// No description provided for @cursusTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'CURSUS HONORUM'**
+  String get cursusTitle;
+
+  /// No description provided for @cursusSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carrière des Honneurs Romains'**
+  String get cursusSubtitle;
+
+  /// No description provided for @cursusCurrentRank.
+  ///
+  /// In fr, this message translates to:
+  /// **'TON RANG ACTUEL : {rank}'**
+  String cursusCurrentRank(String rank);
+
+  /// No description provided for @cursusNextRank.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prochain rang : {rank} ({lessons} leçons, {monuments} édifice(s), {sesterces} HS)'**
+  String cursusNextRank(String rank, int lessons, int monuments, int sesterces);
+
+  /// No description provided for @cursusTop.
+  ///
+  /// In fr, this message translates to:
+  /// **'👑 Tu as atteint le sommet du Cursus Honorum !'**
+  String get cursusTop;
+
+  /// No description provided for @cursusYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'TOI'**
+  String get cursusYou;
+
+  /// No description provided for @cursusRequired.
+  ///
+  /// In fr, this message translates to:
+  /// **'Requis : {lessons} leçons • {monuments} édifice(s) • {sesterces} HS'**
+  String cursusRequired(int lessons, int monuments, int sesterces);
+
+  /// No description provided for @ludiTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'LUDI & ARÈNES DE L\'EMPIRE'**
+  String get ludiTitle;
+
+  /// No description provided for @ludiSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Panem et circenses » • Du pain et des jeux !\nDéfis chronométrés, courses épiques et tavernes antiques.'**
+  String get ludiSubtitle;
+
+  /// No description provided for @ludiRecordPoints.
+  ///
+  /// In fr, this message translates to:
+  /// **'Record : {points} pts'**
+  String ludiRecordPoints(int points);
+
+  /// No description provided for @ludiCircusSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Course de chars & turbo'**
+  String get ludiCircusSubtitle;
+
+  /// No description provided for @ludiCircusTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'COURSE'**
+  String get ludiCircusTag;
+
+  /// No description provided for @ludiRecordStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'Record : {count} d\'affilée'**
+  String ludiRecordStreak(int count);
+
+  /// No description provided for @ludiDuelSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arène tactique des champions'**
+  String get ludiDuelSubtitle;
+
+  /// No description provided for @ludiDuelTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'ARÈNE'**
+  String get ludiDuelTag;
+
+  /// No description provided for @ludiTavernSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Taverne & dés romains'**
+  String get ludiTavernSubtitle;
+
+  /// No description provided for @ludiTavernTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'DÉS'**
+  String get ludiTavernTag;
+
+  /// No description provided for @ludiCaesarSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cryptographie militaire'**
+  String get ludiCaesarSubtitle;
+
+  /// No description provided for @ludiCaesarTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'ÉNIGME'**
+  String get ludiCaesarTag;
+
+  /// No description provided for @ludiMarketSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chiffres romains & étal'**
+  String get ludiMarketSubtitle;
+
+  /// No description provided for @ludiMarketTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'COMMERCE'**
+  String get ludiMarketTag;
+
+  /// No description provided for @ludiPantheonSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une carte par monde terminé'**
+  String get ludiPantheonSubtitle;
+
+  /// No description provided for @ludiPantheonTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'CARTES'**
+  String get ludiPantheonTag;
+
+  /// No description provided for @ludiDidYouKnow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Saviez-vous ?'**
+  String get ludiDidYouKnow;
+
+  /// No description provided for @ludiDidYouKnowBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque nouvelle ville conquise sur la Via Appia déverrouille de nouveaux quartiers de loisirs. Avance dans tes leçons pour tout débloquer ! ({count} leçons terminées).'**
+  String ludiDidYouKnowBody(int count);
+
+  /// No description provided for @libraryTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'BIBLIOTHECA ROMANA'**
+  String get libraryTitle;
+
+  /// No description provided for @librarySubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Littera scripta manet » • Les écrits restent.\nOutils de référence, mémoire espacée et trésors épigraphiques.'**
+  String get librarySubtitle;
+
+  /// No description provided for @libraryMemoriaRecord.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} mot(s) ancré(s) · record {record}'**
+  String libraryMemoriaRecord(int count, int record);
+
+  /// No description provided for @libraryMemoriaCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} mot(s) ancré(s) en mémoire'**
+  String libraryMemoriaCount(int count);
+
+  /// No description provided for @libraryMemoriaTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'RÉVISION SRS'**
+  String get libraryMemoriaTag;
+
+  /// No description provided for @libraryThesaurusSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lexique thématique & déclinaisons'**
+  String get libraryThesaurusSubtitle;
+
+  /// No description provided for @libraryThesaurusTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'DICTIONNAIRE'**
+  String get libraryThesaurusTag;
+
+  /// No description provided for @libraryForumCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} / 6 édifice(s) restauré(s)'**
+  String libraryForumCount(int count);
+
+  /// No description provided for @libraryForumTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'PATRIMOINE'**
+  String get libraryForumTag;
+
+  /// No description provided for @libraryEpigraphyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épigraphie'**
+  String get libraryEpigraphyTitle;
+
+  /// No description provided for @libraryEpigraphyCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} inscription(s) décodée(s)'**
+  String libraryEpigraphyCount(int count);
+
+  /// No description provided for @libraryEpigraphyTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'STÈLES'**
+  String get libraryEpigraphyTag;
+
+  /// No description provided for @libraryExportTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'TABULAE MEMORIALES (FICHES A4)'**
+  String get libraryExportTitle;
+
+  /// No description provided for @libraryExportBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporte la table des 5 déclinaisons et tes flashcards au format papier A4 pour réviser hors-écran.'**
+  String get libraryExportBody;
+
+  /// No description provided for @libraryTipTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conseil Didactique de Lupulus'**
+  String get libraryTipTitle;
+
+  /// No description provided for @libraryTipBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réviser 5 minutes par jour avec Memoria Velox est 3 fois plus efficace qu\'une heure le week-end. Active la répétition espacée !'**
+  String get libraryTipBody;
+
+  /// No description provided for @exportCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiche A4 copiée au format HTML ! Ouvre ton navigateur et imprime (Ctrl+P / Imprimer en PDF).'**
+  String get exportCopied;
+
+  /// No description provided for @exportTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tabulae Memoriales'**
+  String get exportTitle;
+
+  /// No description provided for @exportSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fiches de Révision & Flashcards A4 Imprimables'**
+  String get exportSubtitle;
+
+  /// No description provided for @exportTabDeclensions.
+  ///
+  /// In fr, this message translates to:
+  /// **'📖 Déclinaisons'**
+  String get exportTabDeclensions;
+
+  /// No description provided for @exportTabFlashcards.
+  ///
+  /// In fr, this message translates to:
+  /// **'✂️ Flashcards'**
+  String get exportTabFlashcards;
+
+  /// No description provided for @exportTabRecords.
+  ///
+  /// In fr, this message translates to:
+  /// **'📜 Palmarès'**
+  String get exportTabRecords;
+
+  /// No description provided for @exportCopyButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'COPIER LA FICHE A4 (HTML / PDF)'**
+  String get exportCopyButton;
+
+  /// No description provided for @exportColumnCase.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cas'**
+  String get exportColumnCase;
+
+  /// No description provided for @exportColumnSingular.
+  ///
+  /// In fr, this message translates to:
+  /// **'Singulier'**
+  String get exportColumnSingular;
+
+  /// No description provided for @exportColumnPlural.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pluriel'**
+  String get exportColumnPlural;
+
+  /// No description provided for @exportFlashcardsIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Planche de révision découpable prête à l\'impression :'**
+  String get exportFlashcardsIntro;
+
+  /// No description provided for @exportRankTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Titre républicain : {title}'**
+  String exportRankTitle(String title);
+
+  /// No description provided for @exportTreasure.
+  ///
+  /// In fr, this message translates to:
+  /// **'🪙 Trésor accumulé'**
+  String get exportTreasure;
+
+  /// No description provided for @exportMonuments.
+  ///
+  /// In fr, this message translates to:
+  /// **'🏛️ Monuments restaurés'**
+  String get exportMonuments;
+
+  /// No description provided for @exportMonumentsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} / 6 édifices'**
+  String exportMonumentsCount(int count);
+
+  /// No description provided for @exportEpigraphs.
+  ///
+  /// In fr, this message translates to:
+  /// **'🔍 Stèles lapidaires décodées'**
+  String get exportEpigraphs;
+
+  /// No description provided for @exportEpigraphsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} inscriptions'**
+  String exportEpigraphsCount(int count);
+
+  /// No description provided for @exportCards.
+  ///
+  /// In fr, this message translates to:
+  /// **'🃏 Cartes ancrées en mémoire SRS'**
+  String get exportCards;
+
+  /// No description provided for @exportCardsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} fiches'**
+  String exportCardsCount(int count);
+
+  /// No description provided for @exportStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'🔥 Série d\'assiduité quotidienne'**
+  String get exportStreak;
+
+  /// No description provided for @exportStreakCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} jour(s) consécutif(s)'**
+  String exportStreakCount(int count);
+
+  /// No description provided for @lupulusAdviceTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lupulus te conseille'**
+  String get lupulusAdviceTitle;
+
+  /// No description provided for @diplomaStatLessons.
+  ///
+  /// In fr, this message translates to:
+  /// **'📖 Leçons'**
+  String get diplomaStatLessons;
+
+  /// No description provided for @diplomaStatForum.
+  ///
+  /// In fr, this message translates to:
+  /// **'🏛️ Forum'**
+  String get diplomaStatForum;
+
+  /// No description provided for @diplomaStatTreasure.
+  ///
+  /// In fr, this message translates to:
+  /// **'🪙 Trésor'**
+  String get diplomaStatTreasure;
+
+  /// No description provided for @diplomaStatStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'🔥 Ferveur'**
+  String get diplomaStatStreak;
+
+  /// No description provided for @diplomaCopy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Copier l\'Eloge'**
+  String get diplomaCopy;
+
+  /// No description provided for @diplomaCopiedText.
+  ///
+  /// In fr, this message translates to:
+  /// **'🏛️ DIPLÔME DU SÉNAT ROMAIN (SPQR)\nProclamé pour : {name}\nRang du Cursus Honorum : {rank}\nAccomplissements : {lessons} leçons maîtrisées, {monuments} monuments restaurés au Forum.\n{date}'**
+  String diplomaCopiedText(
+      String name, String rank, int lessons, int monuments, String date);
+
+  /// No description provided for @diplomaCopied.
+  ///
+  /// In fr, this message translates to:
+  /// **'📜 Éloge impérial copié dans le presse-papier !'**
+  String get diplomaCopied;
+
+  /// No description provided for @diplomaRecognition.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reconnaissance'**
+  String get diplomaRecognition;
+
+  /// No description provided for @audioTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'SON'**
+  String get audioTab;
+
+  /// No description provided for @audioTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'HARMONIA ANTIQUA'**
+  String get audioTitle;
+
+  /// No description provided for @audioSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sons & Résonances de l\'Empire'**
+  String get audioSubtitle;
+
+  /// No description provided for @audioSoundsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sonorités de Rome'**
+  String get audioSoundsTitle;
+
+  /// No description provided for @audioMuted.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sourdine activée (silence du temple)'**
+  String get audioMuted;
+
+  /// No description provided for @audioSoundsOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bruitages authentiques actifs'**
+  String get audioSoundsOn;
+
+  /// No description provided for @audioMasterVolume.
+  ///
+  /// In fr, this message translates to:
+  /// **'Volume Maître'**
+  String get audioMasterVolume;
+
+  /// No description provided for @audioMusic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Musique'**
+  String get audioMusic;
+
+  /// No description provided for @audioMusicOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ambiance de lyre et de flûte'**
+  String get audioMusicOn;
+
+  /// No description provided for @audioMusicOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Musique coupée'**
+  String get audioMusicOff;
+
+  /// No description provided for @audioHaptics.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retours Haptiques'**
+  String get audioHaptics;
+
+  /// No description provided for @audioHapticsOn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vibrations du glaive & des victoires'**
+  String get audioHapticsOn;
+
+  /// No description provided for @audioHapticsOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vibrations désactivées'**
+  String get audioHapticsOff;
+
+  /// No description provided for @audioTestBench.
+  ///
+  /// In fr, this message translates to:
+  /// **'BANC D\'ESSAI ACOUSTIQUE'**
+  String get audioTestBench;
+
+  /// No description provided for @audioSfxCoins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sesterces d\'Or'**
+  String get audioSfxCoins;
+
+  /// No description provided for @audioSfxCoinsDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tintement de pièces impériales'**
+  String get audioSfxCoinsDesc;
+
+  /// No description provided for @audioSfxDice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Alea & Fritillus'**
+  String get audioSfxDice;
+
+  /// No description provided for @audioSfxDiceDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roulement des osselets et dés'**
+  String get audioSfxDiceDesc;
+
+  /// No description provided for @audioSfxTriumph.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fanfare de Triomphe'**
+  String get audioSfxTriumph;
+
+  /// No description provided for @audioSfxTriumphDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tubae & buccinae de victoire'**
+  String get audioSfxTriumphDesc;
+
+  /// No description provided for @audioSfxColosseum.
+  ///
+  /// In fr, this message translates to:
+  /// **'Colosseum'**
+  String get audioSfxColosseum;
+
+  /// No description provided for @audioSfxColosseumDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clameur de la plèbe romaine'**
+  String get audioSfxColosseumDesc;
+
+  /// No description provided for @audioSfxSword.
+  ///
+  /// In fr, this message translates to:
+  /// **'Glaive & Scutum'**
+  String get audioSfxSword;
+
+  /// No description provided for @audioSfxSwordDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choc métallique d\'acier et bronze'**
+  String get audioSfxSwordDesc;
+
+  /// No description provided for @audioSfxCaesar.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roue de César'**
+  String get audioSfxCaesar;
+
+  /// No description provided for @audioSfxCaesarDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Engrenage mécanique chiffré'**
+  String get audioSfxCaesarDesc;
+
+  /// No description provided for @audioSfxParchment.
+  ///
+  /// In fr, this message translates to:
+  /// **'Parchemin & Carte'**
+  String get audioSfxParchment;
+
+  /// No description provided for @audioSfxParchmentDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Froissement velouté du vélin'**
+  String get audioSfxParchmentDesc;
+
+  /// No description provided for @questCompleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'DÉFI DU JOUR ACCOMPLI !'**
+  String get questCompleteTitle;
+
+  /// No description provided for @questCompleteReward.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{amount} SESTERCES'**
+  String questCompleteReward(int amount);
+
+  /// No description provided for @questCollect.
+  ///
+  /// In fr, this message translates to:
+  /// **'RÉCOLTER LE TRÉSOR'**
+  String get questCollect;
 }
 
 class _AppLocalizationsDelegate

@@ -8,7 +8,8 @@ import '../../memoria/memoria_screen.dart';
 import '../../thesaurus/thesaurus_screen.dart';
 import '../../forum/forum_screen.dart';
 import '../../../core/latin_epigraph_modal.dart';
-import 'export_fiches_modal.dart';
+import 'export_fiches_modal.dart';
+import '../../../../l10n/l10n.dart';
 
 /// Onglet 2 : Bibliotheca & Memoria — L'espace d'étude, de révision SRS et de documentation latine.
 class BibliothecaView extends StatelessWidget {
@@ -66,13 +67,13 @@ class BibliothecaView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'BIBLIOTHECA ROMANA',
-                            style: TextStyle(
+                            context.l10n.libraryTitle,
+                            style: const TextStyle(
                               fontFamily: 'serif',
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -80,10 +81,10 @@ class BibliothecaView extends StatelessWidget {
                               letterSpacing: 1.5,
                             ),
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           Text(
-                            '« Littera scripta manet » • Les écrits restent.\nOutils de référence, mémoire espacée et trésors épigraphiques.',
-                            style: TextStyle(
+                            context.l10n.librarySubtitle,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               color: Color(0xFFD6E4F0),
                               height: 1.3,
@@ -117,9 +118,9 @@ class BibliothecaView extends StatelessWidget {
                         fallbackIcon: '🃏',
                         title: 'Memoria Velox',
                         subtitle: repo.record('memoria') > 0
-                            ? '$srsCount mot(s) ancré(s) · record ${repo.record('memoria')}'
-                            : '$srsCount mot(s) ancré(s) en mémoire',
-                        tagLabel: 'RÉVISION SRS',
+                            ? context.l10n.libraryMemoriaRecord(srsCount, repo.record('memoria'))
+                            : context.l10n.libraryMemoriaCount(srsCount),
+                        tagLabel: context.l10n.libraryMemoriaTag,
                         tagColor: const Color(0xFF1E5B94),
                         onTap: () {
                           AudioService().playCardFlip();
@@ -136,8 +137,8 @@ class BibliothecaView extends StatelessWidget {
                         imagePath: 'assets/images/musee_louve.jpg',
                         fallbackIcon: '📖',
                         title: 'Thesaurus',
-                        subtitle: 'Lexique thématique & déclinaisons',
-                        tagLabel: 'DICTIONNAIRE',
+                        subtitle: context.l10n.libraryThesaurusSubtitle,
+                        tagLabel: context.l10n.libraryThesaurusTag,
                         tagColor: const Color(0xFF1E5B94),
                         onTap: () {
                           AudioService().playCardFlip();
@@ -154,8 +155,8 @@ class BibliothecaView extends StatelessWidget {
                         imagePath: 'assets/images/musee_thermes.jpg',
                         fallbackIcon: '🏛️',
                         title: 'Forum Imperiale',
-                        subtitle: '$restoredCount / 6 édifice(s) restauré(s)',
-                        tagLabel: 'PATRIMOINE',
+                        subtitle: context.l10n.libraryForumCount(restoredCount),
+                        tagLabel: context.l10n.libraryForumTag,
                         tagColor: const Color(0xFF7A5901),
                         onTap: () {
                           AudioService().playTriumph();
@@ -171,9 +172,9 @@ class BibliothecaView extends StatelessWidget {
                         context: context,
                         imagePath: 'assets/images/icone_epigraphie.png',
                         fallbackIcon: '🔍',
-                        title: 'Épigraphie',
-                        subtitle: '$epigraphCount inscription(s) décodée(s)',
-                        tagLabel: 'STÈLES',
+                        title: context.l10n.libraryEpigraphyTitle,
+                        subtitle: context.l10n.libraryEpigraphyCount(epigraphCount),
+                        tagLabel: context.l10n.libraryEpigraphyTag,
                         tagColor: const Color(0xFF0D6E6E),
                         onTap: () {
                           AudioService().playWheelClick();
@@ -223,23 +224,23 @@ class BibliothecaView extends StatelessWidget {
                         child: const Text('🖨️', style: TextStyle(fontSize: 24)),
                       ),
                       const SizedBox(width: 14),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'TABULAE MEMORIALES (FICHES A4)',
-                              style: TextStyle(
+                              context.l10n.libraryExportTitle,
+                              style: const TextStyle(
                                 color: RomanColors.imperialGold,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                                 letterSpacing: 1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
-                              'Exporte la table des 5 déclinaisons et tes flashcards au format papier A4 pour réviser hors-écran.',
-                              style: TextStyle(color: Colors.white, fontSize: 11.5),
+                              context.l10n.libraryExportBody,
+                              style: const TextStyle(color: Colors.white, fontSize: 11.5),
                             ),
                           ],
                         ),
@@ -266,22 +267,22 @@ class BibliothecaView extends StatelessWidget {
                       child: const Text('💡', style: TextStyle(fontSize: 22)),
                     ),
                     const SizedBox(width: 14),
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Conseil Didactique de Lupulus',
-                            style: TextStyle(
+                            context.l10n.libraryTipTitle,
+                            style: const TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
                               color: RomanColors.imperialPurple,
                             ),
                           ),
-                          SizedBox(height: 3),
+                          const SizedBox(height: 3),
                           Text(
-                            'Réviser 5 minutes par jour avec Memoria Velox est 3 fois plus efficace qu\'une heure le week-end. Active la répétition espacée !',
-                            style: TextStyle(fontSize: 11.5, color: Colors.black87, height: 1.3),
+                            context.l10n.libraryTipBody,
+                            style: const TextStyle(fontSize: 11.5, color: Colors.black87, height: 1.3),
                           ),
                         ],
                       ),
