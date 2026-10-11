@@ -277,6 +277,7 @@ Cédric génère les images et les dépose dans
 | `chroma_boutique.py [id …]` | `<id>.jpg` sur fond vert | `images/boutique/<id>.png` détouré, 256 px |
 | `chroma_avatars.py [genre_toge …]` | `avatar_<genre>_<toge>.jpg` | `images/avatars/…_140.png` et `_48.png` |
 | `icones.py` | `icone_<nom>.jpg` (liste `ICONES`) | `images/icone_<nom>.png`, marge pour un médaillon rond |
+| `icone_appli.py` | `icone_appli.jpg` (casque de centurion, portrait) | icône Android adaptative (`mipmap-*/ic_launcher_foreground.png` + `mipmap-anydpi-v26/ic_launcher.xml` + couleur `values/ic_launcher_background.xml`), icône classique `ic_launcher.png`, `store/icone_play_store_512.png`, `windows/runner/resources/app_icon.ico` |
 | `decors_mondes.py [N …]` | `decor_monde<N>.jpg` | `images/mondes/monde<N>.webp` |
 | `via_elements.py [nom …]` | `via_<nom>.jpg` | `images/via/<nom>.png`, recadré au ras, sans carré |
 | `lupulus_videos.py [humeur ou effet …]` | `lupulus_<humeur>.mp4`, ou un effet de `EFFETS` (fond vert) | `images/animated/*.webp`, son retiré ; un effet peut ne garder qu'une plage d'images |
@@ -325,6 +326,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Nouvelle icône de l'appli** (11/10/2026). Casque de centurion doré
+  entre deux lauriers, sur rouge pompéien, sans texte (l'ancienne affichait
+  « LVDVS ROMANA »). Générée dans Gemini, déclinée par
+  `scripts/assets/icone_appli.py`. L'icône Android est désormais
+  **adaptative** : le sujet occupe 58 % du calque de 108 dp pour rester entier
+  dans un cercle comme dans un carré arrondi. Ne pas agrandir le sujet.
 - **Licence et modèle économique** (11/10/2026). `LICENSE` passe de MIT à
   « © 2026 Icare & Dédale, tous droits réservés » : la MIT permettait à
   n'importe qui de republier l'appli, y compris payante. Icare & Dédale est
