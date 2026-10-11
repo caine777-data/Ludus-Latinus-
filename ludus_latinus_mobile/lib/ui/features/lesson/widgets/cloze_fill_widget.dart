@@ -15,6 +15,7 @@ class ClozeFillWidget extends StatefulWidget {
   final List<String> options;
   final String? latinComplet;
   final VoidCallback onCompleted;
+
   /// Appelé à chaque erreur, pour calculer les étoiles de la leçon.
   final VoidCallback? onMistake;
 
@@ -39,7 +40,8 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
   bool _isEvaluated = false;
   bool _isSuccess = false;
   String? _feedbackMessage;
-  final GlobalKey<RomanScreenShakeState> _shakeKey = GlobalKey<RomanScreenShakeState>();
+  final GlobalKey<RomanScreenShakeState> _shakeKey =
+      GlobalKey<RomanScreenShakeState>();
 
   @override
   void dispose() {
@@ -50,7 +52,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
   String _cleanString(String input) {
     return input
         .toLowerCase()
-        .replaceAll(RegExp(r'[.,!?;:\"«»'']'), '')
+        .replaceAll(RegExp(r'[.,!?;:\"«»' ']'), '')
         .replaceAll(RegExp(r'\s+'), ' ')
         .trim();
   }
@@ -71,7 +73,8 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
 
     // Tolérance : accepte la solution exacte ou solution complète
     final success = (input == expected) ||
-        (widget.latinComplet != null && _cleanString(input) == _cleanString(widget.latinComplet!));
+        (widget.latinComplet != null &&
+            _cleanString(input) == _cleanString(widget.latinComplet!));
 
     setState(() {
       _isEvaluated = true;
@@ -87,7 +90,8 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {
-        _feedbackMessage = '« Ce n\'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »';
+        _feedbackMessage =
+            '« Ce n\'est pas tout à fait cette terminaison. Observe bien le rôle du mot ! »';
       });
     }
   }
@@ -96,6 +100,13 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
   Widget build(BuildContext context) {
     final avantText = widget.avant ?? '';
     final apresText = widget.apres ?? '';
+    // Fin de mot : le texte d'avant se termine collé à la case (« silv » + « am »).
+    // On colle alors ce début de mot à la case, et on le dit clairement à l'élève.
+    final finDeMot = avantText.isNotEmpty && !avantText.endsWith(' ');
+    final coupe = finDeMot ? avantText.lastIndexOf(' ') : -1;
+    final debutPhrase =
+        finDeMot ? avantText.substring(0, coupe + 1).trim() : avantText.trim();
+    final debutMot = finDeMot ? avantText.substring(coupe + 1) : '';
 
     return RomanScreenShake(
       key: _shakeKey,
@@ -109,7 +120,8 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 const Text('✏️ ', style: TextStyle(fontSize: 18)),
                 Expanded(
                   child: Text(
-                    widget.consigne ?? 'Complète la phrase latine avec la bonne forme :',
+                    widget.consigne ??
+                        'Complète la phrase latine avec la bonne forme :',
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
@@ -119,7 +131,33 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: finDeMot
+                      ? const Color(0xFFE3F2FD)
+                      : const Color(0xFFFFF8E1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  finDeMot
+                      ? '✂️ Écris seulement la fin du mot'
+                      : '✍️ Écris le mot entier',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: finDeMot
+                        ? const Color(0xFF0D47A1)
+                        : const Color(0xFF7A5901),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
 
             // 2. Zone d'affichage de la phrase à trou
             Container(
@@ -130,11 +168,16 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 border: Border.all(
                   color: _isSuccess
                       ? RomanColors.laurelGreen
-                      : (_isEvaluated ? Colors.redAccent : RomanColors.imperialGold),
+                      : (_isEvaluated
+                          ? Colors.redAccent
+                          : RomanColors.imperialGold),
                   width: 1.5,
                 ),
                 boxShadow: const [
-                  BoxShadow(color: Color(0x0A000000), blurRadius: 6, offset: Offset(0, 2)),
+                  BoxShadow(
+                      color: Color(0x0A000000),
+                      blurRadius: 6,
+                      offset: Offset(0, 2)),
                 ],
               ),
               child: Wrap(
@@ -143,9 +186,9 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                 spacing: 4,
                 runSpacing: 8,
                 children: [
-                  if (avantText.isNotEmpty)
+                  if (debutPhrase.isNotEmpty)
                     Text(
-                      avantText,
+                      debutPhrase,
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -153,45 +196,64 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                         color: RomanColors.charcoal,
                       ),
                     ),
-                  // Zone de saisie / trou
-                  // Case à la taille de la réponse (trois paliers, pour ne pas
-                  // trahir sa longueur exacte) : une case trop large renvoyait
-                  // la fin de la phrase à la ligne.
-                  Container(
-                    width: widget.solution.length <= 2
-                        ? 72
-                        : (widget.solution.length <= 4 ? 96 : 120),
-                    height: 38,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: _isSuccess
-                            ? RomanColors.laurelGreen
-                            : (_isEvaluated ? Colors.redAccent : RomanColors.imperialPurple),
-                        width: 1.8,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (debutMot.isNotEmpty)
+                        Text(
+                          debutMot,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'serif',
+                            color: RomanColors.charcoal,
+                          ),
+                        ),
+                      // Zone de saisie / trou
+                      // Case à la taille de la réponse (trois paliers, pour ne pas
+                      // trahir sa longueur exacte) : une case trop large renvoyait
+                      // la fin de la phrase à la ligne.
+                      Container(
+                        width: widget.solution.length <= 2
+                            ? 72
+                            : (widget.solution.length <= 4 ? 96 : 120),
+                        height: 38,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: _isSuccess
+                                ? RomanColors.laurelGreen
+                                : (_isEvaluated
+                                    ? Colors.redAccent
+                                    : RomanColors.imperialPurple),
+                            width: 1.8,
+                          ),
+                        ),
+                        child: TextField(
+                          controller: _controller,
+                          enabled: !_isSuccess,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'serif',
+                            color: _isSuccess
+                                ? RomanColors.laurelGreen
+                                : RomanColors.imperialPurple,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: finDeMot ? 'fin' : 'mot',
+                            hintStyle: const TextStyle(color: Colors.black26),
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                          ),
+                          onSubmitted: _verifyInput,
+                        ),
                       ),
-                    ),
-                    child: TextField(
-                      controller: _controller,
-                      enabled: !_isSuccess,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'serif',
-                        color: _isSuccess ? RomanColors.laurelGreen : RomanColors.imperialPurple,
-                      ),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        hintText: '...',
-                        hintStyle: TextStyle(color: Colors.black26),
-                        isDense: true,
-                        contentPadding: EdgeInsets.symmetric(vertical: 8),
-                      ),
-                      onSubmitted: _verifyInput,
-                    ),
+                    ],
                   ),
                   if (apresText.isNotEmpty)
                     Text(
@@ -223,7 +285,10 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                     Expanded(
                       child: Text(
                         _feedbackMessage!,
-                        style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF7A4E0B)),
+                        style: const TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF7A4E0B)),
                       ),
                     ),
                   ],
@@ -236,7 +301,11 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
               const SizedBox(height: 14),
               const Text(
                 'OPTIONS DISPONIBLES (CLIQUE POUR SÉLECTIONNER) :',
-                style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold, color: Colors.black54, letterSpacing: 0.5),
+                style: TextStyle(
+                    fontSize: 10.5,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54,
+                    letterSpacing: 0.5),
               ),
               const SizedBox(height: 6),
               Wrap(
@@ -251,11 +320,13 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                     },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
                         color: RomanColors.goldLight,
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+                        border: Border.all(
+                            color: RomanColors.imperialGold, width: 1.2),
                       ),
                       child: Text(
                         opt,

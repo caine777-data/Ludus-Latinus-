@@ -325,6 +325,11 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Exercice à trou : fin de mot ou mot entier** (11/10/2026, retour de Clovis).
+  Quand `avant` finit sans espace (21 exercices sur 26), le début du mot est
+  collé à la case, une étiquette dit « ✂️ Écris seulement la fin du mot » et la
+  case affiche « fin » ; sinon « ✍️ Écris le mot entier » et « mot ».
+
 - **Sons et départ du Circus** (10/10/2026, retour de Cédric) : plus de bruit
   de carte ni de bouton pour changer d'onglet, ouvrir une page, une leçon ou la
   boutique ; les tuiles de Ludi ne jouent plus de bruitage (les jeux ont leur
