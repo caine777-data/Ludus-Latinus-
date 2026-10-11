@@ -8,7 +8,7 @@ import '../../data/services/latin_phonetics_engine.dart';
 
 /// Modal interactif d'analyse et de récitation phonétique latine.
 /// Permet de comparer la prononciation restituée (Cicéron) et ecclésiastique (Moyen Âge),
-/// d'observer l'accentuation tonique (loi de la pénultième) et d'écouter la cadence métrique.
+/// d'observer l'accentuation tonique (loi de la pénultième) et de battre le rythme des syllabes (un clic par syllabe, pas de voix).
 class LatinPronunciationModal extends StatefulWidget {
   final String text;
 
@@ -99,7 +99,7 @@ class _LatinPronunciationModalState extends State<LatinPronunciationModal> {
   String _getPhoneticHelpText(LatinWordPhonetics word, bool isRest) {
     final lower = word.cleanWord.toLowerCase();
     if (isRest) {
-      if (lower == 'caesar') return 'Prononcez « KA-ÈSS-AR » avec le C claquant [K] et la diphtongue liée.';
+      if (lower == 'caesar') return 'Prononcez « KAÏ-SAR » avec le C claquant [K] ; la diphtongue AE se dit [aï], et l\'accent frappe KAÏ.';
       if (lower == 'cicero') return 'Prononcez « KI-KÉ-RO » comme dans « kiwi », l\'accent sur le premier KI !';
       if (lower == 'roma') return 'Prononcez « RŌ-MA » avec le R roulé et le O long.';
       if (lower == 'senatus') return 'Prononcez « SÉ-NĀ-TOUSS » avec l\'accent frappant le NĀ.';
@@ -312,7 +312,7 @@ class _LatinPronunciationModalState extends State<LatinPronunciationModal> {
                           size: 18,
                         ),
                         label: Text(
-                          _isPlayingRhythm ? 'Récitation en cours...' : 'Réciter au rythme antique ▶',
+                          _isPlayingRhythm ? 'Syllabe après syllabe…' : 'Battre le rythme des syllabes ▶',
                           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(

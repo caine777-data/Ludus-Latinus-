@@ -325,6 +325,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Pas de voix dans l'appli** (11/10/2026). La fenêtre de prononciation ne
+  joue qu'un clic par syllabe : son bouton s'appelle désormais « Battre le
+  rythme des syllabes » (il promettait une récitation). *Caesar* restitué :
+  « KAÏ-SAR » (AE = [aï]). Une vraie voix demanderait des enregistrements :
+  aucune voix Android ne lit le latin restitué.
+
 - **Exercice à trou : fin de mot ou mot entier** (11/10/2026, retour de Clovis).
   Quand `avant` finit sans espace (21 exercices sur 26), le début du mot est
   collé à la case, une étiquette dit « ✂️ Écris seulement la fin du mot » et la
