@@ -833,6 +833,13 @@ https://claude.ai/artifact/5G9NxprB69Ehc7Tng1oXSY). Dans l'ordre :
 3. **Phase 3, visuels Gemini** — cartes des six cas, en-têtes des
    leçons-récits de 4e et 3e, stèle vierge de l'Épigraphie.
 - Teinte du sol qui change avec le cycle (5e, 4e, 3e).
+- **Traduction, en trois temps** (décidé avec Cédric le 11/10/2026). 1. Lancer en
+  français (France et francophonie : Belgique, Suisse, Québec). 2. Sortir les
+  textes de l'interface dans des fichiers de langue (`lib/l10n/app_fr.arb`),
+  sans rien traduire. 3. Si l'appli prend, une deuxième langue (anglais ou
+  allemand) : le contenu pédagogique se réécrit, il ne se traduit pas
+  (étymologie par les mots français, grammaire française, programme de 5e-3e),
+  un cycle à la fois en commençant par la 5e.
 
 ---
 
