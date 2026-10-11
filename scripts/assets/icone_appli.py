@@ -27,13 +27,13 @@ def elargir(im, marge):
     """Ajoute `marge` px à gauche et à droite en prolongeant chaque ligne par
     la couleur de son bord : le fond est un dégradé sombre, la jointure ne se
     voit pas. Nécessaire car les lauriers touchent presque les bords."""
-    l, h = im.size
-    neuf = Image.new("RGB", (l + 2 * marge, h))
+    larg, h = im.size
+    neuf = Image.new("RGB", (larg + 2 * marge, h))
     neuf.paste(im, (marge, 0))
     gauche = im.crop((0, 0, 1, h)).resize((marge, h))
-    droite = im.crop((l - 1, 0, l, h)).resize((marge, h))
+    droite = im.crop((larg - 1, 0, larg, h)).resize((marge, h))
     neuf.paste(gauche, (0, 0))
-    neuf.paste(droite, (l + marge, 0))
+    neuf.paste(droite, (larg + marge, 0))
     return neuf
 
 

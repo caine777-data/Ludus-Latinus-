@@ -25,7 +25,20 @@ class AboutScreen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Image.asset(logoPour(Theme.of(context).brightness), width: 220),
+                // Coins arrondis et ombre légère : le carré du logo devient une
+                // carte voulue au lieu d'un fond un peu différent de la page.
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    boxShadow: const [
+                      BoxShadow(color: Color(0x1A000000), blurRadius: 16, offset: Offset(0, 6)),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(28),
+                    child: Image.asset(logoPour(Theme.of(context).brightness), width: 220),
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Text(
                   'Ludus Latinus',
