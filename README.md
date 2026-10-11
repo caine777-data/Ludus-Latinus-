@@ -1,6 +1,6 @@
 # Ludus Latinus 🏛️
 
-Application libre pour apprendre le latin au collège, de la 5e à la 3e.
+Application pour apprendre le latin au collège, de la 5e à la 3e. Éditée par Icare & Dédale, tous droits réservés (voir `LICENSE`).
 
 Le projet propose un parcours d'apprentissage sous forme de jeu sur la Via Appia. L'élève progresse avec la mascotte Lupulus, un louveteau en toge. Il gagne des sesterces, débloque des costumes d'avatar et maintient une série quotidienne.
 

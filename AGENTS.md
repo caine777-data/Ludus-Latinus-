@@ -325,6 +325,11 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Licence et modèle économique** (11/10/2026). `LICENSE` passe de MIT à
+  « © 2026 Icare & Dédale, tous droits réservés » : la MIT permettait à
+  n'importe qui de republier l'appli, y compris payante. Icare & Dédale est
+  le studio d'édition de Cédric (nom affiché dans les stores). Modèle retenu :
+  voir « Décisions de Cédric ». Le dépôt GitHub doit passer en privé.
 - **Pas de voix dans l'appli** (11/10/2026). La fenêtre de prononciation ne
   joue qu'un clic par syllabe : son bouton s'appelle désormais « Battre le
   rythme des syllabes » (il promettait une récitation). *Caesar* restitué :
@@ -790,6 +795,18 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
 ### Décisions de Cédric (à respecter)
 
+- **Modèle économique** (11/10/2026). **Partie gratuite** : les mondes 1 à 3
+  de 5e en entier (16 leçons, pour ne pas fermer la porte aux débutants)
+  **plus la 1re leçon de chacun des autres mondes** (mondes 4 à 26, aperçu
+  pour les professeurs) ; soit 39 leçons sur 113. Tout le reste se débloque
+  par l'« Édition complète », **achat unique à 3,99 €** via Google Play Billing. **Aucune
+  publicité. Les sesterces ne s'achètent jamais avec de l'argent réel** (appli
+  du programme Familles, public de 12 à 15 ans). Calendrier : test fermé
+  (12 testeurs, 14 jours) avec la version complète gratuite pendant que Cédric
+  fait les démarches (cumul d'activité, micro-entreprise, profil marchand),
+  puis mise en production directement avec l'achat. La règle suivante (1re
+  leçon de chaque monde ouverte d'emblée) reste valable : ces leçons font
+  partie de la partie gratuite. Éditeur affiché : Icare & Dédale.
 - **La première leçon de chaque monde reste ouverte d'emblée**, y compris
   en 4e et en 3e : un professeur doit pouvoir faire travailler directement
   le niveau de sa classe. Ne pas verrouiller.
