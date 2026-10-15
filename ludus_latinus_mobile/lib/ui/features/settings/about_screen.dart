@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../../core/cinematic_player.dart';
 import '../../core/themes.dart';
+import '../../../l10n/l10n.dart';
 
 /// Écran « À propos » : logo et nom de l'éditeur, version de l'appli.
 /// Volontairement sans nom de personne, sans e-mail et sans lien vers le code.
@@ -18,7 +19,7 @@ class AboutScreen extends StatelessWidget {
     final sombre = Theme.of(context).brightness == Brightness.dark;
     final couleurTexte = sombre ? Colors.white : RomanColors.charcoal;
     return Scaffold(
-      appBar: AppBar(title: const Text('À PROPOS')),
+      appBar: AppBar(title: Text(context.l10n.aboutTitle)),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -56,17 +57,17 @@ class AboutScreen extends StatelessWidget {
                   future: PackageInfo.fromPlatform(),
                   builder: (context, info) {
                     final texte = info.hasData
-                        ? 'Version ${info.data!.version} (${info.data!.buildNumber})'
-                        : 'Version …';
+                        ? context.l10n.aboutVersion(info.data!.version, info.data!.buildNumber)
+                        : context.l10n.aboutVersionLoading;
                     return Text(texte, style: TextStyle(fontSize: 15, color: couleurTexte));
                   },
                 ),
                 const SizedBox(height: 20),
-                Text('Édité par Icare & Dédale',
+                Text(context.l10n.aboutPublisher,
                     textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: couleurTexte)),
                 const SizedBox(height: 6),
                 Text(
-                  '© 2026 Icare & Dédale. Tous droits réservés.',
+                  context.l10n.aboutRights,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 13, color: couleurTexte.withValues(alpha: 0.7)),
                 ),

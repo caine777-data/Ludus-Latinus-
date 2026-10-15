@@ -2718,6 +2718,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Invariable'**
   String get thesaurusCatInvariable;
+
+  /// No description provided for @settingsSectionApp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Application'**
+  String get settingsSectionApp;
+
+  /// No description provided for @settingsAbout.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get settingsAbout;
+
+  /// No description provided for @settingsAboutHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version et éditeur'**
+  String get settingsAboutHint;
+
+  /// No description provided for @aboutTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'À PROPOS'**
+  String get aboutTitle;
+
+  /// No description provided for @aboutVersion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version {version} ({build})'**
+  String aboutVersion(String version, String build);
+
+  /// No description provided for @aboutVersionLoading.
+  ///
+  /// In fr, this message translates to:
+  /// **'Version …'**
+  String get aboutVersionLoading;
+
+  /// No description provided for @aboutPublisher.
+  ///
+  /// In fr, this message translates to:
+  /// **'Édité par Icare & Dédale'**
+  String get aboutPublisher;
+
+  /// No description provided for @aboutRights.
+  ///
+  /// In fr, this message translates to:
+  /// **'© 2026 Icare & Dédale. Tous droits réservés.'**
+  String get aboutRights;
 }
 
 class _AppLocalizationsDelegate

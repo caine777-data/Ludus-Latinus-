@@ -1197,5 +1197,23 @@
   "thesaurusCatVerb": "Verbe",
   "thesaurusCatAdjective": "Adjectif",
   "thesaurusCatPronoun": "Pronom",
-  "thesaurusCatInvariable": "Invariable"
+  "thesaurusCatInvariable": "Invariable",
+  "settingsSectionApp": "Application",
+  "settingsAbout": "À propos",
+  "settingsAboutHint": "Version et éditeur",
+  "aboutTitle": "À PROPOS",
+  "aboutVersion": "Version {version} ({build})",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      },
+      "build": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutVersionLoading": "Version …",
+  "aboutPublisher": "Édité par Icare & Dédale",
+  "aboutRights": "© 2026 Icare & Dédale. Tous droits réservés."
 }

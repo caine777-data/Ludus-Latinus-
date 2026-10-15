@@ -1577,4 +1577,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get thesaurusCatInvariable => 'Invariable';
+
+  @override
+  String get settingsSectionApp => 'Application';
+
+  @override
+  String get settingsAbout => 'À propos';
+
+  @override
+  String get settingsAboutHint => 'Version et éditeur';
+
+  @override
+  String get aboutTitle => 'À PROPOS';
+
+  @override
+  String aboutVersion(String version, String build) {
+    return 'Version $version ($build)';
+  }
+
+  @override
+  String get aboutVersionLoading => 'Version …';
+
+  @override
+  String get aboutPublisher => 'Édité par Icare & Dédale';
+
+  @override
+  String get aboutRights => '© 2026 Icare & Dédale. Tous droits réservés.';
 }

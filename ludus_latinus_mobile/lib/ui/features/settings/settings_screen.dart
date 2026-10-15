@@ -29,11 +29,11 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profile = repo.profile;
     return Scaffold(
-      appBar: AppBar(title: const Text(context.l10n.settingsTitle)),
+      appBar: AppBar(title: Text(context.l10n.settingsTitle)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          const _Titre(context.l10n.settingsSectionHero),
+          _Titre(context.l10n.settingsSectionHero),
           RomanParchmentCard(
             padding: const EdgeInsets.all(16),
             child: HeroForm(
@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
-          const _Titre(context.l10n.settingsSectionSound),
+          _Titre(context.l10n.settingsSectionSound),
           _Reglage(
             icone: Icons.volume_up_rounded,
             titre: context.l10n.settingsSoundTitle,
@@ -55,19 +55,19 @@ class SettingsScreen extends StatelessWidget {
           ),
           if (GameRepository.modeSombreDisponible) ...[
             const SizedBox(height: 22),
-            const _Titre(context.l10n.settingsSectionDisplay),
+            _Titre(context.l10n.settingsSectionDisplay),
             AnimatedBuilder(
               animation: repo,
               builder: (context, _) => SwitchListTile.adaptive(
                 value: repo.isDarkMode,
                 onChanged: (_) => repo.toggleThemeMode(),
-                title: const Text(context.l10n.settingsNightMode),
+                title: Text(context.l10n.settingsNightMode),
                 secondary: const Icon(Icons.nightlight_round, color: RomanColors.imperialPurple),
               ),
             ),
           ],
           const SizedBox(height: 22),
-          const _Titre(context.l10n.settingsSectionVideo),
+          _Titre(context.l10n.settingsSectionVideo),
           _Reglage(
             icone: Icons.play_circle_outline_rounded,
             titre: context.l10n.settingsReplayIntro,
@@ -75,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => RomanCinematicOverlay.showIntro(context),
           ),
           const SizedBox(height: 22),
-          const _Titre(context.l10n.settingsSectionApp),
+          _Titre(context.l10n.settingsSectionApp),
           _Reglage(
             icone: Icons.info_outline_rounded,
             titre: context.l10n.settingsAbout,
