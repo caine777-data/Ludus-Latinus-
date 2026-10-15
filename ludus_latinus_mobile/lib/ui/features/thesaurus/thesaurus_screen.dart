@@ -4,7 +4,8 @@ import '../../core/widgets.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/thesaurus_entry.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
+import '../../../l10n/l10n.dart';
 
 /// Dictionnaire bilingue latin-français et tables grammaticales colorées.
 class ThesaurusScreen extends StatefulWidget {
@@ -23,6 +24,26 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   String _searchQuery = '';
 
   final List<String> _categories = ['Tous', 'Nom', 'Verbe', 'Adjectif', 'Pronom', 'Invariable'];
+
+  /// Les identifiants de catégorie (« Nom », « Verbe »…) viennent des données ;
+  /// seul le texte affiché passe par les fichiers de langue.
+  String _categoryLabel(BuildContext context, String cat) {
+    switch (cat) {
+      case 'Tous':
+        return context.l10n.thesaurusCatAll;
+      case 'Nom':
+        return context.l10n.thesaurusCatNoun;
+      case 'Verbe':
+        return context.l10n.thesaurusCatVerb;
+      case 'Adjectif':
+        return context.l10n.thesaurusCatAdjective;
+      case 'Pronom':
+        return context.l10n.thesaurusCatPronoun;
+      case 'Invariable':
+        return context.l10n.thesaurusCatInvariable;
+    }
+    return cat;
+  }
 
   @override
   void initState() {
@@ -54,11 +75,11 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('THESAURUS'),
+        title: Text(context.l10n.thesaurusTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
-            tooltip: 'Harmonia Antiqua (Audio)',
+            tooltip: context.l10n.audioTooltip,
             onPressed: () => RomanAudioModal.show(context),
           ),
         ],
@@ -67,10 +88,10 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           indicatorColor: RomanColors.imperialGold,
           labelColor: RomanColors.imperialPurple,
           unselectedLabelColor: Colors.black54,
-          tabs: const [
-            Tab(icon: Icon(Icons.menu_book_outlined, size: 20), text: 'Dictionnaire'),
-            Tab(icon: Icon(Icons.table_rows_outlined, size: 20), text: 'Déclinaisons'),
-            Tab(icon: Icon(Icons.auto_stories_outlined, size: 20), text: 'Conjugaisons'),
+          tabs: [
+            Tab(icon: const Icon(Icons.menu_book_outlined, size: 20), text: context.l10n.thesaurusTabDictionary),
+            Tab(icon: const Icon(Icons.table_rows_outlined, size: 20), text: context.l10n.thesaurusTabDeclensions),
+            Tab(icon: const Icon(Icons.auto_stories_outlined, size: 20), text: context.l10n.thesaurusTabConjugations),
           ],
         ),
       ),
@@ -99,7 +120,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
               TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Rechercher en latin ou français...',
+                  hintText: context.l10n.thesaurusSearchHint,
                   prefixIcon: const Icon(Icons.search, color: RomanColors.imperialPurple),
                   suffixIcon: _searchQuery.isNotEmpty
                       ? IconButton(
@@ -138,7 +159,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                     return Padding(
                       padding: const EdgeInsets.only(right: 6),
                       child: ChoiceChip(
-                        label: Text(cat),
+                        label: Text(_categoryLabel(context, cat)),
                         selected: isSel,
                         selectedColor: RomanColors.imperialPurple,
                         labelStyle: TextStyle(
@@ -173,12 +194,12 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${entries.length} terme(s) trouvé(s)',
+                context.l10n.thesaurusTermsFound(entries.length),
                 style: const TextStyle(fontSize: 12, color: Colors.black54, fontStyle: FontStyle.italic),
               ),
-              const Text(
-                'Vocabulaire Cycle 4',
-                style: TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
+              Text(
+                context.l10n.thesaurusVocabCycle,
+                style: const TextStyle(fontSize: 11, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -194,7 +215,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                       const Text('📜', style: TextStyle(fontSize: 44)),
                       const SizedBox(height: 10),
                       Text(
-                        'Aucun mot trouvé pour « $_searchQuery »',
+                        context.l10n.thesaurusNoWord(_searchQuery),
                         style: const TextStyle(color: Colors.black54),
                       ),
                     ],
@@ -247,7 +268,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                               const Spacer(),
                               IconButton(
                                 icon: const Icon(Icons.volume_up_rounded, size: 20, color: RomanColors.imperialPurple),
-                                tooltip: 'Prononciation latine certifiée',
+                                tooltip: context.l10n.thesaurusCertifiedPronunciation,
                                 onPressed: () {
                                   AudioService().playWheelClick();
                                   LatinPronunciationModal.show(context, item.latin);
@@ -297,7 +318,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '« ${item.ex} »',
+                                          context.l10n.commonQuoted(item.ex),
                                           style: const TextStyle(
                                             fontSize: 12,
                                             fontStyle: FontStyle.italic,
@@ -547,9 +568,9 @@ class _CartesDesCas extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'LES SIX CAS',
-          style: TextStyle(
+        Text(
+          context.l10n.thesaurusSixCases,
+          style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.4,

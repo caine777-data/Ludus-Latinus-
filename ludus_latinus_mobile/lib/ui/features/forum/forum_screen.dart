@@ -8,7 +8,8 @@ import '../../core/roman_audio_modal.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/models/latin_epigraph.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
+import '../../../l10n/l10n.dart';
 
 /// Écran de reconstruction impériale du Forum Romanum (Style Monument Valley).
 class ForumScreen extends StatelessWidget {
@@ -27,11 +28,11 @@ class ForumScreen extends StatelessWidget {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('FORUM IMPERIALE'),
+            title: Text(context.l10n.forumTitle),
             actions: [
               IconButton(
                 icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
-                tooltip: 'Harmonia Antiqua (Audio)',
+                tooltip: context.l10n.audioTooltip,
                 onPressed: () => RomanAudioModal.show(context),
               ),
               Container(
@@ -48,7 +49,7 @@ class ForumScreen extends StatelessWidget {
                     const Text('🪙', style: TextStyle(fontSize: 13)),
                     const SizedBox(width: 4),
                     Text(
-                      '${profile.sesterces} HS',
+                      context.l10n.accountSesterceAmount(profile.sesterces),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 12.5,
@@ -105,7 +106,7 @@ class ForumScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            '$restoredCount / ${monuments.length} Édifices',
+                            context.l10n.forumBuildingsCount(restoredCount, monuments.length),
                             style: const TextStyle(
                               color: Color(0xFF241505),
                               fontWeight: FontWeight.bold,
@@ -116,9 +117,9 @@ class ForumScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Restaure les chefs-d’œuvre de la Ville Éternelle grâce à tes sesterces de quête. Chaque monument restauré débloque un bonus permanent pour ton épopée !',
-                      style: TextStyle(
+                    Text(
+                      context.l10n.forumIntro,
+                      style: const TextStyle(
                         color: Color(0xFFEDE0D4),
                         fontSize: 12.5,
                         height: 1.4,
@@ -153,10 +154,10 @@ class ForumScreen extends StatelessWidget {
                               const SizedBox(width: 6),
                               // Souple : sur un téléphone étroit, le titre passe à la ligne
                               // au lieu de pousser le compteur hors de la carte.
-                              const Flexible(
+                              Flexible(
                                 child: Text(
-                                  'Atelier d\'Épigraphie Lapidaire',
-                                  style: TextStyle(
+                                  context.l10n.forumEpigraphyTitle,
+                                  style: const TextStyle(
                                     fontFamily: 'serif',
                                     fontSize: 14.5,
                                     fontWeight: FontWeight.bold,
@@ -176,7 +177,7 @@ class ForumScreen extends StatelessWidget {
                             border: Border.all(color: RomanColors.laurelGreen),
                           ),
                           child: Text(
-                            '${profile.decodedEpigraphs.length} / ${LatinEpigraph.catalogue.length} Déchiffrées',
+                            context.l10n.forumEpigraphyCount(profile.decodedEpigraphs.length, LatinEpigraph.catalogue.length),
                             style: const TextStyle(
                               color: RomanColors.laurelGreen,
                               fontWeight: FontWeight.bold,
@@ -187,9 +188,9 @@ class ForumScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      'Restaure les stèles de travertin et de marbre de Rome. Déchiffre les abréviations impériales au marteau lapidaire pour obtenir la sagesse antique et des sesterces !',
-                      style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
+                    Text(
+                      context.l10n.forumEpigraphyIntro,
+                      style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
@@ -202,9 +203,9 @@ class ForumScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
                         icon: const Icon(Icons.history_edu_rounded, color: RomanColors.imperialGold, size: 18),
-                        label: const Text(
-                          'OUVRIR LA RESTAURATION DES 6 STÈLES ANTIQUES',
-                          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, letterSpacing: 0.5),
+                        label: Text(
+                          context.l10n.forumOpenEpigraphy,
+                          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, letterSpacing: 0.5),
                         ),
                         onPressed: () {
                           final nextToDecode = LatinEpigraph.catalogue.values.firstWhere(
@@ -250,7 +251,7 @@ class ForumScreen extends StatelessWidget {
                                 const Text('🏛️ ', style: TextStyle(fontSize: 18)),
                                 Expanded(
                                   child: Text(
-                                    '${monument.nom} restauré avec gloire ! Bonus actif : ${monument.bonus}',
+                                    context.l10n.forumRestored(monument.nom, monument.bonus),
                                     style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -362,9 +363,9 @@ class ForumScreen extends StatelessWidget {
                         color: RomanColors.laurelGreen,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
-                        'RESTAURÉ',
-                        style: TextStyle(
+                      child: Text(
+                        context.l10n.forumRestoredTag,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -387,7 +388,7 @@ class ForumScreen extends StatelessWidget {
                     children: [
                       const Text('🪙 ', style: TextStyle(fontSize: 12)),
                       Text(
-                        '${monument.cout} HS',
+                        context.l10n.forumCost(monument.cout),
                         style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -424,7 +425,7 @@ class ForumScreen extends StatelessWidget {
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
-                    'Bonus permanent : ${monument.bonus}',
+                    context.l10n.forumPermanentBonus(monument.bonus),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -456,7 +457,7 @@ class ForumScreen extends StatelessWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        isDecoded ? 'Épigraphe Déchiffrée (Revoir la Pierre)' : 'Déchiffrer l\'Épigraphe Gravée (+15 HS)',
+                        isDecoded ? context.l10n.forumEpigraphDecoded : context.l10n.forumEpigraphDecode,
                         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -482,7 +483,7 @@ class ForumScreen extends StatelessWidget {
                 ),
                 icon: const Icon(Icons.architecture_rounded, size: 18),
                 label: Text(
-                  canAfford ? 'Reconstruire ce monument' : 'Fonds insuffisants',
+                  canAfford ? context.l10n.forumRebuild : context.l10n.forumNotEnough,
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 ),
                 onPressed: canAfford ? onRestore : null,

@@ -2026,6 +2026,698 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'RÉCOLTER LE TRÉSOR'**
   String get questCollect;
+
+  /// No description provided for @mapTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'VIA APPIA'**
+  String get mapTitle;
+
+  /// No description provided for @audioTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Harmonia Antiqua (Audio)'**
+  String get audioTooltip;
+
+  /// No description provided for @mapEpic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épopée Romaine : {done} / {total} leçons'**
+  String mapEpic(int done, int total);
+
+  /// No description provided for @mapAllCycle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tout le Cycle 4'**
+  String get mapAllCycle;
+
+  /// No description provided for @mapLegendQuiz.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quiz Grammaire'**
+  String get mapLegendQuiz;
+
+  /// No description provided for @mapLegendSyntax.
+  ///
+  /// In fr, this message translates to:
+  /// **'Syntaxe'**
+  String get mapLegendSyntax;
+
+  /// No description provided for @mapLegendDeclensions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déclinaisons'**
+  String get mapLegendDeclensions;
+
+  /// No description provided for @mapLegendBoss.
+  ///
+  /// In fr, this message translates to:
+  /// **'Boss Arène'**
+  String get mapLegendBoss;
+
+  /// No description provided for @mapNoStep.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune étape trouvée pour ce cursus.'**
+  String get mapNoStep;
+
+  /// No description provided for @mapWorldSalute.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Monde {number} : que ta marche soit triomphale ! »'**
+  String mapWorldSalute(String number);
+
+  /// No description provided for @mapLocked.
+  ///
+  /// In fr, this message translates to:
+  /// **'🔒 Complète l\'étape précédente pour débloquer cette borne !'**
+  String get mapLocked;
+
+  /// No description provided for @mapToPlay.
+  ///
+  /// In fr, this message translates to:
+  /// **'▶ À JOUER'**
+  String get mapToPlay;
+
+  /// No description provided for @mapTypeQuiz.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quiz'**
+  String get mapTypeQuiz;
+
+  /// No description provided for @mapTypeEpigraphy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épigraphie'**
+  String get mapTypeEpigraphy;
+
+  /// No description provided for @mapTypeLesson.
+  ///
+  /// In fr, this message translates to:
+  /// **'Leçon'**
+  String get mapTypeLesson;
+
+  /// No description provided for @mapWorldBanner.
+  ///
+  /// In fr, this message translates to:
+  /// **'S • P • Q • R  •  MONDE {number}'**
+  String mapWorldBanner(String number);
+
+  /// No description provided for @memoriaCorrect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exact ! Arca {box} : prochaine révision dans {days} j{bonus}'**
+  String memoriaCorrect(String box, int days, String bonus);
+
+  /// No description provided for @memoriaGainBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **' (+{gain} HS)'**
+  String memoriaGainBonus(int gain);
+
+  /// No description provided for @memoriaWrong.
+  ///
+  /// In fr, this message translates to:
+  /// **'C\'était « {answer} ». Retour en Arca I : tu la reverras bientôt.'**
+  String memoriaWrong(String answer);
+
+  /// No description provided for @memoriaTriumph.
+  ///
+  /// In fr, this message translates to:
+  /// **'TRIOMPHE DE LA MÉMOIRE'**
+  String get memoriaTriumph;
+
+  /// No description provided for @memoriaFinished.
+  ///
+  /// In fr, this message translates to:
+  /// **'Session de révision achevée avec brio !\nTu as remporté +{earnings} Sesterces (HS) !{streakLine}'**
+  String memoriaFinished(int earnings, String streakLine);
+
+  /// No description provided for @memoriaMaxStreakLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'\n🔥 Furor Latinus Max : {streak} d\'affilée !'**
+  String memoriaMaxStreakLine(int streak);
+
+  /// No description provided for @memoriaBackToForum.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour au Forum'**
+  String get memoriaBackToForum;
+
+  /// No description provided for @memoriaTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'MEMORIA VELOX'**
+  String get memoriaTitle;
+
+  /// No description provided for @memoriaEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta Memoria est encore vide.\n\nTermine une leçon de la Via Appia : ses mots viendront s\'y réviser.'**
+  String get memoriaEmpty;
+
+  /// No description provided for @memoriaEmptyLevel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun mot de {level} pour l\'instant : termine une leçon de ce niveau.'**
+  String memoriaEmptyLevel(String level);
+
+  /// No description provided for @memoriaEarnings.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{amount} HS'**
+  String memoriaEarnings(int amount);
+
+  /// No description provided for @memoriaFurorMax.
+  ///
+  /// In fr, this message translates to:
+  /// **'FUROR LATINUS MAXIMUS !'**
+  String get memoriaFurorMax;
+
+  /// No description provided for @memoriaFuror.
+  ///
+  /// In fr, this message translates to:
+  /// **'FUROR LATINUS !'**
+  String get memoriaFuror;
+
+  /// No description provided for @memoriaStreakParen.
+  ///
+  /// In fr, this message translates to:
+  /// **'({streak} d\'affilée)'**
+  String memoriaStreakParen(int streak);
+
+  /// No description provided for @memoriaCardCounter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte {index} / {total}'**
+  String memoriaCardCounter(int index, int total);
+
+  /// No description provided for @memoriaDue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} à réviser'**
+  String memoriaDue(int count);
+
+  /// No description provided for @memoriaCheer1.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Incredibile ! Le feu de Rome brûle en toi ! »'**
+  String get memoriaCheer1;
+
+  /// No description provided for @memoriaCheer2.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Macte animo ! Continue sur cette belle lancée ! »'**
+  String get memoriaCheer2;
+
+  /// No description provided for @memoriaCheer3.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Repetitio est mater studiorum ! »'**
+  String get memoriaCheer3;
+
+  /// No description provided for @memoriaNextCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'CARTE SUIVANTE'**
+  String get memoriaNextCard;
+
+  /// No description provided for @memoriaFinish.
+  ///
+  /// In fr, this message translates to:
+  /// **'TERMINER'**
+  String get memoriaFinish;
+
+  /// No description provided for @memoriaPronunciation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prononciation & API'**
+  String get memoriaPronunciation;
+
+  /// No description provided for @memoriaChooseTranslation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis sa traduction ci-dessous'**
+  String get memoriaChooseTranslation;
+
+  /// No description provided for @memoriaFrenchTranslation.
+  ///
+  /// In fr, this message translates to:
+  /// **'TRADUCTION FRANÇAISE'**
+  String get memoriaFrenchTranslation;
+
+  /// No description provided for @commonQuoted.
+  ///
+  /// In fr, this message translates to:
+  /// **'« {text} »'**
+  String commonQuoted(String text);
+
+  /// No description provided for @memoriaListenSentence.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écouter la phrase'**
+  String get memoriaListenSentence;
+
+  /// No description provided for @memoriaTranslationLine.
+  ///
+  /// In fr, this message translates to:
+  /// **'= {text}'**
+  String memoriaTranslationLine(String text);
+
+  /// No description provided for @pantheonTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Panthéon'**
+  String get pantheonTitle;
+
+  /// No description provided for @pantheonAlbum.
+  ///
+  /// In fr, this message translates to:
+  /// **'ALBUM DES CARTES'**
+  String get pantheonAlbum;
+
+  /// No description provided for @pantheonHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Termine un monde pour retourner sa carte.'**
+  String get pantheonHint;
+
+  /// No description provided for @pantheonCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{won} / {total} cartes'**
+  String pantheonCount(int won, int total);
+
+  /// No description provided for @pantheonWorld.
+  ///
+  /// In fr, this message translates to:
+  /// **'Monde {number}'**
+  String pantheonWorld(int number);
+
+  /// No description provided for @pantheonHiddenCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carte cachée'**
+  String get pantheonHiddenCard;
+
+  /// No description provided for @tavernTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'TAVERNE DES DÉS'**
+  String get tavernTitle;
+
+  /// No description provided for @tavernPurse.
+  ///
+  /// In fr, this message translates to:
+  /// **'🪙 {amount} HS'**
+  String tavernPurse(int amount);
+
+  /// No description provided for @tavernGaius.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius l\'aubergiste'**
+  String get tavernGaius;
+
+  /// No description provided for @tavernGaiusWaits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius attend que tu t\'arrêtes…'**
+  String get tavernGaiusWaits;
+
+  /// No description provided for @tavernBust.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu as dépassé XXI : Gaius n\'a pas besoin de jouer.'**
+  String get tavernBust;
+
+  /// No description provided for @tavernYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toi'**
+  String get tavernYou;
+
+  /// No description provided for @tavernRewardsLeft.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoires payées aujourd\'hui : encore {left} sur 3 (+{gain} HS chacune)'**
+  String tavernRewardsLeft(int left, int gain);
+
+  /// No description provided for @tavernRewardsDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.'**
+  String get tavernRewardsDone;
+
+  /// No description provided for @tavernRulesTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎲 AD XXI : approche-toi de 21 sans le dépasser'**
+  String get tavernRulesTitle;
+
+  /// No description provided for @tavernRule1.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoute des dés un par un. Ton total s\'écrit en chiffres romains.'**
+  String get tavernRule1;
+
+  /// No description provided for @tavernRule2.
+  ///
+  /// In fr, this message translates to:
+  /// **'Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.'**
+  String get tavernRule2;
+
+  /// No description provided for @tavernRule3.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius joue ensuite : il relance tant qu\'il a moins de XVII. Le plus près de XXI gagne ; à égalité, personne ne gagne.'**
+  String get tavernRule3;
+
+  /// No description provided for @tavernHelp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aide : I = 1 · V = 5 · X = 10 · IV = 4 · IX = 9 · XXI = 21'**
+  String get tavernHelp;
+
+  /// No description provided for @tavernTotal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Total : {total}'**
+  String tavernTotal(String total);
+
+  /// No description provided for @tavernRollAgain.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎲 Encore un dé'**
+  String get tavernRollAgain;
+
+  /// No description provided for @tavernStop.
+  ///
+  /// In fr, this message translates to:
+  /// **'✋ Je m\'arrête'**
+  String get tavernStop;
+
+  /// No description provided for @tavernGaiusRolls.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius lance ses dés…'**
+  String get tavernGaiusRolls;
+
+  /// No description provided for @tavernYouWin.
+  ///
+  /// In fr, this message translates to:
+  /// **'🏆 Tu bats Gaius !'**
+  String get tavernYouWin;
+
+  /// No description provided for @tavernGaiusBust.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius a dépassé XXI avec {roman} ({value}).'**
+  String tavernGaiusBust(String roman, int value);
+
+  /// No description provided for @tavernYouBeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ton {yourRoman} ({yourValue}) bat son {hisRoman} ({hisValue}).'**
+  String tavernYouBeat(
+      String yourRoman, int yourValue, String hisRoman, int hisValue);
+
+  /// No description provided for @tavernTooFar.
+  ///
+  /// In fr, this message translates to:
+  /// **'💥 Trop loin !'**
+  String get tavernTooFar;
+
+  /// No description provided for @tavernGaiusWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gaius l\'emporte'**
+  String get tavernGaiusWins;
+
+  /// No description provided for @tavernYouBust.
+  ///
+  /// In fr, this message translates to:
+  /// **'{roman} ({value}) dépasse XXI (21).'**
+  String tavernYouBust(String roman, int value);
+
+  /// No description provided for @tavernHeBeats.
+  ///
+  /// In fr, this message translates to:
+  /// **'Son {hisRoman} ({hisValue}) bat ton {yourRoman} ({yourValue}).'**
+  String tavernHeBeats(
+      String hisRoman, int hisValue, String yourRoman, int yourValue);
+
+  /// No description provided for @tavernTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'⚖️ Égalité'**
+  String get tavernTie;
+
+  /// No description provided for @tavernTieBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous avez tous les deux {roman} ({value}).'**
+  String tavernTieBody(String roman, int value);
+
+  /// No description provided for @tavernWinBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{amount} HS pour la victoire'**
+  String tavernWinBonus(int amount);
+
+  /// No description provided for @tavernQuestBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'+{amount} HS pour le défi du jour'**
+  String tavernQuestBonus(int amount);
+
+  /// No description provided for @tavernNewRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'🎲 NOUVELLE MANCHE'**
+  String get tavernNewRound;
+
+  /// No description provided for @forumTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'FORUM IMPERIALE'**
+  String get forumTitle;
+
+  /// No description provided for @forumBuildingsCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} / {total} Édifices'**
+  String forumBuildingsCount(int done, int total);
+
+  /// No description provided for @forumIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaure les chefs-d’œuvre de la Ville Éternelle grâce à tes sesterces de quête. Chaque monument restauré débloque un bonus permanent pour ton épopée !'**
+  String get forumIntro;
+
+  /// No description provided for @forumEpigraphyTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Atelier d\'Épigraphie Lapidaire'**
+  String get forumEpigraphyTitle;
+
+  /// No description provided for @forumEpigraphyCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{done} / {total} Déchiffrées'**
+  String forumEpigraphyCount(int done, int total);
+
+  /// No description provided for @forumEpigraphyIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaure les stèles de travertin et de marbre de Rome. Déchiffre les abréviations impériales au marteau lapidaire pour obtenir la sagesse antique et des sesterces !'**
+  String get forumEpigraphyIntro;
+
+  /// No description provided for @forumOpenEpigraphy.
+  ///
+  /// In fr, this message translates to:
+  /// **'OUVRIR LA RESTAURATION DES 6 STÈLES ANTIQUES'**
+  String get forumOpenEpigraphy;
+
+  /// No description provided for @forumRestored.
+  ///
+  /// In fr, this message translates to:
+  /// **'{name} restauré avec gloire ! Bonus actif : {bonus}'**
+  String forumRestored(String name, String bonus);
+
+  /// No description provided for @forumRestoredTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'RESTAURÉ'**
+  String get forumRestoredTag;
+
+  /// No description provided for @forumCost.
+  ///
+  /// In fr, this message translates to:
+  /// **'{amount} HS'**
+  String forumCost(int amount);
+
+  /// No description provided for @forumPermanentBonus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonus permanent : {bonus}'**
+  String forumPermanentBonus(String bonus);
+
+  /// No description provided for @forumEpigraphDecoded.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épigraphe Déchiffrée (Revoir la Pierre)'**
+  String get forumEpigraphDecoded;
+
+  /// No description provided for @forumEpigraphDecode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déchiffrer l\'Épigraphe Gravée (+15 HS)'**
+  String get forumEpigraphDecode;
+
+  /// No description provided for @forumRebuild.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reconstruire ce monument'**
+  String get forumRebuild;
+
+  /// No description provided for @forumNotEnough.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fonds insuffisants'**
+  String get forumNotEnough;
+
+  /// No description provided for @thesaurusTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'THESAURUS'**
+  String get thesaurusTitle;
+
+  /// No description provided for @thesaurusTabDictionary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dictionnaire'**
+  String get thesaurusTabDictionary;
+
+  /// No description provided for @thesaurusTabDeclensions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déclinaisons'**
+  String get thesaurusTabDeclensions;
+
+  /// No description provided for @thesaurusTabConjugations.
+  ///
+  /// In fr, this message translates to:
+  /// **'Conjugaisons'**
+  String get thesaurusTabConjugations;
+
+  /// No description provided for @thesaurusSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher en latin ou français...'**
+  String get thesaurusSearchHint;
+
+  /// No description provided for @thesaurusTermsFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} terme(s) trouvé(s)'**
+  String thesaurusTermsFound(int count);
+
+  /// No description provided for @thesaurusVocabCycle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vocabulaire Cycle 4'**
+  String get thesaurusVocabCycle;
+
+  /// No description provided for @thesaurusNoWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun mot trouvé pour « {query} »'**
+  String thesaurusNoWord(String query);
+
+  /// No description provided for @thesaurusCertifiedPronunciation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prononciation latine certifiée'**
+  String get thesaurusCertifiedPronunciation;
+
+  /// No description provided for @thesaurusSixCases.
+  ///
+  /// In fr, this message translates to:
+  /// **'LES SIX CAS'**
+  String get thesaurusSixCases;
+
+  /// No description provided for @pantheonUnlock.
+  ///
+  /// In fr, this message translates to:
+  /// **'Termine le monde {number} pour la débloquer'**
+  String pantheonUnlock(int number);
+
+  /// No description provided for @pantheonUnlockNamed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Termine le monde {number} : {title} pour la débloquer'**
+  String pantheonUnlockNamed(int number, String title);
+
+  /// No description provided for @memoriaLevelAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get memoriaLevelAll;
+
+  /// No description provided for @memoriaLevel5.
+  ///
+  /// In fr, this message translates to:
+  /// **'5ème'**
+  String get memoriaLevel5;
+
+  /// No description provided for @memoriaLevel4.
+  ///
+  /// In fr, this message translates to:
+  /// **'4ème'**
+  String get memoriaLevel4;
+
+  /// No description provided for @memoriaLevel3.
+  ///
+  /// In fr, this message translates to:
+  /// **'3ème'**
+  String get memoriaLevel3;
+
+  /// No description provided for @thesaurusCatAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get thesaurusCatAll;
+
+  /// No description provided for @thesaurusCatNoun.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom'**
+  String get thesaurusCatNoun;
+
+  /// No description provided for @thesaurusCatVerb.
+  ///
+  /// In fr, this message translates to:
+  /// **'Verbe'**
+  String get thesaurusCatVerb;
+
+  /// No description provided for @thesaurusCatAdjective.
+  ///
+  /// In fr, this message translates to:
+  /// **'Adjectif'**
+  String get thesaurusCatAdjective;
+
+  /// No description provided for @thesaurusCatPronoun.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pronom'**
+  String get thesaurusCatPronoun;
+
+  /// No description provided for @thesaurusCatInvariable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Invariable'**
+  String get thesaurusCatInvariable;
 }
 
 class _AppLocalizationsDelegate

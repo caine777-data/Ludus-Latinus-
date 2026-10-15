@@ -7,19 +7,32 @@ import '../../core/particles_overlay.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/srs_card.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
+import '../../../l10n/l10n.dart';
 
 enum NiveauMemoria {
-  tous('Tous', null),
-  cinquieme('5ème', '5eme'),
-  quatrieme('4ème', '4eme'),
-  troisieme('3ème', '3eme');
+  tous(null),
+  cinquieme('5eme'),
+  quatrieme('4eme'),
+  troisieme('3eme');
 
-  final String label;
+  /// Texte affiché pour ce niveau, dans la langue de l'interface.
+  String localizedLabel(BuildContext context) {
+    switch (this) {
+      case NiveauMemoria.tous:
+        return context.l10n.memoriaLevelAll;
+      case NiveauMemoria.cinquieme:
+        return context.l10n.memoriaLevel5;
+      case NiveauMemoria.quatrieme:
+        return context.l10n.memoriaLevel4;
+      case NiveauMemoria.troisieme:
+        return context.l10n.memoriaLevel3;
+    }
+  }
 
   /// Identifiant de classe des mondes retenus (null : tous les niveaux).
   final String? classeId;
-  const NiveauMemoria(this.label, this.classeId);
+  const NiveauMemoria(this.classeId);
 
   bool matches(String? classe) => classeId == null || classe == classeId;
 }
@@ -225,8 +238,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
         backgroundColor: juste ? RomanColors.laurelGreen : const Color(0xFF8B2500),
         duration: const Duration(milliseconds: 1400),
         content: Text(juste
-            ? 'Exact ! Arca ${_toRoman(prog.box)} : prochaine révision dans ${_boxIntervalDays(prog.box)} j${gain > 0 ? ' (+$gain HS)' : ''}'
-            : "C'était « $_bonne ». Retour en Arca I : tu la reverras bientôt."),
+            ? context.l10n.memoriaCorrect(_toRoman(prog.box), _boxIntervalDays(prog.box), gain > 0 ? context.l10n.memoriaGainBonus(gain) : '')
+            : context.l10n.memoriaWrong(_bonne)),
       ),
     );
 
@@ -257,13 +270,13 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
       barrierDismissible: false,
       builder: (_) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Row(
+        title: Row(
           children: [
-            Text('👑 ', style: TextStyle(fontSize: 24)),
+            const Text('👑 ', style: TextStyle(fontSize: 24)),
             Expanded(
               child: Text(
-                'TRIOMPHE DE LA MÉMOIRE',
-                style: TextStyle(
+                context.l10n.memoriaTriumph,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'serif',
@@ -293,7 +306,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             ),
             const SizedBox(height: 12),
             Text(
-              'Session de révision achevée avec brio !\nTu as remporté +$sessionEarnings Sesterces (HS) !${_maxStreak >= 3 ? '\n🔥 Furor Latinus Max : $_maxStreak d\'affilée !' : ''}',
+              context.l10n.memoriaFinished(sessionEarnings, _maxStreak >= 3 ? context.l10n.memoriaMaxStreakLine(_maxStreak) : ''),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 13, height: 1.4),
             ),
@@ -301,7 +314,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
         ),
         actions: [
           RomanButton(
-            text: 'Retour au Forum',
+            text: context.l10n.memoriaBackToForum,
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -318,9 +331,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
     if (cards.isEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: const FittedBox(
+          title: FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text('MEMORIA VELOX'),
+            child: Text(context.l10n.memoriaTitle),
           ),
         ),
         body: Center(
@@ -328,8 +341,8 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             padding: const EdgeInsets.all(32),
             child: Text(
               selectedNiveau == NiveauMemoria.tous
-                  ? "Ta Memoria est encore vide.\n\nTermine une leçon de la Via Appia : ses mots viendront s'y réviser."
-                  : "Aucun mot de ${selectedNiveau.label} pour l'instant : termine une leçon de ce niveau.",
+                  ? context.l10n.memoriaEmpty
+                  : context.l10n.memoriaEmptyLevel(selectedNiveau.localizedLabel(context)),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 16, height: 1.5, color: RomanColors.charcoal),
             ),
@@ -344,9 +357,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
     return Scaffold(
       appBar: AppBar(
-        title: const FittedBox(
+        title: FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text('MEMORIA VELOX'),
+          child: Text(context.l10n.memoriaTitle),
         ),
         actions: [
           Container(
@@ -363,7 +376,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 const Text('🪙', style: TextStyle(fontSize: 13)),
                 const SizedBox(width: 4),
                 Text(
-                  '+$sessionEarnings HS',
+                  context.l10n.memoriaEarnings(sessionEarnings),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                 ),
               ],
@@ -371,7 +384,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           ),
           IconButton(
             icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
-            tooltip: 'Harmonia Antiqua (Audio)',
+            tooltip: context.l10n.audioTooltip,
             onPressed: () => RomanAudioModal.show(context),
           ),
         ],
@@ -389,7 +402,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                   return Padding(
                     padding: const EdgeInsets.only(right: 8),
                     child: ChoiceChip(
-                      label: Text(lvl.label),
+                      label: Text(lvl.localizedLabel(context)),
                       selected: isSelected,
                       selectedColor: RomanColors.imperialPurple,
                       labelStyle: TextStyle(
@@ -448,7 +461,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     const Text('🔥', style: TextStyle(fontSize: 16)),
                     const SizedBox(width: 6),
                     Text(
-                      _streak >= 5 ? 'FUROR LATINUS MAXIMUS !' : 'FUROR LATINUS !',
+                      _streak >= 5 ? context.l10n.memoriaFurorMax : context.l10n.memoriaFuror,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 11.5,
@@ -458,7 +471,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      '($_streak d\'affilée)',
+                      context.l10n.memoriaStreakParen(_streak),
                       style: const TextStyle(
                         color: Color(0xFFFFE082),
                         fontSize: 11,
@@ -477,7 +490,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 Row(
                   children: [
                     Text(
-                      'Carte ${safeIndex + 1} / ${cards.length}',
+                      context.l10n.memoriaCardCounter(safeIndex + 1, cards.length),
                       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                     ),
                     const SizedBox(width: 8),
@@ -496,7 +509,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                         children: [
                           Text(_dueCount > 0 ? '⏳ ' : '✓ ', style: const TextStyle(fontSize: 9)),
                           Text(
-                            '$_dueCount à réviser',
+                            context.l10n.memoriaDue(_dueCount),
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -564,10 +577,10 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                   Flexible(
                     child: Text(
                       _streak >= 5
-                          ? '« Incredibile ! Le feu de Rome brûle en toi ! »'
+                          ? context.l10n.memoriaCheer1
                           : _streak >= 3
-                              ? '« Macte animo ! Continue sur cette belle lancée ! »'
-                              : '« Repetitio est mater studiorum ! »',
+                              ? context.l10n.memoriaCheer2
+                              : context.l10n.memoriaCheer3,
                       style: const TextStyle(
                         fontSize: 11,
                         fontStyle: FontStyle.italic,
@@ -640,7 +653,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
               SizedBox(
                 width: double.infinity,
                 child: RomanButton(
-                  text: safeIndex < cards.length - 1 ? 'CARTE SUIVANTE' : 'TERMINER',
+                  text: safeIndex < cards.length - 1 ? context.l10n.memoriaNextCard : context.l10n.memoriaFinish,
                   icon: Icons.arrow_forward_rounded,
                   onPressed: () => _carteSuivante(cards.length),
                 ),
@@ -921,14 +934,14 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 ),
               ],
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.volume_up_rounded, size: 16, color: RomanColors.imperialPurple),
-                SizedBox(width: 5),
+                const Icon(Icons.volume_up_rounded, size: 16, color: RomanColors.imperialPurple),
+                const SizedBox(width: 5),
                 Text(
-                  'Prononciation & API',
-                  style: TextStyle(
+                  context.l10n.memoriaPronunciation,
+                  style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     color: RomanColors.imperialPurple,
@@ -946,13 +959,13 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: RomanColors.marbleBorder, width: 0.8),
           ),
-          child: const Row(
+          child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('👇 ', style: TextStyle(fontSize: 12)),
+              const Text('👇 ', style: TextStyle(fontSize: 12)),
               Text(
-                'Choisis sa traduction ci-dessous',
-                style: TextStyle(fontSize: 11, color: Colors.black54, fontWeight: FontWeight.w600),
+                context.l10n.memoriaChooseTranslation,
+                style: const TextStyle(fontSize: 11, color: Colors.black54, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -972,9 +985,9 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: RomanColors.laurelGreen.withValues(alpha: 0.5)),
           ),
-          child: const Text(
-            'TRADUCTION FRANÇAISE',
-            style: TextStyle(
+          child: Text(
+            context.l10n.memoriaFrenchTranslation,
+            style: const TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.8,
@@ -1027,7 +1040,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
             child: Column(
               children: [
                 Text(
-                  '« ${card.exemple} »',
+                  context.l10n.commonQuoted(card.exemple),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 13,
@@ -1041,16 +1054,16 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                     AudioService().playWheelClick();
                     LatinPronunciationModal.show(context, card.exemple);
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.only(top: 4),
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 4),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.volume_up_rounded, size: 14, color: RomanColors.imperialPurple),
-                        SizedBox(width: 4),
+                        const Icon(Icons.volume_up_rounded, size: 14, color: RomanColors.imperialPurple),
+                        const SizedBox(width: 4),
                         Text(
-                          'Écouter la phrase',
-                          style: TextStyle(fontSize: 10.5, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
+                          context.l10n.memoriaListenSentence,
+                          style: const TextStyle(fontSize: 10.5, color: RomanColors.imperialPurple, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -1059,7 +1072,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 if (card.exempleFr.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
-                    '= ${card.exempleFr}',
+                    context.l10n.memoriaTranslationLine(card.exempleFr),
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 11.5, color: Colors.black54),
                   ),

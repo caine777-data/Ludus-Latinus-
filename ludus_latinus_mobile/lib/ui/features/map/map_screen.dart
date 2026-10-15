@@ -10,7 +10,8 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../lesson/lesson_screen.dart';
 import '../../core/avatar_assets.dart';
-import 'via_appia_road.dart';
+import 'via_appia_road.dart';
+import '../../../l10n/l10n.dart';
 
 /// La Carte d'Aventure de la Via Appia inspirée de l'esthétique de Monument Valley.
 class MapScreen extends StatefulWidget {
@@ -106,7 +107,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('VIA APPIA'),
+        title: Text(context.l10n.mapTitle),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 14),
@@ -122,7 +123,7 @@ class _MapScreenState extends State<MapScreen> {
                 const Text('🪙', style: TextStyle(fontSize: 13)),
                 const SizedBox(width: 4),
                 Text(
-                  '${profile.sesterces} HS',
+                  context.l10n.accountSesterceAmount(profile.sesterces),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12.5,
@@ -134,7 +135,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.volume_up_rounded, color: RomanColors.imperialGold),
-            tooltip: 'Harmonia Antiqua (Audio)',
+            tooltip: context.l10n.audioTooltip,
             onPressed: () => RomanAudioModal.show(context),
           ),
         ],
@@ -161,7 +162,7 @@ class _MapScreenState extends State<MapScreen> {
                   children: [
                     Flexible(
                       child: Text(
-                      'Épopée Romaine : $completedCount / $totalLessons leçons',
+                      context.l10n.mapEpic(completedCount, totalLessons),
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -194,26 +195,26 @@ class _MapScreenState extends State<MapScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      _buildClassChip(0, 'Tout le Cycle 4'),
+                      _buildClassChip(0, context.l10n.mapAllCycle),
                       const SizedBox(width: 6),
-                      _buildClassChip(1, '5ème • Origines'),
+                      _buildClassChip(1, context.l10n.homeClass5),
                       const SizedBox(width: 6),
-                      _buildClassChip(2, '4ème • République'),
+                      _buildClassChip(2, context.l10n.homeClass4),
                       const SizedBox(width: 6),
-                      _buildClassChip(3, '3ème • Empire'),
+                      _buildClassChip(3, context.l10n.homeClass3),
                     ],
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Wrap(
+                Wrap(
                   alignment: WrapAlignment.spaceEvenly,
                   spacing: 10,
                   runSpacing: 4,
                   children: [
-                    _LessonLegendPill(icon: '📜', label: 'Quiz Grammaire'),
-                    _LessonLegendPill(icon: '🧩', label: 'Syntaxe'),
-                    _LessonLegendPill(icon: '✏️', label: 'Déclinaisons'),
-                    _LessonLegendPill(icon: '⚔️', label: 'Boss Arène'),
+                    _LessonLegendPill(icon: '📜', label: context.l10n.mapLegendQuiz),
+                    _LessonLegendPill(icon: '🧩', label: context.l10n.mapLegendSyntax),
+                    _LessonLegendPill(icon: '✏️', label: context.l10n.mapLegendDeclensions),
+                    _LessonLegendPill(icon: '⚔️', label: context.l10n.mapLegendBoss),
                   ],
                 ),
               ],
@@ -224,7 +225,7 @@ class _MapScreenState extends State<MapScreen> {
           // 2. Chaussée Romaine de la Via Appia
           Expanded(
             child: worlds.isEmpty
-                ? const Center(child: Text('Aucune étape trouvée pour ce cursus.'))
+                ? Center(child: Text(context.l10n.mapNoStep))
                 : Stack(
                     children: [
                       // Arrière-plan : la peinture de la classe affichée (campagne,
@@ -351,7 +352,7 @@ class _MapScreenState extends State<MapScreen> {
                           ],
                         ),
                         child: Text(
-                          '« Monde ${world.id.replaceAll(RegExp(r'\D'), '')} : que ta marche soit triomphale ! »',
+                          context.l10n.mapWorldSalute(world.id.replaceAll(RegExp(r'\D'), '')),
                           style: const TextStyle(
                             fontSize: 11,
                             fontStyle: FontStyle.italic,
@@ -480,9 +481,9 @@ class _MapScreenState extends State<MapScreen> {
           : () {
               AudioService().playError();
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('🔒 Complète l\'étape précédente pour débloquer cette borne !'),
-                  duration: Duration(seconds: 1),
+                SnackBar(
+                  content: Text(context.l10n.mapLocked),
+                  duration: const Duration(seconds: 1),
                 ),
               );
             },
@@ -603,7 +604,7 @@ class _MapScreenState extends State<MapScreen> {
                     Text(_getLessonTypeIcon(lesson.type), style: const TextStyle(fontSize: 10)),
                     const SizedBox(width: 3),
                     Text(
-                      _getLessonTypeShortLabel(lesson.type),
+                      _getLessonTypeShortLabel(context, lesson.type),
                       style: TextStyle(
                         fontSize: 9,
                         fontWeight: FontWeight.bold,
@@ -637,9 +638,9 @@ class _MapScreenState extends State<MapScreen> {
                       color: RomanColors.goldLight,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Text(
-                      '▶ À JOUER',
-                      style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
+                    child: Text(
+                      context.l10n.mapToPlay,
+                      style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
                     ),
                   )
                 else if (!isUnlocked)
@@ -669,20 +670,20 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
-  static String _getLessonTypeShortLabel(String type) {
+  static String _getLessonTypeShortLabel(BuildContext context, String type) {
     switch (type) {
       case 'quiz':
-        return 'Quiz';
+        return context.l10n.mapTypeQuiz;
       case 'puzzle':
-        return 'Syntaxe';
+        return context.l10n.mapLegendSyntax;
       case 'trou':
-        return 'Déclinaisons';
+        return context.l10n.mapLegendDeclensions;
       case 'arene':
-        return 'Boss Arène';
+        return context.l10n.mapLegendBoss;
       case 'decodeur':
-        return 'Épigraphie';
+        return context.l10n.mapTypeEpigraphy;
       default:
-        return 'Leçon';
+        return context.l10n.mapTypeLesson;
     }
   }
 
@@ -790,7 +791,7 @@ class _WorldBanner extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'S • P • Q • R  •  MONDE $_numero',
+                  context.l10n.mapWorldBanner(_numero),
                   style: const TextStyle(
                     fontSize: 10.5,
                     fontWeight: FontWeight.bold,

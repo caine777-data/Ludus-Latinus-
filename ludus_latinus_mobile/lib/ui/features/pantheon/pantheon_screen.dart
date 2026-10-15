@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../data/models/carte_pantheon.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../core/themes.dart';
-import '../../core/widgets.dart';
+import '../../core/widgets.dart';
+import '../../../l10n/l10n.dart';
 
 /// Le Panthéon est un album : une carte par monde. Terminer un monde (toutes
 /// ses leçons validées) retourne sa carte ; les autres restent face cachée.
@@ -22,7 +23,7 @@ class PantheonScreen extends StatelessWidget {
         final gagnees = cartes.where((c) => termines.contains(c.mondeId)).length;
 
         return Scaffold(
-          appBar: AppBar(title: const Text('Le Panthéon')),
+          appBar: AppBar(title: Text(context.l10n.pantheonTitle)),
           body: RomanOculusBackdrop(
             child: SafeArea(
               child: ListView.builder(
@@ -85,9 +86,9 @@ class _EnTete extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'ALBUM DES CARTES',
-                  style: TextStyle(
+                Text(
+                  context.l10n.pantheonAlbum,
+                  style: const TextStyle(
                     color: RomanColors.imperialGold,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -95,13 +96,13 @@ class _EnTete extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  'Termine un monde pour retourner sa carte.',
-                  style: TextStyle(color: Colors.white, fontSize: 13, height: 1.3),
+                Text(
+                  context.l10n.pantheonHint,
+                  style: const TextStyle(color: Colors.white, fontSize: 13, height: 1.3),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '$gagnees / $total cartes',
+                  context.l10n.pantheonCount(gagnees, total),
                   style: const TextStyle(
                     color: RomanColors.imperialGold,
                     fontSize: 15,
@@ -172,7 +173,7 @@ class _Recto extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Monde ${carte.monde}',
+          context.l10n.pantheonWorld(carte.monde),
           style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.goldDark),
         ),
         const SizedBox(height: 2),
@@ -214,17 +215,18 @@ class _Verso extends StatelessWidget {
   Widget build(BuildContext context) {
     // Le titre du monde commence déjà par son numéro (« 4 · Les Cas… ») : on l'enlève.
     final titre = titreMonde.replaceFirst(RegExp(r'^\s*\d+\s*·\s*'), '');
-    final monde = titre.isEmpty ? '' : ' : $titre';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Carte cachée',
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
+        Text(
+          context.l10n.pantheonHiddenCard,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: RomanColors.charcoal),
         ),
         const SizedBox(height: 6),
         Text(
-          'Termine le monde ${carte.monde}$monde pour la débloquer',
+          titre.isEmpty
+              ? context.l10n.pantheonUnlock(carte.monde)
+              : context.l10n.pantheonUnlockNamed(carte.monde, titre),
           style: const TextStyle(fontSize: 13, color: Colors.black87, height: 1.3),
         ),
       ],

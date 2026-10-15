@@ -770,5 +770,432 @@
       }
     }
   },
-  "questCollect": "RÉCOLTER LE TRÉSOR"
+  "questCollect": "RÉCOLTER LE TRÉSOR",
+  "mapTitle": "VIA APPIA",
+  "audioTooltip": "Harmonia Antiqua (Audio)",
+  "mapEpic": "Épopée Romaine : {done} / {total} leçons",
+  "@mapEpic": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "mapAllCycle": "Tout le Cycle 4",
+  "mapLegendQuiz": "Quiz Grammaire",
+  "mapLegendSyntax": "Syntaxe",
+  "mapLegendDeclensions": "Déclinaisons",
+  "mapLegendBoss": "Boss Arène",
+  "mapNoStep": "Aucune étape trouvée pour ce cursus.",
+  "mapWorldSalute": "« Monde {number} : que ta marche soit triomphale ! »",
+  "@mapWorldSalute": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "mapLocked": "🔒 Complète l'étape précédente pour débloquer cette borne !",
+  "mapToPlay": "▶ À JOUER",
+  "mapTypeQuiz": "Quiz",
+  "mapTypeEpigraphy": "Épigraphie",
+  "mapTypeLesson": "Leçon",
+  "mapWorldBanner": "S • P • Q • R  •  MONDE {number}",
+  "@mapWorldBanner": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaCorrect": "Exact ! Arca {box} : prochaine révision dans {days} j{bonus}",
+  "@memoriaCorrect": {
+    "placeholders": {
+      "box": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      },
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaGainBonus": " (+{gain} HS)",
+  "@memoriaGainBonus": {
+    "placeholders": {
+      "gain": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaWrong": "C'était « {answer} ». Retour en Arca I : tu la reverras bientôt.",
+  "@memoriaWrong": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaTriumph": "TRIOMPHE DE LA MÉMOIRE",
+  "memoriaFinished": "Session de révision achevée avec brio !\nTu as remporté +{earnings} Sesterces (HS) !{streakLine}",
+  "@memoriaFinished": {
+    "placeholders": {
+      "earnings": {
+        "type": "int"
+      },
+      "streakLine": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaMaxStreakLine": "\n🔥 Furor Latinus Max : {streak} d'affilée !",
+  "@memoriaMaxStreakLine": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaBackToForum": "Retour au Forum",
+  "memoriaTitle": "MEMORIA VELOX",
+  "memoriaEmpty": "Ta Memoria est encore vide.\n\nTermine une leçon de la Via Appia : ses mots viendront s'y réviser.",
+  "memoriaEmptyLevel": "Aucun mot de {level} pour l'instant : termine une leçon de ce niveau.",
+  "@memoriaEmptyLevel": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaEarnings": "+{amount} HS",
+  "@memoriaEarnings": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaFurorMax": "FUROR LATINUS MAXIMUS !",
+  "memoriaFuror": "FUROR LATINUS !",
+  "memoriaStreakParen": "({streak} d'affilée)",
+  "@memoriaStreakParen": {
+    "placeholders": {
+      "streak": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaCardCounter": "Carte {index} / {total}",
+  "@memoriaCardCounter": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaDue": "{count} à réviser",
+  "@memoriaDue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "memoriaCheer1": "« Incredibile ! Le feu de Rome brûle en toi ! »",
+  "memoriaCheer2": "« Macte animo ! Continue sur cette belle lancée ! »",
+  "memoriaCheer3": "« Repetitio est mater studiorum ! »",
+  "memoriaNextCard": "CARTE SUIVANTE",
+  "memoriaFinish": "TERMINER",
+  "memoriaPronunciation": "Prononciation & API",
+  "memoriaChooseTranslation": "Choisis sa traduction ci-dessous",
+  "memoriaFrenchTranslation": "TRADUCTION FRANÇAISE",
+  "commonQuoted": "« {text} »",
+  "@commonQuoted": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaListenSentence": "Écouter la phrase",
+  "memoriaTranslationLine": "= {text}",
+  "@memoriaTranslationLine": {
+    "placeholders": {
+      "text": {
+        "type": "String"
+      }
+    }
+  },
+  "pantheonTitle": "Le Panthéon",
+  "pantheonAlbum": "ALBUM DES CARTES",
+  "pantheonHint": "Termine un monde pour retourner sa carte.",
+  "pantheonCount": "{won} / {total} cartes",
+  "@pantheonCount": {
+    "placeholders": {
+      "won": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pantheonWorld": "Monde {number}",
+  "@pantheonWorld": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "pantheonHiddenCard": "Carte cachée",
+  "tavernTitle": "TAVERNE DES DÉS",
+  "tavernPurse": "🪙 {amount} HS",
+  "@tavernPurse": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernGaius": "Gaius l'aubergiste",
+  "tavernGaiusWaits": "Gaius attend que tu t'arrêtes…",
+  "tavernBust": "Tu as dépassé XXI : Gaius n'a pas besoin de jouer.",
+  "tavernYou": "Toi",
+  "tavernRewardsLeft": "Victoires payées aujourd'hui : encore {left} sur 3 (+{gain} HS chacune)",
+  "@tavernRewardsLeft": {
+    "placeholders": {
+      "left": {
+        "type": "int"
+      },
+      "gain": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernRewardsDone": "Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.",
+  "tavernRulesTitle": "🎲 AD XXI : approche-toi de 21 sans le dépasser",
+  "tavernRule1": "Ajoute des dés un par un. Ton total s'écrit en chiffres romains.",
+  "tavernRule2": "Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.",
+  "tavernRule3": "Gaius joue ensuite : il relance tant qu'il a moins de XVII. Le plus près de XXI gagne ; à égalité, personne ne gagne.",
+  "tavernHelp": "Aide : I = 1 · V = 5 · X = 10 · IV = 4 · IX = 9 · XXI = 21",
+  "tavernTotal": "Total : {total}",
+  "@tavernTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "tavernRollAgain": "🎲 Encore un dé",
+  "tavernStop": "✋ Je m'arrête",
+  "tavernGaiusRolls": "Gaius lance ses dés…",
+  "tavernYouWin": "🏆 Tu bats Gaius !",
+  "tavernGaiusBust": "Gaius a dépassé XXI avec {roman} ({value}).",
+  "@tavernGaiusBust": {
+    "placeholders": {
+      "roman": {
+        "type": "String"
+      },
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernYouBeat": "Ton {yourRoman} ({yourValue}) bat son {hisRoman} ({hisValue}).",
+  "@tavernYouBeat": {
+    "placeholders": {
+      "yourRoman": {
+        "type": "String"
+      },
+      "yourValue": {
+        "type": "int"
+      },
+      "hisRoman": {
+        "type": "String"
+      },
+      "hisValue": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernTooFar": "💥 Trop loin !",
+  "tavernGaiusWins": "Gaius l'emporte",
+  "tavernYouBust": "{roman} ({value}) dépasse XXI (21).",
+  "@tavernYouBust": {
+    "placeholders": {
+      "roman": {
+        "type": "String"
+      },
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernHeBeats": "Son {hisRoman} ({hisValue}) bat ton {yourRoman} ({yourValue}).",
+  "@tavernHeBeats": {
+    "placeholders": {
+      "hisRoman": {
+        "type": "String"
+      },
+      "hisValue": {
+        "type": "int"
+      },
+      "yourRoman": {
+        "type": "String"
+      },
+      "yourValue": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernTie": "⚖️ Égalité",
+  "tavernTieBody": "Vous avez tous les deux {roman} ({value}).",
+  "@tavernTieBody": {
+    "placeholders": {
+      "roman": {
+        "type": "String"
+      },
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernWinBonus": "+{amount} HS pour la victoire",
+  "@tavernWinBonus": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernQuestBonus": "+{amount} HS pour le défi du jour",
+  "@tavernQuestBonus": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "tavernNewRound": "🎲 NOUVELLE MANCHE",
+  "forumTitle": "FORUM IMPERIALE",
+  "forumBuildingsCount": "{done} / {total} Édifices",
+  "@forumBuildingsCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "forumIntro": "Restaure les chefs-d’œuvre de la Ville Éternelle grâce à tes sesterces de quête. Chaque monument restauré débloque un bonus permanent pour ton épopée !",
+  "forumEpigraphyTitle": "Atelier d'Épigraphie Lapidaire",
+  "forumEpigraphyCount": "{done} / {total} Déchiffrées",
+  "@forumEpigraphyCount": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "forumEpigraphyIntro": "Restaure les stèles de travertin et de marbre de Rome. Déchiffre les abréviations impériales au marteau lapidaire pour obtenir la sagesse antique et des sesterces !",
+  "forumOpenEpigraphy": "OUVRIR LA RESTAURATION DES 6 STÈLES ANTIQUES",
+  "forumRestored": "{name} restauré avec gloire ! Bonus actif : {bonus}",
+  "@forumRestored": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
+  "forumRestoredTag": "RESTAURÉ",
+  "forumCost": "{amount} HS",
+  "@forumCost": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "forumPermanentBonus": "Bonus permanent : {bonus}",
+  "@forumPermanentBonus": {
+    "placeholders": {
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
+  "forumEpigraphDecoded": "Épigraphe Déchiffrée (Revoir la Pierre)",
+  "forumEpigraphDecode": "Déchiffrer l'Épigraphe Gravée (+15 HS)",
+  "forumRebuild": "Reconstruire ce monument",
+  "forumNotEnough": "Fonds insuffisants",
+  "thesaurusTitle": "THESAURUS",
+  "thesaurusTabDictionary": "Dictionnaire",
+  "thesaurusTabDeclensions": "Déclinaisons",
+  "thesaurusTabConjugations": "Conjugaisons",
+  "thesaurusSearchHint": "Rechercher en latin ou français...",
+  "thesaurusTermsFound": "{count} terme(s) trouvé(s)",
+  "@thesaurusTermsFound": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thesaurusVocabCycle": "Vocabulaire Cycle 4",
+  "thesaurusNoWord": "Aucun mot trouvé pour « {query} »",
+  "@thesaurusNoWord": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "thesaurusCertifiedPronunciation": "Prononciation latine certifiée",
+  "thesaurusSixCases": "LES SIX CAS",
+  "pantheonUnlock": "Termine le monde {number} pour la débloquer",
+  "@pantheonUnlock": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "pantheonUnlockNamed": "Termine le monde {number} : {title} pour la débloquer",
+  "@pantheonUnlockNamed": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "memoriaLevelAll": "Tous",
+  "memoriaLevel5": "5ème",
+  "memoriaLevel4": "4ème",
+  "memoriaLevel3": "3ème",
+  "thesaurusCatAll": "Tous",
+  "thesaurusCatNoun": "Nom",
+  "thesaurusCatVerb": "Verbe",
+  "thesaurusCatAdjective": "Adjectif",
+  "thesaurusCatPronoun": "Pronom",
+  "thesaurusCatInvariable": "Invariable"
 }

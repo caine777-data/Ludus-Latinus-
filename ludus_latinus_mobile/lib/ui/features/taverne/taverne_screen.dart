@@ -5,7 +5,8 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
+import '../../../l10n/l10n.dart';
 
 /// Un nombre en chiffres romains (jusqu'à 39, assez pour les totaux du jeu).
 String chiffreRomain(int n) {
@@ -187,7 +188,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
         final enCours = !_partie.joueurArrete;
         return Scaffold(
           appBar: AppBar(
-            title: const FittedBox(fit: BoxFit.scaleDown, child: Text('TAVERNE DES DÉS')),
+            title: FittedBox(fit: BoxFit.scaleDown, child: Text(context.l10n.tavernTitle)),
             actions: [
               Container(
                 margin: const EdgeInsets.only(right: 14),
@@ -198,7 +199,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
                 child: Text(
-                  '🪙 ${widget.repo.profile.sesterces} HS',
+                  context.l10n.tavernPurse(widget.repo.profile.sesterces),
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
                 ),
               ),
@@ -225,17 +226,17 @@ class _TaverneScreenState extends State<TaverneScreen> {
                 _regles(),
                 const SizedBox(height: 14),
                 _zone(
-                  titre: 'Gaius l\'aubergiste',
+                  titre: context.l10n.tavernGaius,
                   des: _partie.desGaius,
                   total: _partie.totalGaius,
                   gaius: true,
                   vide: enCours
-                      ? 'Gaius attend que tu t\'arrêtes…'
-                      : (_partie.joueurDepasse ? 'Tu as dépassé XXI : Gaius n\'a pas besoin de jouer.' : null),
+                      ? context.l10n.tavernGaiusWaits
+                      : (_partie.joueurDepasse ? context.l10n.tavernBust : null),
                 ),
                 const SizedBox(height: 12),
                 _zone(
-                  titre: 'Toi',
+                  titre: context.l10n.tavernYou,
                   des: _partie.desJoueur,
                   total: _partie.totalJoueur,
                   gaius: false,
@@ -245,8 +246,8 @@ class _TaverneScreenState extends State<TaverneScreen> {
                 const SizedBox(height: 14),
                 Text(
                   widget.repo.taverneRewardsLeftToday > 0
-                      ? 'Victoires payées aujourd\'hui : encore ${widget.repo.taverneRewardsLeftToday} sur 3 (+$gainVictoire HS chacune)'
-                      : 'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.',
+                      ? context.l10n.tavernRewardsLeft(widget.repo.taverneRewardsLeftToday, gainVictoire)
+                      : context.l10n.tavernRewardsDone,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 12, color: Colors.black54),
                 ),
@@ -271,21 +272,21 @@ class _TaverneScreenState extends State<TaverneScreen> {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: RomanColors.imperialGold, width: 1.5),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '🎲 AD XXI : approche-toi de 21 sans le dépasser',
-            style: TextStyle(color: Color(0xFFFFE082), fontSize: 15, fontWeight: FontWeight.bold),
+            context.l10n.tavernRulesTitle,
+            style: const TextStyle(color: Color(0xFFFFE082), fontSize: 15, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8),
-          _Regle('1', 'Ajoute des dés un par un. Ton total s\'écrit en chiffres romains.'),
-          _Regle('2', 'Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.'),
-          _Regle('3', 'Gaius joue ensuite : il relance tant qu\'il a moins de XVII. Le plus près de XXI gagne ; à égalité, personne ne gagne.'),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
+          _Regle('1', context.l10n.tavernRule1),
+          _Regle('2', context.l10n.tavernRule2),
+          _Regle('3', context.l10n.tavernRule3),
+          const SizedBox(height: 8),
           Text(
-            'Aide : I = 1 · V = 5 · X = 10 · IV = 4 · IX = 9 · XXI = 21',
-            style: TextStyle(color: Colors.white70, fontSize: 12),
+            context.l10n.tavernHelp,
+            style: const TextStyle(color: Colors.white70, fontSize: 12),
           ),
         ],
       ),
@@ -321,7 +322,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
             const SizedBox(height: 10),
             // Le total n'existe ici qu'en chiffres romains : le lire, c'est jouer.
             Text(
-              'Total : ${chiffreRomain(total)}',
+              context.l10n.tavernTotal(chiffreRomain(total)),
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -377,7 +378,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
             ),
-            child: const Text('🎲 Encore un dé', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            child: Text(context.l10n.tavernRollAgain, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
           ),
         ),
         const SizedBox(width: 10),
@@ -390,7 +391,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
             ),
-            child: const Text('✋ Je m\'arrête', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            child: Text(context.l10n.tavernStop, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
           ),
         ),
       ],
@@ -398,10 +399,10 @@ class _TaverneScreenState extends State<TaverneScreen> {
   }
 
   Widget _gaiusReflechit() {
-    return const Text(
-      'Gaius lance ses dés…',
+    return Text(
+      context.l10n.tavernGaiusRolls,
       textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: RomanColors.imperialPurple),
+      style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic, color: RomanColors.imperialPurple),
     );
   }
 
@@ -412,23 +413,23 @@ class _TaverneScreenState extends State<TaverneScreen> {
     final Color couleur;
     switch (issue) {
       case IssueManche.gagnee:
-        titre = '🏆 Tu bats Gaius !';
+        titre = context.l10n.tavernYouWin;
         couleur = Colors.green.shade800;
         detail = p.totalGaius > PartieAdXXI.cible
-            ? 'Gaius a dépassé XXI avec ${chiffreRomain(p.totalGaius)} (${p.totalGaius}).'
-            : 'Ton ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}) bat son ${chiffreRomain(p.totalGaius)} (${p.totalGaius}).';
+            ? context.l10n.tavernGaiusBust(chiffreRomain(p.totalGaius), p.totalGaius)
+            : context.l10n.tavernYouBeat(chiffreRomain(p.totalJoueur), p.totalJoueur, chiffreRomain(p.totalGaius), p.totalGaius);
         break;
       case IssueManche.perdue:
-        titre = p.joueurDepasse ? '💥 Trop loin !' : 'Gaius l\'emporte';
+        titre = p.joueurDepasse ? context.l10n.tavernTooFar : context.l10n.tavernGaiusWins;
         couleur = const Color(0xFFB71C1C);
         detail = p.joueurDepasse
-            ? '${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}) dépasse XXI (21).'
-            : 'Son ${chiffreRomain(p.totalGaius)} (${p.totalGaius}) bat ton ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}).';
+            ? context.l10n.tavernYouBust(chiffreRomain(p.totalJoueur), p.totalJoueur)
+            : context.l10n.tavernHeBeats(chiffreRomain(p.totalGaius), p.totalGaius, chiffreRomain(p.totalJoueur), p.totalJoueur);
         break;
       case IssueManche.egalite:
-        titre = '⚖️ Égalité';
+        titre = context.l10n.tavernTie;
         couleur = RomanColors.imperialPurple;
-        detail = 'Vous avez tous les deux ${chiffreRomain(p.totalJoueur)} (${p.totalJoueur}).';
+        detail = context.l10n.tavernTieBody(chiffreRomain(p.totalJoueur), p.totalJoueur);
         break;
       case IssueManche.enCours:
         return const SizedBox.shrink();
@@ -450,15 +451,15 @@ class _TaverneScreenState extends State<TaverneScreen> {
             const SizedBox(height: 6),
             Text(
               [
-                if (_gainManche > 0) '+$_gainManche HS pour la victoire',
-                if (_gainDefi > 0) '+$_gainDefi HS pour le défi du jour',
+                if (_gainManche > 0) context.l10n.tavernWinBonus(_gainManche),
+                if (_gainDefi > 0) context.l10n.tavernQuestBonus(_gainDefi),
               ].join('\n'),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: RomanColors.laurelGreen),
             ),
           ],
           const SizedBox(height: 10),
-          RomanButton(text: '🎲 NOUVELLE MANCHE', onPressed: _nouvelleManche),
+          RomanButton(text: context.l10n.tavernNewRound, onPressed: _nouvelleManche),
         ],
       ),
     );

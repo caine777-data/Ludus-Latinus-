@@ -1144,4 +1144,437 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get questCollect => 'RÉCOLTER LE TRÉSOR';
+
+  @override
+  String get mapTitle => 'VIA APPIA';
+
+  @override
+  String get audioTooltip => 'Harmonia Antiqua (Audio)';
+
+  @override
+  String mapEpic(int done, int total) {
+    return 'Épopée Romaine : $done / $total leçons';
+  }
+
+  @override
+  String get mapAllCycle => 'Tout le Cycle 4';
+
+  @override
+  String get mapLegendQuiz => 'Quiz Grammaire';
+
+  @override
+  String get mapLegendSyntax => 'Syntaxe';
+
+  @override
+  String get mapLegendDeclensions => 'Déclinaisons';
+
+  @override
+  String get mapLegendBoss => 'Boss Arène';
+
+  @override
+  String get mapNoStep => 'Aucune étape trouvée pour ce cursus.';
+
+  @override
+  String mapWorldSalute(String number) {
+    return '« Monde $number : que ta marche soit triomphale ! »';
+  }
+
+  @override
+  String get mapLocked =>
+      '🔒 Complète l\'étape précédente pour débloquer cette borne !';
+
+  @override
+  String get mapToPlay => '▶ À JOUER';
+
+  @override
+  String get mapTypeQuiz => 'Quiz';
+
+  @override
+  String get mapTypeEpigraphy => 'Épigraphie';
+
+  @override
+  String get mapTypeLesson => 'Leçon';
+
+  @override
+  String mapWorldBanner(String number) {
+    return 'S • P • Q • R  •  MONDE $number';
+  }
+
+  @override
+  String memoriaCorrect(String box, int days, String bonus) {
+    return 'Exact ! Arca $box : prochaine révision dans $days j$bonus';
+  }
+
+  @override
+  String memoriaGainBonus(int gain) {
+    return ' (+$gain HS)';
+  }
+
+  @override
+  String memoriaWrong(String answer) {
+    return 'C\'était « $answer ». Retour en Arca I : tu la reverras bientôt.';
+  }
+
+  @override
+  String get memoriaTriumph => 'TRIOMPHE DE LA MÉMOIRE';
+
+  @override
+  String memoriaFinished(int earnings, String streakLine) {
+    return 'Session de révision achevée avec brio !\nTu as remporté +$earnings Sesterces (HS) !$streakLine';
+  }
+
+  @override
+  String memoriaMaxStreakLine(int streak) {
+    return '\n🔥 Furor Latinus Max : $streak d\'affilée !';
+  }
+
+  @override
+  String get memoriaBackToForum => 'Retour au Forum';
+
+  @override
+  String get memoriaTitle => 'MEMORIA VELOX';
+
+  @override
+  String get memoriaEmpty =>
+      'Ta Memoria est encore vide.\n\nTermine une leçon de la Via Appia : ses mots viendront s\'y réviser.';
+
+  @override
+  String memoriaEmptyLevel(String level) {
+    return 'Aucun mot de $level pour l\'instant : termine une leçon de ce niveau.';
+  }
+
+  @override
+  String memoriaEarnings(int amount) {
+    return '+$amount HS';
+  }
+
+  @override
+  String get memoriaFurorMax => 'FUROR LATINUS MAXIMUS !';
+
+  @override
+  String get memoriaFuror => 'FUROR LATINUS !';
+
+  @override
+  String memoriaStreakParen(int streak) {
+    return '($streak d\'affilée)';
+  }
+
+  @override
+  String memoriaCardCounter(int index, int total) {
+    return 'Carte $index / $total';
+  }
+
+  @override
+  String memoriaDue(int count) {
+    return '$count à réviser';
+  }
+
+  @override
+  String get memoriaCheer1 => '« Incredibile ! Le feu de Rome brûle en toi ! »';
+
+  @override
+  String get memoriaCheer2 =>
+      '« Macte animo ! Continue sur cette belle lancée ! »';
+
+  @override
+  String get memoriaCheer3 => '« Repetitio est mater studiorum ! »';
+
+  @override
+  String get memoriaNextCard => 'CARTE SUIVANTE';
+
+  @override
+  String get memoriaFinish => 'TERMINER';
+
+  @override
+  String get memoriaPronunciation => 'Prononciation & API';
+
+  @override
+  String get memoriaChooseTranslation => 'Choisis sa traduction ci-dessous';
+
+  @override
+  String get memoriaFrenchTranslation => 'TRADUCTION FRANÇAISE';
+
+  @override
+  String commonQuoted(String text) {
+    return '« $text »';
+  }
+
+  @override
+  String get memoriaListenSentence => 'Écouter la phrase';
+
+  @override
+  String memoriaTranslationLine(String text) {
+    return '= $text';
+  }
+
+  @override
+  String get pantheonTitle => 'Le Panthéon';
+
+  @override
+  String get pantheonAlbum => 'ALBUM DES CARTES';
+
+  @override
+  String get pantheonHint => 'Termine un monde pour retourner sa carte.';
+
+  @override
+  String pantheonCount(int won, int total) {
+    return '$won / $total cartes';
+  }
+
+  @override
+  String pantheonWorld(int number) {
+    return 'Monde $number';
+  }
+
+  @override
+  String get pantheonHiddenCard => 'Carte cachée';
+
+  @override
+  String get tavernTitle => 'TAVERNE DES DÉS';
+
+  @override
+  String tavernPurse(int amount) {
+    return '🪙 $amount HS';
+  }
+
+  @override
+  String get tavernGaius => 'Gaius l\'aubergiste';
+
+  @override
+  String get tavernGaiusWaits => 'Gaius attend que tu t\'arrêtes…';
+
+  @override
+  String get tavernBust =>
+      'Tu as dépassé XXI : Gaius n\'a pas besoin de jouer.';
+
+  @override
+  String get tavernYou => 'Toi';
+
+  @override
+  String tavernRewardsLeft(int left, int gain) {
+    return 'Victoires payées aujourd\'hui : encore $left sur 3 (+$gain HS chacune)';
+  }
+
+  @override
+  String get tavernRewardsDone =>
+      'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.';
+
+  @override
+  String get tavernRulesTitle =>
+      '🎲 AD XXI : approche-toi de 21 sans le dépasser';
+
+  @override
+  String get tavernRule1 =>
+      'Ajoute des dés un par un. Ton total s\'écrit en chiffres romains.';
+
+  @override
+  String get tavernRule2 =>
+      'Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.';
+
+  @override
+  String get tavernRule3 =>
+      'Gaius joue ensuite : il relance tant qu\'il a moins de XVII. Le plus près de XXI gagne ; à égalité, personne ne gagne.';
+
+  @override
+  String get tavernHelp =>
+      'Aide : I = 1 · V = 5 · X = 10 · IV = 4 · IX = 9 · XXI = 21';
+
+  @override
+  String tavernTotal(String total) {
+    return 'Total : $total';
+  }
+
+  @override
+  String get tavernRollAgain => '🎲 Encore un dé';
+
+  @override
+  String get tavernStop => '✋ Je m\'arrête';
+
+  @override
+  String get tavernGaiusRolls => 'Gaius lance ses dés…';
+
+  @override
+  String get tavernYouWin => '🏆 Tu bats Gaius !';
+
+  @override
+  String tavernGaiusBust(String roman, int value) {
+    return 'Gaius a dépassé XXI avec $roman ($value).';
+  }
+
+  @override
+  String tavernYouBeat(
+      String yourRoman, int yourValue, String hisRoman, int hisValue) {
+    return 'Ton $yourRoman ($yourValue) bat son $hisRoman ($hisValue).';
+  }
+
+  @override
+  String get tavernTooFar => '💥 Trop loin !';
+
+  @override
+  String get tavernGaiusWins => 'Gaius l\'emporte';
+
+  @override
+  String tavernYouBust(String roman, int value) {
+    return '$roman ($value) dépasse XXI (21).';
+  }
+
+  @override
+  String tavernHeBeats(
+      String hisRoman, int hisValue, String yourRoman, int yourValue) {
+    return 'Son $hisRoman ($hisValue) bat ton $yourRoman ($yourValue).';
+  }
+
+  @override
+  String get tavernTie => '⚖️ Égalité';
+
+  @override
+  String tavernTieBody(String roman, int value) {
+    return 'Vous avez tous les deux $roman ($value).';
+  }
+
+  @override
+  String tavernWinBonus(int amount) {
+    return '+$amount HS pour la victoire';
+  }
+
+  @override
+  String tavernQuestBonus(int amount) {
+    return '+$amount HS pour le défi du jour';
+  }
+
+  @override
+  String get tavernNewRound => '🎲 NOUVELLE MANCHE';
+
+  @override
+  String get forumTitle => 'FORUM IMPERIALE';
+
+  @override
+  String forumBuildingsCount(int done, int total) {
+    return '$done / $total Édifices';
+  }
+
+  @override
+  String get forumIntro =>
+      'Restaure les chefs-d’œuvre de la Ville Éternelle grâce à tes sesterces de quête. Chaque monument restauré débloque un bonus permanent pour ton épopée !';
+
+  @override
+  String get forumEpigraphyTitle => 'Atelier d\'Épigraphie Lapidaire';
+
+  @override
+  String forumEpigraphyCount(int done, int total) {
+    return '$done / $total Déchiffrées';
+  }
+
+  @override
+  String get forumEpigraphyIntro =>
+      'Restaure les stèles de travertin et de marbre de Rome. Déchiffre les abréviations impériales au marteau lapidaire pour obtenir la sagesse antique et des sesterces !';
+
+  @override
+  String get forumOpenEpigraphy =>
+      'OUVRIR LA RESTAURATION DES 6 STÈLES ANTIQUES';
+
+  @override
+  String forumRestored(String name, String bonus) {
+    return '$name restauré avec gloire ! Bonus actif : $bonus';
+  }
+
+  @override
+  String get forumRestoredTag => 'RESTAURÉ';
+
+  @override
+  String forumCost(int amount) {
+    return '$amount HS';
+  }
+
+  @override
+  String forumPermanentBonus(String bonus) {
+    return 'Bonus permanent : $bonus';
+  }
+
+  @override
+  String get forumEpigraphDecoded => 'Épigraphe Déchiffrée (Revoir la Pierre)';
+
+  @override
+  String get forumEpigraphDecode => 'Déchiffrer l\'Épigraphe Gravée (+15 HS)';
+
+  @override
+  String get forumRebuild => 'Reconstruire ce monument';
+
+  @override
+  String get forumNotEnough => 'Fonds insuffisants';
+
+  @override
+  String get thesaurusTitle => 'THESAURUS';
+
+  @override
+  String get thesaurusTabDictionary => 'Dictionnaire';
+
+  @override
+  String get thesaurusTabDeclensions => 'Déclinaisons';
+
+  @override
+  String get thesaurusTabConjugations => 'Conjugaisons';
+
+  @override
+  String get thesaurusSearchHint => 'Rechercher en latin ou français...';
+
+  @override
+  String thesaurusTermsFound(int count) {
+    return '$count terme(s) trouvé(s)';
+  }
+
+  @override
+  String get thesaurusVocabCycle => 'Vocabulaire Cycle 4';
+
+  @override
+  String thesaurusNoWord(String query) {
+    return 'Aucun mot trouvé pour « $query »';
+  }
+
+  @override
+  String get thesaurusCertifiedPronunciation =>
+      'Prononciation latine certifiée';
+
+  @override
+  String get thesaurusSixCases => 'LES SIX CAS';
+
+  @override
+  String pantheonUnlock(int number) {
+    return 'Termine le monde $number pour la débloquer';
+  }
+
+  @override
+  String pantheonUnlockNamed(int number, String title) {
+    return 'Termine le monde $number : $title pour la débloquer';
+  }
+
+  @override
+  String get memoriaLevelAll => 'Tous';
+
+  @override
+  String get memoriaLevel5 => '5ème';
+
+  @override
+  String get memoriaLevel4 => '4ème';
+
+  @override
+  String get memoriaLevel3 => '3ème';
+
+  @override
+  String get thesaurusCatAll => 'Tous';
+
+  @override
+  String get thesaurusCatNoun => 'Nom';
+
+  @override
+  String get thesaurusCatVerb => 'Verbe';
+
+  @override
+  String get thesaurusCatAdjective => 'Adjectif';
+
+  @override
+  String get thesaurusCatPronoun => 'Pronom';
+
+  @override
+  String get thesaurusCatInvariable => 'Invariable';
 }
