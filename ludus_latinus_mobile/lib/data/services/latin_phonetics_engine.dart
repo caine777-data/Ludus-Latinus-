@@ -144,9 +144,13 @@ class LatinPhoneticsEngine {
     final analyzedWords = <LatinWordPhonetics>[];
 
     for (final rw in rawWords) {
+      // Une terminaison de dictionnaire (« amica, -ae ») n'est pas un mot à prononcer.
+      if (rw.startsWith('-')) continue;
       final stripped = rw.replaceAll(RegExp(r'[^\w\u0100-\u017F]'), '');
       if (stripped.isEmpty) continue;
-      analyzedWords.add(_analyzeSingleWord(stripped, rw));
+      // Affichage sans la ponctuation collée au bord (« amica, » devient « amica »).
+      final affiche = rw.replaceAll(RegExp(r'^[^\w\u0100-\u017F]+|[^\w\u0100-\u017F]+$'), '');
+      analyzedWords.add(_analyzeSingleWord(stripped, affiche));
     }
 
     final fullIpaRest = analyzedWords.map((w) => w.ipaRestituee.replaceAll('[', '').replaceAll(']', '')).join(' ');
