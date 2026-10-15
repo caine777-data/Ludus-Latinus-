@@ -10,7 +10,7 @@ import 'package:ludus_latinus_mobile/ui/features/duel/duel_screen.dart';
 void main() {
   group('Équilibre du Duel', () {
     test('les PV des boss montent d\'un boss à l\'autre', () {
-      expect(DuelEquilibre.pvBoss, [100, 130, 160, 200, 250]);
+      expect(DuelEquilibre.pvBoss, [200, 260, 320, 400, 500]);
       for (var i = 1; i < DuelEquilibre.pvBoss.length; i++) {
         expect(DuelEquilibre.pvBoss[i], greaterThan(DuelEquilibre.pvBoss[i - 1]));
       }
@@ -36,12 +36,12 @@ void main() {
     });
 
     test('bonnes réponses pour vaincre et erreurs supportées', () {
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.gravis, 0), 2);
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.celox, 0), 3);
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.scutum, 0), 4);
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.gravis, 4), 5);
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.celox, 4), 8);
-      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.scutum, 4), 10);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.gravis, 0), 4);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.celox, 0), 6);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.scutum, 0), 8);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.gravis, 4), 10);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.celox, 4), 15);
+      expect(DuelEquilibre.reponsesPourVaincre(CombatStance.scutum, 4), 20);
       // Dernier boss : la lourde tombe à la 2e erreur, la parade tient 5 erreurs.
       expect(DuelEquilibre.erreursPourPerdre(CombatStance.gravis, 4), 2);
       expect(DuelEquilibre.erreursPourPerdre(CombatStance.celox, 4), 3);

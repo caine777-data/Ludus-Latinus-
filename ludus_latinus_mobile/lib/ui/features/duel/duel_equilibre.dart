@@ -37,7 +37,7 @@ class DuelEquilibre {
   static const int pvJoueur = 100;
 
   /// Points de vie de chaque boss, du premier au dernier.
-  static const List<int> pvBoss = [100, 130, 160, 200, 250];
+  static const List<int> pvBoss = [200, 260, 320, 400, 500];
 
   /// Dégâts de la riposte de chaque boss (avant multiplicateur de posture).
   static const List<int> attaqueBoss = [20, 25, 30, 35, 40];

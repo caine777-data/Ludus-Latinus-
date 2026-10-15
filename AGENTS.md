@@ -441,7 +441,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   ouvert dès le départ (décision de Cédric du 09/10) : l'élève voit d'emblée
   les 26 cartes cachées. **Duel** :
   barème dans `duel/duel_equilibre.dart` (seule source des chiffres et des
-  textes des postures) ; boss à 100, 130, 160, 200, 250 PV ; lourde 50
+  textes des postures) ; boss à 200, 260, 320, 400, 500 PV (doublés le 15/10 après le retour de Clovis : 4 à 10 bonnes réponses par boss en attaque lourde) ; lourde 50
   dégâts et riposte x1,5, vive 35 (44 en moins de 4 s) et x1, parade 25 et
   x0,5 ; les boss 3 à 5 piochent dans les 6, 4 puis 3 derniers mondes
   atteints. **Circus** : `circus/circus_deck.dart`, par blocs de trois
