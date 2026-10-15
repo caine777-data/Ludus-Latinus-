@@ -75,7 +75,7 @@ class AboutScreen extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: () => RomanCinematicOverlay.showStudio(context),
                   icon: const Icon(Icons.play_circle_outline_rounded),
-                  label: const Text("Revoir l'animation du studio"),
+                  label: Text(context.l10n.aboutReplayStudio),
                 ),
               ],
             ),

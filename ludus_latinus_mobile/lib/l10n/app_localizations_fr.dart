@@ -1603,4 +1603,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutRights => '© 2026 Icare & Dédale. Tous droits réservés.';
+
+  @override
+  String get aboutReplayStudio => 'Revoir l\'animation du studio';
 }

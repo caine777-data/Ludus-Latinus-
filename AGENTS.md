@@ -341,6 +341,17 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   n'importe qui de republier l'appli, y compris payante. Icare & Dédale est
   le studio d'édition de Cédric (nom affiché dans les stores). Modèle retenu :
   voir « Décisions de Cédric ». Le dépôt GitHub doit passer en privé.
+- **Textes de l'interface dans un fichier de langue** (15/10/2026, étape 2 du
+  plan de traduction). `lib/l10n/app_fr.arb` (446 clés), classes générées
+  commitées dans `lib/l10n/`, accès par `context.l10n.cle`, locale forcée `fr`.
+  Rien n'est traduit : un script a vérifié que chaque texte existait mot pour
+  mot avant la migration. Après un ajout de clé : `flutter gen-l10n`. Restent en
+  dur : les jeux César, Duel, Circus et Marché, les fenêtres de prononciation et
+  d'épigraphie, les sous-titres des cinématiques, le catalogue de la boutique
+  (`goodie_item.dart`), les rangs du Cursus, les monuments, la quête du jour.
+  Le contenu pédagogique (données, questions des jeux, tables du Thesaurus et
+  des fiches A4) sera réécrit par langue, pas traduit.
+
 - **Éditeur Icare & Dédale** (11/10/2026). À chaque lancement, l'animation du
   studio (`cinematics/icare_dedale.mp4`, fournie telle quelle) puis l'intro, dans
   une seule page (`RomanCinematicOverlay.showStudioPuisIntro`) : « Passer » passe

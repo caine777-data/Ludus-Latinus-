@@ -2766,6 +2766,12 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'© 2026 Icare & Dédale. Tous droits réservés.'**
   String get aboutRights;
+
+  /// No description provided for @aboutReplayStudio.
+  ///
+  /// In fr, this message translates to:
+  /// **'Revoir l\'animation du studio'**
+  String get aboutReplayStudio;
 }
 
 class _AppLocalizationsDelegate
