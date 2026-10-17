@@ -330,6 +330,14 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Inventaire et analyse « best-seller »** (17/10/2026). Inventaire factuel
+  A à L par Sonnet (`docs/audits/inventaire_fonctionnel.md`, recoupé), analyse
+  de l'architecte dans `docs/audits/analyse_best_seller.md`. À retenir : le
+  « compte Tabularium Cloud » et le « code Tessera » sont factices, 80 succès,
+  le glossaire et 32 cartes du dataset ne sont pas lus, aucun rappel, aucun
+  monde verrouillé, l'Édition complète n'est pas codée. Propositions en
+  attente de l'arbitrage de Cédric.
+
 - **Illustrations de leçon, 1er lot** (17/10/2026). 17 images 16:9
   (1376 × 768) de m11-01 à m16-03, copiées sans recompression dans
   `assets/images/lecons/lecon_mXX-YY.jpg`. Liste des leçons illustrées dans
