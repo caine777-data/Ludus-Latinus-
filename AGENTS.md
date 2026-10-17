@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Succès : maquette et catalogue** (17/10/2026). Le dataset n'a que 8 succès
+  (l'inventaire de Sonnet en annonçait 80 à tort : erreur non recoupée par
+  l'architecte, notée dans `.claude/mods/deleguer/REGLES.md`). Proposition :
+  32 succès, un par carte de l'album « Héros et Créatures », dans
+  `docs/propositions/succes_et_cartes.md`. En attente de validation de Cédric.
+
 - **Tablette** (17/10/2026). Trois défauts vus à l'émulateur en tablette
   10 pouces paysage (2560 × 1600, 320 dpi via `wm size` / `wm density`), corrigés :
   la leçon s'étirait sur toute la largeur (colonne de lecture de 760 points,
@@ -400,7 +406,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 - **Inventaire et analyse « best-seller »** (17/10/2026). Inventaire factuel
   A à L par Sonnet (`docs/audits/inventaire_fonctionnel.md`, recoupé), analyse
   de l'architecte dans `docs/audits/analyse_best_seller.md`. À retenir : le
-  « compte Tabularium Cloud » et le « code Tessera » sont factices, 80 succès,
+  « compte Tabularium Cloud » et le « code Tessera » sont factices, 8 succès (et non 80),
   le glossaire et 32 cartes du dataset ne sont pas lus, aucun rappel, aucun
   monde verrouillé, l'Édition complète n'est pas codée. Propositions en
   attente de l'arbitrage de Cédric.

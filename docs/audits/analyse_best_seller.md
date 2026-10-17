@@ -25,7 +25,7 @@ Ces points ne rendent pas l'appli meilleure, mais leur absence vaut des refus de
 | Permission `INTERNET` inutilisée | Google la signale aux familles, et elle fait douter. | La retirer du manifeste de release (garder celle du debug). | très faible |
 | Politique de confidentialité | Obligatoire pour une appli destinée aux enfants. | Une page simple : aucune donnée collectée, aucun réseau. Hébergée sur une adresse neutre (pas GitHub au nom réel). | faible |
 | Fiche Store vide | Sans captures ni texte, aucun téléchargement. | 8 captures téléphone et tablette, image de présentation 1024 × 500, description courte et longue. | moyen |
-| Contenus prêts mais muets | 80 succès, 24 termes de glossaire et 32 cartes de collection dorment dans le dataset. | Brancher les 80 succès (voir priorité 2) ; trancher pour le reste : brancher ou retirer du dataset. | moyen |
+| Contenus prêts mais muets | 8 succès (et non 80, corrigé le 17/10), 24 termes de glossaire et 32 cartes de collection dorment dans le dataset. | Remplacer les succès par un catalogue de 32, un par carte (voir priorité 2) ; trancher pour le reste : brancher ou retirer du dataset. | moyen |
 
 ## Priorité 2 : la raison de revenir chaque jour
 
@@ -34,7 +34,7 @@ Les applis ludo-éducatives qui dominent le Store reposent sur la même boucle :
 | Manque | Proposition | Effort |
 |---|---|---|
 | Aucun rappel | Notification locale quotidienne, sans réseau, à l'heure choisie par l'élève, dans la voix de Lupulus (« Ta série de 5 jours t'attend »). Désactivable, désactivée par défaut si le programme Familles l'exige. | moyen |
-| Succès invisibles | Brancher les 80 succès du dataset, avec un écran d'album et une notification à l'obtention. Ils sont déjà écrits. | moyen |
+| Succès invisibles | Catalogue de 32 succès, un par carte du second album, avec un écran d'album et une annonce à l'obtention : `docs/propositions/succes_et_cartes.md`. | moyen |
 | Pas d'objectif de séance | « Objectif du jour : 1 leçon ou 10 cartes Memoria », barre qui se remplit à l'accueil. | faible |
 | Collection limitée au Panthéon | Second album « Héros et Créatures » : les 32 cartes de `content/cartes_data.py` (rareté, citation, anecdote), chacune gagnée par un succès. 32 illustrations à générer dans le style du Panthéon. Retenu par Cédric le 17/10/2026. | moyen |
 | Aucun jeu ne se sert de la collection | Bataille de cartes dans Ludi, contre un adversaire romain : le joueur ne joue que les cartes de son second album ; à chaque manche, une question de latin des mondes vus active sa carte. Bonne réponse : il choisit de comparer l'attaque ou la défense ; mauvaise réponse : l'adversaire choisit. Victoire en sesterces, jeu ajouté au tirage de la quête quotidienne. Dépend du second album et des succès. Retenu par Cédric le 17/10/2026. | moyen |
