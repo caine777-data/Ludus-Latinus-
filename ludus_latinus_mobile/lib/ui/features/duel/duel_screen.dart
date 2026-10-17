@@ -1216,13 +1216,16 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
           const SizedBox(height: 12),
 
           SizedBox(
-            child: GridView.count(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              // Cases plus basses quand la place manque, pour garder les
-              // quatre réponses visibles sans faire défiler.
-              childAspectRatio: contraintes.maxHeight < 300 ? 3.3 : 2.1,
+            child: GridView(
+              // Hauteur de case fixe (celle d'un téléphone) plutôt qu'un rapport :
+              // sur tablette, un rapport ferait des cases géantes qui sortent de
+              // l'écran. Cases plus basses quand la place manque.
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                mainAxisExtent: contraintes.maxHeight < 300 ? 48 : 76,
+              ),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               children: _shuffledChoices.map((choice) {

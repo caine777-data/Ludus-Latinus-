@@ -302,11 +302,13 @@ class _ArenaChallengeWidgetState extends State<ArenaChallengeWidget> {
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
+              // Hauteur de case fixe : sur tablette, un rapport largeur/hauteur
+              // donnerait des cases démesurées.
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 1.9,
+                mainAxisExtent: 76,
               ),
               itemCount: options.length,
               itemBuilder: (context, pos) {

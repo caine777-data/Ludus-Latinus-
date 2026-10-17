@@ -22,6 +22,18 @@ import '../../../data/models/vocab_question.dart';
 import '../../../l10n/l10n.dart';
 
 /// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
+/// Largeur maximale du contenu d'une leçon, en points.
+const double largeurLecture = 760;
+
+/// Hauteur du bandeau illustré : 140 points sur téléphone ; sur tablette (600
+/// points de large et plus), proportionnelle à la colonne de lecture (rapport
+/// 2,4), plafonnée à 280.
+double hauteurBandeau(double largeurEcran) {
+  if (largeurEcran < 600) return 140;
+  final colonne = (largeurEcran < largeurLecture + 32 ? largeurEcran : largeurLecture + 32) - 32;
+  return (colonne / 2.4).clamp(140.0, 280.0);
+}
+
 class LessonScreen extends StatefulWidget {
   final GameRepository repo;
   final Lesson lesson;
@@ -592,7 +604,15 @@ class _LessonScreenState extends State<LessonScreen> {
         key: _shakeKey,
         child: SingleChildScrollView(
           controller: _scrollController,
-          padding: const EdgeInsets.all(16),
+          // Sur tablette, la leçon garde une largeur de lecture (760 points au
+          // plus) au lieu de s'étirer d'un bord à l'autre ; le défilement reste
+          // possible sur toute la largeur.
+          padding: EdgeInsets.symmetric(
+            horizontal: (MediaQuery.sizeOf(context).width - largeurLecture) / 2 > 16
+                ? (MediaQuery.sizeOf(context).width - largeurLecture) / 2
+                : 16,
+            vertical: 16,
+          ),
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -671,7 +691,9 @@ class _LessonScreenState extends State<LessonScreen> {
             // 1. Illustration liée au thème (absente si aucune ne correspond)
             if (illustration != null)
             Container(
-              height: 140,
+              // 140 points sur téléphone ; plus haut sur une colonne large, pour que
+              // la scène 16:9 ne soit pas réduite à une bande où les têtes sont coupées.
+              height: hauteurBandeau(MediaQuery.sizeOf(context).width),
               decoration: BoxDecoration(
                 color: RomanColors.palatinCream,
                 borderRadius: BorderRadius.circular(16),

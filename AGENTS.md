@@ -330,6 +330,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Tablette** (17/10/2026). Trois défauts vus à l'émulateur en tablette
+  10 pouces paysage (2560 × 1600, 320 dpi via `wm size` / `wm density`), corrigés :
+  la leçon s'étirait sur toute la largeur (colonne de lecture de 760 points,
+  bandeau illustré plus haut au-delà de 600 points, `hauteurBandeau`) ; le fond
+  de la Via Appia, peint en portrait, ne montrait que le ciel (calé au tiers
+  bas sur écran large) ; les cases de réponse du Duel, de l'arène et de Memoria
+  grandissaient avec la largeur et sortaient de l'écran (hauteur fixe
+  `mainAxisExtent`, identique au téléphone). 8 captures tablette 16:9 dans
+  `store/captures_tablette/`. Reste perfectible : Panthéon et Thesaurus en
+  pleine largeur sur tablette.
+
 - **Fiche Store, brouillon** (17/10/2026). Textes (nom, description courte et
   complète) dans `docs/publication/fiche_store.md`, à valider par Cédric.
   8 captures téléphone dans `ludus_latinus_mobile/store/captures/` (1200 ×

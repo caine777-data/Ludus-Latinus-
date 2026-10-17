@@ -60,7 +60,7 @@ Ludus Latinus est édité par Icare & Dédale.
 | Icône | 512 × 512, PNG | prête : `store/icone_play_store_512.png` |
 | Image de présentation | 1024 × 500, JPG ou PNG | projet à valider : `store/presentation_1024x500.png` (illustration m21-03, script `scripts/assets/presentation_store.py`) |
 | Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration |
-| Captures tablette | facultatives, conseillées pour les tablettes | à faire |
+| Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` |
 
 ## À revoir avant la mise en production
 

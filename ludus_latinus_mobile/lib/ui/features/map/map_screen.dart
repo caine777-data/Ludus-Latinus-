@@ -296,14 +296,19 @@ class _MapScreenState extends State<MapScreen> {
     final repli = CustomPaint(painter: ViaAppiaBackgroundPainter());
     final chemin = _fondsParClasse[_activeFilter == 0 ? 1 : _activeFilter];
     if (chemin == null) return repli;
-    return Image.asset(
-      chemin,
-      fit: BoxFit.cover,
-      alignment: Alignment.topCenter,
-      // Un voile crème garde les cartes de leçons bien lisibles par-dessus.
-      color: RomanColors.palatinCream.withValues(alpha: 0.25),
-      colorBlendMode: BlendMode.srcOver,
-      errorBuilder: (context, error, stack) => repli,
+    // Les fonds sont peints en portrait. Sur un écran plus large que haut
+    // (tablette en paysage), l'image est fortement agrandie : calée en haut, on
+    // n'en verrait que le ciel ; on la cale sur la campagne, au tiers bas.
+    return LayoutBuilder(
+      builder: (context, contraintes) => Image.asset(
+        chemin,
+        fit: BoxFit.cover,
+        alignment: contraintes.maxWidth > contraintes.maxHeight ? const Alignment(0, 0.45) : Alignment.topCenter,
+        // Un voile crème garde les cartes de leçons bien lisibles par-dessus.
+        color: RomanColors.palatinCream.withValues(alpha: 0.25),
+        colorBlendMode: BlendMode.srcOver,
+        errorBuilder: (context, error, stack) => repli,
+      ),
     );
   }
 

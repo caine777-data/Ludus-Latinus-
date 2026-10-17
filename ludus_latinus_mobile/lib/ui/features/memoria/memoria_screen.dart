@@ -637,13 +637,17 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
 
             // 5. Quatre traductions possibles, puis « Carte suivante » une fois répondu.
             if (_choix == null)
-              GridView.count(
-                crossAxisCount: 2,
+              GridView(
+                // Hauteur de case fixe : sur tablette, un rapport largeur/hauteur
+                // donnerait des cases démesurées.
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  mainAxisExtent: 52,
+                ),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 3.2,
                 children: [
                   for (final option in _options)
                     _buildOption(option, onTap: () => _repondre(card, option)),
