@@ -19,13 +19,13 @@ if str(project_root) not in sys.path:
 
 from app.forum_imperiale import MONUMENTS_FORUM  # noqa: E402
 from app.memoria_velox import VOCABULAIRE_SRS  # noqa: E402
-from app.succes import CATALOGUE_SUCCES  # noqa: E402
 from app.thesaurus import (  # noqa: E402
     DICTIONNAIRE_LATIN,
     TABLES_CONJUGAISONS,
     TABLES_DECLINAISONS,
 )
 from content import CLASSES, CURRICULUM, GLOSSAIRE  # noqa: E402
+from content.album_mobile import ALBUM_CARTES, SESTERCES_PAR_RARETE, SUCCES_ALBUM  # noqa: E402
 
 
 def _monde_du_mot(entree, curriculum):
@@ -115,7 +115,13 @@ def exporter_dataset(dest_path=None) -> Path:
         # Pas de cartes de collection : l'appli mobile a le Panthéon (26 cartes,
         # une par monde) ; les 32 cartes de l'appli bureau feraient doublon.
         "glossaire": GLOSSAIRE,
-        "succes": CATALOGUE_SUCCES,
+        # Album « Héros et Créatures » : 32 cartes, chacune gagnée par un succès.
+        # Remplace les 8 succès de l'appli bureau, dont deux étaient périmés.
+        "album": {
+            "cartes": ALBUM_CARTES,
+            "succes": SUCCES_ALBUM,
+            "sesterces_par_rarete": SESTERCES_PAR_RARETE,
+        },
     }
 
     contenu_json = json.dumps(dataset, ensure_ascii=False, indent=2)

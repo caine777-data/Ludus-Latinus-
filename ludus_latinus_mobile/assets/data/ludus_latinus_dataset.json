@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-17 14:10:44",
+    "date_export": "2026-10-17 17:16:50",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -7665,102 +7665,624 @@
       "La formule d'adieu romaine : 'Au revoir !' ou 'Porte-toi bien !'"
     ]
   ],
-  "succes": {
-    "polyglotte": {
-      "id": "polyglotte",
-      "titre": "Polyglotte du Forum",
-      "icone": "🗣️",
-      "desc": "Écouter au moins 20 phrases latines avec la prononciation vocale antique.",
-      "desc_secrete": "Écouter 20 phrases latines.",
-      "secret": false,
-      "recompense_sesterces": 30,
-      "seuil": 20,
-      "cle_stat": "audio_ecoutes",
-      "unite": "phrases écoutées"
-    },
-    "banquier": {
-      "id": "banquier",
-      "titre": "Banquier du Forum",
-      "icone": "🪙",
-      "desc": "Accumuler au moins 500 Sesterces dans ton trésor personnel.",
-      "desc_secrete": "Accumuler 500 Sesterces.",
-      "secret": false,
-      "recompense_sesterces": 50,
-      "seuil": 500,
-      "cle_stat": "sesterces_max",
-      "unite": "Sesterces"
-    },
-    "invincible": {
-      "id": "invincible",
-      "titre": "Champion Invincible",
-      "icone": "⚔️",
-      "desc": "Remporter un duel au Colisée avec 3 victoires d'affilée sans aucune faute (score 3 à 0).",
-      "desc_secrete": "??? Trophée secret : Brille par ton invincibilité dans les arènes du Colisée !",
-      "secret": true,
-      "recompense_sesterces": 40,
-      "seuil": 1,
-      "cle_stat": "duels_parfaits",
-      "unite": "duel sans faute"
-    },
-    "cryptographe": {
-      "id": "cryptographe",
-      "titre": "Maître Cryptographe",
-      "icone": "📜",
-      "desc": "Déchiffrer au moins 3 dépêches militaires secrètes dans le Chiffre de César.",
-      "desc_secrete": "Déchiffrer 3 dépêches militaires secrètes.",
-      "secret": false,
-      "recompense_sesterces": 30,
-      "seuil": 3,
-      "cle_stat": "cesar_resolus",
-      "unite": "dépêches décodées"
-    },
-    "collectionneur": {
-      "id": "collectionneur",
-      "titre": "Grand Collectionneur",
-      "icone": "🃏",
-      "desc": "Découvrir et posséder au moins 5 cartes mythologiques dans son Album.",
-      "desc_secrete": "Découvrir 5 cartes mythologiques.",
-      "secret": false,
-      "recompense_sesterces": 30,
-      "seuil": 5,
-      "cle_stat": "cartes_possedees",
-      "unite": "cartes trouvées"
-    },
-    "mercator": {
-      "id": "mercator",
-      "titre": "Mercator de Trajan",
-      "icone": "🏺",
-      "desc": "Conclure 5 opérations et calculs avec succès aux Marchés de Trajan.",
-      "desc_secrete": "Conclure 5 opérations marchandes de Trajan.",
-      "secret": false,
-      "recompense_sesterces": 30,
-      "seuil": 5,
-      "cle_stat": "marche_transactions",
-      "unite": "transactions"
-    },
-    "triomphe_4eme": {
-      "id": "triomphe_4eme",
-      "titre": "Triomphateur de la République",
-      "icone": "🦅",
-      "desc": "Conquérir l'ensemble du programme de 4ème (Mondes 11 à 18) et débloquer les lauriers républicains.",
-      "desc_secrete": "??? Trophée républicain : Conquiers l'intégralité du programme de 4ème !",
-      "secret": true,
-      "recompense_sesterces": 60,
-      "seuil": 1,
-      "cle_stat": "triomphe_4eme",
-      "unite": "programme 4e conquis"
-    },
-    "triomphe_cycle4": {
-      "id": "triomphe_cycle4",
-      "titre": "Maître du Collège",
-      "icone": "🏆",
-      "desc": "Accomplir l'ensemble du Cycle 4 (26 mondes) de l'entrée en 5ème jusqu'au Brevet en 3ème.",
-      "desc_secrete": "??? Trophée suprême : Triomphe sur l'intégralité du Cycle 4 du Collège !",
-      "secret": true,
-      "recompense_sesterces": 100,
-      "seuil": 1,
-      "cle_stat": "triomphe_cycle4",
-      "unite": "cycle 4 achevé"
+  "album": {
+    "cartes": [
+      {
+        "id": "div_minerve",
+        "nom": "Minerve",
+        "nom_latin": "Minerva Sapientissima",
+        "categorie": "divinites",
+        "rarete": "epique",
+        "atk": 86,
+        "def": 92,
+        "citation": "Sapientia et virtus vincunt.",
+        "anecdote": "Déesse de la sagesse, de la stratégie militaire et des artisans. Accompagnée de sa chouette aux yeux d'or.",
+        "traduction": "La sagesse et le courage l'emportent.",
+        "image": "assets/images/album/div_minerve.jpg"
+      },
+      {
+        "id": "div_mars",
+        "nom": "Mars Ultor",
+        "nom_latin": "Mars Deus Belli",
+        "categorie": "divinites",
+        "rarete": "epique",
+        "atk": 95,
+        "def": 84,
+        "citation": "Si vis pacem, para bellum.",
+        "anecdote": "Père légendaire de Romulus et Rémus, dieu de la guerre et protecteur des légions romaines en marche.",
+        "traduction": "Si tu veux la paix, prépare la guerre.",
+        "image": "assets/images/album/div_mars.jpg"
+      },
+      {
+        "id": "div_mercure",
+        "nom": "Mercure",
+        "nom_latin": "Mercurius Nuntius Deorum",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 82,
+        "def": 78,
+        "citation": "Velociter per auras volat.",
+        "anecdote": "Le messager des dieux aux sandales ailées, protecteur des marchands, des voyageurs et des voleurs d'esprit.",
+        "traduction": "Il vole rapidement à travers les airs.",
+        "image": "assets/images/album/div_mercure.jpg"
+      },
+      {
+        "id": "div_apollon",
+        "nom": "Apollon",
+        "nom_latin": "Apollo Deus Solis",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 85,
+        "def": 80,
+        "citation": "Apollo lyra canit.",
+        "anecdote": "Dieu de la lumière, des arts, de la poésie et de la médecine, armé d'un arc d'argent et d'une lyre d'or.",
+        "traduction": "Apollon chante avec sa lyre.",
+        "image": "assets/images/album/div_apollon.jpg"
+      },
+      {
+        "id": "mon_cerbere",
+        "nom": "Cerbère",
+        "nom_latin": "Cerberus Custos Inferorum",
+        "categorie": "monstres",
+        "rarete": "epique",
+        "atk": 91,
+        "def": 89,
+        "citation": "Tres fauces, una custodia.",
+        "anecdote": "Le colossal molosse à trois têtes qui garde la porte des Enfers pour empêcher les ombres de s'échapper.",
+        "traduction": "Trois gueules, une seule garde.",
+        "image": "assets/images/album/mon_cerbere.jpg"
+      },
+      {
+        "id": "mon_meduse",
+        "nom": "Méduse la Gorgone",
+        "nom_latin": "Medusa Gorgonis",
+        "categorie": "monstres",
+        "rarete": "epique",
+        "atk": 94,
+        "def": 75,
+        "citation": "Aspice et lapis eris.",
+        "anecdote": "Créature aux cheveux de serpents dont le regard pétrifie instantanément quiconque croise ses yeux.",
+        "traduction": "Regarde, et tu seras pierre.",
+        "image": "assets/images/album/mon_meduse.jpg"
+      },
+      {
+        "id": "mon_minotaure",
+        "nom": "Le Minotaure",
+        "nom_latin": "Minotaurus Labyrinthi",
+        "categorie": "monstres",
+        "rarete": "rare",
+        "atk": 89,
+        "def": 85,
+        "citation": "In tenebris labyrinthi mugit.",
+        "anecdote": "Moitié homme, moitié taureau, enfermé dans l'impénétrable dédale bâti par l'architecte Dédale.",
+        "traduction": "Il mugit dans les ténèbres du labyrinthe.",
+        "image": "assets/images/album/mon_minotaure.jpg"
+      },
+      {
+        "id": "mon_lion",
+        "nom": "Le Lion de Némée",
+        "nom_latin": "Leo Nemaeus Invictus",
+        "categorie": "monstres",
+        "rarete": "rare",
+        "atk": 88,
+        "def": 96,
+        "citation": "Pellis nullis telis perforabilis.",
+        "anecdote": "Un monstre à la peau impénétrable que ni les flèches ni les épées de bronze ne pouvaient percer.",
+        "traduction": "Une peau qu'aucune arme ne peut percer.",
+        "image": "assets/images/album/mon_lion.jpg"
+      },
+      {
+        "id": "mon_sphinx",
+        "nom": "Le Sphinx",
+        "nom_latin": "Sphinx Aenigmatica",
+        "categorie": "monstres",
+        "rarete": "commune",
+        "atk": 77,
+        "def": 79,
+        "citation": "Solve aenigma aut peries.",
+        "anecdote": "Gardienne ailée au corps de lionne qui dévore ceux qui échouent à résoudre ses énigmes sacrées.",
+        "traduction": "Résous l'énigme, ou tu périras.",
+        "image": "assets/images/album/mon_sphinx.jpg"
+      },
+      {
+        "id": "her_enee",
+        "nom": "Énée le Troyen",
+        "nom_latin": "Aeneas Filius Veneris",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 87,
+        "def": 90,
+        "citation": "Sum pius Aeneas.",
+        "anecdote": "Prince troyen échappé de Troie en flammes, ancêtre du peuple romain chanté par Virgile.",
+        "traduction": "Je suis le pieux Énée.",
+        "image": "assets/images/album/her_enee.jpg"
+      },
+      {
+        "id": "her_romulus",
+        "nom": "Romulus",
+        "nom_latin": "Romulus Primus Rex",
+        "categorie": "heros",
+        "rarete": "commune",
+        "atk": 89,
+        "def": 88,
+        "citation": "Roma aeterna hic oritur.",
+        "anecdote": "Fondateur de Rome sur le mont Palatin en 753 av. J.-C., après avoir tracé le sillon sacré avec sa charrue.",
+        "traduction": "Ici naît la Rome éternelle.",
+        "image": "assets/images/album/her_romulus.jpg"
+      },
+      {
+        "id": "her_ulysse",
+        "nom": "Ulysse",
+        "nom_latin": "Ulixes Astutus",
+        "categorie": "heros",
+        "rarete": "rare",
+        "atk": 82,
+        "def": 86,
+        "citation": "Ingenio plus quam viribus.",
+        "anecdote": "Le maître de la ruse, inventeur du cheval de Troie et voyageur intrépide de l'Odyssée.",
+        "traduction": "Plus par l'intelligence que par la force.",
+        "image": "assets/images/album/her_ulysse.jpg"
+      },
+      {
+        "id": "her_achille",
+        "nom": "Achille",
+        "nom_latin": "Achilles Invulnerabilis",
+        "categorie": "heros",
+        "rarete": "rare",
+        "atk": 96,
+        "def": 74,
+        "citation": "Mors celeris, gloria sempiterna.",
+        "anecdote": "Guerrier invincible plongé dans le fleuve Styx par sa mère Thétis, à l'exception de son talon.",
+        "traduction": "Une mort rapide, une gloire éternelle.",
+        "image": "assets/images/album/her_achille.jpg"
+      },
+      {
+        "id": "her_julia",
+        "nom": "Julia la Vestale",
+        "nom_latin": "Iulia Heroina Romana",
+        "categorie": "heros",
+        "rarete": "commune",
+        "atk": 80,
+        "def": 83,
+        "citation": "Fortuna audaces iuvat.",
+        "anecdote": "Choisie enfant, une Vestale servait trente ans la déesse Vesta : elle gardait le feu sacré et les testaments confiés au temple.",
+        "traduction": "La fortune sourit aux audacieux.",
+        "image": "assets/images/album/her_julia.jpg"
+      },
+      {
+        "id": "mon_colisee",
+        "nom": "Le Colisée",
+        "nom_latin": "Amphitheatrum Flavium",
+        "categorie": "monuments",
+        "rarete": "epique",
+        "atk": 85,
+        "def": 97,
+        "citation": "Dum stat Colyseus, stat Roma.",
+        "anecdote": "Le plus grand amphithéâtre du monde antique, pouvant accueillir plus de 50 000 spectateurs éblouis.",
+        "traduction": "Tant que le Colisée est debout, Rome est debout.",
+        "image": "assets/images/album/mon_colisee.jpg"
+      },
+      {
+        "id": "mon_scutum",
+        "nom": "Le Scutum & Gladius",
+        "nom_latin": "Scutum Legionarium",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 81,
+        "def": 93,
+        "citation": "In scuto fides, in gladio virtus.",
+        "anecdote": "Le bouclier cintré et le glaive court à double tranchant qui ont forgé la discipline des légions romaines.",
+        "traduction": "Dans le bouclier la confiance, dans le glaive le courage.",
+        "image": "assets/images/album/mon_scutum.jpg"
+      },
+      {
+        "id": "mon_circus",
+        "nom": "Le Circus Maximus",
+        "nom_latin": "Circus Maximus",
+        "categorie": "monuments",
+        "rarete": "rare",
+        "atk": 88,
+        "def": 80,
+        "citation": "Panem et circenses.",
+        "anecdote": "L'hippodrome géant de Rome, où plus de 150 000 spectateurs vibraient au passage des chars lancés à pleine vitesse.",
+        "traduction": "Du pain et des jeux.",
+        "image": "assets/images/album/mon_circus.jpg"
+      },
+      {
+        "id": "mon_aqueduc",
+        "nom": "L'Aqueduc Romain",
+        "nom_latin": "Aquaeductus Romanus",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 72,
+        "def": 91,
+        "citation": "Aqua vitae et civitatis.",
+        "anecdote": "Prouesse d'ingénierie acheminant des millions de litres d'eau pure des montagnes jusqu'au cœur des cités.",
+        "traduction": "L'eau, vie de la cité.",
+        "image": "assets/images/album/mon_aqueduc.jpg"
+      },
+      {
+        "id": "her_scipion",
+        "nom": "Scipion l'Africain",
+        "nom_latin": "Publius Cornelius Scipio",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 94,
+        "def": 90,
+        "citation": "Virtute et constantia vincemus.",
+        "anecdote": "Vainqueur d'Hannibal à la bataille de Zama en 202 av. J.-C., sauvant Rome et forgeant l'hégémonie républicaine.",
+        "traduction": "Par le courage et la constance, nous vaincrons.",
+        "image": "assets/images/album/her_scipion.jpg"
+      },
+      {
+        "id": "her_hannibal",
+        "nom": "Hannibal Barca",
+        "nom_latin": "Hannibal Poenus Invictus",
+        "categorie": "heros",
+        "rarete": "legendaire",
+        "atk": 96,
+        "def": 92,
+        "citation": "Aut viam inveniam aut faciam.",
+        "anecdote": "Génie carthaginois qui traversa les Alpes avec ses éléphants de guerre pour défier Rome sur son propre sol.",
+        "traduction": "Je trouverai un chemin, ou j'en ferai un.",
+        "image": "assets/images/album/her_hannibal.jpg"
+      },
+      {
+        "id": "her_horace",
+        "nom": "Horace",
+        "nom_latin": "Quintus Horatius Flaccus",
+        "categorie": "heros",
+        "rarete": "rare",
+        "atk": 85,
+        "def": 84,
+        "citation": "Carpe diem, quam minimum credula postero.",
+        "anecdote": "Poète lyrique du siècle d'Auguste, célébrant la sagesse, l'amitié et l'art de cueillir le jour présent.",
+        "traduction": "Cueille le jour, et ne crois pas au lendemain.",
+        "image": "assets/images/album/her_horace.jpg"
+      },
+      {
+        "id": "div_junon",
+        "nom": "Junon",
+        "nom_latin": "Iuno Regina",
+        "categorie": "divinites",
+        "rarete": "legendaire",
+        "atk": 93,
+        "def": 98,
+        "citation": "Iuno Romam custodit.",
+        "traduction": "Junon garde Rome.",
+        "anecdote": "Reine des dieux et épouse de Jupiter. Ses oies sacrées, sur le Capitole, donnèrent l'alerte une nuit où les Gaulois escaladaient la colline.",
+        "image": "assets/images/album/div_junon.jpg"
+      },
+      {
+        "id": "div_vesta",
+        "nom": "Vesta",
+        "nom_latin": "Vesta Mater",
+        "categorie": "divinites",
+        "rarete": "rare",
+        "atk": 78,
+        "def": 90,
+        "citation": "Ignis Vestae numquam exstinguitur.",
+        "traduction": "Le feu de Vesta ne s'éteint jamais.",
+        "anecdote": "Déesse du foyer de chaque maison et de Rome entière. Son temple rond, sur le Forum, abritait un feu qui ne devait jamais s'éteindre.",
+        "image": "assets/images/album/div_vesta.jpg"
+      },
+      {
+        "id": "her_persee",
+        "nom": "Persée",
+        "nom_latin": "Perseus Gorgonis Victor",
+        "categorie": "heros",
+        "rarete": "commune",
+        "atk": 84,
+        "def": 80,
+        "citation": "Perseus Medusam in clipeo videt.",
+        "traduction": "Persée voit Méduse dans son bouclier.",
+        "anecdote": "Fils de Jupiter, il vainquit Méduse sans croiser son regard, en guettant son reflet dans un bouclier de bronze poli.",
+        "image": "assets/images/album/her_persee.jpg"
+      },
+      {
+        "id": "her_brennus",
+        "nom": "Brennus",
+        "nom_latin": "Brennus Dux Gallorum",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 91,
+        "def": 86,
+        "citation": "Vae victis !",
+        "traduction": "Malheur aux vaincus !",
+        "anecdote": "Chef gaulois qui prit Rome vers 390 av. J.-C. Quand les Romains contestèrent le poids de la rançon, il jeta son épée dans la balance.",
+        "image": "assets/images/album/her_brennus.jpg"
+      },
+      {
+        "id": "her_pline_jeune",
+        "nom": "Pline le Jeune",
+        "nom_latin": "Caius Plinius Caecilius Secundus",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 80,
+        "def": 88,
+        "citation": "Nubes ex monte oriebatur.",
+        "traduction": "Un nuage s'élevait de la montagne.",
+        "anecdote": "À 17 ans, il vit l'éruption du Vésuve depuis Misène et la raconta dans deux lettres à l'historien Tacite.",
+        "image": "assets/images/album/her_pline_jeune.jpg"
+      },
+      {
+        "id": "her_caton",
+        "nom": "Caton l'Ancien",
+        "nom_latin": "Marcus Porcius Cato",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 86,
+        "def": 91,
+        "citation": "Carthago delenda est.",
+        "traduction": "Il faut détruire Carthage.",
+        "anecdote": "Sénateur austère qui terminait chacun de ses discours en réclamant la destruction de Carthage, la grande rivale de Rome.",
+        "image": "assets/images/album/her_caton.jpg"
+      },
+      {
+        "id": "her_ovide",
+        "nom": "Ovide",
+        "nom_latin": "Publius Ovidius Naso",
+        "categorie": "heros",
+        "rarete": "epique",
+        "atk": 83,
+        "def": 86,
+        "citation": "Omnia mutantur.",
+        "traduction": "Tout change.",
+        "anecdote": "Poète des Métamorphoses, où il raconte plus de deux cents légendes, dont le vol de Dédale et d'Icare.",
+        "image": "assets/images/album/her_ovide.jpg"
+      },
+      {
+        "id": "mon_centaure",
+        "nom": "Le Centaure",
+        "nom_latin": "Centaurus Velox",
+        "categorie": "monstres",
+        "rarete": "commune",
+        "atk": 80,
+        "def": 76,
+        "citation": "Centaurus celerius vento currit.",
+        "traduction": "Le centaure court plus vite que le vent.",
+        "anecdote": "Moitié homme, moitié cheval. Le sage centaure Chiron fut le maître d'Achille et de nombreux héros.",
+        "image": "assets/images/album/mon_centaure.jpg"
+      },
+      {
+        "id": "mon_sceau",
+        "nom": "Le Sceau impérial",
+        "nom_latin": "Signum Imperatoris",
+        "categorie": "monuments",
+        "rarete": "legendaire",
+        "atk": 88,
+        "def": 97,
+        "citation": "Signum fidem facit.",
+        "traduction": "Le sceau garantit la confiance.",
+        "anecdote": "Les Romains scellaient tablettes et lettres avec un anneau gravé : un sceau brisé prouvait que le message avait été ouvert.",
+        "image": "assets/images/album/mon_sceau.jpg"
+      },
+      {
+        "id": "mon_roma",
+        "nom": "Roma Aeterna",
+        "nom_latin": "Urbs Aeterna",
+        "categorie": "monuments",
+        "rarete": "legendaire",
+        "atk": 99,
+        "def": 99,
+        "citation": "Roma caput mundi.",
+        "traduction": "Rome, capitale du monde.",
+        "anecdote": "Les Romains appelaient leur ville l'Urbs, « la Ville ». Bâtie sur sept collines, elle comptait près d'un million d'habitants sous Auguste.",
+        "image": "assets/images/album/mon_roma.jpg"
+      },
+      {
+        "id": "mon_borne",
+        "nom": "La Borne milliaire",
+        "nom_latin": "Miliarium",
+        "categorie": "monuments",
+        "rarete": "commune",
+        "atk": 70,
+        "def": 90,
+        "citation": "Lapis viam metitur.",
+        "traduction": "La pierre mesure la route.",
+        "anecdote": "Tous les mille pas, soit environ 1,5 km, une colonne de pierre indiquait aux voyageurs la distance jusqu'à Rome.",
+        "image": "assets/images/album/mon_borne.jpg"
+      }
+    ],
+    "succes": [
+      {
+        "carte": "her_romulus",
+        "stat": "monde_termine:1",
+        "seuil": 1,
+        "texte": "Terminer le monde 1"
+      },
+      {
+        "carte": "her_julia",
+        "stat": "monde_termine:2",
+        "seuil": 1,
+        "texte": "Terminer le monde 2"
+      },
+      {
+        "carte": "her_persee",
+        "stat": "monde_termine:3",
+        "seuil": 1,
+        "texte": "Terminer le monde 3"
+      },
+      {
+        "carte": "her_ulysse",
+        "stat": "monde_termine:10",
+        "seuil": 1,
+        "texte": "Terminer le monde 10"
+      },
+      {
+        "carte": "her_horace",
+        "stat": "lecons_reussies",
+        "seuil": 50,
+        "texte": "Réussir 50 leçons"
+      },
+      {
+        "carte": "her_achille",
+        "stat": "lecons_trois_etoiles",
+        "seuil": 30,
+        "texte": "Réussir 30 leçons avec 3 étoiles"
+      },
+      {
+        "carte": "her_enee",
+        "stat": "classe_terminee:5eme",
+        "seuil": 1,
+        "texte": "Terminer toute la 5e"
+      },
+      {
+        "carte": "her_scipion",
+        "stat": "monde_termine:13",
+        "seuil": 1,
+        "texte": "Terminer le monde 13"
+      },
+      {
+        "carte": "her_brennus",
+        "stat": "monde_termine:17",
+        "seuil": 1,
+        "texte": "Terminer le monde 17"
+      },
+      {
+        "carte": "her_pline_jeune",
+        "stat": "monde_termine:21",
+        "seuil": 1,
+        "texte": "Terminer le monde 21"
+      },
+      {
+        "carte": "her_caton",
+        "stat": "monde_termine:23",
+        "seuil": 1,
+        "texte": "Terminer le monde 23"
+      },
+      {
+        "carte": "her_ovide",
+        "stat": "monde_termine:25",
+        "seuil": 1,
+        "texte": "Terminer le monde 25"
+      },
+      {
+        "carte": "her_hannibal",
+        "stat": "classe_terminee:4eme",
+        "seuil": 1,
+        "texte": "Terminer toute la 4e"
+      },
+      {
+        "carte": "div_apollon",
+        "stat": "serie_jours",
+        "seuil": 3,
+        "texte": "Jouer 3 jours de suite"
+      },
+      {
+        "carte": "div_mercure",
+        "stat": "marche_operations",
+        "seuil": 10,
+        "texte": "Réussir 10 opérations au Marché de Trajan"
+      },
+      {
+        "carte": "div_vesta",
+        "stat": "quetes_du_jour",
+        "seuil": 10,
+        "texte": "Accomplir 10 quêtes du jour"
+      },
+      {
+        "carte": "div_mars",
+        "stat": "gladiateurs_vaincus",
+        "seuil": 5,
+        "texte": "Vaincre les 5 gladiateurs du Duel"
+      },
+      {
+        "carte": "div_minerve",
+        "stat": "memoria_maitrises",
+        "seuil": 20,
+        "texte": "Maîtriser 20 mots dans Memoria"
+      },
+      {
+        "carte": "div_junon",
+        "stat": "serie_jours",
+        "seuil": 30,
+        "texte": "Jouer 30 jours de suite"
+      },
+      {
+        "carte": "mon_centaure",
+        "stat": "courses_finies",
+        "seuil": 1,
+        "texte": "Finir une course au Circus"
+      },
+      {
+        "carte": "mon_sphinx",
+        "stat": "missions_cesar",
+        "seuil": 1,
+        "texte": "Résoudre une énigme de l'Atelier de César"
+      },
+      {
+        "carte": "mon_lion",
+        "stat": "gladiateurs_vaincus",
+        "seuil": 1,
+        "texte": "Vaincre Crixus, le premier gladiateur"
+      },
+      {
+        "carte": "mon_minotaure",
+        "stat": "epigraphes",
+        "seuil": 3,
+        "texte": "Déchiffrer 3 inscriptions"
+      },
+      {
+        "carte": "mon_meduse",
+        "stat": "duels_sans_faute",
+        "seuil": 1,
+        "texte": "Gagner un duel sans aucune faute"
+      },
+      {
+        "carte": "mon_cerbere",
+        "stat": "taverne_victoires",
+        "seuil": 10,
+        "texte": "Gagner 10 parties à la Taverne"
+      },
+      {
+        "carte": "mon_borne",
+        "stat": "lecons_reussies",
+        "seuil": 5,
+        "texte": "Réussir 5 leçons"
+      },
+      {
+        "carte": "mon_scutum",
+        "stat": "objets_achetes",
+        "seuil": 1,
+        "texte": "Acheter un objet à la Taberna"
+      },
+      {
+        "carte": "mon_aqueduc",
+        "stat": "monuments_restaures",
+        "seuil": 1,
+        "texte": "Restaurer un monument du Forum"
+      },
+      {
+        "carte": "mon_circus",
+        "stat": "courses_gagnees",
+        "seuil": 5,
+        "texte": "Gagner 5 courses au Circus"
+      },
+      {
+        "carte": "mon_colisee",
+        "stat": "duels_gagnes",
+        "seuil": 10,
+        "texte": "Gagner 10 duels"
+      },
+      {
+        "carte": "mon_sceau",
+        "stat": "missions_cesar_toutes",
+        "seuil": 1,
+        "texte": "Réussir toutes les missions de César"
+      },
+      {
+        "carte": "mon_roma",
+        "stat": "mondes_termines",
+        "seuil": 26,
+        "texte": "Terminer les 26 mondes"
+      }
+    ],
+    "sesterces_par_rarete": {
+      "commune": 10,
+      "rare": 20,
+      "epique": 40,
+      "legendaire": 80
     }
   }
 }

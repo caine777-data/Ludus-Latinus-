@@ -77,6 +77,17 @@ class TestDatasetMobile(unittest.TestCase):
         self.assertNotIn("cartes_collection", self.data)
         self.assertNotIn("total_cartes_collection", self.data["metadata"])
 
+    def test_album_heros_et_creatures(self):
+        album = self.data["album"]
+        ids = {c["id"] for c in album["cartes"]}
+        self.assertEqual(len(ids), 32)
+        # Un succès par carte, et aucune carte sans succès.
+        self.assertEqual(sorted(s["carte"] for s in album["succes"]), sorted(ids))
+        for carte in album["cartes"]:
+            for cle in ("nom", "nom_latin", "rarete", "atk", "def", "citation", "traduction", "anecdote", "image"):
+                self.assertTrue(carte.get(cle), (carte["id"], cle))
+        self.assertNotIn("succes", self.data)
+
     def test_glossaire_export(self):
         gloss = self.data.get("glossaire", [])
         self.assertGreaterEqual(len(gloss), 20)
