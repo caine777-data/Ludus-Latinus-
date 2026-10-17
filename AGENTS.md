@@ -330,6 +330,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Tablette, suite** (17/10/2026). Composant `ColonneLecture` (widgets.dart :
+  colonne centrée de largeur limitée, `heightFactor: 1` pour ne pas s'étirer en
+  hauteur dans une barre du bas). Appliqué à Panthéon, Thesaurus (900),
+  Taverne (corps et boutons), Atelier de César, Marché, Memoria, Forum, Compte,
+  Réglages. Revue de tous les écrans en tablette 10 pouces paysage : accueil,
+  Ludi, Bibliotheca, carte, leçon, Duel, Circus, album, boutique, épigraphie et
+  fiches étaient déjà corrects. Test `tablette_ecrans_test.dart` (9 écrans) :
+  il échoue bien si le défaut de la Taverne revient (vérifié). Corrigé au
+  passage : double `Flexible` dans un bouton du Forum (erreur d'affichage).
+  Captures tablette du Panthéon et du Thesaurus refaites.
+
 - **Objectif du jour et rappel quotidien** (17/10/2026, validés par Cédric).
   Objectif : 1 à 3 activités (une leçon réussie ou 10 cartes Memoria), barre
   sous la carte du héros, 5 sesterces une fois par jour, choix dans la carte

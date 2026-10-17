@@ -26,6 +26,7 @@ class PantheonScreen extends StatelessWidget {
           appBar: AppBar(title: Text(context.l10n.pantheonTitle)),
           body: RomanOculusBackdrop(
             child: SafeArea(
+              child: ColonneLecture(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 itemCount: cartes.length + 1,
@@ -41,6 +42,7 @@ class PantheonScreen extends StatelessWidget {
                     ),
                   );
                 },
+              ),
               ),
             ),
           ),

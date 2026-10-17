@@ -210,14 +210,14 @@ class _TaverneScreenState extends State<TaverneScreen> {
           // Les deux boutons restent en bas de l'écran : ils ne bougent plus
           // quand les dés passent sur une deuxième rangée.
           bottomNavigationBar: enCours
-              ? SafeArea(
+              ? ColonneLecture(largeurMax: 900, child: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                     child: _boutonsDeJeu(),
                   ),
-                )
+                ))
               : null,
-          body: SafeArea(
+          body: ColonneLecture(largeurMax: 900, child: SafeArea(
             top: false,
             child: SingleChildScrollView(
             controller: _defilement,
@@ -256,7 +256,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
               ],
             ),
             ),
-          ),
+          )),
         );
       },
     );

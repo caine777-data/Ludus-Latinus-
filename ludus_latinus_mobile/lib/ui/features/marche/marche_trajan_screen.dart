@@ -835,7 +835,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
               ),
             ],
           ),
-      body: SafeArea(
+      body: ColonneLecture(largeurMax: 900, child: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Column(
@@ -1310,7 +1310,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
             ],
           ),
         ),
-      ),
+      )),
     );
       },
     );

@@ -8,6 +8,23 @@ export 'room_decorations.dart';
 export 'roman_lock_badge.dart';
 
 /// Bouton tactile impérial romain avec liseré d'or et retour haptique.
+/// Colonne centrée de largeur limitée : sur tablette, le contenu garde une
+/// largeur de lecture au lieu de s'étirer d'un bord à l'autre. Sans effet sur
+/// téléphone, où l'écran est plus étroit que [largeurMax].
+class ColonneLecture extends StatelessWidget {
+  final Widget child;
+  final double largeurMax;
+  const ColonneLecture({super.key, required this.child, this.largeurMax = 760});
+
+  @override
+  // heightFactor : centrée en largeur seulement. Sans lui, dans une barre du bas,
+  // la colonne prendrait toute la hauteur de l'écran et cacherait le contenu.
+  Widget build(BuildContext context) => Center(
+        heightFactor: 1,
+        child: ConstrainedBox(constraints: BoxConstraints(maxWidth: largeurMax), child: child),
+      );
+}
+
 class RomanButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;

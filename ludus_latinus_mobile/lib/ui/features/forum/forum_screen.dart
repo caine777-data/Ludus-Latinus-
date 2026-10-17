@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/themes.dart';
+import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/lottie_effects.dart';
 import '../../core/latin_epigraph_modal.dart';
-import '../../core/roman_ornaments.dart';
-import '../../core/roman_audio_modal.dart';
 import '../../../data/models/monument.dart';
 import '../../../data/models/latin_epigraph.dart';
 import '../../../data/repositories/game_repository.dart';
@@ -61,7 +60,7 @@ class ForumScreen extends StatelessWidget {
               )
             ],
           ),
-          body: ListView(
+          body: ColonneLecture(largeurMax: 900, child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               // 1. Fresque Panoramique du Forum Romain
@@ -267,7 +266,7 @@ class ForumScreen extends StatelessWidget {
                 );
               }),
             ],
-          ),
+          )),
         );
       },
     );
@@ -453,13 +452,13 @@ class ForumScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                   icon: Icon(isDecoded ? Icons.check_circle_outline : Icons.history_edu_outlined, size: 17),
-                  label: Flexible(
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        isDecoded ? context.l10n.forumEpigraphDecoded : context.l10n.forumEpigraphDecode,
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                      ),
+                  // Pas de Flexible ici : OutlinedButton.icon enveloppe déjà le libellé
+                  // dans un Flexible, et deux à la suite déclenchent une erreur d'affichage.
+                  label: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      isDecoded ? context.l10n.forumEpigraphDecoded : context.l10n.forumEpigraphDecode,
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                   onPressed: () {

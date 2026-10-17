@@ -99,7 +99,10 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           ],
         ),
       ),
-      body: TabBarView(
+      // Sur tablette, les quatre onglets gardent une largeur de lecture.
+      body: ColonneLecture(
+        largeurMax: 900,
+        child: TabBarView(
         controller: _tabController,
         children: [
           _buildDictionaryTab(),
@@ -107,6 +110,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           _buildConjugationsTab(),
           _buildGlossaryTab(),
         ],
+        ),
       ),
     );
   }

@@ -193,7 +193,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ],
           ),
-          body: ListView(
+          body: ColonneLecture(largeurMax: 900, child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               // 1. Tablette de Cire Antique & Diplôme Impérial (Tabula Cerata)
@@ -467,7 +467,7 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               const SizedBox(height: 20),
             ],
-          ),
+          )),
         );
       },
     );
