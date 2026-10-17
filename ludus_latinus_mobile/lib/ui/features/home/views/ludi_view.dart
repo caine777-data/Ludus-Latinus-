@@ -8,7 +8,8 @@ import '../../duel/duel_screen.dart';
 import '../../taverne/taverne_screen.dart';
 import '../../cesar/cesar_screen.dart';
 import '../../marche/marche_trajan_screen.dart';
-import '../../pantheon/pantheon_screen.dart';
+import '../../pantheon/pantheon_screen.dart';
+import '../../album/album_screen.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Onglet 3 : Ludi & Arènes — Mini-jeux d'arcade romaine soumis au déblocage progressif (Progressive Disclosure).
@@ -216,6 +217,24 @@ class LudiView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => PantheonScreen(repo: repo)),
+                          );
+                        },
+                      ),
+
+                      // 7. Album « Héros et Créatures » : une carte par succès
+                      _buildGameTile(
+                        context: context,
+                        gameKey: 'album',
+                        imagePath: 'assets/images/dos_carte_collector.png',
+                        fallbackIcon: '🃏',
+                        title: context.l10n.albumTitle,
+                        subtitle: context.l10n.ludiAlbumSubtitle,
+                        tagLabel: context.l10n.ludiAlbumTag,
+                        tagColor: const Color(0xFF8E44AD),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => AlbumScreen(repo: repo)),
                           );
                         },
                       ),

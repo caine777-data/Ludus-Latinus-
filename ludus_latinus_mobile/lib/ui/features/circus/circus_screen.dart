@@ -727,6 +727,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     _raceFinished = true;
     _playerWon = won;
     _nouveauRecord = widget.repo.enregistrerRecord('circus', _scoreSesterces);
+    // Compteurs des succès de l'album (Centaure, Circus Maximus).
+    widget.repo.noterEvenement('courses_finies');
+    if (won) widget.repo.noterEvenement('courses_gagnees');
 
     if (won) {
       // Une course gagnée vaut une leçon réussie, et seulement 3 fois par jour.

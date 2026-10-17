@@ -76,16 +76,6 @@
     }
   },
   "accountWardrobeButton": "Vestiaire",
-  "accountTrophiesTitle": "Panthéon des Trophées",
-  "accountTrophiesHint": "Touche un piédestal",
-  "accountTrophyFirstStep": "Premier Pas",
-  "accountTrophyFirstStepCondition": "Terminer ta toute première leçon de latin.",
-  "accountTrophyCenturion": "Centurion",
-  "accountTrophyCenturionCondition": "Valider 5 leçons complètes du Ludus.",
-  "accountTrophyCharioteer": "Aurige",
-  "accountTrophyCharioteerCondition": "Atteindre une série de 3 jours consécutifs.",
-  "accountTrophyBuilder": "Bâtisseur",
-  "accountTrophyBuilderCondition": "Restaurer au moins un monument du Forum.",
   "accountBackupTitle": "Sauvegarde de ta progression",
   "accountBackupDescription": "Ta progression est enregistrée sur cet appareil. Pour la retrouver sur un autre appareil, exporte-la dans un fichier, puis importe ce fichier sur le nouvel appareil.",
   "accountBackupExport": "Exporter dans un fichier",
@@ -98,16 +88,6 @@
   "accountBackupImported": "Progression importée.",
   "accountBackupExportFailed": "Impossible d'enregistrer le fichier. Choisis un autre dossier.",
   "accountBackupInvalid": "Ce fichier n'est pas une sauvegarde de Ludus Latinus.",
-  "accountTrophyUnlocked": "Trophée débloqué et exposé au Panthéon !",
-  "accountTrophyCondition": "Condition : {condition}",
-  "@accountTrophyCondition": {
-    "placeholders": {
-      "condition": {
-        "type": "String"
-      }
-    }
-  },
-  "accountTrophyClose": "OPTICAS GRACIAS (Fermer)",
   "shopNotEnough": "🪙 Sesterces insuffisants ! Il te manque {missing} HS. Réussis des leçons pour en amasser !",
   "@shopNotEnough": {
     "placeholders": {
@@ -1207,5 +1187,68 @@
   "aboutVersionLoading": "Version …",
   "aboutPublisher": "Édité par Icare & Dédale",
   "aboutRights": "© 2026 Icare & Dédale. Tous droits réservés.",
-  "aboutReplayStudio": "Revoir l'animation du studio"
+  "aboutReplayStudio": "Revoir l'animation du studio",
+  "albumTitle": "Héros et Créatures",
+  "albumHeaderLabel": "ALBUM DES SUCCÈS",
+  "albumHeaderHint": "Chaque succès te donne une carte.",
+  "albumFamilyHeroes": "Héros",
+  "albumFamilyGods": "Dieux",
+  "albumFamilyCreatures": "Créatures",
+  "albumFamilyMonuments": "Monuments",
+  "albumRarityCommon": "Commune",
+  "albumRarityRare": "Rare",
+  "albumRarityEpic": "Épique",
+  "albumRarityLegendary": "Légendaire",
+  "albumAttack": "Attaque",
+  "albumDefense": "Défense",
+  "albumClose": "Fermer",
+  "albumNewCard": "NOUVELLE CARTE",
+  "albumOpen": "Voir l'album",
+  "albumContinue": "Continuer",
+  "albumEmpty": "Aucune carte pour l'instant. Termine le monde 1 pour gagner Romulus.",
+  "ludiAlbumSubtitle": "Une carte par succès",
+  "ludiAlbumTag": "SUCCÈS",
+  "albumCount": "{obtenues} / {total} cartes",
+  "@albumCount": {
+    "placeholders": {
+      "obtenues": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "albumEarned": "+ {sesterces} sesterces gagnés",
+  "@albumEarned": {
+    "placeholders": {
+      "sesterces": {
+        "type": "int"
+      }
+    }
+  },
+  "albumNewCards": "{nombre} NOUVELLES CARTES",
+  "@albumNewCards": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
+  },
+  "albumAchievement": "Succès : {texte}",
+  "@albumAchievement": {
+    "placeholders": {
+      "texte": {
+        "type": "String"
+      }
+    }
+  },
+  "albumReward": "+ {sesterces} sesterces",
+  "@albumReward": {
+    "placeholders": {
+      "sesterces": {
+        "type": "int"
+      }
+    }
+  }
 }

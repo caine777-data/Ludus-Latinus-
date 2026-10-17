@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../models/album.dart';
 import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
 import '../models/carte_pantheon.dart';
@@ -109,6 +110,123 @@ class GameRepository extends ChangeNotifier {
       };
 
   List<CartePantheon> get cartesPantheon => dataService.cartesPantheon;
+
+  // ------------------------------------------------------------------
+  // Album « Héros et Créatures » : une carte par succès.
+  // ------------------------------------------------------------------
+
+  List<CarteAlbum> get cartesAlbum => dataService.cartesAlbum;
+  List<SuccesAlbum> get succesAlbum => dataService.succesAlbum;
+
+  CarteAlbum? carteAlbum(String id) {
+    for (final c in cartesAlbum) {
+      if (c.id == id) return c;
+    }
+    return null;
+  }
+
+  SuccesAlbum? succesDeLaCarte(String carteId) {
+    for (final s in succesAlbum) {
+      if (s.carteId == carteId) return s;
+    }
+    return null;
+  }
+
+  bool aLaCarte(String carteId) => profile.cartesAlbum.contains(carteId);
+
+  /// Récompense en sesterces d'une carte, selon sa rareté.
+  int sesterceDeLaCarte(CarteAlbum carte) => dataService.sesterceParRarete[carte.rarete] ?? 0;
+
+  /// Cartes obtenues depuis la dernière annonce, à montrer à l'élève au
+  /// retour à l'accueil (jamais en pleine partie).
+  final List<CarteAlbum> cartesAAnnoncer = [];
+
+  /// Valeur actuelle d'une statistique de succès (voir content/album_mobile.py).
+  int valeurStat(String stat) {
+    final p = profile;
+    if (stat.startsWith('monde_termine:')) {
+      final rang = int.tryParse(stat.split(':').last) ?? 0;
+      if (rang < 1 || rang > worlds.length) return 0;
+      return isWorldCompleted(worlds[rang - 1]) ? 1 : 0;
+    }
+    if (stat.startsWith('classe_terminee:')) {
+      final id = stat.split(':').last;
+      for (final c in classes) {
+        if (c.id != id) continue;
+        final mondes = worlds.where((w) => c.mondesIds.contains(w.id));
+        return mondes.isNotEmpty && mondes.every(isWorldCompleted) ? 1 : 0;
+      }
+      return 0;
+    }
+    switch (stat) {
+      case 'lecons_reussies':
+        return p.completedLessons.length;
+      case 'lecons_trois_etoiles':
+        return p.lessonStars.values.where((e) => e >= 3).length;
+      case 'mondes_termines':
+        return mondesTermines.length;
+      case 'serie_jours':
+        return p.streakDays;
+      case 'gladiateurs_vaincus':
+        return p.gladiateursVaincus.length;
+      case 'memoria_maitrises':
+        return p.srsCards.values.where((c) => c.box >= 5).length;
+      case 'missions_cesar':
+        return p.missionsCesar.length;
+      case 'epigraphes':
+        return p.decodedEpigraphs.length;
+      case 'monuments_restaures':
+        return p.restoredMonuments.length;
+    }
+    // Les autres statistiques sont des compteurs d'événements des jeux.
+    return p.compteurs[stat] ?? 0;
+  }
+
+  /// Ajoute 1 au compteur d'un événement de jeu (« duels_gagnes »…).
+  void noterEvenement(String compteur) {
+    profile.compteurs[compteur] = (profile.compteurs[compteur] ?? 0) + 1;
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  /// Un gladiateur du Duel vaincu : victoire, gladiateur retenu, combat parfait.
+  void noterVictoireDuel(String gladiateur, {required bool sansFaute}) {
+    profile.compteurs['duels_gagnes'] = (profile.compteurs['duels_gagnes'] ?? 0) + 1;
+    if (sansFaute) profile.compteurs['duels_sans_faute'] = (profile.compteurs['duels_sans_faute'] ?? 0) + 1;
+    if (!profile.gladiateursVaincus.contains(gladiateur)) profile.gladiateursVaincus.add(gladiateur);
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  /// Donne les cartes dont le succès vient d'être atteint. Appelé à chaque
+  /// changement de progression (voir [notifyListeners]) : aucun écran n'a à y
+  /// penser. Renvoie les cartes nouvellement obtenues.
+  List<CarteAlbum> verifierSucces() {
+    if (!dataService.isLoaded) return const [];
+    final nouvelles = <CarteAlbum>[];
+    for (final s in succesAlbum) {
+      if (profile.cartesAlbum.contains(s.carteId)) continue;
+      if (valeurStat(s.stat) < s.seuil) continue;
+      final carte = carteAlbum(s.carteId);
+      if (carte == null) continue;
+      profile.cartesAlbum.add(carte.id);
+      profile.sesterces += sesterceDeLaCarte(carte);
+      nouvelles.add(carte);
+    }
+    if (nouvelles.isNotEmpty) {
+      storageService.saveProfile(profile);
+      cartesAAnnoncer.addAll(nouvelles);
+    }
+    return nouvelles;
+  }
+
+  /// Toute mutation du profil passe par ici : on vérifie les succès avant de
+  /// prévenir les écrans, qui affichent donc déjà la carte et ses sesterces.
+  @override
+  void notifyListeners() {
+    verifierSucces();
+    super.notifyListeners();
+  }
 
   /// Carte du Panthéon rattachée à un monde (null si le monde n'en a pas).
   CartePantheon? carteDuMonde(String worldId) {
@@ -270,6 +388,7 @@ class GameRepository extends ChangeNotifier {
     final defi = defiDuJour;
     if (defi.routeCible != jeu) return 0;
     profile.lastDailyQuestDate = DateTime.now().toIso8601String().substring(0, 10);
+    profile.compteurs['quetes_du_jour'] = (profile.compteurs['quetes_du_jour'] ?? 0) + 1;
     storageService.addSesterces(defi.recompense);
     storageService.saveProfile(profile);
     notifyListeners();
@@ -374,9 +493,11 @@ class GameRepository extends ChangeNotifier {
   bool isMissionCesarReussie(int index) => profile.missionsCesar.contains(index);
 
   /// Mission de César réussie : payée une seule fois, même après redémarrage.
-  int validerMissionCesar(int index, int gain) {
+  int validerMissionCesar(int index, int gain, {int total = 0}) {
     if (isMissionCesarReussie(index)) return 0;
     profile.missionsCesar.add(index);
+    // Toutes les missions réussies : succès du Sceau impérial.
+    if (total > 0 && profile.missionsCesar.length >= total) profile.compteurs['missions_cesar_toutes'] = 1;
     storageService.addSesterces(gain);
     storageService.saveProfile(profile);
     notifyListeners();
@@ -427,6 +548,7 @@ class GameRepository extends ChangeNotifier {
 
     profile.sesterces -= item.prix;
     profile.ownedGoodies.add(item.id);
+    profile.compteurs['objets_achetes'] = (profile.compteurs['objets_achetes'] ?? 0) + 1;
     // Équipe automatiquement le nouvel objet acheté
     profile.equippedGoodies[item.categorie.name] = item.id;
 

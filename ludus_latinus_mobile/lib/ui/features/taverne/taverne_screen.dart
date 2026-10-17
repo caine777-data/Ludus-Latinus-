@@ -134,6 +134,8 @@ class _TaverneScreenState extends State<TaverneScreen> {
     var gain = 0;
     var defi = 0;
     if (issue == IssueManche.gagnee) {
+      // Compteur du succès de Cerbère, même quand la victoire n'est plus payée.
+      widget.repo.noterEvenement('taverne_victoires');
       if (widget.repo.taverneRewardsLeftToday > 0 && widget.repo.consumeTaverneReward()) {
         widget.repo.addSesterces(gainVictoire);
         gain = gainVictoire;

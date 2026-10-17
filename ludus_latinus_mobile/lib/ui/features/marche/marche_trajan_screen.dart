@@ -372,6 +372,8 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
   /// Un exercice déjà payé revient avec un prix tiré au hasard : il se paie
   /// alors comme une partie, trois fois par jour.
   String _payer(String cle, int montant) {
+    // Compteur du succès de Mercure : toute opération réussie compte.
+    widget.repo.noterEvenement('marche_operations');
     if (_ratesCetteVisite.contains(cle)) {
       widget.repo.accomplirDefi('marche');
       return ' (pas de sesterces après une erreur)';

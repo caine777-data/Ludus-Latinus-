@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import '../models/album.dart';
 import '../models/carte_pantheon.dart';
 import '../models/monument.dart';
 import '../models/srs_card.dart';
@@ -16,6 +17,10 @@ class DataService {
   List<ForumMonument> monuments = [];
   List<SrsCard> srsCards = [];
   List<CartePantheon> cartesPantheon = [];
+  /// Album « Héros et Créatures » et ses succès (une carte par succès).
+  List<CarteAlbum> cartesAlbum = [];
+  List<SuccesAlbum> succesAlbum = [];
+  Map<String, int> sesterceParRarete = {};
   Map<String, dynamic> rawData = {};
 
   bool isLoaded = false;
@@ -45,6 +50,20 @@ class DataService {
       thesaurus = rawDico
           .map((d) => ThesaurusEntry.fromJson(d as Map<String, dynamic>))
           .toList();
+
+      // Album : cartes, succès et récompense par rareté. Absent d'un vieux
+      // dataset : l'album reste vide, le reste du jeu fonctionne.
+      final rawAlbum = rawData['album'] as Map<String, dynamic>? ?? {};
+      cartesAlbum = [
+        for (final c in rawAlbum['cartes'] as List<dynamic>? ?? []) CarteAlbum.fromJson(c as Map<String, dynamic>),
+      ];
+      succesAlbum = [
+        for (final s in rawAlbum['succes'] as List<dynamic>? ?? []) SuccesAlbum.fromJson(s as Map<String, dynamic>),
+      ];
+      sesterceParRarete = {
+        for (final e in (rawAlbum['sesterces_par_rarete'] as Map<String, dynamic>? ?? {}).entries)
+          e.key: (e.value as num).toInt(),
+      };
 
       // Glossaire : chaque entrée est une paire [terme, définition] ; on ignore
       // toute entrée mal formée plutôt que de faire échouer le chargement.

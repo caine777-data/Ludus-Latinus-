@@ -330,6 +330,21 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Album « Héros et Créatures » et succès** (17/10/2026, catalogue validé par
+  Cédric). Données : `content/album_mobile.py` (32 cartes, dont 11 remplacées
+  pour ne pas doubler le Panthéon, et leurs 32 succès), exportées dans le bloc
+  `album` du dataset ; l'ancien bloc `succes` (8 succès) n'est plus exporté.
+  Appli : `lib/data/models/album.dart`, profil (`compteurs`,
+  `gladiateurs_vaincus`, `cartes_album`), dépôt (`valeurStat`,
+  `verifierSucces` appelé dans `notifyListeners`, `cartesAAnnoncer`), compteurs
+  branchés dans Circus, Duel (combat sans faute), Taverne, Marché, quêtes,
+  Taberna, César (`total` des missions). Écrans : `lib/ui/features/album/` (album
+  dans Ludi, fiche de carte, annonce à l'accueil seulement quand il est l'écran
+  affiché, résumé dans le Compte à la place des 5 trophées en dur). Vu à
+  l'émulateur : le profil de démonstration reçoit 10 cartes et 170 sesterces
+  d'un coup. Images attendues dans `assets/images/album/<id>.jpg` ; prompts
+  dans `docs/propositions/illustrations_album.md`.
+
 - **Succès : maquette et catalogue** (17/10/2026). Le dataset n'a que 8 succès
   (l'inventaire de Sonnet en annonçait 80 à tort : erreur non recoupée par
   l'architecte, notée dans `.claude/mods/deleguer/REGLES.md`). Proposition :

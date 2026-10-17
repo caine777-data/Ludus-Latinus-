@@ -46,6 +46,7 @@ flutter:
     - assets/images/epigraphie/
     - assets/images/studio/
     - assets/images/lecons/
+    - assets/images/album/
     - assets/audio/
     - assets/animations/
     - assets/images/animated/

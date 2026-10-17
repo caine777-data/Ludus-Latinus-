@@ -136,6 +136,15 @@ class UserProfile {
   Map<String, String> equippedGoodies;
   List<String> ownedGoodies;
 
+  /// Compteurs des succès de l'album (« duels_gagnes », « courses_finies »…).
+  Map<String, int> compteurs;
+
+  /// Gladiateurs du Duel déjà vaincus (nom du boss).
+  List<String> gladiateursVaincus;
+
+  /// Cartes de l'album « Héros et Créatures » obtenues, dans l'ordre d'obtention.
+  List<String> cartesAlbum;
+
   UserProfile({
     this.id = 'defaut',
     this.nomHeros = 'Marcus',
@@ -163,7 +172,13 @@ class UserProfile {
     this.isDarkMode = false,
     Map<String, String>? equippedGoodies,
     List<String>? ownedGoodies,
-  })  : completedLessons = completedLessons ?? [],
+    Map<String, int>? compteurs,
+    List<String>? gladiateursVaincus,
+    List<String>? cartesAlbum,
+  })  : compteurs = compteurs ?? {},
+        gladiateursVaincus = gladiateursVaincus ?? [],
+        cartesAlbum = cartesAlbum ?? [],
+        completedLessons = completedLessons ?? [],
         niveauxVus = niveauxVus ?? [],
         lessonStars = lessonStars ?? {},
         restoredMonuments = restoredMonuments ?? [],
@@ -414,6 +429,9 @@ class UserProfile {
       isDarkMode: json['dark_mode'] as bool? ?? false,
       equippedGoodies: parsedEquipped,
       ownedGoodies: parsedOwned,
+      compteurs: (json['compteurs'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
+      gladiateursVaincus: (json['gladiateurs_vaincus'] as List?)?.map((e) => e.toString()).toList(),
+      cartesAlbum: (json['cartes_album'] as List?)?.map((e) => e.toString()).toList(),
     );
   }
 
@@ -444,6 +462,9 @@ class UserProfile {
       'dark_mode': isDarkMode,
       'equipped_goodies': equippedGoodies,
       'owned_goodies': ownedGoodies,
+      'compteurs': compteurs,
+      'gladiateurs_vaincus': gladiateursVaincus,
+      'cartes_album': cartesAlbum,
     };
   }
 }

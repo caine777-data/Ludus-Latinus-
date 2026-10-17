@@ -364,66 +364,6 @@ abstract class AppLocalizations {
   /// **'Vestiaire'**
   String get accountWardrobeButton;
 
-  /// No description provided for @accountTrophiesTitle.
-  ///
-  /// In fr, this message translates to:
-  /// **'Panthéon des Trophées'**
-  String get accountTrophiesTitle;
-
-  /// No description provided for @accountTrophiesHint.
-  ///
-  /// In fr, this message translates to:
-  /// **'Touche un piédestal'**
-  String get accountTrophiesHint;
-
-  /// No description provided for @accountTrophyFirstStep.
-  ///
-  /// In fr, this message translates to:
-  /// **'Premier Pas'**
-  String get accountTrophyFirstStep;
-
-  /// No description provided for @accountTrophyFirstStepCondition.
-  ///
-  /// In fr, this message translates to:
-  /// **'Terminer ta toute première leçon de latin.'**
-  String get accountTrophyFirstStepCondition;
-
-  /// No description provided for @accountTrophyCenturion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Centurion'**
-  String get accountTrophyCenturion;
-
-  /// No description provided for @accountTrophyCenturionCondition.
-  ///
-  /// In fr, this message translates to:
-  /// **'Valider 5 leçons complètes du Ludus.'**
-  String get accountTrophyCenturionCondition;
-
-  /// No description provided for @accountTrophyCharioteer.
-  ///
-  /// In fr, this message translates to:
-  /// **'Aurige'**
-  String get accountTrophyCharioteer;
-
-  /// No description provided for @accountTrophyCharioteerCondition.
-  ///
-  /// In fr, this message translates to:
-  /// **'Atteindre une série de 3 jours consécutifs.'**
-  String get accountTrophyCharioteerCondition;
-
-  /// No description provided for @accountTrophyBuilder.
-  ///
-  /// In fr, this message translates to:
-  /// **'Bâtisseur'**
-  String get accountTrophyBuilder;
-
-  /// No description provided for @accountTrophyBuilderCondition.
-  ///
-  /// In fr, this message translates to:
-  /// **'Restaurer au moins un monument du Forum.'**
-  String get accountTrophyBuilderCondition;
-
   /// No description provided for @accountBackupTitle.
   ///
   /// In fr, this message translates to:
@@ -495,24 +435,6 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ce fichier n\'est pas une sauvegarde de Ludus Latinus.'**
   String get accountBackupInvalid;
-
-  /// No description provided for @accountTrophyUnlocked.
-  ///
-  /// In fr, this message translates to:
-  /// **'Trophée débloqué et exposé au Panthéon !'**
-  String get accountTrophyUnlocked;
-
-  /// No description provided for @accountTrophyCondition.
-  ///
-  /// In fr, this message translates to:
-  /// **'Condition : {condition}'**
-  String accountTrophyCondition(String condition);
-
-  /// No description provided for @accountTrophyClose.
-  ///
-  /// In fr, this message translates to:
-  /// **'OPTICAS GRACIAS (Fermer)'**
-  String get accountTrophyClose;
 
   /// No description provided for @shopNotEnough.
   ///
@@ -2760,6 +2682,156 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Revoir l\'animation du studio'**
   String get aboutReplayStudio;
+
+  /// No description provided for @albumTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Héros et Créatures'**
+  String get albumTitle;
+
+  /// No description provided for @albumHeaderLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'ALBUM DES SUCCÈS'**
+  String get albumHeaderLabel;
+
+  /// No description provided for @albumHeaderHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque succès te donne une carte.'**
+  String get albumHeaderHint;
+
+  /// No description provided for @albumFamilyHeroes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Héros'**
+  String get albumFamilyHeroes;
+
+  /// No description provided for @albumFamilyGods.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dieux'**
+  String get albumFamilyGods;
+
+  /// No description provided for @albumFamilyCreatures.
+  ///
+  /// In fr, this message translates to:
+  /// **'Créatures'**
+  String get albumFamilyCreatures;
+
+  /// No description provided for @albumFamilyMonuments.
+  ///
+  /// In fr, this message translates to:
+  /// **'Monuments'**
+  String get albumFamilyMonuments;
+
+  /// No description provided for @albumRarityCommon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commune'**
+  String get albumRarityCommon;
+
+  /// No description provided for @albumRarityRare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rare'**
+  String get albumRarityRare;
+
+  /// No description provided for @albumRarityEpic.
+  ///
+  /// In fr, this message translates to:
+  /// **'Épique'**
+  String get albumRarityEpic;
+
+  /// No description provided for @albumRarityLegendary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Légendaire'**
+  String get albumRarityLegendary;
+
+  /// No description provided for @albumAttack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Attaque'**
+  String get albumAttack;
+
+  /// No description provided for @albumDefense.
+  ///
+  /// In fr, this message translates to:
+  /// **'Défense'**
+  String get albumDefense;
+
+  /// No description provided for @albumClose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get albumClose;
+
+  /// No description provided for @albumNewCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'NOUVELLE CARTE'**
+  String get albumNewCard;
+
+  /// No description provided for @albumOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir l\'album'**
+  String get albumOpen;
+
+  /// No description provided for @albumContinue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get albumContinue;
+
+  /// No description provided for @albumEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune carte pour l\'instant. Termine le monde 1 pour gagner Romulus.'**
+  String get albumEmpty;
+
+  /// No description provided for @ludiAlbumSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une carte par succès'**
+  String get ludiAlbumSubtitle;
+
+  /// No description provided for @ludiAlbumTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'SUCCÈS'**
+  String get ludiAlbumTag;
+
+  /// No description provided for @albumCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{obtenues} / {total} cartes'**
+  String albumCount(int obtenues, int total);
+
+  /// No description provided for @albumEarned.
+  ///
+  /// In fr, this message translates to:
+  /// **'+ {sesterces} sesterces gagnés'**
+  String albumEarned(int sesterces);
+
+  /// No description provided for @albumNewCards.
+  ///
+  /// In fr, this message translates to:
+  /// **'{nombre} NOUVELLES CARTES'**
+  String albumNewCards(int nombre);
+
+  /// No description provided for @albumAchievement.
+  ///
+  /// In fr, this message translates to:
+  /// **'Succès : {texte}'**
+  String albumAchievement(String texte);
+
+  /// No description provided for @albumReward.
+  ///
+  /// In fr, this message translates to:
+  /// **'+ {sesterces} sesterces'**
+  String albumReward(int sesterces);
 }
 
 class _AppLocalizationsDelegate

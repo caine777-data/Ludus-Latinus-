@@ -299,7 +299,7 @@ $texteChiffre
       gain = widget.repo.payerPartie('cesar', montant);
       _libreReussie = true;
     } else {
-      gain = widget.repo.validerMissionCesar(index, montant);
+      gain = widget.repo.validerMissionCesar(index, montant, total: kMissionsCesar.length);
     }
     HapticFeedback.mediumImpact();
     AudioService().playTriumph();

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
@@ -28,6 +29,7 @@ import '../../core/avatar_assets.dart';
 import '../settings/hero_creation_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
+import '../album/album_screen.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -47,9 +49,31 @@ class _HomeScreenState extends State<HomeScreen> {
   // Statique : survit aux reconstructions et navigations, réinitialisé à chaque fermeture du process.
   static bool _introJoueeCeLancement = false;
 
+  /// Surveille les cartes de l'album à annoncer. L'annonce n'apparaît que
+  /// lorsque l'accueil est l'écran affiché : jamais en pleine partie, ni par-dessus
+  /// le bilan d'une leçon ou une cinématique.
+  Timer? _veilleAlbum;
+  bool _annonceEnCours = false;
+
+  void _verifierAnnonceAlbum() {
+    if (_annonceEnCours || !mounted || widget.repo.cartesAAnnoncer.isEmpty) return;
+    if (ModalRoute.of(context)?.isCurrent != true) return;
+    final cartes = List.of(widget.repo.cartesAAnnoncer);
+    widget.repo.cartesAAnnoncer.clear();
+    _annonceEnCours = true;
+    annoncerCartes(context, widget.repo, cartes).whenComplete(() => _annonceEnCours = false);
+  }
+
+  @override
+  void dispose() {
+    _veilleAlbum?.cancel();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
+    _veilleAlbum = Timer.periodic(const Duration(seconds: 1), (_) => _verifierAnnonceAlbum());
     AudioService().enterMusic(MusicTrack.accueil);
     // Vidéo d'introduction jouée au démarrage de l'application (une seule fois par session).
     if (!_introJoueeCeLancement) {

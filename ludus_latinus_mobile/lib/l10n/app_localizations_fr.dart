@@ -160,40 +160,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountWardrobeButton => 'Vestiaire';
 
   @override
-  String get accountTrophiesTitle => 'Panthéon des Trophées';
-
-  @override
-  String get accountTrophiesHint => 'Touche un piédestal';
-
-  @override
-  String get accountTrophyFirstStep => 'Premier Pas';
-
-  @override
-  String get accountTrophyFirstStepCondition =>
-      'Terminer ta toute première leçon de latin.';
-
-  @override
-  String get accountTrophyCenturion => 'Centurion';
-
-  @override
-  String get accountTrophyCenturionCondition =>
-      'Valider 5 leçons complètes du Ludus.';
-
-  @override
-  String get accountTrophyCharioteer => 'Aurige';
-
-  @override
-  String get accountTrophyCharioteerCondition =>
-      'Atteindre une série de 3 jours consécutifs.';
-
-  @override
-  String get accountTrophyBuilder => 'Bâtisseur';
-
-  @override
-  String get accountTrophyBuilderCondition =>
-      'Restaurer au moins un monument du Forum.';
-
-  @override
   String get accountBackupTitle => 'Sauvegarde de ta progression';
 
   @override
@@ -232,18 +198,6 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get accountBackupInvalid =>
       'Ce fichier n\'est pas une sauvegarde de Ludus Latinus.';
-
-  @override
-  String get accountTrophyUnlocked =>
-      'Trophée débloqué et exposé au Panthéon !';
-
-  @override
-  String accountTrophyCondition(String condition) {
-    return 'Condition : $condition';
-  }
-
-  @override
-  String get accountTrophyClose => 'OPTICAS GRACIAS (Fermer)';
 
   @override
   String shopNotEnough(int missing) {
@@ -1597,4 +1551,90 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutReplayStudio => 'Revoir l\'animation du studio';
+
+  @override
+  String get albumTitle => 'Héros et Créatures';
+
+  @override
+  String get albumHeaderLabel => 'ALBUM DES SUCCÈS';
+
+  @override
+  String get albumHeaderHint => 'Chaque succès te donne une carte.';
+
+  @override
+  String get albumFamilyHeroes => 'Héros';
+
+  @override
+  String get albumFamilyGods => 'Dieux';
+
+  @override
+  String get albumFamilyCreatures => 'Créatures';
+
+  @override
+  String get albumFamilyMonuments => 'Monuments';
+
+  @override
+  String get albumRarityCommon => 'Commune';
+
+  @override
+  String get albumRarityRare => 'Rare';
+
+  @override
+  String get albumRarityEpic => 'Épique';
+
+  @override
+  String get albumRarityLegendary => 'Légendaire';
+
+  @override
+  String get albumAttack => 'Attaque';
+
+  @override
+  String get albumDefense => 'Défense';
+
+  @override
+  String get albumClose => 'Fermer';
+
+  @override
+  String get albumNewCard => 'NOUVELLE CARTE';
+
+  @override
+  String get albumOpen => 'Voir l\'album';
+
+  @override
+  String get albumContinue => 'Continuer';
+
+  @override
+  String get albumEmpty =>
+      'Aucune carte pour l\'instant. Termine le monde 1 pour gagner Romulus.';
+
+  @override
+  String get ludiAlbumSubtitle => 'Une carte par succès';
+
+  @override
+  String get ludiAlbumTag => 'SUCCÈS';
+
+  @override
+  String albumCount(int obtenues, int total) {
+    return '$obtenues / $total cartes';
+  }
+
+  @override
+  String albumEarned(int sesterces) {
+    return '+ $sesterces sesterces gagnés';
+  }
+
+  @override
+  String albumNewCards(int nombre) {
+    return '$nombre NOUVELLES CARTES';
+  }
+
+  @override
+  String albumAchievement(String texte) {
+    return 'Succès : $texte';
+  }
+
+  @override
+  String albumReward(int sesterces) {
+    return '+ $sesterces sesterces';
+  }
 }

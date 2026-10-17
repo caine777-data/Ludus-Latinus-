@@ -326,6 +326,8 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
   int _playerHp = DuelEquilibre.pvJoueur;
   int _bossHp = DuelEquilibre.pvBoss[0];
   bool _combatFini = false;
+  /// Mauvaises réponses du combat en cours : zéro à la victoire = succès de Méduse.
+  int _fautesCombat = 0;
   bool _victoire = false;
   // Score du combat, en points : ce n'est plus de l'argent.
   int _gainsSesterces = 0;
@@ -398,6 +400,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       _duelDeck = [];
       _bossHp = boss['maxHp'] as int;
       _combatFini = false;
+      _fautesCombat = 0;
       _victoire = false;
       _gainsSesterces = 0;
       _recompense = 0;
@@ -523,6 +526,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       }
     } else {
       _serie = 0;
+      _fautesCombat++;
       HapticFeedback.vibrate();
       AudioService().playError();
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.heavy);
@@ -570,6 +574,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       // Un boss vaincu vaut un peu plus qu'une leçon, et seulement 3 fois par jour.
       // Avant : score + 50, sans limite.
       _recompense = widget.repo.payerPartie('duel', GameRepository.gainDuel);
+      widget.repo.noterVictoireDuel(
+        _bosses[_currentBossIndex]['nom'] as String,
+        sansFaute: _fautesCombat == 0,
+      );
       HapticFeedback.heavyImpact();
       AudioService().playSwordClash();
       AudioService().playCrowdCheer();

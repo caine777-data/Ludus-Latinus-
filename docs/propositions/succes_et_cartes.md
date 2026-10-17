@@ -1,6 +1,8 @@
 # Succès et album « Héros et Créatures »
 
-Proposition de l'architecte (17/10/2026), à valider par Cédric. Un succès = une carte : les 32 cartes de `content/cartes_data.py` deviennent les 32 récompenses.
+Proposition de l'architecte (17/10/2026), à valider par Cédric.
+
+**Mise à jour du 17/10/2026, validée par Cédric** : 11 cartes qui doublaient le Panthéon sont remplacées (Junon, Vesta, Persée, Brennus, Pline le Jeune, Caton l'Ancien, Ovide, le Centaure, le Sceau impérial, Roma Aeterna, la Borne milliaire). Le catalogue qui fait foi, avec tous les textes, est `content/album_mobile.py` ; les tableaux ci-dessous gardent les noms d'origine. Un succès = une carte : les 32 cartes de `content/cartes_data.py` deviennent les 32 récompenses.
 
 ## Constat
 
