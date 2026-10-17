@@ -36,6 +36,7 @@ Les applis ludo-éducatives qui dominent le Store reposent sur la même boucle :
 | Aucun rappel | Notification locale quotidienne, sans réseau, à l'heure choisie par l'élève, dans la voix de Lupulus (« Ta série de 5 jours t'attend »). Désactivable, désactivée par défaut si le programme Familles l'exige. | moyen |
 | Succès invisibles | Brancher les 80 succès du dataset, avec un écran d'album et une notification à l'obtention. Ils sont déjà écrits. | moyen |
 | Pas d'objectif de séance | « Objectif du jour : 1 leçon ou 10 cartes Memoria », barre qui se remplit à l'accueil. | faible |
+| Collection limitée au Panthéon | Second album « Héros et Créatures » : les 32 cartes de `content/cartes_data.py` (rareté, citation, anecdote), chacune gagnée par un succès. 32 illustrations à générer dans le style du Panthéon. Retenu par Cédric le 17/10/2026. | moyen |
 | Série fragile | Un « bouclier de série » (un jour manqué pardonné par semaine), gagné en sesterces. Évite le découragement après une absence. | faible |
 | Pas de bilan de semaine | Écran du lundi : leçons faites, mots révisés, série. Sert aussi aux parents. | faible |
 

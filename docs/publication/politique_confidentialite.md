@@ -44,4 +44,4 @@ En cas de changement, cette page est mise à jour et la date en tête de page es
 
 ## Contact
 
-Pour toute question : [adresse de contact dédiée aux applications].
+Pour toute question : icareetdedale.studio@gmail.com.

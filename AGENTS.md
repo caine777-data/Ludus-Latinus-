@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Contact et second album** (17/10/2026). Adresse de contact des applis :
+  `icareetdedale.studio@gmail.com` (politique de confidentialité et sa page).
+  Priorité 2 : second album « Héros et Créatures » (32 cartes de
+  `content/cartes_data.py`, une par succès, illustrations à générer), retenu
+  par Cédric.
+
 - **Glossaire branché, cartes de collection retirées** (17/10/2026, accord de
   Cédric). Les 24 termes du glossaire s'affichent dans un 4e onglet
   « Glossaire » du Thesaurus (ordre alphabétique, onglets défilants). Les 32
