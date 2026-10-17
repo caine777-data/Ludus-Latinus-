@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
@@ -10,7 +13,7 @@ import '../../../data/services/audio_service.dart';
 import '../../core/avatar_assets.dart';
 import '../../../l10n/l10n.dart';
 
-/// Écran Tabularium : Compte Cloud, Tessera Hospitalis et profil de l'élève (Style Monument Valley).
+/// Écran Tabularium : profil de l'élève, trophées et sauvegarde par fichier (Style Monument Valley).
 class AccountScreen extends StatefulWidget {
   final GameRepository repo;
 
@@ -21,42 +24,110 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  bool _isSyncing = false;
 
   @override
   void initState() {
     super.initState();
-    _emailController.text = widget.repo.profile.email;
     _nameController.text = widget.repo.profile.nomHeros;
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
     _nameController.dispose();
     super.dispose();
   }
 
-  void _syncNow() async {
-    HapticFeedback.mediumImpact();
-    setState(() => _isSyncing = true);
-    await Future.delayed(const Duration(milliseconds: 1200));
-    widget.repo.profile.lastSyncDate = DateTime.now().toString().substring(0, 16);
-    widget.repo.storageService.saveProfile(widget.repo.profile);
-    if (mounted) {
-      setState(() => _isSyncing = false);
-      HapticFeedback.heavyImpact();
-      AudioService().playTriumph();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: RomanColors.laurelGreen,
-          content: Text(context.l10n.accountSyncDone),
-        ),
+  /// Exporte la progression dans un fichier JSON choisi par l'élève.
+  Future<void> _exportBackup() async {
+    HapticFeedback.lightImpact();
+    final now = DateTime.now();
+    String deux(int n) => n.toString().padLeft(2, '0');
+    final nom = 'ludus_latinus_sauvegarde_${now.year}-${deux(now.month)}-${deux(now.day)}.json';
+    final octets = Uint8List.fromList(utf8.encode(widget.repo.exportSauvegarde()));
+    try {
+      final destination = await FilePicker.saveFile(
+        fileName: nom,
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+        bytes: octets,
       );
+      // Annulé par l'élève : on n'affiche rien.
+      if (destination == null) return;
+      // Sur Windows, le plugin ne reçoit que le chemin et n'écrit pas toujours
+      // les octets : on écrit nous-mêmes le fichier pour être sûr qu'il existe.
+      if (Platform.isWindows && destination.scheme == 'file') {
+        await File(destination.toFilePath()).writeAsBytes(octets, flush: true);
+      }
+      if (!mounted) return;
+      AudioService().playSesterces();
+      _afficherMessageSauvegarde(context.l10n.accountBackupExported, RomanColors.laurelGreen);
+    } catch (_) {
+      // Écriture impossible (dossier protégé, plugin absent) : rien n'a été exporté.
+      if (!mounted) return;
+      _afficherMessageSauvegarde(context.l10n.accountBackupExportFailed, Colors.redAccent);
     }
+  }
+
+  /// Importe une sauvegarde : choix du fichier, confirmation, puis remplacement.
+  Future<void> _importBackup() async {
+    HapticFeedback.lightImpact();
+    String? contenu;
+    try {
+      final fichier = await FilePicker.pickFile(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
+      // Annulé par l'élève : on n'affiche rien.
+      if (fichier == null) return;
+      // file_picker 13 ne fournit plus `withData` : on lit le fichier choisi.
+      contenu = utf8.decode(await fichier.readAsBytes());
+    } catch (_) {
+      contenu = null;
+    }
+    if (!mounted) return;
+    // Fichier illisible ou qui n'est pas une sauvegarde : on le dit tout de
+    // suite, sans demander de confirmer un remplacement qui échouerait.
+    if (contenu == null || !widget.repo.estSauvegardeValide(contenu)) {
+      _afficherMessageSauvegarde(context.l10n.accountBackupInvalid, Colors.redAccent);
+      return;
+    }
+
+    // Le remplacement est définitif : on demande confirmation avant d'écraser.
+    final confirme = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(ctx.l10n.accountBackupImportConfirmTitle),
+        content: Text(ctx.l10n.accountBackupImportConfirmBody),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(ctx.l10n.accountBackupCancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(ctx.l10n.accountBackupImportConfirm),
+          ),
+        ],
+      ),
+    );
+    if (confirme != true || !mounted) return;
+
+    if (widget.repo.importerSauvegarde(contenu)) {
+      // Le nom du héros a pu changer : le champ de saisie doit le refléter.
+      _nameController.text = widget.repo.profile.nomHeros;
+      AudioService().playTriumph();
+      setState(() {});
+      _afficherMessageSauvegarde(context.l10n.accountBackupImported, RomanColors.laurelGreen);
+    } else {
+      _afficherMessageSauvegarde(context.l10n.accountBackupInvalid, Colors.redAccent);
+    }
+  }
+
+  void _afficherMessageSauvegarde(String texte, Color couleur) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(backgroundColor: couleur, content: Text(texte)),
+    );
   }
 
   void _saveProfileChanges() {
@@ -407,7 +478,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
               const SizedBox(height: 16),
 
-              // 3. Tessera Hospitalis (Jeton de Transfert Express)
+              // 3. Sauvegarde de la progression (export / import par fichier)
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -420,10 +491,11 @@ class _AccountScreenState extends State<AccountScreen> {
                   children: [
                     Row(
                       children: [
-                        const Text('🏛️ ', style: TextStyle(fontSize: 18)),
+                        const Icon(Icons.save_alt_rounded, color: Color(0xFF7A5901), size: 22),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            context.l10n.accountTesseraTitle,
+                            context.l10n.accountBackupTitle,
                             style: const TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
@@ -435,152 +507,39 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      context.l10n.accountTesseraDescription,
-                      style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: RomanColors.imperialGold),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                profile.tesseraCode,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2,
-                                  color: RomanColors.charcoal,
-                                  fontFamily: 'monospace',
-                                ),
-                              ),
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.copy_rounded, color: RomanColors.imperialPurple, size: 20),
-                            tooltip: context.l10n.accountTesseraCopy,
-                            onPressed: () {
-                              HapticFeedback.lightImpact();
-                              AudioService().playSesterces();
-                              Clipboard.setData(ClipboardData(text: profile.tesseraCode));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: RomanColors.imperialPurple,
-                                  content: Text(context.l10n.accountTesseraCopied),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // 4. Compte Tabularium Cloud (Mail & Sync)
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: RomanColors.marbleBorder, width: 1.2),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.cloud_done_outlined, color: RomanColors.imperialPurple, size: 22),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            context.l10n.accountCloudTitle,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: RomanColors.charcoal,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      context.l10n.accountCloudDescription,
+                      context.l10n.accountBackupDescription,
                       style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.35),
                     ),
                     const SizedBox(height: 12),
-                    TextField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: context.l10n.accountEmailLabel,
-                        hintText: context.l10n.accountEmailHint,
-                        isDense: true,
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-                        prefixIcon: const Icon(Icons.email_outlined),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
+                    // Wrap : sur un écran étroit, le second bouton passe à la ligne.
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
                       children: [
-                        Expanded(
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: RomanColors.imperialPurple,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                              padding: const EdgeInsets.symmetric(vertical: 11),
-                            ),
-                            icon: _isSyncing
-                                ? const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                                  )
-                                : const Icon(Icons.cloud_upload_outlined, size: 18),
-                            label: Text(_isSyncing ? context.l10n.accountSyncing : context.l10n.accountSaveAndSync),
-                            onPressed: _isSyncing
-                                ? null
-                                : () {
-                                    final mail = _emailController.text.trim();
-                                    if (mail.isNotEmpty && mail.contains('@')) {
-                                      widget.repo.registerAccount(mail);
-                                      _syncNow();
-                                    } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          backgroundColor: Colors.redAccent,
-                                          content: Text(context.l10n.accountEmailInvalid),
-                                        ),
-                                      );
-                                    }
-                                  },
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: RomanColors.imperialPurple,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
                           ),
+                          icon: const Icon(Icons.file_upload_outlined, size: 18),
+                          label: Text(context.l10n.accountBackupExport),
+                          onPressed: _exportBackup,
+                        ),
+                        OutlinedButton.icon(
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: RomanColors.imperialPurple,
+                            side: const BorderSide(color: RomanColors.imperialPurple),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+                          ),
+                          icon: const Icon(Icons.file_download_outlined, size: 18),
+                          label: Text(context.l10n.accountBackupImport),
+                          onPressed: _importBackup,
                         ),
                       ],
                     ),
-                    if (profile.lastSyncDate != null) ...[
-                      const SizedBox(height: 8),
-                      Center(
-                        child: Text(
-                          context.l10n.accountLastSync(profile.lastSyncDate != null && profile.lastSyncDate!.length >= 16 ? profile.lastSyncDate!.substring(0, 16).replaceAll('T', context.l10n.accountSyncDateSeparator) : (profile.lastSyncDate ?? context.l10n.accountSyncNever)),
-                          style: const TextStyle(fontSize: 11, color: Colors.black54, fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
               ),

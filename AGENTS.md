@@ -330,6 +330,23 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Priorité 1 du Store, première partie** (17/10/2026). Faux « compte
+  Tabularium Cloud » (saisie d'e-mail) et faux « code Tessera » retirés du
+  modèle, du repository et de l'écran Compte, remplacés par une carte
+  « Sauvegarde » : export et import d'un fichier JSON enveloppé
+  (`format: ludus_latinus_sauvegarde`, version 1) via `file_picker` 13.1.0.
+  Le fichier est vérifié avant la confirmation ; une ancienne sauvegarde avec
+  le bloc `compte` se relit. Le fichier local reste le profil brut.
+  Permission INTERNET retirée du manifeste principal, gardée dans `debug/` et
+  `profile/` pour le débogage. Vérifié à l'émulateur : export dans
+  Téléchargements, faux fichier refusé sans confirmation, import réel appliqué.
+  Code par Sonnet, relu et corrigé par l'architecte. Politique de
+  confidentialité (`docs/publication/politique_confidentialite.md`, page
+  `docs/publication/site/index.html`) et réponses du formulaire Sécurité des
+  données prêtes. Restent : adresse de contact dédiée à créer par Cédric,
+  publication Netlify (feu vert de Cédric), fiche Store, sort du glossaire
+  et des 32 cartes de collection.
+
 - **Inventaire et analyse « best-seller »** (17/10/2026). Inventaire factuel
   A à L par Sonnet (`docs/audits/inventaire_fonctionnel.md`, recoupé), analyse
   de l'architecte dans `docs/audits/analyse_best_seller.md`. À retenir : le

@@ -67,7 +67,8 @@ class StorageService {
     try {
       final path = await _getSaveFilePath();
       final file = File(path);
-      await file.writeAsString(exportProfileJson(), flush: true);
+      // Fichier local : le profil brut, sans l'enveloppe des sauvegardes exportées.
+      await file.writeAsString(json.encode(profile.toJson()), flush: true);
     } catch (e) {
       debugPrint('[StorageService] Erreur sauvegarde disque: $e');
     }
@@ -95,18 +96,43 @@ class StorageService {
     return true;
   }
 
+  /// Identifiant du format de sauvegarde exportable : il permet de refuser un
+  /// fichier JSON quelconque que l'élève choisirait par erreur.
+  static const String formatSauvegarde = 'ludus_latinus_sauvegarde';
+
+  /// Sauvegarde exportable : le profil enveloppé avec son format, sa version
+  /// et sa date, pour qu'une version future de l'appli puisse la reconnaître.
   String exportProfileJson() {
-    return json.encode(_currentProfile.toJson());
+    return json.encode({
+      'format': formatSauvegarde,
+      'version': 1,
+      'date': DateTime.now().toIso8601String(),
+      'profil': _currentProfile.toJson(),
+    });
   }
 
+  /// Importe une sauvegarde. Tout est vérifié avant de toucher au profil
+  /// courant : en cas d'échec, il reste intact et on retourne false.
   bool importProfileJson(String jsonStr) {
+    final nouveau = lireSauvegarde(jsonStr);
+    if (nouveau == null) return false;
+    _currentProfile = nouveau;
+    saveProfile(nouveau);
+    return true;
+  }
+
+  /// Lit une sauvegarde exportée sans rien modifier ; null si le contenu n'en
+  /// est pas une. Sert aussi à vérifier le fichier avant de demander confirmation.
+  static UserProfile? lireSauvegarde(String jsonStr) {
     try {
-      final map = json.decode(jsonStr) as Map<String, dynamic>;
-      _currentProfile = UserProfile.fromJson(map);
-      saveProfile(_currentProfile);
-      return true;
+      final enveloppe = json.decode(jsonStr);
+      if (enveloppe is! Map<String, dynamic>) return null;
+      if (enveloppe['format'] != formatSauvegarde) return null;
+      final profil = enveloppe['profil'];
+      if (profil is! Map<String, dynamic>) return null;
+      return UserProfile.fromJson(profil);
     } catch (_) {
-      return false;
+      return null;
     }
   }
 }

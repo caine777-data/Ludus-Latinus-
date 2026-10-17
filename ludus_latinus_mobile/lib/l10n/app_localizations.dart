@@ -250,12 +250,6 @@ abstract class AppLocalizations {
   /// **'« Repetitio est mater studiorum » • La répétition est la mère des études'**
   String get loadingQuote4;
 
-  /// No description provided for @accountSyncDone.
-  ///
-  /// In fr, this message translates to:
-  /// **'⚡ Parchemins synchronisés avec les archives du Tabularium !'**
-  String get accountSyncDone;
-
   /// No description provided for @accountProfileUpdated.
   ///
   /// In fr, this message translates to:
@@ -430,89 +424,77 @@ abstract class AppLocalizations {
   /// **'Restaurer au moins un monument du Forum.'**
   String get accountTrophyBuilderCondition;
 
-  /// No description provided for @accountTesseraTitle.
+  /// No description provided for @accountBackupTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Tessera Hospitalis (Jeton d’Hospitalité)'**
-  String get accountTesseraTitle;
+  /// **'Sauvegarde de ta progression'**
+  String get accountBackupTitle;
 
-  /// No description provided for @accountTesseraDescription.
+  /// No description provided for @accountBackupDescription.
   ///
   /// In fr, this message translates to:
-  /// **'Ce jeton secret permet de transférer immédiatement tous tes progrès vers un smartphone, une tablette ou ton ordinateur en classe.'**
-  String get accountTesseraDescription;
+  /// **'Ta progression est enregistrée sur cet appareil. Pour la retrouver sur un autre appareil, exporte-la dans un fichier, puis importe ce fichier sur le nouvel appareil.'**
+  String get accountBackupDescription;
 
-  /// No description provided for @accountTesseraCopy.
+  /// No description provided for @accountBackupExport.
   ///
   /// In fr, this message translates to:
-  /// **'Copier la Tessera'**
-  String get accountTesseraCopy;
+  /// **'Exporter dans un fichier'**
+  String get accountBackupExport;
 
-  /// No description provided for @accountTesseraCopied.
+  /// No description provided for @accountBackupImport.
   ///
   /// In fr, this message translates to:
-  /// **'Tessera Hospitalis copiée dans le presse-papier !'**
-  String get accountTesseraCopied;
+  /// **'Importer un fichier'**
+  String get accountBackupImport;
 
-  /// No description provided for @accountCloudTitle.
+  /// No description provided for @accountBackupExported.
   ///
   /// In fr, this message translates to:
-  /// **'Sauvegarde & Compte Cloud'**
-  String get accountCloudTitle;
+  /// **'Progression exportée.'**
+  String get accountBackupExported;
 
-  /// No description provided for @accountCloudDescription.
+  /// No description provided for @accountBackupImportConfirmTitle.
   ///
   /// In fr, this message translates to:
-  /// **'Associe ton adresse courriel pour sauvegarder ta progression sur les serveurs du Tabularium.'**
-  String get accountCloudDescription;
+  /// **'Remplacer ta progression ?'**
+  String get accountBackupImportConfirmTitle;
 
-  /// No description provided for @accountEmailLabel.
+  /// No description provided for @accountBackupImportConfirmBody.
   ///
   /// In fr, this message translates to:
-  /// **'Adresse courriel (email)'**
-  String get accountEmailLabel;
+  /// **'La progression de ce fichier remplacera celle de cet appareil. Cette action ne peut pas être annulée.'**
+  String get accountBackupImportConfirmBody;
 
-  /// No description provided for @accountEmailHint.
+  /// No description provided for @accountBackupCancel.
   ///
   /// In fr, this message translates to:
-  /// **'eleve@latin.ac-paris.fr'**
-  String get accountEmailHint;
+  /// **'Annuler'**
+  String get accountBackupCancel;
 
-  /// No description provided for @accountSyncing.
+  /// No description provided for @accountBackupImportConfirm.
   ///
   /// In fr, this message translates to:
-  /// **'Synchronisation...'**
-  String get accountSyncing;
+  /// **'Remplacer'**
+  String get accountBackupImportConfirm;
 
-  /// No description provided for @accountSaveAndSync.
+  /// No description provided for @accountBackupImported.
   ///
   /// In fr, this message translates to:
-  /// **'Enregistrer & Synchroniser'**
-  String get accountSaveAndSync;
+  /// **'Progression importée.'**
+  String get accountBackupImported;
 
-  /// No description provided for @accountEmailInvalid.
+  /// No description provided for @accountBackupExportFailed.
   ///
   /// In fr, this message translates to:
-  /// **'Veuillez saisir une adresse courriel valide.'**
-  String get accountEmailInvalid;
+  /// **'Impossible d\'enregistrer le fichier. Choisis un autre dossier.'**
+  String get accountBackupExportFailed;
 
-  /// No description provided for @accountLastSync.
+  /// No description provided for @accountBackupInvalid.
   ///
   /// In fr, this message translates to:
-  /// **'Dernière synchronisation : {date}'**
-  String accountLastSync(String date);
-
-  /// No description provided for @accountSyncDateSeparator.
-  ///
-  /// In fr, this message translates to:
-  /// **' à '**
-  String get accountSyncDateSeparator;
-
-  /// No description provided for @accountSyncNever.
-  ///
-  /// In fr, this message translates to:
-  /// **'Jamais'**
-  String get accountSyncNever;
+  /// **'Ce fichier n\'est pas une sauvegarde de Ludus Latinus.'**
+  String get accountBackupInvalid;
 
   /// No description provided for @accountTrophyUnlocked.
   ///

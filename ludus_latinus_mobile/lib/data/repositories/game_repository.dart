@@ -233,11 +233,21 @@ class GameRepository extends ChangeNotifier {
     updateProfileName(prenom, genre);
   }
 
-  void registerAccount(String email) {
-    profile.email = email;
-    profile.lastSyncDate = DateTime.now().toString().substring(0, 16);
-    storageService.saveProfile(profile);
-    notifyListeners();
+  /// Contenu du fichier de sauvegarde (progression de l'élève, JSON enveloppé).
+  String exportSauvegarde() => storageService.exportProfileJson();
+
+  /// Vrai si le contenu est une sauvegarde lisible : vérifié avant de demander
+  /// à l'élève de confirmer le remplacement.
+  bool estSauvegardeValide(String contenu) => StorageService.lireSauvegarde(contenu) != null;
+
+  /// Remplace la progression par celle d'un fichier de sauvegarde. Retourne
+  /// false, sans rien changer, si le contenu n'est pas une sauvegarde valide.
+  /// On prévient les écouteurs : les écrans lisent `profile` à chaque rebuild,
+  /// ils doivent donc se redessiner avec le profil importé.
+  bool importerSauvegarde(String contenu) {
+    final ok = storageService.importProfileJson(contenu);
+    if (ok) notifyListeners();
+    return ok;
   }
 
   bool isDailyQuestCompletedToday() {

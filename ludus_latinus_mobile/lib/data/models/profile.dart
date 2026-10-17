@@ -114,9 +114,6 @@ class UserProfile {
   List<String> restoredMonuments;
   Map<String, int> srsScores;
   Map<String, SrsCardProgress> srsCards;
-  String email;
-  String tesseraCode;
-  String? lastSyncDate;
   String? lastDailyQuestDate;
   String? taverneRewardDate;
   int taverneRewardCount;
@@ -154,9 +151,6 @@ class UserProfile {
     List<String>? restoredMonuments,
     Map<String, int>? srsScores,
     Map<String, SrsCardProgress>? srsCards,
-    this.email = '',
-    this.tesseraCode = 'SPQR-7A2B-9C1D',
-    this.lastSyncDate,
     this.lastDailyQuestDate,
     this.taverneRewardDate,
     this.taverneRewardCount = 0,
@@ -201,8 +195,6 @@ class UserProfile {
     final current = getCardProgress(cardId);
     srsCards[cardId] = success ? current.onSuccess() : current.onFailure();
   }
-
-  bool get isRegistered => email.isNotEmpty;
 
   String getEquippedGoodie(String categoryKey) {
     return equippedGoodies[categoryKey] ??
@@ -361,7 +353,8 @@ class UserProfile {
   }
 
   factory UserProfile.fromJson(Map<String, dynamic> json) {
-    var rawCompte = json['compte'] as Map<String, dynamic>? ?? {};
+    // Une ancienne sauvegarde peut contenir un bloc 'compte' (faux compte cloud
+    // retiré) : on ne le lit plus, il est simplement ignoré.
     var rawCompleted = json['completed'] as List<dynamic>? ?? [];
     var rawMonuments = json['forum_monuments'] as List<dynamic>? ?? [];
     var rawEpigraphs = json['decoded_epigraphs'] as List<dynamic>? ?? [];
@@ -408,9 +401,6 @@ class UserProfile {
       },
       restoredMonuments: rawMonuments.map((e) => e.toString()).toList(),
       srsCards: parsedSrs,
-      email: rawCompte['email'] as String? ?? '',
-      tesseraCode: rawCompte['tessera'] as String? ?? 'SPQR-1001-A2B3',
-      lastSyncDate: rawCompte['derniere_sync'] as String?,
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
       taverneRewardDate: json['taverne_reward_date'] as String?,
       taverneRewardCount: json['taverne_reward_count'] as int? ?? 0,
@@ -454,11 +444,6 @@ class UserProfile {
       'dark_mode': isDarkMode,
       'equipped_goodies': equippedGoodies,
       'owned_goodies': ownedGoodies,
-      'compte': {
-        'email': email,
-        'tessera': tesseraCode,
-        'derniere_sync': lastSyncDate,
-      },
     };
   }
 }

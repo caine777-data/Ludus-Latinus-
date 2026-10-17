@@ -92,10 +92,6 @@ class AppLocalizationsFr extends AppLocalizations {
       '« Repetitio est mater studiorum » • La répétition est la mère des études';
 
   @override
-  String get accountSyncDone =>
-      '⚡ Parchemins synchronisés avec les archives du Tabularium !';
-
-  @override
   String accountProfileUpdated(String name) {
     return 'Profil mis à jour : Salve, $name !';
   }
@@ -198,52 +194,44 @@ class AppLocalizationsFr extends AppLocalizations {
       'Restaurer au moins un monument du Forum.';
 
   @override
-  String get accountTesseraTitle => 'Tessera Hospitalis (Jeton d’Hospitalité)';
+  String get accountBackupTitle => 'Sauvegarde de ta progression';
 
   @override
-  String get accountTesseraDescription =>
-      'Ce jeton secret permet de transférer immédiatement tous tes progrès vers un smartphone, une tablette ou ton ordinateur en classe.';
+  String get accountBackupDescription =>
+      'Ta progression est enregistrée sur cet appareil. Pour la retrouver sur un autre appareil, exporte-la dans un fichier, puis importe ce fichier sur le nouvel appareil.';
 
   @override
-  String get accountTesseraCopy => 'Copier la Tessera';
+  String get accountBackupExport => 'Exporter dans un fichier';
 
   @override
-  String get accountTesseraCopied =>
-      'Tessera Hospitalis copiée dans le presse-papier !';
+  String get accountBackupImport => 'Importer un fichier';
 
   @override
-  String get accountCloudTitle => 'Sauvegarde & Compte Cloud';
+  String get accountBackupExported => 'Progression exportée.';
 
   @override
-  String get accountCloudDescription =>
-      'Associe ton adresse courriel pour sauvegarder ta progression sur les serveurs du Tabularium.';
+  String get accountBackupImportConfirmTitle => 'Remplacer ta progression ?';
 
   @override
-  String get accountEmailLabel => 'Adresse courriel (email)';
+  String get accountBackupImportConfirmBody =>
+      'La progression de ce fichier remplacera celle de cet appareil. Cette action ne peut pas être annulée.';
 
   @override
-  String get accountEmailHint => 'eleve@latin.ac-paris.fr';
+  String get accountBackupCancel => 'Annuler';
 
   @override
-  String get accountSyncing => 'Synchronisation...';
+  String get accountBackupImportConfirm => 'Remplacer';
 
   @override
-  String get accountSaveAndSync => 'Enregistrer & Synchroniser';
+  String get accountBackupImported => 'Progression importée.';
 
   @override
-  String get accountEmailInvalid =>
-      'Veuillez saisir une adresse courriel valide.';
+  String get accountBackupExportFailed =>
+      'Impossible d\'enregistrer le fichier. Choisis un autre dossier.';
 
   @override
-  String accountLastSync(String date) {
-    return 'Dernière synchronisation : $date';
-  }
-
-  @override
-  String get accountSyncDateSeparator => ' à ';
-
-  @override
-  String get accountSyncNever => 'Jamais';
+  String get accountBackupInvalid =>
+      'Ce fichier n\'est pas une sauvegarde de Ludus Latinus.';
 
   @override
   String get accountTrophyUnlocked =>
