@@ -330,6 +330,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Fiche Store, brouillon** (17/10/2026). Textes (nom, description courte et
+  complète) dans `docs/publication/fiche_store.md`, à valider par Cédric.
+  8 captures téléphone dans `ludus_latinus_mobile/store/captures/` (1200 ×
+  2400 : Google refuse au-delà de 2:1, bords prolongés), prises à l'émulateur
+  en mode démo sur une sauvegarde de démonstration importée (59 leçons,
+  série 12 j). Image de présentation 1024 × 500 (`store/presentation_1024x500.png`,
+  script `scripts/assets/presentation_store.py`, illustration m21-03). Le
+  bandeau illustré des leçons est vérifié à l'émulateur (m13-03).
+
 - **Bataille de cartes en priorité 2** (17/10/2026, retenue par Cédric). Jeu
   Ludi avec les cartes du second album (ATK/DEF de `content/cartes_data.py`),
   une question de latin par manche décide qui choisit la caractéristique.
