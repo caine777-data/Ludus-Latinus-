@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Politique de confidentialité en ligne** (17/10/2026, feu vert de Cédric) :
+  https://icare-et-dedale.netlify.app/ludus-latinus/confidentialite/ . Site Netlify `icare-et-dedale` (équipe de Cédric), source
+  `docs/publication/netlify/`. Republier : depuis ce dossier,
+  `npx netlify-cli deploy --prod --dir . --site 0c26af25-2ec7-46dd-acfd-524c2e8e8809`.
+  La racine du site n'a pas encore de page (404).
+
 - **Contact et second album** (17/10/2026). Adresse de contact des applis :
   `icareetdedale.studio@gmail.com` (politique de confidentialité et sa page).
   Priorité 2 : second album « Héros et Créatures » (32 cartes de

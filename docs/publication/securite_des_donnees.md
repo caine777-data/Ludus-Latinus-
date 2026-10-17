@@ -7,7 +7,7 @@ Document interne, à recopier dans la Play Console (Règles et programmes > Cont
 | Votre application collecte-t-elle ou partage-t-elle des types de données utilisateur obligatoires ? | **Non** | Aucune donnée ne quitte l'appareil : pas de permission INTERNET dans le build de publication. |
 | Les données sont-elles chiffrées en transit ? | sans objet | Aucune transmission. |
 | Les utilisateurs peuvent-ils demander la suppression de leurs données ? | sans objet | Rien n'est collecté ; désinstaller l'appli efface tout. |
-| URL de la politique de confidentialité | à fournir | Texte prêt : `politique_confidentialite.md`, à héberger. |
+| URL de la politique de confidentialité | https://icare-et-dedale.netlify.app/ludus-latinus/confidentialite/ | Site Netlify `icare-et-dedale`, source `netlify/`. |
 
 ## À revoir si
 
