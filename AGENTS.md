@@ -336,6 +336,11 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   et `sword_clash` sont à réécouter. Prompts ElevenLabs dans
   `docs/propositions/bruitages_elevenlabs.md`. Cédric génère les sons, puis
   l'architecte les remplace un par un, sans conversion ni recompression.
+  Première livraison : `lecon_validee`, `carte_obtenue`, `dice_roll` et
+  `triumph_fanfare` passent en MP3 (WAV retirés, chemins dans
+  `audio_service.dart`). `achat`, `indice`, `sesterces_clink` (encore
+  stridents) et `sword_clash` (presque inaudible) sont à regénérer avec les
+  prompts du second essai.
 
 - **Nouvelle icône de l'appli** (11/10/2026). Casque de centurion doré
   entre deux lauriers, sur rouge pompéien, sans texte (l'ancienne affichait

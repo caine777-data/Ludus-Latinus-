@@ -71,6 +71,46 @@ Short iron sword hitting a wooden shield reinforced with bronze, solid thud with
 
 Short ancient Roman brass horn fanfare, two bold rising notes, warm and round, triumphant but not blaring
 
+## Livraison du 17/10/2026
+
+Intégrés tels quels (MP3 copiés sans conversion, anciens WAV retirés) :
+
+| Fichier | Aigus > 4 kHz avant | après |
+|---|---|---|
+| `lecon_validee.mp3` | 99 % | 0 % |
+| `carte_obtenue.mp3` | 70 % | 9 % |
+| `dice_roll.mp3` | 70 % | 61 %, mais nettement moins de très aigus (55 % > 8 kHz avant, 16 % après) |
+| `triumph_fanfare.mp3` | 0 % | 0 %, volume identique |
+
+À refaire :
+
+| Fichier | Mesure | Problème |
+|---|---|---|
+| `achat.mp3` | 92 % d'aigus | encore strident : la clochette domine |
+| `indice.mp3` | 95 % d'aigus, crête à -11 dB | strident et faible, 0,14 s de silence au début |
+| `sesterces_clink.mp3` | 99,8 % d'aigus | plus strident que l'ancien (50 %) |
+| `sword_clash.mp3` | crête à -26 dB | presque inaudible ; le code ne peut pas monter le volume au-dessus de l'original |
+
+### Prompts, second essai
+
+Ces prompts excluent explicitement les cloches et les brillances, qui produisaient les aigus.
+
+**achat (1,2 s)**
+
+Handful of bronze coins poured onto a thick wooden counter, dull warm clinks, muffled, low and mid frequencies, no bell, no shimmer, no sparkle
+
+**indice (0,8 s)**
+
+Single soft wooden knock followed by a low breathy whoosh, muffled, low frequencies only, starts immediately, no chime, no bell, no sparkle, no hiss
+
+**sesterces_clink (0,5 s)**
+
+Two heavy bronze coins tapping together inside a closed hand, dull muffled clink, low-mid tone, very short, no ringing, no sparkle
+
+**sword_clash (0,6 s)**
+
+Loud close-up impact of an iron sword striking a wooden shield, heavy thud and a short metallic clang, punchy and loud, starts immediately
+
 ## Après dépôt
 
 Je remplace les fichiers un par un, sans les recompresser, et j'ajuste le volume dans le code si un son ressort trop par rapport aux autres.

@@ -389,14 +389,14 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> playDiceRoll() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.mediumImpact();
-    await playAsset('assets/audio/dice_roll.wav');
+    await playAsset('assets/audio/dice_roll.mp3');
   }
 
   /// Fanfare de triomphe impérial (buccina & tuba)
   Future<void> playTriumph() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.heavyImpact();
-    await playAsset('assets/audio/triumph_fanfare.wav');
+    await playAsset('assets/audio/triumph_fanfare.mp3');
   }
 
   /// Clameur de la foule au Colisée ou au Circus Maximus
@@ -450,7 +450,7 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   /// Leçon validée pour la première fois.
   Future<void> playLessonDone() async {
     if (_isMuted) return;
-    await playAsset('assets/audio/lecon_validee.wav');
+    await playAsset('assets/audio/lecon_validee.mp3');
   }
 
   /// Étoile obtenue.
@@ -476,7 +476,7 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> playCardObtained() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.mediumImpact();
-    await playAsset('assets/audio/carte_obtenue.wav');
+    await playAsset('assets/audio/carte_obtenue.mp3');
   }
 
   /// Dernière leçon d'un monde réussie : fanfare plus solennelle que celle d'une leçon.
