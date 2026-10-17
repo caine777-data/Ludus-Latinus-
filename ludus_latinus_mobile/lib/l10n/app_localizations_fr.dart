@@ -1637,4 +1637,92 @@ class AppLocalizationsFr extends AppLocalizations {
   String albumReward(int sesterces) {
     return '+ $sesterces sesterces';
   }
+
+  @override
+  String get reminderTitle => 'Ludus Latinus';
+
+  @override
+  String get reminderChannel => 'Rappel quotidien';
+
+  @override
+  String get reminderChannelDescription =>
+      'Un rappel par jour pour ta leçon de latin.';
+
+  @override
+  String get goalTitle => 'Objectif du jour';
+
+  @override
+  String get goalDone => 'Objectif atteint, bravo !';
+
+  @override
+  String get goalHint =>
+      'Une activité = une leçon réussie ou 10 cartes Memoria.';
+
+  @override
+  String get goalChoose => 'Combien d\'activités par jour ?';
+
+  @override
+  String get reminderOfferTitle => 'Un rappel chaque jour ?';
+
+  @override
+  String get reminderOfferBody =>
+      'Veux-tu que je te rappelle ta leçon chaque jour ? Je t\'enverrai un seul message, à 17 h 30. Tu pourras changer l\'heure ou l\'arrêter dans les Réglages.';
+
+  @override
+  String get reminderOfferYes => 'Oui, rappelle-moi';
+
+  @override
+  String get reminderOfferNo => 'Plus tard';
+
+  @override
+  String get settingsReminderSection => 'Rappel et objectif';
+
+  @override
+  String get settingsReminder => 'Rappel quotidien';
+
+  @override
+  String get settingsReminderOff => 'Désactivé';
+
+  @override
+  String get settingsReminderDenied =>
+      'Android n\'autorise pas les notifications pour Ludus Latinus. Active-les dans les réglages du téléphone.';
+
+  @override
+  String get settingsGoal => 'Objectif du jour';
+
+  @override
+  String reminderStreak(int serie, String nom) {
+    return 'Ta série de $serie jours t\'attend, $nom !';
+  }
+
+  @override
+  String reminderGeneric(String nom) {
+    return 'Lupulus t\'attend pour une leçon de cinq minutes, $nom.';
+  }
+
+  @override
+  String goalProgress(int faites, int objectif) {
+    return '$faites / $objectif';
+  }
+
+  @override
+  String goalReward(int sesterces) {
+    return 'Objectif du jour atteint : + $sesterces sesterces';
+  }
+
+  @override
+  String settingsReminderAt(String heure) {
+    return 'Chaque jour à $heure';
+  }
+
+  @override
+  String settingsGoalValue(int nombre) {
+    String _temp0 = intl.Intl.pluralLogic(
+      nombre,
+      locale: localeName,
+      other: '$nombre activités par jour',
+      one: '1 activité par jour',
+    );
+    return '$_temp0';
+  }
 }

@@ -330,6 +330,22 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Objectif du jour et rappel quotidien** (17/10/2026, validés par Cédric).
+  Objectif : 1 à 3 activités (une leçon réussie ou 10 cartes Memoria), barre
+  sous la carte du héros, 5 sesterces une fois par jour, choix dans la carte
+  ou les Réglages. Rappel : `flutter_local_notifications` 22.3.2 + `timezone`,
+  Android seulement, désactivé par défaut, proposé une fois par Lupulus après
+  la première leçon (boîte non refermable par un toucher à côté), 17 h 30 par
+  défaut. `RappelService` programme les 7 prochains jours à chaque
+  changement : texte « Ta série de N jours t'attend, <prénom du héros> ! » le
+  jour où la série est en jeu, rappel simple ensuite ; rien le soir si
+  l'objectif est atteint. Android : désucrage (`desugar_jdk_libs` 2.1.4),
+  récepteurs et `RECEIVE_BOOT_COMPLETED` dans le manifeste, icône
+  `drawable/ic_stat_ludus.xml`. Vu à l'émulateur (Android 16) : autorisation
+  demandée, 6 rappels programmés, notification reçue avec l'icône et le
+  prénom. Aucune donnée ne sort de l'appareil : politique de confidentialité
+  inchangée.
+
 - **Album « Héros et Créatures » et succès** (17/10/2026, catalogue validé par
   Cédric). Données : `content/album_mobile.py` (32 cartes, dont 11 remplacées
   pour ne pas doubler le Panthéon, et leurs 32 succès), exportées dans le bloc

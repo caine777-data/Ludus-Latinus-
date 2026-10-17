@@ -9,6 +9,7 @@ import '../../core/markdown_lite.dart';
 import '../../core/cinematic_player.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
+import '../../../data/services/rappel_service.dart';
 import '../map/map_screen.dart';
 import '../memoria/memoria_screen.dart';
 import '../forum/forum_screen.dart';
@@ -30,6 +31,7 @@ import '../settings/hero_creation_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
+import 'views/objectif_du_jour.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
 class HomeScreen extends StatefulWidget {
@@ -56,8 +58,26 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _annonceEnCours = false;
 
   void _verifierAnnonceAlbum() {
-    if (_annonceEnCours || !mounted || widget.repo.cartesAAnnoncer.isEmpty) return;
+    if (_annonceEnCours || !mounted) return;
     if (ModalRoute.of(context)?.isCurrent != true) return;
+    // Objectif du jour atteint : une fête discrète, une seule fois.
+    if (widget.repo.objectifAAnnoncer) {
+      widget.repo.objectifAAnnoncer = false;
+      AudioService().playStar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: const Color(0xFF3B6D11),
+        content: Text(context.l10n.goalReward(GameRepository.gainObjectif)),
+      ));
+    }
+    // Après la toute première leçon, Lupulus propose le rappel quotidien (une fois).
+    final p = widget.repo.profile;
+    if (widget.repo.cartesAAnnoncer.isEmpty && !p.rappelPropose && p.completedLessons.isNotEmpty &&
+        widget.repo.rappels != null && RappelService.disponible) {
+      _annonceEnCours = true;
+      proposerRappel(context, widget.repo).whenComplete(() => _annonceEnCours = false);
+      return;
+    }
+    if (widget.repo.cartesAAnnoncer.isEmpty) return;
     final cartes = List.of(widget.repo.cartesAAnnoncer);
     widget.repo.cartesAAnnoncer.clear();
     _annonceEnCours = true;
@@ -355,6 +375,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
+
+              const SizedBox(height: 10),
+
+              // 1 bis. Objectif du jour : activités faites sur l'objectif choisi.
+              CarteObjectifDuJour(repo: widget.repo),
 
               const SizedBox(height: 14),
 

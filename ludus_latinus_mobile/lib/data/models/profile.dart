@@ -145,6 +145,21 @@ class UserProfile {
   /// Cartes de l'album « Héros et Créatures » obtenues, dans l'ordre d'obtention.
   List<String> cartesAlbum;
 
+  /// Rappel quotidien : désactivé par défaut, proposé après la première leçon.
+  bool rappelActif;
+  bool rappelPropose;
+  /// Heure du rappel, en minutes depuis minuit (17 h 30 par défaut).
+  int rappelMinutes;
+
+  /// Objectif du jour : 1 à 3 activités (une leçon réussie, ou 10 cartes Memoria).
+  int objectifJour;
+  /// Jour des compteurs ci-dessous (« AAAA-MM-JJ ») : ils repartent de zéro chaque jour.
+  String? activiteDate;
+  int leconsDuJour;
+  int revisionsDuJour;
+  /// Jour où l'objectif a été atteint et payé (5 sesterces, une fois par jour).
+  String? objectifRecompenseDate;
+
   UserProfile({
     this.id = 'defaut',
     this.nomHeros = 'Marcus',
@@ -175,6 +190,14 @@ class UserProfile {
     Map<String, int>? compteurs,
     List<String>? gladiateursVaincus,
     List<String>? cartesAlbum,
+    this.rappelActif = false,
+    this.rappelPropose = false,
+    this.rappelMinutes = 17 * 60 + 30,
+    this.objectifJour = 1,
+    this.activiteDate,
+    this.leconsDuJour = 0,
+    this.revisionsDuJour = 0,
+    this.objectifRecompenseDate,
   })  : compteurs = compteurs ?? {},
         gladiateursVaincus = gladiateursVaincus ?? [],
         cartesAlbum = cartesAlbum ?? [],
@@ -234,6 +257,45 @@ class UserProfile {
       '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
   static String get _todayStr => _dateStr(DateTime.now());
+
+  /// Remet les compteurs du jour à zéro quand la date a changé.
+  void _jourCourant([DateTime? now]) {
+    final jour = _dateStr(now ?? DateTime.now());
+    if (activiteDate == jour) return;
+    activiteDate = jour;
+    leconsDuJour = 0;
+    revisionsDuJour = 0;
+  }
+
+  /// Activités du jour : une par leçon réussie, une par tranche de 10 cartes Memoria.
+  int activitesDuJour([DateTime? now]) {
+    final jour = _dateStr(now ?? DateTime.now());
+    if (activiteDate != jour) return 0;
+    return leconsDuJour + revisionsDuJour ~/ 10;
+  }
+
+  /// Leçon ou révision faite aujourd'hui (la série est déjà prolongée).
+  bool aJoueAujourdhui([DateTime? now]) => lastActivityDate == _dateStr(now ?? DateTime.now());
+
+  bool objectifAtteintAujourdhui([DateTime? now]) => objectifRecompenseDate == _dateStr(now ?? DateTime.now());
+
+  void noterLeconDuJour([DateTime? now]) {
+    _jourCourant(now);
+    leconsDuJour++;
+  }
+
+  void noterRevisionDuJour([DateTime? now]) {
+    _jourCourant(now);
+    revisionsDuJour++;
+  }
+
+  /// Vrai, une fois par jour, au moment où l'objectif vient d'être atteint.
+  bool validerObjectif([DateTime? now]) {
+    if (objectifAtteintAujourdhui(now)) return false;
+    if (activitesDuJour(now) < objectifJour) return false;
+    objectifRecompenseDate = _dateStr(now ?? DateTime.now());
+    return true;
+  }
 
   /// Série de jours consécutifs d'apprentissage. Elle retombe à 0 si l'élève
   /// n'a rien fait ni aujourd'hui ni hier.
@@ -432,6 +494,14 @@ class UserProfile {
       compteurs: (json['compteurs'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
       gladiateursVaincus: (json['gladiateurs_vaincus'] as List?)?.map((e) => e.toString()).toList(),
       cartesAlbum: (json['cartes_album'] as List?)?.map((e) => e.toString()).toList(),
+      rappelActif: json['rappel_actif'] as bool? ?? false,
+      rappelPropose: json['rappel_propose'] as bool? ?? false,
+      rappelMinutes: json['rappel_minutes'] as int? ?? 17 * 60 + 30,
+      objectifJour: (json['objectif_jour'] as int? ?? 1).clamp(1, 3),
+      activiteDate: json['activite_date'] as String?,
+      leconsDuJour: json['lecons_du_jour'] as int? ?? 0,
+      revisionsDuJour: json['revisions_du_jour'] as int? ?? 0,
+      objectifRecompenseDate: json['objectif_recompense_date'] as String?,
     );
   }
 
@@ -465,6 +535,14 @@ class UserProfile {
       'compteurs': compteurs,
       'gladiateurs_vaincus': gladiateursVaincus,
       'cartes_album': cartesAlbum,
+      'rappel_actif': rappelActif,
+      'rappel_propose': rappelPropose,
+      'rappel_minutes': rappelMinutes,
+      'objectif_jour': objectifJour,
+      'activite_date': activiteDate,
+      'lecons_du_jour': leconsDuJour,
+      'revisions_du_jour': revisionsDuJour,
+      'objectif_recompense_date': objectifRecompenseDate,
     };
   }
 }

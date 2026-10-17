@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/repositories/game_repository.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
+import 'data/services/rappel_service.dart';
 import 'data/services/audio_service.dart';
 import 'l10n/l10n.dart';
 import 'ui/core/themes.dart';
@@ -17,6 +18,7 @@ void main() async {
   final repository = GameRepository(
     dataService: dataService,
     storageService: storageService,
+    rappels: RappelService(),
   );
 
   runApp(LudusLatinusApp(repository: repository));

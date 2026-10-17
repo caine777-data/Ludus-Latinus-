@@ -31,6 +31,9 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
+        // Exigé par flutter_local_notifications (rappel quotidien) pour planifier
+        // les notifications sur les anciennes versions d'Android.
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
@@ -81,4 +84,6 @@ flutter {
     source "../.."
 }
 
-dependencies {}
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
+}

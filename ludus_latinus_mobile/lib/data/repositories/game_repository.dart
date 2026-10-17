@@ -9,6 +9,7 @@ import '../models/srs_card.dart';
 import '../models/thesaurus_entry.dart';
 import '../models/world.dart';
 import '../services/data_service.dart';
+import '../services/rappel_service.dart';
 import '../services/storage_service.dart';
 
 /// Résultat de la validation d'une leçon, pour doser la célébration.
@@ -41,10 +42,72 @@ class GameRepository extends ChangeNotifier {
   final DataService dataService;
   final StorageService storageService;
 
+  /// Rappels quotidiens (Android). Absent dans les tests.
+  final RappelService? rappels;
+
   GameRepository({
     required this.dataService,
     required this.storageService,
+    this.rappels,
   });
+
+  // ------------------------------------------------------------------
+  // Objectif du jour et rappel quotidien
+  // ------------------------------------------------------------------
+
+  /// Récompense de l'objectif du jour atteint.
+  static const int gainObjectif = 5;
+
+  /// Vrai quand l'objectif vient d'être atteint : l'accueil le fête une fois.
+  bool objectifAAnnoncer = false;
+
+  int get activitesDuJour => profile.activitesDuJour();
+  bool get objectifAtteint => profile.objectifAtteintAujourdhui();
+
+  /// Après une leçon ou une révision : objectif payé une fois par jour, et
+  /// rappels reprogrammés (celui d'aujourd'hui saute si l'objectif est atteint).
+  void _apresActivite() {
+    if (profile.validerObjectif()) {
+      profile.sesterces += gainObjectif;
+      objectifAAnnoncer = true;
+    }
+    replanifierRappels();
+  }
+
+  void changerObjectif(int activites) {
+    profile.objectifJour = activites.clamp(1, 3);
+    // Un objectif abaissé peut déjà être atteint aujourd'hui.
+    _apresActivite();
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  void reglerRappel({bool? actif, int? minutes}) {
+    if (actif != null) profile.rappelActif = actif;
+    if (minutes != null) profile.rappelMinutes = minutes;
+    profile.rappelPropose = true;
+    storageService.saveProfile(profile);
+    replanifierRappels();
+    notifyListeners();
+  }
+
+  /// La proposition du rappel, après la première leçon, n'est faite qu'une fois.
+  void marquerRappelPropose() {
+    profile.rappelPropose = true;
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  Future<void> replanifierRappels() async {
+    await rappels?.planifier(
+      actif: profile.rappelActif,
+      minutes: profile.rappelMinutes,
+      nom: profile.nomHeros,
+      serie: profile.currentStreak(),
+      joueAujourdhui: profile.aJoueAujourdhui(),
+      faitAujourdhui: profile.objectifAtteintAujourdhui(),
+    );
+  }
 
   bool get isReady => dataService.isLoaded;
 
@@ -254,6 +317,8 @@ class GameRepository extends ChangeNotifier {
   Future<void> initialize() async {
     await dataService.loadDataset();
     await storageService.init();
+    // Les rappels se recalent à chaque ouverture (série, prénom, heure).
+    replanifierRappels();
     notifyListeners();
   }
 
@@ -282,6 +347,8 @@ class GameRepository extends ChangeNotifier {
       profile.lessonStars[lessonId] = stars;
     }
     profile.recordActivity();
+    profile.noterLeconDuJour();
+    _apresActivite();
     storageService.saveProfile(profile);
 
     World? world;
@@ -332,6 +399,8 @@ class GameRepository extends ChangeNotifier {
   void recordSrsReview(String cardId, {required bool success}) {
     profile.updateCardSrs(cardId, success: success);
     profile.recordActivity();
+    profile.noterRevisionDuJour();
+    _apresActivite();
     storageService.saveProfile(profile);
     notifyListeners();
   }

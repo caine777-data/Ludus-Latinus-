@@ -2832,6 +2832,138 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'+ {sesterces} sesterces'**
   String albumReward(int sesterces);
+
+  /// No description provided for @reminderTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ludus Latinus'**
+  String get reminderTitle;
+
+  /// No description provided for @reminderChannel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel quotidien'**
+  String get reminderChannel;
+
+  /// No description provided for @reminderChannelDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un rappel par jour pour ta leçon de latin.'**
+  String get reminderChannelDescription;
+
+  /// No description provided for @goalTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif du jour'**
+  String get goalTitle;
+
+  /// No description provided for @goalDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif atteint, bravo !'**
+  String get goalDone;
+
+  /// No description provided for @goalHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une activité = une leçon réussie ou 10 cartes Memoria.'**
+  String get goalHint;
+
+  /// No description provided for @goalChoose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Combien d\'activités par jour ?'**
+  String get goalChoose;
+
+  /// No description provided for @reminderOfferTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un rappel chaque jour ?'**
+  String get reminderOfferTitle;
+
+  /// No description provided for @reminderOfferBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veux-tu que je te rappelle ta leçon chaque jour ? Je t\'enverrai un seul message, à 17 h 30. Tu pourras changer l\'heure ou l\'arrêter dans les Réglages.'**
+  String get reminderOfferBody;
+
+  /// No description provided for @reminderOfferYes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Oui, rappelle-moi'**
+  String get reminderOfferYes;
+
+  /// No description provided for @reminderOfferNo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get reminderOfferNo;
+
+  /// No description provided for @settingsReminderSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel et objectif'**
+  String get settingsReminderSection;
+
+  /// No description provided for @settingsReminder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel quotidien'**
+  String get settingsReminder;
+
+  /// No description provided for @settingsReminderOff.
+  ///
+  /// In fr, this message translates to:
+  /// **'Désactivé'**
+  String get settingsReminderOff;
+
+  /// No description provided for @settingsReminderDenied.
+  ///
+  /// In fr, this message translates to:
+  /// **'Android n\'autorise pas les notifications pour Ludus Latinus. Active-les dans les réglages du téléphone.'**
+  String get settingsReminderDenied;
+
+  /// No description provided for @settingsGoal.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif du jour'**
+  String get settingsGoal;
+
+  /// No description provided for @reminderStreak.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta série de {serie} jours t\'attend, {nom} !'**
+  String reminderStreak(int serie, String nom);
+
+  /// No description provided for @reminderGeneric.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lupulus t\'attend pour une leçon de cinq minutes, {nom}.'**
+  String reminderGeneric(String nom);
+
+  /// No description provided for @goalProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'{faites} / {objectif}'**
+  String goalProgress(int faites, int objectif);
+
+  /// No description provided for @goalReward.
+  ///
+  /// In fr, this message translates to:
+  /// **'Objectif du jour atteint : + {sesterces} sesterces'**
+  String goalReward(int sesterces);
+
+  /// No description provided for @settingsReminderAt.
+  ///
+  /// In fr, this message translates to:
+  /// **'Chaque jour à {heure}'**
+  String settingsReminderAt(String heure);
+
+  /// No description provided for @settingsGoalValue.
+  ///
+  /// In fr, this message translates to:
+  /// **'{nombre, plural, =1{1 activité par jour} other{{nombre} activités par jour}}'**
+  String settingsGoalValue(int nombre);
 }
 
 class _AppLocalizationsDelegate

@@ -1250,5 +1250,75 @@
         "type": "int"
       }
     }
+  },
+  "reminderTitle": "Ludus Latinus",
+  "reminderChannel": "Rappel quotidien",
+  "reminderChannelDescription": "Un rappel par jour pour ta leçon de latin.",
+  "goalTitle": "Objectif du jour",
+  "goalDone": "Objectif atteint, bravo !",
+  "goalHint": "Une activité = une leçon réussie ou 10 cartes Memoria.",
+  "goalChoose": "Combien d'activités par jour ?",
+  "reminderOfferTitle": "Un rappel chaque jour ?",
+  "reminderOfferBody": "Veux-tu que je te rappelle ta leçon chaque jour ? Je t'enverrai un seul message, à 17 h 30. Tu pourras changer l'heure ou l'arrêter dans les Réglages.",
+  "reminderOfferYes": "Oui, rappelle-moi",
+  "reminderOfferNo": "Plus tard",
+  "settingsReminderSection": "Rappel et objectif",
+  "settingsReminder": "Rappel quotidien",
+  "settingsReminderOff": "Désactivé",
+  "settingsReminderDenied": "Android n'autorise pas les notifications pour Ludus Latinus. Active-les dans les réglages du téléphone.",
+  "settingsGoal": "Objectif du jour",
+  "reminderStreak": "Ta série de {serie} jours t'attend, {nom} !",
+  "@reminderStreak": {
+    "placeholders": {
+      "serie": {
+        "type": "int"
+      },
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderGeneric": "Lupulus t'attend pour une leçon de cinq minutes, {nom}.",
+  "@reminderGeneric": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "goalProgress": "{faites} / {objectif}",
+  "@goalProgress": {
+    "placeholders": {
+      "faites": {
+        "type": "int"
+      },
+      "objectif": {
+        "type": "int"
+      }
+    }
+  },
+  "goalReward": "Objectif du jour atteint : + {sesterces} sesterces",
+  "@goalReward": {
+    "placeholders": {
+      "sesterces": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsReminderAt": "Chaque jour à {heure}",
+  "@settingsReminderAt": {
+    "placeholders": {
+      "heure": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsGoalValue": "{nombre, plural, =1{1 activité par jour} other{{nombre} activités par jour}}",
+  "@settingsGoalValue": {
+    "placeholders": {
+      "nombre": {
+        "type": "int"
+      }
+    }
   }
 }

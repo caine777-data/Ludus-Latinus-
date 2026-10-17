@@ -7,6 +7,7 @@ import 'about_screen.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import 'hero_form.dart';
+import '../home/views/objectif_du_jour.dart';
 import '../../../l10n/l10n.dart';
 
 /// Paramètres : tous les réglages au même endroit (héros, son, intro).
@@ -45,6 +46,9 @@ class SettingsScreen extends StatelessWidget {
                   repo.updateProfileName(prenom.isEmpty ? profile.nomHeros : prenom, genre),
             ),
           ),
+          const SizedBox(height: 22),
+          _Titre(context.l10n.settingsReminderSection),
+          ReglagesRappelEtObjectif(repo: repo),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsSectionSound),
           _Reglage(
