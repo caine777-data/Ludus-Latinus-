@@ -44,6 +44,7 @@ flutter:
     - assets/images/cas/
     - assets/images/epigraphie/
     - assets/images/studio/
+    - assets/images/lecons/
     - assets/audio/
     - assets/animations/
     - assets/images/animated/

@@ -330,6 +330,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Illustrations de leçon, 1er lot** (17/10/2026). 17 images 16:9
+  (1376 × 768) de m11-01 à m16-03, copiées sans recompression dans
+  `assets/images/lecons/lecon_mXX-YY.jpg`. Liste des leçons illustrées dans
+  `lib/ui/features/lesson/illustrations_lecons.dart`, à allonger à chaque
+  livraison (le test `illustrations_lecons_test.dart` exige qu'elle colle aux
+  fichiers). Ces images remplissent le bandeau (`BoxFit.cover`), les pièces
+  du musée restent entières. Manque m14-03. La 5e (39 leçons) n'a pas
+  d'image propre : 9 seulement ont un repli musée.
+
 - **Audit des bruitages** (17/10/2026). Mesure des 17 WAV (part d'aigus
   au-dessus de 4 kHz) : `lecon_validee`, `indice`, `achat` et
   `carte_obtenue` sont stridents (70 à 99 %), `dice_roll`, `sesterces_clink`

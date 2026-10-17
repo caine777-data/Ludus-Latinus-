@@ -17,6 +17,7 @@ import 'widgets/case_decoder_widget.dart';
 import 'widgets/arena_challenge_widget.dart';
 import 'widgets/vocab_question_widget.dart';
 import 'widgets/grammar_question_widget.dart';
+import 'illustrations_lecons.dart';
 import '../../../data/models/vocab_question.dart';
 import '../../../l10n/l10n.dart';
 
@@ -454,6 +455,9 @@ class _LessonScreenState extends State<LessonScreen> {
   /// Illustration liée au thème de la leçon, ou null : mieux vaut aucune
   /// image qu'une coupe « CHAMPION » sans rapport avec le sujet.
   String? _getLessonIllustration() {
+    // Image propre à la leçon (4e et 3e) en priorité, sinon repli sur le thème.
+    final propre = illustrationDeLecon(widget.lesson.id);
+    if (propre != null) return propre;
     final title = widget.lesson.title.toLowerCase();
     if (title.contains('gladiat') || title.contains('arène')) {
       return 'assets/images/musee_gladiateur.jpg';
@@ -684,7 +688,10 @@ class _LessonScreenState extends State<LessonScreen> {
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
                   illustration,
-                  fit: BoxFit.contain,
+                  // Les images de leçon sont des scènes 16:9 composées pour un
+                  // bandeau : on remplit. Les pièces du musée restent entières.
+                  fit: illustration.startsWith('assets/images/lecons/') ? BoxFit.cover : BoxFit.contain,
+                  width: double.infinity,
                   errorBuilder: (_, __, ___) => const Center(
                     child: Text('🏛️', style: TextStyle(fontSize: 48)),
                   ),
