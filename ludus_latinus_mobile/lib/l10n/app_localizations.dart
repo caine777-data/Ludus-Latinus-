@@ -2593,6 +2593,12 @@ abstract class AppLocalizations {
   /// **'Conjugaisons'**
   String get thesaurusTabConjugations;
 
+  /// No description provided for @thesaurusTabGlossary.
+  ///
+  /// In fr, this message translates to:
+  /// **'Glossaire'**
+  String get thesaurusTabGlossary;
+
   /// No description provided for @thesaurusSearchHint.
   ///
   /// In fr, this message translates to:

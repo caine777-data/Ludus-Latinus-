@@ -11,6 +11,8 @@ class DataService {
   List<SchoolClass> classes = [];
   List<World> worlds = [];
   List<ThesaurusEntry> thesaurus = [];
+  /// Glossaire : paires [terme, définition], affichées dans le Thesaurus.
+  List<List<String>> glossaire = [];
   List<ForumMonument> monuments = [];
   List<SrsCard> srsCards = [];
   List<CartePantheon> cartesPantheon = [];
@@ -43,6 +45,14 @@ class DataService {
       thesaurus = rawDico
           .map((d) => ThesaurusEntry.fromJson(d as Map<String, dynamic>))
           .toList();
+
+      // Glossaire : chaque entrée est une paire [terme, définition] ; on ignore
+      // toute entrée mal formée plutôt que de faire échouer le chargement.
+      var rawGloss = rawData['glossaire'] as List<dynamic>? ?? [];
+      glossaire = [
+        for (final g in rawGloss)
+          if (g is List && g.length >= 2) [g[0].toString(), g[1].toString()],
+      ];
 
       // Parsing des Monuments du Forum
       var rawMonuments = rawData['forum_monuments'] as List<dynamic>? ?? [];

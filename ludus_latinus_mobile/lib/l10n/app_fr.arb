@@ -1139,6 +1139,7 @@
   "thesaurusTabDictionary": "Dictionnaire",
   "thesaurusTabDeclensions": "Déclinaisons",
   "thesaurusTabConjugations": "Conjugaisons",
+  "thesaurusTabGlossary": "Glossaire",
   "thesaurusSearchHint": "Rechercher en latin ou français...",
   "thesaurusTermsFound": "{count} terme(s) trouvé(s)",
   "@thesaurusTermsFound": {

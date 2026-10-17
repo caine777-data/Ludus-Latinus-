@@ -48,7 +48,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -88,10 +88,14 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           indicatorColor: RomanColors.imperialGold,
           labelColor: RomanColors.imperialPurple,
           unselectedLabelColor: Colors.black54,
+          // Quatre onglets : défilants, pour que les libellés restent entiers sur téléphone.
+          isScrollable: true,
+          tabAlignment: TabAlignment.center,
           tabs: [
             Tab(icon: const Icon(Icons.menu_book_outlined, size: 20), text: context.l10n.thesaurusTabDictionary),
             Tab(icon: const Icon(Icons.table_rows_outlined, size: 20), text: context.l10n.thesaurusTabDeclensions),
             Tab(icon: const Icon(Icons.auto_stories_outlined, size: 20), text: context.l10n.thesaurusTabConjugations),
+            Tab(icon: const Icon(Icons.lightbulb_outline_rounded, size: 20), text: context.l10n.thesaurusTabGlossary),
           ],
         ),
       ),
@@ -101,6 +105,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           _buildDictionaryTab(),
           _buildDeclensionsTab(),
           _buildConjugationsTab(),
+          _buildGlossaryTab(),
         ],
       ),
     );
@@ -446,6 +451,42 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
           ],
         ),
       ],
+    );
+  }
+
+  /// Glossaire : les mots de la grammaire et quelques mots clés, par ordre
+  /// alphabétique, chacun avec sa définition.
+  Widget _buildGlossaryTab() {
+    final termes = [...widget.repo.glossaire]
+      ..sort((a, b) => a[0].toLowerCase().compareTo(b[0].toLowerCase()));
+    return ListView.separated(
+      padding: const EdgeInsets.all(16),
+      itemCount: termes.length,
+      separatorBuilder: (_, __) => const SizedBox(height: 10),
+      itemBuilder: (context, i) => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              termes[i][0],
+              style: const TextStyle(
+                color: RomanColors.imperialPurple,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontFamily: 'serif',
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(termes[i][1], style: const TextStyle(fontSize: 14, height: 1.35, color: Colors.black87)),
+          ],
+        ),
+      ),
     );
   }
 

@@ -1504,6 +1504,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get thesaurusTabConjugations => 'Conjugaisons';
 
   @override
+  String get thesaurusTabGlossary => 'Glossaire';
+
+  @override
   String get thesaurusSearchHint => 'Rechercher en latin ou français...';
 
   @override

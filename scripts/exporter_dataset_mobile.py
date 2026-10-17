@@ -26,7 +26,6 @@ from app.thesaurus import (  # noqa: E402
     TABLES_DECLINAISONS,
 )
 from content import CLASSES, CURRICULUM, GLOSSAIRE  # noqa: E402
-from content.cartes_data import CARTES_COLLECTION, CATEGORIES, RARETES  # noqa: E402
 
 
 def _monde_du_mot(entree, curriculum):
@@ -90,7 +89,6 @@ def exporter_dataset(dest_path=None) -> Path:
             "total_classes": len(CLASSES),
             "total_mondes": len(CURRICULUM),
             "total_lecons": total_lecons,
-            "total_cartes_collection": len(CARTES_COLLECTION),
             "total_mots_thesaurus": len(DICTIONNAIRE_LATIN),
             "total_monuments_forum": len(MONUMENTS_FORUM),
             "total_flashcards_srs": len(VOCABULAIRE_SRS),
@@ -114,11 +112,8 @@ def exporter_dataset(dest_path=None) -> Path:
         },
         "forum_monuments": MONUMENTS_FORUM,
         "memoria_srs": VOCABULAIRE_SRS,
-        "cartes_collection": {
-            "cartes": CARTES_COLLECTION,
-            "raretes": RARETES,
-            "categories": CATEGORIES,
-        },
+        # Pas de cartes de collection : l'appli mobile a le Panthéon (26 cartes,
+        # une par monde) ; les 32 cartes de l'appli bureau feraient doublon.
         "glossaire": GLOSSAIRE,
         "succes": CATALOGUE_SUCCES,
     }
@@ -139,7 +134,6 @@ def exporter_dataset(dest_path=None) -> Path:
     print(f"  - Mondes : {len(CURRICULUM)} ({len(CLASSES)} classes)")
     print(f"  - Lecons & Exercices : {total_lecons}")
     print(f"  - Thesaurus latin : {len(DICTIONNAIRE_LATIN)} entrees")
-    print(f"  - Cartes Mythologiques : {len(CARTES_COLLECTION)}")
     print(f"  - Monuments du Forum : {len(MONUMENTS_FORUM)}")
     print(f"  - Taille du fichier : {len(contenu_json) / 1024:.1f} Ko")
 

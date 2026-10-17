@@ -72,12 +72,16 @@ class TestDatasetMobile(unittest.TestCase):
         srs = self.data.get("memoria_srs", [])
         self.assertGreaterEqual(len(srs), 25)
 
-    def test_cartes_collection_export(self):
-        cartes_col = self.data.get("cartes_collection", {})
-        cartes = cartes_col.get("cartes", [])
-        self.assertGreaterEqual(len(cartes), 24)
-        self.assertIn("raretes", cartes_col)
-        self.assertIn("categories", cartes_col)
+    def test_pas_de_cartes_collection(self):
+        # Doublon du Panthéon retiré de l'appli mobile (décision du 17/10/2026).
+        self.assertNotIn("cartes_collection", self.data)
+        self.assertNotIn("total_cartes_collection", self.data["metadata"])
+
+    def test_glossaire_export(self):
+        gloss = self.data.get("glossaire", [])
+        self.assertGreaterEqual(len(gloss), 20)
+        for terme in gloss:
+            self.assertEqual(len(terme), 2)
 
 
 if __name__ == "__main__":

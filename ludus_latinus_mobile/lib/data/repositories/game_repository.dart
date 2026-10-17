@@ -51,6 +51,7 @@ class GameRepository extends ChangeNotifier {
   List<SchoolClass> get classes => dataService.classes;
   List<World> get worlds => dataService.worlds;
   List<ThesaurusEntry> get thesaurus => dataService.thesaurus;
+  List<List<String>> get glossaire => dataService.glossaire;
   List<ForumMonument> get monuments => dataService.monuments;
   List<SrsCard> get srsCards => dataService.srsCards;
 

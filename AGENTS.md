@@ -330,6 +330,14 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Glossaire branché, cartes de collection retirées** (17/10/2026, accord de
+  Cédric). Les 24 termes du glossaire s'affichent dans un 4e onglet
+  « Glossaire » du Thesaurus (ordre alphabétique, onglets défilants). Les 32
+  cartes de collection ne sont plus exportées vers l'appli mobile (doublon du
+  Panthéon) ; elles restent dans `content/cartes_data.py` pour l'appli bureau.
+  Dataset réexporté : seul le bloc `cartes_collection` disparaît, attribution
+  du Thesaurus inchangée. Vu à l'émulateur.
+
 - **Priorité 1 du Store, première partie** (17/10/2026). Faux « compte
   Tabularium Cloud » (saisie d'e-mail) et faux « code Tessera » retirés du
   modèle, du repository et de l'écran Compte, remplacés par une carte
