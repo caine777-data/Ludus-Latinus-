@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Bataille de cartes en priorité 2** (17/10/2026, retenue par Cédric). Jeu
+  Ludi avec les cartes du second album (ATK/DEF de `content/cartes_data.py`),
+  une question de latin par manche décide qui choisit la caractéristique.
+  Ordre : succès, puis second album, puis bataille. Détail dans
+  `docs/audits/analyse_best_seller.md`.
+
 - **Illustrations de leçon, 2e lot** (17/10/2026). 30 images m17-01 à
   m26-03, contrôlées sur planche, copiées sans recompression : 47 leçons de 4e
   et 3e illustrées sur 48 (manque m14-03). Prompts de la 5e envoyés à Cédric.
