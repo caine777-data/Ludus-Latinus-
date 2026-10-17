@@ -330,6 +330,13 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Audit des bruitages** (17/10/2026). Mesure des 17 WAV (part d'aigus
+  au-dessus de 4 kHz) : `lecon_validee`, `indice`, `achat` et
+  `carte_obtenue` sont stridents (70 à 99 %), `dice_roll`, `sesterces_clink`
+  et `sword_clash` sont à réécouter. Prompts ElevenLabs dans
+  `docs/propositions/bruitages_elevenlabs.md`. Cédric génère les sons, puis
+  l'architecte les remplace un par un, sans conversion ni recompression.
+
 - **Nouvelle icône de l'appli** (11/10/2026). Casque de centurion doré
   entre deux lauriers, sur rouge pompéien, sans texte (l'ancienne affichait
   « LVDVS ROMANA »). Générée dans Gemini, déclinée par
