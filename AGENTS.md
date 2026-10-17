@@ -337,7 +337,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   livraison (le test `illustrations_lecons_test.dart` exige qu'elle colle aux
   fichiers). Ces images remplissent le bandeau (`BoxFit.cover`), les pièces
   du musée restent entières. Manque m14-03. La 5e (39 leçons) n'a pas
-  d'image propre : 9 seulement ont un repli musée.
+  d'image propre : 9 seulement ont un repli musée. Prompts de la 5e en
+  16:9 dans `docs/propositions/illustrations_lecons_5e.md` (fichiers
+  `lecon_m1-01.jpg` : identifiants du dataset, sans zéro devant le monde).
 
 - **Audit des bruitages** (17/10/2026). Mesure des 17 WAV (part d'aigus
   au-dessus de 4 kHz) : `lecon_validee`, `indice`, `achat` et
