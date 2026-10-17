@@ -330,6 +330,10 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Illustrations de leçon, 2e lot** (17/10/2026). 30 images m17-01 à
+  m26-03, contrôlées sur planche, copiées sans recompression : 47 leçons de 4e
+  et 3e illustrées sur 48 (manque m14-03). Prompts de la 5e envoyés à Cédric.
+
 - **Politique de confidentialité en ligne** (17/10/2026, feu vert de Cédric) :
   https://icare-et-dedale.netlify.app/ludus-latinus/confidentialite/ . Site Netlify `icare-et-dedale` (équipe de Cédric), source
   `docs/publication/netlify/`. Republier : depuis ce dossier,
