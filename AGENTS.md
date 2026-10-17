@@ -337,6 +337,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   le glossaire et 32 cartes du dataset ne sont pas lus, aucun rappel, aucun
   monde verrouillé, l'Édition complète n'est pas codée. Propositions en
   attente de l'arbitrage de Cédric.
+- **Artefacts CI gardés 3 jours** (17/10/2026) au lieu de 30 : quota de
+  stockage GitHub atteint. Les anciens artefacts restent comptés jusqu'à leur
+  suppression ou expiration.
 
 - **Illustrations de leçon, 1er lot** (17/10/2026). 17 images 16:9
   (1376 × 768) de m11-01 à m16-03, copiées sans recompression dans

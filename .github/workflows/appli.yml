@@ -5,7 +5,9 @@ name: Ludus Latinus (Android & Windows)
 # « Ludus Latinus (Android & Windows) » > « Run workflow », en choisissant la
 # branche de travail.
 #
-# Trois fichiers à télécharger, rubrique « Artifacts » de l'exécution :
+# Trois fichiers à télécharger, rubrique « Artifacts » de l'exécution (gardés 3 jours :
+# chaque exécution pèse plusieurs centaines de Mo et le quota de stockage GitHub
+# a été atteint avec 30 jours ; télécharger le build voulu sans attendre) :
 #
 #   LudusLatinus-APK        LudusLatinus.apk            à installer sur un téléphone
 #   LudusLatinus-PlayStore  LudusLatinus-PlayStore.aab  à envoyer sur la Play Console
@@ -137,13 +139,13 @@ jobs:
         with:
           name: LudusLatinus-APK
           path: LudusLatinus.apk
-          retention-days: 30
+          retention-days: 3
 
       - uses: actions/upload-artifact@v4
         with:
           name: LudusLatinus-PlayStore
           path: LudusLatinus-PlayStore.aab
-          retention-days: 30
+          retention-days: 3
 
       - name: Résumé
         if: always()
@@ -197,7 +199,7 @@ jobs:
         with:
           name: LudusLatinus-Windows
           path: LudusLatinus-Windows.zip
-          retention-days: 30
+          retention-days: 3
 
       - name: Résumé
         if: success()
