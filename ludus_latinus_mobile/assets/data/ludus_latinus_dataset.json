@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-18 16:41:53",
+    "date_export": "2026-10-18 19:06:17",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 119,
@@ -281,7 +281,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le verbe sum ; la prononciation ; les chiffres romains.",
+        "culture": "« De la légende à l'histoire » : les origines de Rome et ses figures héroïques, les légendes de fondation."
+      }
     },
     {
       "id": "monde2",
@@ -466,7 +470,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "L'indicatif présent (3e personne) ; les compléments de lieu.",
+        "culture": "« Vie privée et vie publique » : famille et filiation, l'habitat, l'éducation."
+      }
     },
     {
       "id": "monde3",
@@ -651,7 +659,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Les personnes de l'indicatif.",
+        "culture": "« Vie privée et vie publique » : la religion romaine, figures grecques et figures romaines de divinités."
+      }
     },
     {
       "id": "monde4",
@@ -832,7 +844,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Les cas et leurs fonctions : nominatif, accusatif.",
+        "culture": "« De la légende à l'histoire » : figures héroïques."
+      }
     },
     {
       "id": "monde5",
@@ -1007,7 +1023,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "L'indicatif présent actif ; le verbe sum.",
+        "culture": "« De la légende à l'histoire » : figures héroïques."
+      }
     },
     {
       "id": "monde6",
@@ -1166,7 +1186,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le pluriel du verbe ; les cas.",
+        "culture": "« Vie privée et vie publique » : théâtre, jeux et loisirs publics."
+      }
     },
     {
       "id": "monde7",
@@ -1325,7 +1349,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Premier perfectum (veni, vidi, vici).",
+        "culture": "Lexique : familles de mots, sens des préverbes, expressions latines du français."
+      }
     },
     {
       "id": "monde8",
@@ -1513,7 +1541,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le génitif.",
+        "culture": "« Vie privée et vie publique » : la vie quotidienne."
+      }
     },
     {
       "id": "monde9",
@@ -1699,7 +1731,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le pluriel des noms.",
+        "culture": "L'armée romaine : thème de 3e dans le programme, abordé ici dès la 5e."
+      }
     },
     {
       "id": "monde10",
@@ -1896,7 +1932,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "L'accord de l'adjectif ; le datif et l'ablatif.",
+        "culture": "« De la légende à l'histoire » : récits mythologiques ; « De Troie au Latium » pour Ulysse."
+      }
     },
     {
       "id": "monde11",
@@ -2045,7 +2085,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Révision des cas ; les verbes composés.",
+        "culture": "« De la légende à l'histoire » : la Rome royale, la naissance de la république."
+      }
     },
     {
       "id": "monde12",
@@ -2194,7 +2238,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "La 3e déclinaison.",
+        "culture": "« La république : histoire et institutions » : assemblées et votes, grandes figures politiques."
+      }
     },
     {
       "id": "monde13",
@@ -2343,7 +2391,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "La 3e déclinaison (noms en -i, neutres).",
+        "culture": "« Le monde méditerranéen antique » : Carthage et les guerres puniques."
+      }
     },
     {
       "id": "monde14",
@@ -2492,7 +2544,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Les adjectifs de la seconde classe ; les degrés de l'adjectif.",
+        "culture": "« Alliances et conflits entre cités dans le monde antique »."
+      }
     },
     {
       "id": "monde15",
@@ -2640,7 +2696,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "L'imparfait ; sum à l'imparfait.",
+        "culture": "« La république : histoire et institutions »."
+      }
     },
     {
       "id": "monde16",
@@ -2788,7 +2848,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le parfait (perfectum) ; sum au parfait.",
+        "culture": "« Les grandes figures politiques de la République » : César."
+      }
     },
     {
       "id": "monde17",
@@ -2973,7 +3037,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le futur ; is, ea, id ; hic, ille, iste, idem, ipse.",
+        "culture": "La guerre des Gaules : « Rome et les provinces » est un thème de 3e, abordé ici en 4e."
+      }
     },
     {
       "id": "monde18",
@@ -3122,7 +3190,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Révision de la 5e et de la 4e.",
+        "culture": "« Les crises et la fin de la République » : thème de 3e, abordé ici en fin de 4e."
+      }
     },
     {
       "id": "monde19",
@@ -3271,7 +3343,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Les 4e et 5e déclinaisons.",
+        "culture": "« De la république au principat » : Auguste ; « L'empire romain » : la paix romaine."
+      }
     },
     {
       "id": "monde20",
@@ -3448,7 +3524,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le pronom relatif et les propositions relatives ; les verbes eo, fero, fio.",
+        "culture": "« L'empire romain » : la romanisation de l'empire."
+      }
     },
     {
       "id": "monde21",
@@ -3596,7 +3676,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le participe parfait passif.",
+        "culture": "« Vie familiale, sociale et intellectuelle » : la vie à la ville."
+      }
     },
     {
       "id": "monde22",
@@ -3745,7 +3829,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "L'ablatif absolu.",
+        "culture": "« L'empire romain » : l'armée romaine et les guerres de conquête."
+      }
     },
     {
       "id": "monde23",
@@ -3930,7 +4018,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le passif ; les verbes déponents.",
+        "culture": "« Le monde méditerranéen » : les pratiques de l'argumentation (Cicéron)."
+      }
     },
     {
       "id": "monde24",
@@ -4105,7 +4197,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "La proposition infinitive ; le gérondif.",
+        "culture": "« L'empire romain » : figures d'empereurs."
+      }
     },
     {
       "id": "monde25",
@@ -4322,7 +4418,11 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Le subjonctif : souhait, but, conséquence, condition.",
+        "culture": "« Le monde méditerranéen » : Rome et la Grèce, la transmission culturelle (Virgile, Ovide)."
+      }
     },
     {
       "id": "monde26",
@@ -4481,9 +4581,25 @@
             }
           ]
         }
-      ]
+      ],
+      "programme": {
+        "langue": "Synthèse du cycle 4.",
+        "culture": "Tous les ensembles du programme."
+      }
     }
   ],
+  "programme_lca": {
+    "reference": "Programme de l'enseignement de complément de langues et cultures de l'Antiquité (LCA) au cycle 4, Bulletin officiel n°11 du 17 mars 2016.",
+    "presentation": "Ludus Latinus suit le programme de latin du collège, de la 5e à la 3e. Chaque monde travaille une notion de langue et un thème culturel du programme. Les élèves peuvent s'entraîner à la maison sur ce qui est vu en classe.",
+    "ecarts": [
+      "L'armée romaine (monde 9) est traitée dès la 5e ; le programme la place en 3e, dans « L'empire romain ».",
+      "La guerre des Gaules (monde 17) est traitée en 4e ; « Rome et les provinces » figure au programme de 3e.",
+      "La fin de la République (monde 18) clôt la 4e ; « Les crises et la fin de la République » est un thème de 3e.",
+      "L'ablatif absolu et la proposition infinitive, à « observer » dès la 5e-4e, sont enseignés en 3e (mondes 22 et 24)."
+    ],
+    "relecture": "Tableau établi d'après le Bulletin officiel ; les remarques des professeurs sont les bienvenues.",
+    "contact": "icareetdedale.studio@gmail.com"
+  },
   "thesaurus": {
     "dictionnaire": [
       {

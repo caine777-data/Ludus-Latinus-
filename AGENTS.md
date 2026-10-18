@@ -330,6 +330,17 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Programme de LCA affiché** (18/10/2026, tableau validé par Cédric) :
+  `content/programme_lca.py` (PROGRAMME_MONDES : langue et culture par monde ;
+  PROGRAMME_LCA : présentation, référence, 4 écarts, contact), exporté dans
+  chaque monde (`programme`) et en bloc `programme_lca`. Puce « Au programme »
+  sur la bannière de chaque monde (fiche en bas d'écran) et page « Pour les
+  professeurs » dans Paramètres > Application (`professeurs_screen.dart`).
+  Espaces insécables dans les guillemets ajoutés à l'export. Tests :
+  `tests/test_dataset_mobile.py`, `test/professeurs_test.dart`. Vérifié sur
+  l'émulateur (téléphone). Relecture par un professeur de latin : à faire
+  côté Cédric.
+
 - **Six leçons complémentaires branchées** (18/10/2026, relues et
   demandées par Cédric) : hic/ille/iste/idem/ipse (m17-05), eo/fero/fio
   (m20-05), déponent (m23-05), gérondif (m24-05), subjonctif de but (m25-05),

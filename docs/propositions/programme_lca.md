@@ -1,6 +1,6 @@
 # Ludus Latinus et le programme de latin du collège
 
-Proposition de l'architecte (18/10/2026), à valider par Cédric.
+Proposition de l'architecte (18/10/2026), validée par Cédric le 18/10/2026 (relecture par un professeur de latin souhaitée). Affichée dans l'appli : puce « Au programme » sur chaque monde et page « Pour les professeurs » ; source des textes : `content/programme_lca.py`.
 
 **Référence :** programme d'enseignement de complément de langues et cultures de l'Antiquité (LCA) au cycle 4, Bulletin officiel n°11 du 17 mars 2016 (arrêté du 8 février 2016), en vigueur selon Eduscol. Un projet de révision du Conseil supérieur des programmes (22 mai 2025) n'est pas adopté : à surveiller.
 
@@ -65,7 +65,7 @@ Les intitulés entre guillemets sont ceux du Bulletin officiel, mot pour mot. Us
 - **Monde 17, la Gaule :** traitée en 4e dans l'appli, « Rome et les provinces (Sicile, la Gaule...) » figure en 3e.
 - **Monde 18, la fin de la République :** « Les crises et la fin de la République » est un thème de 3e, abordé ici en fin de 4e.
 - **Ablatif absolu et proposition infinitive :** le programme demande de les « observer » dès la 5e-4e et de « réinvestir » l'ablatif absolu en 3e. L'appli les enseigne en 3e (mondes 22 et 24). C'est cohérent pour la 3e ; un professeur de 4e pourra y renvoyer ses élèves en avance.
-- **Non couverts par l'appli :** les pronoms *hic, ille, iste, idem, ipse*, le déponent, les verbes *eo, fio, fero*, le subjonctif hors souhait (but, conséquence, condition), le gérondif. Ce sont des pistes de contenu, à valider par Cédric.
+- **Couverts depuis le 18/10/2026 :** les pronoms *hic, ille, iste, idem, ipse* (m17-05), les verbes *eo, fio, fero* (m20-05), le déponent (m23-05), le gérondif (m24-05), le subjonctif de but (m25-05), de conséquence et de condition (m25-06).
 
 ## Source
 

@@ -5,6 +5,7 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/game_juice.dart';
 import '../../../data/models/world.dart';
+import '../settings/professeurs_screen.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -806,6 +807,12 @@ class _WorldBanner extends StatelessWidget {
                 ),
               ),
             ),
+            if (world.programme != null)
+              Positioned(
+                top: 34, // sous le bandeau doré « MONDE N », qui occupe le centre du haut
+                right: 8,
+                child: _PuceProgramme(world: world, numero: _numero),
+              ),
             Positioned(
               left: 14,
               right: 14,
@@ -825,6 +832,44 @@ class _WorldBanner extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Puce « Au programme » : ouvre ce que le monde travaille du programme
+/// officiel. Utile aux parents et aux professeurs, discrète pour l'élève.
+class _PuceProgramme extends StatelessWidget {
+  final World world;
+  final String numero;
+
+  const _PuceProgramme({required this.world, required this.numero});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: RomanColors.palatinCream.withValues(alpha: 0.92),
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          HapticFeedback.selectionClick();
+          montrerProgrammeMonde(context, world, numero);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.school_outlined, size: 14, color: RomanColors.imperialPurple),
+              const SizedBox(width: 4),
+              Text(
+                context.l10n.mapProgramme,
+                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+              ),
+            ],
+          ),
         ),
       ),
     );

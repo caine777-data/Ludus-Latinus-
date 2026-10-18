@@ -21,6 +21,8 @@ class DataService {
   List<CarteAlbum> cartesAlbum = [];
   List<SuccesAlbum> succesAlbum = [];
   Map<String, int> sesterceParRarete = {};
+  /// Page « Pour les professeurs » ; absente d'un vieux dataset.
+  ProgrammeLca? programmeLca;
   Map<String, dynamic> rawData = {};
 
   bool isLoaded = false;
@@ -43,6 +45,9 @@ class DataService {
       worlds = rawWorlds
           .map((w) => World.fromJson(w as Map<String, dynamic>))
           .toList();
+
+      final rawProgramme = rawData['programme_lca'];
+      programmeLca = rawProgramme is Map<String, dynamic> ? ProgrammeLca.fromJson(rawProgramme) : null;
 
       // Parsing du Thesaurus
       var rawThes = rawData['thesaurus'] as Map<String, dynamic>? ?? {};

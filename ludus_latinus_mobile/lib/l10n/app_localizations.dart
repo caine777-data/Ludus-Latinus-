@@ -3174,6 +3174,72 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{joueur, plural, =0{0 manche} =1{1 manche} other{{joueur} manches}} à {crassus}'**
   String bataFinalScore(int joueur, int crassus);
+
+  /// No description provided for @mapProgramme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au programme'**
+  String get mapProgramme;
+
+  /// No description provided for @mapProgrammeTitre.
+  ///
+  /// In fr, this message translates to:
+  /// **'Au programme du monde {numero}'**
+  String mapProgrammeTitre(String numero);
+
+  /// No description provided for @programmeLangue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue'**
+  String get programmeLangue;
+
+  /// No description provided for @programmeCulture.
+  ///
+  /// In fr, this message translates to:
+  /// **'Culture'**
+  String get programmeCulture;
+
+  /// No description provided for @programmeSource.
+  ///
+  /// In fr, this message translates to:
+  /// **'Programme de latin du collège (BO du 17 mars 2016)'**
+  String get programmeSource;
+
+  /// No description provided for @settingsTeachers.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour les professeurs'**
+  String get settingsTeachers;
+
+  /// No description provided for @settingsTeachersHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le programme officiel, monde par monde'**
+  String get settingsTeachersHint;
+
+  /// No description provided for @teachersTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour les professeurs'**
+  String get teachersTitle;
+
+  /// No description provided for @teachersReference.
+  ///
+  /// In fr, this message translates to:
+  /// **'Référence'**
+  String get teachersReference;
+
+  /// No description provided for @teachersGaps.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écarts avec le programme'**
+  String get teachersGaps;
+
+  /// No description provided for @teachersContact.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contact'**
+  String get teachersContact;
 }
 
 class _AppLocalizationsDelegate

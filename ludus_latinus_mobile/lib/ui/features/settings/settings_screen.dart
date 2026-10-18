@@ -4,6 +4,7 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/cinematic_player.dart';
 import 'about_screen.dart';
+import 'professeurs_screen.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import 'hero_form.dart';
@@ -80,6 +81,16 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsSectionApp),
+          if (repo.dataService.programmeLca != null)
+            _Reglage(
+              icone: Icons.school_outlined,
+              titre: context.l10n.settingsTeachers,
+              sousTitre: context.l10n.settingsTeachersHint,
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ProfesseursScreen(repo: repo)),
+              ),
+            ),
           _Reglage(
             icone: Icons.info_outline_rounded,
             titre: context.l10n.settingsAbout,

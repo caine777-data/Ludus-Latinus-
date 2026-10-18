@@ -7,6 +7,8 @@ class World {
   final String? subtitle;
   final String? icon;
   final List<Lesson> lessons;
+  /// Ce que le monde travaille du programme officiel (ligne « Au programme »).
+  final ProgrammeMonde? programme;
 
   const World({
     required this.id,
@@ -14,6 +16,7 @@ class World {
     this.subtitle,
     this.icon,
     required this.lessons,
+    this.programme,
   });
 
   factory World.fromJson(Map<String, dynamic> json) {
@@ -28,8 +31,50 @@ class World {
       subtitle: json['subtitle'] as String?,
       icon: json['icon'] as String?,
       lessons: parsedLessons,
+      programme: json['programme'] is Map<String, dynamic>
+          ? ProgrammeMonde.fromJson(json['programme'] as Map<String, dynamic>)
+          : null,
     );
   }
+}
+
+/// Notion de langue et thème culturel du programme de LCA (BO du 17 mars 2016)
+/// travaillés dans un monde.
+class ProgrammeMonde {
+  final String langue;
+  final String culture;
+
+  const ProgrammeMonde({required this.langue, required this.culture});
+
+  factory ProgrammeMonde.fromJson(Map<String, dynamic> json) => ProgrammeMonde(
+        langue: json['langue'] as String? ?? '',
+        culture: json['culture'] as String? ?? '',
+      );
+}
+
+/// Texte de la page « Pour les professeurs ».
+class ProgrammeLca {
+  final String reference;
+  final String presentation;
+  final List<String> ecarts;
+  final String relecture;
+  final String contact;
+
+  const ProgrammeLca({
+    required this.reference,
+    required this.presentation,
+    required this.ecarts,
+    required this.relecture,
+    required this.contact,
+  });
+
+  factory ProgrammeLca.fromJson(Map<String, dynamic> json) => ProgrammeLca(
+        reference: json['reference'] as String? ?? '',
+        presentation: json['presentation'] as String? ?? '',
+        ecarts: [for (final e in json['ecarts'] as List<dynamic>? ?? []) e.toString()],
+        relecture: json['relecture'] as String? ?? '',
+        contact: json['contact'] as String? ?? '',
+      );
 }
 
 /// Classe du collège (5ème, 4ème, 3ème).

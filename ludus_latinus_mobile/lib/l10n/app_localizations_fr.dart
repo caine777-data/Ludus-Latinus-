@@ -1858,4 +1858,40 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0 à $crassus';
   }
+
+  @override
+  String get mapProgramme => 'Au programme';
+
+  @override
+  String mapProgrammeTitre(String numero) {
+    return 'Au programme du monde $numero';
+  }
+
+  @override
+  String get programmeLangue => 'Langue';
+
+  @override
+  String get programmeCulture => 'Culture';
+
+  @override
+  String get programmeSource =>
+      'Programme de latin du collège (BO du 17 mars 2016)';
+
+  @override
+  String get settingsTeachers => 'Pour les professeurs';
+
+  @override
+  String get settingsTeachersHint => 'Le programme officiel, monde par monde';
+
+  @override
+  String get teachersTitle => 'Pour les professeurs';
+
+  @override
+  String get teachersReference => 'Référence';
+
+  @override
+  String get teachersGaps => 'Écarts avec le programme';
+
+  @override
+  String get teachersContact => 'Contact';
 }

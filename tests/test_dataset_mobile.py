@@ -1,6 +1,6 @@
 """
 Tests unitaires pour le dataset universel mobile (ludus_latinus_dataset.json).
-Vérifie la validité du fichier exporté, l'intégrité des 26 mondes, des 113 leçons
+Vérifie la validité du fichier exporté, l'intégrité des 26 mondes, des 119 leçons
 et des modules (Thesaurus, Forum, Cartes, SRS).
 """
 
@@ -29,7 +29,7 @@ class TestDatasetMobile(unittest.TestCase):
         self.assertEqual(meta.get("app"), "Ludus Latinus")
         self.assertEqual(meta.get("total_classes"), 3)
         self.assertEqual(meta.get("total_mondes"), 26)
-        self.assertEqual(meta.get("total_lecons"), 113)
+        self.assertEqual(meta.get("total_lecons"), 119)
 
     def test_classes_structure(self):
         classes = self.data.get("classes", [])
@@ -57,7 +57,7 @@ class TestDatasetMobile(unittest.TestCase):
                 self.assertIn("title", les)
                 self.assertIn("content", les)
 
-        self.assertEqual(total_lecons, 113)
+        self.assertEqual(total_lecons, 119)
 
     def test_thesaurus_export(self):
         thesaurus = self.data.get("thesaurus", {})
@@ -87,6 +87,18 @@ class TestDatasetMobile(unittest.TestCase):
             for cle in ("nom", "nom_latin", "rarete", "atk", "def", "citation", "traduction", "anecdote", "image"):
                 self.assertTrue(carte.get(cle), (carte["id"], cle))
         self.assertNotIn("succes", self.data)
+
+    def test_programme_lca(self):
+        # Chaque monde dit ce qu'il travaille du programme officiel (ligne « Au programme »).
+        for monde in self.data["mondes"]:
+            prog = monde.get("programme", {})
+            self.assertTrue(prog.get("langue"), monde["id"])
+            self.assertTrue(prog.get("culture"), monde["id"])
+            self.assertNotIn("\u2014", prog["langue"] + prog["culture"])
+        page = self.data["programme_lca"]
+        for cle in ("reference", "presentation", "ecarts", "relecture", "contact"):
+            self.assertTrue(page.get(cle), cle)
+        self.assertEqual(len(page["ecarts"]), 4)
 
     def test_glossaire_export(self):
         gloss = self.data.get("glossaire", [])

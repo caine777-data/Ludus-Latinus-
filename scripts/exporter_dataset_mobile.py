@@ -26,6 +26,7 @@ from app.thesaurus import (  # noqa: E402
 )
 from content import CLASSES, CURRICULUM, GLOSSAIRE  # noqa: E402
 from content.album_mobile import ALBUM_CARTES, SESTERCES_PAR_RARETE, SUCCES_ALBUM  # noqa: E402
+from content.programme_lca import PROGRAMME_LCA, PROGRAMME_MONDES  # noqa: E402
 
 
 def _monde_du_mot(entree, curriculum):
@@ -104,7 +105,9 @@ def exporter_dataset(dest_path=None) -> Path:
             }
             for c_id, c_data in CLASSES.items()
         ],
-        "mondes": CURRICULUM,
+        # Chaque monde porte sa ligne « Au programme » (notion de langue, thème culturel).
+        "mondes": [{**w, "programme": PROGRAMME_MONDES[w["id"]]} for w in CURRICULUM],
+        "programme_lca": PROGRAMME_LCA,
         "thesaurus": {
             "dictionnaire": dictionnaire_avec_mondes(),
             "declinaisons": TABLES_DECLINAISONS,

@@ -1427,5 +1427,23 @@
         "type": "int"
       }
     }
-  }
+  },
+  "mapProgramme": "Au programme",
+  "mapProgrammeTitre": "Au programme du monde {numero}",
+  "@mapProgrammeTitre": {
+    "placeholders": {
+      "numero": {
+        "type": "String"
+      }
+    }
+  },
+  "programmeLangue": "Langue",
+  "programmeCulture": "Culture",
+  "programmeSource": "Programme de latin du collège (BO du 17 mars 2016)",
+  "settingsTeachers": "Pour les professeurs",
+  "settingsTeachersHint": "Le programme officiel, monde par monde",
+  "teachersTitle": "Pour les professeurs",
+  "teachersReference": "Référence",
+  "teachersGaps": "Écarts avec le programme",
+  "teachersContact": "Contact"
 }
