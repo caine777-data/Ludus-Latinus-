@@ -330,6 +330,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Portrait sur téléphone, illustrations complètes** (18/10/2026, accord de
+  Cédric). `main.dart` : `estUnTelephone` (petit côté < 600 points) bloque le
+  portrait ; les tablettes tournent librement. Raison : en paysage sur
+  téléphone, le Circus est injouable (question invisible) et le Duel cache ses
+  réponses. Vu à l'émulateur : téléphone tourné, appli restée en portrait ;
+  tablette en portrait (1600 × 2560) correcte pour l'accueil, la leçon, le Duel.
+  Illustrations : 40 images de plus (5e entière et m14-03), contrôlées sur
+  planche : les 87 leçons de cours sont illustrées.
+
 - **Tablette, suite** (17/10/2026). Composant `ColonneLecture` (widgets.dart :
   colonne centrée de largeur limitée, `heightFactor: 1` pour ne pas s'étirer en
   hauteur dans une barre du bas). Appliqué à Panthéon, Thesaurus (900),

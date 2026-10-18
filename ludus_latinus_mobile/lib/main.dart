@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+import 'dart:ui' show PlatformDispatcher;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'data/repositories/game_repository.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
@@ -9,8 +11,18 @@ import 'l10n/l10n.dart';
 import 'ui/core/themes.dart';
 import 'ui/features/home/home_screen.dart';
 
+/// Un écran dont le petit côté fait moins de 600 points est un téléphone.
+bool estUnTelephone(Size tailleEnPoints) => tailleEnPoints.shortestSide < 600;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Téléphone : portrait seulement. En paysage, il ne reste qu'environ 400 points
+  // de haut et les jeux (Circus, Duel) ne tiennent plus. Les tablettes tournent
+  // librement ; sous Windows, la consigne est sans effet.
+  final vue = PlatformDispatcher.instance.views.first;
+  if (estUnTelephone(vue.physicalSize / vue.devicePixelRatio)) {
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
   await AudioService().init();
 
   final dataService = DataService();
