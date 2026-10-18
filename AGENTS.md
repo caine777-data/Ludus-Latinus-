@@ -330,6 +330,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Captures du Store refaites** (18/10/2026) : 8 captures téléphone
+  1200 × 2400 (leçon, Via Appia avec la puce « Au programme », duel, album,
+  Bataille, exercice, page des professeurs, accueil) ; Panthéon, Thesaurus et
+  Taverne retirés (Google limite à 8). Script `scripts/assets/captures_store.py`
+  (bords prolongés). Description du Store complétée (album, Bataille, page des
+  professeurs, 119 leçons), à valider par Cédric. Corrigé au passage : dans la
+  Bataille, les réponses longues (devises) étaient coupées à la 3e ligne ; la
+  hauteur des cases suit maintenant la taille de police. Captures tablette non
+  refaites.
+
 - **Programme de LCA affiché** (18/10/2026, tableau validé par Cédric) :
   `content/programme_lca.py` (PROGRAMME_MONDES : langue et culture par monde ;
   PROGRAMME_LCA : présentation, référence, 4 écarts, contact), exporté dans

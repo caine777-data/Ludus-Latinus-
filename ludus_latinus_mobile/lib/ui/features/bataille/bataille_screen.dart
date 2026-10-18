@@ -312,11 +312,14 @@ class _BatailleScreenState extends State<BatailleScreen> {
             GridView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              // Hauteur des cases : trois lignes de texte (les devises sont longues)
+              // à la taille de police de l'élève, plus les marges. À 64 fixes,
+              // la 3e ligne d'une devise était coupée.
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisSpacing: 8,
                 crossAxisSpacing: 8,
-                mainAxisExtent: 64,
+                mainAxisExtent: 24 + MediaQuery.textScalerOf(context).scale(13) * 3 * 1.3,
               ),
               children: [for (final r in q.reponses) _Choix(texte: r, onTap: () => _repondre(r))],
             ),

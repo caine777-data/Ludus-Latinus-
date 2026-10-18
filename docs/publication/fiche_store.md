@@ -18,9 +18,9 @@ LE PROGRAMME DU COLLÈGE
 26 mondes suivent les trois années de latin :
 • 5e : les origines de Rome, la maison romaine, les dieux, les gladiateurs, les premiers cas et le présent ;
 • 4e : la République, les conquêtes, l'imparfait, le parfait, César et la guerre des Gaules ;
-• 3e : l'Empire, Pompéi, l'ablatif absolu, la voix passive, la proposition infinitive, Virgile et Ovide.
+• 3e : l'Empire, Pompéi, l'ablatif absolu, la voix passive, la proposition infinitive, le subjonctif, Virgile et Ovide.
 
-113 leçons courtes : quiz, phrases à reconstituer, mots à compléter, décodeur des cas pour repérer le sujet et le complément d'objet. Chaque monde se termine par une arène qui reprend ce qu'il a enseigné.
+119 leçons courtes : quiz, phrases à reconstituer, mots à compléter, décodeur des cas pour repérer le sujet et le complément d'objet. Chaque monde se termine par une arène qui reprend ce qu'il a enseigné.
 
 DES JEUX POUR S'ENTRAÎNER
 • Circus Maximus : une course de chars où chaque bonne réponse donne de la vitesse.
@@ -29,6 +29,8 @@ DES JEUX POUR S'ENTRAÎNER
 • L'Atelier de César : messages secrets à chiffrer et à déchiffrer.
 • Le Marché de Trajan : acheter, rendre la monnaie et marchander en sesterces.
 • Le Panthéon : une carte à collectionner pour chaque monde terminé.
+• Héros et Créatures : un album de 32 cartes, une carte gagnée à chaque succès.
+• La Bataille des Légendes : un jeu de cartes contre Crassus, où chaque manche se joue sur une question de latin.
 
 RÉVISER SANS OUBLIER
 • Memoria : des cartes de vocabulaire qui reviennent au bon moment, selon ce que l'élève retient.
@@ -43,6 +45,7 @@ PENSÉ POUR LES FAMILLES ET LES PROFESSEURS
 • Aucune donnée collectée, aucun compte à créer.
 • Fonctionne sans connexion Internet.
 • Progression exportable dans un fichier, pour changer d'appareil.
+• Une page pour les professeurs : ce que chaque monde travaille du programme officiel de latin du collège.
 
 Ludus Latinus est édité par Icare & Dédale.
 
@@ -59,10 +62,11 @@ Ludus Latinus est édité par Icare & Dédale.
 |---|---|---|
 | Icône | 512 × 512, PNG | prête : `store/icone_play_store_512.png` |
 | Image de présentation | 1024 × 500, JPG ou PNG | projet à valider : `store/presentation_1024x500.png` (illustration m21-03, script `scripts/assets/presentation_store.py`) |
-| Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration |
+| Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, album, Bataille, exercice, page des professeurs, accueil (refaites le 18/10/2026, script `scripts/assets/captures_store.py`) |
 | Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` |
 
 ## À revoir avant la mise en production
 
 - Si l'Édition complète est vendue, l'indiquer dans la description (« les mondes 1 à 3 sont gratuits ; l'Édition complète débloque tout, en un seul achat ») : Google exige que les achats intégrés soient signalés.
-- Les chiffres (26 mondes, 113 leçons, 224 mots) sont ceux du dataset du 17/10/2026.
+- Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
+- Captures tablette : prises avant l'album, la Bataille et la page des professeurs, à refaire si on veut les y montrer.
