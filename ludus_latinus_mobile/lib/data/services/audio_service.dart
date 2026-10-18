@@ -410,7 +410,7 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> playSwordClash() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.heavyImpact();
-    await playAsset('assets/audio/sword_clash.wav');
+    await playAsset('assets/audio/sword_clash.mp3');
   }
 
   /// Cliquetis mécanique cranté de la roue de César
@@ -444,7 +444,7 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   /// Indice demandé.
   Future<void> playHint() async {
     if (_isMuted) return;
-    await playAsset('assets/audio/indice.wav', volumeMultiplier: 0.8);
+    await playAsset('assets/audio/indice.mp3', volumeMultiplier: 0.8);
   }
 
   /// Leçon validée pour la première fois.

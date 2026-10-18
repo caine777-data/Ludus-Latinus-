@@ -330,6 +330,11 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Bruitages, second essai** (18/10/2026). `indice` et `sword_clash` passent en
+  MP3 ElevenLabs (mesurés : 0 % et 6 % d'aigus). `achat` et `sesterces_clink`
+  restent les anciens WAV (nouveaux essais encore stridents) ; troisième piste
+  de prompts dans `docs/propositions/bruitages_elevenlabs.md`.
+
 - **Portrait sur téléphone, illustrations complètes** (18/10/2026, accord de
   Cédric). `main.dart` : `estUnTelephone` (petit côté < 600 points) bloque le
   portrait ; les tablettes tournent librement. Raison : en paysage sur

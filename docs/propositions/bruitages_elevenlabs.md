@@ -111,6 +111,25 @@ Two heavy bronze coins tapping together inside a closed hand, dull muffled clink
 
 Loud close-up impact of an iron sword striking a wooden shield, heavy thud and a short metallic clang, punchy and loud, starts immediately
 
+## Livraison du 18/10/2026 (second essai)
+
+| Fichier | Mesure | Verdict |
+|---|---|---|
+| `indice.mp3` | 0 % d'aigus, crête à -0,1 dB, démarre tout de suite | intégré |
+| `sword_clash.mp3` | 6 % d'aigus, crête à -9,6 dB | intégré ; plus doux que les autres sons |
+| `achat.mp3` | 99 % d'aigus | écarté : encore strident |
+| `sesterces_clink.mp3` | 99,5 % d'aigus | écarté : l'ancien son (50 %) reste meilleur |
+
+Deux essais de pièces ont donné le même tintement aigu : ElevenLabs rend les pièces brillantes, quoi qu'on demande. Troisième piste : faire tomber une **bourse en cuir**, dont le choc sourd couvre le tintement.
+
+**achat (1 s)**
+
+A small leather purse full of coins dropped onto a thick wooden table, heavy muffled thud with a soft jingle inside the leather, warm and low, no bell
+
+**sesterces_clink (0,5 s)**
+
+A small leather pouch of coins shaken once in a hand, soft muffled jingle, low and warm, very short
+
 ## Après dépôt
 
 Je remplace les fichiers un par un, sans les recompresser, et j'ajuste le volume dans le code si un son ressort trop par rapport aux autres.
