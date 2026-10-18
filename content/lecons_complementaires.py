@@ -4,12 +4,13 @@ que l'appli n'enseignait pas encore. Rédaction de l'architecte du 18/10/2026,
 EN ATTENTE DE VALIDATION PAR CÉDRIC : ce module n'est pas encore branché sur les
 mondes ni exporté.
 
-Chaque leçon s'insère juste avant l'arène de son monde (clé = identifiant du monde).
+Clé = identifiant du monde ; valeur = liste des leçons à insérer, dans l'ordre,
+juste avant l'arène de ce monde.
 """
 
 LECONS_COMPLEMENTAIRES = {
     # 4e : après « is, ea, id » (m17-02). Programme 5e-4e : « hic, ille, iste ; idem ; ipse ».
-    "monde17": {
+    "monde17": [{
         "id": "m17-05",
         "type": "quiz",
         "title": "Hic, Ille, Iste : Celui-ci, Celui-là",
@@ -46,9 +47,9 @@ Exemple : *« Hic miles Romanus est, ille Gallus. »* = « Ce soldat-ci est roma
                 "Iste montre quelqu'un près de toi, souvent avec mépris.",
             ],
         },
-    },
+    }],
     # 3e : le monde des voies romaines. Programme : « les formes des verbes eo, fio, fero ».
-    "monde20": {
+    "monde20": [{
         "id": "m20-05",
         "type": "trou",
         "title": "Eo, Fero, Fio : Aller, Porter, Devenir",
@@ -85,9 +86,9 @@ Exemple : *« Mercator Romam it. »* = « Le marchand va à Rome. » Devant un n
                 "Fert est au présent : il porte maintenant.",
             ],
         },
-    },
+    }],
     # 3e : après la voix passive. Programme : « la formation du passif et du déponent ».
-    "monde23": {
+    "monde23": [{
         "id": "m23-05",
         "type": "quiz",
         "title": "Les Verbes Déponents : Passifs de Forme, Actifs de Sens",
@@ -130,9 +131,9 @@ Pour les reconnaître : le dictionnaire les donne avec une forme en **-or** (*lo
                 "C'est le passif de laudare : il est loué.",
             ],
         },
-    },
+    }],
     # 3e : le monde des verbes de parole. Programme : « la formation du gérondif ».
-    "monde24": {
+    "monde24": [{
         "id": "m24-05",
         "type": "trou",
         "title": "Le Gérondif : l'Art de Parler",
@@ -164,36 +165,88 @@ Exemple : *« Cicero artem dicendi docet. »* = « Cicéron enseigne l'art de pa
                 "Legendo n'est pas un ordre : c'est « en lisant ».",
             ],
         },
-    },
+    }],
     # 3e : après le subjonctif de souhait. Programme : subjonctif du but, de la conséquence, de la condition.
-    "monde25": {
-        "id": "m25-05",
-        "type": "puzzle",
-        "title": "Le Subjonctif : Pour Que, Si Bien Que, Si",
-        "content": """## Le mode des intentions
-Tu connais le subjonctif du souhait (*Felix sim !* = Que je sois heureux !). Il sert aussi dans des propositions subordonnées :
+    # Coupé en deux à la demande de Cédric : le but d'abord, la conséquence et la condition ensuite.
+    "monde25": [
+        {
+            "id": "m25-05",
+            "type": "puzzle",
+            "title": "Le Subjonctif de But : Pour Que",
+            "content": """## Le mode des intentions
+Tu connais le subjonctif du souhait (*Felix sim !* = Que je sois heureux !). Il sert aussi à dire **dans quel but** on agit :
 
-- **UT + subjonctif** = pour que, afin de (le **but**) : *Legimus ut discamus.* = Nous lisons pour apprendre.
-- **NE + subjonctif** = pour ne pas : *Fugit ne capiatur.* = Il fuit pour ne pas être pris.
-- **TAM... UT + subjonctif** = si... que (la **conséquence**) : *Tam fortis est ut omnes eum timeant.* = Il est si courageux que tous le craignent.
-- **SI + subjonctif** = si (une **condition** imaginée) : *Si venias, gaudeam.* = Si tu venais, je me réjouirais.
+- **UT + subjonctif** = pour que, pour : *Legimus ut discamus.* = Nous lisons pour apprendre.
+- **NE + subjonctif** = pour ne pas, pour que... ne... pas : *Fugit ne capiatur.* = Il fuit pour ne pas être pris.
 
-Pour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (au lieu de *legit*), *sit* (au lieu de *est*).
+Pour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (au lieu de *legit*), *defendant* (au lieu de *defendunt*), *sit* (au lieu de *est*).
 
 À toi ! Les Romains se battent dans un but précis.""",
-        "latin": "Romani pugnant ut patriam defendant.",
-        "mots": ["Les Romains", "combattent", "pour défendre la patrie.", "ont combattu", "si bien qu'ils défendent la patrie."],
-        "solution": "Les Romains combattent pour défendre la patrie.",
-        "grammaire": {
-            "question": "Dans « Tam fortis est ut omnes eum timeant. », que veut dire ut ? (timere = craindre)",
-            "options": ["si bien que", "pour que", "comme", "quand"],
+            "latin": "Romani pugnant ut patriam defendant.",
+            "mots": ["Les Romains", "combattent", "pour défendre la patrie.", "ont combattu", "car ils défendent la patrie."],
+            "solution": "Les Romains combattent pour défendre la patrie.",
+            "grammaire": {
+                "question": "Que veut dire « Fugit ne capiatur. » ? (fugere = fuir ; capere = prendre)",
+                "options": [
+                    "Il fuit pour ne pas être pris.",
+                    "Il fuit pour être pris.",
+                    "Il fuit car il n'est pas pris.",
+                    "Il ne fuit pas, il est pris.",
+                ],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Ne change le sens du but : pour ne pas être pris.",
+                    "Ne + subjonctif exprime un but, pas une cause.",
+                    "Ne porte sur capiatur : il fuit bien.",
+                ],
+            },
+        },
+        {
+            "id": "m25-06",
+            "type": "quiz",
+            "title": "Si Bien Que, Si : Conséquence et Condition",
+            "content": """## Quand le subjonctif imagine
+Le subjonctif sert aussi à dire **ce qui en résulte** et **ce qui arriverait si** :
+
+- **TAM... UT + subjonctif** = si... que (la **conséquence**) : *Tam fortis est ut omnes eum timeant.* = Il est si courageux que tous le craignent.
+- **ITA... UT + subjonctif** = de telle façon que : *Ita clamat ut omnes audiant.* = Il crie si fort que tous l'entendent.
+- **SI + subjonctif** = si (une **condition** imaginée) : *Si venias, gaudeam.* = Si tu venais, je me réjouirais.
+
+Astuce : un petit mot annonce la conséquence (*tam*, *ita*). Sans lui, *ut* + subjonctif exprime le plus souvent le but.
+
+À toi ! Virgile raconte qu'Énée respecte tant les dieux qu'ils veillent sur lui.""",
+            "question": "Que veut dire « Aeneas tam pius est ut di eum servent. » ? (di = les dieux ; servare = protéger)",
+            "options": [
+                "Énée est si pieux que les dieux le protègent.",
+                "Énée est pieux pour que les dieux le protègent.",
+                "Si Énée était pieux, les dieux le protégeraient.",
+                "Les dieux sont si pieux qu'ils protègent Énée.",
+            ],
             "answer": 0,
             "explications": [
                 "",
-                "Après tam (si), ut exprime la conséquence, pas le but.",
-                "Ut + indicatif peut vouloir dire « comme », mais timeant est au subjonctif.",
-                "« Quand » se dirait cum ou ubi.",
+                "Tam annonce la conséquence : si pieux que.",
+                "Il n'y a pas de si ici : c'est ut, après tam.",
+                "Aeneas est au nominatif : c'est Énée qui est pieux.",
             ],
+            "explanation": "Après tam (si), ut + subjonctif exprime la conséquence : si pieux que les dieux le protègent.",
+            "grammaire": {
+                "question": "Que veut dire « Si venias, gaudeam. » ? (venire = venir ; gaudere = se réjouir)",
+                "options": [
+                    "Si tu venais, je me réjouirais.",
+                    "Quand tu viens, je me réjouis.",
+                    "Viens pour que je me réjouisse.",
+                    "Tu es venu, je me suis réjoui.",
+                ],
+                "answer": 0,
+                "explications": [
+                    "",
+                    "Venias et gaudeam sont au subjonctif : la condition est imaginée.",
+                    "Si veut dire « si », pas « pour que ».",
+                    "Ce sont des subjonctifs présents, pas des parfaits.",
+                ],
+            },
         },
-    },
+    ],
 }

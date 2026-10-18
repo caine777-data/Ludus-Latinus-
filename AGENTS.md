@@ -330,13 +330,16 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
-- **Cinq leçons complémentaires rédigées** (18/10/2026, en attente de
+- **Six leçons complémentaires rédigées** (18/10/2026, en attente de
   validation de Cédric) : hic/ille/iste/idem/ipse (m17-05), eo/fero/fio
-  (m20-05), déponent (m23-05), gérondif (m24-05), subjonctif de but,
-  conséquence et condition (m25-05). Source `content/lecons_complementaires.py`,
-  non branchée ; relecture dans `docs/propositions/lecons_complementaires.md`.
+  (m20-05), déponent (m23-05), gérondif (m24-05), subjonctif de but (m25-05),
+  subjonctif de conséquence et de condition (m25-06, Cédric a demandé de couper
+  la leçon du subjonctif en deux). Source `content/lecons_complementaires.py`
+  (valeur = liste de leçons par monde), non branchée ; relecture dans
+  `docs/propositions/lecons_complementaires.md`. Prompts des 6 illustrations
+  dans `docs/propositions/illustrations_lecons_complementaires.md`.
   Une fois validées : insertion avant l'arène de chaque monde, export, tests,
-  prompts d'illustration (5 images).
+  intégration des images (WebP, `illustrations_lecons.dart`).
 
 - **Programme de latin par monde** (18/10/2026). Tableau langue / culture /
   culture des 26 mondes dans `docs/propositions/programme_lca.md`, confronté

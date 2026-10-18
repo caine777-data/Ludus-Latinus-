@@ -1,4 +1,4 @@
-# Cinq leçons complémentaires, à valider
+# Six leçons complémentaires, à valider
 
 Rédaction de l'architecte (18/10/2026). Ces leçons couvrent les notions du programme de LCA (BO du 17 mars 2016) que l'appli n'enseignait pas. Chacune s'insère juste avant l'arène de son monde. Source qui fait foi : `content/lecons_complementaires.py`, pas encore branchée.
 
@@ -119,29 +119,57 @@ Exemple : *« Cicero artem dicendi docet. »* = « Cicéron enseigne l'art de pa
 - Lis, et nous apprendrons. : Legendo n'est pas un ordre : c'est « en lisant ».
 
 ## Monde 25 (3e) : Virgile et Ovide
-### m25-05 · Le Subjonctif : Pour Que, Si Bien Que, Si (puzzle)
+
+Leçon coupée en deux à la demande de Cédric (18/10/2026).
+
+### m25-05 · Le Subjonctif de But : Pour Que (puzzle)
 
 ## Le mode des intentions
-Tu connais le subjonctif du souhait (*Felix sim !* = Que je sois heureux !). Il sert aussi dans des propositions subordonnées :
+Tu connais le subjonctif du souhait (*Felix sim !* = Que je sois heureux !). Il sert aussi à dire **dans quel but** on agit :
 
-- **UT + subjonctif** = pour que, afin de (le **but**) : *Legimus ut discamus.* = Nous lisons pour apprendre.
-- **NE + subjonctif** = pour ne pas : *Fugit ne capiatur.* = Il fuit pour ne pas être pris.
-- **TAM... UT + subjonctif** = si... que (la **conséquence**) : *Tam fortis est ut omnes eum timeant.* = Il est si courageux que tous le craignent.
-- **SI + subjonctif** = si (une **condition** imaginée) : *Si venias, gaudeam.* = Si tu venais, je me réjouirais.
+- **UT + subjonctif** = pour que, pour : *Legimus ut discamus.* = Nous lisons pour apprendre.
+- **NE + subjonctif** = pour ne pas, pour que... ne... pas : *Fugit ne capiatur.* = Il fuit pour ne pas être pris.
 
-Pour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (au lieu de *legit*), *sit* (au lieu de *est*).
+Pour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (au lieu de *legit*), *defendant* (au lieu de *defendunt*), *sit* (au lieu de *est*).
 
 À toi ! Les Romains se battent dans un but précis.
 
 **Exercice :** remettre dans l'ordre la traduction de *Romani pugnant ut patriam defendant.*
 
-Mots proposés : Les Romains / combattent / pour défendre la patrie. / ont combattu / si bien qu'ils défendent la patrie.
+Mots proposés : Les Romains / combattent / pour défendre la patrie. / ont combattu / car ils défendent la patrie.
 
 Solution : Les Romains combattent pour défendre la patrie.
 
-**Question de grammaire :** Dans « Tam fortis est ut omnes eum timeant. », que veut dire ut ? (timere = craindre)
+**Question de grammaire :** Que veut dire « Fugit ne capiatur. » ? (fugere = fuir ; capere = prendre)
 
-- ✅ si bien que
-- pour que : Après tam (si), ut exprime la conséquence, pas le but.
-- comme : Ut + indicatif peut vouloir dire « comme », mais timeant est au subjonctif.
-- quand : « Quand » se dirait cum ou ubi.
+- ✅ Il fuit pour ne pas être pris.
+- Il fuit pour être pris. : Ne change le sens du but : pour ne pas être pris.
+- Il fuit car il n'est pas pris. : Ne + subjonctif exprime un but, pas une cause.
+- Il ne fuit pas, il est pris. : Ne porte sur capiatur : il fuit bien.
+
+### m25-06 · Si Bien Que, Si : Conséquence et Condition (quiz)
+
+## Quand le subjonctif imagine
+Le subjonctif sert aussi à dire **ce qui en résulte** et **ce qui arriverait si** :
+
+- **TAM... UT + subjonctif** = si... que (la **conséquence**) : *Tam fortis est ut omnes eum timeant.* = Il est si courageux que tous le craignent.
+- **ITA... UT + subjonctif** = de telle façon que : *Ita clamat ut omnes audiant.* = Il crie si fort que tous l'entendent.
+- **SI + subjonctif** = si (une **condition** imaginée) : *Si venias, gaudeam.* = Si tu venais, je me réjouirais.
+
+Astuce : un petit mot annonce la conséquence (*tam*, *ita*). Sans lui, *ut* + subjonctif exprime le plus souvent le but.
+
+À toi ! Virgile raconte qu'Énée respecte tant les dieux qu'ils veillent sur lui.
+
+**Question :** Que veut dire « Aeneas tam pius est ut di eum servent. » ? (di = les dieux ; servare = protéger)
+
+- ✅ Énée est si pieux que les dieux le protègent.
+- Énée est pieux pour que les dieux le protègent. : Tam annonce la conséquence : si pieux que.
+- Si Énée était pieux, les dieux le protégeraient. : Il n'y a pas de si ici : c'est ut, après tam.
+- Les dieux sont si pieux qu'ils protègent Énée. : Aeneas est au nominatif : c'est Énée qui est pieux.
+
+**Question de grammaire :** Que veut dire « Si venias, gaudeam. » ? (venire = venir ; gaudere = se réjouir)
+
+- ✅ Si tu venais, je me réjouirais.
+- Quand tu viens, je me réjouis. : Venias et gaudeam sont au subjonctif : la condition est imaginée.
+- Viens pour que je me réjouisse. : Si veut dire « si », pas « pour que ».
+- Tu es venu, je me suis réjoui. : Ce sont des subjonctifs présents, pas des parfaits.
