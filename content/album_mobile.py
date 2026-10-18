@@ -164,7 +164,7 @@ def _construire_cartes():
         cartes.append(copie)
     cartes.extend(_NOUVELLES)
     for carte in cartes:
-        carte["image"] = f"assets/images/album/{carte['id']}.jpg"
+        carte["image"] = f"assets/images/album/{carte['id']}.webp"
     return cartes
 
 

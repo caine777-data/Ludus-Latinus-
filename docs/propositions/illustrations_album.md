@@ -4,6 +4,7 @@ Proposition de l'architecte (17/10/2026). 32 images, une par carte, dans l'ordre
 
 - Générer chaque image avec le prompt du bloc de code, en format 3:4.
 - Télécharger les images dans l'ordre du document, sans les renommer : l'architecte les retrouve par la date et vérifie chacune.
+- Livrez-les en JPG ou en PNG : l'architecte les convertit en WebP (qualité 90) en les intégrant, comme les illustrations de leçon (décision de Cédric du 18/10/2026).
 - Tant qu'une carte n'a pas son image, l'appli affiche une icône sur la couleur de sa rareté.
 
 ## 1. Romulus

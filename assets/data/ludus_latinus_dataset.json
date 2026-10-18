@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-17 17:16:50",
+    "date_export": "2026-10-18 10:10:20",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 113,
@@ -7678,7 +7678,7 @@
         "citation": "Sapientia et virtus vincunt.",
         "anecdote": "Déesse de la sagesse, de la stratégie militaire et des artisans. Accompagnée de sa chouette aux yeux d'or.",
         "traduction": "La sagesse et le courage l'emportent.",
-        "image": "assets/images/album/div_minerve.jpg"
+        "image": "assets/images/album/div_minerve.webp"
       },
       {
         "id": "div_mars",
@@ -7691,7 +7691,7 @@
         "citation": "Si vis pacem, para bellum.",
         "anecdote": "Père légendaire de Romulus et Rémus, dieu de la guerre et protecteur des légions romaines en marche.",
         "traduction": "Si tu veux la paix, prépare la guerre.",
-        "image": "assets/images/album/div_mars.jpg"
+        "image": "assets/images/album/div_mars.webp"
       },
       {
         "id": "div_mercure",
@@ -7704,7 +7704,7 @@
         "citation": "Velociter per auras volat.",
         "anecdote": "Le messager des dieux aux sandales ailées, protecteur des marchands, des voyageurs et des voleurs d'esprit.",
         "traduction": "Il vole rapidement à travers les airs.",
-        "image": "assets/images/album/div_mercure.jpg"
+        "image": "assets/images/album/div_mercure.webp"
       },
       {
         "id": "div_apollon",
@@ -7717,7 +7717,7 @@
         "citation": "Apollo lyra canit.",
         "anecdote": "Dieu de la lumière, des arts, de la poésie et de la médecine, armé d'un arc d'argent et d'une lyre d'or.",
         "traduction": "Apollon chante avec sa lyre.",
-        "image": "assets/images/album/div_apollon.jpg"
+        "image": "assets/images/album/div_apollon.webp"
       },
       {
         "id": "mon_cerbere",
@@ -7730,7 +7730,7 @@
         "citation": "Tres fauces, una custodia.",
         "anecdote": "Le colossal molosse à trois têtes qui garde la porte des Enfers pour empêcher les ombres de s'échapper.",
         "traduction": "Trois gueules, une seule garde.",
-        "image": "assets/images/album/mon_cerbere.jpg"
+        "image": "assets/images/album/mon_cerbere.webp"
       },
       {
         "id": "mon_meduse",
@@ -7743,7 +7743,7 @@
         "citation": "Aspice et lapis eris.",
         "anecdote": "Créature aux cheveux de serpents dont le regard pétrifie instantanément quiconque croise ses yeux.",
         "traduction": "Regarde, et tu seras pierre.",
-        "image": "assets/images/album/mon_meduse.jpg"
+        "image": "assets/images/album/mon_meduse.webp"
       },
       {
         "id": "mon_minotaure",
@@ -7756,7 +7756,7 @@
         "citation": "In tenebris labyrinthi mugit.",
         "anecdote": "Moitié homme, moitié taureau, enfermé dans l'impénétrable dédale bâti par l'architecte Dédale.",
         "traduction": "Il mugit dans les ténèbres du labyrinthe.",
-        "image": "assets/images/album/mon_minotaure.jpg"
+        "image": "assets/images/album/mon_minotaure.webp"
       },
       {
         "id": "mon_lion",
@@ -7769,7 +7769,7 @@
         "citation": "Pellis nullis telis perforabilis.",
         "anecdote": "Un monstre à la peau impénétrable que ni les flèches ni les épées de bronze ne pouvaient percer.",
         "traduction": "Une peau qu'aucune arme ne peut percer.",
-        "image": "assets/images/album/mon_lion.jpg"
+        "image": "assets/images/album/mon_lion.webp"
       },
       {
         "id": "mon_sphinx",
@@ -7782,7 +7782,7 @@
         "citation": "Solve aenigma aut peries.",
         "anecdote": "Gardienne ailée au corps de lionne qui dévore ceux qui échouent à résoudre ses énigmes sacrées.",
         "traduction": "Résous l'énigme, ou tu périras.",
-        "image": "assets/images/album/mon_sphinx.jpg"
+        "image": "assets/images/album/mon_sphinx.webp"
       },
       {
         "id": "her_enee",
@@ -7795,7 +7795,7 @@
         "citation": "Sum pius Aeneas.",
         "anecdote": "Prince troyen échappé de Troie en flammes, ancêtre du peuple romain chanté par Virgile.",
         "traduction": "Je suis le pieux Énée.",
-        "image": "assets/images/album/her_enee.jpg"
+        "image": "assets/images/album/her_enee.webp"
       },
       {
         "id": "her_romulus",
@@ -7808,7 +7808,7 @@
         "citation": "Roma aeterna hic oritur.",
         "anecdote": "Fondateur de Rome sur le mont Palatin en 753 av. J.-C., après avoir tracé le sillon sacré avec sa charrue.",
         "traduction": "Ici naît la Rome éternelle.",
-        "image": "assets/images/album/her_romulus.jpg"
+        "image": "assets/images/album/her_romulus.webp"
       },
       {
         "id": "her_ulysse",
@@ -7821,7 +7821,7 @@
         "citation": "Ingenio plus quam viribus.",
         "anecdote": "Le maître de la ruse, inventeur du cheval de Troie et voyageur intrépide de l'Odyssée.",
         "traduction": "Plus par l'intelligence que par la force.",
-        "image": "assets/images/album/her_ulysse.jpg"
+        "image": "assets/images/album/her_ulysse.webp"
       },
       {
         "id": "her_achille",
@@ -7834,7 +7834,7 @@
         "citation": "Mors celeris, gloria sempiterna.",
         "anecdote": "Guerrier invincible plongé dans le fleuve Styx par sa mère Thétis, à l'exception de son talon.",
         "traduction": "Une mort rapide, une gloire éternelle.",
-        "image": "assets/images/album/her_achille.jpg"
+        "image": "assets/images/album/her_achille.webp"
       },
       {
         "id": "her_julia",
@@ -7847,7 +7847,7 @@
         "citation": "Fortuna audaces iuvat.",
         "anecdote": "Choisie enfant, une Vestale servait trente ans la déesse Vesta : elle gardait le feu sacré et les testaments confiés au temple.",
         "traduction": "La fortune sourit aux audacieux.",
-        "image": "assets/images/album/her_julia.jpg"
+        "image": "assets/images/album/her_julia.webp"
       },
       {
         "id": "mon_colisee",
@@ -7860,7 +7860,7 @@
         "citation": "Dum stat Colyseus, stat Roma.",
         "anecdote": "Le plus grand amphithéâtre du monde antique, pouvant accueillir plus de 50 000 spectateurs éblouis.",
         "traduction": "Tant que le Colisée est debout, Rome est debout.",
-        "image": "assets/images/album/mon_colisee.jpg"
+        "image": "assets/images/album/mon_colisee.webp"
       },
       {
         "id": "mon_scutum",
@@ -7873,7 +7873,7 @@
         "citation": "In scuto fides, in gladio virtus.",
         "anecdote": "Le bouclier cintré et le glaive court à double tranchant qui ont forgé la discipline des légions romaines.",
         "traduction": "Dans le bouclier la confiance, dans le glaive le courage.",
-        "image": "assets/images/album/mon_scutum.jpg"
+        "image": "assets/images/album/mon_scutum.webp"
       },
       {
         "id": "mon_circus",
@@ -7886,7 +7886,7 @@
         "citation": "Panem et circenses.",
         "anecdote": "L'hippodrome géant de Rome, où plus de 150 000 spectateurs vibraient au passage des chars lancés à pleine vitesse.",
         "traduction": "Du pain et des jeux.",
-        "image": "assets/images/album/mon_circus.jpg"
+        "image": "assets/images/album/mon_circus.webp"
       },
       {
         "id": "mon_aqueduc",
@@ -7899,7 +7899,7 @@
         "citation": "Aqua vitae et civitatis.",
         "anecdote": "Prouesse d'ingénierie acheminant des millions de litres d'eau pure des montagnes jusqu'au cœur des cités.",
         "traduction": "L'eau, vie de la cité.",
-        "image": "assets/images/album/mon_aqueduc.jpg"
+        "image": "assets/images/album/mon_aqueduc.webp"
       },
       {
         "id": "her_scipion",
@@ -7912,7 +7912,7 @@
         "citation": "Virtute et constantia vincemus.",
         "anecdote": "Vainqueur d'Hannibal à la bataille de Zama en 202 av. J.-C., sauvant Rome et forgeant l'hégémonie républicaine.",
         "traduction": "Par le courage et la constance, nous vaincrons.",
-        "image": "assets/images/album/her_scipion.jpg"
+        "image": "assets/images/album/her_scipion.webp"
       },
       {
         "id": "her_hannibal",
@@ -7925,7 +7925,7 @@
         "citation": "Aut viam inveniam aut faciam.",
         "anecdote": "Génie carthaginois qui traversa les Alpes avec ses éléphants de guerre pour défier Rome sur son propre sol.",
         "traduction": "Je trouverai un chemin, ou j'en ferai un.",
-        "image": "assets/images/album/her_hannibal.jpg"
+        "image": "assets/images/album/her_hannibal.webp"
       },
       {
         "id": "her_horace",
@@ -7938,7 +7938,7 @@
         "citation": "Carpe diem, quam minimum credula postero.",
         "anecdote": "Poète lyrique du siècle d'Auguste, célébrant la sagesse, l'amitié et l'art de cueillir le jour présent.",
         "traduction": "Cueille le jour, et ne crois pas au lendemain.",
-        "image": "assets/images/album/her_horace.jpg"
+        "image": "assets/images/album/her_horace.webp"
       },
       {
         "id": "div_junon",
@@ -7951,7 +7951,7 @@
         "citation": "Iuno Romam custodit.",
         "traduction": "Junon garde Rome.",
         "anecdote": "Reine des dieux et épouse de Jupiter. Ses oies sacrées, sur le Capitole, donnèrent l'alerte une nuit où les Gaulois escaladaient la colline.",
-        "image": "assets/images/album/div_junon.jpg"
+        "image": "assets/images/album/div_junon.webp"
       },
       {
         "id": "div_vesta",
@@ -7964,7 +7964,7 @@
         "citation": "Ignis Vestae numquam exstinguitur.",
         "traduction": "Le feu de Vesta ne s'éteint jamais.",
         "anecdote": "Déesse du foyer de chaque maison et de Rome entière. Son temple rond, sur le Forum, abritait un feu qui ne devait jamais s'éteindre.",
-        "image": "assets/images/album/div_vesta.jpg"
+        "image": "assets/images/album/div_vesta.webp"
       },
       {
         "id": "her_persee",
@@ -7977,7 +7977,7 @@
         "citation": "Perseus Medusam in clipeo videt.",
         "traduction": "Persée voit Méduse dans son bouclier.",
         "anecdote": "Fils de Jupiter, il vainquit Méduse sans croiser son regard, en guettant son reflet dans un bouclier de bronze poli.",
-        "image": "assets/images/album/her_persee.jpg"
+        "image": "assets/images/album/her_persee.webp"
       },
       {
         "id": "her_brennus",
@@ -7990,7 +7990,7 @@
         "citation": "Vae victis !",
         "traduction": "Malheur aux vaincus !",
         "anecdote": "Chef gaulois qui prit Rome vers 390 av. J.-C. Quand les Romains contestèrent le poids de la rançon, il jeta son épée dans la balance.",
-        "image": "assets/images/album/her_brennus.jpg"
+        "image": "assets/images/album/her_brennus.webp"
       },
       {
         "id": "her_pline_jeune",
@@ -8003,7 +8003,7 @@
         "citation": "Nubes ex monte oriebatur.",
         "traduction": "Un nuage s'élevait de la montagne.",
         "anecdote": "À 17 ans, il vit l'éruption du Vésuve depuis Misène et la raconta dans deux lettres à l'historien Tacite.",
-        "image": "assets/images/album/her_pline_jeune.jpg"
+        "image": "assets/images/album/her_pline_jeune.webp"
       },
       {
         "id": "her_caton",
@@ -8016,7 +8016,7 @@
         "citation": "Carthago delenda est.",
         "traduction": "Il faut détruire Carthage.",
         "anecdote": "Sénateur austère qui terminait chacun de ses discours en réclamant la destruction de Carthage, la grande rivale de Rome.",
-        "image": "assets/images/album/her_caton.jpg"
+        "image": "assets/images/album/her_caton.webp"
       },
       {
         "id": "her_ovide",
@@ -8029,7 +8029,7 @@
         "citation": "Omnia mutantur.",
         "traduction": "Tout change.",
         "anecdote": "Poète des Métamorphoses, où il raconte plus de deux cents légendes, dont le vol de Dédale et d'Icare.",
-        "image": "assets/images/album/her_ovide.jpg"
+        "image": "assets/images/album/her_ovide.webp"
       },
       {
         "id": "mon_centaure",
@@ -8042,7 +8042,7 @@
         "citation": "Centaurus celerius vento currit.",
         "traduction": "Le centaure court plus vite que le vent.",
         "anecdote": "Moitié homme, moitié cheval. Le sage centaure Chiron fut le maître d'Achille et de nombreux héros.",
-        "image": "assets/images/album/mon_centaure.jpg"
+        "image": "assets/images/album/mon_centaure.webp"
       },
       {
         "id": "mon_sceau",
@@ -8055,7 +8055,7 @@
         "citation": "Signum fidem facit.",
         "traduction": "Le sceau garantit la confiance.",
         "anecdote": "Les Romains scellaient tablettes et lettres avec un anneau gravé : un sceau brisé prouvait que le message avait été ouvert.",
-        "image": "assets/images/album/mon_sceau.jpg"
+        "image": "assets/images/album/mon_sceau.webp"
       },
       {
         "id": "mon_roma",
@@ -8068,7 +8068,7 @@
         "citation": "Roma caput mundi.",
         "traduction": "Rome, capitale du monde.",
         "anecdote": "Les Romains appelaient leur ville l'Urbs, « la Ville ». Bâtie sur sept collines, elle comptait près d'un million d'habitants sous Auguste.",
-        "image": "assets/images/album/mon_roma.jpg"
+        "image": "assets/images/album/mon_roma.webp"
       },
       {
         "id": "mon_borne",
@@ -8081,7 +8081,7 @@
         "citation": "Lapis viam metitur.",
         "traduction": "La pierre mesure la route.",
         "anecdote": "Tous les mille pas, soit environ 1,5 km, une colonne de pierre indiquait aux voyageurs la distance jusqu'à Rome.",
-        "image": "assets/images/album/mon_borne.jpg"
+        "image": "assets/images/album/mon_borne.webp"
       }
     ],
     "succes": [

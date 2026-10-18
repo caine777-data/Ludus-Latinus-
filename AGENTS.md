@@ -330,6 +330,13 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Illustrations en WebP** (18/10/2026, décision de Cédric : exception à la
+  règle « pas de recompression », pour les illustrations de leçon et les cartes
+  de l'album seulement). Script `scripts/assets/webp_illustrations.py`, qualité
+  90 (écart ~40 dB, invisible sur détail agrandi). Leçons : 68,4 Mo -> 14,4 Mo.
+  Chemins en `.webp` (illustrations_lecons.dart, `content/album_mobile.py`,
+  script de l'image Store). Originaux JPG conservés dans `gemini ludus`.
+
 - **Bruitages : les 8 refaits sont intégrés** (18/10/2026). `achat` et
   `sesterces_clink` passent aussi en MP3, choisis par Cédric à l'écoute alors
   que la mesure les disait stridents (99 % d'aigus). Leçon : pour des pièces,

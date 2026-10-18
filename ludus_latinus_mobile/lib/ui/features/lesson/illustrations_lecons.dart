@@ -32,4 +32,4 @@ const Set<String> leconsIllustrees = {
 
 /// Chemin de l'illustration propre à la leçon, ou null si elle n'en a pas encore.
 String? illustrationDeLecon(String idLecon) =>
-    leconsIllustrees.contains(idLecon) ? 'assets/images/lecons/lecon_$idLecon.jpg' : null;
+    leconsIllustrees.contains(idLecon) ? 'assets/images/lecons/lecon_$idLecon.webp' : null;

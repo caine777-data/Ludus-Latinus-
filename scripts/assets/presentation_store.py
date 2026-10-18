@@ -12,7 +12,7 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
-ILLUSTRATION = "assets/images/lecons/lecon_m21-03.jpg"
+ILLUSTRATION = "assets/images/lecons/lecon_m21-03.webp"
 SORTIE = "store/presentation_1024x500.png"
 
 

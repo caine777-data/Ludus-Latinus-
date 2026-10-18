@@ -14,14 +14,14 @@ void main() {
     final fichiers = Directory('assets/images/lecons')
         .listSync()
         .map((f) => f.uri.pathSegments.last)
-        .where((n) => n.startsWith('lecon_') && n.endsWith('.jpg'))
-        .map((n) => n.substring(6, n.length - 4))
+        .where((n) => n.startsWith('lecon_') && n.endsWith('.webp'))
+        .map((n) => n.substring(6, n.length - 5))
         .toSet();
     expect(fichiers, leconsIllustrees);
   });
 
   test('Une leçon sans image garde le repli', () {
-    expect(illustrationDeLecon('m11-01'), 'assets/images/lecons/lecon_m11-01.jpg');
+    expect(illustrationDeLecon('m11-01'), 'assets/images/lecons/lecon_m11-01.webp');
     expect(illustrationDeLecon('m01-01'), isNull);
   });
 
@@ -49,7 +49,7 @@ void main() {
 
   testWidgets('Leçon de 4e : son image remplit le bandeau', (tester) async {
     final img = await bandeau(tester, 'm11-01', 'Horatius Coclès');
-    expect((img.image as AssetImage).assetName, 'assets/images/lecons/lecon_m11-01.jpg');
+    expect((img.image as AssetImage).assetName, 'assets/images/lecons/lecon_m11-01.webp');
     expect(img.fit, BoxFit.cover);
   });
 
