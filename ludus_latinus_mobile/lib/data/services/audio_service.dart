@@ -375,14 +375,14 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> playSesterces() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.lightImpact();
-    await playAsset('assets/audio/sesterces_clink.wav');
+    await playAsset('assets/audio/sesterces_clink.mp3');
   }
 
   /// Micro-tintement rapide pour le défilement fluide des pièces
   Future<void> playCoinTick() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.selectionClick();
-    await playAsset('assets/audio/sesterces_clink.wav', volumeMultiplier: 0.6);
+    await playAsset('assets/audio/sesterces_clink.mp3', volumeMultiplier: 0.6);
   }
 
   /// Roulement des osselets et dés dans le cornet (fritillus)
@@ -469,7 +469,7 @@ class AudioService extends ChangeNotifier with WidgetsBindingObserver {
   Future<void> playPurchase() async {
     if (_isMuted) return;
     if (_hapticsEnabled) HapticFeedback.heavyImpact();
-    await playAsset('assets/audio/achat.wav');
+    await playAsset('assets/audio/achat.mp3');
   }
 
   /// Carte de collection obtenue.

@@ -117,10 +117,10 @@ Loud close-up impact of an iron sword striking a wooden shield, heavy thud and a
 |---|---|---|
 | `indice.mp3` | 0 % d'aigus, crête à -0,1 dB, démarre tout de suite | intégré |
 | `sword_clash.mp3` | 6 % d'aigus, crête à -9,6 dB | intégré ; plus doux que les autres sons |
-| `achat.mp3` | 99 % d'aigus | écarté : encore strident |
-| `sesterces_clink.mp3` | 99,5 % d'aigus | écarté : l'ancien son (50 %) reste meilleur |
+| `achat.mp3` | 99 % d'aigus | intégré après écoute de Cédric : pas strident à l'oreille, on entend la foule du marché |
+| `sesterces_clink.mp3` | 99,5 % d'aigus | intégré après écoute de Cédric : bon à l'oreille |
 
-Deux essais de pièces ont donné le même tintement aigu : ElevenLabs rend les pièces brillantes, quoi qu'on demande. Troisième piste : faire tomber une **bourse en cuir**, dont le choc sourd couvre le tintement.
+Leçon : la part d'aigus mesurée ne suffit pas à juger un son de pièces, naturellement aigu ; l'oreille de Cédric tranche. Pistes non utilisées : deux essais de pièces ont donné le même tintement aigu : ElevenLabs rend les pièces brillantes, quoi qu'on demande. Troisième piste : faire tomber une **bourse en cuir**, dont le choc sourd couvre le tintement.
 
 **achat (1 s)**
 
