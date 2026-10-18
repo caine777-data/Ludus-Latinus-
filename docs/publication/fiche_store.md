@@ -63,10 +63,9 @@ Ludus Latinus est édité par Icare & Dédale.
 | Icône | 512 × 512, PNG | prête : `store/icone_play_store_512.png` |
 | Image de présentation | 1024 × 500, JPG ou PNG | projet à valider : `store/presentation_1024x500.png` (illustration m21-03, script `scripts/assets/presentation_store.py`) |
 | Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, album, Bataille, exercice, page des professeurs, accueil (refaites le 18/10/2026, script `scripts/assets/captures_store.py`) |
-| Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` |
+| Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` : leçon, Via Appia, duel, Ludi, album, Bataille, page des professeurs, accueil (refaites le 18/10/2026 : capture 2560 × 1600 recadrée, barre d'état et barre de gestes retirées) |
 
 ## À revoir avant la mise en production
 
 - Si l'Édition complète est vendue, l'indiquer dans la description (« les mondes 1 à 3 sont gratuits ; l'Édition complète débloque tout, en un seul achat ») : Google exige que les achats intégrés soient signalés.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
-- Captures tablette : prises avant l'album, la Bataille et la page des professeurs, à refaire si on veut les y montrer.

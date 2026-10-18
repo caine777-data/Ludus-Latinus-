@@ -337,8 +337,10 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   (bords prolongés). Description du Store complétée (album, Bataille, page des
   professeurs, 119 leçons), à valider par Cédric. Corrigé au passage : dans la
   Bataille, les réponses longues (devises) étaient coupées à la 3e ligne ; la
-  hauteur des cases suit maintenant la taille de police. Captures tablette non
-  refaites.
+  hauteur des cases suit maintenant la taille de police. Captures tablette refaites
+  aussi (2560 × 1440, recadrage des captures 2560 × 1600 sur y 80 à 1520) :
+  boutique, Panthéon et Thesaurus remplacés par album, Bataille et page des
+  professeurs.
 
 - **Programme de LCA affiché** (18/10/2026, tableau validé par Cédric) :
   `content/programme_lca.py` (PROGRAMME_MONDES : langue et culture par monde ;
