@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Album illustré** (18/10/2026). Les 32 cartes livrées par Cédric (Google
+  Flow, 896 × 1200), contrôlées sur planche, converties en WebP qualité 90
+  (24,8 Mo -> 4,9 Mo) dans `assets/images/album/<id>.webp`. Test : chaque carte
+  a son image. Vu à l'émulateur : album et fiche de carte. Prochaine étape :
+  maquette de la bataille de cartes.
+
 - **Illustrations en WebP** (18/10/2026, décision de Cédric : exception à la
   règle « pas de recompression », pour les illustrations de leçon et les cartes
   de l'album seulement). Script `scripts/assets/webp_illustrations.py`, qualité

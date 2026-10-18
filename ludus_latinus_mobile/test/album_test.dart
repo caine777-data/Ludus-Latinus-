@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,6 +36,12 @@ void main() {
   test('L\'album a 32 cartes et un succès par carte', () {
     expect(data.cartesAlbum.length, 32);
     expect(data.succesAlbum.map((s) => s.carteId).toSet(), data.cartesAlbum.map((c) => c.id).toSet());
+  });
+
+  test('Chaque carte a son illustration dans les assets', () {
+    for (final c in data.cartesAlbum) {
+      expect(File(c.image).existsSync(), isTrue, reason: c.image);
+    }
   });
 
   test('Terminer le monde 1 donne Romulus, une seule fois, avec ses sesterces', () {
