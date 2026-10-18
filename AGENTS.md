@@ -331,10 +331,12 @@ refusé.
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
 - **Programme de latin par monde** (18/10/2026). Tableau langue / culture /
-  lexique des 26 mondes dans `docs/propositions/programme_lca.md`, tiré du
-  contenu réel des leçons. Il ne cite pas le Bulletin officiel : à valider par
-  Cédric et à confronter au programme de LCA en vigueur avant affichage
-  (ligne « Au programme » par monde, page « Pour les professeurs »).
+  culture des 26 mondes dans `docs/propositions/programme_lca.md`, confronté
+  au programme officiel (BO n°11 du 17 mars 2016, intitulés cités mot pour
+  mot ; projet de révision du CSP du 22/05/2025 non adopté). Écarts relevés
+  (armée en 5e, Gaule en 4e, fin de la République en 4e) et notions non
+  couvertes (hic/ille, déponent, eo/fio/fero, subjonctif hors souhait). À
+  valider par Cédric avant affichage (« Au programme », page professeurs).
 
 - **Bataille des Légendes** (18/10/2026, nom, Crassus et cartes de prêt validés
   par Cédric). 8e jeu de Ludi, ouvert à 3 cartes d'album. Règles pures dans
