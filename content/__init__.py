@@ -34,6 +34,7 @@ from . import (
 )
 from .glossaire import GLOSSAIRE as GLOSSAIRE
 from .glossaire import get_glossaire as get_glossaire
+from .lecons_complementaires import LECONS_COMPLEMENTAIRES
 
 CURRICULUM_5EME = [
     monde1_salve.LEVEL,
@@ -98,6 +99,21 @@ CLASSES = {
 }
 
 CURRICULUM = CURRICULUM_5EME + CURRICULUM_4EME + CURRICULUM_3EME
+
+
+def _inserer_complements():
+    """Place les leçons complémentaires du programme juste avant l'arène de leur
+    monde : l'arène reste l'épreuve finale qui reprend tout le monde."""
+    for niveau in CURRICULUM:
+        ajouts = LECONS_COMPLEMENTAIRES.get(niveau["id"], [])
+        if not ajouts or any(lecon["id"] == ajouts[0]["id"] for lecon in niveau["lessons"]):
+            continue
+        lecons = niveau["lessons"]
+        arene = next((i for i, lecon in enumerate(lecons) if lecon["type"] == "arene"), len(lecons))
+        lecons[arene:arene] = [dict(lecon) for lecon in ajouts]
+
+
+_inserer_complements()
 
 
 def get_curriculum_classe(classe="5eme"):

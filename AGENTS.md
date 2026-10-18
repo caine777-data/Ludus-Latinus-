@@ -330,16 +330,18 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
-- **Six leçons complémentaires rédigées** (18/10/2026, en attente de
-  validation de Cédric) : hic/ille/iste/idem/ipse (m17-05), eo/fero/fio
+- **Six leçons complémentaires branchées** (18/10/2026, relues et
+  demandées par Cédric) : hic/ille/iste/idem/ipse (m17-05), eo/fero/fio
   (m20-05), déponent (m23-05), gérondif (m24-05), subjonctif de but (m25-05),
-  subjonctif de conséquence et de condition (m25-06, Cédric a demandé de couper
-  la leçon du subjonctif en deux). Source `content/lecons_complementaires.py`
-  (valeur = liste de leçons par monde), non branchée ; relecture dans
-  `docs/propositions/lecons_complementaires.md`. Prompts des 6 illustrations
-  dans `docs/propositions/illustrations_lecons_complementaires.md`.
-  Une fois validées : insertion avant l'arène de chaque monde, export, tests,
-  intégration des images (WebP, `illustrations_lecons.dart`).
+  subjonctif de conséquence et de condition (m25-06, leçon du subjonctif coupée
+  en deux à sa demande). Source `content/lecons_complementaires.py` (valeur =
+  liste de leçons par monde) ; `content/__init__.py` (`_inserer_complements`)
+  les insère juste avant l'arène, les identifiants -05/-06 viennent donc avant
+  l'arène -04 dans la liste. Jeu de données réexporté : 119 leçons.
+  Illustrations de Cédric converties en WebP qualité 90 (~170 Ko chacune) et
+  ajoutées à `illustrations_lecons.dart` (93 leçons illustrées). Test
+  `test/lecons_complementaires_test.dart` : place avant l'arène et ouverture de
+  chaque leçon. Relecture : `docs/propositions/lecons_complementaires.md`.
 
 - **Programme de latin par monde** (18/10/2026). Tableau langue / culture /
   culture des 26 mondes dans `docs/propositions/programme_lca.md`, confronté
@@ -392,7 +394,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   réponses. Vu à l'émulateur : téléphone tourné, appli restée en portrait ;
   tablette en portrait (1600 × 2560) correcte pour l'accueil, la leçon, le Duel.
   Illustrations : 40 images de plus (5e entière et m14-03), contrôlées sur
-  planche : les 87 leçons de cours sont illustrées.
+  planche : les 87 leçons de cours sont illustrées (93 depuis les leçons complémentaires).
 
 - **Tablette, suite** (17/10/2026). Composant `ColonneLecture` (widgets.dart :
   colonne centrée de largeur limitée, `heightFactor: 1` pour ne pas s'étirer en

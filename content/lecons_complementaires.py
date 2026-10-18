@@ -1,8 +1,8 @@
 """
 Leçons complémentaires : les notions du programme de LCA (BO n°11 du 17 mars 2016)
 que l'appli n'enseignait pas encore. Rédaction de l'architecte du 18/10/2026,
-EN ATTENTE DE VALIDATION PAR CÉDRIC : ce module n'est pas encore branché sur les
-mondes ni exporté.
+relues et branchées le 18/10/2026 : content/__init__.py les insère avant l'arène
+de leur monde.
 
 Clé = identifiant du monde ; valeur = liste des leçons à insérer, dans l'ordre,
 juste avant l'arène de ce monde.
@@ -96,7 +96,7 @@ Exemple : *« Mercator Romam it. »* = « Le marchand va à Rome. » Devant un n
 Certains verbes latins ont la forme du **passif**, mais un sens **actif**. On les appelle **déponents** : ils ont « déposé » leurs formes actives.
 
 - **LOQUOR** = je parle (et non « je suis parlé ») ; *loquitur* = il parle
-- **SEQUOR** = je suis, je suis quelqu'un ; *sequitur* = il suit
+- **SEQUOR** = je suis (du verbe suivre) ; *sequitur* = il suit
 - **HORTOR** = j'encourage ; *hortatur* = il encourage
 - **CONOR** = j'essaie ; *conatur* = il essaie
 
@@ -196,7 +196,7 @@ Pour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (
                 "answer": 0,
                 "explications": [
                     "",
-                    "Ne change le sens du but : pour ne pas être pris.",
+                    "Ne rend le but négatif : pour ne pas être pris.",
                     "Ne + subjonctif exprime un but, pas une cause.",
                     "Ne porte sur capiatur : il fuit bien.",
                 ],

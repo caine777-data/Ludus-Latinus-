@@ -3,10 +3,10 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-18 10:10:20",
+    "date_export": "2026-10-18 16:41:53",
     "total_classes": 3,
     "total_mondes": 26,
-    "total_lecons": 113,
+    "total_lecons": 119,
     "total_mots_thesaurus": 224,
     "total_monuments_forum": 6,
     "total_flashcards_srs": 29
@@ -2891,6 +2891,43 @@
           }
         },
         {
+          "id": "m17-05",
+          "type": "quiz",
+          "title": "Hic, Ille, Iste : Celui-ci, Celui-là",
+          "content": "## Montrer du doigt en latin\nTu connais déjà **is, ea, id** (il, elle, cela). Le latin a d'autres démonstratifs, plus précis :\n\n- **HIC, HAEC, HOC** = celui-ci, celle-ci, ceci (tout près de moi)\n- **ILLE, ILLA, ILLUD** = celui-là, celle-là (loin de moi, ou célèbre : *ille Caesar*, « le fameux César »)\n- **ISTE, ISTA, ISTUD** = celui-là (près de toi), souvent avec mépris\n- **IDEM, EADEM, IDEM** = le même, la même\n- **IPSE, IPSA, IPSUM** = lui-même, elle-même\n\nExemple : *« Hic miles Romanus est, ille Gallus. »* = « Ce soldat-ci est romain, celui-là est gaulois. »\n\nÀ toi ! Sur la colline d'Alésia, un soldat montre au loin le chef ennemi.",
+          "question": "Que veut dire « ille dux » ?",
+          "options": [
+            "Ce chef-là, ce fameux chef",
+            "Ce chef-ci, tout près",
+            "Le même chef",
+            "Le chef lui-même"
+          ],
+          "answer": 0,
+          "explications": [
+            "",
+            "« Ce chef-ci » se dit hic dux : hic désigne ce qui est proche.",
+            "« Le même chef » se dit idem dux.",
+            "« Le chef lui-même » se dit dux ipse."
+          ],
+          "explanation": "Ille montre ce qui est loin, ou ce qui est célèbre : ille dux, ce chef-là.",
+          "grammaire": {
+            "question": "Comment dit-on « César lui-même combat » ? (pugnare = combattre)",
+            "options": [
+              "Caesar ipse pugnat.",
+              "Caesar idem pugnat.",
+              "Caesar hic pugnat.",
+              "Caesar iste pugnat."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Idem veut dire « le même », pas « lui-même ».",
+              "Hic veut dire « celui-ci » : il montre, il n'insiste pas.",
+              "Iste montre quelqu'un près de toi, souvent avec mépris."
+            ]
+          }
+        },
+        {
           "id": "m17-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : L'Aigle de la Xe Légion",
@@ -3335,6 +3372,33 @@
               "",
               "Cette forme est féminine ; elle irait avec un nom comme urbs.",
               "Cette forme est masculine ; elle ne s'accorde pas avec un nom neutre."
+            ]
+          }
+        },
+        {
+          "id": "m20-05",
+          "type": "trou",
+          "title": "Eo, Fero, Fio : Aller, Porter, Devenir",
+          "content": "## Trois verbes irréguliers pour voyager\nSur les routes de l'Empire, trois verbes très fréquents ne suivent pas les modèles habituels.\n\n**EO, IRE** = aller\n- *eo, is, it* = je vais, tu vas, il va\n- *imus, itis, eunt* = nous allons, vous allez, ils vont\n\n**FERO, FERRE** = porter\n- *fero, fers, fert* = je porte, tu portes, il porte\n- *ferimus, fertis, ferunt* = nous portons, vous portez, ils portent\n\n**FIO, FIERI** = devenir, être fait\n- *fio, fis, fit* = je deviens, tu deviens, il devient\n\nExemple : *« Mercator Romam it. »* = « Le marchand va à Rome. » Devant un nom de ville, pas de préposition : *Romam*.\n\nÀ toi ! Les soldats, cette fois, sont plusieurs.",
+          "consigne": "Complète le verbe « vont » :",
+          "avant": "Milites Romam ",
+          "apres": ".",
+          "solution": "eunt",
+          "latin_complet": "Milites Romam eunt.",
+          "grammaire": {
+            "question": "Que veut dire « Servus aquam fert. » ? (servus = l'esclave ; aqua = l'eau)",
+            "options": [
+              "L'esclave porte de l'eau.",
+              "L'esclave va vers l'eau.",
+              "L'esclave devient l'eau.",
+              "L'esclave a porté de l'eau."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "« Il va » se dit it, du verbe eo.",
+              "« Il devient » se dit fit, du verbe fio.",
+              "Fert est au présent : il porte maintenant."
             ]
           }
         },
@@ -3784,6 +3848,43 @@
           }
         },
         {
+          "id": "m23-05",
+          "type": "quiz",
+          "title": "Les Verbes Déponents : Passifs de Forme, Actifs de Sens",
+          "content": "## Des verbes déguisés\nCertains verbes latins ont la forme du **passif**, mais un sens **actif**. On les appelle **déponents** : ils ont « déposé » leurs formes actives.\n\n- **LOQUOR** = je parle (et non « je suis parlé ») ; *loquitur* = il parle\n- **SEQUOR** = je suis (du verbe suivre) ; *sequitur* = il suit\n- **HORTOR** = j'encourage ; *hortatur* = il encourage\n- **CONOR** = j'essaie ; *conatur* = il essaie\n\nExemple : *« Cicero in senatu loquitur. »* = « Cicéron parle au Sénat. »\n\nPour les reconnaître : le dictionnaire les donne avec une forme en **-or** (*loquor*) et un infinitif en **-i** (*loqui*, parler).\n\nÀ toi ! Les légionnaires marchent derrière leur général.",
+          "question": "Que veut dire « Milites ducem sequuntur. » ? (dux, ducis = le chef)",
+          "options": [
+            "Les soldats suivent le chef.",
+            "Les soldats sont suivis par le chef.",
+            "Le chef suit les soldats.",
+            "Les soldats suivaient le chef."
+          ],
+          "answer": 0,
+          "explications": [
+            "",
+            "Sequor est déponent : sa forme est passive, mais son sens est actif.",
+            "Ducem est à l'accusatif : le chef est suivi, il ne suit pas.",
+            "Sequuntur est au présent : ils suivent maintenant."
+          ],
+          "explanation": "Sequuntur a une forme passive mais un sens actif : les soldats suivent.",
+          "grammaire": {
+            "question": "Laquelle de ces formes est un verbe déponent ?",
+            "options": [
+              "amatur",
+              "loquitur",
+              "portatur",
+              "laudatur"
+            ],
+            "answer": 1,
+            "explications": [
+              "C'est le passif de amare : il est aimé.",
+              "",
+              "C'est le passif de portare : il est porté.",
+              "C'est le passif de laudare : il est loué."
+            ]
+          }
+        },
+        {
           "id": "m23-04",
           "type": "arene",
           "title": "⚔️ Défi de l'Arène : Le Procureur du Barreau",
@@ -3928,6 +4029,33 @@
               "L'infinitif présent ne marque pas une action passée par rapport à puto.",
               "Reginam est au singulier : la fin -am désigne une seule reine.",
               "Puto veut dire « je pense » : celui qui pense, c'est « je », pas la reine."
+            ]
+          }
+        },
+        {
+          "id": "m24-05",
+          "type": "trou",
+          "title": "Le Gérondif : l'Art de Parler",
+          "content": "## Un verbe qui se déguise en nom\nLe **gérondif** permet d'employer un verbe comme un nom. Il se forme avec **-ND-** :\n\n- **-NDI** : *ars dicendi* = l'art de parler (mot à mot : l'art du parler)\n- **-NDO** : *legendo discimus* = nous apprenons en lisant\n- **AD + -NDUM** : *venit ad pugnandum* = il vient pour combattre\n\nPour le former : on part du verbe (*dicere*, parler) et on ajoute **-endi**, **-endo** ou **-endum** (*-andi* pour les verbes en *-are* : *amandi*, d'aimer).\n\nExemple : *« Cicero artem dicendi docet. »* = « Cicéron enseigne l'art de parler. »\n\nÀ toi ! Les jeunes Romains veulent apprendre l'art d'écrire (*scribere*).",
+          "consigne": "Complète le gérondif « d'écrire » :",
+          "avant": "Pueri artem ",
+          "apres": " discunt.",
+          "solution": "scribendi",
+          "latin_complet": "Pueri artem scribendi discunt.",
+          "grammaire": {
+            "question": "Que veut dire « Legendo discimus. » ? (legere = lire ; discere = apprendre)",
+            "options": [
+              "En lisant, nous apprenons.",
+              "Nous lisons pour apprendre.",
+              "Nous avons appris à lire.",
+              "Lis, et nous apprendrons."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "« Pour apprendre » se dirait ad discendum ou ut discamus.",
+              "Discimus est au présent : nous apprenons maintenant.",
+              "Legendo n'est pas un ordre : c'est « en lisant »."
             ]
           }
         },
@@ -4077,6 +4205,74 @@
               "Le -que ajouté au mot n'exprime pas un complément du nom.",
               "Le petit mot -que ne propose pas un choix entre deux noms.",
               ""
+            ]
+          }
+        },
+        {
+          "id": "m25-05",
+          "type": "puzzle",
+          "title": "Le Subjonctif de But : Pour Que",
+          "content": "## Le mode des intentions\nTu connais le subjonctif du souhait (*Felix sim !* = Que je sois heureux !). Il sert aussi à dire **dans quel but** on agit :\n\n- **UT + subjonctif** = pour que, pour : *Legimus ut discamus.* = Nous lisons pour apprendre.\n- **NE + subjonctif** = pour ne pas, pour que... ne... pas : *Fugit ne capiatur.* = Il fuit pour ne pas être pris.\n\nPour reconnaître le subjonctif présent : *amet* (au lieu de *amat*), *legat* (au lieu de *legit*), *defendant* (au lieu de *defendunt*), *sit* (au lieu de *est*).\n\nÀ toi ! Les Romains se battent dans un but précis.",
+          "latin": "Romani pugnant ut patriam defendant.",
+          "mots": [
+            "Les Romains",
+            "combattent",
+            "pour défendre la patrie.",
+            "ont combattu",
+            "car ils défendent la patrie."
+          ],
+          "solution": "Les Romains combattent pour défendre la patrie.",
+          "grammaire": {
+            "question": "Que veut dire « Fugit ne capiatur. » ? (fugere = fuir ; capere = prendre)",
+            "options": [
+              "Il fuit pour ne pas être pris.",
+              "Il fuit pour être pris.",
+              "Il fuit car il n'est pas pris.",
+              "Il ne fuit pas, il est pris."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Ne rend le but négatif : pour ne pas être pris.",
+              "Ne + subjonctif exprime un but, pas une cause.",
+              "Ne porte sur capiatur : il fuit bien."
+            ]
+          }
+        },
+        {
+          "id": "m25-06",
+          "type": "quiz",
+          "title": "Si Bien Que, Si : Conséquence et Condition",
+          "content": "## Quand le subjonctif imagine\nLe subjonctif sert aussi à dire **ce qui en résulte** et **ce qui arriverait si** :\n\n- **TAM... UT + subjonctif** = si... que (la **conséquence**) : *Tam fortis est ut omnes eum timeant.* = Il est si courageux que tous le craignent.\n- **ITA... UT + subjonctif** = de telle façon que : *Ita clamat ut omnes audiant.* = Il crie si fort que tous l'entendent.\n- **SI + subjonctif** = si (une **condition** imaginée) : *Si venias, gaudeam.* = Si tu venais, je me réjouirais.\n\nAstuce : un petit mot annonce la conséquence (*tam*, *ita*). Sans lui, *ut* + subjonctif exprime le plus souvent le but.\n\nÀ toi ! Virgile raconte qu'Énée respecte tant les dieux qu'ils veillent sur lui.",
+          "question": "Que veut dire « Aeneas tam pius est ut di eum servent. » ? (di = les dieux ; servare = protéger)",
+          "options": [
+            "Énée est si pieux que les dieux le protègent.",
+            "Énée est pieux pour que les dieux le protègent.",
+            "Si Énée était pieux, les dieux le protégeraient.",
+            "Les dieux sont si pieux qu'ils protègent Énée."
+          ],
+          "answer": 0,
+          "explications": [
+            "",
+            "Tam annonce la conséquence : si pieux que.",
+            "Il n'y a pas de si ici : c'est ut, après tam.",
+            "Aeneas est au nominatif : c'est Énée qui est pieux."
+          ],
+          "explanation": "Après tam (si), ut + subjonctif exprime la conséquence : si pieux que les dieux le protègent.",
+          "grammaire": {
+            "question": "Que veut dire « Si venias, gaudeam. » ? (venire = venir ; gaudere = se réjouir)",
+            "options": [
+              "Si tu venais, je me réjouirais.",
+              "Quand tu viens, je me réjouis.",
+              "Viens pour que je me réjouisse.",
+              "Tu es venu, je me suis réjoui."
+            ],
+            "answer": 0,
+            "explications": [
+              "",
+              "Venias et gaudeam sont au subjonctif : la condition est imaginée.",
+              "Si veut dire « si », pas « pour que ».",
+              "Ce sont des subjonctifs présents, pas des parfaits."
             ]
           }
         },
@@ -4818,7 +5014,7 @@
         "etym": "docteur, doctrine, document",
         "ex": "Magister discipulos docet.",
         "ex_fr": "Le maître instruit les élèves.",
-        "monde": ""
+        "monde": "monde24"
       },
       {
         "latin": "esse (sum, fui)",
@@ -4848,7 +5044,7 @@
         "etym": "itinéraire, initié",
         "ex": "Quo vadis ?",
         "ex_fr": "Où vas-tu ?",
-        "monde": ""
+        "monde": "monde20"
       },
       {
         "latin": "legere (lego, legi, lectum)",

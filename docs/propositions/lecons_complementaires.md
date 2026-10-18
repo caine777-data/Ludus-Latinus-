@@ -69,7 +69,7 @@ Exemple : *« Mercator Romam it. »* = « Le marchand va à Rome. » Devant un n
 Certains verbes latins ont la forme du **passif**, mais un sens **actif**. On les appelle **déponents** : ils ont « déposé » leurs formes actives.
 
 - **LOQUOR** = je parle (et non « je suis parlé ») ; *loquitur* = il parle
-- **SEQUOR** = je suis, je suis quelqu'un ; *sequitur* = il suit
+- **SEQUOR** = je suis (du verbe suivre) ; *sequitur* = il suit
 - **HORTOR** = j'encourage ; *hortatur* = il encourage
 - **CONOR** = j'essaie ; *conatur* = il essaie
 
@@ -143,7 +143,7 @@ Solution : Les Romains combattent pour défendre la patrie.
 **Question de grammaire :** Que veut dire « Fugit ne capiatur. » ? (fugere = fuir ; capere = prendre)
 
 - ✅ Il fuit pour ne pas être pris.
-- Il fuit pour être pris. : Ne change le sens du but : pour ne pas être pris.
+- Il fuit pour être pris. : Ne rend le but négatif : pour ne pas être pris.
 - Il fuit car il n'est pas pris. : Ne + subjonctif exprime un but, pas une cause.
 - Il ne fuit pas, il est pris. : Ne porte sur capiatur : il fuit bien.
 
