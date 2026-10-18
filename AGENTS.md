@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Programme de latin par monde** (18/10/2026). Tableau langue / culture /
+  lexique des 26 mondes dans `docs/propositions/programme_lca.md`, tiré du
+  contenu réel des leçons. Il ne cite pas le Bulletin officiel : à valider par
+  Cédric et à confronter au programme de LCA en vigueur avant affichage
+  (ligne « Au programme » par monde, page « Pour les professeurs »).
+
 - **Bataille des Légendes** (18/10/2026, nom, Crassus et cartes de prêt validés
   par Cédric). 8e jeu de Ludi, ouvert à 3 cartes d'album. Règles pures dans
   `lib/ui/features/bataille/bataille_logique.dart` (main de 5, cartes de prêt
