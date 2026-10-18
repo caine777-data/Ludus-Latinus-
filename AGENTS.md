@@ -330,6 +330,11 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Bruitages : les 8 refaits sont intégrés** (18/10/2026). `achat` et
+  `sesterces_clink` passent aussi en MP3, choisis par Cédric à l'écoute alors
+  que la mesure les disait stridents (99 % d'aigus). Leçon : pour des pièces,
+  sons naturellement aigus, la part d'aigus ne suffit pas ; l'oreille tranche.
+
 - **Bruitages, second essai** (18/10/2026). `indice` et `sword_clash` passent en
   MP3 ElevenLabs (mesurés : 0 % et 6 % d'aigus). `achat` et `sesterces_clink`
   restent les anciens WAV (nouveaux essais encore stridents) ; troisième piste
