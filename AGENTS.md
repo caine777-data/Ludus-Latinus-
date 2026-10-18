@@ -330,6 +330,19 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Bataille des Légendes** (18/10/2026, nom, Crassus et cartes de prêt validés
+  par Cédric). 8e jeu de Ludi, ouvert à 3 cartes d'album. Règles pures dans
+  `lib/ui/features/bataille/bataille_logique.dart` (main de 5, cartes de prêt
+  communes d'abord, main de Crassus de même rareté carte à carte, question :
+  devise de la carte posée à 60 %, sinon vocabulaire des mondes atteints ;
+  bonne réponse = l'élève choisit attaque ou défense, sinon Crassus prend
+  l'avantage ; premier à 3, 5 manches au plus). Écran `bataille_screen.dart`.
+  Victoire : `GameRepository.noterBataille` (12 HS, 3 parties payées par jour,
+  série et record `bataille`), quête du jour `quest_bataille`. Tests
+  `bataille_test.dart` (règles, récompense, déblocage, manche jouée). Partie
+  complète jouée à l'émulateur ; corrigés en jouant : carte posée encore dans
+  la main, sélection peu visible (coche), numéro de manche, pluriel du score.
+
 - **Album illustré** (18/10/2026). Les 32 cartes livrées par Cédric (Google
   Flow, 896 × 1200), contrôlées sur planche, converties en WebP qualité 90
   (24,8 Mo -> 4,9 Mo) dans `assets/images/album/<id>.webp`. Test : chaque carte

@@ -9,7 +9,8 @@ import '../../taverne/taverne_screen.dart';
 import '../../cesar/cesar_screen.dart';
 import '../../marche/marche_trajan_screen.dart';
 import '../../pantheon/pantheon_screen.dart';
-import '../../album/album_screen.dart';
+import '../../album/album_screen.dart';
+import '../../bataille/bataille_screen.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Onglet 3 : Ludi & Arènes — Mini-jeux d'arcade romaine soumis au déblocage progressif (Progressive Disclosure).
@@ -235,6 +236,26 @@ class LudiView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => AlbumScreen(repo: repo)),
+                          );
+                        },
+                      ),
+
+                      // 8. Bataille des Légendes : les cartes de l'album contre Crassus
+                      _buildGameTile(
+                        context: context,
+                        gameKey: 'bataille',
+                        imagePath: 'assets/images/album/her_hannibal.webp',
+                        fallbackIcon: '⚔️',
+                        title: context.l10n.bataTitle,
+                        subtitle: repo.record('bataille') > 0
+                            ? context.l10n.ludiRecordStreak(repo.record('bataille'))
+                            : context.l10n.bataSubtitle,
+                        tagLabel: context.l10n.bataTag,
+                        tagColor: const Color(0xFF8E1724),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => BatailleScreen(repo: repo)),
                           );
                         },
                       ),

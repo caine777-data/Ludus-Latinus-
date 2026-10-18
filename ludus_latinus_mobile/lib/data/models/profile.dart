@@ -417,6 +417,12 @@ class UserProfile {
           reason: 'Termine 12 leçons pour ouvrir l\'Atelier de César',
           progress: prog,
         );
+      case 'bataille':
+        return (
+          isUnlocked: cartesAlbum.length >= 3,
+          reason: 'Gagne 3 cartes de l\'album pour défier Crassus',
+          progress: (cartesAlbum.length / 3).clamp(0.0, 1.0),
+        );
       case 'marche':
         final prog = (completedLessons.length / marcheTrajanRequiredLessons).clamp(0.0, 1.0);
         return (

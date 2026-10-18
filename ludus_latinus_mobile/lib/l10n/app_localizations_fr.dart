@@ -1725,4 +1725,137 @@ class AppLocalizationsFr extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get bataTitle => 'Bataille des Légendes';
+
+  @override
+  String get bataSubtitle => 'Tes cartes contre Crassus';
+
+  @override
+  String get bataTag => 'CARTES';
+
+  @override
+  String get bataIntro =>
+      'Crassus le collectionneur, l\'homme le plus riche de Rome, te défie avec ses propres cartes.';
+
+  @override
+  String get bataRules =>
+      'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : Crassus choisit. Le premier à 3 manches gagne.';
+
+  @override
+  String get bataChooseHand => 'Choisis les 5 cartes de ta main';
+
+  @override
+  String get bataLoanInfo =>
+      'Tu n\'as pas encore 5 cartes : Crassus te prête les autres. Gagne des succès pour jouer avec les tiennes.';
+
+  @override
+  String get bataLoan => 'PRÊT';
+
+  @override
+  String get bataStart => 'Combattre';
+
+  @override
+  String get bataYou => 'Toi';
+
+  @override
+  String get bataCrassus => 'Crassus';
+
+  @override
+  String get bataHidden => 'face cachée';
+
+  @override
+  String get bataPlayCard => 'Pose une carte de ta main.';
+
+  @override
+  String get bataChooseStat => 'Bonne réponse ! Choisis la caractéristique.';
+
+  @override
+  String get bataRoundWon => 'Manche gagnée !';
+
+  @override
+  String get bataRoundLost => 'Manche perdue.';
+
+  @override
+  String get bataRoundTie => 'Égalité : personne ne marque.';
+
+  @override
+  String get bataNext => 'Manche suivante';
+
+  @override
+  String get bataSeeResult => 'Voir le résultat';
+
+  @override
+  String get bataVictory => 'Victoire ! Crassus s\'incline.';
+
+  @override
+  String get bataDefeat => 'Crassus l\'emporte cette fois.';
+
+  @override
+  String get bataDraw => 'Match nul.';
+
+  @override
+  String get bataNoReward => 'Pour la gloire : 3 victoires payées par jour.';
+
+  @override
+  String get bataAgain => 'Rejouer';
+
+  @override
+  String get bataBack => 'Retour';
+
+  @override
+  String get bataHand => 'Ta main';
+
+  @override
+  String bataChosen(int nombre) {
+    return '$nombre / 5 cartes';
+  }
+
+  @override
+  String bataRound(int manche) {
+    return 'Manche $manche · premier à 3';
+  }
+
+  @override
+  String bataScore(int points) {
+    return '$points';
+  }
+
+  @override
+  String bataQuestionMotto(String latin) {
+    return 'Que veut dire « $latin » ?';
+  }
+
+  @override
+  String bataQuestionWord(String latin) {
+    return 'Que signifie « $latin » ?';
+  }
+
+  @override
+  String bataWrong(String reponse) {
+    return 'Mauvaise réponse : la bonne était « $reponse ». Crassus choisit.';
+  }
+
+  @override
+  String bataDuel(String stat, int joueur, int crassus) {
+    return '$stat : $joueur contre $crassus';
+  }
+
+  @override
+  String bataReward(int gain) {
+    return '+ $gain sesterces';
+  }
+
+  @override
+  String bataFinalScore(int joueur, int crassus) {
+    String _temp0 = intl.Intl.pluralLogic(
+      joueur,
+      locale: localeName,
+      other: '$joueur manches',
+      one: '1 manche',
+      zero: '0 manche',
+    );
+    return '$_temp0 à $crassus';
+  }
 }

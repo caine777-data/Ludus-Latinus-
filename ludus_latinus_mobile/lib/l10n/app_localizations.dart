@@ -2964,6 +2964,216 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'{nombre, plural, =1{1 activité par jour} other{{nombre} activités par jour}}'**
   String settingsGoalValue(int nombre);
+
+  /// No description provided for @bataTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bataille des Légendes'**
+  String get bataTitle;
+
+  /// No description provided for @bataSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes cartes contre Crassus'**
+  String get bataSubtitle;
+
+  /// No description provided for @bataTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'CARTES'**
+  String get bataTag;
+
+  /// No description provided for @bataIntro.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crassus le collectionneur, l\'homme le plus riche de Rome, te défie avec ses propres cartes.'**
+  String get bataIntro;
+
+  /// No description provided for @bataRules.
+  ///
+  /// In fr, this message translates to:
+  /// **'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : Crassus choisit. Le premier à 3 manches gagne.'**
+  String get bataRules;
+
+  /// No description provided for @bataChooseHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis les 5 cartes de ta main'**
+  String get bataChooseHand;
+
+  /// No description provided for @bataLoanInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tu n\'as pas encore 5 cartes : Crassus te prête les autres. Gagne des succès pour jouer avec les tiennes.'**
+  String get bataLoanInfo;
+
+  /// No description provided for @bataLoan.
+  ///
+  /// In fr, this message translates to:
+  /// **'PRÊT'**
+  String get bataLoan;
+
+  /// No description provided for @bataStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'Combattre'**
+  String get bataStart;
+
+  /// No description provided for @bataYou.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toi'**
+  String get bataYou;
+
+  /// No description provided for @bataCrassus.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crassus'**
+  String get bataCrassus;
+
+  /// No description provided for @bataHidden.
+  ///
+  /// In fr, this message translates to:
+  /// **'face cachée'**
+  String get bataHidden;
+
+  /// No description provided for @bataPlayCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pose une carte de ta main.'**
+  String get bataPlayCard;
+
+  /// No description provided for @bataChooseStat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonne réponse ! Choisis la caractéristique.'**
+  String get bataChooseStat;
+
+  /// No description provided for @bataRoundWon.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manche gagnée !'**
+  String get bataRoundWon;
+
+  /// No description provided for @bataRoundLost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manche perdue.'**
+  String get bataRoundLost;
+
+  /// No description provided for @bataRoundTie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Égalité : personne ne marque.'**
+  String get bataRoundTie;
+
+  /// No description provided for @bataNext.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manche suivante'**
+  String get bataNext;
+
+  /// No description provided for @bataSeeResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voir le résultat'**
+  String get bataSeeResult;
+
+  /// No description provided for @bataVictory.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire ! Crassus s\'incline.'**
+  String get bataVictory;
+
+  /// No description provided for @bataDefeat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Crassus l\'emporte cette fois.'**
+  String get bataDefeat;
+
+  /// No description provided for @bataDraw.
+  ///
+  /// In fr, this message translates to:
+  /// **'Match nul.'**
+  String get bataDraw;
+
+  /// No description provided for @bataNoReward.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour la gloire : 3 victoires payées par jour.'**
+  String get bataNoReward;
+
+  /// No description provided for @bataAgain.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rejouer'**
+  String get bataAgain;
+
+  /// No description provided for @bataBack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour'**
+  String get bataBack;
+
+  /// No description provided for @bataHand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ta main'**
+  String get bataHand;
+
+  /// No description provided for @bataChosen.
+  ///
+  /// In fr, this message translates to:
+  /// **'{nombre} / 5 cartes'**
+  String bataChosen(int nombre);
+
+  /// No description provided for @bataRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manche {manche} · premier à 3'**
+  String bataRound(int manche);
+
+  /// No description provided for @bataScore.
+  ///
+  /// In fr, this message translates to:
+  /// **'{points}'**
+  String bataScore(int points);
+
+  /// No description provided for @bataQuestionMotto.
+  ///
+  /// In fr, this message translates to:
+  /// **'Que veut dire « {latin} » ?'**
+  String bataQuestionMotto(String latin);
+
+  /// No description provided for @bataQuestionWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Que signifie « {latin} » ?'**
+  String bataQuestionWord(String latin);
+
+  /// No description provided for @bataWrong.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mauvaise réponse : la bonne était « {reponse} ». Crassus choisit.'**
+  String bataWrong(String reponse);
+
+  /// No description provided for @bataDuel.
+  ///
+  /// In fr, this message translates to:
+  /// **'{stat} : {joueur} contre {crassus}'**
+  String bataDuel(String stat, int joueur, int crassus);
+
+  /// No description provided for @bataReward.
+  ///
+  /// In fr, this message translates to:
+  /// **'+ {gain} sesterces'**
+  String bataReward(int gain);
+
+  /// No description provided for @bataFinalScore.
+  ///
+  /// In fr, this message translates to:
+  /// **'{joueur, plural, =0{0 manche} =1{1 manche} other{{joueur} manches}} à {crassus}'**
+  String bataFinalScore(int joueur, int crassus);
 }
 
 class _AppLocalizationsDelegate

@@ -261,6 +261,32 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Fin d'une partie de la Bataille des Légendes : victoire payée comme une
+  /// partie d'arcade (3 par jour), série de victoires et record. Renvoie le gain.
+  int noterBataille({required bool victoire}) {
+    var gain = 0;
+    if (victoire) {
+      profile.compteurs['bataille_victoires'] = (profile.compteurs['bataille_victoires'] ?? 0) + 1;
+      final serie = (profile.compteurs['bataille_serie'] ?? 0) + 1;
+      profile.compteurs['bataille_serie'] = serie;
+      if (serie > record('bataille')) profile.records['bataille'] = serie;
+      gain = payerPartie('bataille', gainBataille);
+    } else {
+      profile.compteurs['bataille_serie'] = 0;
+    }
+    // payerPartie n'enregistre rien quand le quota du jour est atteint.
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return gain;
+  }
+
+  /// Vocabulaire des mondes déjà atteints, pour les questions des jeux.
+  List<ThesaurusEntry> get vocabulaireAtteint {
+    final atteints = mondesAtteints;
+    final mots = thesaurus.where((e) => atteints.contains(e.monde)).toList();
+    return mots.length >= 4 ? mots : thesaurus;
+  }
+
   /// Donne les cartes dont le succès vient d'être atteint. Appelé à chaque
   /// changement de progression (voir [notifyListeners]) : aucun écran n'a à y
   /// penser. Renvoie les cartes nouvellement obtenues.
@@ -514,6 +540,7 @@ class GameRepository extends ChangeNotifier {
 
   /// Barème des jeux d'arcade : une partie gagnée vaut à peu près une leçon (10 HS).
   static const int gainCircus = 12;
+  static const int gainBataille = 12;
   static const int gainDuel = 15;
   static const int gainMissionCesar = 10;
   static const int gainMarcheEtal = 5;

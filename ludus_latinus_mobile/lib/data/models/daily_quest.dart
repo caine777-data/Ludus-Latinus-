@@ -59,6 +59,14 @@ class DailyQuest {
       routeCible: 'marche',
     ),
     DailyQuest(
+      id: 'quest_bataille',
+      titre: 'Défi de la Bataille des Légendes',
+      description: 'Bats Crassus le collectionneur avec les cartes de ton album !',
+      icone: '🃏',
+      recompense: 10,
+      routeCible: 'bataille',
+    ),
+    DailyQuest(
       id: 'quest_taverne',
       titre: 'Défi de la Taverne des Dés',
       description: 'Bats Gaius l\'aubergiste aux dés, à Alea Iacta Est !',

@@ -31,6 +31,7 @@ import '../settings/hero_creation_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
+import '../bataille/bataille_screen.dart';
 import 'views/objectif_du_jour.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
@@ -1102,6 +1103,9 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
       case 'taverne':
         Navigator.push(context, MaterialPageRoute(builder: (_) => TaverneScreen(repo: widget.repo)));
+        break;
+      case 'bataille':
+        Navigator.push(context, MaterialPageRoute(builder: (_) => BatailleScreen(repo: widget.repo)));
         break;
       case 'forum':
         Navigator.push(context, MaterialPageRoute(builder: (_) => ForumScreen(repo: widget.repo)));
