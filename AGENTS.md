@@ -330,6 +330,19 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Circus Maximus : chars animés, vidéo de départ allégée** (22/10/2026,
+  demandé par Cédric). Piste à 28 % de la hauteur d'écran (185 à 300 dp au
+  lieu de 185 fixes), chars à l'échelle de la voie (au plus 30 % de la
+  largeur), voies calées de part et d'autre de la spina (le char du joueur
+  passait dessous), poussière dessinée (`_PoussierePainter`) au lieu de
+  l'émoji 💨, traînées de vitesse et nuage orangé en turbo, rival décalé
+  d'une demi-foulée. `circus_depart.mp4` recompressé avec l'accord de Cédric
+  (exception à « pas de recompression ») : 9,0 Mo en 1080 × 1920 → 2,7 Mo en
+  720 × 1280 comme les autres vidéos, CRF 25, PSNR 40 dB, vérifié à l'œil et
+  à l'émulateur ; original dans `LATIN_LEARN/scratch/anciennes_videos/`.
+  Prompts de deux vidéos à générer (arrivée de la course, entrée de Crassus) :
+  `docs/propositions/videos_circus_bataille.md` ; branchement après réception.
+
 - **Captures du Store refaites** (18/10/2026) : 8 captures téléphone
   1200 × 2400 (leçon, Via Appia avec la puce « Au programme », duel, album,
   Bataille, exercice, page des professeurs, accueil) ; Panthéon, Thesaurus et

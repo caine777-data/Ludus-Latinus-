@@ -833,7 +833,9 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
 
                   // 2. Vue de la Piste Monument Valley (CustomPainter & Sprites)
                   SizedBox(
-                    height: 185,
+                    // Environ 28 % de l'écran : la console du quiz laissait la moitié
+                    // basse vide sur téléphone, la piste peut respirer.
+                    height: (MediaQuery.sizeOf(context).height * 0.28).clamp(185.0, 300.0),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       child: _buildRacetrackView(),
@@ -1077,7 +1079,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 _buildChariotWidget(
                   constraints: constraints,
                   progress: _playerProgress / 100.0,
-                  laneY: 0.28,
+                  auDessus: true,
                   isPlayer: true,
                   isTurbo: _turboRemainingFrames > 0,
                 ),
@@ -1086,7 +1088,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 _buildChariotWidget(
                   constraints: constraints,
                   progress: _rivalProgress / 100.0,
-                  laneY: 0.72,
+                  auDessus: false,
                   isPlayer: false,
                   isTurbo: false,
                 ),
@@ -1098,195 +1100,173 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
     );
   }
 
+  /// Hauteur de la spina centrale : les deux voies se calent de part et d'autre.
+  static const double _hauteurSpina = 36.0;
+
   Widget _buildChariotWidget({
     required BoxConstraints constraints,
     required double progress,
-    required double laneY,
+    required bool auDessus,
     required bool isPlayer,
     required bool isTurbo,
   }) {
-    // Largeur du quadrige et de la piste
-    const chariotWidth = 92.0;
-    const chariotHeight = 46.0;
+    // Taille du quadrige : la plus grande qui tient dans une voie (moitié de piste
+    // moins la spina et le badge), sans dépasser 30 % de la largeur pour garder
+    // assez de course au char. Proportions de l'image : environ 2 pour 1.
+    const badge = 18.0;
+    final placeVerticale = (constraints.maxHeight - _hauteurSpina) / 2 - badge - 10;
+    final chariotWidth = math.min(placeVerticale * 2, constraints.maxWidth * 0.3).clamp(84.0, 170.0);
+    final chariotHeight = chariotWidth / 2;
     final trackWidth = math.max(100.0, constraints.maxWidth - (chariotWidth + 24.0));
     final x = 10.0 + (progress.clamp(0.0, 1.0) * trackWidth);
-    final y = (constraints.maxHeight * laneY) - (chariotHeight * 0.65);
+    final milieu = constraints.maxHeight / 2;
+    final y = auDessus
+        ? milieu - _hauteurSpina / 2 - 6 - badge - chariotHeight
+        : milieu + _hauteurSpina / 2 + 4;
 
     final faction = isPlayer ? _selectedFaction : _rivalFaction;
     final assetPath = _getChariotAsset(faction);
 
-    // Galop physique avec rebond vertical et léger tangage
+    // Galop : rebond vertical et léger tangage, deux fois plus vifs en turbo.
+    // Le rival est décalé d'une demi-foulée pour que les deux chars ne
+    // sautent pas en même temps.
     final gallopSpeed = isTurbo ? 9.5 : 4.5;
-    final gallopCycle = (_animController.value * gallopSpeed * 2 * math.pi);
-    final gallopOffsetY = math.sin(gallopCycle) * (isTurbo ? 2.8 : 1.6);
-    final gallopAngle = math.cos(gallopCycle) * (isTurbo ? 0.035 : 0.015);
+    final phase = (_animController.value * gallopSpeed + (isPlayer ? 0 : 0.5)) * 2 * math.pi;
+    final gallopOffsetY = math.sin(phase) * (isTurbo ? 2.8 : 1.6);
+    final gallopAngle = math.cos(phase) * (isTurbo ? 0.035 : 0.015);
+    // Un char à l'arrêt (avant le départ ou après l'arrivée) ne soulève rien.
+    final enMouvement = _departDans == null && !_raceFinished;
 
     return Positioned(
       left: x,
       top: y + gallopOffsetY,
       child: Transform.rotate(
-            angle: gallopAngle,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Badge d'écurie romaine au-dessus du quadrige
-                Container(
-                  margin: const EdgeInsets.only(left: 4, bottom: 2),
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1.5),
-                  decoration: BoxDecoration(
-                    color: faction.couleur.withValues(alpha: 0.92),
-                    borderRadius: BorderRadius.circular(6),
-                    border: Border.all(
-                      color: isPlayer ? RomanColors.imperialGold : Colors.white70,
-                      width: 1,
+        angle: gallopAngle,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Badge d'écurie romaine au-dessus du quadrige
+            Container(
+              height: badge - 2,
+              margin: const EdgeInsets.only(left: 4, bottom: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              decoration: BoxDecoration(
+                color: faction.couleur.withValues(alpha: 0.92),
+                borderRadius: BorderRadius.circular(6),
+                border: Border.all(
+                  color: isPlayer ? RomanColors.imperialGold : Colors.white70,
+                  width: 1,
+                ),
+                boxShadow: const [
+                  BoxShadow(color: Color(0x33000000), offset: Offset(0, 1), blurRadius: 3),
+                ],
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(faction.icon, style: const TextStyle(fontSize: 8.5)),
+                  const SizedBox(width: 3),
+                  Text(
+                    isPlayer ? 'SPQR • ${faction.nom.toUpperCase()}' : 'RIVAL • ${faction.nom.toUpperCase()}',
+                    style: const TextStyle(
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
                     ),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color(0x33000000),
-                        offset: Offset(0, 1),
-                        blurRadius: 3,
-                      ),
-                    ],
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(faction.icon, style: const TextStyle(fontSize: 8.5)),
-                      const SizedBox(width: 3),
-                      Text(
-                        isPlayer ? 'SPQR • ${faction.nom.toUpperCase()}' : 'RIVAL • ${faction.nom.toUpperCase()}',
-                        style: const TextStyle(
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          letterSpacing: 0.5,
-                        ),
+                  if (isPlayer && isTurbo) ...[
+                    const SizedBox(width: 3),
+                    const Text('🔥', style: TextStyle(fontSize: 8)),
+                  ],
+                ],
+              ),
+            ),
+
+            // Corps du char : poussière et traînées derrière, ombre au sol,
+            // halo de turbo ou bouclier Albati, puis l'image du quadrige.
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                if (enMouvement)
+                  Positioned(
+                    right: chariotWidth * 0.72,
+                    bottom: 0,
+                    width: chariotWidth * 0.9,
+                    height: chariotHeight,
+                    child: CustomPaint(
+                      painter: _PoussierePainter(
+                        temps: _animController.value,
+                        turbo: isTurbo,
+                        decalage: isPlayer ? 0 : 0.37,
                       ),
-                      if (isPlayer && isTurbo) ...[
-                        const SizedBox(width: 3),
-                        const Text('🔥', style: TextStyle(fontSize: 8)),
-                      ],
-                    ],
+                    ),
+                  ),
+                Positioned(
+                  left: chariotWidth * 0.1,
+                  right: chariotWidth * 0.1,
+                  bottom: -3,
+                  child: Container(
+                    height: 6,
+                    decoration: BoxDecoration(
+                      color: const Color(0x403E2723),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
-
-                // Quadrige avec roues, aurige, chevaux, traînée de poussière & turbo
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    // Traînée de poussière et flammes à l'arrière des roues
-                    if (isTurbo)
-                      Container(
-                        margin: const EdgeInsets.only(right: 3, bottom: 2),
-                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            colors: [Color(0xFFFF9100), Color(0xFFFF3D00)],
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: const [
-                            BoxShadow(color: Color(0x99FF6D00), blurRadius: 8, spreadRadius: 1),
-                          ],
-                        ),
-                        child: const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('⚡', style: TextStyle(fontSize: 10)),
-                            Text('🔥', style: TextStyle(fontSize: 13)),
-                          ],
-                        ),
-                      )
-                    else
-                      Container(
-                        margin: const EdgeInsets.only(right: 3, bottom: 3),
-                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                        decoration: BoxDecoration(
-                          color: const Color(0x33FFFFFF),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Text('💨', style: TextStyle(fontSize: 9)),
+                if (isTurbo)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: const [
+                          BoxShadow(color: Color(0x66FF6D00), blurRadius: 16, spreadRadius: 2),
+                        ],
                       ),
-
-                    // Corps du char (Quadrige antique avec ombre portée et bouclier éventuel)
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        // Ombre de sol réaliste sous le char
-                        Positioned(
-                          left: 10,
-                          right: 10,
-                          bottom: -3,
-                          child: Container(
-                            height: 6,
-                            decoration: BoxDecoration(
-                              color: const Color(0x403E2723),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                        // Halo de turbo ou bouclier céleste Albati
-                        if (isTurbo)
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color(0x99FF6D00),
-                                    blurRadius: 16,
-                                    spreadRadius: 4,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        if (isPlayer && _shieldAvailable && _selectedFaction == CircusFaction.albati)
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.cyanAccent.withValues(alpha: 0.85), width: 2),
-                                color: Colors.cyanAccent.withValues(alpha: 0.18),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.cyanAccent.withValues(alpha: 0.4),
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                        // Image réelle du Quadrige Antique
-                        Image.asset(
-                          assetPath,
-                          width: chariotWidth,
-                          height: chariotHeight,
-                          fit: BoxFit.contain,
-                          errorBuilder: (_, __, ___) => Container(
-                            width: chariotWidth,
-                            height: chariotHeight,
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: faction.couleur,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Center(
-                              child: Text('🐎 Quadrige', style: TextStyle(color: Colors.white, fontSize: 10)),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
-                  ],
+                  ),
+                if (isPlayer && _shieldAvailable && _selectedFaction == CircusFaction.albati)
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.cyanAccent.withValues(alpha: 0.85), width: 2),
+                        color: Colors.cyanAccent.withValues(alpha: 0.18),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.cyanAccent.withValues(alpha: 0.4),
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                Image.asset(
+                  assetPath,
+                  width: chariotWidth,
+                  height: chariotHeight,
+                  fit: BoxFit.contain,
+                  errorBuilder: (_, __, ___) => Container(
+                    width: chariotWidth,
+                    height: chariotHeight,
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: faction.couleur,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Center(
+                      child: Text('🐎 Quadrige', style: TextStyle(color: Colors.white, fontSize: 10)),
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-        );
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildTurboComboHeader() {
@@ -1766,6 +1746,56 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       ),
     );
   }
+}
+
+/// Nuage de sable soulevé derrière les roues : des bouffées qui naissent au
+/// ras du sol, grossissent, montent un peu et s'effacent en reculant. En turbo,
+/// le nuage s'épaissit, rougeoie, et des traînées de vitesse s'y ajoutent.
+/// Dessiné plutôt qu'en vidéo : il suit l'allure réelle du char.
+class _PoussierePainter extends CustomPainter {
+  final double temps; // 0 à 1, cycle de l'animation du galop
+  final bool turbo;
+  final double decalage; // désynchronise les deux chars
+
+  _PoussierePainter({required this.temps, required this.turbo, required this.decalage});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final bouffees = turbo ? 9 : 6;
+    final sol = size.height * 0.9;
+    for (var i = 0; i < bouffees; i++) {
+      // Chaque bouffée a son âge dans le cycle : 0 = vient de naître contre la roue.
+      final age = (temps * (turbo ? 3 : 2) + decalage + i / bouffees) % 1.0;
+      final x = size.width * (1 - age); // naît à droite (contre la roue), part à gauche
+      final y = sol - age * size.height * 0.35 - (i.isEven ? 0 : size.height * 0.08);
+      final rayon = size.height * (0.08 + age * (turbo ? 0.26 : 0.2));
+      final opacite = (1 - age) * (turbo ? 0.55 : 0.4);
+      final couleur = turbo
+          ? Color.lerp(const Color(0xFFFFB74D), const Color(0xFFC8A27A), age)!
+          : const Color(0xFFC8A27A);
+      canvas.drawCircle(
+        Offset(x, y),
+        rayon,
+        Paint()..color = couleur.withValues(alpha: opacite),
+      );
+    }
+    if (turbo) {
+      final trait = Paint()
+        ..color = Colors.white.withValues(alpha: 0.7)
+        ..strokeWidth = 1.6
+        ..strokeCap = StrokeCap.round;
+      for (var i = 0; i < 3; i++) {
+        final avance = (temps * 4 + i / 3) % 1.0;
+        final y = size.height * (0.25 + i * 0.22);
+        final debut = size.width * (0.9 - avance * 0.6);
+        canvas.drawLine(Offset(debut, y), Offset(debut - size.width * 0.35, y), trait);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _PoussierePainter old) =>
+      old.temps != temps || old.turbo != turbo;
 }
 
 class _CircusTrackPainter extends CustomPainter {
