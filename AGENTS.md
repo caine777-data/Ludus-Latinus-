@@ -330,6 +330,12 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Compte Play Console créé** (22/10/2026). Compte personnel, nom public
+  « Icare & Dédale », validation d'identité en cours (aucune fiche d'appli
+  possible avant). `docs/publication/fiche_store.md` : adresse de
+  confidentialité passée à `icareetdedale.fr/confidentialite/`, mention de
+  l'achat intégré à reprendre. `docs/publication/invitation_testeurs.md` :
+  messages pour recruter les testeurs du test fermé.
 - **Circus Maximus : chars animés, vidéo de départ allégée** (22/10/2026,
   demandé par Cédric). Piste à 28 % de la hauteur d'écran (185 à 300 dp au
   lieu de 185 fixes), chars à l'échelle de la voie (au plus 30 % de la

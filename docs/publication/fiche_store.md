@@ -54,7 +54,7 @@ Ludus Latinus est édité par Icare & Dédale.
 - Catégorie : Éducation.
 - Public cible : 12 à 15 ans (programme Familles). À confirmer dans la Play Console : le questionnaire propose des tranches d'âge fixes.
 - Coordonnées : icareetdedale.studio@gmail.com.
-- Politique de confidentialité : https://icare-et-dedale.netlify.app/ludus-latinus/confidentialite/
+- Politique de confidentialité : https://icareetdedale.fr/confidentialite/ (domaine en ligne depuis le 19/10/2026 ; l'ancienne adresse Netlify redirige ici, section Ludus Latinus).
 
 ## Visuels
 
@@ -67,5 +67,6 @@ Ludus Latinus est édité par Icare & Dédale.
 
 ## À revoir avant la mise en production
 
-- Si l'Édition complète est vendue, l'indiquer dans la description (« les mondes 1 à 3 sont gratuits ; l'Édition complète débloque tout, en un seul achat ») : Google exige que les achats intégrés soient signalés.
+- Si l'Édition complète est vendue, l'indiquer dans la description, conformément au modèle décidé (voir `AGENTS.md`, « Décisions de Cédric ») : « Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque tout le reste, en un seul achat, sans abonnement. » Google exige que les achats intégrés soient signalés. Recompter alors la partie gratuite sur le dataset du moment (119 leçons au 18/10, et non plus 113).
+- Compte développeur créé le 22/10/2026 (compte personnel, nom public Icare & Dédale, nom légal affiché par Google : Cédric Monna, France). La fiche ne peut être créée qu'après la validation d'identité par Google.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
