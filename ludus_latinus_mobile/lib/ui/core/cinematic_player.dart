@@ -13,6 +13,8 @@ enum CinematicType {
   bossEntrance,
   triumph,
   circusDepart,
+  circusArrivee,
+  batailleCrassus,
 }
 
 /// Configuration d'une courte vidéo cinématique (vidéos verticales 9:16 avec bande-son).
@@ -54,6 +56,18 @@ class CinematicConfig {
           assetPath: 'assets/cinematics/circus_depart.mp4',
           title: 'CIRCUS MAXIMUS',
           subtitle: 'Les grilles s\'ouvrent : les chars s\'élancent !',
+        );
+      case CinematicType.circusArrivee:
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/circus_arrivee.mp4',
+          title: 'VICTORIA !',
+          subtitle: 'Ton quadrige franchit la ligne le premier !',
+        );
+      case CinematicType.batailleCrassus:
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/bataille_crassus.mp4',
+          title: 'BATAILLE DES LÉGENDES',
+          subtitle: 'Crassus, l\'homme le plus riche de Rome, te défie !',
         );
       case CinematicType.triumph:
         return CinematicConfig(
@@ -296,6 +310,14 @@ class RomanCinematicOverlay {
   /// Départ d'une course au Circus Maximus.
   static Future<void> showCircusDepart(BuildContext context) =>
       _show(context, CinematicConfig.forType(CinematicType.circusDepart));
+
+  /// Arrivée victorieuse d'une course au Circus Maximus.
+  static Future<void> showCircusArrivee(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.circusArrivee));
+
+  /// Entrée de Crassus, l'adversaire de la Bataille des Légendes.
+  static Future<void> showBatailleCrassus(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.batailleCrassus));
 
   /// Triomphe : fin d'un monde de la Via Appia.
   static Future<void> showTriumph(BuildContext context, {String? subtitle}) =>

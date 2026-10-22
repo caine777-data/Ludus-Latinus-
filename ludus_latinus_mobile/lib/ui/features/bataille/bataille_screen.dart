@@ -7,6 +7,7 @@ import '../../../data/models/album.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
+import '../../core/cinematic_player.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../album/album_screen.dart';
@@ -15,7 +16,10 @@ import 'bataille_logique.dart';
 /// Bataille des Légendes : les cartes de l'album contre celles de Crassus.
 class BatailleScreen extends StatefulWidget {
   final GameRepository repo;
-  const BatailleScreen({super.key, required this.repo});
+  /// Vidéo d'entrée de Crassus à l'ouverture ; coupée dans les tests, où le
+  /// lecteur vidéo n'existe pas.
+  final bool avecEntree;
+  const BatailleScreen({super.key, required this.repo, this.avecEntree = true});
 
   @override
   State<BatailleScreen> createState() => _BatailleScreenState();
@@ -49,6 +53,12 @@ class _BatailleScreenState extends State<BatailleScreen> {
   void initState() {
     super.initState();
     _preparerMain();
+    // Crassus entre en scène, comme les champions du Colisée (bouton « Passer »).
+    if (widget.avecEntree) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) RomanCinematicOverlay.showBatailleCrassus(context);
+      });
+    }
   }
 
   /// Avec 5 cartes ou moins, la main est toute faite (complétée par des prêts) ;

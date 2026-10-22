@@ -739,9 +739,15 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
         (GameRepository.gainCircus * _selectedFaction.sestercesMult).round(),
       );
       HapticFeedback.heavyImpact();
-      AudioService().playCrowdCheer();
-      AudioService().playTriumph();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      // La vidéo d'arrivée porte la clameur de la foule : la fanfare et la
+      // pluie de lauriers viennent après, sur l'écran des résultats.
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        await RomanCinematicOverlay.showCircusArrivee(context);
+        if (!mounted) return;
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      });
     } else {
       _recompense = 0;
       AudioService().playError();

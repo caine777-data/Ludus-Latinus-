@@ -24,7 +24,7 @@ Jouée en ouvrant la Bataille des Légendes. Crassus, « l'homme le plus riche d
 Plan vertical 9:16, film d'animation 3D doux et chaleureux. Dans l'atrium luxueux d'une villa romaine, colonnes de marbre, bassin, tentures pourpres et coffres débordant de pièces d'or, Marcus Licinius Crassus, Romain d'âge mûr, rond et jovial, toge blanche bordée de pourpre, bagues d'or aux doigts, est assis sur un siège d'ivoire. Il sourit d'un air malicieux et étale en éventail devant lui cinq grandes cartes illustrées dont on ne voit que le dos pourpre et doré, puis les tend vers la caméra comme pour lancer un défi. La caméra avance lentement vers lui. Lumière chaude de lampes à huile, reflets dorés. Le tiers bas de l'image reste sur le dallage de mosaïque. Aucun texte, aucune lettre, aucun chiffre, aucune image sur les cartes.
 ```
 
-## Branchement prévu (après réception)
+## Branchement (fait le 22/10/2026)
 
 - `circus_arrivee.mp4` : à la victoire au Circus, avant l'écran de résultats.
 - `bataille_crassus.mp4` : à l'ouverture de la Bataille, avant le choix des cartes, comme les entrées de boss du Colisée (bouton « Passer »).

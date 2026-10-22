@@ -336,6 +336,15 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   confidentialité passée à `icareetdedale.fr/confidentialite/`, mention de
   l'achat intégré à reprendre. `docs/publication/invitation_testeurs.md` :
   messages pour recruter les testeurs du test fermé.
+- **Deux vidéos branchées** (22/10/2026, générées par Cédric dans Flow).
+  `circus_arrivee.mp4` (1,9 Mo) jouée à la victoire au Circus, avant la
+  fanfare et la pluie de lauriers (la clameur de la foule est dans la vidéo,
+  `playCrowdCheer` retiré à cet endroit) ; `bataille_crassus.mp4` (1,2 Mo)
+  à l'ouverture de la Bataille (`BatailleScreen.avecEntree`, coupé dans
+  `bataille_test.dart`). Recompressées comme `circus_depart.mp4` (CRF 25,
+  PSNR 41,6 dB), originaux dans « gemini ludus ». Vérifié à l'émulateur, course
+  gagnée de bout en bout.
+
 - **Circus Maximus : chars animés, vidéo de départ allégée** (22/10/2026,
   demandé par Cédric). Piste à 28 % de la hauteur d'écran (185 à 300 dp au
   lieu de 185 fixes), chars à l'échelle de la voie (au plus 30 % de la

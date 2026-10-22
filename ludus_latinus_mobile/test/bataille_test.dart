@@ -119,7 +119,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: BatailleScreen(repo: repo),
+      home: BatailleScreen(repo: repo, avecEntree: false),
     ));
     await tester.pump();
 
