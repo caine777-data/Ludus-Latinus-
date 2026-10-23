@@ -5769,3 +5769,314 @@ affichés. Le Circus pose deux questions des leçons pour une sur le cirque.
   - Aucun. Les trois fonctionnalités (album du Panthéon, postures/PV rééquilibrés du Duel, pondération 2/3-1/3 du Circus) s'exécutent de façon exemplaire et sans bug d'affichage.
 - Reste à faire :
   - Tâche T52 validée. Prêt pour la suite.
+
+---
+
+# Série « regard neuf » : audits et propositions (préparée le 23/10/2026)
+
+**Pour l'exécutant** : six tâches d'observation, **sans toucher au code ni au
+contenu**. Tu joues, tu mesures, tu captures, puis tu proposes. Chaque tâche
+produit **son propre rapport** dans `docs/audits/` ; dans ce fichier-ci, tu ne
+remplis que le statut et le compte rendu de la tâche.
+
+Règles communes aux six tâches :
+- Une tâche par session, dans l'ordre (T58 d'abord).
+- **Interdit** : modifier `lib/`, `content/`, `assets/`, `test/`, `scripts/`,
+  le dataset ; pousser sur GitHub ; se connecter à un compte Google sur
+  l'émulateur (si un écran « Sign in » apparaît, touche Accueil et relance
+  l'appli) ; publier quoi que ce soit.
+- Profil de l'émulateur : sauvegardé avant, restauré après (méthode de T26).
+- Chaque constat porte : **gravité** (bloquant / gênant / détail), **écran**,
+  **capture** (`scratch/t5x_*`), **ce que vit l'élève** en une phrase.
+- Chaque proposition porte : **ce qu'on gagne** pour l'élève, **effort**
+  estimé (S = moins d'une heure, M = une demi-journée, L = plus), **risque**.
+  Pas de code dans les propositions : décris le comportement voulu.
+- Ton franc : on veut savoir ce qui ennuie, déroute ou déçoit un collégien
+  de 12 ans, pas une liste de compliments. Pas de tiret cadratin.
+- L'architecte trie les propositions avec Cédric : **aucune n'est appliquée
+  par toi**.
+- Commit à la fin : le rapport et `docs/TACHES.md` seulement.
+
+---
+
+## T58 — Les dix premières minutes d'un nouvel élève (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : un enfant décide en quelques minutes s'il garde une appli.
+On veut voir l'appli comme lui la voit au premier lancement, chronomètre en
+main, et repérer chaque moment où il hésite, s'ennuie ou ne comprend pas.
+
+**Périmètre** : écriture `docs/audits/premieres_minutes.md` et
+`docs/TACHES.md` ; captures `scratch/t58_*`.
+
+**Étapes** :
+1. Sauvegarde le profil (méthode de T26), puis efface les données de
+   l'appli (`adb shell pm clear com.luduslatinus.app`) pour repartir de zéro.
+2. Lance l'appli et chronomètre chaque étape : vidéos du début, création du
+   héros, premier écran d'accueil, première leçon jusqu'au bilan, premier
+   retour à l'accueil, proposition de rappel quotidien.
+3. Note à chaque écran : ce qu'on comprend sans lire, ce qu'il faut lire,
+   ce qui n'est pas expliqué (ex. sesterces, série, objectif du jour, Ludi
+   verrouillés), le nombre de touchers avant la première question de latin.
+4. Fais la leçon m1-01 une fois en te trompant exprès deux fois : le
+   message d'erreur aide-t-il ? La récompense donne-t-elle envie de
+   continuer ?
+5. Fais 2 leçons de plus. À quel moment l'appli montre-t-elle qu'il y a des
+   jeux, un album, une carte ? Trop tôt, trop tard ?
+6. Restaure le profil.
+
+**Livrable** (`docs/audits/premieres_minutes.md`) :
+- La chronologie minute par minute (tableau : temps, écran, action, ressenti).
+- Les 5 frictions les plus graves, classées.
+- 5 propositions maximum, chacune avec gain, effort, risque.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Chronologie complète des dix premières minutes, avec captures.
+- [ ] Nombre de touchers avant la première question de latin, mesuré.
+- [ ] Profil d'origine restauré (capture de l'accueil).
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: audit des dix premières minutes`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T59 — Cohérence visuelle de tous les écrans (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'appli a grandi par couches (album, Bataille, page des
+professeurs, objectif du jour...). On veut savoir si elle a toujours l'air
+d'une seule appli : mêmes boutons, mêmes titres, mêmes couleurs, mêmes
+marges, ou si certains écrans détonnent.
+
+**Périmètre** : écriture `docs/audits/coherence_visuelle.md` et
+`docs/TACHES.md` ; captures `scratch/t59_*`.
+
+**Étapes** :
+1. Capture chaque écran sur téléphone (1080 × 2400) : accueil, carte Via
+   Appia, une leçon de chaque type (quiz, trou, puzzle, décodeur, arène),
+   bilan de leçon, Bibliotheca (Thesaurus, Memoria, fiches), Ludi et ses
+   8 jeux, album, Panthéon, boutique, compte, paramètres, page des
+   professeurs, À propos.
+2. Fais une planche par famille (boutons principaux, titres d'écran,
+   cartes et encadrés, pastilles et badges, barres de progression) et
+   repère les variantes : couleur, rayon des coins, taille du texte,
+   ombre, alignement.
+3. Relève les icônes et émojis : mélange d'émojis et d'icônes dessinées
+   sur un même écran ? Émojis qui changent selon le téléphone ?
+4. Refais 6 écrans au choix sur tablette (2560 × 1600, densité 320) et en
+   police agrandie (`font_scale 1.3`) : textes coupés, vides géants,
+   éléments étirés.
+5. Remets taille, densité et police d'origine.
+
+**Livrable** (`docs/audits/coherence_visuelle.md`) :
+- Un tableau des variantes par famille d'éléments, avec la variante que tu
+  proposes de garder comme référence et pourquoi.
+- La liste des écrans qui détonnent, classés du plus visible au moins visible.
+- 5 propositions maximum (gain, effort, risque).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Au moins 25 écrans capturés, chacun cité dans le rapport.
+- [ ] Une planche par famille d'éléments (`scratch/t59_planche_*.png`).
+- [ ] Taille, densité et police de l'émulateur remises (valeurs recopiées).
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: audit de cohérence visuelle`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T60 — Les 8 jeux Ludi : plaisir, difficulté, envie de rejouer (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : l'audit des jeux du 3 octobre (`docs/audits/audit_jeux_2026-10-03.md`)
+date d'avant la Bataille, l'album, les nouvelles règles de la Taverne et les
+chars animés. On refait le point, partie en main, sur les huit jeux.
+
+**Périmètre** : écriture `docs/audits/jeux_ludi_2026-10.md` et
+`docs/TACHES.md` ; captures `scratch/t60_*`.
+
+**Étapes** :
+1. Sauvegarde le profil ; donne-toi un profil avec les mondes 1 à 10
+   terminés et au moins 10 cartes d'album (méthode de T26).
+2. Joue **trois parties** de chaque jeu : Circus Maximus, Colosseum
+   Duellum, Alea Iacta Est, Atelier de César, Marché de Trajan, Panthéon
+   (consultation), Héros et Créatures (consultation), Bataille des Légendes.
+   Une partie en jouant bien, une en jouant mal, une au hasard.
+3. Pour chaque partie, mesure : durée, nombre de questions de latin,
+   nombre de décisions qui ne sont pas des questions (choix de carte, de
+   posture, d'écurie...), sesterces gagnés, et si on peut gagner sans
+   connaître le latin.
+4. Relis l'audit du 3 octobre : quels défauts sont corrigés, lesquels
+   restent ?
+5. Restaure le profil.
+
+**Livrable** (`docs/audits/jeux_ludi_2026-10.md`) :
+- Le tableau de l'audit du 3 octobre, refait avec tes mesures.
+- Pour chaque jeu : ce qui plaît, ce qui lasse, à quelle partie on s'ennuie.
+- Le classement des 8 jeux, du plus au moins réussi, justifié en une ligne.
+- 2 propositions par jeu au maximum (gain, effort, risque), dont au moins
+  une qui fait davantage pratiquer le latin.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] 24 parties jouées et mesurées (tableau des mesures).
+- [ ] Les défauts de l'audit du 3 octobre repris un par un : corrigé ou non.
+- [ ] Profil d'origine restauré.
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: audit des jeux Ludi d'octobre`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T61 — Une semaine d'élève : progression, sesterces, raisons de revenir (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : un élève revient s'il sent qu'il avance et qu'il a quelque
+chose à gagner demain. On veut vérifier, chiffres à l'appui, que la boucle
+leçons, sesterces, boutique, succès, album, objectif du jour et série tient
+sur une semaine, sans enrichir trop vite ni frustrer.
+
+**Périmètre** : écriture `docs/audits/semaine_eleve.md` et `docs/TACHES.md` ;
+captures `scratch/t61_*`. Lecture du code autorisée (sans modification) :
+`lib/data/repositories/game_repository.dart`, `lib/data/models/profile.dart`,
+`content/album_mobile.py`, le catalogue de la boutique.
+
+**Étapes** :
+1. Dans le code, relève tous les gains (leçon, arène, objectif du jour,
+   jeux et leurs plafonds par jour, succès, cartes) et tous les prix
+   (boutique, autres dépenses). Fais-en un tableau.
+2. Simule trois élèves sur 7 jours, sur le papier : « 10 minutes par jour »,
+   « une grosse séance le mercredi », « joue surtout aux jeux ». Pour chacun :
+   sesterces cumulés, objets achetables, cartes d'album gagnées, série.
+3. Vérifie à l'émulateur deux points de ta simulation (par exemple le
+   plafond quotidien d'un jeu et le bonus de l'objectif du jour), en
+   changeant la date si besoin (méthode à décrire dans le compte rendu).
+4. Repère : ce qui s'obtient trop vite, ce qui reste hors d'atteinte, les
+   jours où il n'y a rien de neuf à débloquer.
+5. Restaure le profil et la date.
+
+**Livrable** (`docs/audits/semaine_eleve.md`) :
+- Le tableau des gains et des prix.
+- Les trois simulations (tableau jour par jour).
+- 5 propositions maximum (gain, effort, risque), chiffrées.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Chaque chiffre du tableau renvoie à un fichier et une ligne du code.
+- [ ] Deux points de la simulation vérifiés à l'écran, avec captures.
+- [ ] Profil et date d'origine restaurés.
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: une semaine d'élève, progression et économie`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T62 — Accessibilité : lire, toucher, entendre (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : la fiche Store vise les familles et les professeurs. Un élève
+dyslexique, malvoyant ou qui joue sans le son doit pouvoir suivre. On veut
+la liste de ce qui bloque, écran par écran.
+
+**Périmètre** : écriture `docs/audits/accessibilite.md` et `docs/TACHES.md` ;
+captures `scratch/t62_*`.
+
+**Étapes** :
+1. Police agrandie (`font_scale 1.3` puis `1.6`) : accueil, une leçon de
+   chaque type, Duel, Circus, Bataille, album, Thesaurus, paramètres.
+   Relève les textes coupés ou superposés.
+2. Contrastes : mesure sur les captures le contraste des textes clairs sur
+   fond crème, des textes sur images (bannières, cartes) et des boutons
+   grisés (seuil visé : 4,5 pour 1 pour le texte courant).
+3. Cibles tactiles : relève les éléments touchables de moins de 48 dp
+   (petites pastilles, croix, flèches, dés, cartes de la main).
+4. Sans le son : chaque information donnée par un son l'est-elle aussi à
+   l'écran (bonne ou mauvaise réponse, fin de chrono) ?
+5. TalkBack : active-le et essaie de faire une leçon quiz. Note ce qui est
+   lu, ce qui ne l'est pas. Désactive-le ensuite.
+6. Remets la police et les réglages d'origine.
+
+**Livrable** (`docs/audits/accessibilite.md`) :
+- Un tableau par critère (police, contraste, cibles, son, TalkBack), écran
+  par écran, avec gravité et capture.
+- 5 propositions maximum (gain, effort, risque), dont une sur une police
+  plus lisible pour les élèves dyslexiques.
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] Les 5 critères couverts, chiffres de contraste compris.
+- [ ] TalkBack et police remis à l'état d'origine (valeurs recopiées).
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: audit d'accessibilité`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :
+
+---
+
+## T63 — Idées de jeu venues d'ailleurs, adaptées au latin (sans rien modifier)
+
+Statut : À FAIRE
+
+**Objectif** : chercher dans les applis éducatives qui marchent auprès des
+11 à 15 ans ce qui fait revenir les élèves, et ne garder que ce qui
+s'adapte à Ludus Latinus sans publicité, sans compte et sans Internet.
+
+**Périmètre** : écriture `docs/audits/idees_venues_d_ailleurs.md` et
+`docs/TACHES.md`. Recherche sur le Web autorisée (lecture seulement : ne crée
+aucun compte, ne télécharge rien).
+
+**Étapes** :
+1. Étudie au moins 6 applis ou jeux éducatifs (langues, histoire, maths),
+   par leurs fiches Store, tests et vidéos : boucle de jeu, récompenses,
+   rythme, ce que les avis d'utilisateurs aiment ou détestent.
+2. Relis `docs/audits/analyse_best_seller.md` et l'inventaire
+   `docs/audits/inventaire_fonctionnel.md` : ne propose pas ce qui existe déjà.
+3. Retiens 8 idées au plus. Pour chacune : d'où elle vient, à quoi elle
+   ressemblerait dans Ludus Latinus (un écran décrit en quelques lignes),
+   le latin qu'elle fait pratiquer, gain, effort, risque.
+4. Écarte explicitement les mécanismes qui posent problème pour des
+   enfants (achats poussés, pression sociale, minuteries culpabilisantes,
+   pubs) et dis pourquoi.
+
+**Livrable** (`docs/audits/idees_venues_d_ailleurs.md`) :
+- Le tableau des applis étudiées (source, ce qu'elles font bien, ce qu'on
+  écarte).
+- Les 8 idées au plus, classées par rapport gain sur effort.
+- Les sources citées (liens).
+
+**Critères de réussite** (tous obligatoires) :
+- [ ] 6 applis au moins, chacune avec sa source.
+- [ ] Aucune idée qui demande Internet, un compte ou de la publicité.
+- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [ ] Un commit `docs: idées de jeu venues d'ailleurs`.
+
+**Compte rendu** (rempli par l'exécutant) :
+- Fichiers modifiés :
+- Commandes lancées et résultat réel :
+- Doutes, questions pour l'architecte :
+- Reste à faire :

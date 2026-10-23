@@ -336,6 +336,12 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   confidentialité passée à `icareetdedale.fr/confidentialite/`, mention de
   l'achat intégré à reprendre. `docs/publication/invitation_testeurs.md` :
   messages pour recruter les testeurs du test fermé.
+- **Six tâches d'audit pour Gemini** (23/10/2026, demandées par Cédric) :
+  T58 à T63 dans `docs/TACHES.md` (dix premières minutes, cohérence visuelle,
+  8 jeux Ludi, une semaine d'élève et économie, accessibilité, idées venues
+  d'ailleurs). Observation seulement ; un rapport par tâche dans
+  `docs/audits/`, propositions à trier par l'architecte avec Cédric.
+
 - **Deux vidéos branchées** (22/10/2026, générées par Cédric dans Flow).
   `circus_arrivee.mp4` (1,9 Mo) jouée à la victoire au Circus, avant la
   fanfare et la pluie de lauriers (la clameur de la foule est dans la vidéo,
