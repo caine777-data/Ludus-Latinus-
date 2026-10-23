@@ -6039,7 +6039,7 @@ captures `scratch/t61_*`. Lecture du code autorisée (sans modification) :
 
 ## T62 — Accessibilité : lire, toucher, entendre (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : la fiche Store vise les familles et les professeurs. Un élève
 dyslexique, malvoyant ou qui joue sans le son doit pouvoir suivre. On veut
@@ -6070,16 +6070,40 @@ captures `scratch/t62_*`.
   plus lisible pour les élèves dyslexiques.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Les 5 critères couverts, chiffres de contraste compris.
-- [ ] TalkBack et police remis à l'état d'origine (valeurs recopiées).
-- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `docs: audit d'accessibilité`.
+- [x] Les 5 critères couverts, chiffres de contraste compris.
+- [x] TalkBack et police remis à l'état d'origine (valeurs recopiées).
+- [x] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `docs: audit d'accessibilité`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/audits/accessibilite.md` (rapport complet chiffré)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - `font_scale` 1.3 puis 1.6 testé sur l'ensemble des écrans : 14 captures enregistrées dans `scratch/` (`t62_01_accueil_scale13.png` à `t62_17_duel_scale16.png`). Troncatures critiques identifiées : case de saisie `TextField` de la leçon à trou bloquée à `height: 38` dp (`cloze_fill_widget.dart#L221`), boutons d'incidents Circus bloqués à `height: 44` dp (`circus_screen.dart#L391`), et carte boutique Taberna sur l'accueil écrasée à 2 px (`bounds: [42,2167][1038,2169]`).
+  - Mesure photométrique WCAG 2.1 via script `scratch/compute_contrasts.py` sur les 12 paires fondamentales :
+    - Texte Charcoal sur Crème Palatin : **15.01:1** (AAA)
+    - Texte Charcoal sur Blanc Travertin : **16.14:1** (AAA)
+    - Texte Blanc sur Pourpre Impérial : **14.12:1** (AAA)
+    - Texte Blanc sur Vert Laurier : **7.73:1** (AAA)
+    - Vert Laurier sur Crème Palatin : **6.78:1** (AA)
+    - Titre Or sur Pourpre Impérial : **6.71:1** (AA)
+    - Terracotta sur Crème Palatin : **4.52:1** (AA)
+    - Or sombre sur Or clair : **4.42:1** (Conforme grand texte >= 3:1, limite texte normal)
+    - Sous-texte Gris (`#757575`) sur Crème : **4.04:1** (Conforme grand texte >= 3:1, défaut texte normal < 4.5:1)
+    - Bouton désactivé (Gris `#9E9E9E`) sur Blanc : **2.68:1** (Non conforme < 3:1)
+    - Or Impérial (`#D4AF37`) sur Fond Blanc (badges) : **2.10:1** (Non conforme sévère < 3:1)
+  - Cibles tactiles mesurées (< 48 dp / 126 px à 420 dpi) : case à trou (38 dp), désinences rapides (32 dp), mots-étiquettes du puzzle (34 dp), boutons d'incidents Circus (44 dp), sélection de statistiques Bataille (38 dp), puces de filtre Album (34 dp).
+  - Mode sans le son : 14 événements audio inspectés dans `AudioService`. Redondance visuelle complète à 100 % (surlignage couleur vert/rose, sceaux ✓/✗, secousse visuelle `RomanScreenShake`, bannières explicatives, animations Lottie, jauges et comptes à rebours numériques).
+  - TalkBack testé sous `com.google.android.marvin.talkback/.TalkBackService` : le texte courant et les boutons système sont lus, mais les sceaux A/B/C/D ne sont pas annoncés comme boutons radio, les réponses éliminées par l'indice 50/50 (`lineThrough`) ne sont pas oralisées comme barrées/invalides, et aucune annonce vocale n'est déclenchée lors de la validation. L'arbre sémantique Flutter ne compte qu'une seule balise `Semantics` sur l'ensemble de l'application (`hero_form.dart`).
+  - Restauration des réglages d'origine vérifiée :
+    - `adb shell settings get system font_scale` : **`1.0`**
+    - `adb shell settings get secure enabled_accessibility_services` : **`null`**
+    - `adb shell settings get secure accessibility_enabled` : **`0`**
+  - Profil Marcus préservé : vérification JSON contre `scratch/t60_profil_avant.json` -> **0 différence**, profil 100 % intact.
+  - 5 propositions formalisées (P1 : Mode Lecture Confort/Dyslexie, P2 : Rehausse universelle des cibles tactiles à 48 dp, P3 : Sécurisation des conteneurs rigides face au zoom 1.6x, P4 : Renforcement des contrastes faibles sur fond blanc, P5 : Étiquetage sémantique TalkBack).
+- Doutes, questions pour l'architecte : Aucun doute.
+- Reste à faire : Rien sur T62. Tâche terminée.
 
 ---
 
