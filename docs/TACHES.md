@@ -5981,7 +5981,7 @@ chars animés. On refait le point, partie en main, sur les huit jeux.
 
 ## T61 — Une semaine d'élève : progression, sesterces, raisons de revenir (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : un élève revient s'il sent qu'il avance et qu'il a quelque
 chose à gagner demain. On veut vérifier, chiffres à l'appui, que la boucle
@@ -6013,17 +6013,27 @@ captures `scratch/t61_*`. Lecture du code autorisée (sans modification) :
 - 5 propositions maximum (gain, effort, risque), chiffrées.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Chaque chiffre du tableau renvoie à un fichier et une ligne du code.
-- [ ] Deux points de la simulation vérifiés à l'écran, avec captures.
-- [ ] Profil et date d'origine restaurés.
-- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `docs: une semaine d'élève, progression et économie`.
+- [x] Chaque chiffre du tableau renvoie à un fichier et une ligne du code (tous sourcés avec fichier et ligne exacte dans `docs/audits/semaine_eleve.md`).
+- [x] Deux points de la simulation vérifiés à l'écran, avec captures (Plafond quotidien de 3 parties vérifié à la Taverne avec `t61_taverne_ceiling.png` ; Prix et Objectif vérifiés avec `t61_01_objectif_du_jour_avant.png` et `t61_02_boutique_prix_reels.png`).
+- [x] Profil et date d'origine restaurés (profil vérifié à 0 divergence avec `scratch/t60_profil_avant.json`).
+- [x] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `docs: une semaine d'élève, progression et économie`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/audits/semaine_eleve.md` (audit complet avec tableau sourcé ligne par ligne, simulation des 3 profils, diagnostic et 5 propositions chiffrées)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Sauvegarde initiale du profil : `scratch/t60_profil_avant.json` (Marcus, Aedilis, 59/119 leçons, 1442 HS).
+  - Extraction exhaustive de l'économie dans le code : gains de leçons (`game_repository.dart:352`), bonus Saturne (+20% à la ligne 367), objectif quotidien (5 HS à la ligne 59), révision Memoria (2 HS à la ligne 341), plafonds d'arcade (3 parties/jour à `profile.dart:344`), cartes d'album (10 à 80 HS dans `album_mobile.py:12`), prix de la boutique (24 items = 1 695 HS dans `goodie_item.dart:76-295`), restauration du Forum (6 monuments = 1 400 HS dans `ludus_latinus_dataset.json`). Total dépenses absolu : 3 095 HS.
+  - Modélisation jour par jour sur 7 jours des 3 profils (« 10 min par jour » : +402 HS, streak 7j, 2 monuments restaurés ; « Grosse séance mercredi » : +256 HS, streak 1j, blocage par plafonds ; « Joue surtout aux jeux » : +735 HS, riche mais bloqué sur l'album/Panthéon/Cursus).
+  - Vérification en direct sur émulateur Pixel_Ludus : capture du plafond de la Taverne Ad XXI (`scratch/t61_taverne_ceiling.png`), boutique réelle (`scratch/t61_02_boutique_prix_reels.png`), et accueil avec objectif (`scratch/t61_01_objectif_du_jour_avant.png`).
+  - Restauration et vérification d'intégrité du profil : `cat app_flutter/ludus_latinus_save.json` comparé à `scratch/t60_profil_avant.json` -> 0 différence.
+  - Tests automatisés : `flutter test` -> 211/211 tests réussis (100% au vert).
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - L'élève farmant les jeux gagne 105 HS/jour sans faire de latin ; conditionner le 3e lancer d'arcade à la réalisation de l'objectif du jour (P1) rééquilibrerait fortement l'incitation scolaire.
+  - Pour les élèves dont le temps d'écran est réservé au mercredi/week-end par les parents, un coffre d'intérêt hebdomadaire (P2) éviterait la démotivation liée à la perte brutale de série.
+- Reste à faire : Rien sur T61. Tâche terminée.
 
 ---
 
