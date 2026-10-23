@@ -5801,7 +5801,7 @@ Règles communes aux six tâches :
 
 ## T58 — Les dix premières minutes d'un nouvel élève (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : un enfant décide en quelques minutes s'il garde une appli.
 On veut voir l'appli comme lui la voit au premier lancement, chronomètre en
@@ -5832,17 +5832,29 @@ main, et repérer chaque moment où il hésite, s'ennuie ou ne comprend pas.
 - 5 propositions maximum, chacune avec gain, effort, risque.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] Chronologie complète des dix premières minutes, avec captures.
-- [ ] Nombre de touchers avant la première question de latin, mesuré.
-- [ ] Profil d'origine restauré (capture de l'accueil).
-- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `docs: audit des dix premières minutes`.
+- [x] Chronologie complète des dix premières minutes, avec captures.
+- [x] Nombre de touchers avant la première question de latin, mesuré.
+- [x] Profil d'origine restauré (capture de l'accueil).
+- [x] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `docs: audit des dix premières minutes`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/audits/premieres_minutes.md`
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Sauvegarde initiale du profil : `scratch/t58_profil_avant.json` (2613 octets, Marcus, Aedilis, 59/119 leçons, 1442 HS).
+  - Remise à zéro complète de l'application : `adb shell pm clear com.luduslatinus.app` (Success).
+  - Parcours chronométré complet de l'accueil, de la leçon 1 (m1-01), 2 (m1-02) et 3 (m1-03) avec simulations d'erreurs et captures pas à pas dans `scratch/t58_*` (61 captures générées et analysées).
+  - Mesure du nombre de touchers avant première question de latin : 6 touchers au minimum (ou 8 touchers en passant les vidéos).
+  - Restauration du profil d'origine : `adb push latin_learn/scratch/t58_profil_avant.json /data/local/tmp/save.json` puis `adb shell run-as com.luduslatinus.app cp /data/local/tmp/save.json app_flutter/ludus_latinus_save.json` et relance de l'app.
+  - Capture de l'accueil final restauré (`scratch/t58_61_restored_home.png`) : profil Marcus, Aedilis, 59 / 119 leçons conquises, 1442 HS, inventaire et données SRS intacts.
+  - Paramètres système de touches : `pointer_location` = 0, `show_touches` = 0.
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - Friction bloquante : lors des questions de vocabulaire, le bouton « Continuer » se retrouve sous le bas de l'écran suite à l'affichage de l'encadré « Optime ! ». Un élève de 12 ans pense que l'appli est gelée s'il ne défile pas vers le bas. Une barre fixe en bas (Sticky Bottom Bar) résoudrait le problème.
+  - Friction ergonomique : le clavier virtuel masque les boutons de validation (« Entrer dans Rome » et « Valider la terminaison » dans les trous).
+  - Gamification : le déblocage du Colosseum Duellum (à 2 leçons) et le passage au rang Civis Romanus (à 3 leçons) se font en silence sans aucune célébration ni invitation visuelle.
+- Reste à faire : Rien sur T58. Tâche terminée.
 
 ---
 
