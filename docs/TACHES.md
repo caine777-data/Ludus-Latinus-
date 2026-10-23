@@ -5923,7 +5923,7 @@ marges, ou si certains écrans détonnent.
 
 ## T60 — Les 8 jeux Ludi : plaisir, difficulté, envie de rejouer (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : l'audit des jeux du 3 octobre (`docs/audits/audit_jeux_2026-10-03.md`)
 date d'avant la Bataille, l'album, les nouvelles règles de la Taverne et les
@@ -5955,17 +5955,27 @@ chars animés. On refait le point, partie en main, sur les huit jeux.
   une qui fait davantage pratiquer le latin.
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] 24 parties jouées et mesurées (tableau des mesures).
-- [ ] Les défauts de l'audit du 3 octobre repris un par un : corrigé ou non.
-- [ ] Profil d'origine restauré.
-- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `docs: audit des jeux Ludi d'octobre`.
+- [x] 24 parties jouées et mesurées (tableau des mesures pour les 8 jeux × 3 modes : bien joué, mal joué, au hasard).
+- [x] Les défauts de l'audit du 3 octobre repris un par un : corrigé ou non (les 6 défauts réévalués en détail).
+- [x] Profil d'origine restauré (sauvegarde `scratch/t60_profil_avant.json` vérifiée à 0 différence).
+- [x] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `docs: audit des jeux Ludi d'octobre`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/audits/jeux_ludi_2026-10.md` (rapport complet avec tableau des 24 mesures, analyse des 6 défauts, classement et 16 propositions)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
+  - Sauvegarde initiale du profil : `scratch/t60_profil_avant.json` (Marcus, Aedilis, 59/119 leçons, 11 cartes d'album, 1442 HS).
+  - 24 parties jouées et mesurées sur émulateur (Circus, Duel, Taverne, César, Marché, Panthéon, Album, Bataille).
+  - Mesures précises : durées réelles (de 8s à 86s), nombre de questions de latin, décisions hors questions (factions, postures, cartes, dés), sesterces gagnés et possibilité de gagner sans latin.
+  - 16 captures d'écran d'illustration archivées dans `scratch/t60_*`.
+  - Vérification d'intégrité de la sauvegarde : comparaison `scratch/t60_profil_avant.json` vs profil sur émulateur -> 0 divergence.
+  - Exécution de la suite de tests : `flutter test` -> 211/211 tests réussis à 100% au vert.
 - Doutes, questions pour l'architecte :
-- Reste à faire :
+  - La Bataille des Légendes est le jeu le plus stratégique et captivant de l'application ; serait-il pertinent de la débloquer plus tôt (dès 1 ou 2 cartes d'album) pour motiver les élèves plus vite ?
+  - Pour l'Atelier de César, remplacer le curseur horizontal par un double disque rotatif physique façon machine d'Alberti améliorerait grandement l'ergonomie mobile.
+- Reste à faire : Rien sur T60. Tâche terminée.
 
 ---
 
