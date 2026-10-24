@@ -49,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsReminderSection),
-          ReglagesRappelEtObjectif(repo: repo),
+          _Bloc(child: ReglagesRappelEtObjectif(repo: repo)),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsSectionSound),
           _Reglage(
@@ -60,7 +60,8 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsSectionDisplay),
-          AnimatedBuilder(
+          _Bloc(
+            child: AnimatedBuilder(
             animation: repo,
             builder: (context, _) => SwitchListTile.adaptive(
               value: repo.lectureConfort,
@@ -69,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
               subtitle: Text(context.l10n.settingsReadingComfortHint),
               secondary: const Icon(Icons.chrome_reader_mode_outlined, color: RomanColors.imperialPurple),
             ),
-          ),
+          )),
           if (GameRepository.modeSombreDisponible) ...[
             AnimatedBuilder(
               animation: repo,
@@ -138,6 +139,27 @@ class _Titre extends StatelessWidget {
   }
 }
 
+/// Carte blanche qui regroupe des lignes de réglage, comme [_Reglage] :
+/// toutes les sections ont ainsi le même aspect.
+class _Bloc extends StatelessWidget {
+  final Widget child;
+
+  const _Bloc({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: const BorderSide(color: RomanColors.marbleBorder),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
+    );
+  }
+}
+
 class _Reglage extends StatelessWidget {
   final IconData icone;
   final String titre;
@@ -153,7 +175,10 @@ class _Reglage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    // Marge sous chaque carte : deux réglages d'une même section se touchaient.
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -167,6 +192,6 @@ class _Reglage extends StatelessWidget {
         trailing: const Icon(Icons.chevron_right_rounded),
         onTap: onTap,
       ),
-    );
+    ));
   }
 }

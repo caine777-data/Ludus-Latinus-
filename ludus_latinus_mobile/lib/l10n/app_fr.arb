@@ -1682,5 +1682,7 @@
   },
   "wordComeBack": "Un nouveau mot t'attend demain.",
   "wordNone": "Termine ta première leçon pour avoir un mot à deviner.",
-  "a11yDelete": "Effacer"
+  "a11yDelete": "Effacer",
+  "bataLongPress": "Appuie longtemps sur une carte pour la voir en grand.",
+  "bataSeeCard": "voir la carte en grand"
 }

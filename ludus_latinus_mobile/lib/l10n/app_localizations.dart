@@ -3588,6 +3588,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Effacer'**
   String get a11yDelete;
+
+  /// No description provided for @bataLongPress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appuie longtemps sur une carte pour la voir en grand.'**
+  String get bataLongPress;
+
+  /// No description provided for @bataSeeCard.
+  ///
+  /// In fr, this message translates to:
+  /// **'voir la carte en grand'**
+  String get bataSeeCard;
 }
 
 class _AppLocalizationsDelegate

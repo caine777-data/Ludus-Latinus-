@@ -156,4 +156,28 @@ void main() {
     }
     expect(find.text('Manche suivante'), findsOneWidget);
   });
+  // Audit E9 : sur téléphone la carte est petite ; un appui long l'ouvre en grand.
+  testWidgets("Appui long sur une carte : elle s'ouvre en grand", (tester) async {
+    final ancien = FlutterError.onError;
+    FlutterError.onError = (d) {
+      if (!d.toString().contains('overflowed')) ancien?.call(d);
+    };
+    addTearDown(() => FlutterError.onError = ancien);
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+
+    final repo = depotAvec(['her_romulus', 'her_julia', 'mon_borne']);
+    final romulus = data.cartesAlbum.firstWhere((c) => c.id == 'her_romulus');
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: BatailleScreen(repo: repo, avecEntree: false),
+    ));
+    await tester.pump();
+    expect(find.text(romulus.nomLatin), findsNothing);
+    await tester.longPress(find.text(romulus.nom).first);
+    await tester.pumpAndSettle();
+    expect(find.text(romulus.nomLatin), findsOneWidget);
+  });
 }

@@ -2122,4 +2122,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get a11yDelete => 'Effacer';
+
+  @override
+  String get bataLongPress =>
+      'Appuie longtemps sur une carte pour la voir en grand.';
+
+  @override
+  String get bataSeeCard => 'voir la carte en grand';
 }

@@ -63,6 +63,16 @@ class RomanTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
+      // Interrupteurs pourpre et or ; éteints, un rond blanc sur fond de
+      // marbre plutôt que le rond noir d'Android (audit E7).
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? RomanColors.goldLight : Colors.white),
+        trackColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? RomanColors.imperialPurple : RomanColors.marbleBorder),
+        trackOutlineColor: WidgetStateProperty.resolveWith(
+            (s) => s.contains(WidgetState.selected) ? RomanColors.imperialPurple : RomanColors.goldDark),
+      ),
       fontFamily: RomanFonts.body,
       scaffoldBackgroundColor: RomanColors.travertinWhite,
       primaryColor: RomanColors.imperialPurple,

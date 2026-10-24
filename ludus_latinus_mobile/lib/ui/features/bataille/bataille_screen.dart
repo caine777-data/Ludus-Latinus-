@@ -186,6 +186,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
         ),
         if (possedees.length > tailleMain)
           Text(context.l10n.bataChosen(_choisies.length), style: const TextStyle(color: Colors.black54)),
+        Text(context.l10n.bataLongPress, style: const TextStyle(fontSize: 12.5, color: Colors.black54)),
         const SizedBox(height: 8),
         Wrap(
           spacing: 8,
@@ -511,8 +512,20 @@ class _CarteJeu extends StatelessWidget {
         ],
       ),
     );
-    if (onTap == null) return carteWidget;
-    return InkWell(borderRadius: BorderRadius.circular(10), onTap: onTap, child: carteWidget);
+    // Appui long sur une carte visible : elle s'ouvre en grand, comme dans
+    // l'album (audit E9). Sur téléphone, la carte fait 70 points de large et
+    // son image, son nom et sa devise y sont à peine lisibles.
+    final voirEnGrand = cachee ? null : () => montrerCarteAlbum(context, carte);
+    if (onTap == null && voirEnGrand == null) return carteWidget;
+    return Semantics(
+      onLongPressHint: cachee ? null : context.l10n.bataSeeCard,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: onTap,
+        onLongPress: voirEnGrand,
+        child: carteWidget,
+      ),
+    );
   }
 }
 
