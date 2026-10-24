@@ -63,8 +63,11 @@ chaque partie.
 
 ## Consignes de génération
 
-- Pour l'image 3, joindre `assets/images/lupulus/lupulus_mercure.png` comme
-  référence, pour que Lupulus garde son allure.
+- Les 4 images se génèrent sans image de référence (l'ancienne image 3,
+  la seule qui en demandait une, est abandonnée).
+- Les 2 animations partent d'une image : Gaius (image 1, à générer d'abord)
+  et la bannière de Paires éclair, déjà dans « gemini ludus »
+  (`banniere_mercure.webp`).
 - Aucun texte, lettre ou chiffre dans les images.
 - Déposer dans « gemini ludus » sans renommer : l'architecte les convertit en
   WebP et les détoure si besoin.
