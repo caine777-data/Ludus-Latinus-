@@ -3400,7 +3400,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsReadingComfortHint.
   ///
   /// In fr, this message translates to:
-  /// **'Lettres et lignes plus espacées, pour lire plus facilement'**
+  /// **'Police plus lisible, lettres et lignes plus espacées'**
   String get settingsReadingComfortHint;
 }
 

@@ -52,6 +52,10 @@ class RomanFonts {
 
   /// Police géométrique et moderne pour les textes pédagogiques, cours et dialogues
   static const String body = 'PlusJakartaSans';
+
+  /// Police du mode lecture confort : Atkinson Hyperlegible, dessinée par le
+  /// Braille Institute pour que les lettres proches ne se confondent pas.
+  static const String lecture = 'AtkinsonHyperlegible';
 }
 
 class RomanTheme {
@@ -104,11 +108,12 @@ class RomanTheme {
     );
   }
 
-  /// Variante « lecture confort » d'un thème : lettres plus espacées et
-  /// lignes plus aérées. Les styles écrits dans les écrans sans espacement
+  /// Variante « lecture confort » d'un thème : police plus lisible, lettres
+  /// plus espacées et lignes plus aérées. Les styles écrits dans les écrans sans espacement
   /// ni interligne en héritent par le style de texte par défaut.
   static ThemeData confort(ThemeData base) {
-    TextStyle? aerer(TextStyle? s) => s?.copyWith(letterSpacing: 0.6, height: 1.5, wordSpacing: 1.5);
+    TextStyle? aerer(TextStyle? s) =>
+        s?.copyWith(fontFamily: RomanFonts.lecture, letterSpacing: 0.6, height: 1.5, wordSpacing: 1.5);
     TextTheme aererTout(TextTheme t) => t.copyWith(
           displayLarge: aerer(t.displayLarge),
           displayMedium: aerer(t.displayMedium),

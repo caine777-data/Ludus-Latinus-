@@ -350,8 +350,9 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   (`views/conseil_lupulus.dart`, 9 phrases à relire par Cédric) ;
   contrastes (gris en black54, étoiles en goldDark) ; mode « Lecture confort »
   (profil `lecture_confort`, `RomanTheme.confort`, Paramètres > Affichage)
-  sans police dédiée pour l'instant : police à télécharger avec l'accord de
-  Cédric. Vérifié à l'émulateur sur un premier lancement, profil démo restauré.
+  avec la police Atkinson Hyperlegible (Braille Institute, licence OFL dans
+  `assets/fonts/OFL_AtkinsonHyperlegible.txt`, `RomanFonts.lecture`),
+  téléchargée avec l'accord de Cédric le 24/10/2026. Vérifié à l'émulateur sur un premier lancement, profil démo restauré.
   Économie et nouveaux jeux : à étudier (demande de Cédric).
 
 - **Audits T58 à T63 relus** (24/10/2026). Synthèse et tri dans

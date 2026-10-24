@@ -62,3 +62,12 @@ flutter:
     - family: PlusJakartaSans
       fonts:
         - asset: assets/fonts/PlusJakartaSans-VariableFont_wght.ttf
+    # Mode lecture confort : police dessinée pour distinguer les lettres
+    # proches (b/d, I/l/1). Licence OFL : assets/fonts/OFL_AtkinsonHyperlegible.txt
+    - family: AtkinsonHyperlegible
+      fonts:
+        - asset: assets/fonts/AtkinsonHyperlegible-Regular.ttf
+        - asset: assets/fonts/AtkinsonHyperlegible-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/AtkinsonHyperlegible-Italic.ttf
+          style: italic

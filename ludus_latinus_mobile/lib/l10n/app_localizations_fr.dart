@@ -2000,5 +2000,5 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsReadingComfortHint =>
-      'Lettres et lignes plus espacées, pour lire plus facilement';
+      'Police plus lisible, lettres et lignes plus espacées';
 }
