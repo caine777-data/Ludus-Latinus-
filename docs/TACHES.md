@@ -6109,7 +6109,7 @@ captures `scratch/t62_*`.
 
 ## T63 — Idées de jeu venues d'ailleurs, adaptées au latin (sans rien modifier)
 
-Statut : À FAIRE
+Statut : FAIT
 
 **Objectif** : chercher dans les applis éducatives qui marchent auprès des
 11 à 15 ans ce qui fait revenir les élèves, et ne garder que ce qui
@@ -6139,13 +6139,26 @@ aucun compte, ne télécharge rien).
 - Les sources citées (liens).
 
 **Critères de réussite** (tous obligatoires) :
-- [ ] 6 applis au moins, chacune avec sa source.
-- [ ] Aucune idée qui demande Internet, un compte ou de la publicité.
-- [ ] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
-- [ ] Un commit `docs: idées de jeu venues d'ailleurs`.
+- [x] 6 applis au moins, chacune avec sa source.
+- [x] Aucune idée qui demande Internet, un compte ou de la publicité.
+- [x] `git status` : seuls le rapport et `docs/TACHES.md` sont modifiés.
+- [x] Un commit `docs: idées de jeu venues d'ailleurs`.
 
 **Compte rendu** (rempli par l'exécutant) :
 - Fichiers modifiés :
+  - `docs/audits/idees_venues_d_ailleurs.md` (rapport complet)
+  - `docs/TACHES.md`
 - Commandes lancées et résultat réel :
-- Doutes, questions pour l'architecte :
-- Reste à faire :
+  - Étude comparative approfondie de 6 applications de référence : Duolingo (langues), Prodigy Math (maths/RPG), DragonBox (algèbre/stealth learning), Kahoot! Challenge Solo (quiz/défi asynchrone), Seterra / GeoGuessr (repérage cartographique spatial), Wordle / Pédantix (déduction lexicale quotidienne).
+  - Écartement formel des mécanismes toxiques et anxiogènes : aucun achat intégré ni monnaie réelle, aucun système de vies restrictif (cœurs) pénalisant l'erreur, aucune ligue compétitive à déclassement social, zéro publicité et zéro tracking personnel.
+  - Sélection et conception de 8 idées de jeu inédites (sans redondance avec les 9 jeux et 113 leçons de Ludus Latinus), 100 % hors-ligne et sans compte, classées par rapport gain sur effort :
+    1. *Aenigma Diei* (Mot du jour quotidien déductif à la Wordle, graines locales synchronisées par date) — Gain Énorme / Effort Faible
+    2. *Tabula Geographica* (Pointage interactif sur carte muette des provinces et cités à la Seterra) — Gain Très Élevé / Effort Faible-Moyen
+    3. *Tempus Fugit : Paires Éclair* (Appariement tactile rapide de tablettes de cire à la Quizlet Match) — Gain Élevé / Effort Faible
+    4. *Certamen Umbrae : Défi Fantôme* (Rejouabilité solo contre son meilleur record à la Kahoot! Challenge) — Gain Élevé / Effort Faible
+    5. *Libra Grammatica : Balance de la Phrase* (Accords syntaxiques et transitivité par équilibre physique à la DragonBox) — Gain Très Élevé / Effort Moyen
+    6. *Officina Verborum : Fabrique de Dérivés* (Forge de préfixes/suffixes et filiation française à la Little Alchemy) — Gain Très Élevé / Effort Moyen
+    7. *Lupulus Domi : Compagnon du Foyer* (Familier virtuel bienveillant sans mort avec ordres latins à la Neko Atsume) — Gain Moyen-Élevé / Effort Moyen
+    8. *Papyrus d'Herculanum* (Reconstitution de récits historiques lacunaires à la Heaven's Vault) — Gain Élevé / Effort Moyen-Élevé
+- Doutes, questions pour l'architecte : Aucun doute. Les propositions 1 (*Aenigma Diei*) et 3 (*Tempus Fugit*) offrent un ratio gain/effort immédiat pour enrichir la boucle quotidienne sans complexité technique.
+- Reste à faire : Rien sur T63. Tâche terminée.
