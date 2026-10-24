@@ -1915,4 +1915,90 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get a11yWrong => 'Mauvaise réponse';
+
+  @override
+  String lupulusBienvenue(String nom) {
+    return '« Salve $nom ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t\'attend. »';
+  }
+
+  @override
+  String lupulusObjectifAtteint(String nom) {
+    return '« Optime, $nom ! Ton objectif du jour est atteint. Un tour au Ludi pour fêter ça ? »';
+  }
+
+  @override
+  String lupulusEncoreUnEffort(String nom) {
+    return '« Bene, $nom ! Encore un petit effort et ton objectif du jour sera atteint. »';
+  }
+
+  @override
+  String lupulusGarderSerie(String nom, int serie) {
+    return '« Ta série dure depuis $serie jours, $nom : une leçon aujourd\'hui pour la garder ! »';
+  }
+
+  @override
+  String lupulusMaxime1(String nom) {
+    return '« Salve $nom ! Rome ne s\'est pas faite en un jour : une leçon aujourd\'hui, et la route avance. »';
+  }
+
+  @override
+  String lupulusMaxime2(String nom) {
+    return '« Festina lente, $nom : hâte-toi lentement. Lis bien le cours avant l\'exercice. »';
+  }
+
+  @override
+  String lupulusMaxime3(String nom) {
+    return '« Repetitio mater studiorum : la répétition est la mère des études. Un tour à Memoria, $nom ? »';
+  }
+
+  @override
+  String lupulusMaxime4(String nom) {
+    return '« Une erreur n\'est pas une défaite, $nom : lis l\'explication, puis réessaie. »';
+  }
+
+  @override
+  String lupulusMaxime5(String nom) {
+    return '« Gutta cavat lapidem : la goutte creuse la pierre. Un peu chaque jour suffit, $nom. »';
+  }
+
+  @override
+  String get unlockRankTitle => 'Nouveau rang !';
+
+  @override
+  String get unlockGameTitle => 'Un nouveau jeu s\'ouvre !';
+
+  @override
+  String unlockRankName(String titre, String sousTitre) {
+    return '$titre : $sousTitre';
+  }
+
+  @override
+  String unlockGameOpen(String jeu) {
+    return '$jeu t\'ouvre ses portes !';
+  }
+
+  @override
+  String get unlockLater => 'Plus tard';
+
+  @override
+  String get unlockGoPlay => 'Aller au Ludi';
+
+  @override
+  String get unlockNameDuel => 'Le Colosseum Duellum';
+
+  @override
+  String get unlockNameTaverne => 'La Taverne (Alea Iacta Est)';
+
+  @override
+  String get unlockNameCesar => 'L\'Atelier de César';
+
+  @override
+  String get unlockNameMarche => 'Le Marché de Trajan';
+
+  @override
+  String get settingsReadingComfort => 'Lecture confort';
+
+  @override
+  String get settingsReadingComfortHint =>
+      'Lettres et lignes plus espacées, pour lire plus facilement';
 }

@@ -628,14 +628,14 @@ class _MapScreenState extends State<MapScreen> {
                   style: TextStyle(
                     fontSize: 10.5,
                     fontWeight: isUnlocked ? FontWeight.bold : FontWeight.normal,
-                    color: isUnlocked ? RomanColors.charcoal : Colors.black45,
+                    color: isUnlocked ? RomanColors.charcoal : Colors.black54,
                   ),
                 ),
                 const SizedBox(height: 2),
                 if (isCompleted)
                   Text(
                     '★' * widget.repo.starsForLesson(lesson.id).clamp(0, 3) + '☆' * (3 - widget.repo.starsForLesson(lesson.id).clamp(0, 3)),
-                    style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 11, color: RomanColors.goldDark, fontWeight: FontWeight.bold),
                   )
                 else if (isCurrentActive)
                   Container(

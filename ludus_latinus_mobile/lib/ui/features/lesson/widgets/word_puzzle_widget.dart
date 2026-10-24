@@ -202,7 +202,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                       child: Text(
                         context.l10n.puzzleTapWords,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 12, color: Colors.black45, fontStyle: FontStyle.italic),
+                        style: const TextStyle(fontSize: 12, color: Colors.black54, fontStyle: FontStyle.italic),
                       ),
                     )
                   : Wrap(

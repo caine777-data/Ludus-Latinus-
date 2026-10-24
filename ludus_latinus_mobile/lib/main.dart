@@ -69,8 +69,8 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
           locale: const Locale('fr'),
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          theme: RomanTheme.lightTheme,
-          darkTheme: RomanTheme.darkTheme,
+          theme: widget.repository.lectureConfort ? RomanTheme.confort(RomanTheme.lightTheme) : RomanTheme.lightTheme,
+          darkTheme: widget.repository.lectureConfort ? RomanTheme.confort(RomanTheme.darkTheme) : RomanTheme.darkTheme,
           themeMode: widget.repository.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: FutureBuilder<void>(
         future: _initFuture,

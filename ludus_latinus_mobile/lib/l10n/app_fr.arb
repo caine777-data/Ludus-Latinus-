@@ -1461,5 +1461,109 @@
   },
   "a11yStruck": "éliminée",
   "a11yCorrect": "Bonne réponse",
-  "a11yWrong": "Mauvaise réponse"
+  "a11yWrong": "Mauvaise réponse",
+  "lupulusBienvenue": "« Salve {nom} ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t'attend. »",
+  "@lupulusBienvenue": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusObjectifAtteint": "« Optime, {nom} ! Ton objectif du jour est atteint. Un tour au Ludi pour fêter ça ? »",
+  "@lupulusObjectifAtteint": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusEncoreUnEffort": "« Bene, {nom} ! Encore un petit effort et ton objectif du jour sera atteint. »",
+  "@lupulusEncoreUnEffort": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusGarderSerie": "« Ta série dure depuis {serie} jours, {nom} : une leçon aujourd'hui pour la garder ! »",
+  "@lupulusGarderSerie": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      },
+      "serie": {
+        "type": "int"
+      }
+    }
+  },
+  "lupulusMaxime1": "« Salve {nom} ! Rome ne s'est pas faite en un jour : une leçon aujourd'hui, et la route avance. »",
+  "@lupulusMaxime1": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusMaxime2": "« Festina lente, {nom} : hâte-toi lentement. Lis bien le cours avant l'exercice. »",
+  "@lupulusMaxime2": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusMaxime3": "« Repetitio mater studiorum : la répétition est la mère des études. Un tour à Memoria, {nom} ? »",
+  "@lupulusMaxime3": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusMaxime4": "« Une erreur n'est pas une défaite, {nom} : lis l'explication, puis réessaie. »",
+  "@lupulusMaxime4": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "lupulusMaxime5": "« Gutta cavat lapidem : la goutte creuse la pierre. Un peu chaque jour suffit, {nom}. »",
+  "@lupulusMaxime5": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockRankTitle": "Nouveau rang !",
+  "unlockGameTitle": "Un nouveau jeu s'ouvre !",
+  "unlockRankName": "{titre} : {sousTitre}",
+  "@unlockRankName": {
+    "placeholders": {
+      "titre": {
+        "type": "String"
+      },
+      "sousTitre": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockGameOpen": "{jeu} t'ouvre ses portes !",
+  "@unlockGameOpen": {
+    "placeholders": {
+      "jeu": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockLater": "Plus tard",
+  "unlockGoPlay": "Aller au Ludi",
+  "unlockNameDuel": "Le Colosseum Duellum",
+  "unlockNameTaverne": "La Taverne (Alea Iacta Est)",
+  "unlockNameCesar": "L'Atelier de César",
+  "unlockNameMarche": "Le Marché de Trajan",
+  "settingsReadingComfort": "Lecture confort",
+  "settingsReadingComfortHint": "Lettres et lignes plus espacées, pour lire plus facilement"
 }

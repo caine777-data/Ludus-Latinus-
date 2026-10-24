@@ -104,6 +104,34 @@ class RomanTheme {
     );
   }
 
+  /// Variante « lecture confort » d'un thème : lettres plus espacées et
+  /// lignes plus aérées. Les styles écrits dans les écrans sans espacement
+  /// ni interligne en héritent par le style de texte par défaut.
+  static ThemeData confort(ThemeData base) {
+    TextStyle? aerer(TextStyle? s) => s?.copyWith(letterSpacing: 0.6, height: 1.5, wordSpacing: 1.5);
+    TextTheme aererTout(TextTheme t) => t.copyWith(
+          displayLarge: aerer(t.displayLarge),
+          displayMedium: aerer(t.displayMedium),
+          displaySmall: aerer(t.displaySmall),
+          headlineLarge: aerer(t.headlineLarge),
+          headlineMedium: aerer(t.headlineMedium),
+          headlineSmall: aerer(t.headlineSmall),
+          titleLarge: aerer(t.titleLarge),
+          titleMedium: aerer(t.titleMedium),
+          titleSmall: aerer(t.titleSmall),
+          bodyLarge: aerer(t.bodyLarge),
+          bodyMedium: aerer(t.bodyMedium),
+          bodySmall: aerer(t.bodySmall),
+          labelLarge: aerer(t.labelLarge),
+          labelMedium: aerer(t.labelMedium),
+          labelSmall: aerer(t.labelSmall),
+        );
+    return base.copyWith(
+      textTheme: aererTout(base.textTheme),
+      primaryTextTheme: aererTout(base.primaryTextTheme),
+    );
+  }
+
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,

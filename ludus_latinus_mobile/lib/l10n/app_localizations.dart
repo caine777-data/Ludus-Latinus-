@@ -3276,6 +3276,132 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Mauvaise réponse'**
   String get a11yWrong;
+
+  /// No description provided for @lupulusBienvenue.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Salve {nom} ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t\'attend. »'**
+  String lupulusBienvenue(String nom);
+
+  /// No description provided for @lupulusObjectifAtteint.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Optime, {nom} ! Ton objectif du jour est atteint. Un tour au Ludi pour fêter ça ? »'**
+  String lupulusObjectifAtteint(String nom);
+
+  /// No description provided for @lupulusEncoreUnEffort.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Bene, {nom} ! Encore un petit effort et ton objectif du jour sera atteint. »'**
+  String lupulusEncoreUnEffort(String nom);
+
+  /// No description provided for @lupulusGarderSerie.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Ta série dure depuis {serie} jours, {nom} : une leçon aujourd\'hui pour la garder ! »'**
+  String lupulusGarderSerie(String nom, int serie);
+
+  /// No description provided for @lupulusMaxime1.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Salve {nom} ! Rome ne s\'est pas faite en un jour : une leçon aujourd\'hui, et la route avance. »'**
+  String lupulusMaxime1(String nom);
+
+  /// No description provided for @lupulusMaxime2.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Festina lente, {nom} : hâte-toi lentement. Lis bien le cours avant l\'exercice. »'**
+  String lupulusMaxime2(String nom);
+
+  /// No description provided for @lupulusMaxime3.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Repetitio mater studiorum : la répétition est la mère des études. Un tour à Memoria, {nom} ? »'**
+  String lupulusMaxime3(String nom);
+
+  /// No description provided for @lupulusMaxime4.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Une erreur n\'est pas une défaite, {nom} : lis l\'explication, puis réessaie. »'**
+  String lupulusMaxime4(String nom);
+
+  /// No description provided for @lupulusMaxime5.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Gutta cavat lapidem : la goutte creuse la pierre. Un peu chaque jour suffit, {nom}. »'**
+  String lupulusMaxime5(String nom);
+
+  /// No description provided for @unlockRankTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau rang !'**
+  String get unlockRankTitle;
+
+  /// No description provided for @unlockGameTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un nouveau jeu s\'ouvre !'**
+  String get unlockGameTitle;
+
+  /// No description provided for @unlockRankName.
+  ///
+  /// In fr, this message translates to:
+  /// **'{titre} : {sousTitre}'**
+  String unlockRankName(String titre, String sousTitre);
+
+  /// No description provided for @unlockGameOpen.
+  ///
+  /// In fr, this message translates to:
+  /// **'{jeu} t\'ouvre ses portes !'**
+  String unlockGameOpen(String jeu);
+
+  /// No description provided for @unlockLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get unlockLater;
+
+  /// No description provided for @unlockGoPlay.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aller au Ludi'**
+  String get unlockGoPlay;
+
+  /// No description provided for @unlockNameDuel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Colosseum Duellum'**
+  String get unlockNameDuel;
+
+  /// No description provided for @unlockNameTaverne.
+  ///
+  /// In fr, this message translates to:
+  /// **'La Taverne (Alea Iacta Est)'**
+  String get unlockNameTaverne;
+
+  /// No description provided for @unlockNameCesar.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Atelier de César'**
+  String get unlockNameCesar;
+
+  /// No description provided for @unlockNameMarche.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le Marché de Trajan'**
+  String get unlockNameMarche;
+
+  /// No description provided for @settingsReadingComfort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lecture confort'**
+  String get settingsReadingComfort;
+
+  /// No description provided for @settingsReadingComfortHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lettres et lignes plus espacées, pour lire plus facilement'**
+  String get settingsReadingComfortHint;
 }
 
 class _AppLocalizationsDelegate

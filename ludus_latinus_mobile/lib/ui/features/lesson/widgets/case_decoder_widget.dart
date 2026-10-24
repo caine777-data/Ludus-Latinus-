@@ -253,7 +253,7 @@ class _CaseDecoderWidgetState extends State<CaseDecoderWidget> {
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: hasRole ? Colors.white : Colors.black45,
+                              color: hasRole ? Colors.white : Colors.black54,
                             ),
                           ),
                         ),

@@ -336,6 +336,24 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   confidentialité passée à `icareetdedale.fr/confidentialite/`, mention de
   l'achat intégré à reprendre. `docs/publication/invitation_testeurs.md` :
   messages pour recruter les testeurs du test fermé.
+- **Suites des audits appliquées** (24/10/2026, validées par Cédric).
+  Correctifs (commit 27fd368) : bouton Continuer du vocabulaire ramené à
+  l'écran (test `vocab_continuer_visible_test`), place sous les champs quand
+  le clavier s'ouvre, case du texte à trou extensible et « Valider le mot » /
+  « Valider la terminaison », zones à toucher à 48 dp, lecteur d'écran
+  (`annoncerAuLecteur` dans `widgets.dart`, réponses en `Semantics`).
+  Décisions : leçon 1 ouverte d'office après la création du héros
+  (`HeroCreationScreen.showIfNeeded` renvoie vrai) ; annonce des déblocages
+  (`deblocagesAAnnoncer`, profil `rang_annonce` / `jeux_annonces`, relevé
+  silencieux pour une ancienne sauvegarde ; `views/annonce_deblocage.dart`,
+  test `deblocages_test`) ; Lupulus selon le moment
+  (`views/conseil_lupulus.dart`, 9 phrases à relire par Cédric) ;
+  contrastes (gris en black54, étoiles en goldDark) ; mode « Lecture confort »
+  (profil `lecture_confort`, `RomanTheme.confort`, Paramètres > Affichage)
+  sans police dédiée pour l'instant : police à télécharger avec l'accord de
+  Cédric. Vérifié à l'émulateur sur un premier lancement, profil démo restauré.
+  Économie et nouveaux jeux : à étudier (demande de Cédric).
+
 - **Audits T58 à T63 relus** (24/10/2026). Synthèse et tri dans
   `docs/audits/synthese_audits_gemini_2026-10.md` : 5 défauts à corriger
   (D1 « Continuer » caché après une question de vocabulaire, confirmé à

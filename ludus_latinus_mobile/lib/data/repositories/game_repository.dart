@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/album.dart';
+import '../models/cursus_honorum.dart';
 import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
 import '../models/carte_pantheon.dart';
@@ -203,6 +204,37 @@ class GameRepository extends ChangeNotifier {
   /// Cartes obtenues depuis la dernière annonce, à montrer à l'élève au
   /// retour à l'accueil (jamais en pleine partie).
   final List<CarteAlbum> cartesAAnnoncer = [];
+
+  /// Jeux du Ludi qui s'ouvrent en cours de route ; les autres (Circus,
+  /// Panthéon, album) le sont dès le départ et n'ont rien à annoncer.
+  static const jeuxADebloquer = ['duel', 'taverne', 'cesar', 'marche', 'bataille'];
+
+  /// Nouveau rang et jeux tout juste ouverts, pas encore annoncés ; les
+  /// marque comme annoncés. Un rang n'est annoncé qu'en montant : le rang
+  /// dépend aussi des sesterces, il peut redescendre après un achat.
+  ({CursusHonorum? rang, List<String> jeux}) deblocagesAAnnoncer() {
+    final p = profile;
+    final rang = p.cursusRank;
+    final ouverts = [
+      for (final jeu in jeuxADebloquer)
+        if (p.getUnlockStatusForGame(jeu).isUnlocked) jeu,
+    ];
+    final dejaAnnonces = p.jeuxAnnonces;
+    if (p.rangAnnonce == null || dejaAnnonces == null) {
+      p.rangAnnonce = rang.titre;
+      p.jeuxAnnonces = ouverts;
+      storageService.saveProfile(p);
+      return (rang: null, jeux: const <String>[]);
+    }
+    int niveau(String titre) => CursusHonorum.echelons.indexWhere((e) => e.titre == titre);
+    final nouveauRang = niveau(rang.titre) > niveau(p.rangAnnonce!) ? rang : null;
+    final nouveauxJeux = [for (final jeu in ouverts) if (!dejaAnnonces.contains(jeu)) jeu];
+    if (nouveauRang == null && nouveauxJeux.isEmpty) return (rang: null, jeux: const <String>[]);
+    if (nouveauRang != null) p.rangAnnonce = nouveauRang.titre;
+    p.jeuxAnnonces = [...dejaAnnonces, ...nouveauxJeux];
+    storageService.saveProfile(p);
+    return (rang: nouveauRang, jeux: nouveauxJeux);
+  }
 
   /// Valeur actuelle d'une statistique de succès (voir content/album_mobile.py).
   int valeurStat(String stat) {
@@ -620,6 +652,14 @@ class GameRepository extends ChangeNotifier {
 
   void toggleThemeMode() {
     profile.isDarkMode = !profile.isDarkMode;
+    storageService.saveProfile(profile);
+    notifyListeners();
+  }
+
+  bool get lectureConfort => profile.lectureConfort;
+
+  void basculerLectureConfort() {
+    profile.lectureConfort = !profile.lectureConfort;
     storageService.saveProfile(profile);
     notifyListeners();
   }

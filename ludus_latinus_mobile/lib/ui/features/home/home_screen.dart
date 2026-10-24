@@ -32,6 +32,8 @@ import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
 import '../bataille/bataille_screen.dart';
+import 'views/annonce_deblocage.dart';
+import 'views/conseil_lupulus.dart';
 import 'views/objectif_du_jour.dart';
 
 /// Tableau de bord d'accueil mobile au niveau artistique et architectural de Monument Valley.
@@ -56,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
   /// lorsque l'accueil est l'écran affiché : jamais en pleine partie, ni par-dessus
   /// le bilan d'une leçon ou une cinématique.
   Timer? _veilleAlbum;
+  /// Rang de l'onglet Ludi dans la barre du bas (Cursus, Bibliotheca, Ludi).
+  static const _ongletLudi = 2;
   bool _annonceEnCours = false;
 
   void _verifierAnnonceAlbum() {
@@ -69,6 +73,20 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: const Color(0xFF3B6D11),
         content: Text(context.l10n.goalReward(GameRepository.gainObjectif)),
       ));
+    }
+    // Nouveau rang ou jeu ouvert : annoncé une fois, après les cartes gagnées.
+    if (widget.repo.cartesAAnnoncer.isEmpty) {
+      final deblocages = widget.repo.deblocagesAAnnoncer();
+      if (deblocages.rang != null || deblocages.jeux.isNotEmpty) {
+        _annonceEnCours = true;
+        annoncerDeblocages(
+          context,
+          rang: deblocages.rang,
+          jeux: deblocages.jeux,
+          ouvrirLudi: () => setState(() => _currentTabIndex = _ongletLudi),
+        ).whenComplete(() => _annonceEnCours = false);
+        return;
+      }
     }
     // Après la toute première leçon, Lupulus propose le rappel quotidien (une fois).
     final p = widget.repo.profile;
@@ -106,7 +124,17 @@ class _HomeScreenState extends State<HomeScreen> {
         // « Passer » sur le studio n'enchaîne que sur l'intro, il ne saute pas les deux.
         await RomanCinematicOverlay.showStudioPuisIntro(context);
         // Premier lancement : l'élève choisit son héros juste après l'intro.
-        if (mounted) await HeroCreationScreen.showIfNeeded(context, widget.repo);
+        if (!mounted) return;
+        final heroCree = await HeroCreationScreen.showIfNeeded(context, widget.repo);
+        // Le héros vient d'être créé : on ouvre aussitôt la première leçon.
+        // Avant, l'élève arrivait sur l'accueil et devait trouver seul la
+        // route puis le premier jalon (6 à 8 touchers, audit T58).
+        if (!heroCree || !mounted || widget.repo.profile.completedLessons.isNotEmpty) return;
+        final premiere = widget.repo.worlds.firstOrNull?.lessons.firstOrNull;
+        if (premiere == null) return;
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: premiere)),
+        );
       });
     }
   }
@@ -365,8 +393,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // 2. Mascotte Lupulus vivante avec bulle de dialogue
                 LupulusDialogue(
-                  emotion: 'normal',
-                  message: context.l10n.homeLupulusSalve(profile.nomHeros),
+                  emotion: conseilLupulus(context.l10n, profile).emotion,
+                  message: conseilLupulus(context.l10n, profile).message,
                   onTap: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -1038,7 +1066,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           if (isDone)
-                            Text(_stars(l.id), style: const TextStyle(fontSize: 11, color: RomanColors.imperialGold, fontWeight: FontWeight.bold))
+                            Text(_stars(l.id), style: const TextStyle(fontSize: 11, color: RomanColors.goldDark, fontWeight: FontWeight.bold))
                           else if (isCurrent)
                             Text(context.l10n.homeHere, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF7A5901))),
                         ],
@@ -1342,7 +1370,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   rank.sousTitre,
-                                  style: TextStyle(fontSize: 11, color: isUnlocked ? RomanColors.imperialPurple : Colors.grey),
+                                  style: TextStyle(fontSize: 11, color: isUnlocked ? RomanColors.imperialPurple : Colors.black54),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(

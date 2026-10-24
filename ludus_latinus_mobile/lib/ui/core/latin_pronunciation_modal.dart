@@ -290,7 +290,7 @@ class _LatinPronunciationModalState extends State<LatinPronunciationModal> {
                                 isTonic ? '▲ tonique' : '—',
                                 style: TextStyle(
                                   fontSize: 9,
-                                  color: isTonic ? const Color(0xFF7A5901) : Colors.black38,
+                                  color: isTonic ? const Color(0xFF7A5901) : Colors.black54,
                                   fontWeight: isTonic ? FontWeight.bold : FontWeight.normal,
                                 ),
                               ),

@@ -58,9 +58,19 @@ class SettingsScreen extends StatelessWidget {
             sousTitre: AudioService().isMuted ? context.l10n.settingsSoundMuted : context.l10n.settingsSoundOn,
             onTap: () => RomanAudioModal.show(context),
           ),
+          const SizedBox(height: 22),
+          _Titre(context.l10n.settingsSectionDisplay),
+          AnimatedBuilder(
+            animation: repo,
+            builder: (context, _) => SwitchListTile.adaptive(
+              value: repo.lectureConfort,
+              onChanged: (_) => repo.basculerLectureConfort(),
+              title: Text(context.l10n.settingsReadingComfort),
+              subtitle: Text(context.l10n.settingsReadingComfortHint),
+              secondary: const Icon(Icons.chrome_reader_mode_outlined, color: RomanColors.imperialPurple),
+            ),
+          ),
           if (GameRepository.modeSombreDisponible) ...[
-            const SizedBox(height: 22),
-            _Titre(context.l10n.settingsSectionDisplay),
             AnimatedBuilder(
               animation: repo,
               builder: (context, _) => SwitchListTile.adaptive(

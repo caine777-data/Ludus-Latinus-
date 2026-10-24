@@ -16,12 +16,14 @@ class HeroCreationScreen extends StatefulWidget {
 
   const HeroCreationScreen({super.key, required this.repo});
 
-  /// Affiche l'écran si le héros n'a pas encore été choisi.
-  static Future<void> showIfNeeded(BuildContext context, GameRepository repo) async {
-    if (repo.profile.heroChoisi) return;
+  /// Affiche l'écran si le héros n'a pas encore été choisi. Renvoie vrai
+  /// quand le héros vient d'être créé.
+  static Future<bool> showIfNeeded(BuildContext context, GameRepository repo) async {
+    if (repo.profile.heroChoisi) return false;
     await Navigator.of(context).push(
       MaterialPageRoute(fullscreenDialog: true, builder: (_) => HeroCreationScreen(repo: repo)),
     );
+    return repo.profile.heroChoisi;
   }
 
   @override

@@ -133,6 +133,9 @@ class UserProfile {
   Map<String, int> records;
   List<String> decodedEpigraphs;
   bool isDarkMode;
+  /// Mode lecture confort : texte plus espacé, pour les élèves dyslexiques
+  /// ou qui lisent avec peine.
+  bool lectureConfort;
   Map<String, String> equippedGoodies;
   List<String> ownedGoodies;
 
@@ -148,6 +151,11 @@ class UserProfile {
   /// Rappel quotidien : désactivé par défaut, proposé après la première leçon.
   bool rappelActif;
   bool rappelPropose;
+  /// Dernier rang du Cursus Honorum et jeux du Ludi déjà annoncés à l'élève.
+  /// Null tant que l'appli ne les a jamais relevés (ancienne sauvegarde) :
+  /// on note alors l'état du moment sans rien annoncer.
+  String? rangAnnonce;
+  List<String>? jeuxAnnonces;
   /// Heure du rappel, en minutes depuis minuit (17 h 30 par défaut).
   int rappelMinutes;
 
@@ -185,6 +193,7 @@ class UserProfile {
     Map<String, int>? records,
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
+    this.lectureConfort = false,
     Map<String, String>? equippedGoodies,
     List<String>? ownedGoodies,
     Map<String, int>? compteurs,
@@ -192,6 +201,8 @@ class UserProfile {
     List<String>? cartesAlbum,
     this.rappelActif = false,
     this.rappelPropose = false,
+    this.rangAnnonce,
+    this.jeuxAnnonces,
     this.rappelMinutes = 17 * 60 + 30,
     this.objectifJour = 1,
     this.activiteDate,
@@ -495,6 +506,7 @@ class UserProfile {
       records: (json['records'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
+      lectureConfort: json['lecture_confort'] as bool? ?? false,
       equippedGoodies: parsedEquipped,
       ownedGoodies: parsedOwned,
       compteurs: (json['compteurs'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
@@ -502,6 +514,8 @@ class UserProfile {
       cartesAlbum: (json['cartes_album'] as List?)?.map((e) => e.toString()).toList(),
       rappelActif: json['rappel_actif'] as bool? ?? false,
       rappelPropose: json['rappel_propose'] as bool? ?? false,
+      rangAnnonce: json['rang_annonce'] as String?,
+      jeuxAnnonces: (json['jeux_annonces'] as List?)?.map((e) => e.toString()).toList(),
       rappelMinutes: json['rappel_minutes'] as int? ?? 17 * 60 + 30,
       objectifJour: (json['objectif_jour'] as int? ?? 1).clamp(1, 3),
       activiteDate: json['activite_date'] as String?,
@@ -536,6 +550,7 @@ class UserProfile {
       'records': records,
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
+      'lecture_confort': lectureConfort,
       'equipped_goodies': equippedGoodies,
       'owned_goodies': ownedGoodies,
       'compteurs': compteurs,
@@ -543,6 +558,8 @@ class UserProfile {
       'cartes_album': cartesAlbum,
       'rappel_actif': rappelActif,
       'rappel_propose': rappelPropose,
+      'rang_annonce': rangAnnonce,
+      'jeux_annonces': jeuxAnnonces,
       'rappel_minutes': rappelMinutes,
       'objectif_jour': objectifJour,
       'activite_date': activiteDate,
