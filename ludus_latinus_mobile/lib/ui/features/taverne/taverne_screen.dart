@@ -5,7 +5,7 @@ import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/widgets.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
 
 /// Un nombre en chiffres romains (jusqu'à 39, assez pour les totaux du jeu).
@@ -214,7 +214,11 @@ class _TaverneScreenState extends State<TaverneScreen> {
       builder: (context, _) {
         final issue = _partie.issue;
         final enCours = !_partie.joueurArrete;
-        return Scaffold(
+        // Décor de taverne très pâle derrière toute la partie.
+        return FondDeJeu(
+          image: 'assets/images/taverne/fond_taverne.webp',
+          child: Scaffold(
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: FittedBox(fit: BoxFit.scaleDown, child: Text(context.l10n.tavernTitle)),
             actions: [
@@ -283,7 +287,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
             ),
             ),
           )),
-        );
+        ));
       },
     );
   }
@@ -328,14 +332,7 @@ class _TaverneScreenState extends State<TaverneScreen> {
     required bool gaius,
     String? vide,
   }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: gaius ? const Color(0xFFF3E6D8) : RomanColors.palatinCream,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: gaius ? const Color(0xFF9E6534) : RomanColors.imperialGold, width: 1.2),
-      ),
-      child: Column(
+    final contenu = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -361,7 +358,35 @@ class _TaverneScreenState extends State<TaverneScreen> {
             ),
           ],
         ],
+      );
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: gaius ? const Color(0xFFF3E6D8).withValues(alpha: 0.94) : RomanColors.palatinCream.withValues(alpha: 0.94),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: gaius ? const Color(0xFF9E6534) : RomanColors.imperialGold, width: 1.2),
       ),
+      // Gaius est là en personne, animé : il secoue son gobelet pendant la
+      // partie, comme les boss du Colisée.
+      child: gaius
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    'assets/images/taverne/gaius_anime.webp',
+                    width: 84,
+                    height: 112,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const SizedBox(width: 84),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(child: contenu),
+              ],
+            )
+          : contenu,
     );
   }
 

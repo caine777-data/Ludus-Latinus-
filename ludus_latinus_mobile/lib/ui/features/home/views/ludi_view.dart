@@ -202,7 +202,7 @@ class LudiView extends StatelessWidget {
                       _buildGameTile(
                         context: context,
                         gameKey: 'taverne',
-                        imagePath: 'assets/images/boss_mercure_140.png',
+                        imagePath: 'assets/images/taverne/gaius.webp',
                         fallbackIcon: '🎲',
                         title: 'Alea Iacta Est',
                         subtitle: context.l10n.ludiTavernSubtitle,

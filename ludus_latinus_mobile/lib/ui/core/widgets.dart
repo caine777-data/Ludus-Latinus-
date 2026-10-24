@@ -519,3 +519,22 @@ class CaseRibbon extends StatelessWidget {
     );
   }
 }
+
+/// Décor illustré derrière tout un écran de jeu (Taverne, Mot du jour).
+/// Le Scaffold enfant doit avoir un fond transparent. Le crème du thème reste
+/// dessous, au cas où l'image manquerait.
+class FondDeJeu extends StatelessWidget {
+  final String image;
+  final Widget child;
+
+  const FondDeJeu({super.key, required this.image, required this.child});
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+        decoration: BoxDecoration(
+          color: RomanColors.travertinWhite,
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+        ),
+        child: child,
+      );
+}

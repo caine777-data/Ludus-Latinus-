@@ -213,7 +213,13 @@ class _PairesScreenState extends State<PairesScreen> {
           borderRadius: BorderRadius.circular(16),
           child: AspectRatio(
             aspectRatio: 16 / 9,
-            child: Image.asset('assets/images/paires/banniere_mercure.webp', fit: BoxFit.cover),
+            child: Image.asset(
+              'assets/images/paires/banniere_mercure_anime.webp',
+              fit: BoxFit.cover,
+              // L'image fixe reste en secours si l'animation ne se charge pas.
+              errorBuilder: (_, __, ___) =>
+                  Image.asset('assets/images/paires/banniere_mercure.webp', fit: BoxFit.cover),
+            ),
           ),
         ),
         const SizedBox(height: 16),

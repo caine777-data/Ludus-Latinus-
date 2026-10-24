@@ -93,7 +93,11 @@ class _MotDuJourScreenState extends State<MotDuJourScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    // Bibliothèque romaine très pâle derrière la grille.
+    return FondDeJeu(
+      image: 'assets/images/mot_du_jour/fond_bibliotheque.webp',
+      child: Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: FittedBox(fit: BoxFit.scaleDown, child: Text(context.l10n.wordTitle))),
       body: _mot == null
           ? Padding(
@@ -138,7 +142,7 @@ class _MotDuJourScreenState extends State<MotDuJourScreen> {
                 ),
               ),
             ),
-    );
+    ));
   }
 
   Widget _entete() => Row(

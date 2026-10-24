@@ -318,11 +318,16 @@ $texteChiffre
           borderRadius: BorderRadius.circular(20),
           side: const BorderSide(color: RomanColors.imperialGold, width: 2),
         ),
-        title: const Row(
+        title: Row(
           children: [
-            Text('🦅', style: TextStyle(fontSize: 26)),
-            SizedBox(width: 8),
-            Flexible(
+            Image.asset(
+              'assets/images/cesar/sceau_victoire.webp',
+              width: 56,
+              height: 56,
+              errorBuilder: (_, __, ___) => const Text('🦅', style: TextStyle(fontSize: 26)),
+            ),
+            const SizedBox(width: 8),
+            const Flexible(
               child: Text(
                 'Message Déchiffré !',
                 style: TextStyle(

@@ -45,6 +45,9 @@ flutter:
     - assets/images/via/
     - assets/images/duel/
     - assets/images/paires/
+    - assets/images/taverne/
+    - assets/images/mot_du_jour/
+    - assets/images/cesar/
     - assets/images/cas/
     - assets/images/epigraphie/
     - assets/images/studio/
