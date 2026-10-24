@@ -213,7 +213,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                         return GestureDetector(
                           onTap: () => _onWordTappedFromSelected(idx),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15), // 48 dp au doigt
                             decoration: BoxDecoration(
                               color: RomanColors.imperialPurple,
                               borderRadius: BorderRadius.circular(10),
@@ -287,7 +287,7 @@ class _WordPuzzleWidgetState extends State<WordPuzzleWidget> {
                   onTap: () => _onWordTappedFromBank(idx),
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15), // 48 dp au doigt
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),

@@ -18,7 +18,7 @@ import 'widgets/arena_challenge_widget.dart';
 import 'widgets/vocab_question_widget.dart';
 import 'widgets/grammar_question_widget.dart';
 import 'illustrations_lecons.dart';
-import '../../../data/models/vocab_question.dart';
+import '../../../data/models/vocab_question.dart';
 import '../../../l10n/l10n.dart';
 
 /// Écran de cours et d'exercice QCM 2x2 tactile au style épuré Monument Valley.
@@ -211,6 +211,7 @@ class _LessonScreenState extends State<LessonScreen> {
       }
     });
 
+    annoncerAuLecteur(context, correct ? context.l10n.a11yCorrect : context.l10n.a11yWrong);
     if (isCorrect) {
       _onMainDone();
     } else {
@@ -1022,10 +1023,23 @@ class _LessonScreenState extends State<LessonScreen> {
               sealColor = const Color(0xFFB8AEA3);
             }
 
-            return Padding(
+            // Pour le lecteur d'écran : un bouton « Réponse A : … », avec son
+            // état ; le barré et les couleurs ne lui disent rien.
+            final peutToucher = !(isAnswered || isStruck);
+            final etat = isStruck
+                ? context.l10n.a11yStruck
+                : (sealLabel == '✓' ? context.l10n.a11yCorrect : (sealLabel == '✗' ? context.l10n.a11yWrong : null));
+            return Semantics(
+              button: true,
+              enabled: peutToucher,
+              label: context.l10n.a11yAnswer(letters[pos.clamp(0, letters.length - 1)], optionText) +
+                  (etat == null ? '' : ', $etat'),
+              onTap: peutToucher ? () => _submitAnswer(optIndex) : null,
+              excludeSemantics: true,
+              child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: InkWell(
-                onTap: (isAnswered || isStruck) ? null : () => _submitAnswer(optIndex),
+                onTap: peutToucher ? () => _submitAnswer(optIndex) : null,
                 borderRadius: BorderRadius.circular(14),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
@@ -1056,7 +1070,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   ),
                 ),
               ),
-            );
+            ));
           }),
 
           if (canUseHint)

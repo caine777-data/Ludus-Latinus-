@@ -92,9 +92,16 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
       _shakeKey.currentState?.shake(intensity: ShakeIntensity.medium);
       setState(() {
         _feedbackMessage =
-            context.l10n.clozeWrongEnding;
+            _finDeMot ? context.l10n.clozeWrongEnding : context.l10n.clozeWrongWord;
       });
     }
+  }
+
+  /// Vrai quand la case complète un mot commencé (« silv » + « am ») ;
+  /// faux quand l'élève tape un mot entier.
+  bool get _finDeMot {
+    final avant = widget.avant ?? '';
+    return avant.isNotEmpty && !avant.endsWith(' ');
   }
 
   @override
@@ -103,7 +110,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
     final apresText = widget.apres ?? '';
     // Fin de mot : le texte d'avant se termine collé à la case (« silv » + « am »).
     // On colle alors ce début de mot à la case, et on le dit clairement à l'élève.
-    final finDeMot = avantText.isNotEmpty && !avantText.endsWith(' ');
+    final finDeMot = _finDeMot;
     final coupe = finDeMot ? avantText.lastIndexOf(' ') : -1;
     final debutPhrase =
         finDeMot ? avantText.substring(0, coupe + 1).trim() : avantText.trim();
@@ -218,7 +225,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                         width: widget.solution.length <= 2
                             ? 72
                             : (widget.solution.length <= 4 ? 96 : 120),
-                        height: 38,
+                        constraints: const BoxConstraints(minHeight: 48),
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -252,6 +259,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                             contentPadding: const EdgeInsets.symmetric(vertical: 8),
                           ),
                           onSubmitted: _verifyInput,
+                          scrollPadding: const EdgeInsets.only(bottom: 160),
                         ),
                       ),
                     ],
@@ -322,7 +330,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
+                          horizontal: 14, vertical: 15), // 48 dp au doigt
                       decoration: BoxDecoration(
                         color: RomanColors.goldLight,
                         borderRadius: BorderRadius.circular(10),
@@ -348,7 +356,7 @@ class _ClozeFillWidgetState extends State<ClozeFillWidget> {
             // 4. Bouton de validation
             if (!_isSuccess)
               RomanButton(
-                text: context.l10n.clozeCheck,
+                text: finDeMot ? context.l10n.clozeCheck : context.l10n.clozeCheckWord,
                 backgroundColor: RomanColors.imperialPurple,
                 textColor: RomanColors.goldLight,
                 isLarge: true,

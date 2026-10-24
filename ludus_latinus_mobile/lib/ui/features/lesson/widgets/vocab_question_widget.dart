@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../../data/models/vocab_question.dart';
 import '../../../../data/services/audio_service.dart';
 import '../../../core/themes.dart';
-import '../../../core/widgets.dart';
+import '../../../core/widgets.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Question de vocabulaire à 4 choix. Après une erreur, la bonne réponse est
@@ -26,6 +26,10 @@ class VocabQuestionWidget extends StatefulWidget {
 
 class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
   int? _selected;
+  // Repère du bouton « Continuer » : la correction s'affiche sous les
+  // réponses et le pousse sous le bord de l'écran. Sans défilement, l'élève
+  // croyait l'appli bloquée (audit T58).
+  final _cleContinuer = GlobalKey();
 
   bool get _answered => _selected != null;
   bool get _correct => _selected == widget.question.answer;
@@ -33,6 +37,22 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
   void _choose(int i) {
     if (_answered) return;
     setState(() => _selected = i);
+    // Une fois la correction dessinée, on fait défiler juste assez pour que
+    // le bouton « Continuer » apparaisse en bas de l'écran.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = _cleContinuer.currentContext;
+      if (ctx == null) return;
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOutCubic,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+      );
+    });
+    annoncerAuLecteur(
+      context,
+      i == widget.question.answer ? context.l10n.a11yCorrect : context.l10n.a11yWrong,
+    );
     if (i == widget.question.answer) {
       AudioService().playCorrect();
     } else {
@@ -83,7 +103,14 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
               seal = '✗';
               sealColor = const Color(0xFF8B2500);
             }
-            return Padding(
+            final etat = seal == '✓' ? context.l10n.a11yCorrect : (seal == '✗' ? context.l10n.a11yWrong : null);
+            return Semantics(
+              button: true,
+              enabled: !_answered,
+              label: context.l10n.a11yAnswer(letters[i], q.options[i]) + (etat == null ? '' : ', $etat'),
+              onTap: _answered ? null : () => _choose(i),
+              excludeSemantics: true,
+              child: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: InkWell(
                 onTap: _answered ? null : () => _choose(i),
@@ -111,7 +138,7 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
                   ),
                 ),
               ),
-            );
+            ));
           }),
           if (_answered) ...[
             const SizedBox(height: 4),
@@ -153,6 +180,7 @@ class _VocabQuestionWidgetState extends State<VocabQuestionWidget> {
             ),
             const SizedBox(height: 12),
             ElevatedButton(
+              key: _cleContinuer,
               onPressed: () {
                 HapticFeedback.selectionClick();
                 widget.onAnswered(_correct);

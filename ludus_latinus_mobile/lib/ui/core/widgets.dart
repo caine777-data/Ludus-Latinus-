@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'themes.dart';
 import '../../l10n/l10n.dart';
@@ -6,6 +7,13 @@ export 'roman_ornaments.dart';
 export 'roman_audio_modal.dart';
 export 'room_decorations.dart';
 export 'roman_lock_badge.dart';
+
+/// Fait lire [message] par le lecteur d'écran (TalkBack) ; sans effet
+/// quand il est éteint. Sert à dire « bonne réponse » ou « mauvaise
+/// réponse » : sans cela, seul un changement de couleur l'indiquait.
+void annoncerAuLecteur(BuildContext context, String message) {
+  SemanticsService.sendAnnouncement(View.of(context), message, TextDirection.ltr);
+}
 
 /// Bouton tactile impérial romain avec liseré d'or et retour haptique.
 /// Colonne centrée de largeur limitée : sur tablette, le contenu garde une

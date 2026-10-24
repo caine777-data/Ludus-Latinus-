@@ -1894,4 +1894,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get teachersContact => 'Contact';
+
+  @override
+  String get clozeCheckWord => 'VALIDER LE MOT ▶';
+
+  @override
+  String get clozeWrongWord =>
+      '« Ce n\'est pas tout à fait ce mot. Relis la phrase et observe le rôle du mot ! »';
+
+  @override
+  String a11yAnswer(String lettre, String texte) {
+    return 'Réponse $lettre : $texte';
+  }
+
+  @override
+  String get a11yStruck => 'éliminée';
+
+  @override
+  String get a11yCorrect => 'Bonne réponse';
+
+  @override
+  String get a11yWrong => 'Mauvaise réponse';
 }

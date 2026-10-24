@@ -3240,6 +3240,42 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Contact'**
   String get teachersContact;
+
+  /// No description provided for @clozeCheckWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'VALIDER LE MOT ▶'**
+  String get clozeCheckWord;
+
+  /// No description provided for @clozeWrongWord.
+  ///
+  /// In fr, this message translates to:
+  /// **'« Ce n\'est pas tout à fait ce mot. Relis la phrase et observe le rôle du mot ! »'**
+  String get clozeWrongWord;
+
+  /// No description provided for @a11yAnswer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réponse {lettre} : {texte}'**
+  String a11yAnswer(String lettre, String texte);
+
+  /// No description provided for @a11yStruck.
+  ///
+  /// In fr, this message translates to:
+  /// **'éliminée'**
+  String get a11yStruck;
+
+  /// No description provided for @a11yCorrect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonne réponse'**
+  String get a11yCorrect;
+
+  /// No description provided for @a11yWrong.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mauvaise réponse'**
+  String get a11yWrong;
 }
 
 class _AppLocalizationsDelegate

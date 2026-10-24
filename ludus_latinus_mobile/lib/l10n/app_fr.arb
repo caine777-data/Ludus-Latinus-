@@ -1445,5 +1445,21 @@
   "teachersTitle": "Pour les professeurs",
   "teachersReference": "Référence",
   "teachersGaps": "Écarts avec le programme",
-  "teachersContact": "Contact"
+  "teachersContact": "Contact",
+  "clozeCheckWord": "VALIDER LE MOT ▶",
+  "clozeWrongWord": "« Ce n'est pas tout à fait ce mot. Relis la phrase et observe le rôle du mot ! »",
+  "a11yAnswer": "Réponse {lettre} : {texte}",
+  "@a11yAnswer": {
+    "placeholders": {
+      "lettre": {
+        "type": "String"
+      },
+      "texte": {
+        "type": "String"
+      }
+    }
+  },
+  "a11yStruck": "éliminée",
+  "a11yCorrect": "Bonne réponse",
+  "a11yWrong": "Mauvaise réponse"
 }

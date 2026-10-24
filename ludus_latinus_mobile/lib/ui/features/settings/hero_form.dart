@@ -66,6 +66,9 @@ class _HeroFormState extends State<HeroForm> {
           maxLength: GameRepository.longueurMaxPrenom,
           textCapitalization: TextCapitalization.words,
           textInputAction: TextInputAction.done,
+          // Place réservée sous le champ quand le clavier s'ouvre : le bouton
+          // « Entrer dans Rome », juste dessous, restait caché (audit T58).
+          scrollPadding: const EdgeInsets.only(bottom: 180),
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           decoration: InputDecoration(
             labelText: context.l10n.heroFormFirstName,

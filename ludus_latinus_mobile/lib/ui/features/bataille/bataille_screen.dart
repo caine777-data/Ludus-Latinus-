@@ -551,7 +551,10 @@ class _Choix extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: onTap,
-          child: Padding(
+          // 48 dp au moins : la taille minimale confortable au doigt.
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 48),
+            alignment: Alignment.center,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
