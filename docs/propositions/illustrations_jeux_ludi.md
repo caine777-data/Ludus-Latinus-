@@ -15,14 +15,43 @@ chaque jeu. Rien n'est appliqué avant la validation de Cédric.
 | Panthéon, Bataille | cartes illustrées | rien |
 | Mot du jour | Lupulus philosophe, fond uni | un fond |
 
-## Les 5 images proposées
+## Animations déjà dans le projet, à réutiliser
+
+L'inventaire des animations (`assets/images/animated/`) montre trois
+boucles prêtes, rien à générer :
+
+- `lupulus_encouragement.webp` (Lupulus en toge qui encourage, fond
+  transparent) : il sert aujourd'hui à une seule leçon. Il remplacerait le
+  🏁 du Circus, le ☠️ du Colisée et la pose fixe des défaites de Paires
+  éclair et du Mot du jour. **L'image 3 ci-dessous devient inutile.**
+- `dice_roll_3d.webp` (dés qui roulent) : présent mais jamais affiché. Il
+  irait dans la Taverne, le temps du lancer.
+- `pieces_or.webp` (pluie de pièces) : déjà utilisé pour les gains ; on
+  l'ajouterait aux victoires payées de Paires éclair et du Mot du jour.
+
+## Animations à créer (2, en boucle courte)
+
+Même méthode que les boss du Colisée : une vidéo de quelques secondes,
+convertie par l'architecte en animation WebP en boucle, sans son, qui joue
+sur place sans retarder la partie.
+
+1. **Gaius en boucle** : il secoue son gobelet de dés et rit. Il vit à
+   l'écran pendant la partie de Taverne, comme les boss au Colisée.
+   Générer d'abord l'image 1 (Gaius), puis l'animer en partant d'elle.
+2. **Lupulus Mercure en vol**, en boucle, pour la bannière de Paires
+   éclair (facultatif : la bannière fixe fonctionne déjà).
+
+Toujours pas de cinématique (vidéo plein écran) : ces jeux se rejouent
+souvent. Les cinématiques restent pour les moments uniques (entrée d'un
+niveau, boss, arrivée du Circus).
+
+## Les images proposées
 
 1. **Gaius, le tavernier** : il devient la tuile de la Taverne et apparaît
    face au joueur pendant la partie. Il libère Mercure pour Paires éclair.
 2. **Le décor de la taverne**, très pâle, derrière les dés.
-3. **Lupulus qui console** : une seule image pour toutes les défaites
-   (Circus, Colisée, Taverne, Paires éclair, Mot du jour), à la place du 🏁
-   et du ☠️. Un message d'encouragement plutôt qu'une tête de mort.
+3. ~~Lupulus qui console~~ : remplacé par l'animation existante
+   `lupulus_encouragement.webp`, rien à générer.
 4. **Le fond du Mot du jour** : une bibliothèque romaine très pâle.
 5. **Le sceau de César** pour la victoire d'une mission, à la place du 🦅.
 
@@ -56,14 +85,6 @@ Fichier : `assets/images/taverne/fond_taverne.webp`, format 9:16.
 Décor vertical très clair et très doux de l'intérieur d'une taverne romaine : murs crème, amphores et lampes à huile sur les côtés, une table en bois en bas de l'image, le tout à peine esquissé et très flou. Le centre de l'image est presque vide et uniforme, de couleur crème chaude, pour qu'on puisse poser du texte par-dessus. Aucun personnage. Contraste très faible, tons pastel crème, ocre pâle et brun clair. Illustration douce, façon film d'animation. Format portrait 9:16. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 3. Lupulus qui console
-
-Fichier : `assets/images/lupulus/lupulus_courage.webp`, format carré 1:1.
-
-```
-Le louveteau Lupulus de l'image de référence, sans casque ni ailes, en toge blanche simple, assis sur une marche de marbre, sourit avec douceur et tend la patte en avant comme pour dire « ce n'est pas grave, on recommence ». Attitude bienveillante et encourageante, pas triste. Fond crème uni et clair, sans décor. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres. Format carré 1:1, personnage entier et centré. Aucun texte, aucune lettre, aucun chiffre dans l'image.
-```
-
 ### 4. Fond du Mot du jour
 
 Fichier : `assets/images/mot_du_jour/fond_bibliotheque.webp`, format 9:16.
@@ -78,4 +99,28 @@ Fichier : `assets/images/cesar/sceau_victoire.webp`, format carré 1:1.
 
 ```
 Un sceau de cire rouge sombre posé sur un parchemin enroulé, frappé d'un aigle romain aux ailes déployées, entouré d'une couronne de laurier dorée, avec un ruban pourpre. Lumière chaude qui fait briller la cire. Fond crème uni et clair. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs pourpres, rouges et dorées. Format carré 1:1, objet centré. Aucun texte, aucune lettre, aucun chiffre dans l'image, pas même sur le sceau.
+```
+
+## Prompts des animations
+
+À générer en vidéo (Gemini / Veo), **en partant de l'image fixe** comme
+première image, 4 à 6 secondes, plan fixe, caméra immobile, sans son :
+l'architecte découpe une boucle et la convertit en WebP animé.
+
+### A. Gaius en boucle
+
+Fichier : `assets/images/taverne/gaius_anime.webp`. Image de départ :
+`gaius.webp` (image 1).
+
+```
+Le tavernier romain de l'image secoue joyeusement son gobelet de dés en terre cuite à hauteur de poitrine, puis éclate d'un petit rire en plissant les yeux, et revient à sa pose de départ. Mouvements amples mais lents, faciles à boucler. Caméra totalement fixe, cadrage identique du début à la fin, décor immobile. Pas de texte, pas de son.
+```
+
+### B. Lupulus Mercure en vol (facultatif)
+
+Fichier : `assets/images/paires/banniere_mercure_anime.webp`. Image de
+départ : `banniere_mercure.webp`.
+
+```
+Le louveteau ailé de l'image vole sur place au-dessus de Rome : ses ailes battent doucement, il ondule légèrement de haut en bas, la traînée d'étincelles dorées scintille derrière lui. La ville en contrebas reste immobile. Caméra totalement fixe, cadrage identique du début à la fin, pour une boucle parfaite. Pas de texte, pas de son.
 ```
