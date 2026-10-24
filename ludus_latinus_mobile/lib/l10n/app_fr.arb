@@ -1622,5 +1622,65 @@
   },
   "pairsNewRecord": "Nouveau record !",
   "pairsCeleriter": "Celeriter !",
-  "pairsReview": "Les mots de la partie"
+  "pairsReview": "Les mots de la partie",
+  "wordTitle": "Mot du jour",
+  "ludiWordSubtitle": "Un mot latin à deviner",
+  "ludiWordDone": "Reviens demain !",
+  "ludiWordTag": "ÉNIGME",
+  "wordRules": "Trouve le mot latin du jour en six essais. Vert : lettre bien placée. Doré : lettre dans le mot, mais ailleurs. Gris : lettre absente.",
+  "wordLetters": "{n} lettres",
+  "@wordLetters": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "wordHint": "Indice : on le retrouve en français dans « {derives} »",
+  "@wordHint": {
+    "placeholders": {
+      "derives": {
+        "type": "String"
+      }
+    }
+  },
+  "wordTooShort": "Le mot a {n} lettres.",
+  "@wordTooShort": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "wordValidate": "VALIDER",
+  "wordWin": "Bravo ! Trouvé en {n} essais.",
+  "@wordWin": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "wordLose": "Le mot était {mot}.",
+  "@wordLose": {
+    "placeholders": {
+      "mot": {
+        "type": "String"
+      }
+    }
+  },
+  "wordMeaning": "{latin} : {fr}",
+  "@wordMeaning": {
+    "placeholders": {
+      "latin": {
+        "type": "String"
+      },
+      "fr": {
+        "type": "String"
+      }
+    }
+  },
+  "wordComeBack": "Un nouveau mot t'attend demain.",
+  "wordNone": "Termine ta première leçon pour avoir un mot à deviner.",
+  "a11yDelete": "Effacer"
 }

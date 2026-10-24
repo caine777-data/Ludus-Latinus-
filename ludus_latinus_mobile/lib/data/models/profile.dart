@@ -134,6 +134,15 @@ class UserProfile {
   /// Mode lecture confort : texte plus espacé, pour les élèves dyslexiques
   /// ou qui lisent avec peine.
   bool lectureConfort;
+
+  /// Mot du jour : date, mot choisi et essais, gardés dans la sauvegarde
+  /// pour qu'une relance de l'appli ne redonne pas une partie neuve.
+  String? motDuJourDate;
+  String? motDuJour;
+  List<String> motDuJourEssais;
+
+  /// Derniers mots du jour proposés, pour ne pas les redonner trop tôt.
+  List<String> motsDuJourPasses;
   Map<String, String> equippedGoodies;
   List<String> ownedGoodies;
 
@@ -190,6 +199,10 @@ class UserProfile {
     List<String>? decodedEpigraphs,
     this.isDarkMode = false,
     this.lectureConfort = false,
+    this.motDuJourDate,
+    this.motDuJour,
+    List<String>? motDuJourEssais,
+    List<String>? motsDuJourPasses,
     Map<String, String>? equippedGoodies,
     List<String>? ownedGoodies,
     Map<String, int>? compteurs,
@@ -218,6 +231,8 @@ class UserProfile {
         recompensesJeux = recompensesJeux ?? {},
         missionsCesar = missionsCesar ?? [],
         recompensesUniques = recompensesUniques ?? [],
+        motDuJourEssais = motDuJourEssais ?? [],
+        motsDuJourPasses = motsDuJourPasses ?? [],
         records = records ?? {},
         equippedGoodies = equippedGoodies ?? {
           'toge': 'lin_blanc',
@@ -492,6 +507,10 @@ class UserProfile {
       decodedEpigraphs: rawEpigraphs.map((e) => e.toString()).toList(),
       isDarkMode: json['dark_mode'] as bool? ?? false,
       lectureConfort: json['lecture_confort'] as bool? ?? false,
+      motDuJourDate: json['mot_du_jour_date'] as String?,
+      motDuJour: json['mot_du_jour'] as String?,
+      motDuJourEssais: (json['mot_du_jour_essais'] as List?)?.map((e) => e.toString()).toList(),
+      motsDuJourPasses: (json['mots_du_jour_passes'] as List?)?.map((e) => e.toString()).toList(),
       equippedGoodies: parsedEquipped,
       ownedGoodies: parsedOwned,
       compteurs: (json['compteurs'] as Map?)?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
@@ -534,6 +553,10 @@ class UserProfile {
       'decoded_epigraphs': decodedEpigraphs,
       'dark_mode': isDarkMode,
       'lecture_confort': lectureConfort,
+      'mot_du_jour_date': motDuJourDate,
+      'mot_du_jour': motDuJour,
+      'mot_du_jour_essais': motDuJourEssais,
+      'mots_du_jour_passes': motsDuJourPasses,
       'equipped_goodies': equippedGoodies,
       'owned_goodies': ownedGoodies,
       'compteurs': compteurs,

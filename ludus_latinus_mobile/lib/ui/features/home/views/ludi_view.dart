@@ -13,6 +13,7 @@ import '../../pantheon/pantheon_screen.dart';
 import '../../album/album_screen.dart';
 import '../../bataille/bataille_screen.dart';
 import '../../paires/paires_screen.dart';
+import '../../mot_du_jour/mot_du_jour_screen.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Onglet 3 : Ludi & Arènes — Mini-jeux d'arcade romaine soumis au déblocage progressif (Progressive Disclosure).
@@ -152,6 +153,27 @@ class LudiView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => PairesScreen(repo: repo)),
+                          );
+                        },
+                      ),
+
+                      // Mot du jour : ouvert dès le départ ; une fois le mot du
+                      // jour joué, la tuile dit de revenir demain.
+                      _buildGameTile(
+                        context: context,
+                        gameKey: 'motdujour',
+                        imagePath: 'assets/images/lupulus/lupulus_philosophe_180.png',
+                        fallbackIcon: '🔤',
+                        title: context.l10n.wordTitle,
+                        subtitle: repo.motDuJourTermine
+                            ? context.l10n.ludiWordDone
+                            : context.l10n.ludiWordSubtitle,
+                        tagLabel: context.l10n.ludiWordTag,
+                        tagColor: RomanColors.laurelGreen,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => MotDuJourScreen(repo: repo)),
                           );
                         },
                       ),

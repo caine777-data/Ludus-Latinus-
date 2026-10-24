@@ -3498,6 +3498,96 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Les mots de la partie'**
   String get pairsReview;
+
+  /// No description provided for @wordTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mot du jour'**
+  String get wordTitle;
+
+  /// No description provided for @ludiWordSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un mot latin à deviner'**
+  String get ludiWordSubtitle;
+
+  /// No description provided for @ludiWordDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Reviens demain !'**
+  String get ludiWordDone;
+
+  /// No description provided for @ludiWordTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'ÉNIGME'**
+  String get ludiWordTag;
+
+  /// No description provided for @wordRules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trouve le mot latin du jour en six essais. Vert : lettre bien placée. Doré : lettre dans le mot, mais ailleurs. Gris : lettre absente.'**
+  String get wordRules;
+
+  /// No description provided for @wordLetters.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} lettres'**
+  String wordLetters(int n);
+
+  /// No description provided for @wordHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Indice : on le retrouve en français dans « {derives} »'**
+  String wordHint(String derives);
+
+  /// No description provided for @wordTooShort.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot a {n} lettres.'**
+  String wordTooShort(int n);
+
+  /// No description provided for @wordValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'VALIDER'**
+  String get wordValidate;
+
+  /// No description provided for @wordWin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bravo ! Trouvé en {n} essais.'**
+  String wordWin(int n);
+
+  /// No description provided for @wordLose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le mot était {mot}.'**
+  String wordLose(String mot);
+
+  /// No description provided for @wordMeaning.
+  ///
+  /// In fr, this message translates to:
+  /// **'{latin} : {fr}'**
+  String wordMeaning(String latin, String fr);
+
+  /// No description provided for @wordComeBack.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un nouveau mot t\'attend demain.'**
+  String get wordComeBack;
+
+  /// No description provided for @wordNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Termine ta première leçon pour avoir un mot à deviner.'**
+  String get wordNone;
+
+  /// No description provided for @a11yDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Effacer'**
+  String get a11yDelete;
 }
 
 class _AppLocalizationsDelegate

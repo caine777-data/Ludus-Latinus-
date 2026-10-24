@@ -5,6 +5,7 @@ import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
 import '../models/carte_pantheon.dart';
 import '../models/monument.dart';
+import '../models/mot_du_jour.dart';
 import '../models/profile.dart';
 import '../models/srs_card.dart';
 import '../models/thesaurus_entry.dart';
@@ -575,6 +576,7 @@ class GameRepository extends ChangeNotifier {
   static const int gainMarcheRendu = 5;
   static const int gainMarcheNegociation = 10;
   static const int gainPaires = 10;
+  static const int gainMotDuJour = 10;
 
   /// Victoires encore payées aujourd'hui, tous jeux confondus.
   int get victoiresPayeesRestantes => profile.victoiresPayeesRestantes();
@@ -604,6 +606,58 @@ class GameRepository extends ChangeNotifier {
   }
 
   bool estDejaPaye(String cle) => profile.recompensesUniques.contains(cle);
+
+  static String _aujourdhui() => DateTime.now().toIso8601String().substring(0, 10);
+
+  /// Mot du jour de l'élève, choisi au premier appel de la journée parmi les
+  /// mots de ses mondes atteints, puis retenu dans le profil : il ne change
+  /// pas si l'élève fait une leçon entre deux essais. Null s'il n'y a aucun
+  /// mot jouable.
+  ThesaurusEntry? motDuJour() {
+    final jour = _aujourdhui();
+    if (profile.motDuJourDate == jour && profile.motDuJour != null) {
+      for (final e in thesaurus) {
+        if (MotDuJour.forme(e) == profile.motDuJour) return e;
+      }
+    }
+    final e = MotDuJour.choisir(
+      MotDuJour.candidats(thesaurus, mondesAtteints),
+      DateTime.now(),
+      profile.motsDuJourPasses,
+    );
+    if (e == null) return null;
+    final forme = MotDuJour.forme(e);
+    profile
+      ..motDuJourDate = jour
+      ..motDuJour = forme
+      ..motDuJourEssais = []
+      ..motsDuJourPasses = [...profile.motsDuJourPasses.where((m) => m != forme), forme]
+          .reversed
+          .take(MotDuJour.memoireMots)
+          .toList()
+          .reversed
+          .toList();
+    storageService.saveProfile(profile);
+    return e;
+  }
+
+  /// Vrai quand le mot du jour est déjà trouvé ou perdu aujourd'hui.
+  bool get motDuJourTermine =>
+      profile.motDuJourDate == _aujourdhui() &&
+      (profile.motDuJourEssais.contains(profile.motDuJour) ||
+          profile.motDuJourEssais.length >= MotDuJour.essaisMax);
+
+  /// Enregistre un essai du mot du jour. Renvoie les sesterces gagnés :
+  /// 10 HS le jour où le mot est trouvé, une seule fois.
+  int proposerMotDuJour(String essai) {
+    final cible = profile.motDuJour;
+    if (cible == null || profile.motDuJourEssais.length >= MotDuJour.essaisMax) return 0;
+    profile.motDuJourEssais.add(essai);
+    final gain = essai == cible ? payerUneFois('mot_du_jour:${_aujourdhui()}', gainMotDuJour) : 0;
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return gain;
+  }
 
   /// Exercice payé une seule fois, même après redémarrage (étals du Marché…).
   /// Renvoie le montant versé, 0 s'il l'avait déjà été.

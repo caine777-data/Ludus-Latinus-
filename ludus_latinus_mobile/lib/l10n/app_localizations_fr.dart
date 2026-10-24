@@ -2063,4 +2063,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pairsReview => 'Les mots de la partie';
+
+  @override
+  String get wordTitle => 'Mot du jour';
+
+  @override
+  String get ludiWordSubtitle => 'Un mot latin à deviner';
+
+  @override
+  String get ludiWordDone => 'Reviens demain !';
+
+  @override
+  String get ludiWordTag => 'ÉNIGME';
+
+  @override
+  String get wordRules =>
+      'Trouve le mot latin du jour en six essais. Vert : lettre bien placée. Doré : lettre dans le mot, mais ailleurs. Gris : lettre absente.';
+
+  @override
+  String wordLetters(int n) {
+    return '$n lettres';
+  }
+
+  @override
+  String wordHint(String derives) {
+    return 'Indice : on le retrouve en français dans « $derives »';
+  }
+
+  @override
+  String wordTooShort(int n) {
+    return 'Le mot a $n lettres.';
+  }
+
+  @override
+  String get wordValidate => 'VALIDER';
+
+  @override
+  String wordWin(int n) {
+    return 'Bravo ! Trouvé en $n essais.';
+  }
+
+  @override
+  String wordLose(String mot) {
+    return 'Le mot était $mot.';
+  }
+
+  @override
+  String wordMeaning(String latin, String fr) {
+    return '$latin : $fr';
+  }
+
+  @override
+  String get wordComeBack => 'Un nouveau mot t\'attend demain.';
+
+  @override
+  String get wordNone =>
+      'Termine ta première leçon pour avoir un mot à deviner.';
+
+  @override
+  String get a11yDelete => 'Effacer';
 }
