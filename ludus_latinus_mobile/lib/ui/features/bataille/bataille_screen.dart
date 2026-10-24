@@ -395,7 +395,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
             if (issue == IssuePartie.victoire) ...[
               const SizedBox(height: 8),
               Text(
-                _gain > 0 ? context.l10n.bataReward(_gain) : context.l10n.bataNoReward,
+                _gain > 0 ? context.l10n.bataReward(_gain) : context.l10n.jeuxPourLaGloire,
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
               ),

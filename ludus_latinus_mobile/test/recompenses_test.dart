@@ -64,21 +64,4 @@ void main() {
     });
   });
 
-  group('Taverne', () {
-    test('Trois lancers récompensés par jour, puis plus rien', () {
-      final profile = UserProfile();
-      expect(profile.taverneRewardsLeftToday, 3);
-      expect(profile.consumeTaverneReward(), isTrue);
-      expect(profile.consumeTaverneReward(), isTrue);
-      expect(profile.consumeTaverneReward(), isTrue);
-      expect(profile.consumeTaverneReward(), isFalse);
-      expect(profile.taverneRewardsLeftToday, 0);
-    });
-
-    test('Le quota repart à zéro un autre jour', () {
-      final profile = UserProfile(taverneRewardDate: '2000-01-01', taverneRewardCount: 3);
-      expect(profile.taverneRewardsLeftToday, 3);
-      expect(profile.consumeTaverneReward(), isTrue);
-    });
-  });
 }

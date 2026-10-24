@@ -55,12 +55,9 @@ void main() {
     // Défi du jour complété aujourd'hui pour isoler le barème pur du Duel.
     repo.profile.lastDailyQuestDate = DateTime.now().toIso8601String().substring(0, 10);
 
-    if (quotaAtteint) {
-      repo.profile.recompensesJeux = {'duel': 3};
-      repo.profile.recompensesJeuxDate = DateTime.now().toIso8601String().substring(0, 10);
-    } else {
-      repo.profile.recompensesJeux = {};
-    }
+    // Sans leçon du jour, plus de victoire payée ; une leçon en ouvre deux.
+    repo.profile.recompensesJeux = {};
+    if (!quotaAtteint) repo.profile.noterLeconDuJour();
 
     await tester.pumpWidget(MaterialApp(home: DuelScreen(repo: repo)));
     await tester.pump();
@@ -124,7 +121,7 @@ void main() {
 
     // Vérification du panneau de victoire avec quota atteint
     expect(find.textContaining("TRIOMPHE DANS L'ARÈNE"), findsOneWidget);
-    expect(find.text('Pour la gloire : 3 duels payés par jour'), findsOneWidget);
+    expect(find.text("Pour la gloire : une leçon t'ouvre 2 victoires payées"), findsOneWidget);
     expect(find.text('Quitter'), findsOneWidget);
     expect(find.text('Boss Suivant'), findsOneWidget);
     expect(repo.profile.sesterces, 0);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../../../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 import '../../core/themes.dart';
 import '../../core/particles_overlay.dart';
@@ -1692,7 +1693,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                     _recompense > 0
                         ? '+$_recompense Sesterces remportés'
                         : _playerWon
-                            ? 'Pour la gloire : 3 courses payées par jour'
+                            ? context.l10n.jeuxPourLaGloire
                             : 'Pas de sesterces cette fois',
                     textAlign: TextAlign.center,
                     style: const TextStyle(

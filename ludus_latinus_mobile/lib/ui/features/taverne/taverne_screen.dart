@@ -136,11 +136,10 @@ class _TaverneScreenState extends State<TaverneScreen> {
     if (issue == IssueManche.gagnee) {
       // Compteur du succès de Cerbère, même quand la victoire n'est plus payée.
       widget.repo.noterEvenement('taverne_victoires');
-      if (widget.repo.taverneRewardsLeftToday > 0 && widget.repo.consumeTaverneReward()) {
-        widget.repo.addSesterces(gainVictoire);
-        gain = gainVictoire;
-      }
+      // Le défi d'abord : payerPartie ne le paie alors plus une seconde fois,
+      // et l'écran affiche les deux montants séparément.
       defi = widget.repo.accomplirDefi('taverne');
+      gain = widget.repo.payerPartie('taverne', gainVictoire);
       HapticFeedback.heavyImpact();
       AudioService().playTriumph();
       RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
@@ -247,9 +246,9 @@ class _TaverneScreenState extends State<TaverneScreen> {
                 if (_gaiusJoue) _gaiusReflechit() else if (!enCours) _resultat(issue),
                 const SizedBox(height: 14),
                 Text(
-                  widget.repo.taverneRewardsLeftToday > 0
-                      ? context.l10n.tavernRewardsLeft(widget.repo.taverneRewardsLeftToday, gainVictoire)
-                      : context.l10n.tavernRewardsDone,
+                  widget.repo.victoiresPayeesRestantes > 0
+                      ? context.l10n.tavernRewardsLeft(widget.repo.victoiresPayeesRestantes, gainVictoire)
+                      : context.l10n.jeuxPourLaGloire,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 12, color: Colors.black54),
                 ),

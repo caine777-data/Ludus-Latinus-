@@ -56,8 +56,12 @@ class GameRepository extends ChangeNotifier {
   // Objectif du jour et rappel quotidien
   // ------------------------------------------------------------------
 
-  /// Récompense de l'objectif du jour atteint.
-  static const int gainObjectif = 5;
+  /// Prime de l'objectif du jour : 5 HS, puis +1 par jour de série, jusqu'à
+  /// 10. Elle récompense la régularité plutôt que la quantité.
+  static int primeObjectif(int serie) => (4 + serie).clamp(5, 10);
+
+  /// Dernière prime versée, pour l'annonce sur l'accueil.
+  int primeObjectifAnnoncee = 0;
 
   /// Vrai quand l'objectif vient d'être atteint : l'accueil le fête une fois.
   bool objectifAAnnoncer = false;
@@ -69,7 +73,9 @@ class GameRepository extends ChangeNotifier {
   /// rappels reprogrammés (celui d'aujourd'hui saute si l'objectif est atteint).
   void _apresActivite() {
     if (profile.validerObjectif()) {
-      profile.sesterces += gainObjectif;
+      // La série est déjà prolongée (recordActivity) avant cet appel.
+      primeObjectifAnnoncee = primeObjectif(profile.currentStreak());
+      profile.sesterces += primeObjectifAnnoncee;
       objectifAAnnoncer = true;
     }
     replanifierRappels();
@@ -294,7 +300,7 @@ class GameRepository extends ChangeNotifier {
   }
 
   /// Fin d'une partie de la Bataille des Légendes : victoire payée comme une
-  /// partie d'arcade (3 par jour), série de victoires et record. Renvoie le gain.
+  /// partie d'arcade, série de victoires et record. Renvoie le gain.
   int noterBataille({required bool victoire}) {
     var gain = 0;
     if (victoire) {
@@ -306,7 +312,7 @@ class GameRepository extends ChangeNotifier {
     } else {
       profile.compteurs['bataille_serie'] = 0;
     }
-    // payerPartie n'enregistre rien quand le quota du jour est atteint.
+    // payerPartie n'enregistre rien quand il ne reste plus de victoire payée.
     storageService.saveProfile(profile);
     notifyListeners();
     return gain;
@@ -560,16 +566,6 @@ class GameRepository extends ChangeNotifier {
     return dejaEntre ? null : niveau;
   }
 
-  int get taverneRewardsLeftToday => profile.taverneRewardsLeftToday;
-
-  /// Réserve un lancer récompensé de la Taverne (3 par jour). Renvoie false si épuisé.
-  bool consumeTaverneReward() {
-    final ok = profile.consumeTaverneReward();
-    storageService.saveProfile(profile);
-    notifyListeners();
-    return ok;
-  }
-
   /// Barème des jeux d'arcade : une partie gagnée vaut à peu près une leçon (10 HS).
   static const int gainCircus = 12;
   static const int gainBataille = 12;
@@ -579,7 +575,8 @@ class GameRepository extends ChangeNotifier {
   static const int gainMarcheRendu = 5;
   static const int gainMarcheNegociation = 10;
 
-  int recompensesRestantes(String jeu) => profile.recompensesRestantes(jeu);
+  /// Victoires encore payées aujourd'hui, tous jeux confondus.
+  int get victoiresPayeesRestantes => profile.victoiresPayeesRestantes();
 
   /// Meilleur résultat de l'élève à ce jeu (0 s'il n'y a pas encore joué).
   int record(String jeu) => profile.records[jeu] ?? 0;
@@ -593,9 +590,9 @@ class GameRepository extends ChangeNotifier {
     return true;
   }
 
-  /// Paie une partie gagnée d'un jeu d'arcade, dans la limite du jour.
-  /// Renvoie le montant réellement versé (0 si le quota est atteint).
-  /// Le défi du jour compte même quand le quota est atteint.
+  /// Paie une partie gagnée d'un jeu d'arcade s'il reste une victoire payée
+  /// aujourd'hui. Renvoie le montant réellement versé (0 sinon).
+  /// Le défi du jour compte même sans victoire payée.
   int payerPartie(String jeu, int montant) {
     final prime = accomplirDefi(jeu);
     if (!profile.prendreRecompense(jeu)) return prime;

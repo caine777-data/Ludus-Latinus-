@@ -940,7 +940,7 @@
   "tavernGaiusWaits": "Gaius attend que tu t'arrêtes…",
   "tavernBust": "Tu as dépassé XXI : Gaius n'a pas besoin de jouer.",
   "tavernYou": "Toi",
-  "tavernRewardsLeft": "Victoires payées aujourd'hui : encore {left} sur 3 (+{gain} HS chacune)",
+  "tavernRewardsLeft": "Victoires payées aujourd'hui : encore {left} (+{gain} HS chacune)",
   "@tavernRewardsLeft": {
     "placeholders": {
       "left": {
@@ -951,7 +951,6 @@
       }
     }
   },
-  "tavernRewardsDone": "Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.",
   "tavernRulesTitle": "🎲 AD XXI : approche-toi de 21 sans le dépasser",
   "tavernRule1": "Ajoute des dés un par un. Ton total s'écrit en chiffres romains.",
   "tavernRule2": "Arrête-toi quand tu veux. Au-dessus de XXI, tu as perdu.",
@@ -1343,7 +1342,6 @@
   "bataVictory": "Victoire ! Crassus s'incline.",
   "bataDefeat": "Crassus l'emporte cette fois.",
   "bataDraw": "Match nul.",
-  "bataNoReward": "Pour la gloire : 3 victoires payées par jour.",
   "bataAgain": "Rejouer",
   "bataBack": "Retour",
   "bataHand": "Ta main",
@@ -1565,5 +1563,16 @@
   "unlockNameCesar": "L'Atelier de César",
   "unlockNameMarche": "Le Marché de Trajan",
   "settingsReadingComfort": "Lecture confort",
-  "settingsReadingComfortHint": "Police plus lisible, lettres et lignes plus espacées"
+  "settingsReadingComfortHint": "Police plus lisible, lettres et lignes plus espacées",
+  "jeuxPourLaGloire": "Pour la gloire : une leçon t'ouvre 2 victoires payées",
+  "ludiVictoiresPayees": "Victoires payées aujourd'hui : {left}. Chaque leçon en ouvre 2, jusqu'à 6 par jour.",
+  "@ludiVictoiresPayees": {
+    "placeholders": {
+      "left": {
+        "type": "int"
+      }
+    }
+  },
+  "ludiVictoiresAucune": "Fais une leçon pour ouvrir 2 victoires payées. Sans leçon, on joue pour la gloire.",
+  "ludiVictoiresEpuisees": "Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces."
 }

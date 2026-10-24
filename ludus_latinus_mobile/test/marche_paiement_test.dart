@@ -54,11 +54,12 @@ void main() {
 
   testWidgets('Un étal déjà payé revient avec un prix au hasard, payé comme une partie', (tester) async {
     final repo = await monter(tester, dejaPayes: ['marche:etal:0']);
+    repo.profile.noterLeconDuJour();
     final etiquette = find.textContaining(RegExp(r'^\d+ SESTERCES$'));
     final prix = int.parse((tester.widget<Text>(etiquette).data ?? '').split(' ').first);
     await composer(tester, romain(prix));
     expect(repo.profile.sesterces, GameRepository.gainMarcheEtal);
-    expect(repo.recompensesRestantes('marche'), 2);
+    expect(repo.victoiresPayeesRestantes, 1);
     await tester.pumpAndSettle(const Duration(seconds: 3));
   });
 

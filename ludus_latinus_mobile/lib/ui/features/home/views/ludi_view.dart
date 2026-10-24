@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../core/themes.dart';
 import '../../../core/widgets.dart';
+import '../../../../data/models/profile.dart';
 import '../../../../data/repositories/game_repository.dart';
 import '../../circus/circus_screen.dart';
 import '../../duel/duel_screen.dart';
@@ -95,6 +96,8 @@ class LudiView extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: 12),
+              _BandeauVictoires(repo: repo),
               const SizedBox(height: 16),
 
               // 2. Grille des 6 Jeux & Arènes avec Déblocage Progressif
@@ -493,6 +496,51 @@ class LudiView extends StatelessWidget {
           child: tileContent,
         );
       },
+    );
+  }
+}
+
+/// Rappelle, en haut du Ludi, combien de victoires seront encore payées
+/// aujourd'hui et que ce sont les leçons qui les ouvrent : sans ce rappel,
+/// l'élève découvrirait la règle à la fin d'une partie gagnée pour rien.
+class _BandeauVictoires extends StatelessWidget {
+  final GameRepository repo;
+
+  const _BandeauVictoires({required this.repo});
+
+  @override
+  Widget build(BuildContext context) {
+    final restantes = repo.victoiresPayeesRestantes;
+    final plafondAtteint =
+        repo.profile.activitesDuJour() * UserProfile.victoiresParActivite >= UserProfile.victoiresPayeesMax;
+    final message = restantes > 0
+        ? context.l10n.ludiVictoiresPayees(restantes)
+        : plafondAtteint
+            ? context.l10n.ludiVictoiresEpuisees
+            : context.l10n.ludiVictoiresAucune;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: RomanColors.palatinCream,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            restantes > 0 ? Icons.paid : Icons.menu_book,
+            color: RomanColors.goldDark,
+            size: 24,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(fontSize: 13, color: Colors.black87, height: 1.3),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

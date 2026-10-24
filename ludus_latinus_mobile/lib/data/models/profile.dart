@@ -115,10 +115,8 @@ class UserProfile {
   Map<String, int> srsScores;
   Map<String, SrsCardProgress> srsCards;
   String? lastDailyQuestDate;
-  String? taverneRewardDate;
-  int taverneRewardCount;
 
-  /// Parties récompensées aujourd'hui, par jeu (« circus », « duel »).
+  /// Victoires payées aujourd'hui, par jeu (« circus », « duel »).
   String? recompensesJeuxDate;
   Map<String, int> recompensesJeux;
 
@@ -184,8 +182,6 @@ class UserProfile {
     Map<String, int>? srsScores,
     Map<String, SrsCardProgress>? srsCards,
     this.lastDailyQuestDate,
-    this.taverneRewardDate,
-    this.taverneRewardCount = 0,
     this.recompensesJeuxDate,
     Map<String, int>? recompensesJeux,
     List<int>? missionsCesar,
@@ -333,40 +329,31 @@ class UserProfile {
     return lastDailyQuestDate == _todayStr;
   }
 
-  /// Nombre de lancers de la Taverne encore récompensés aujourd'hui.
-  static const int taverneRewardsPerDay = 3;
+  /// Victoires payées ouvertes par chaque activité du jour (leçon, tranche
+  /// de 10 cartes Memoria), et plafond du jour tous jeux confondus.
+  /// Avant, chaque jeu payait 3 victoires par jour sans condition : un élève
+  /// qui ne faisait que jouer gagnait dix fois plus que celui qui faisait sa
+  /// leçon. Le jeu devient la récompense de la leçon, sans être retiré.
+  static const int victoiresParActivite = 2;
+  static const int victoiresPayeesMax = 6;
 
-  int get taverneRewardsLeftToday =>
-      taverneRewardDate == _todayStr ? (taverneRewardsPerDay - taverneRewardCount).clamp(0, taverneRewardsPerDay) : taverneRewardsPerDay;
-
-  /// Consomme un lancer récompensé. Renvoie false si le quota du jour est atteint.
-  bool consumeTaverneReward() {
-    if (taverneRewardDate != _todayStr) {
-      taverneRewardDate = _todayStr;
-      taverneRewardCount = 0;
-    }
-    if (taverneRewardCount >= taverneRewardsPerDay) return false;
-    taverneRewardCount++;
-    return true;
+  /// Victoires encore payées aujourd'hui, tous jeux confondus.
+  int victoiresPayeesRestantes([DateTime? now]) {
+    final jour = _dateStr(now ?? DateTime.now());
+    final utilisees = recompensesJeuxDate == jour ? recompensesJeux.values.fold(0, (a, b) => a + b) : 0;
+    final ouvertes = (activitesDuJour(now) * victoiresParActivite).clamp(0, victoiresPayeesMax);
+    return (ouvertes - utilisees).clamp(0, victoiresPayeesMax);
   }
 
-  /// Parties payées par jour et par jeu d'arcade : au-delà, on joue pour le plaisir.
-  /// Sans plafond, une course gagnée en boucle rapportait plus que toutes les leçons.
-  static const int recompensesJeuParJour = 3;
-
-  int recompensesRestantes(String jeu) => recompensesJeuxDate == _todayStr
-      ? (recompensesJeuParJour - (recompensesJeux[jeu] ?? 0)).clamp(0, recompensesJeuParJour)
-      : recompensesJeuParJour;
-
-  /// Consomme une partie payée du jeu. Renvoie false si le quota du jour est atteint.
-  bool prendreRecompense(String jeu) {
-    if (recompensesJeuxDate != _todayStr) {
-      recompensesJeuxDate = _todayStr;
+  /// Consomme une victoire payée pour [jeu]. Renvoie false s'il n'en reste pas.
+  bool prendreRecompense(String jeu, [DateTime? now]) {
+    if (victoiresPayeesRestantes(now) <= 0) return false;
+    final jour = _dateStr(now ?? DateTime.now());
+    if (recompensesJeuxDate != jour) {
+      recompensesJeuxDate = jour;
       recompensesJeux.clear();
     }
-    final n = recompensesJeux[jeu] ?? 0;
-    if (n >= recompensesJeuParJour) return false;
-    recompensesJeux[jeu] = n + 1;
+    recompensesJeux[jeu] = (recompensesJeux[jeu] ?? 0) + 1;
     return true;
   }
 
@@ -496,8 +483,6 @@ class UserProfile {
       restoredMonuments: rawMonuments.map((e) => e.toString()).toList(),
       srsCards: parsedSrs,
       lastDailyQuestDate: json['last_daily_quest_date'] as String?,
-      taverneRewardDate: json['taverne_reward_date'] as String?,
-      taverneRewardCount: json['taverne_reward_count'] as int? ?? 0,
       recompensesJeuxDate: json['recompenses_jeux_date'] as String?,
       recompensesJeux: (json['recompenses_jeux'] as Map?)
           ?.map((k, v) => MapEntry(k.toString(), (v as num?)?.toInt() ?? 0)),
@@ -541,8 +526,6 @@ class UserProfile {
       'forum_monuments': restoredMonuments,
       'srs_cards': srsCards.map((k, v) => MapEntry(k, v.toJson())),
       'last_daily_quest_date': lastDailyQuestDate,
-      'taverne_reward_date': taverneRewardDate,
-      'taverne_reward_count': taverneRewardCount,
       'recompenses_jeux_date': recompensesJeuxDate,
       'recompenses_jeux': recompensesJeux,
       'missions_cesar': missionsCesar,

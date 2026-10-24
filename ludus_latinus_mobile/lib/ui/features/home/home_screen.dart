@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       AudioService().playStar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: const Color(0xFF3B6D11),
-        content: Text(context.l10n.goalReward(GameRepository.gainObjectif)),
+        content: Text(context.l10n.goalReward(widget.repo.primeObjectifAnnoncee)),
       ));
     }
     // Nouveau rang ou jeu ouvert : annoncé une fois, après les cartes gagnées.

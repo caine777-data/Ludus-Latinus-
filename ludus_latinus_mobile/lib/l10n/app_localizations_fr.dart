@@ -1294,12 +1294,8 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String tavernRewardsLeft(int left, int gain) {
-    return 'Victoires payées aujourd\'hui : encore $left sur 3 (+$gain HS chacune)';
+    return 'Victoires payées aujourd\'hui : encore $left (+$gain HS chacune)';
   }
-
-  @override
-  String get tavernRewardsDone =>
-      'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.';
 
   @override
   String get tavernRulesTitle =>
@@ -1796,9 +1792,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bataDraw => 'Match nul.';
 
   @override
-  String get bataNoReward => 'Pour la gloire : 3 victoires payées par jour.';
-
-  @override
   String get bataAgain => 'Rejouer';
 
   @override
@@ -2001,4 +1994,21 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingsReadingComfortHint =>
       'Police plus lisible, lettres et lignes plus espacées';
+
+  @override
+  String get jeuxPourLaGloire =>
+      'Pour la gloire : une leçon t\'ouvre 2 victoires payées';
+
+  @override
+  String ludiVictoiresPayees(int left) {
+    return 'Victoires payées aujourd\'hui : $left. Chaque leçon en ouvre 2, jusqu\'à 6 par jour.';
+  }
+
+  @override
+  String get ludiVictoiresAucune =>
+      'Fais une leçon pour ouvrir 2 victoires payées. Sans leçon, on joue pour la gloire.';
+
+  @override
+  String get ludiVictoiresEpuisees =>
+      'Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces.';
 }

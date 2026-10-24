@@ -2264,14 +2264,8 @@ abstract class AppLocalizations {
   /// No description provided for @tavernRewardsLeft.
   ///
   /// In fr, this message translates to:
-  /// **'Victoires payées aujourd\'hui : encore {left} sur 3 (+{gain} HS chacune)'**
+  /// **'Victoires payées aujourd\'hui : encore {left} (+{gain} HS chacune)'**
   String tavernRewardsLeft(int left, int gain);
-
-  /// No description provided for @tavernRewardsDone.
-  ///
-  /// In fr, this message translates to:
-  /// **'Tes 3 victoires payées du jour sont faites : tu peux jouer pour la gloire.'**
-  String get tavernRewardsDone;
 
   /// No description provided for @tavernRulesTitle.
   ///
@@ -3097,12 +3091,6 @@ abstract class AppLocalizations {
   /// **'Match nul.'**
   String get bataDraw;
 
-  /// No description provided for @bataNoReward.
-  ///
-  /// In fr, this message translates to:
-  /// **'Pour la gloire : 3 victoires payées par jour.'**
-  String get bataNoReward;
-
   /// No description provided for @bataAgain.
   ///
   /// In fr, this message translates to:
@@ -3402,6 +3390,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Police plus lisible, lettres et lignes plus espacées'**
   String get settingsReadingComfortHint;
+
+  /// No description provided for @jeuxPourLaGloire.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pour la gloire : une leçon t\'ouvre 2 victoires payées'**
+  String get jeuxPourLaGloire;
+
+  /// No description provided for @ludiVictoiresPayees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoires payées aujourd\'hui : {left}. Chaque leçon en ouvre 2, jusqu\'à 6 par jour.'**
+  String ludiVictoiresPayees(int left);
+
+  /// No description provided for @ludiVictoiresAucune.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fais une leçon pour ouvrir 2 victoires payées. Sans leçon, on joue pour la gloire.'**
+  String get ludiVictoiresAucune;
+
+  /// No description provided for @ludiVictoiresEpuisees.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces.'**
+  String get ludiVictoiresEpuisees;
 }
 
 class _AppLocalizationsDelegate

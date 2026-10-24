@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../../../l10n/l10n.dart';
 import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
@@ -380,7 +381,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
     }
     if (widget.repo.estDejaPaye(cle)) {
       final gain = widget.repo.payerPartie('marche', montant);
-      return gain > 0 ? ' (+$gain HS)' : ' (pour la gloire : 3 ventes payées par jour)';
+      return gain > 0 ? ' (+$gain HS)' : ' (${context.l10n.jeuxPourLaGloire.toLowerCase()})';
     }
     widget.repo.accomplirDefi('marche');
     return ' (+${widget.repo.payerUneFois(cle, montant)} HS)';

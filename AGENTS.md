@@ -353,7 +353,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   avec la police Atkinson Hyperlegible (Braille Institute, licence OFL dans
   `assets/fonts/OFL_AtkinsonHyperlegible.txt`, `RomanFonts.lecture`),
   téléchargée avec l'accord de Cédric le 24/10/2026. Vérifié à l'émulateur sur un premier lancement, profil démo restauré.
-  Économie et nouveaux jeux : étude rendue dans docs/propositions/etude_economie_et_jeux.md (recommandé : parties payées ouvertes par les leçons + prime de série ; Paires éclair puis Mot du jour). En attente de la décision de Cédric.
+  Économie (étude docs/propositions/etude_economie_et_jeux.md, pistes A + C validées par Cédric, appliquées) : les victoires payées des jeux sont ouvertes par les activités du jour (UserProfile.victoiresParActivite = 2 par leçon ou tranche de 10 cartes Memoria, victoiresPayeesMax = 6 par jour, tous jeux confondus, Taverne comprise) ; bandeau en haut du Ludi (_BandeauVictoires) ; prime de l'objectif GameRepository.primeObjectif(serie) = 5 puis +1 par jour de série jusqu'à 10. Nouveaux jeux validés : Paires éclair d'abord, puis Mot du jour (mot propre à chaque élève, tiré de ses mondes faits).
 
 - **Audits T58 à T63 relus** (24/10/2026). Synthèse et tri dans
   `docs/audits/synthese_audits_gemini_2026-10.md` : 5 défauts à corriger

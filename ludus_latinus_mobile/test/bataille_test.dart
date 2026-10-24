@@ -90,6 +90,8 @@ void main() {
   test('Récompense : victoire payée, série et record ; défaite remet la série à zéro', () {
     final repo = depotAvec(['her_romulus', 'her_julia', 'mon_borne']);
     final avant = repo.profile.sesterces;
+    // Une leçon du jour ouvre les victoires payées.
+    repo.profile.noterLeconDuJour();
     expect(repo.noterBataille(victoire: true), greaterThanOrEqualTo(GameRepository.gainBataille));
     repo.noterBataille(victoire: true);
     expect(repo.record('bataille'), 2);

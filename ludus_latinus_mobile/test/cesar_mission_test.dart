@@ -65,6 +65,7 @@ void main() {
     await tester.runAsync(data.loadDataset);
     final repo = GameRepository(dataService: data, storageService: StorageService());
     repo.profile.sesterces = 0;
+    repo.profile.noterLeconDuJour();
     await tester.pumpWidget(MaterialApp(home: CesarScreen(repo: repo)));
     // L'onglet est au bout d'une rangée qui défile.
     await tester.ensureVisible(find.text('Message libre ∞'));
