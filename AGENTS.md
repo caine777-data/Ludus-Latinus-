@@ -353,7 +353,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   avec la police Atkinson Hyperlegible (Braille Institute, licence OFL dans
   `assets/fonts/OFL_AtkinsonHyperlegible.txt`, `RomanFonts.lecture`),
   téléchargée avec l'accord de Cédric le 24/10/2026. Vérifié à l'émulateur sur un premier lancement, profil démo restauré.
-  Économie et nouveaux jeux : à étudier (demande de Cédric).
+  Économie et nouveaux jeux : étude rendue dans docs/propositions/etude_economie_et_jeux.md (recommandé : parties payées ouvertes par les leçons + prime de série ; Paires éclair puis Mot du jour). En attente de la décision de Cédric.
 
 - **Audits T58 à T63 relus** (24/10/2026). Synthèse et tri dans
   `docs/audits/synthese_audits_gemini_2026-10.md` : 5 défauts à corriger
