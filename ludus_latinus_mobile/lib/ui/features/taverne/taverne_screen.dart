@@ -97,16 +97,43 @@ class _TaverneScreenState extends State<TaverneScreen> {
   final ScrollController _defilement = ScrollController();
   bool _mancheComptee = false;
 
+  /// Vrai pendant l'animation du lancer : les touches sont ignorées.
+  bool _lancerEnCours = false;
+
+  static const _desQuiRoulent = AssetImage('assets/images/animated/dice_roll_3d.webp');
+  static const _dureeLancer = Duration(milliseconds: 650);
+
   static const Map<int, String> _faces = {1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI'};
 
-  void _encoreUnDe() {
+  /// Le joueur prend un dé : les dés roulent un court instant au-dessus de
+  /// l'écran, puis le nouveau dé apparaît dans sa zone.
+  Future<void> _encoreUnDe() async {
+    if (_lancerEnCours) return;
     HapticFeedback.lightImpact();
     AudioService().playDiceRoll();
+    _lancerEnCours = true;
+    _montrerDesQuiRoulent();
+    await Future.delayed(_dureeLancer);
+    if (!mounted) return;
+    _lancerEnCours = false;
     setState(() => _partie.encoreUnDe());
     if (_partie.joueurArrete) _finDeManche();
   }
 
+  void _montrerDesQuiRoulent() {
+    // Rejoue l'animation depuis sa première image (piège 17 d'AGENTS.md).
+    _desQuiRoulent.evict();
+    final entree = OverlayEntry(
+      builder: (_) => IgnorePointer(
+        child: Center(child: Image(key: UniqueKey(), image: _desQuiRoulent, width: 200, height: 200)),
+      ),
+    );
+    Overlay.of(context).insert(entree);
+    Future.delayed(_dureeLancer, entree.remove);
+  }
+
   Future<void> _jeMArrete() async {
+    if (_lancerEnCours) return;
     HapticFeedback.selectionClick();
     setState(() {
       _partie.arreter();

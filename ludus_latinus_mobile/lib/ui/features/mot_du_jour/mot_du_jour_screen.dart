@@ -7,6 +7,7 @@ import '../../../data/models/vocab_question.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
+import '../../core/lottie_effects.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
@@ -75,8 +76,12 @@ class _MotDuJourScreenState extends State<MotDuJourScreen> {
       _gain = gain;
     });
     if (_trouve) {
-      AudioService().playTriumph();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      if (gain > 0) {
+        RomanLottieEffects.showCoinShower(context);
+      } else {
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      }
       annoncerAuLecteur(context, context.l10n.wordWin(_essais.length));
     } else if (_fini) {
       AudioService().playError();
@@ -247,6 +252,12 @@ class _MotDuJourScreenState extends State<MotDuJourScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Image.asset(
+            lupulusAnimation(_trouve ? LupulusMood.triomphe : LupulusMood.encouragement),
+            height: 110,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 6),
           Text(
             _trouve ? context.l10n.wordWin(_essais.length) : context.l10n.wordLose(_cible),
             textAlign: TextAlign.center,

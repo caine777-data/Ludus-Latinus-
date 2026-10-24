@@ -1356,9 +1356,10 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
         child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (_victoire) ...[
+          // Défaite : Lupulus encourage plutôt qu'une tête de mort.
+          ...[
             Image.asset(
-              lupulusAnimation(LupulusMood.triomphe),
+              lupulusAnimation(_victoire ? LupulusMood.triomphe : LupulusMood.encouragement),
               width: 120,
               height: 120,
               fit: BoxFit.contain,
@@ -1367,7 +1368,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             const SizedBox(height: 8),
           ],
           Text(
-            _victoire ? '⚔️ TRIOMPHE DANS L\'ARÈNE !' : '☠️ DÉFAITE AU COMBAT !',
+            _victoire ? '⚔️ TRIOMPHE DANS L\'ARÈNE !' : 'DÉFAITE AU COMBAT !',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

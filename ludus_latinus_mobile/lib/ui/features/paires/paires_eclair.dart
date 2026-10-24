@@ -29,6 +29,9 @@ class PartiePaires {
   /// partie les montre en premier, pour qu'il les révise.
   final Set<ThesaurusEntry> ratees = {};
 
+  /// Mots reliés juste au moins une fois.
+  final Set<ThesaurusEntry> reussies = {};
+
   final math.Random _hasard;
   int manche = 0;
   int erreurs = 0;
@@ -129,6 +132,7 @@ class PartiePaires {
       return false;
     }
     trouvees.add(iLatin);
+    reussies.add(mots[iLatin]);
     pairesTrouvees++;
     if (trouvees.length == pairesParManche) {
       manche++;

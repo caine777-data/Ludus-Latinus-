@@ -7,6 +7,7 @@ import '../../../data/models/vocab_question.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
+import '../../core/lottie_effects.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
@@ -28,6 +29,9 @@ enum _Etape { regles, enJeu, fin }
 
 /// Paires justes d'affilée qui déclenchent « Celeriter ! ».
 const int _serieCeleriter = 3;
+
+/// Puce des mots que le temps n'a pas laissé atteindre.
+const _gris = Color(0xFF8A817A);
 
 class _PairesScreenState extends State<PairesScreen> {
   late PartiePaires _partie;
@@ -149,8 +153,13 @@ class _PairesScreenState extends State<PairesScreen> {
     if (_partie.estGagnee) {
       _gain = widget.repo.payerPartie('paires', GameRepository.gainPaires);
       _nouveauRecord = widget.repo.enregistrerRecord('paires', _secondesRestantes);
-      AudioService().playTriumph();
-      RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      // Victoire payée : pluie de pièces (elle joue aussi la fanfare).
+      if (_gain > 0) {
+        RomanLottieEffects.showCoinShower(context);
+      } else {
+        AudioService().playTriumph();
+        RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+      }
     } else {
       AudioService().playError();
     }
@@ -326,29 +335,11 @@ class _PairesScreenState extends State<PairesScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Ces deux poses sont des vignettes à marge blanche : on les agrandit
-        // un peu dans un cadre arrondi pour couper la marge sur le fond doré.
-        Center(
-          child: Container(
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28),
-              boxShadow: const [BoxShadow(color: Color(0x33000000), offset: Offset(0, 3), blurRadius: 8)],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(28),
-              child: Transform.scale(
-                scale: 1.12,
-                child: Image.asset(
-                  gagne
-                      ? 'assets/images/lupulus/lupulus_triomphe_180.png'
-                      : 'assets/images/lupulus/lupulus_reflexion_180.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
+        // Animations sur fond transparent : elles se posent sur le fond doré.
+        Image.asset(
+          lupulusAnimation(gagne ? LupulusMood.triomphe : LupulusMood.encouragement),
+          height: 140,
+          fit: BoxFit.contain,
         ),
         const SizedBox(height: 12),
         Text(
@@ -401,10 +392,20 @@ class _PairesScreenState extends State<PairesScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Raté : à revoir ; trouvé : coché ; pas atteint avant la fin
+                  // du temps : simple puce, pour ne pas cocher un mot non relié.
                   Icon(
-                    _partie.ratees.contains(e) ? Icons.replay : Icons.check,
+                    _partie.ratees.contains(e)
+                        ? Icons.replay
+                        : _partie.reussies.contains(e)
+                            ? Icons.check
+                            : Icons.circle_outlined,
                     size: 18,
-                    color: _partie.ratees.contains(e) ? RomanColors.terracotta : RomanColors.laurelGreen,
+                    color: _partie.ratees.contains(e)
+                        ? RomanColors.terracotta
+                        : _partie.reussies.contains(e)
+                            ? RomanColors.laurelGreen
+                            : _gris,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

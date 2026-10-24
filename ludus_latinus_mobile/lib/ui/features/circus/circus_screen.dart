@@ -1643,9 +1643,15 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
               ),
             )
           else
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text('🏁', style: TextStyle(fontSize: 44)),
+            // Course perdue : Lupulus encourage à recommencer.
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Image.asset(
+                lupulusAnimation(LupulusMood.encouragement),
+                height: 96,
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => const Text('🏁', style: TextStyle(fontSize: 44)),
+              ),
             ),
 
           Text(
