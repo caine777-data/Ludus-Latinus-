@@ -34,6 +34,24 @@ void main() {
     }
   });
 
+  test('Jamais deux traductions qui se recoupent dans une même manche', () {
+    final tous = {for (final e in dico) e.monde};
+    final familia = dico.firstWhere((e) => e.latin.startsWith('familia'));
+    final domus = dico.firstWhere((e) => e.latin.startsWith('domus'));
+    expect(PartiePaires.seRecoupent(familia, domus), isTrue);
+    for (var graine = 0; graine < 200; graine++) {
+      final p = PartiePaires.tirer(dictionnaire: dico, mondes: tous, hasard: math.Random(graine));
+      for (final manche in p.manches) {
+        for (var i = 0; i < manche.length; i++) {
+          for (var j = i + 1; j < manche.length; j++) {
+            expect(PartiePaires.seRecoupent(manche[i], manche[j]), isFalse,
+                reason: '${manche[i].fr} / ${manche[j].fr}');
+          }
+        }
+      }
+    }
+  });
+
   test('Sans monde atteint, pas de partie', () {
     expect(PartiePaires.tirer(dictionnaire: dico, mondes: const {}).estJouable, isFalse);
   });

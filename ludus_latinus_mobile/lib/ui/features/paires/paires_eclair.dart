@@ -66,15 +66,40 @@ class PartiePaires {
     var paquet = <ThesaurusEntry>[];
     for (var m = 0; m < nbManches; m++) {
       final manche = <ThesaurusEntry>[];
+      var tirages = 0;
       while (manche.length < pairesParManche) {
         if (paquet.isEmpty) paquet = [...pool]..shuffle(rnd);
         final e = paquet.removeLast();
-        if (!manche.contains(e)) manche.add(e);
+        tirages++;
+        if (manche.contains(e)) continue;
+        // Pas deux traductions qui se recoupent dans une manche (« la famille /
+        // maisonnée » et « la maison / la maisonnée ») : l'élève hésiterait
+        // sans que ce soit sa faute. Si le paquet est trop petit pour l'éviter
+        // après deux tours, on l'accepte plutôt que de tourner sans fin.
+        final tolere = tirages > pool.length * 2;
+        if (!tolere && manche.any((d) => seRecoupent(d, e))) continue;
+        manche.add(e);
       }
       manches.add(manche);
     }
     return PartiePaires._(manches, rnd);
   }
+
+  /// Petits mots ignorés quand on compare deux traductions.
+  static const _motsVides = {
+    'le', 'la', 'les', 'l', 'un', 'une', 'des', 'de', 'du', 'd', 'et', 'ou', 'se', 's', 'en', 'à', 'au', 'aux',
+  };
+
+  /// Mots pleins d'une traduction : « la maison / la maisonnée » → {maison, maisonnée}.
+  static Set<String> motsDuSens(ThesaurusEntry e) => VocabQuestion.shortFrench(e)
+      .toLowerCase()
+      .split(RegExp(r"[^a-zà-ÿœæ]+"))
+      .where((m) => m.isNotEmpty && !_motsVides.contains(m))
+      .toSet();
+
+  /// Vrai si les deux traductions partagent un mot plein.
+  static bool seRecoupent(ThesaurusEntry a, ThesaurusEntry b) =>
+      motsDuSens(a).intersection(motsDuSens(b)).isNotEmpty;
 
   bool get estJouable => manches.isNotEmpty;
   bool get estGagnee => estJouable && manche >= nbManches;
