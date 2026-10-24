@@ -25,6 +25,10 @@ class PartiePaires {
   /// Indices (dans la manche) des paires déjà trouvées.
   final Set<int> trouvees = {};
 
+  /// Mots latins sur lesquels l'élève s'est trompé : le rappel de fin de
+  /// partie les montre en premier, pour qu'il les révise.
+  final Set<ThesaurusEntry> ratees = {};
+
   final math.Random _hasard;
   int manche = 0;
   int erreurs = 0;
@@ -76,6 +80,12 @@ class PartiePaires {
   bool get estGagnee => estJouable && manche >= nbManches;
   List<ThesaurusEntry> get mots => manches[manche.clamp(0, nbManches - 1)];
 
+  /// Mots joués jusqu'ici (manches commencées), les ratés d'abord, sans doublon.
+  List<ThesaurusEntry> get motsAReviser {
+    final joues = {for (final m in manches.take((manche + 1).clamp(0, nbManches))) ...m};
+    return [...ratees, ...joues.where((e) => !ratees.contains(e))];
+  }
+
   String latin(int i) => VocabQuestion.shortLatin(mots[i]);
   String francais(int i) => VocabQuestion.shortFrench(mots[i]);
 
@@ -90,6 +100,7 @@ class PartiePaires {
     final iFrancais = ordreFrancais[positionFrancais];
     if (iLatin != iFrancais) {
       erreurs++;
+      ratees.add(mots[iLatin]);
       return false;
     }
     trouvees.add(iLatin);

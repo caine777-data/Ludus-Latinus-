@@ -136,11 +136,11 @@ class LudiView extends StatelessWidget {
 
                       // Paires éclair : ouvert dès le départ, comme le Circus,
                       // car il ne demande que les mots du premier monde.
-                      // Image provisoire en attendant l'illustration du jeu.
+                      // Lupulus en Mercure, hôte du jeu (messager rapide des dieux).
                       _buildGameTile(
                         context: context,
                         gameKey: 'paires',
-                        imagePath: 'assets/images/lupulus/lupulus_joie_180.png',
+                        imagePath: 'assets/images/lupulus/lupulus_mercure_180.png',
                         fallbackIcon: '⚡',
                         title: context.l10n.pairsTitle,
                         subtitle: repo.record('paires') > 0

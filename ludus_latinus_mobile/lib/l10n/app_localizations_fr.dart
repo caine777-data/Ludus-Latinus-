@@ -2057,4 +2057,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get pairsNewRecord => 'Nouveau record !';
+
+  @override
+  String get pairsCeleriter => 'Celeriter !';
+
+  @override
+  String get pairsReview => 'Les mots de la partie';
 }

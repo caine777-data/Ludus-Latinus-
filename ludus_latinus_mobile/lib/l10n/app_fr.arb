@@ -1620,5 +1620,7 @@
       }
     }
   },
-  "pairsNewRecord": "Nouveau record !"
+  "pairsNewRecord": "Nouveau record !",
+  "pairsCeleriter": "Celeriter !",
+  "pairsReview": "Les mots de la partie"
 }

@@ -3486,6 +3486,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Nouveau record !'**
   String get pairsNewRecord;
+
+  /// No description provided for @pairsCeleriter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Celeriter !'**
+  String get pairsCeleriter;
+
+  /// No description provided for @pairsReview.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les mots de la partie'**
+  String get pairsReview;
 }
 
 class _AppLocalizationsDelegate

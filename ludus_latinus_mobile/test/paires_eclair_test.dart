@@ -51,6 +51,9 @@ void main() {
       }
     }
     expect(p.estGagnee, isTrue);
+    // Le mot raté vient en tête du rappel de fin de partie.
+    expect(p.motsAReviser.first, p.manches.first.first);
+    expect(p.motsAReviser.toSet().length, p.motsAReviser.length);
     expect(p.pairesTrouvees, PartiePaires.totalPaires);
   });
 
@@ -63,6 +66,8 @@ void main() {
     ));
     await tester.pumpAndSettle();
     expect(find.text('COMMENCER'), findsOneWidget);
+    // Sous la bannière, le bouton peut sortir d'un écran bas : on y défile.
+    await tester.ensureVisible(find.text('COMMENCER'));
     await tester.tap(find.text('COMMENCER'));
     await tester.pump();
     expect(find.text('Manche 1 sur 3'), findsOneWidget);
