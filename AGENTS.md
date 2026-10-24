@@ -336,6 +336,15 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   confidentialité passée à `icareetdedale.fr/confidentialite/`, mention de
   l'achat intégré à reprendre. `docs/publication/invitation_testeurs.md` :
   messages pour recruter les testeurs du test fermé.
+- **Audits T58 à T63 relus** (24/10/2026). Synthèse et tri dans
+  `docs/audits/synthese_audits_gemini_2026-10.md` : 5 défauts à corriger
+  (D1 « Continuer » caché après une question de vocabulaire, confirmé à
+  l'émulateur ; clavier sur les boutons ; case du texte à trou ; zones à
+  toucher ; lecteur d'écran), 9 décisions pour Cédric, l'économie (les jeux
+  rapportent deux fois plus que les leçons), 6 idées de jeux. Doublons de T59
+  supprimés. Rapports de Gemini fiables sur les chiffres du code, pas sur
+  certains noms.
+
 - **Six tâches d'audit pour Gemini** (23/10/2026, demandées par Cédric) :
   T58 à T63 dans `docs/TACHES.md` (dix premières minutes, cohérence visuelle,
   8 jeux Ludi, une semaine d'élève et économie, accessibilité, idées venues

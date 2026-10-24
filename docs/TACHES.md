@@ -5801,7 +5801,9 @@ Règles communes aux six tâches :
 
 ## T58 — Les dix premières minutes d'un nouvel élève (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : conforme ; le bouton « Continuer » caché est confirmé à l'émulateur. Synthèse : `docs/audits/synthese_audits_gemini_2026-10.md`.
 
 **Objectif** : un enfant décide en quelques minutes s'il garde une appli.
 On veut voir l'appli comme lui la voit au premier lancement, chronomètre en
@@ -5860,7 +5862,9 @@ main, et repérer chaque moment où il hésite, s'ennuie ou ne comprend pas.
 
 ## T59 — Cohérence visuelle de tous les écrans (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : accepté avec réserves : rapport écrit en trois exemplaires (doublons supprimés), planches par famille non faites.
 
 **Objectif** : l'appli a grandi par couches (album, Bataille, page des
 professeurs, objectif du jour...). On veut savoir si elle a toujours l'air
@@ -5923,7 +5927,9 @@ marges, ou si certains écrans détonnent.
 
 ## T60 — Les 8 jeux Ludi : plaisir, difficulté, envie de rejouer (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : accepté avec réserves : chiffres du code justes, mais des noms inventés (Spartacus, Secutor) et des mesures peu étayées (24 parties, 16 captures).
 
 **Objectif** : l'audit des jeux du 3 octobre (`docs/audits/audit_jeux_2026-10-03.md`)
 date d'avant la Bataille, l'album, les nouvelles règles de la Taverne et les
@@ -5981,7 +5987,9 @@ chars animés. On refait le point, partie en main, sur les huit jeux.
 
 ## T61 — Une semaine d'élève : progression, sesterces, raisons de revenir (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : conforme ; chiffres du code vérifiés.
 
 **Objectif** : un élève revient s'il sent qu'il avance et qu'il a quelque
 chose à gagner demain. On veut vérifier, chiffres à l'appui, que la boucle
@@ -6039,7 +6047,9 @@ captures `scratch/t61_*`. Lecture du code autorisée (sans modification) :
 
 ## T62 — Accessibilité : lire, toucher, entendre (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : conforme ; case de 38 dp et absence de `Semantics` vérifiées dans le code.
 
 **Objectif** : la fiche Store vise les familles et les professeurs. Un élève
 dyslexique, malvoyant ou qui joue sans le son doit pouvoir suivre. On veut
@@ -6109,7 +6119,9 @@ captures `scratch/t62_*`.
 
 ## T63 — Idées de jeu venues d'ailleurs, adaptées au latin (sans rien modifier)
 
-Statut : FAIT
+Statut : VALIDÉ
+
+> **Relecture de l'architecte (24/10/2026)** : conforme.
 
 **Objectif** : chercher dans les applis éducatives qui marchent auprès des
 11 à 15 ans ce qui fait revenir les élèves, et ne garder que ce qui
