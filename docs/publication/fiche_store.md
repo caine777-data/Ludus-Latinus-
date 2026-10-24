@@ -24,6 +24,8 @@ LE PROGRAMME DU COLLÈGE
 
 DES JEUX POUR S'ENTRAÎNER
 • Circus Maximus : une course de chars où chaque bonne réponse donne de la vitesse.
+• Paires éclair : relier mots latins et traductions contre la montre, avec Lupulus en messager des dieux.
+• Le Mot du jour : un mot latin à deviner en six essais, tiré des mondes déjà vus, avec les mots français qui en viennent pour indice.
 • Colosseum Duellum : des duels de gladiateurs gagnés au vocabulaire.
 • Alea Iacta Est : les dés de la taverne, comptés en chiffres romains.
 • L'Atelier de César : messages secrets à chiffrer et à déchiffrer.
@@ -41,9 +43,11 @@ ROME COMME TERRAIN DE JEU
 L'élève crée son héros, gagne des sesterces, restaure les monuments du Forum, gravit les rangs du Cursus Honorum et garde sa série de jours. Lupulus, un louveteau romain, l'accompagne et l'encourage.
 
 PENSÉ POUR LES FAMILLES ET LES PROFESSEURS
+• Les jeux récompensent le travail : chaque leçon du jour ouvre des parties payées en sesterces. Sans leçon, on joue pour la gloire.
 • Aucune publicité.
 • Aucune donnée collectée, aucun compte à créer.
 • Fonctionne sans connexion Internet.
+• Un mode lecture confort, pour les élèves dyslexiques ou qui lisent avec peine : police très lisible, lettres et lignes plus espacées.
 • Progression exportable dans un fichier, pour changer d'appareil.
 • Une page pour les professeurs : ce que chaque monde travaille du programme officiel de latin du collège.
 
@@ -70,3 +74,4 @@ Ludus Latinus est édité par Icare & Dédale.
 - Si l'Édition complète est vendue, l'indiquer dans la description, conformément au modèle décidé (voir `AGENTS.md`, « Décisions de Cédric ») : « Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque tout le reste, en un seul achat, sans abonnement. » Google exige que les achats intégrés soient signalés. Recompter alors la partie gratuite sur le dataset du moment (119 leçons au 18/10, et non plus 113).
 - Compte développeur créé le 22/10/2026 (compte personnel, nom public Icare & Dédale, nom légal affiché par Google : Cédric Monna, France). La fiche ne peut être créée qu'après la validation d'identité par Google.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
+- Captures à refaire (téléphone et tablette) une fois les icônes sesterce, flamme et bourse intégrées (audit E4, E8), pour montrer Paires éclair, le Mot du jour et la Taverne illustrée.
