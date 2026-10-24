@@ -12,6 +12,7 @@ import '../../marche/marche_trajan_screen.dart';
 import '../../pantheon/pantheon_screen.dart';
 import '../../album/album_screen.dart';
 import '../../bataille/bataille_screen.dart';
+import '../../paires/paires_screen.dart';
 import '../../../../l10n/l10n.dart';
 
 /// Onglet 3 : Ludi & Arènes — Mini-jeux d'arcade romaine soumis au déblocage progressif (Progressive Disclosure).
@@ -129,6 +130,28 @@ class LudiView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) => CircusMaximusScreen(repo: repo)),
+                          );
+                        },
+                      ),
+
+                      // Paires éclair : ouvert dès le départ, comme le Circus,
+                      // car il ne demande que les mots du premier monde.
+                      // Image provisoire en attendant l'illustration du jeu.
+                      _buildGameTile(
+                        context: context,
+                        gameKey: 'paires',
+                        imagePath: 'assets/images/lupulus/lupulus_joie_180.png',
+                        fallbackIcon: '⚡',
+                        title: context.l10n.pairsTitle,
+                        subtitle: repo.record('paires') > 0
+                            ? context.l10n.pairsRecord(repo.record('paires'))
+                            : context.l10n.ludiPairsSubtitle,
+                        tagLabel: context.l10n.ludiPairsTag,
+                        tagColor: RomanColors.laurelGreen,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => PairesScreen(repo: repo)),
                           );
                         },
                       ),

@@ -1574,5 +1574,51 @@
     }
   },
   "ludiVictoiresAucune": "Fais une leçon pour ouvrir 2 victoires payées. Sans leçon, on joue pour la gloire.",
-  "ludiVictoiresEpuisees": "Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces."
+  "ludiVictoiresEpuisees": "Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces.",
+  "pairsTitle": "Paires éclair",
+  "ludiPairsSubtitle": "Les mots contre la montre",
+  "ludiPairsTag": "MOTS",
+  "pairsRules": "Relie chaque mot latin à sa traduction : touche le mot, puis son sens. Trois manches de cinq paires en une minute. Une erreur coûte trois secondes.",
+  "pairsNoWords": "Termine ta première leçon pour avoir des mots à relier.",
+  "pairsStart": "COMMENCER",
+  "pairsReplay": "REJOUER",
+  "pairsRound": "Manche {n} sur {total}",
+  "@pairsRound": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pairsWin": "Victoire ! {secondes} secondes d'avance",
+  "@pairsWin": {
+    "placeholders": {
+      "secondes": {
+        "type": "int"
+      }
+    }
+  },
+  "pairsLose": "Temps écoulé ! Paires trouvées : {trouvees} sur {total}",
+  "@pairsLose": {
+    "placeholders": {
+      "trouvees": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "pairsRecord": "Record : {secondes} s d'avance",
+  "@pairsRecord": {
+    "placeholders": {
+      "secondes": {
+        "type": "int"
+      }
+    }
+  },
+  "pairsNewRecord": "Nouveau record !"
 }

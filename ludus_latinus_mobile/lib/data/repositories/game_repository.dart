@@ -574,6 +574,7 @@ class GameRepository extends ChangeNotifier {
   static const int gainMarcheEtal = 5;
   static const int gainMarcheRendu = 5;
   static const int gainMarcheNegociation = 10;
+  static const int gainPaires = 10;
 
   /// Victoires encore payées aujourd'hui, tous jeux confondus.
   int get victoiresPayeesRestantes => profile.victoiresPayeesRestantes();

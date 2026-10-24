@@ -2011,4 +2011,50 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get ludiVictoiresEpuisees =>
       'Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces.';
+
+  @override
+  String get pairsTitle => 'Paires éclair';
+
+  @override
+  String get ludiPairsSubtitle => 'Les mots contre la montre';
+
+  @override
+  String get ludiPairsTag => 'MOTS';
+
+  @override
+  String get pairsRules =>
+      'Relie chaque mot latin à sa traduction : touche le mot, puis son sens. Trois manches de cinq paires en une minute. Une erreur coûte trois secondes.';
+
+  @override
+  String get pairsNoWords =>
+      'Termine ta première leçon pour avoir des mots à relier.';
+
+  @override
+  String get pairsStart => 'COMMENCER';
+
+  @override
+  String get pairsReplay => 'REJOUER';
+
+  @override
+  String pairsRound(int n, int total) {
+    return 'Manche $n sur $total';
+  }
+
+  @override
+  String pairsWin(int secondes) {
+    return 'Victoire ! $secondes secondes d\'avance';
+  }
+
+  @override
+  String pairsLose(int trouvees, int total) {
+    return 'Temps écoulé ! Paires trouvées : $trouvees sur $total';
+  }
+
+  @override
+  String pairsRecord(int secondes) {
+    return 'Record : $secondes s d\'avance';
+  }
+
+  @override
+  String get pairsNewRecord => 'Nouveau record !';
 }

@@ -3414,6 +3414,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tes 6 victoires payées du jour sont faites : à demain pour de nouveaux sesterces.'**
   String get ludiVictoiresEpuisees;
+
+  /// No description provided for @pairsTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paires éclair'**
+  String get pairsTitle;
+
+  /// No description provided for @ludiPairsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les mots contre la montre'**
+  String get ludiPairsSubtitle;
+
+  /// No description provided for @ludiPairsTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'MOTS'**
+  String get ludiPairsTag;
+
+  /// No description provided for @pairsRules.
+  ///
+  /// In fr, this message translates to:
+  /// **'Relie chaque mot latin à sa traduction : touche le mot, puis son sens. Trois manches de cinq paires en une minute. Une erreur coûte trois secondes.'**
+  String get pairsRules;
+
+  /// No description provided for @pairsNoWords.
+  ///
+  /// In fr, this message translates to:
+  /// **'Termine ta première leçon pour avoir des mots à relier.'**
+  String get pairsNoWords;
+
+  /// No description provided for @pairsStart.
+  ///
+  /// In fr, this message translates to:
+  /// **'COMMENCER'**
+  String get pairsStart;
+
+  /// No description provided for @pairsReplay.
+  ///
+  /// In fr, this message translates to:
+  /// **'REJOUER'**
+  String get pairsReplay;
+
+  /// No description provided for @pairsRound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Manche {n} sur {total}'**
+  String pairsRound(int n, int total);
+
+  /// No description provided for @pairsWin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Victoire ! {secondes} secondes d\'avance'**
+  String pairsWin(int secondes);
+
+  /// No description provided for @pairsLose.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps écoulé ! Paires trouvées : {trouvees} sur {total}'**
+  String pairsLose(int trouvees, int total);
+
+  /// No description provided for @pairsRecord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Record : {secondes} s d\'avance'**
+  String pairsRecord(int secondes);
+
+  /// No description provided for @pairsNewRecord.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau record !'**
+  String get pairsNewRecord;
 }
 
 class _AppLocalizationsDelegate
