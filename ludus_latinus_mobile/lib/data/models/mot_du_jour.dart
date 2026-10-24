@@ -18,10 +18,6 @@ class MotDuJour {
   /// Derniers mots proposés, retenus pour ne pas les redonner trop tôt.
   static const int memoireMots = 60;
 
-  /// Mots français dérivés écartés de l'indice : pas à leur place dans une
-  /// appli pour collégiens.
-  static const _derivesEcartes = {'lupanar'};
-
   /// Forme à deviner, en capitales : « amicus, -i » → « AMICUS ».
   static String forme(ThesaurusEntry e) => VocabQuestion.shortLatin(e).toUpperCase();
 
@@ -76,14 +72,14 @@ class MotDuJour {
   }
 
   /// Indice : les mots français dérivés, sans ceux qui donnent la réponse
-  /// telle quelle (« atrium » pour ATRIUM) ni ceux de [_derivesEcartes].
+  /// telle quelle (« atrium » pour ATRIUM).
   /// Sans dérivé utilisable, la traduction sert d'indice.
   static String indice(ThesaurusEntry e) {
     final cible = forme(e).toLowerCase();
     final derives = e.etym
         .split(',')
         .map((m) => m.trim())
-        .where((m) => m.isNotEmpty && m.toLowerCase() != cible && !_derivesEcartes.contains(m.toLowerCase()))
+        .where((m) => m.isNotEmpty && m.toLowerCase() != cible)
         .toList();
     return derives.isEmpty ? VocabQuestion.shortFrench(e) : derives.join(', ');
   }

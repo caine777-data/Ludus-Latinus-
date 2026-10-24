@@ -3,7 +3,7 @@
     "app": "Ludus Latinus",
     "version": "1.0.0",
     "titre": "Dataset Pédagogique Universel — Cycle 4",
-    "date_export": "2026-10-18 19:06:17",
+    "date_export": "2026-10-24 21:02:23",
     "total_classes": 3,
     "total_mondes": 26,
     "total_lecons": 119,
@@ -4837,7 +4837,7 @@
         "cat": "Nom",
         "genre": "fém. 1re décl.",
         "fr": "la louve",
-        "etym": "louve, lupanar",
+        "etym": "louve, louveteau",
         "ex": "Lupa Romulum et Remum alit.",
         "ex_fr": "La louve nourrit Romulus et Rémus.",
         "monde": "monde1"

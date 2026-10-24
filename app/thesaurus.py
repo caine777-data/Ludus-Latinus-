@@ -39,7 +39,7 @@ DICTIONNAIRE_LATIN = [
     {"latin": "hostis, -is", "cat": "Nom", "genre": "masc. 3e décl.", "fr": "l'ennemi", "etym": "hostile, hostilité", "ex": "Hostes urbem oppugnant.", "ex_fr": "Les ennemis attaquent la ville."},
     {"latin": "insula, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "l'île / l'immeuble romain", "etym": "insulaire, isoler, péninsule", "ex": "Plebs in insulis habitat.", "ex_fr": "La plèbe habite dans des immeubles."},
     {"latin": "lex, legis", "cat": "Nom", "genre": "fém. 3e décl.", "fr": "la loi", "etym": "légal, légitime, légiférer", "ex": "Dura lex, sed lex.", "ex_fr": "La loi est dure, mais c'est la loi."},
-    {"latin": "lupa, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la louve", "etym": "louve, lupanar", "ex": "Lupa Romulum et Remum alit.", "ex_fr": "La louve nourrit Romulus et Rémus."},
+    {"latin": "lupa, -ae", "cat": "Nom", "genre": "fém. 1re décl.", "fr": "la louve", "etym": "louve, louveteau", "ex": "Lupa Romulum et Remum alit.", "ex_fr": "La louve nourrit Romulus et Rémus."},
     {"latin": "lupus, -i", "cat": "Nom", "genre": "masc. 2e décl.", "fr": "le loup", "etym": "loup, louveteau", "ex": "Homo homini lupus est.", "ex_fr": "L'homme est un loup pour l'homme."},
     {"latin": "manus, -us", "cat": "Nom", "genre": "fém. 4e décl.", "fr": "la main / la troupe", "etym": "manuel, manucure, manipuler", "ex": "Manus manum lavat.", "ex_fr": "Une main lave l'autre."},
     {"latin": "mare, -is", "cat": "Nom", "genre": "neutre 3e décl.", "fr": "la mer", "etym": "marin, maritime", "ex": "Mare Nostrum navigamus.", "ex_fr": "Nous voguons sur Notre Mer."},
