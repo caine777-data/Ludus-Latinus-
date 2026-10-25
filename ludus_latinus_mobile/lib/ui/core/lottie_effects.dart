@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
 import 'themes.dart';
@@ -180,7 +181,7 @@ class RomanLottieEffects {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('🪙', style: TextStyle(fontSize: 22)),
+                      const IconeSesterce(taille: 25),
                       const SizedBox(width: 8),
                       Text(
                         context.l10n.questCompleteReward(sestercesReward),

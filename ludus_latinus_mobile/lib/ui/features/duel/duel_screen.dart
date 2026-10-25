@@ -626,7 +626,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
                   child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const IconeSesterce(taille: 16),
                     const SizedBox(width: 4),
                     Text(
                       '$_gainsSesterces pts (${widget.repo.profile.sesterces} HS)',
@@ -1395,7 +1395,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('🪙', style: TextStyle(fontSize: 18)),
+                const IconeSesterce(taille: 21),
                 const SizedBox(width: 8),
                 // Passe à la ligne au lieu de déborder sur un petit écran.
                 Flexible(

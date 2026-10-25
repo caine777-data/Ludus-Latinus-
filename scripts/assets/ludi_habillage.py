@@ -1,5 +1,6 @@
-"""Habillage des jeux du Ludi (24/10/2026) : Gaius et sa taverne, fond du Mot
-du jour, sceau de César, bannière animée de Paires éclair.
+"""Habillage des jeux du Ludi (24-25/10/2026) : Gaius et sa taverne, fond du
+Mot du jour, sceau de César, bannière animée de Paires éclair, portraits des
+clients du Marché.
 
 Les images fixes passent en WebP (Gemini les livre en JPEG nommé .webp).
 Les deux vidéos deviennent des WebP animés en boucle simple : elles reviennent
@@ -27,6 +28,12 @@ FIXES = {
     "fond_bibliotheque": ("mot_du_jour/fond_bibliotheque.webp", 768),
     "sceau_victoire": ("cesar/sceau_victoire.webp", 512),
 }
+
+# Portraits des clients du Marché (1024 x 1024, buste) : carré serré sur le
+# visage, pour le médaillon rond de 54 points (192 px = 3,5x).
+CLIENTS = ["centurion", "senateur", "vestale", "fermier", "negociante", "general", "patricienne", "philosophe"]
+ZONE_VISAGE = (172, 40, 852, 720)
+COTE_CLIENT = 192
 
 # Vidéo Gemini -> (sortie, zone gardée (x0, y0, x1, y1), largeur de sortie, images/s).
 ANIMATIONS = {
@@ -69,11 +76,22 @@ def animation(nom, sortie, zone, largeur, ips):
     print(f"[OK] {sortie}  {len(images)} images {largeur}x{hauteur}, {chemin.stat().st_size // 1024} Ko")
 
 
+def portrait_client(nom):
+    im = Image.open(SOURCE / f"client_{nom}.jpg").convert("RGB").crop(ZONE_VISAGE)
+    im = im.resize((COTE_CLIENT, COTE_CLIENT), Image.LANCZOS)
+    chemin = IMAGES / "marche" / f"client_{nom}.webp"
+    chemin.parent.mkdir(parents=True, exist_ok=True)
+    im.save(chemin, "WEBP", quality=85, method=6)
+    print(f"[OK] marche/client_{nom}.webp  {chemin.stat().st_size // 1024} Ko")
+
+
 def main():
     for nom, (sortie, largeur) in FIXES.items():
         image_fixe(nom, sortie, largeur)
     for nom, (sortie, zone, largeur, ips) in ANIMATIONS.items():
         animation(nom, sortie, zone, largeur, ips)
+    for nom in CLIENTS:
+        portrait_client(nom)
 
 
 if __name__ == "__main__":

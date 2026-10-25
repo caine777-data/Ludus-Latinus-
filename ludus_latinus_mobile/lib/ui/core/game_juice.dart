@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'widgets.dart';
 import 'package:flutter/services.dart';
 import '../../data/services/audio_service.dart';
 import 'themes.dart';
@@ -235,14 +236,20 @@ class RollingSestercesCounter extends StatelessWidget {
       letterSpacing: 0.3,
     );
 
-    return RomanAnimatedCounter(
+    final compteur = RomanAnimatedCounter(
       value: value,
       initialValue: initialValue,
-      prefix: showIcon ? '🪙 ' : '',
       suffix: ' HS',
       style: style ?? defaultStyle,
       duration: duration,
       playSound: playSound,
+    );
+    if (!showIcon) return compteur;
+    // Pièce dessinée devant le nombre, à la taille du texte.
+    final taille = ((style ?? defaultStyle).fontSize ?? 13) + 4;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [IconeSesterce(taille: taille), const SizedBox(width: 3), compteur],
     );
   }
 }

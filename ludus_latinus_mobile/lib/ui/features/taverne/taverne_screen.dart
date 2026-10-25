@@ -230,9 +230,16 @@ class _TaverneScreenState extends State<TaverneScreen> {
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(color: RomanColors.imperialGold),
                 ),
-                child: Text(
-                  context.l10n.tavernPurse(widget.repo.profile.sesterces),
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const IconeSesterce(taille: 15),
+                    const SizedBox(width: 3),
+                    Text(
+                      context.l10n.tavernPurse(widget.repo.profile.sesterces),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF7A5901)),
+                    ),
+                  ],
                 ),
               ),
             ],

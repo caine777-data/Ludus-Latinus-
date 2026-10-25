@@ -811,7 +811,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const IconeSesterce(taille: 16),
                     const SizedBox(width: 4),
                     Text(
                       '$_scoreSesterces pts (${widget.repo.profile.sesterces} HS)',
@@ -1691,7 +1691,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('🪙', style: TextStyle(fontSize: 18)),
+                const IconeSesterce(taille: 21),
                 const SizedBox(width: 8),
                 // Passe à la ligne au lieu de déborder sur un petit écran.
                 Flexible(

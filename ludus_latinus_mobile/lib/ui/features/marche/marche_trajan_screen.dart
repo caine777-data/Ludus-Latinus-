@@ -217,6 +217,36 @@ class OptionNegociation {
   });
 }
 
+/// Portrait de chaque client, par son nom : les clients du comptoir et
+/// ceux des missions de négociation sont les mêmes personnes.
+const Map<String, String> kPortraitsClients = {
+  'Centurio Lucius': 'centurion',
+  'Senator Valerius': 'senateur',
+  'Sacerdos Claudia': 'vestale',
+  'Agricola Titus': 'fermier',
+  'Mercatrix Flavia': 'negociante',
+  'Legatus Marcus': 'general',
+  'Matrona Aurelia': 'patricienne',
+  'Philosophus Sextus': 'philosophe',
+};
+
+/// Visage du client dans son médaillon rond ; l'emoji reste en secours
+/// pour un client sans portrait.
+Widget medaillonClient(String nom, String emoji, double tailleEmoji) {
+  final portrait = kPortraitsClients[nom];
+  final repli = Text(emoji, style: TextStyle(fontSize: tailleEmoji));
+  if (portrait == null) return repli;
+  return ClipOval(
+    child: Image.asset(
+      'assets/images/marche/client_$portrait.webp',
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
+      errorBuilder: (_, __, ___) => Center(child: repli),
+    ),
+  );
+}
+
 class MissionNegociation {
   final String nomClient;
   final String titreClient;
@@ -815,7 +845,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const IconeSesterce(taille: 16),
                     const SizedBox(width: 4),
                     Text(
                       '${widget.repo.profile.sesterces} HS',
@@ -1016,7 +1046,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                           shape: BoxShape.circle,
                           color: Color(0xFFD6E4F0),
                         ),
-                        child: Text(_clientActuel.emoji, style: const TextStyle(fontSize: 28)),
+                        child: medaillonClient(_clientActuel.nom, _clientActuel.emoji, 28),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -1351,7 +1381,7 @@ class _MarcheTrajanScreenState extends State<MarcheTrajanScreen> {
                   shape: BoxShape.circle,
                   color: Color(0xFFEADBFF),
                 ),
-                child: Text(mission.emoji, style: const TextStyle(fontSize: 30)),
+                child: medaillonClient(mission.nomClient, mission.emoji, 30),
               ),
               const SizedBox(width: 14),
               Expanded(

@@ -928,7 +928,7 @@
   },
   "pantheonHiddenCard": "Carte cachée",
   "tavernTitle": "TAVERNE DES DÉS",
-  "tavernPurse": "🪙 {amount} HS",
+  "tavernPurse": "{amount} HS",
   "@tavernPurse": {
     "placeholders": {
       "amount": {

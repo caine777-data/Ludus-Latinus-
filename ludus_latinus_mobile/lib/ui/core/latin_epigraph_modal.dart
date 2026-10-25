@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets.dart';
 import 'package:flutter/services.dart';
 import 'themes.dart';
 import 'particles_overlay.dart';
@@ -297,7 +298,7 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text('🪙 ', style: TextStyle(fontSize: 11)),
+                        const IconeSesterce(taille: 14),
                         Text(
                           '+${widget.epigraph.recompense} HS',
                           style: const TextStyle(

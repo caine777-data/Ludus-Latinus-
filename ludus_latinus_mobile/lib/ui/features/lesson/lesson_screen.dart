@@ -1359,7 +1359,7 @@ class _CoinRewardState extends State<_CoinReward> with SingleTickerProviderState
                       offset: Offset((i - 2) * 16.0 * (1 - y), 0),
                       child: Opacity(
                         opacity: _started ? (t < 1 ? 1.0 : 0.0) : 0.0,
-                        child: const Text('🪙', style: TextStyle(fontSize: 18)),
+                        child: const IconeSesterce(taille: 21),
                       ),
                     ),
                   );

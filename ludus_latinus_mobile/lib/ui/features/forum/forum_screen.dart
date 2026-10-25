@@ -45,7 +45,7 @@ class ForumScreen extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const IconeSesterce(taille: 16),
                     const SizedBox(width: 4),
                     Text(
                       context.l10n.accountSesterceAmount(profile.sesterces),
@@ -385,7 +385,7 @@ class ForumScreen extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('🪙 ', style: TextStyle(fontSize: 12)),
+                      const IconeSesterce(taille: 15),
                       Text(
                         context.l10n.forumCost(monument.cout),
                         style: const TextStyle(

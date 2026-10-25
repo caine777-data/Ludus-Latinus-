@@ -1276,7 +1276,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String tavernPurse(int amount) {
-    return '🪙 $amount HS';
+    return '$amount HS';
   }
 
   @override

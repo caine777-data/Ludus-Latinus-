@@ -382,7 +382,7 @@ $texteChiffre
             const SizedBox(height: 12),
             Row(
               children: [
-                const Text('🪙', style: TextStyle(fontSize: 16)),
+                const IconeSesterce(taille: 19),
                 const SizedBox(width: 6),
                 Flexible(
                   child: Text(
@@ -440,7 +440,7 @@ $texteChiffre
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('🪙', style: TextStyle(fontSize: 13)),
+                    const IconeSesterce(taille: 16),
                     const SizedBox(width: 4),
                     Text(
                       '${widget.repo.profile.sesterces} HS',

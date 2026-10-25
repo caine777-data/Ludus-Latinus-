@@ -14,6 +14,14 @@ ICONES = {
     "icone_epigraphie": 192,
 }
 
+# Icônes posées dans le texte (sesterces, série, boutique : audit E4 et E8),
+# 12 à 24 points à l'écran : cadrage serré, sans la marge du médaillon.
+ICONES_SERREES = {
+    "icone_sesterce": 96,
+    "icone_flamme": 96,
+    "icone_bourse": 96,
+}
+
 # Les icônes s'affichent dans un médaillon rond : le sujet doit tenir dans le
 # cercle, sinon les coins (ici le manche de la loupe) sont coupés.
 MARGE_CERCLE = 1.30
@@ -27,12 +35,20 @@ def dans_le_cercle(im):
 
 
 def main():
-    for nom, taille in ICONES.items():
+    for nom, taille in {**ICONES, **ICONES_SERREES}.items():
         src = SOURCE / f"{nom}.jpg"
         if not src.exists():
             print(f"[MANQUE] {nom}")
             continue
-        img = dans_le_cercle(recadrer(detourer(Image.open(src))))
+        img = recadrer(detourer(Image.open(src)))
+        if nom in ICONES:
+            img = dans_le_cercle(img)
+        else:
+            # Carré transparent autour du sujet, pour qu'il ne soit pas déformé.
+            cote = max(img.size)
+            carre = Image.new("RGBA", (cote, cote), (0, 0, 0, 0))
+            carre.paste(img, ((cote - img.width) // 2, (cote - img.height) // 2))
+            img = carre
         img = alleger(img.resize((taille, taille), Image.LANCZOS))
         img.save(DEST / f"{nom}.png", optimize=True)
         print(f"[OK] {nom}.png  ({(DEST / f'{nom}.png').stat().st_size // 1024} Ko)")

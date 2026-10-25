@@ -538,3 +538,37 @@ class FondDeJeu extends StatelessWidget {
         child: child,
       );
 }
+
+/// Pièce de sesterce dessinée, à la place de l'emoji 🪙 dont le rendu change
+/// d'un téléphone à l'autre (audit E8). [taille] en points.
+class IconeSesterce extends StatelessWidget {
+  final double taille;
+
+  const IconeSesterce({super.key, this.taille = 16});
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+        'assets/images/icone_sesterce.png',
+        width: taille,
+        height: taille,
+        excludeFromSemantics: true,
+        errorBuilder: (_, __, ___) => Text('🪙', style: TextStyle(fontSize: taille * 0.8)),
+      );
+}
+
+/// Bourse de cuir : l'entrée de la boutique (audit E4), à la place des sacs
+/// de magasin d'Android.
+class IconeBourse extends StatelessWidget {
+  final double taille;
+
+  const IconeBourse({super.key, this.taille = 16});
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+        'assets/images/icone_bourse.png',
+        width: taille,
+        height: taille,
+        excludeFromSemantics: true,
+        errorBuilder: (_, __, ___) => Icon(Icons.shopping_bag_outlined, size: taille),
+      );
+}

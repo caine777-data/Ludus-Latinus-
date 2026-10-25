@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(width: 3),
-                  const Icon(Icons.shopping_bag_outlined, size: 12, color: Color(0xFF7A5901)),
+                  const IconeBourse(taille: 15),
                 ],
               ),
             ),

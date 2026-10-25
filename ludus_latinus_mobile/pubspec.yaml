@@ -48,6 +48,7 @@ flutter:
     - assets/images/taverne/
     - assets/images/mot_du_jour/
     - assets/images/cesar/
+    - assets/images/marche/
     - assets/images/cas/
     - assets/images/epigraphie/
     - assets/images/studio/

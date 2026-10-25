@@ -2234,7 +2234,7 @@ abstract class AppLocalizations {
   /// No description provided for @tavernPurse.
   ///
   /// In fr, this message translates to:
-  /// **'🪙 {amount} HS'**
+  /// **'{amount} HS'**
   String tavernPurse(int amount);
 
   /// No description provided for @tavernGaius.

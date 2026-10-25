@@ -182,7 +182,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 },
               ),
               IconButton(
-                icon: const Icon(Icons.shopping_bag_outlined, color: RomanColors.imperialPurple, size: 24),
+                icon: const IconeBourse(taille: 26),
                 tooltip: context.l10n.accountTooltipShop,
                 onPressed: () => BoutiqueModal.show(context, repo: widget.repo),
               ),
@@ -376,7 +376,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               side: const BorderSide(color: RomanColors.imperialGold, width: 1),
                             ),
                           ),
-                          icon: const Icon(Icons.shopping_bag_outlined, size: 16, color: RomanColors.goldLight),
+                          icon: const IconeBourse(taille: 18),
                           label: Text(
                             context.l10n.accountWardrobeButton,
                             style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
