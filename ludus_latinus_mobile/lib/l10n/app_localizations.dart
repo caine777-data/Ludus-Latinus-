@@ -3268,7 +3268,7 @@ abstract class AppLocalizations {
   /// No description provided for @lupulusBienvenue.
   ///
   /// In fr, this message translates to:
-  /// **'« Salve {nom} ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t\'attend. »'**
+  /// **'« Salve {nom} ! Bienvenue à Rome. Touche le bouton Avancer sur la route : ta première leçon t\'attend. »'**
   String lupulusBienvenue(String nom);
 
   /// No description provided for @lupulusObjectifAtteint.

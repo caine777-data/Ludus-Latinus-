@@ -1460,7 +1460,7 @@
   "a11yStruck": "éliminée",
   "a11yCorrect": "Bonne réponse",
   "a11yWrong": "Mauvaise réponse",
-  "lupulusBienvenue": "« Salve {nom} ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t'attend. »",
+  "lupulusBienvenue": "« Salve {nom} ! Bienvenue à Rome. Touche le bouton Avancer sur la route : ta première leçon t'attend. »",
   "@lupulusBienvenue": {
     "placeholders": {
       "nom": {

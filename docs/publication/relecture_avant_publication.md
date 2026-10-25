@@ -60,7 +60,7 @@ Ludus Latinus est édité par Icare & Dédale.
 
 | Moment | Phrase |
 |---|---|
-| Premier jour, aucune leçon faite | « Salve {nom} ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t'attend. » |
+| Premier jour, aucune leçon faite | « Salve {nom} ! Bienvenue à Rome. Touche le bouton Avancer sur la route : ta première leçon t'attend. » |
 | Objectif du jour atteint | « Optime, {nom} ! Ton objectif du jour est atteint. Un tour au Ludi pour fêter ça ? » |
 | Objectif du jour pas encore atteint | « Bene, {nom} ! Encore un petit effort et ton objectif du jour sera atteint. » |
 | Série de 2 jours ou plus, rien fait aujourd'hui | « Ta série dure depuis {serie} jours, {nom} : une leçon aujourd'hui pour la garder ! » |

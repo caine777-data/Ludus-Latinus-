@@ -347,7 +347,7 @@ Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
   (`deblocagesAAnnoncer`, profil `rang_annonce` / `jeux_annonces`, relevé
   silencieux pour une ancienne sauvegarde ; `views/annonce_deblocage.dart`,
   test `deblocages_test`) ; Lupulus selon le moment
-  (`views/conseil_lupulus.dart`, 9 phrases à relire par Cédric) ;
+  (`views/conseil_lupulus.dart`, 9 phrases validées par Cédric le 25/10/2026) ;
   contrastes (gris en black54, étoiles en goldDark) ; mode « Lecture confort »
   (profil `lecture_confort`, `RomanTheme.confort`, Paramètres > Affichage)
   avec la police Atkinson Hyperlegible (Braille Institute, licence OFL dans
@@ -1226,3 +1226,5 @@ gain et messages inexistants dans le code). Avant de committer, lance
 `ls scratch/tNN_*` et vérifie que chaque nom cité y figure. Si une étape n'a
 pas pu être faite, écris-le : un compte rendu incomplet et vrai vaut mieux
 qu'un compte rendu complet et faux.
+
+- **Relecture avant publication validée par Cédric (25/10/2026)** : fiche du Store, 9 phrases de Lupulus (bienvenue corrigée : « Touche le bouton Avancer sur la route »), 11 cartes nouvelles de l'album, tableau du programme. Document : `docs/publication/relecture_avant_publication.md` (généré par `scratch/relecture.py`). Reste la relecture du programme par un professeur de latin, que Cédric mène, et son feu vert pour publier.

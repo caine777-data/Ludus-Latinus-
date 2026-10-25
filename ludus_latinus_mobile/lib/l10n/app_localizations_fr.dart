@@ -1911,7 +1911,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String lupulusBienvenue(String nom) {
-    return '« Salve $nom ! Bienvenue à Rome. Touche « Avancer sur la route » : ta première leçon t\'attend. »';
+    return '« Salve $nom ! Bienvenue à Rome. Touche le bouton Avancer sur la route : ta première leçon t\'attend. »';
   }
 
   @override
