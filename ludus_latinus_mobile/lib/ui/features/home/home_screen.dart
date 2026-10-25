@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('🔥', style: TextStyle(fontSize: 12)),
+                const IconeFlamme(taille: 15),
                 const SizedBox(width: 3),
                 Text(
                   context.l10n.accountDaysShort(profile.currentStreak()),

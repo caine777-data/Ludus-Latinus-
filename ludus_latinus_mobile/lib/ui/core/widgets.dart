@@ -572,3 +572,19 @@ class IconeBourse extends StatelessWidget {
         errorBuilder: (_, __, ___) => Icon(Icons.shopping_bag_outlined, size: taille),
       );
 }
+
+/// Flamme de la série de jours (audit E8), à la place de l'emoji 🔥.
+class IconeFlamme extends StatelessWidget {
+  final double taille;
+
+  const IconeFlamme({super.key, this.taille = 16});
+
+  @override
+  Widget build(BuildContext context) => Image.asset(
+        'assets/images/icone_flamme.png',
+        width: taille,
+        height: taille,
+        excludeFromSemantics: true,
+        errorBuilder: (_, __, ___) => Text('🔥', style: TextStyle(fontSize: taille * 0.8)),
+      );
+}

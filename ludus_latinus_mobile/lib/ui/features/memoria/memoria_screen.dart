@@ -458,7 +458,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('🔥', style: TextStyle(fontSize: 16)),
+                    const IconeFlamme(taille: 19),
                     const SizedBox(width: 6),
                     Text(
                       _streak >= 5 ? context.l10n.memoriaFurorMax : context.l10n.memoriaFuror,
