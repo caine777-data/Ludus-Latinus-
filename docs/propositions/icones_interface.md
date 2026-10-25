@@ -42,3 +42,15 @@ Fichier : `icone_bourse.jpg`
 ```
 Une bourse romaine en cuir brun fermée par un cordon doré, bien rebondie, avec deux pièces d'or qui dépassent de l'ouverture. Formes simples et lisibles même en très petit. Objet seul, centré, avec une large marge tout autour. Fond vert incrustation uni (#00FF00), sans ombre portée sur le fond. Rendu 3D doux et brillant, façon icône d'application. Format carré 1:1. Aucun texte, aucune lettre, aucun chiffre.
 ```
+
+### 2 bis. La flamme seule (à refaire)
+
+La lampe à huile générée le 25/10 est large et plate : réduite à 16 points,
+la flamme n'y est plus qu'un point et la lampe passe pour une théière. Il
+faut une flamme seule, qui remplit le carré.
+
+Fichier : `icone_flamme.jpg` (remplace le précédent)
+
+```
+Une seule grande flamme vive, en forme de goutte élancée, orange vif au bord et jaune doré au cœur, légèrement ondulée vers le haut, qui remplit presque toute la hauteur de l'image. Formes simples et lisibles même en très petit, contour net. Aucun objet, aucune lampe, aucun support. Objet seul, centré. Fond vert incrustation uni (#00FF00), sans ombre portée sur le fond. Rendu 3D doux et brillant, façon icône d'application. Format carré 1:1. Aucun texte, aucune lettre, aucun chiffre.
+```

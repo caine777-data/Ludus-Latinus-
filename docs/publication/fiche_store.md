@@ -66,12 +66,11 @@ Ludus Latinus est édité par Icare & Dédale.
 |---|---|---|
 | Icône | 512 × 512, PNG | prête : `store/icone_play_store_512.png` |
 | Image de présentation | 1024 × 500, JPG ou PNG | projet à valider : `store/presentation_1024x500.png` (illustration m21-03, script `scripts/assets/presentation_store.py`) |
-| Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, album, Bataille, exercice, page des professeurs, accueil (refaites le 18/10/2026, script `scripts/assets/captures_store.py`) |
-| Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` : leçon, Via Appia, duel, Ludi, album, Bataille, page des professeurs, accueil (refaites le 18/10/2026 : capture 2560 × 1600 recadrée, barre d'état et barre de gestes retirées) |
+| Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, Paires éclair, Mot du jour, album, Bataille, page des professeurs (refaites le 25/10/2026, script `scripts/assets/captures_store.py`) |
+| Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` : leçon, Via Appia, duel, Ludi, Paires éclair, album, Bataille, page des professeurs (refaites le 25/10/2026 : capture 2560 × 1600 recadrée, barre d'état et barre de gestes retirées) |
 
 ## À revoir avant la mise en production
 
 - Si l'Édition complète est vendue, l'indiquer dans la description, conformément au modèle décidé (voir `AGENTS.md`, « Décisions de Cédric ») : « Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque tout le reste, en un seul achat, sans abonnement. » Google exige que les achats intégrés soient signalés. Recompter alors la partie gratuite sur le dataset du moment (119 leçons au 18/10, et non plus 113).
 - Compte développeur créé le 22/10/2026 (compte personnel, nom public Icare & Dédale, nom légal affiché par Google : Cédric Monna, France). La fiche ne peut être créée qu'après la validation d'identité par Google.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
-- Captures à refaire (téléphone et tablette) une fois les icônes sesterce, flamme et bourse intégrées (audit E4, E8), pour montrer Paires éclair, le Mot du jour et la Taverne illustrée.
