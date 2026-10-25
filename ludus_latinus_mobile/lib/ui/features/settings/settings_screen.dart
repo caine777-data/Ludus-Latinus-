@@ -4,6 +4,7 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/cinematic_player.dart';
 import 'about_screen.dart';
+import 'choix_profil_screen.dart';
 import 'professeurs_screen.dart';
 import '../../core/themes.dart';
 import '../../core/widgets.dart';
@@ -47,6 +48,28 @@ class SettingsScreen extends StatelessWidget {
                   repo.updateProfileName(prenom.isEmpty ? profile.nomHeros : prenom, genre),
             ),
           ),
+          const SizedBox(height: 22),
+          _Titre(context.l10n.profilesSection),
+          _Reglage(
+            icone: Icons.people_alt_outlined,
+            titre: context.l10n.profilesSwitch,
+            sousTitre: repo.nombreDeProfils > 1
+                ? context.l10n.profilesCount(repo.nombreDeProfils)
+                : context.l10n.profilesAddHint,
+            onTap: () async {
+              final change = await ChoixProfilScreen.montrer(context, repo, auDemarrage: false);
+              // Autre élève : retour à l'accueil, où il retrouve sa progression
+              // (et sa première leçon s'il vient d'être créé).
+              if (change && context.mounted) Navigator.of(context).popUntil((r) => r.isFirst);
+            },
+          ),
+          if (repo.nombreDeProfils > 1)
+            _Reglage(
+              icone: Icons.person_remove_outlined,
+              titre: context.l10n.profilesDelete,
+              sousTitre: profile.nomHeros,
+              onTap: () => _supprimerProfil(context),
+            ),
           const SizedBox(height: 22),
           _Titre(context.l10n.settingsReminderSection),
           _Bloc(child: ReglagesRappelEtObjectif(repo: repo)),
@@ -114,6 +137,32 @@ class SettingsScreen extends StatelessWidget {
         ],
       )),
     );
+  }
+}
+
+extension on SettingsScreen {
+  /// Suppression de l'élève actif, après confirmation par son prénom : on ne
+  /// perd pas une année de latin d'un toucher malheureux.
+  Future<void> _supprimerProfil(BuildContext context) async {
+    final prenom = repo.profile.nomHeros;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(ctx.l10n.profilesDeleteTitle(prenom)),
+        content: Text(ctx.l10n.profilesDeleteBody(prenom)),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(ctx.l10n.commonCancel)),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: RomanColors.terracotta),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: Text(ctx.l10n.profilesDeleteConfirm),
+          ),
+        ],
+      ),
+    );
+    if (ok != true) return;
+    await repo.supprimerProfil(repo.storageService.idActif);
+    if (context.mounted) Navigator.of(context).popUntil((r) => r.isFirst);
   }
 }
 

@@ -1684,5 +1684,47 @@
   "wordNone": "Termine ta première leçon pour avoir un mot à deviner.",
   "a11yDelete": "Effacer",
   "bataLongPress": "Appuie longtemps sur une carte pour la voir en grand.",
-  "bataSeeCard": "voir la carte en grand"
+  "bataSeeCard": "voir la carte en grand",
+  "profilesSection": "Élèves",
+  "profilesSwitch": "Changer d'élève",
+  "profilesCount": "{n} élèves sur cet appareil",
+  "@profilesCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profilesAddHint": "Ajouter un frère, une sœur, un camarade",
+  "profilesDelete": "Supprimer ce profil",
+  "profilesDeleteTitle": "Supprimer le profil de {prenom} ?",
+  "@profilesDeleteTitle": {
+    "placeholders": {
+      "prenom": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesDeleteBody": "Toute la progression de {prenom} sera effacée de cet appareil : leçons, sesterces, album. Pense à exporter sa sauvegarde avant si tu veux la garder.",
+  "@profilesDeleteBody": {
+    "placeholders": {
+      "prenom": {
+        "type": "String"
+      }
+    }
+  },
+  "profilesDeleteConfirm": "Supprimer",
+  "profilesWho": "Qui joue ?",
+  "profilesNew": "Nouvel élève",
+  "profilesFull": "4 élèves au plus sur un appareil.",
+  "profilesLessons": "{n} leçons",
+  "@profilesLessons": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "profilesNewHero": "Nouveau héros",
+  "commonCancel": "Annuler"
 }

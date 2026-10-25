@@ -28,6 +28,7 @@ import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
 import '../settings/hero_creation_screen.dart';
+import '../settings/choix_profil_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
@@ -65,6 +66,18 @@ class _HomeScreenState extends State<HomeScreen> {
   void _verifierAnnonceAlbum() {
     if (_annonceEnCours || !mounted) return;
     if (ModalRoute.of(context)?.isCurrent != true) return;
+    // Nouvel élève ajouté (« Qui joue ? ») : sa première leçon s'ouvre dès
+    // que l'accueil est à l'écran, comme au tout premier lancement.
+    if (widget.repo.premiereLeconAOuvrir) {
+      widget.repo.premiereLeconAOuvrir = false;
+      final premiere = widget.repo.worlds.firstOrNull?.lessons.firstOrNull;
+      if (premiere != null && widget.repo.profile.completedLessons.isEmpty) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: premiere)),
+        );
+        return;
+      }
+    }
     // Objectif du jour atteint : une fête discrète, une seule fois.
     if (widget.repo.objectifAAnnoncer) {
       widget.repo.objectifAAnnoncer = false;
@@ -123,6 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
         // Ordre : animation du studio, puis intro, puis choix du héros.
         // « Passer » sur le studio n'enchaîne que sur l'intro, il ne saute pas les deux.
         await RomanCinematicOverlay.showStudioPuisIntro(context);
+        // Plusieurs élèves sur l'appareil : on demande qui joue.
+        if (!mounted) return;
+        if (widget.repo.nombreDeProfils > 1) {
+          await ChoixProfilScreen.montrer(context, widget.repo, auDemarrage: true);
+        }
         // Premier lancement : l'élève choisit son héros juste après l'intro.
         if (!mounted) return;
         final heroCree = await HeroCreationScreen.showIfNeeded(context, widget.repo);
@@ -518,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Row(
                       children: [
-                        const Text('🛍️', style: TextStyle(fontSize: 24)),
+                        const IconeBourse(taille: 30),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(

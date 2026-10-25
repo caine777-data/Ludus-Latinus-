@@ -2129,4 +2129,54 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get bataSeeCard => 'voir la carte en grand';
+
+  @override
+  String get profilesSection => 'Élèves';
+
+  @override
+  String get profilesSwitch => 'Changer d\'élève';
+
+  @override
+  String profilesCount(int n) {
+    return '$n élèves sur cet appareil';
+  }
+
+  @override
+  String get profilesAddHint => 'Ajouter un frère, une sœur, un camarade';
+
+  @override
+  String get profilesDelete => 'Supprimer ce profil';
+
+  @override
+  String profilesDeleteTitle(String prenom) {
+    return 'Supprimer le profil de $prenom ?';
+  }
+
+  @override
+  String profilesDeleteBody(String prenom) {
+    return 'Toute la progression de $prenom sera effacée de cet appareil : leçons, sesterces, album. Pense à exporter sa sauvegarde avant si tu veux la garder.';
+  }
+
+  @override
+  String get profilesDeleteConfirm => 'Supprimer';
+
+  @override
+  String get profilesWho => 'Qui joue ?';
+
+  @override
+  String get profilesNew => 'Nouvel élève';
+
+  @override
+  String get profilesFull => '4 élèves au plus sur un appareil.';
+
+  @override
+  String profilesLessons(int n) {
+    return '$n leçons';
+  }
+
+  @override
+  String get profilesNewHero => 'Nouveau héros';
+
+  @override
+  String get commonCancel => 'Annuler';
 }

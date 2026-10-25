@@ -31,7 +31,9 @@ void main() {
 
     final cible = StorageService();
     expect(cible.importProfileJson(contenu), isTrue);
-    expect(json.encode(cible.profile.toJson()), json.encode(source.profile.toJson()));
+    // L'import remplit le profil de l'élève actif : seul l'identifiant change.
+    expect(cible.profile.id, cible.idActif);
+    expect(json.encode(cible.profile.toJson()), json.encode((source.profile..id = cible.idActif).toJson()));
   });
 
   test("l'export est enveloppé : format, version, date, profil", () {

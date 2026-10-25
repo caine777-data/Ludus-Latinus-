@@ -3600,6 +3600,90 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'voir la carte en grand'**
   String get bataSeeCard;
+
+  /// No description provided for @profilesSection.
+  ///
+  /// In fr, this message translates to:
+  /// **'Élèves'**
+  String get profilesSection;
+
+  /// No description provided for @profilesSwitch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer d\'élève'**
+  String get profilesSwitch;
+
+  /// No description provided for @profilesCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} élèves sur cet appareil'**
+  String profilesCount(int n);
+
+  /// No description provided for @profilesAddHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter un frère, une sœur, un camarade'**
+  String get profilesAddHint;
+
+  /// No description provided for @profilesDelete.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer ce profil'**
+  String get profilesDelete;
+
+  /// No description provided for @profilesDeleteTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le profil de {prenom} ?'**
+  String profilesDeleteTitle(String prenom);
+
+  /// No description provided for @profilesDeleteBody.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toute la progression de {prenom} sera effacée de cet appareil : leçons, sesterces, album. Pense à exporter sa sauvegarde avant si tu veux la garder.'**
+  String profilesDeleteBody(String prenom);
+
+  /// No description provided for @profilesDeleteConfirm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer'**
+  String get profilesDeleteConfirm;
+
+  /// No description provided for @profilesWho.
+  ///
+  /// In fr, this message translates to:
+  /// **'Qui joue ?'**
+  String get profilesWho;
+
+  /// No description provided for @profilesNew.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouvel élève'**
+  String get profilesNew;
+
+  /// No description provided for @profilesFull.
+  ///
+  /// In fr, this message translates to:
+  /// **'4 élèves au plus sur un appareil.'**
+  String get profilesFull;
+
+  /// No description provided for @profilesLessons.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} leçons'**
+  String profilesLessons(int n);
+
+  /// No description provided for @profilesNewHero.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau héros'**
+  String get profilesNewHero;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get commonCancel;
 }
 
 class _AppLocalizationsDelegate

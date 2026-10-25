@@ -387,6 +387,49 @@ class GameRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ------------------------------------------------------------------
+  // Élèves de l'appareil (multiprofil)
+  // ------------------------------------------------------------------
+
+  int get nombreDeProfils => storageService.idsProfils.length;
+  bool get peutAjouterProfil => nombreDeProfils < StorageService.profilsMax;
+
+  /// Tous les élèves de l'appareil, pour l'écran « Qui joue ? ».
+  Future<List<UserProfile>> profilsDeLAppareil() => storageService.chargerTousLesProfils();
+
+  /// Vrai quand un nouvel élève vient de créer son héros : l'accueil ouvre
+  /// alors sa première leçon dès qu'il est à l'écran.
+  bool premiereLeconAOuvrir = false;
+
+  Future<void> changerDeProfil(String id) async {
+    await storageService.changerDeProfil(id);
+    _apresChangementDeProfil();
+  }
+
+  /// Ajoute un élève et le rend actif ; false s'il y en a déjà le maximum.
+  Future<bool> ajouterProfil() async {
+    final ok = await storageService.creerProfil();
+    if (ok) _apresChangementDeProfil();
+    return ok;
+  }
+
+  Future<bool> supprimerProfil(String id) async {
+    final ok = await storageService.supprimerProfil(id);
+    if (ok) _apresChangementDeProfil();
+    return ok;
+  }
+
+  /// Ce qui attendait d'être annoncé appartenait à l'élève précédent ; le
+  /// rappel du jour, lui, suit l'élève actif (son prénom, sa série).
+  void _apresChangementDeProfil() {
+    objectifAAnnoncer = false;
+    primeObjectifAnnoncee = 0;
+    cartesAAnnoncer.clear();
+    premiereLeconAOuvrir = false;
+    replanifierRappels();
+    notifyListeners();
+  }
+
   /// Sesterces gagnés à la première réussite d'une leçon, selon les étoiles.
   static int rewardForStars(int stars) => const {3: 10, 2: 7, 1: 4}[stars.clamp(1, 3)]!;
 
