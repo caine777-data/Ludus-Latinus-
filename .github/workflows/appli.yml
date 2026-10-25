@@ -154,8 +154,10 @@ jobs:
             echo "## Android — build ${{ github.run_number }}"
             echo ""
             echo "- Signature : ${SIGNATURE:-inconnue (étape non atteinte)}"
-            [ -f ../LudusLatinus.apk ] && echo "- LudusLatinus.apk : $(du -h ../LudusLatinus.apk | cut -f1)"
-            [ -f ../LudusLatinus-PlayStore.aab ] && echo "- LudusLatinus-PlayStore.aab : $(du -h ../LudusLatinus-PlayStore.aab | cut -f1)"
+            # « if » plutôt que « [ -f ] && » : un fichier absent (build arrêté
+            # plus tôt) ne doit pas faire échouer le résumé lui-même.
+            if [ -f ../LudusLatinus.apk ]; then echo "- LudusLatinus.apk : $(du -h ../LudusLatinus.apk | cut -f1)"; fi
+            if [ -f ../LudusLatinus-PlayStore.aab ]; then echo "- LudusLatinus-PlayStore.aab : $(du -h ../LudusLatinus-PlayStore.aab | cut -f1)"; fi
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Effacer la clé

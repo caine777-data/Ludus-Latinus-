@@ -7,7 +7,7 @@ import '../../core/particles_overlay.dart';
 import '../../core/latin_pronunciation_modal.dart';
 import '../../../data/models/srs_card.dart';
 import '../../../data/repositories/game_repository.dart';
-import '../../../data/services/audio_service.dart';
+import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
 
 enum NiveauMemoria {
@@ -103,13 +103,20 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
         .where((c) => selectedNiveau.matches(widget.repo.classeDuMonde(c.monde)))
         .toList();
 
-    // Trie par priorité didactique : les cartes à réviser (isDue) en tête de file
+    // Trie par priorité didactique : les cartes à réviser (isDue) en tête de file.
+    // Les clés sont figées avant le tri : une carte jamais révisée reçoit
+    // « maintenant » comme date à chaque lecture, et une comparaison qui
+    // change en cours de tri faisait planter le tri de Dart (RangeError vu
+    // sur la machine d'intégration continue le 25/10/2026).
+    final cles = {
+      for (final c in cards) c: widget.repo.getSrsProgress(_cardKey(c)),
+    };
+    final aReviser = {for (final e in cles.entries) e.key: e.value.isDue};
     cards.sort((a, b) {
-      final progA = widget.repo.getSrsProgress(_cardKey(a));
-      final progB = widget.repo.getSrsProgress(_cardKey(b));
-      if (progA.isDue && !progB.isDue) return -1;
-      if (!progA.isDue && progB.isDue) return 1;
-      return progA.nextReviewDate.compareTo(progB.nextReviewDate);
+      final dueA = aReviser[a]!;
+      final dueB = aReviser[b]!;
+      if (dueA != dueB) return dueA ? -1 : 1;
+      return cles[a]!.nextReviewDate.compareTo(cles[b]!.nextReviewDate);
     });
 
     return cards;
