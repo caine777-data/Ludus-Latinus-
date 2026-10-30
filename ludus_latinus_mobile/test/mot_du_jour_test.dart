@@ -79,7 +79,8 @@ void main() {
     expect(repo.proposerMotDuJour(MotDuJour.forme(mot)), GameRepository.gainMotDuJour);
     expect(repo.motDuJourTermine, isTrue);
     expect(repo.proposerMotDuJour(MotDuJour.forme(mot)), 0);
-    expect(repo.profile.sesterces, GameRepository.gainMotDuJour);
+    // Le premier mot trouvé donne aussi la carte de Janus, et sa prime.
+    expect(repo.profile.sesterces, GameRepository.gainMotDuJour + repo.sesterceDeLaCarte(repo.carteAlbum('div_janus')!));
   });
 
   testWidgets('Taper un mot au clavier puis valider remplit une rangée', (tester) async {

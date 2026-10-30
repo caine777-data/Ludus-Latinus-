@@ -80,9 +80,11 @@ class TestDatasetMobile(unittest.TestCase):
     def test_album_heros_et_creatures(self):
         album = self.data["album"]
         ids = {c["id"] for c in album["cartes"]}
-        self.assertEqual(len(ids), 32)
-        # Un succès par carte, et aucune carte sans succès.
-        self.assertEqual(sorted(s["carte"] for s in album["succes"]), sorted(ids))
+        self.assertEqual(len(ids), 66)
+        # Une carte se gagne par un seul succès ou s'achète à prix fixe, jamais les deux.
+        a_vendre = {c["id"] for c in album["cartes"] if c.get("prix")}
+        self.assertEqual(len(a_vendre), 16)
+        self.assertEqual(sorted(s["carte"] for s in album["succes"]), sorted(ids - a_vendre))
         for carte in album["cartes"]:
             for cle in ("nom", "nom_latin", "rarete", "atk", "def", "citation", "traduction", "anecdote", "image"):
                 self.assertTrue(carte.get(cle), (carte["id"], cle))

@@ -260,6 +260,7 @@ class GameRepository extends ChangeNotifier {
       }
       return 0;
     }
+    if (stat.startsWith('record:')) return record(stat.split(':').last);
     switch (stat) {
       case 'lecons_reussies':
         return p.completedLessons.length;
@@ -302,10 +303,13 @@ class GameRepository extends ChangeNotifier {
 
   /// Fin d'une partie de la Bataille des Légendes : victoire payée comme une
   /// partie d'arcade, série de victoires et record. Renvoie le gain.
-  int noterBataille({required bool victoire}) {
+  /// « bataille_victoires » reste le compteur des victoires contre Crassus :
+  /// celles déjà acquises avant l'arrivée de Cléopâtre comptent pour l'album.
+  int noterBataille({required bool victoire, bool contreCleopatre = false}) {
     var gain = 0;
     if (victoire) {
-      profile.compteurs['bataille_victoires'] = (profile.compteurs['bataille_victoires'] ?? 0) + 1;
+      final compteur = contreCleopatre ? 'bataille_victoires_cleopatre' : 'bataille_victoires';
+      profile.compteurs[compteur] = (profile.compteurs[compteur] ?? 0) + 1;
       final serie = (profile.compteurs['bataille_serie'] ?? 0) + 1;
       profile.compteurs['bataille_serie'] = serie;
       if (serie > record('bataille')) profile.records['bataille'] = serie;
@@ -317,6 +321,29 @@ class GameRepository extends ChangeNotifier {
     storageService.saveProfile(profile);
     notifyListeners();
     return gain;
+  }
+
+  /// Victoires contre Crassus qui ouvrent le second adversaire.
+  static const int victoiresPourCleopatre = 5;
+
+  int get victoiresContreCrassus => profile.compteurs['bataille_victoires'] ?? 0;
+  bool get cleopatreOuverte => victoiresContreCrassus >= victoiresPourCleopatre;
+
+  /// Cartes vendues à la Taberna, de la moins chère à la plus chère.
+  List<CarteAlbum> get cartesAVendre =>
+      cartesAlbum.where((c) => c.prix != null).toList()..sort((a, b) => a.prix!.compareTo(b.prix!));
+
+  /// Achète une carte à son prix fixe. Pas de prime de sesterces : elle
+  /// rendrait une partie du prix. Renvoie false si la carte n'est pas à
+  /// vendre, déjà obtenue, ou trop chère.
+  bool acheterCarte(CarteAlbum carte) {
+    final prix = carte.prix;
+    if (prix == null || aLaCarte(carte.id) || profile.sesterces < prix) return false;
+    profile.sesterces -= prix;
+    profile.cartesAlbum.add(carte.id);
+    storageService.saveProfile(profile);
+    notifyListeners();
+    return true;
   }
 
   /// Vocabulaire des mondes déjà atteints, pour les questions des jeux.
@@ -696,7 +723,12 @@ class GameRepository extends ChangeNotifier {
     final cible = profile.motDuJour;
     if (cible == null || profile.motDuJourEssais.length >= MotDuJour.essaisMax) return 0;
     profile.motDuJourEssais.add(essai);
-    final gain = essai == cible ? payerUneFois('mot_du_jour:${_aujourdhui()}', gainMotDuJour) : 0;
+    final cle = 'mot_du_jour:${_aujourdhui()}';
+    // Compté avant le paiement : celui-ci vérifie les succès de l'album.
+    if (essai == cible && !estDejaPaye(cle)) {
+      profile.compteurs['mots_du_jour_trouves'] = (profile.compteurs['mots_du_jour_trouves'] ?? 0) + 1;
+    }
+    final gain = essai == cible ? payerUneFois(cle, gainMotDuJour) : 0;
     storageService.saveProfile(profile);
     notifyListeners();
     return gain;

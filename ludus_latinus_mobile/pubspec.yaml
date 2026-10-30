@@ -54,6 +54,7 @@ flutter:
     - assets/images/studio/
     - assets/images/lecons/
     - assets/images/album/
+    - assets/images/bataille/
     - assets/audio/
     - assets/animations/
     - assets/images/animated/

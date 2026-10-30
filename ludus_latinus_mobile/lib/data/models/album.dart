@@ -1,4 +1,5 @@
-/// Album « Héros et Créatures » : 32 cartes, chacune gagnée par un succès.
+/// Album « Héros et Créatures » : 66 cartes, gagnées par un succès ou achetées
+/// à prix fixe à la Taberna, sans tirage au hasard.
 /// Les données viennent du bloc `album` du dataset (content/album_mobile.py).
 library;
 
@@ -18,6 +19,9 @@ class CarteAlbum {
   final String anecdote;
   final String image;
 
+  /// Prix à la Taberna ; null pour une carte qui se gagne par un succès.
+  final int? prix;
+
   const CarteAlbum({
     required this.id,
     required this.nom,
@@ -30,6 +34,7 @@ class CarteAlbum {
     required this.traduction,
     required this.anecdote,
     required this.image,
+    this.prix,
   });
 
   factory CarteAlbum.fromJson(Map<String, dynamic> json) => CarteAlbum(
@@ -44,6 +49,7 @@ class CarteAlbum {
         traduction: json['traduction'] as String? ?? '',
         anecdote: json['anecdote'] as String? ?? '',
         image: json['image'] as String? ?? '',
+        prix: json['prix'] as int?,
       );
 }
 

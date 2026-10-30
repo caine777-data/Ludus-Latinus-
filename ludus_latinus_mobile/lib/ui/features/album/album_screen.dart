@@ -4,6 +4,8 @@ import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../../l10n/l10n.dart';
 import '../../core/themes.dart';
+import '../../core/widgets.dart';
+import '../boutique/boutique_modal.dart';
 
 /// Couleur de bordure d'une carte selon sa rareté (reprise de l'appli bureau).
 Color couleurRarete(String rarete) {
@@ -95,7 +97,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
     final obtenues = repo.profile.cartesAlbum.length;
     final sesterces = [
       for (final id in repo.profile.cartesAlbum)
-        if (repo.carteAlbum(id) != null) repo.sesterceDeLaCarte(repo.carteAlbum(id)!),
+        // Une carte achetée n'a rien rapporté.
+        if (repo.carteAlbum(id) != null && repo.carteAlbum(id)!.prix == null)
+          repo.sesterceDeLaCarte(repo.carteAlbum(id)!),
     ].fold<int>(0, (a, b) => a + b);
 
     return Scaffold(
@@ -217,6 +221,35 @@ class _TuileCarte extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 13, fontFamily: 'serif', color: RomanColors.imperialPurple)),
               Text(libelleRarete(context, carte.rarete), style: TextStyle(fontSize: 11, color: couleur)),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Carte à vendre : son prix, et le toucher mène à la Taberna.
+    if (carte.prix != null) {
+      return InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => BoutiqueModal.show(context, repo: repo, ouvrirCartes: true),
+        child: Container(
+          decoration: BoxDecoration(
+            color: RomanColors.palatinCream,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: RomanColors.imperialGold, width: 1.2),
+          ),
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Expanded(child: Center(child: IconeBourse(taille: 38))),
+              Text(carte.nom,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.black54)),
+              const SizedBox(height: 2),
+              Text(context.l10n.albumAtTaberna(carte.prix!),
+                  style: const TextStyle(fontSize: 11, color: Color(0xFF854F0B))),
             ],
           ),
         ),

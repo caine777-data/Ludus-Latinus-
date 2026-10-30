@@ -1,4 +1,4 @@
-"""Album « Héros et Créatures » de l'appli mobile : 32 cartes, chacune gagnée par un succès.
+"""Album « Héros et Créatures » de l'appli mobile : série 1 (32 cartes, chacune gagnée par un succès), plus la série 2 (content/album_serie2.py).
 
 Les cartes partent de content/cartes_data.py (celles de l'appli bureau, inchangées) :
 11 sujets qui doublaient une carte du Panthéon sont remplacés, et quelques textes
@@ -6,6 +6,7 @@ corrigés pour ne pas répéter une devise du Panthéon. Proposition de l'archit
 17/10/2026, validée sur le principe par Cédric ; les textes restent à relire.
 """
 
+from content.album_serie2 import CARTES_SERIE2, PRIX_PAR_RARETE
 from content.cartes_data import CARTES_COLLECTION
 
 # Récompense en sesterces selon la rareté de la carte.
@@ -152,6 +153,15 @@ SUCCES_ALBUM = [
 ]
 
 
+def _carte_serie2(carte):
+    """Carte de la série 2 telle que l'appli la lit : ni la scène du prompt, ni le succès."""
+    copie = {k: carte[k] for k in ("id", "nom", "nom_latin", "categorie", "rarete", "atk", "def",
+                                   "citation", "traduction", "anecdote")}
+    if carte.get("achat"):
+        copie["prix"] = PRIX_PAR_RARETE[carte["rarete"]]
+    return copie
+
+
 def _construire_cartes():
     cartes = []
     for carte in CARTES_COLLECTION:
@@ -163,9 +173,17 @@ def _construire_cartes():
             copie["traduction"] = _TRADUCTIONS[carte["id"]]
         cartes.append(copie)
     cartes.extend(_NOUVELLES)
+    cartes.extend(_carte_serie2(c) for c in CARTES_SERIE2)
     for carte in cartes:
         carte["image"] = f"assets/images/album/{carte['id']}.webp"
     return cartes
 
 
 ALBUM_CARTES = _construire_cartes()
+
+# Série 2 : ses succès s'ajoutent à la suite ; les cartes à prix fixe n'en ont pas.
+SUCCES_ALBUM.extend(
+    {"carte": c["id"], "stat": c["stat"], "seuil": c["seuil"], "texte": c["texte"]}
+    for c in CARTES_SERIE2
+    if not c.get("achat")
+)

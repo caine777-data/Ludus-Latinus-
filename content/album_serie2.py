@@ -84,8 +84,9 @@ CARTES_SERIE2 = [
                  "gouvernail : elle mène la vie des hommes où elle veut. La devise vient de Virgile.",
      "stat": "bataille_victoires", "seuil": 50, "texte": "Gagner 50 Batailles contre Crassus",
      "scene": "Fortuna, déesse souriante en longue robe dorée, tenant d'une main une corne d'abondance "
-              "d'où tombent des fruits et des pièces d'or, de l'autre un gouvernail de navire, "
-              "sur fond de ciel lumineux"},
+              "d'où tombent des fruits et des pièces d'or, de l'autre un gouvernail antique : une "
+              "longue rame de bois à large pale, tenue debout près d'elle, sans aucune roue ni barre "
+              "à roue, sur fond de ciel lumineux"},
     # --- Gagnées contre Cléopâtre ---
     {"id": "mon_phenix", "nom": "Le Phénix", "nom_latin": "Phoenix Avis", "categorie": "monstres",
      "rarete": "rare", "atk": 84, "def": 86,

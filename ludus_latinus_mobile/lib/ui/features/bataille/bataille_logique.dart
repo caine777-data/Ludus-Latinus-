@@ -50,6 +50,30 @@ List<CarteAlbum> mainDeCrassus(List<CarteAlbum> mainJoueur, List<CarteAlbum> tou
   return main;
 }
 
+/// Adversaires de la Bataille. Cléopâtre s'ouvre après 5 victoires contre Crassus.
+enum Adversaire { crassus, cleopatre }
+
+const List<String> _raretes = ['commune', 'rare', 'epique', 'legendaire'];
+
+/// Main de Cléopâtre, plus difficile : pour chaque carte de l'élève, une carte
+/// d'une rareté au-dessus quand il en reste, sinon de même rareté.
+List<CarteAlbum> mainDeCleopatre(List<CarteAlbum> mainJoueur, List<CarteAlbum> toutes, Random alea) {
+  final prises = mainJoueur.map((c) => c.id).toSet();
+  final main = <CarteAlbum>[];
+  for (final carte in mainJoueur) {
+    final rang = _raretes.indexOf(carte.rarete);
+    final visee = _raretes[(rang + 1).clamp(0, _raretes.length - 1)];
+    var choix = toutes.where((c) => c.rarete == visee && !prises.contains(c.id)).toList();
+    if (choix.isEmpty) choix = toutes.where((c) => c.rarete == carte.rarete && !prises.contains(c.id)).toList();
+    if (choix.isEmpty) choix = toutes.where((c) => !prises.contains(c.id)).toList();
+    if (choix.isEmpty) choix = List.of(toutes);
+    final tiree = choix[alea.nextInt(choix.length)];
+    prises.add(tiree.id);
+    main.add(tiree);
+  }
+  return main;
+}
+
 /// Après une mauvaise réponse, Crassus choisit la caractéristique où son
 /// avance est la plus grande (ou son retard le plus petit).
 Caracteristique choixDeCrassus(CarteAlbum joueur, CarteAlbum crassus) {

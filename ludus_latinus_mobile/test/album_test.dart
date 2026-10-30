@@ -33,9 +33,10 @@ void main() {
     return GameRepository(dataService: data, storageService: stockage);
   }
 
-  test('L\'album a 32 cartes et un succès par carte', () {
-    expect(data.cartesAlbum.length, 32);
-    expect(data.succesAlbum.map((s) => s.carteId).toSet(), data.cartesAlbum.map((c) => c.id).toSet());
+  test('L\'album a 66 cartes : un succès par carte, sauf les 16 à acheter', () {
+    expect(data.cartesAlbum.length, 66);
+    expect(data.succesAlbum.map((s) => s.carteId).toSet(),
+        data.cartesAlbum.where((c) => c.prix == null).map((c) => c.id).toSet());
   });
 
   test('Chaque carte a son illustration dans les assets', () {

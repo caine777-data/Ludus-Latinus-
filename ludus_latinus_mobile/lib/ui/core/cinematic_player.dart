@@ -15,6 +15,7 @@ enum CinematicType {
   circusDepart,
   circusArrivee,
   batailleCrassus,
+  batailleCleopatre,
 }
 
 /// Configuration d'une courte vidéo cinématique (vidéos verticales 9:16 avec bande-son).
@@ -68,6 +69,12 @@ class CinematicConfig {
           assetPath: 'assets/cinematics/bataille_crassus.mp4',
           title: 'BATAILLE DES LÉGENDES',
           subtitle: 'Crassus, l\'homme le plus riche de Rome, te défie !',
+        );
+      case CinematicType.batailleCleopatre:
+        return const CinematicConfig(
+          assetPath: 'assets/cinematics/bataille_cleopatre.mp4',
+          title: 'BATAILLE DES LÉGENDES',
+          subtitle: 'Cléopâtre, reine d\'Égypte, te défie !',
         );
       case CinematicType.triumph:
         return CinematicConfig(
@@ -318,6 +325,10 @@ class RomanCinematicOverlay {
   /// Entrée de Crassus, l'adversaire de la Bataille des Légendes.
   static Future<void> showBatailleCrassus(BuildContext context) =>
       _show(context, CinematicConfig.forType(CinematicType.batailleCrassus));
+
+  /// Entrée de Cléopâtre, le second adversaire de la Bataille.
+  static Future<void> showBatailleCleopatre(BuildContext context) =>
+      _show(context, CinematicConfig.forType(CinematicType.batailleCleopatre));
 
   /// Triomphe : fin d'un monde de la Via Appia.
   static Future<void> showTriumph(BuildContext context, {String? subtitle}) =>

@@ -8,6 +8,8 @@ import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
 import '../../core/avatar_assets.dart';
+import '../album/album_screen.dart';
+import '../../../data/models/album.dart';
 import '../../../l10n/l10n.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
@@ -16,16 +18,21 @@ class BoutiqueModal extends StatefulWidget {
   final GameRepository repo;
   final GoodieCategory initialCategory;
 
+  /// Ouvre directement l'étal de cartes (depuis l'album).
+  final bool ouvrirCartes;
+
   const BoutiqueModal({
     super.key,
     required this.repo,
     this.initialCategory = GoodieCategory.toge,
+    this.ouvrirCartes = false,
   });
 
   static Future<void> show(
     BuildContext context, {
     required GameRepository repo,
     GoodieCategory initialCategory = GoodieCategory.toge,
+    bool ouvrirCartes = false,
   }) {
     HapticFeedback.mediumImpact();
     AudioService().playCardFlip();
@@ -36,6 +43,7 @@ class BoutiqueModal extends StatefulWidget {
       builder: (_) => BoutiqueModal(
         repo: repo,
         initialCategory: initialCategory,
+        ouvrirCartes: ouvrirCartes,
       ),
     );
   }
@@ -46,16 +54,21 @@ class BoutiqueModal extends StatefulWidget {
 
 class _BoutiqueModalState extends State<BoutiqueModal> {
   late GoodieCategory _activeCategory;
+  late bool _voirCartes;
 
   @override
   void initState() {
     super.initState();
     _activeCategory = widget.initialCategory;
+    _voirCartes = widget.ouvrirCartes;
   }
 
   void _onCategoryChanged(GoodieCategory cat) {
     HapticFeedback.selectionClick();
-    setState(() => _activeCategory = cat);
+    setState(() {
+      _activeCategory = cat;
+      _voirCartes = false;
+    });
   }
 
   void _acheterObjet(GoodieItem item) {
@@ -98,6 +111,109 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
         ),
       );
     }
+  }
+
+  /// Achat d'une carte : elle s'ouvre en grand, pour la découvrir aussitôt.
+  void _acheterCarte(CarteAlbum carte) {
+    final solde = widget.repo.profile.sesterces;
+    if (solde < carte.prix!) {
+      HapticFeedback.vibrate();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red.shade800,
+          content: Text(
+            context.l10n.shopNotEnough(carte.prix! - solde),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+      return;
+    }
+    if (!widget.repo.acheterCarte(carte)) return;
+    HapticFeedback.heavyImpact();
+    AudioService().playPurchase();
+    RomanParticlesOverlay.show(context, type: ParticleType.laurelRain);
+    montrerCarteAlbum(context, carte);
+  }
+
+  /// Étal de cartes : on voit ce qu'on achète (image, valeurs, prix), et
+  /// on choisit. Jamais de pochette surprise : décision de Cédric, et Google
+  /// surveille ces mécaniques dans les applis pour enfants.
+  Widget _buildEtalCartes() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(context.l10n.shopCardsHint, style: const TextStyle(fontSize: 13, color: Colors.black54)),
+        for (final carte in widget.repo.cartesAVendre) ...[
+          const SizedBox(height: 10),
+          _buildCarteAVendre(carte),
+        ],
+      ],
+    );
+  }
+
+  Widget _buildCarteAVendre(CarteAlbum carte) {
+    final possedee = widget.repo.aLaCarte(carte.id);
+    final couleur = couleurRarete(carte.rarete);
+    return Material(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: couleur, width: 1.5),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () => montrerCarteAlbum(context, carte),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(width: 60, height: 80, child: ImageCarteAlbum(carte: carte, tailleIcone: 26)),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(carte.nom,
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple)),
+                    Text(libelleRarete(context, carte.rarete), style: TextStyle(fontSize: 12, color: couleur)),
+                    Text('${context.l10n.albumAttack} ${carte.attaque} · ${context.l10n.albumDefense} ${carte.defense}',
+                        style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              if (possedee)
+                Text(context.l10n.shopCardOwned,
+                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: RomanColors.laurelGreen))
+              else
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: widget.repo.profile.sesterces >= carte.prix!
+                        ? RomanColors.imperialPurple
+                        : Colors.black38,
+                    minimumSize: const Size(0, 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                  ),
+                  onPressed: () => _acheterCarte(carte),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const IconeSesterce(taille: 16),
+                      const SizedBox(width: 4),
+                      Text(context.l10n.shopPrice(carte.prix!),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void _equiperObjet(GoodieItem item) {
@@ -269,7 +385,9 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                         // 4. Grille des Articles de la Catégorie
                         Padding(
                           padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-                          child: Column(
+                          child: _voirCartes
+                              ? _buildEtalCartes()
+                              : Column(
                             children: [
                               for (var index = 0; index < itemsFiltered.length; index++) ...[
                                 if (index > 0) const SizedBox(height: 10),
@@ -456,8 +574,30 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: GoodieCategory.values.map((cat) {
-            final isSelected = _activeCategory == cat;
+          children: [
+            // L'étal de cartes en premier : au bout de la rangée, il était hors écran.
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: ChoiceChip(
+              label: Text(context.l10n.shopCardsTab),
+              selected: _voirCartes,
+              selectedColor: RomanColors.imperialPurple,
+              backgroundColor: Colors.white,
+              labelStyle: TextStyle(
+                fontFamily: RomanFonts.body,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: _voirCartes ? RomanColors.goldLight : RomanColors.charcoal,
+              ),
+              side: BorderSide(
+                color: _voirCartes ? RomanColors.imperialGold : RomanColors.marbleBorder,
+                width: _voirCartes ? 1.2 : 1.0,
+              ),
+              onSelected: (_) => setState(() => _voirCartes = true),
+            ),
+            ),
+            ...GoodieCategory.values.map((cat) {
+            final isSelected = !_voirCartes && _activeCategory == cat;
             return Padding(
               padding: const EdgeInsets.only(right: 8),
               child: ChoiceChip(
@@ -478,7 +618,8 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
                 onSelected: (_) => _onCategoryChanged(cat),
               ),
             );
-          }).toList(),
+          }),
+          ],
         ),
       ),
     );

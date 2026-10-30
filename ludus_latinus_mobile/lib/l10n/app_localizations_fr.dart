@@ -1736,15 +1736,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Crassus le collectionneur, l\'homme le plus riche de Rome, te défie avec ses propres cartes.';
 
   @override
-  String get bataRules =>
-      'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : Crassus choisit. Le premier à 3 manches gagne.';
+  String bataRules(String adversaire) {
+    return 'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : $adversaire choisit. Le premier à 3 manches gagne.';
+  }
 
   @override
   String get bataChooseHand => 'Choisis les 5 cartes de ta main';
 
   @override
-  String get bataLoanInfo =>
-      'Tu n\'as pas encore 5 cartes : Crassus te prête les autres. Gagne des succès pour jouer avec les tiennes.';
+  String bataLoanInfo(String adversaire) {
+    return 'Tu n\'as pas encore 5 cartes : $adversaire te prête les autres. Gagne des succès pour jouer avec les tiennes.';
+  }
 
   @override
   String get bataLoan => 'PRÊT';
@@ -1783,10 +1785,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bataSeeResult => 'Voir le résultat';
 
   @override
-  String get bataVictory => 'Victoire ! Crassus s\'incline.';
+  String bataVictory(String adversaire) {
+    return 'Victoire ! $adversaire s\'incline.';
+  }
 
   @override
-  String get bataDefeat => 'Crassus l\'emporte cette fois.';
+  String bataDefeat(String adversaire) {
+    return '$adversaire l\'emporte cette fois.';
+  }
 
   @override
   String get bataDraw => 'Match nul.';
@@ -1826,8 +1832,8 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String bataWrong(String reponse) {
-    return 'Mauvaise réponse : la bonne était « $reponse ». Crassus choisit.';
+  String bataWrong(String reponse, String adversaire) {
+    return 'Mauvaise réponse : la bonne était « $reponse ». $adversaire choisit.';
   }
 
   @override
@@ -2179,4 +2185,35 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get commonCancel => 'Annuler';
+
+  @override
+  String get bataCleopatra => 'Cléopâtre';
+
+  @override
+  String get bataIntroCleopatra =>
+      'Cléopâtre, reine d\'Égypte, joue plus fin que Crassus : à chacune de tes cartes, elle en oppose une plus rare.';
+
+  @override
+  String bataLockedWins(int n, int total) {
+    return '$n / $total victoires contre Crassus';
+  }
+
+  @override
+  String get bataCleopatraOpens =>
+      'Cléopâtre a vu ta victoire. Elle te défie à son tour : choisis-la avant ta prochaine partie.';
+
+  @override
+  String albumAtTaberna(int prix) {
+    return 'À la Taberna : $prix HS';
+  }
+
+  @override
+  String get shopCardsTab => '🃏 Cartes';
+
+  @override
+  String get shopCardsHint =>
+      'Choisis ta carte : elle rejoint ton album et ta main à la Bataille.';
+
+  @override
+  String get shopCardOwned => 'Dans l\'album';
 }

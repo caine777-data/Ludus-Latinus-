@@ -44,6 +44,16 @@ class _BatailleScreenState extends State<BatailleScreen> {
   int _resultatManche = 0;
   int _gain = 0;
 
+  Adversaire _adversaire = Adversaire.crassus;
+  bool _entreeCleopatreVue = false;
+
+  /// Vrai à la fin de la partie qui vient d'ouvrir Cléopâtre : on l'annonce.
+  bool _cleopatreVientDOuvrir = false;
+
+  bool get _contreCleopatre => _adversaire == Adversaire.cleopatre;
+  String _nomAdversaire(BuildContext context) =>
+      _contreCleopatre ? context.l10n.bataCleopatra : context.l10n.bataCrassus;
+
   List<CarteAlbum> get _possedees => [
         for (final id in widget.repo.profile.cartesAlbum)
           if (widget.repo.carteAlbum(id) != null) widget.repo.carteAlbum(id)!,
@@ -82,7 +92,9 @@ class _BatailleScreenState extends State<BatailleScreen> {
     setState(() {
       _partie = PartieBataille(
         mainJoueur: main,
-        mainCrassus: mainDeCrassus(main, widget.repo.cartesAlbum, _alea),
+        mainCrassus: _contreCleopatre
+            ? mainDeCleopatre(main, widget.repo.cartesAlbum, _alea)
+            : mainDeCrassus(main, widget.repo.cartesAlbum, _alea),
         pretees: _pretees.map((c) => c.id).toSet(),
       );
       _carteJoueur = null;
@@ -91,6 +103,16 @@ class _BatailleScreenState extends State<BatailleScreen> {
       _etape = _Etape.poseCarte;
     });
     AudioService().playCardFlip();
+  }
+
+  /// Sa vidéo d'entrée se joue au premier choix, une fois par visite.
+  void _choisirAdversaire(Adversaire adversaire) {
+    HapticFeedback.selectionClick();
+    setState(() => _adversaire = adversaire);
+    if (adversaire == Adversaire.cleopatre && widget.avecEntree && !_entreeCleopatreVue) {
+      _entreeCleopatreVue = true;
+      RomanCinematicOverlay.showBatailleCleopatre(context);
+    }
   }
 
   void _poser(CarteAlbum carte) {
@@ -143,7 +165,9 @@ class _BatailleScreenState extends State<BatailleScreen> {
       return;
     }
     final victoire = partie.issue == IssuePartie.victoire;
-    final gain = widget.repo.noterBataille(victoire: victoire);
+    final fermee = !widget.repo.cleopatreOuverte;
+    final gain = widget.repo.noterBataille(victoire: victoire, contreCleopatre: _contreCleopatre);
+    _cleopatreVientDOuvrir = fermee && widget.repo.cleopatreOuverte;
     if (victoire) {
       AudioService().playTriumph();
       HapticFeedback.heavyImpact();
@@ -176,9 +200,39 @@ class _BatailleScreenState extends State<BatailleScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _Bandeau(titre: context.l10n.bataCrassus, texte: context.l10n.bataIntro),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _TuileAdversaire(
+                nom: context.l10n.bataCrassus,
+                image: 'assets/images/bataille/adversaire_crassus.webp',
+                choisi: !_contreCleopatre,
+                onTap: () => _choisirAdversaire(Adversaire.crassus),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _TuileAdversaire(
+                nom: context.l10n.bataCleopatra,
+                image: 'assets/images/bataille/adversaire_cleopatre.webp',
+                choisi: _contreCleopatre,
+                verrou: widget.repo.cleopatreOuverte
+                    ? null
+                    : context.l10n.bataLockedWins(
+                        widget.repo.victoiresContreCrassus, GameRepository.victoiresPourCleopatre),
+                onTap: () => _choisirAdversaire(Adversaire.cleopatre),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 10),
-        Text(context.l10n.bataRules, style: const TextStyle(fontSize: 14, height: 1.4)),
+        _Bandeau(
+          titre: _nomAdversaire(context),
+          texte: _contreCleopatre ? context.l10n.bataIntroCleopatra : context.l10n.bataIntro,
+        ),
+        const SizedBox(height: 10),
+        Text(context.l10n.bataRules(_nomAdversaire(context)), style: const TextStyle(fontSize: 14, height: 1.4)),
         const SizedBox(height: 16),
         Text(
           possedees.length > tailleMain ? context.l10n.bataChooseHand : context.l10n.bataHand,
@@ -212,7 +266,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
         ),
         if (_pretees.isNotEmpty) ...[
           const SizedBox(height: 10),
-          Text(context.l10n.bataLoanInfo, style: const TextStyle(fontSize: 13, color: Colors.black54)),
+          Text(context.l10n.bataLoanInfo(_nomAdversaire(context)), style: const TextStyle(fontSize: 13, color: Colors.black54)),
         ],
         const SizedBox(height: 18),
         RomanButton(text: context.l10n.bataStart, isLarge: true, onPressed: pret ? _commencer : null),
@@ -242,7 +296,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
                         _etape == _Etape.resultat || _etape == _Etape.fin ? partie.manche : partie.manche + 1, 5)),
                     textAlign: TextAlign.center, style: const TextStyle(color: Colors.white70, fontSize: 12)),
               ),
-              Text('${context.l10n.bataCrassus} ${partie.pointsCrassus}',
+              Text('${_nomAdversaire(context)} ${partie.pointsCrassus}',
                   style: const TextStyle(color: RomanColors.goldLight, fontWeight: FontWeight.bold)),
             ],
           ),
@@ -256,7 +310,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: Text('VS', style: TextStyle(fontFamily: 'serif', color: RomanColors.imperialGold, fontSize: 18)),
             ),
-            _emplacement(context, _carteCrassus, context.l10n.bataCrassus,
+            _emplacement(context, _carteCrassus, _nomAdversaire(context),
                 cachee: _etape == _Etape.question || _etape == _Etape.choixCaracteristique),
           ],
         ),
@@ -365,7 +419,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (erreur) _Message(texte: context.l10n.bataWrong(_question!.bonne), couleur: const Color(0xFFFCEBEB)),
+            if (erreur) _Message(texte: context.l10n.bataWrong(_question!.bonne, _nomAdversaire(context)), couleur: const Color(0xFFFCEBEB)),
             if (erreur) const SizedBox(height: 6),
             _Message(
               texte: '${_resultatManche > 0 ? context.l10n.bataRoundWon : _resultatManche < 0 ? context.l10n.bataRoundLost : context.l10n.bataRoundTie}\n'
@@ -387,9 +441,9 @@ class _BatailleScreenState extends State<BatailleScreen> {
           children: [
             _Bandeau(
               titre: issue == IssuePartie.victoire
-                  ? context.l10n.bataVictory
+                  ? context.l10n.bataVictory(_nomAdversaire(context))
                   : issue == IssuePartie.defaite
-                      ? context.l10n.bataDefeat
+                      ? context.l10n.bataDefeat(_nomAdversaire(context))
                       : context.l10n.bataDraw,
               texte: context.l10n.bataFinalScore(partie.pointsJoueur, partie.pointsCrassus),
             ),
@@ -400,6 +454,10 @@ class _BatailleScreenState extends State<BatailleScreen> {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF7A5901)),
               ),
+            ],
+            if (_cleopatreVientDOuvrir) ...[
+              const SizedBox(height: 10),
+              _Message(texte: context.l10n.bataCleopatraOpens, couleur: RomanColors.goldLight),
             ],
             const SizedBox(height: 14),
             RomanButton(
@@ -418,6 +476,100 @@ class _BatailleScreenState extends State<BatailleScreen> {
 
   String _libelle(BuildContext context, Caracteristique c) =>
       c == Caracteristique.attaque ? context.l10n.albumAttack : context.l10n.albumDefense;
+}
+
+/// Un adversaire au choix : son portrait et son nom. Verrouillé, il reste
+/// visible en gris avec ce qu'il faut pour l'ouvrir : c'est un objectif.
+class _TuileAdversaire extends StatelessWidget {
+  final String nom;
+  final String image;
+  final bool choisi;
+  final String? verrou;
+  final VoidCallback onTap;
+
+  const _TuileAdversaire({
+    required this.nom,
+    required this.image,
+    required this.choisi,
+    required this.onTap,
+    this.verrou,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final ferme = verrou != null;
+    Widget portrait = Image.asset(
+      image,
+      height: 120,
+      width: double.infinity,
+      fit: BoxFit.cover,
+      // Le visage est dans le haut des portraits 3:4.
+      alignment: const Alignment(0, -0.65),
+      errorBuilder: (_, __, ___) => const SizedBox(height: 120),
+    );
+    if (ferme) {
+      portrait = Stack(
+        alignment: Alignment.center,
+        children: [
+          ColorFiltered(
+            // Matrice plutôt que BlendMode.saturation : ce mode débordait du
+            // portrait et grisait aussi le bas de la tuile.
+            colorFilter: const ColorFilter.matrix(<double>[
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0, 0, 0, 1, 0,
+            ]),
+            child: portrait,
+          ),
+          const Icon(Icons.lock_rounded, color: Colors.white, size: 34),
+        ],
+      );
+    }
+    return Semantics(
+      button: true,
+      selected: choisi,
+      enabled: !ferme,
+      child: Material(
+        color: choisi ? RomanColors.goldLight : Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(
+            color: choisi ? RomanColors.imperialGold : RomanColors.marbleBorder,
+            width: choisi ? 2 : 1.2,
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: ferme ? null : onTap,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              portrait,
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Text(
+                      nom,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
+                    ),
+                    if (ferme)
+                      Text(
+                        verrou!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 12, color: Colors.black54),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// Une carte de jeu : illustration, nom, attaque et défense ; face cachée,

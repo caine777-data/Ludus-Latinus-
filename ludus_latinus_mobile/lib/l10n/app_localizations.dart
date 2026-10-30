@@ -2986,8 +2986,8 @@ abstract class AppLocalizations {
   /// No description provided for @bataRules.
   ///
   /// In fr, this message translates to:
-  /// **'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : Crassus choisit. Le premier à 3 manches gagne.'**
-  String get bataRules;
+  /// **'À chaque manche, pose une carte et réponds à la question. Bonne réponse : tu choisis l\'attaque ou la défense. Mauvaise réponse : {adversaire} choisit. Le premier à 3 manches gagne.'**
+  String bataRules(String adversaire);
 
   /// No description provided for @bataChooseHand.
   ///
@@ -2998,8 +2998,8 @@ abstract class AppLocalizations {
   /// No description provided for @bataLoanInfo.
   ///
   /// In fr, this message translates to:
-  /// **'Tu n\'as pas encore 5 cartes : Crassus te prête les autres. Gagne des succès pour jouer avec les tiennes.'**
-  String get bataLoanInfo;
+  /// **'Tu n\'as pas encore 5 cartes : {adversaire} te prête les autres. Gagne des succès pour jouer avec les tiennes.'**
+  String bataLoanInfo(String adversaire);
 
   /// No description provided for @bataLoan.
   ///
@@ -3076,14 +3076,14 @@ abstract class AppLocalizations {
   /// No description provided for @bataVictory.
   ///
   /// In fr, this message translates to:
-  /// **'Victoire ! Crassus s\'incline.'**
-  String get bataVictory;
+  /// **'Victoire ! {adversaire} s\'incline.'**
+  String bataVictory(String adversaire);
 
   /// No description provided for @bataDefeat.
   ///
   /// In fr, this message translates to:
-  /// **'Crassus l\'emporte cette fois.'**
-  String get bataDefeat;
+  /// **'{adversaire} l\'emporte cette fois.'**
+  String bataDefeat(String adversaire);
 
   /// No description provided for @bataDraw.
   ///
@@ -3142,8 +3142,8 @@ abstract class AppLocalizations {
   /// No description provided for @bataWrong.
   ///
   /// In fr, this message translates to:
-  /// **'Mauvaise réponse : la bonne était « {reponse} ». Crassus choisit.'**
-  String bataWrong(String reponse);
+  /// **'Mauvaise réponse : la bonne était « {reponse} ». {adversaire} choisit.'**
+  String bataWrong(String reponse, String adversaire);
 
   /// No description provided for @bataDuel.
   ///
@@ -3684,6 +3684,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Annuler'**
   String get commonCancel;
+
+  /// No description provided for @bataCleopatra.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cléopâtre'**
+  String get bataCleopatra;
+
+  /// No description provided for @bataIntroCleopatra.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cléopâtre, reine d\'Égypte, joue plus fin que Crassus : à chacune de tes cartes, elle en oppose une plus rare.'**
+  String get bataIntroCleopatra;
+
+  /// No description provided for @bataLockedWins.
+  ///
+  /// In fr, this message translates to:
+  /// **'{n} / {total} victoires contre Crassus'**
+  String bataLockedWins(int n, int total);
+
+  /// No description provided for @bataCleopatraOpens.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cléopâtre a vu ta victoire. Elle te défie à son tour : choisis-la avant ta prochaine partie.'**
+  String get bataCleopatraOpens;
+
+  /// No description provided for @albumAtTaberna.
+  ///
+  /// In fr, this message translates to:
+  /// **'À la Taberna : {prix} HS'**
+  String albumAtTaberna(int prix);
+
+  /// No description provided for @shopCardsTab.
+  ///
+  /// In fr, this message translates to:
+  /// **'🃏 Cartes'**
+  String get shopCardsTab;
+
+  /// No description provided for @shopCardsHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisis ta carte : elle rejoint ton album et ta main à la Bataille.'**
+  String get shopCardsHint;
+
+  /// No description provided for @shopCardOwned.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dans l\'album'**
+  String get shopCardOwned;
 }
 
 class _AppLocalizationsDelegate

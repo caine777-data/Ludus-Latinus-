@@ -151,6 +151,7 @@ class _PairesScreenState extends State<PairesScreen> {
     _chrono?.cancel();
     if (_etape == _Etape.fin) return;
     if (_partie.estGagnee) {
+      widget.repo.noterEvenement('paires_victoires');
       _gain = widget.repo.payerPartie('paires', GameRepository.gainPaires);
       _nouveauRecord = widget.repo.enregistrerRecord('paires', _secondesRestantes);
       // Victoire payée : pluie de pièces (elle joue aussi la fanfare).

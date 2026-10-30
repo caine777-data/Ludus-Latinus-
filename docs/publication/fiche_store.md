@@ -31,8 +31,8 @@ DES JEUX POUR S'ENTRAÎNER
 • L'Atelier de César : messages secrets à chiffrer et à déchiffrer.
 • Le Marché de Trajan : acheter, rendre la monnaie et marchander en sesterces.
 • Le Panthéon : une carte à collectionner pour chaque monde terminé.
-• Héros et Créatures : un album de 32 cartes, une carte gagnée à chaque succès.
-• La Bataille des Légendes : un jeu de cartes contre Crassus, où chaque manche se joue sur une question de latin.
+• Héros et Créatures : un album de 66 cartes, gagnées par les succès ou achetées en sesterces, sans tirage au hasard.
+• La Bataille des Légendes : un jeu de cartes contre Crassus puis Cléopâtre, où chaque manche se joue sur une question de latin.
 
 RÉVISER SANS OUBLIER
 • Memoria : des cartes de vocabulaire qui reviennent au bon moment, selon ce que l'élève retient.

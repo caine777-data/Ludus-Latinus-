@@ -107,7 +107,7 @@ Fichier : `div_fortuna.jpg`
 - Anecdote : Déesse de la chance, on la représentait avec une corne d'abondance et un gouvernail : elle mène la vie des hommes où elle veut. La devise vient de Virgile.
 
 ```
-Fortuna, déesse souriante en longue robe dorée, tenant d'une main une corne d'abondance d'où tombent des fruits et des pièces d'or, de l'autre un gouvernail de navire, sur fond de ciel lumineux. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
+Fortuna, déesse souriante en longue robe dorée, tenant d'une main une corne d'abondance d'où tombent des fruits et des pièces d'or, de l'autre un gouvernail antique : une longue rame de bois à large pale, tenue debout près d'elle, sans aucune roue ni barre à roue, sur fond de ciel lumineux. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
 ### 9. Le Phénix (Phoenix Avis)
