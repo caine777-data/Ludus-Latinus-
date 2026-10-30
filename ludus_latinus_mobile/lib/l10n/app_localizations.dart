@@ -2692,7 +2692,7 @@ abstract class AppLocalizations {
   /// No description provided for @albumHeaderHint.
   ///
   /// In fr, this message translates to:
-  /// **'Chaque succès te donne une carte.'**
+  /// **'Chaque succès te donne une carte. D\'autres s\'achètent à la Taberna.'**
   String get albumHeaderHint;
 
   /// No description provided for @albumFamilyHeroes.

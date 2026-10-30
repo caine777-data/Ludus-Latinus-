@@ -1555,7 +1555,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get albumHeaderLabel => 'ALBUM DES SUCCÈS';
 
   @override
-  String get albumHeaderHint => 'Chaque succès te donne une carte.';
+  String get albumHeaderHint =>
+      'Chaque succès te donne une carte. D\'autres s\'achètent à la Taberna.';
 
   @override
   String get albumFamilyHeroes => 'Héros';
