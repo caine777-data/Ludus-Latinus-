@@ -1,7 +1,8 @@
-"""Album « Héros et Créatures », série 2 : 32 cartes de plus (29/10/2026).
+"""Album « Héros et Créatures », série 2 : 34 cartes de plus (29-30/10/2026).
 
 Catalogue validé par Cédric (docs/propositions/album_serie2.md) après le
-premier retour de Clovis : plus de cartes à débloquer pour la Bataille.
+premier retour de Clovis : plus de cartes à débloquer pour la Bataille,
+dont Rémus et Jules César, qu'il a demandés.
 Chaque carte se gagne par un succès (stat, seuil) ou s'achète à prix fixe
 à la Taberna (prix, sans tirage au hasard). Le champ « scene » ne sert
 qu'aux prompts d'illustration (scripts/docs), pas à l'appli.
@@ -21,6 +22,18 @@ CARTES_SERIE2 = [
      "stat": "bataille_victoires", "seuil": 1, "texte": "Gagner une Bataille contre Crassus",
      "scene": "Clélie, jeune Romaine aux cheveux nattés en tunique claire, nage avec énergie dans le "
               "Tibre vers la rive de Rome, ses compagnes derrière elle, les collines et les remparts au loin"},
+    {"id": "her_remus", "nom": "Rémus", "nom_latin": "Remus Frater Romuli", "categorie": "heros",
+     "rarete": "commune", "atk": 86, "def": 76,
+     "citation": "Remus sulcum transilit.", "traduction": "Rémus saute par-dessus le sillon.",
+     "anecdote": "Jumeau de Romulus, élevé avec lui par la louve. Il franchit par défi le sillon sacré "
+                 "que son frère venait de tracer, et ce geste lui coûta la vie.",
+     "stat": "bataille_victoires", "seuil": 2, "texte": "Gagner 2 Batailles contre Crassus",
+     # Jumeau de la carte Romulus : l'image de celle-ci sert de référence.
+     "reference": "assets/images/album/her_romulus.webp",
+     "scene": "Rémus, le frère jumeau du jeune homme de l'image de référence, mêmes traits du visage et "
+              "mêmes cheveux sombres et bouclés, en tunique claire et cape bleu sombre, saute d'un bond "
+              "joyeux et plein de défi par-dessus un sillon fraîchement tracé dans la terre, sur la "
+              "colline du Palatin à l'aube, un sourire moqueur aux lèvres"},
     {"id": "div_cupidon", "nom": "Cupidon", "nom_latin": "Cupido Sagittarius", "categorie": "divinites",
      "rarete": "commune", "atk": 80, "def": 72,
      "citation": "Cupido sagittas mittit.", "traduction": "Cupidon lance des flèches.",
@@ -91,6 +104,18 @@ CARTES_SERIE2 = [
      "scene": "Scylla, monstre marin aux longs cous terminés par des têtes de chien grondantes, "
               "surgissant d'une grotte dans une falaise, un petit navire grec qui passe au loin "
               "sur une mer agitée, l'air plus impressionnant qu'effrayant"},
+    # Exception au « pas de doublon avec le Panthéon », demandée par Clovis (30/10/2026) :
+    # les cartes du Panthéon ne jouent pas à la Bataille, et la scène du Rubicon est différente.
+    {"id": "her_cesar", "nom": "Jules César", "nom_latin": "Gaius Iulius Caesar", "categorie": "heros",
+     "rarete": "legendaire", "atk": 98, "def": 93,
+     "citation": "Veni, vidi, vici.", "traduction": "Je suis venu, j'ai vu, j'ai vaincu.",
+     "anecdote": "Vainqueur de la Gaule, il franchit le Rubicon avec son armée en 49 av. J.-C. et "
+                 "déclencha la guerre civile. Sa devise résume une victoire éclair de 47 av. J.-C.",
+     "stat": "bataille_victoires_cleopatre", "seuil": 7, "texte": "Gagner 7 Batailles contre Cléopâtre",
+     "scene": "Jules César, général romain d'une cinquantaine d'années, visage maigre et énergique, "
+              "front dégarni, couronne de laurier d'or, cuirasse de bronze et grande cape écarlate, "
+              "debout à la proue d'une barque qui traverse une petite rivière à l'aube, le bras tendu "
+              "vers l'autre rive, ses légionnaires et leurs enseignes derrière lui"},
     {"id": "div_venus", "nom": "Vénus", "nom_latin": "Venus Genetrix", "categorie": "divinites",
      "rarete": "legendaire", "atk": 92, "def": 99,
      "citation": "Amor omnia vincit.", "traduction": "L'amour triomphe de tout.",

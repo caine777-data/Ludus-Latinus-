@@ -50,7 +50,7 @@ def main():
         "",
         "## Consignes",
         "",
-        "- 32 images de cartes, format **3:4** (portrait), même style que la série 1.",
+        f"- {len(CARTES_SERIE2)} images de cartes, format **3:4** (portrait), même style que la série 1.",
         "- 2 portraits d'adversaires pour l'écran de choix, format 3:4.",
         "- 1 vidéo d'entrée de Cléopâtre, format 9:16 (facultative), comme celle de Crassus.",
         "- Déposer dans « gemini ludus » sous le nom indiqué (JPG ou PNG) : l'architecte les convertit "
@@ -58,7 +58,7 @@ def main():
         "- Tant qu'une carte n'a pas son image, l'appli affiche une icône sur la couleur de sa rareté.",
         "- Anecdotes et devises : à relire ; devises à faire relire aussi par le professeur de latin.",
         "",
-        "## Les 32 cartes",
+        f"## Les {len(CARTES_SERIE2)} cartes",
         "",
     ]
     for n, c in enumerate(CARTES_SERIE2, 1):
@@ -71,6 +71,7 @@ def main():
             "",
             f"- Devise : *{c['citation']}* ({c['traduction']})",
             f"- Anecdote : {c['anecdote']}",
+            *([f"- Image de référence à joindre : `{c['reference']}`"] if c.get("reference") else []),
             "",
             "```",
             f"{c['scene']}. {STYLE_CARTE}",

@@ -4,14 +4,14 @@ Proposition de l'architecte (29/10/2026). Catalogue validé par Cédric le même
 
 ## Consignes
 
-- 32 images de cartes, format **3:4** (portrait), même style que la série 1.
+- 34 images de cartes, format **3:4** (portrait), même style que la série 1.
 - 2 portraits d'adversaires pour l'écran de choix, format 3:4.
 - 1 vidéo d'entrée de Cléopâtre, format 9:16 (facultative), comme celle de Crassus.
 - Déposer dans « gemini ludus » sous le nom indiqué (JPG ou PNG) : l'architecte les convertit en WebP et les branche.
 - Tant qu'une carte n'a pas son image, l'appli affiche une icône sur la couleur de sa rareté.
 - Anecdotes et devises : à relire ; devises à faire relire aussi par le professeur de latin.
 
-## Les 32 cartes
+## Les 34 cartes
 
 ### 1. Clélie (Cloelia Virgo Fortis)
 
@@ -25,7 +25,20 @@ Fichier : `her_clelie.jpg`
 Clélie, jeune Romaine aux cheveux nattés en tunique claire, nage avec énergie dans le Tibre vers la rive de Rome, ses compagnes derrière elle, les collines et les remparts au loin. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 2. Cupidon (Cupido Sagittarius)
+### 2. Rémus (Remus Frater Romuli)
+
+héros · commune · attaque 86, défense 76 · Succès : Gagner 2 Batailles contre Crassus  
+Fichier : `her_remus.jpg`
+
+- Devise : *Remus sulcum transilit.* (Rémus saute par-dessus le sillon.)
+- Anecdote : Jumeau de Romulus, élevé avec lui par la louve. Il franchit par défi le sillon sacré que son frère venait de tracer, et ce geste lui coûta la vie.
+- Image de référence à joindre : `assets/images/album/her_romulus.webp`
+
+```
+Rémus, le frère jumeau du jeune homme de l'image de référence, mêmes traits du visage et mêmes cheveux sombres et bouclés, en tunique claire et cape bleu sombre, saute d'un bond joyeux et plein de défi par-dessus un sillon fraîchement tracé dans la terre, sur la colline du Palatin à l'aube, un sourire moqueur aux lèvres. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
+```
+
+### 3. Cupidon (Cupido Sagittarius)
 
 dieux · commune · attaque 80, défense 72 · Succès : Gagner 3 Batailles contre Crassus  
 Fichier : `div_cupidon.jpg`
@@ -37,7 +50,7 @@ Fichier : `div_cupidon.jpg`
 Cupidon, petit garçon ailé et malicieux aux boucles blondes, bande son petit arc doré en visant vers le ciel, perché sur un nuage rose. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 3. Mucius Scaevola (Gaius Mucius Scaevola)
+### 4. Mucius Scaevola (Gaius Mucius Scaevola)
 
 héros · rare · attaque 86, défense 88 · Succès : Gagner 5 Batailles contre Crassus  
 Fichier : `her_mucius.jpg`
@@ -49,7 +62,7 @@ Fichier : `her_mucius.jpg`
 Mucius Scaevola, jeune Romain en tunique et cape rouge, debout fièrement face à un brasier sur un trépied de bronze, le regard droit et calme, dans la tente d'un roi étrusque. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 4. Le Capitole (Capitolium)
+### 5. Le Capitole (Capitolium)
 
 monuments · rare · attaque 78, défense 92 · Succès : Gagner 10 Batailles contre Crassus  
 Fichier : `mon_capitole.jpg`
@@ -61,7 +74,7 @@ Fichier : `mon_capitole.jpg`
 La colline du Capitole couronnée du grand temple de Jupiter aux colonnes blanches et au toit doré, un escalier monumental, des oies blanches au premier plan. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 5. Vulcain (Vulcanus Faber)
+### 6. Vulcain (Vulcanus Faber)
 
 dieux · épique · attaque 93, défense 88 · Succès : Gagner 20 Batailles contre Crassus  
 Fichier : `div_vulcain.jpg`
@@ -73,7 +86,7 @@ Fichier : `div_vulcain.jpg`
 Vulcain, dieu forgeron barbu et musclé au tablier de cuir, frappe de son marteau une épée rougeoyante sur une enclume, des étincelles dorées autour de lui, dans une forge creusée sous un volcan. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 6. La Chimère (Chimaera Flammifera)
+### 7. La Chimère (Chimaera Flammifera)
 
 créatures · épique · attaque 95, défense 80 · Succès : Gagner 35 Batailles contre Crassus  
 Fichier : `mon_chimere.jpg`
@@ -85,7 +98,7 @@ Fichier : `mon_chimere.jpg`
 La Chimère, créature fantastique à tête de lion, avec une tête de chèvre sur le dos et une queue de serpent, soufflant une petite gerbe de flammes orangées, sur un rocher volcanique, l'air plus impressionnant qu'effrayant. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 7. Fortuna (Fortuna Dea)
+### 8. Fortuna (Fortuna Dea)
 
 dieux · légendaire · attaque 94, défense 96 · Succès : Gagner 50 Batailles contre Crassus  
 Fichier : `div_fortuna.jpg`
@@ -97,7 +110,7 @@ Fichier : `div_fortuna.jpg`
 Fortuna, déesse souriante en longue robe dorée, tenant d'une main une corne d'abondance d'où tombent des fruits et des pièces d'or, de l'autre un gouvernail de navire, sur fond de ciel lumineux. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 8. Le Phénix (Phoenix Avis)
+### 9. Le Phénix (Phoenix Avis)
 
 créatures · rare · attaque 84, défense 86 · Succès : Gagner une Bataille contre Cléopâtre  
 Fichier : `mon_phenix.jpg`
@@ -109,7 +122,7 @@ Fichier : `mon_phenix.jpg`
 Le Phénix, grand oiseau aux plumes rouges et or, ailes déployées, s'élevant d'un nid de braises dorées, devant des palmiers et une pyramide lointaine. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 9. Scylla (Scylla Monstrum Maris)
+### 10. Scylla (Scylla Monstrum Maris)
 
 créatures · épique · attaque 94, défense 84 · Succès : Gagner 5 Batailles contre Cléopâtre  
 Fichier : `mon_scylla.jpg`
@@ -121,7 +134,19 @@ Fichier : `mon_scylla.jpg`
 Scylla, monstre marin aux longs cous terminés par des têtes de chien grondantes, surgissant d'une grotte dans une falaise, un petit navire grec qui passe au loin sur une mer agitée, l'air plus impressionnant qu'effrayant. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 10. Vénus (Venus Genetrix)
+### 11. Jules César (Gaius Iulius Caesar)
+
+héros · légendaire · attaque 98, défense 93 · Succès : Gagner 7 Batailles contre Cléopâtre  
+Fichier : `her_cesar.jpg`
+
+- Devise : *Veni, vidi, vici.* (Je suis venu, j'ai vu, j'ai vaincu.)
+- Anecdote : Vainqueur de la Gaule, il franchit le Rubicon avec son armée en 49 av. J.-C. et déclencha la guerre civile. Sa devise résume une victoire éclair de 47 av. J.-C.
+
+```
+Jules César, général romain d'une cinquantaine d'années, visage maigre et énergique, front dégarni, couronne de laurier d'or, cuirasse de bronze et grande cape écarlate, debout à la proue d'une barque qui traverse une petite rivière à l'aube, le bras tendu vers l'autre rive, ses légionnaires et leurs enseignes derrière lui. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
+```
+
+### 12. Vénus (Venus Genetrix)
 
 dieux · légendaire · attaque 92, défense 99 · Succès : Gagner 10 Batailles contre Cléopâtre  
 Fichier : `div_venus.jpg`
@@ -133,7 +158,7 @@ Fichier : `div_venus.jpg`
 Vénus, déesse gracieuse aux longs cheveux dorés, en robe blanche et rose, debout sur une grande coquille nacrée au bord de la mer, des colombes autour d'elle. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 11. Atalante (Atalanta Velox)
+### 13. Atalante (Atalanta Velox)
 
 héros · commune · attaque 84, défense 74 · Succès : Gagner une partie de Paires éclair  
 Fichier : `her_atalante.jpg`
@@ -145,7 +170,7 @@ Fichier : `her_atalante.jpg`
 Atalante, jeune chasseresse grecque en tunique courte, cheveux au vent, court à toute vitesse sur un stade de terre, une pomme d'or roulant devant elle. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 12. Les Harpies (Harpyiae Rapaces)
+### 14. Les Harpies (Harpyiae Rapaces)
 
 créatures · rare · attaque 86, défense 78 · Succès : Gagner 10 parties de Paires éclair  
 Fichier : `mon_harpies.jpg`
@@ -157,7 +182,7 @@ Fichier : `mon_harpies.jpg`
 Deux Harpies, créatures mi-femmes mi-oiseaux aux ailes grises, fondent en riant sur une table de banquet pour emporter des fruits et du pain, l'air espiègle plus que menaçant. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 13. Le Griffon (Gryps Custos Auri)
+### 15. Le Griffon (Gryps Custos Auri)
 
 créatures · épique · attaque 90, défense 92 · Succès : Finir Paires éclair avec 30 secondes d'avance  
 Fichier : `mon_griffon.jpg`
@@ -169,7 +194,7 @@ Fichier : `mon_griffon.jpg`
 Le Griffon, créature majestueuse au corps de lion doré, à la tête et aux grandes ailes d'aigle, posé sur un tas de pépites d'or au sommet d'une montagne. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 14. Janus (Ianus Bifrons)
+### 16. Janus (Ianus Bifrons)
 
 dieux · commune · attaque 74, défense 86 · Succès : Trouver un Mot du jour  
 Fichier : `div_janus.jpg`
@@ -181,7 +206,7 @@ Fichier : `div_janus.jpg`
 Janus, dieu barbu à deux visages regardant chacun d'un côté, tenant une grande clé, debout sous une arche de pierre à deux portes. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 15. Cornélie (Cornelia Mater Gracchorum)
+### 17. Cornélie (Cornelia Mater Gracchorum)
 
 héros · rare · attaque 78, défense 90 · Succès : Trouver 7 Mots du jour  
 Fichier : `her_cornelie.jpg`
@@ -193,7 +218,7 @@ Fichier : `her_cornelie.jpg`
 Cornélie, dame romaine digne en stola bleue, la main posée sur les épaules de ses deux jeunes fils souriants, dans l'atrium d'une maison romaine. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 16. Saturne (Saturnus Sator)
+### 18. Saturne (Saturnus Sator)
 
 dieux · épique · attaque 86, défense 94 · Succès : Trouver 30 Mots du jour  
 Fichier : `div_saturne.jpg`
@@ -205,7 +230,7 @@ Fichier : `div_saturne.jpg`
 Saturne, vieux dieu barbu et bienveillant tenant une faucille dorée, au milieu de champs de blé dorés baignés de lumière, symbole de l'âge d'or. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 17. Le Forum romain (Forum Romanum)
+### 19. Le Forum romain (Forum Romanum)
 
 monuments · commune · attaque 72, défense 88 · Achat à la Taberna : 80 HS  
 Fichier : `mon_forum.jpg`
@@ -217,7 +242,7 @@ Fichier : `mon_forum.jpg`
 Le Forum romain animé, temples à colonnes et basiliques, une foule en toges et tuniques, un orateur sur une tribune, des marchands. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 18. La Maison carrée (Templum Nemausense)
+### 20. La Maison carrée (Templum Nemausense)
 
 monuments · commune · attaque 70, défense 90 · Achat à la Taberna : 80 HS  
 Fichier : `mon_maison_carree.jpg`
@@ -229,7 +254,7 @@ Fichier : `mon_maison_carree.jpg`
 La Maison carrée de Nîmes, temple romain rectangulaire à colonnes corinthiennes sur un haut podium, dans sa pierre claire, sous un ciel bleu du Midi. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 19. Le Théâtre d'Orange (Theatrum Arausionense)
+### 21. Le Théâtre d'Orange (Theatrum Arausionense)
 
 monuments · commune · attaque 74, défense 86 · Achat à la Taberna : 80 HS  
 Fichier : `mon_theatre_orange.jpg`
@@ -241,7 +266,7 @@ Fichier : `mon_theatre_orange.jpg`
 Le théâtre antique d'Orange, gradins en demi-cercle face à un immense mur de scène à colonnes, des acteurs masqués sur la scène, des spectateurs romains. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 20. Le Sanglier d'Érymanthe (Aper Erymanthius)
+### 22. Le Sanglier d'Érymanthe (Aper Erymanthius)
 
 créatures · commune · attaque 85, défense 78 · Achat à la Taberna : 80 HS  
 Fichier : `mon_sanglier.jpg`
@@ -253,7 +278,7 @@ Fichier : `mon_sanglier.jpg`
 Un énorme sanglier sauvage aux défenses blanches, poil hérissé, chargeant dans une forêt de montagne enneigée, l'air plus impressionnant qu'effrayant. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 21. Cérès (Ceres Frugifera)
+### 23. Cérès (Ceres Frugifera)
 
 dieux · commune · attaque 75, défense 85 · Achat à la Taberna : 80 HS  
 Fichier : `div_ceres.jpg`
@@ -265,7 +290,7 @@ Fichier : `div_ceres.jpg`
 Cérès, déesse souriante couronnée d'épis de blé, tenant une gerbe dorée et une torche, au milieu de champs mûrs. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 22. Diane (Diana Venatrix)
+### 24. Diane (Diana Venatrix)
 
 dieux · rare · attaque 89, défense 80 · Achat à la Taberna : 150 HS  
 Fichier : `div_diane.jpg`
@@ -277,7 +302,7 @@ Fichier : `div_diane.jpg`
 Diane, chasseresse en tunique courte, un croissant de lune dans les cheveux, un arc d'argent à la main, accompagnée d'une biche, dans une forêt sous la lune. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 23. Bacchus (Bacchus Liber Pater)
+### 25. Bacchus (Bacchus Liber Pater)
 
 dieux · rare · attaque 82, défense 84 · Achat à la Taberna : 150 HS  
 Fichier : `div_bacchus.jpg`
@@ -289,7 +314,7 @@ Fichier : `div_bacchus.jpg`
 Bacchus, jeune dieu joyeux couronné de feuilles de vigne et de grappes de raisin, tenant un thyrse orné de lierre, entouré de vignes dorées par le soleil. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 24. La Sirène (Siren Canora)
+### 26. La Sirène (Siren Canora)
 
 créatures · rare · attaque 84, défense 82 · Achat à la Taberna : 150 HS  
 Fichier : `mon_sirene.jpg`
@@ -301,7 +326,7 @@ Fichier : `mon_sirene.jpg`
 Une Sirène à la manière antique, femme-oiseau aux ailes dorées et au visage gracieux, chantant sur un rocher au-dessus de la mer, un navire grec au loin. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 25. Cincinnatus (Lucius Quinctius Cincinnatus)
+### 27. Cincinnatus (Lucius Quinctius Cincinnatus)
 
 héros · rare · attaque 83, défense 89 · Achat à la Taberna : 150 HS  
 Fichier : `her_cincinnatus.jpg`
@@ -313,7 +338,7 @@ Fichier : `her_cincinnatus.jpg`
 Cincinnatus, Romain d'âge mûr en simple tunique, laisse sa charrue au milieu d'un champ pour recevoir la toge que lui tendent des sénateurs venus de Rome. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 26. Le Pont du Gard (Aquaeductus Nemausensis)
+### 28. Le Pont du Gard (Aquaeductus Nemausensis)
 
 monuments · rare · attaque 76, défense 94 · Achat à la Taberna : 150 HS  
 Fichier : `mon_pont_gard.jpg`
@@ -325,7 +350,7 @@ Fichier : `mon_pont_gard.jpg`
 Le Pont du Gard, pont-aqueduc romain à trois rangées d'arches de pierre dorée, enjambant une rivière verte entre des collines boisées. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 27. Thésée (Theseus Atheniensis)
+### 29. Thésée (Theseus Atheniensis)
 
 héros · épique · attaque 92, défense 86 · Achat à la Taberna : 300 HS  
 Fichier : `her_thesee.jpg`
@@ -337,7 +362,7 @@ Fichier : `her_thesee.jpg`
 Thésée, jeune héros grec en tunique et cape bleue, une épée courte à la main, suit un fil rouge déroulé dans les couloirs de pierre d'un labyrinthe éclairé par une torche. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 28. Polyphème le Cyclope (Polyphemus Cyclops)
+### 30. Polyphème le Cyclope (Polyphemus Cyclops)
 
 créatures · épique · attaque 96, défense 82 · Achat à la Taberna : 300 HS  
 Fichier : `mon_polypheme.jpg`
@@ -349,7 +374,7 @@ Fichier : `mon_polypheme.jpg`
 Polyphème, géant cyclope à l'œil unique au milieu du front, assis à l'entrée de sa caverne avec ses moutons, l'air bourru plus que menaçant, la mer en contrebas. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 29. Le Mur d'Hadrien (Vallum Hadriani)
+### 31. Le Mur d'Hadrien (Vallum Hadriani)
 
 monuments · épique · attaque 80, défense 98 · Achat à la Taberna : 300 HS  
 Fichier : `mon_mur_hadrien.jpg`
@@ -361,7 +386,7 @@ Fichier : `mon_mur_hadrien.jpg`
 Le Mur d'Hadrien, long rempart de pierre qui serpente sur des collines vertes et brumeuses, un fortin et des légionnaires en manteau rouge qui montent la garde. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 30. Le Dragon Ladon (Draco Hesperidum)
+### 32. Le Dragon Ladon (Draco Hesperidum)
 
 créatures · épique · attaque 91, défense 93 · Achat à la Taberna : 300 HS  
 Fichier : `mon_ladon.jpg`
@@ -373,7 +398,7 @@ Fichier : `mon_ladon.jpg`
 Le dragon Ladon, grand serpent ailé aux écailles vertes et dorées, enroulé autour d'un arbre chargé de pommes d'or, dans un jardin merveilleux au coucher du soleil. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 31. Pluton (Pluto Rex Inferorum)
+### 33. Pluton (Pluto Rex Inferorum)
 
 dieux · légendaire · attaque 97, défense 94 · Achat à la Taberna : 600 HS  
 Fichier : `div_pluton.jpg`
@@ -385,7 +410,7 @@ Fichier : `div_pluton.jpg`
 Pluton, dieu majestueux à la barbe sombre, couronne d'or et manteau noir et pourpre, assis sur un trône sculpté dans une grande salle souterraine éclairée de lueurs bleutées, le chien Cerbère couché à ses pieds, l'air solennel et non effrayant. Illustration 3D douce et chaleureuse, façon film d'animation, couleurs dorées et pourpres, lumière de fin d'après-midi. Format portrait 3:4, sujet centré, décor simple et légèrement flou. Pas de sang, pas de violence montrée. Aucun texte, aucune lettre, aucun chiffre dans l'image.
 ```
 
-### 32. Pompéi et le Vésuve (Pompeii et Vesuvius)
+### 34. Pompéi et le Vésuve (Pompeii et Vesuvius)
 
 monuments · légendaire · attaque 99, défense 90 · Achat à la Taberna : 600 HS  
 Fichier : `mon_pompei.jpg`

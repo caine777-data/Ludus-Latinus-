@@ -1,8 +1,8 @@
-# Album, série 2 : 32 cartes de plus et un second adversaire
+# Album, série 2 : 34 cartes de plus et un second adversaire
 
 Proposition de l'architecte (29/10/2026), à la suite du premier retour de
-Clovis (« plus de cartes à débloquer pour le jeu de cartes »). Cadre validé
-par Cédric : 32 cartes, gagnées en jouant à la Bataille, dans les nouveaux
+Clovis (« plus de cartes à débloquer pour le jeu de cartes »), puis sa demande
+de Rémus et de Jules César (30/10). Cadre validé par Cédric : 34 cartes, gagnées en jouant à la Bataille, dans les nouveaux
 jeux, achetées à prix fixe, et un second adversaire. À valider : la liste,
 les devises et la répartition. Les anecdotes et les prompts viennent ensuite.
 
@@ -15,20 +15,22 @@ très lentement, et aucune carte ne se gagne en jouant à la Bataille.
 ## Le choix des personnages
 
 - Aucun doublon avec l'album actuel ni avec les 26 cartes du Panthéon
-  (Jupiter, Hercule, Neptune, César, Auguste, Cicéron, Virgile…).
-- Familles plus équilibrées à la fin : héros 19, dieux 16, créatures 15,
-  monuments 14, soit 64 cartes (la série 1 penchait vers les héros : 13 sur 32).
+  (Jupiter, Hercule, Neptune, Auguste, Cicéron, Virgile…), sauf Jules César,
+  demandé par Clovis : les cartes du Panthéon ne jouent pas à la Bataille.
+- Familles plus équilibrées à la fin : héros 21, dieux 16, créatures 15,
+  monuments 14, soit 66 cartes (la série 1 penchait vers les héros : 13 sur 32).
 - Des héroïnes : Clélie, Cornélie, Atalante, aux côtés de Julia la Vestale.
-- Devises latines simples (présent, mots déjà vus), sauf trois citations
+- Devises latines simples (présent, mots déjà vus), sauf quatre citations
   célèbres signalées. **À faire relire par le professeur de latin.**
 
-## Les 32 cartes
+## Les 34 cartes
 
-### Gagnées en jouant à la Bataille contre Crassus (7)
+### Gagnées en jouant à la Bataille contre Crassus (8)
 
 | Victoires | Carte | Famille | Rareté | Devise | Traduction |
 |---|---|---|---|---|---|
 | 1 | Clélie | héros | commune | *Cloelia Tiberim tranat.* | Clélie traverse le Tibre à la nage. |
+| 2 | Rémus | héros | commune | *Remus sulcum transilit.* | Rémus saute par-dessus le sillon. |
 | 3 | Cupidon | dieux | commune | *Cupido sagittas mittit.* | Cupidon lance des flèches. |
 | 5 | Mucius Scaevola | héros | rare | *Et facere et pati fortia Romanum est.* (Tite-Live) | Agir et souffrir avec courage, c'est être romain. |
 | 10 | Le Capitole | monuments | rare | *Capitolium arx Romae est.* | Le Capitole est la citadelle de Rome. |
@@ -38,12 +40,13 @@ très lentement, et aucune carte ne se gagne en jouant à la Bataille.
 
 La 5e victoire ouvre aussi le second adversaire.
 
-### Gagnées contre le second adversaire (3)
+### Gagnées contre le second adversaire (4)
 
 | Victoires | Carte | Famille | Rareté | Devise | Traduction |
 |---|---|---|---|---|---|
 | 1 | Le Phénix | créatures | rare | *Phoenix e cineribus resurgit.* | Le phénix renaît de ses cendres. |
 | 5 | Scylla | créatures | épique | *Scylla nautas terret.* | Scylla effraie les marins. |
+| 7 | Jules César | héros | légendaire | *Veni, vidi, vici.* (César) | Je suis venu, j'ai vu, j'ai vaincu. |
 | 10 | Vénus | dieux | légendaire | *Amor omnia vincit.* (Virgile) | L'amour triomphe de tout. |
 
 ### Gagnées dans les nouveaux jeux (6)
@@ -88,10 +91,10 @@ Total des achats : 3 550 HS. C'est la dépense de long terme qui manquait aux
 
 | Rareté | Série 2 | Album complet |
 |---|---|---|
-| Commune | 9 | 17 |
+| Commune | 10 | 18 |
 | Rare | 10 | 19 |
 | Épique | 9 | 20 |
-| Légendaire | 4 | 8 |
+| Légendaire | 5 | 9 |
 
 ## Le second adversaire : Cléopâtre
 
@@ -109,8 +112,8 @@ Total des achats : 3 550 HS. C'est la dépense de long terme qui manquait aux
 
 ## Ensuite, après validation
 
-1. Les 32 anecdotes (3 à 4 lignes chacune, comme la série 1).
-2. Les 32 prompts d'illustration, plus le portrait de Cléopâtre.
+1. Les 34 anecdotes (3 à 4 lignes chacune, comme la série 1).
+2. Les 34 prompts d'illustration, plus le portrait de Cléopâtre.
 3. Le code : nouvelles cartes et succès, compteurs (victoires par
    adversaire, Paires éclair, Mot du jour), achat à la Taberna, choix de
    l'adversaire, tests.
