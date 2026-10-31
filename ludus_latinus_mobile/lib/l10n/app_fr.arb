@@ -1782,5 +1782,16 @@
   },
   "shopCardsTab": "🃏 Cartes",
   "shopCardsHint": "Choisis ta carte : elle rejoint ton album et ta main à la Bataille.",
-  "shopCardOwned": "Dans l'album"
+  "shopCardOwned": "Dans l'album",
+  "titleTagline": "Le latin du collège, de la 5e à la 3e",
+  "titleGreeting": "Salve, {nom} !",
+  "@titleGreeting": {
+    "placeholders": {
+      "nom": {
+        "type": "String"
+      }
+    }
+  },
+  "titleEnterTouch": "Touche l'écran pour entrer",
+  "titleEnterClick": "Clique pour entrer"
 }

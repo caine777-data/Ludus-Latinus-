@@ -52,6 +52,7 @@ flutter:
     - assets/images/cas/
     - assets/images/epigraphie/
     - assets/images/studio/
+    - assets/images/titre/
     - assets/images/lecons/
     - assets/images/album/
     - assets/images/bataille/

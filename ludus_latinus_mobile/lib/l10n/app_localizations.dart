@@ -3732,6 +3732,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Dans l\'album'**
   String get shopCardOwned;
+
+  /// No description provided for @titleTagline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le latin du collège, de la 5e à la 3e'**
+  String get titleTagline;
+
+  /// No description provided for @titleGreeting.
+  ///
+  /// In fr, this message translates to:
+  /// **'Salve, {nom} !'**
+  String titleGreeting(String nom);
+
+  /// No description provided for @titleEnterTouch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Touche l\'écran pour entrer'**
+  String get titleEnterTouch;
+
+  /// No description provided for @titleEnterClick.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clique pour entrer'**
+  String get titleEnterClick;
 }
 
 class _AppLocalizationsDelegate

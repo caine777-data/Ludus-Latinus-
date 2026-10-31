@@ -10,20 +10,17 @@ import '../../core/widgets.dart';
 import 'hero_creation_screen.dart';
 
 /// « Qui joue ? » : un médaillon par élève de l'appareil (4 au plus), et un
-/// bouton pour en ajouter un. Montré au démarrage dès qu'il y a deux élèves,
-/// et depuis les Paramètres (« Changer d'élève »).
+/// bouton pour en ajouter un. S'ouvre par « Changer d'élève », sur l'écran titre
+/// et dans les Paramètres.
 class ChoixProfilScreen extends StatefulWidget {
   final GameRepository repo;
 
-  /// Au démarrage, il faut choisir : pas de retour possible.
-  final bool auDemarrage;
-
-  const ChoixProfilScreen({super.key, required this.repo, required this.auDemarrage});
+  const ChoixProfilScreen({super.key, required this.repo});
 
   /// Ouvre l'écran ; renvoie vrai si l'élève actif a changé (ou vient d'être créé).
-  static Future<bool> montrer(BuildContext context, GameRepository repo, {required bool auDemarrage}) async {
+  static Future<bool> montrer(BuildContext context, GameRepository repo) async {
     final change = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(builder: (_) => ChoixProfilScreen(repo: repo, auDemarrage: auDemarrage)),
+      MaterialPageRoute(builder: (_) => ChoixProfilScreen(repo: repo)),
     );
     return change ?? false;
   }
@@ -69,38 +66,34 @@ class _ChoixProfilScreenState extends State<ChoixProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: !widget.auDemarrage,
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: !widget.auDemarrage,
-          title: Text(context.l10n.profilesWho),
-        ),
-        body: ColonneLecture(
-          largeurMax: 640,
-          child: FutureBuilder<List<UserProfile>>(
-            future: _profils,
-            builder: (context, instantane) {
-              final profils = instantane.data;
-              if (profils == null) return const Center(child: CircularProgressIndicator());
-              return GridView.count(
-                padding: const EdgeInsets.all(16),
-                crossAxisCount: 2,
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: 0.78,
-                children: [
-                  for (final p in profils)
-                    _Medaillon(
-                      profil: p,
-                      actif: p.id == widget.repo.storageService.idActif,
-                      onTap: () => _choisir(p),
-                    ),
-                  if (widget.repo.peutAjouterProfil) _NouvelEleve(onTap: _ajouter),
-                ],
-              );
-            },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(context.l10n.profilesWho),
+      ),
+      body: ColonneLecture(
+        largeurMax: 640,
+        child: FutureBuilder<List<UserProfile>>(
+          future: _profils,
+          builder: (context, instantane) {
+            final profils = instantane.data;
+            if (profils == null) return const Center(child: CircularProgressIndicator());
+            return GridView.count(
+              padding: const EdgeInsets.all(16),
+              crossAxisCount: 2,
+              mainAxisSpacing: 14,
+              crossAxisSpacing: 14,
+              childAspectRatio: 0.78,
+              children: [
+                for (final p in profils)
+                  _Medaillon(
+                    profil: p,
+                    actif: p.id == widget.repo.storageService.idActif,
+                    onTap: () => _choisir(p),
+                  ),
+                if (widget.repo.peutAjouterProfil) _NouvelEleve(onTap: _ajouter),
+              ],
+            );
+          },
         ),
       ),
     );

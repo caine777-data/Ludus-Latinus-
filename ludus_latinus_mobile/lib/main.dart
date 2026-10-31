@@ -189,9 +189,7 @@ class _LudusLatinusAppState extends State<LudusLatinusApp> {
             );
           }
 
-          // Pas de cinématique d'ouverture : l'élève arrive directement sur
-          // l'accueil (l'ancienne vidéo, en basse définition, affichait du
-          // texte anglais et des caractères manquants).
+          // L'accueil lance lui-même le démarrage : studio, intro, écran titre.
           return HomeScreen(repo: widget.repository);
         },
       ),

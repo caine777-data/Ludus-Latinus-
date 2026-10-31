@@ -285,13 +285,14 @@ class RomanCinematicOverlay {
   static Future<void> showStudio(BuildContext context) =>
       _show(context, CinematicConfig.forType(CinematicType.studio));
 
-  /// Démarrage : studio puis intro dans un seul écran. « Passer » fait passer
-  /// à la vidéo suivante ; l'accueil n'apparaît jamais entre les deux, sans quoi
-  /// un double appui sur « Passer » ouvrait ce qui se trouvait dessous.
-  static Future<void> showStudioPuisIntro(BuildContext context) {
+  /// Démarrage : studio, intro au premier lancement, puis [ensuite] dans un seul
+  /// écran. « Passer » fait passer à l'étape suivante ; l'accueil n'apparaît
+  /// jamais entre deux, sans quoi un double appui sur « Passer » ouvrait ce qui
+  /// se trouvait dessous. [ensuite] dépile lui-même l'écran quand il a fini.
+  static Future<void> showDemarrage(BuildContext context, {required bool avecIntro, required WidgetBuilder ensuite}) {
     final configs = [
       CinematicConfig.forType(CinematicType.studio),
-      CinematicConfig.forType(CinematicType.intro),
+      if (avecIntro) CinematicConfig.forType(CinematicType.intro),
     ];
     return Navigator.of(context).push(
       PageRouteBuilder(
@@ -299,7 +300,7 @@ class RomanCinematicOverlay {
         transitionDuration: const Duration(milliseconds: 350),
         pageBuilder: (ctx, _, __) => _SuiteDeCinematiques(
           configs: configs,
-          onTerminee: () => Navigator.of(ctx).pop(),
+          ensuite: ensuite,
         ),
         transitionsBuilder: (_, animation, __, child) => FadeTransition(opacity: animation, child: child),
       ),
@@ -360,9 +361,9 @@ class RomanCinematicOverlay {
 /// Joue plusieurs cinématiques à la suite dans la même page.
 class _SuiteDeCinematiques extends StatefulWidget {
   final List<CinematicConfig> configs;
-  final VoidCallback onTerminee;
+  final WidgetBuilder ensuite;
 
-  const _SuiteDeCinematiques({required this.configs, required this.onTerminee});
+  const _SuiteDeCinematiques({required this.configs, required this.ensuite});
 
   @override
   State<_SuiteDeCinematiques> createState() => _SuiteDeCinematiquesState();
@@ -371,21 +372,20 @@ class _SuiteDeCinematiques extends StatefulWidget {
 class _SuiteDeCinematiquesState extends State<_SuiteDeCinematiques> {
   int _index = 0;
 
-  void _suivante() {
-    if (_index + 1 >= widget.configs.length) {
-      widget.onTerminee();
-    } else {
-      setState(() => _index++);
-    }
-  }
+  void _suivante() => setState(() => _index++);
 
   @override
   Widget build(BuildContext context) {
-    return RomanCinematicPlayer(
-      // Une clé par vidéo : le lecteur repart de zéro sur la suivante.
-      key: ValueKey(_index),
-      config: widget.configs[_index],
-      onCompleted: _suivante,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 350),
+      child: _index < widget.configs.length
+          ? RomanCinematicPlayer(
+              // Une clé par vidéo : le lecteur repart de zéro sur la suivante.
+              key: ValueKey(_index),
+              config: widget.configs[_index],
+              onCompleted: _suivante,
+            )
+          : KeyedSubtree(key: const ValueKey('ensuite'), child: widget.ensuite(context)),
     );
   }
 }

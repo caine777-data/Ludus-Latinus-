@@ -2217,4 +2217,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get shopCardOwned => 'Dans l\'album';
+
+  @override
+  String get titleTagline => 'Le latin du collège, de la 5e à la 3e';
+
+  @override
+  String titleGreeting(String nom) {
+    return 'Salve, $nom !';
+  }
+
+  @override
+  String get titleEnterTouch => 'Touche l\'écran pour entrer';
+
+  @override
+  String get titleEnterClick => 'Clique pour entrer';
 }

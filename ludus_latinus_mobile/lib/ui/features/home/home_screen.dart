@@ -28,7 +28,7 @@ import '../../../data/models/profile.dart';
 import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
 import '../settings/hero_creation_screen.dart';
-import '../settings/choix_profil_screen.dart';
+import 'ecran_titre_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
@@ -132,16 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
       _introJoueeCeLancement = true;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
+        // L'intro ne passe qu'une fois : au-delà, deux vidéos avant le titre
+        // feraient trop attendre. Elle reste dans les Paramètres.
+        final avecIntro = !widget.repo.profile.introSeen;
         widget.repo.markIntroSeen();
-        // Ordre : animation du studio, puis intro, puis choix du héros.
-        // « Passer » sur le studio n'enchaîne que sur l'intro, il ne saute pas les deux.
-        await RomanCinematicOverlay.showStudioPuisIntro(context);
-        // Plusieurs élèves sur l'appareil : on demande qui joue.
-        if (!mounted) return;
-        if (widget.repo.nombreDeProfils > 1) {
-          await ChoixProfilScreen.montrer(context, widget.repo, auDemarrage: true);
-        }
-        // Premier lancement : l'élève choisit son héros juste après l'intro.
+        // Ordre : animation du studio, intro, écran titre, puis choix du héros.
+        await RomanCinematicOverlay.showDemarrage(
+          context,
+          avecIntro: avecIntro,
+          ensuite: (_) => EcranTitreScreen(repo: widget.repo),
+        );
+        // Premier lancement : l'élève choisit son héros juste après le titre.
         if (!mounted) return;
         final heroCree = await HeroCreationScreen.showIfNeeded(context, widget.repo);
         // Le héros vient d'être créé : on ouvre aussitôt la première leçon.

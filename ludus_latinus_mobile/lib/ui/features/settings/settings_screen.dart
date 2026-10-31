@@ -57,7 +57,7 @@ class SettingsScreen extends StatelessWidget {
                 ? context.l10n.profilesCount(repo.nombreDeProfils)
                 : context.l10n.profilesAddHint,
             onTap: () async {
-              final change = await ChoixProfilScreen.montrer(context, repo, auDemarrage: false);
+              final change = await ChoixProfilScreen.montrer(context, repo);
               // Autre élève : retour à l'accueil, où il retrouve sa progression
               // (et sa première leçon s'il vient d'être créé).
               if (change && context.mounted) Navigator.of(context).popUntil((r) => r.isFirst);
