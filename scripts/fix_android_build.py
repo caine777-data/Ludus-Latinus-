@@ -117,7 +117,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.luduslatinus.app"
+        applicationId "fr.icareetdedale.luduslatinus"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()

@@ -47,7 +47,9 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.luduslatinus.app"
+        // Identifiant Play Store définitif (domaine du studio à l'envers), choisi le 12/11/2026 ;
+        // le namespace Kotlin reste com.luduslatinus.app pour ne pas déplacer MainActivity.
+        applicationId "fr.icareetdedale.luduslatinus"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()

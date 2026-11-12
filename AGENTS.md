@@ -202,7 +202,7 @@ C:/Users/caine/dev/flutter/bin/flutter.bat build apk --debug
 # Émulateur
 C:/Users/caine/dev/android-sdk/emulator/emulator.exe -avd Pixel_Ludus -no-boot-anim
 C:/Users/caine/dev/android-sdk/platform-tools/adb.exe install -r build/app/outputs/flutter-apk/app-debug.apk
-C:/Users/caine/dev/android-sdk/platform-tools/adb.exe shell monkey -p com.luduslatinus.app -c android.intent.category.LAUNCHER 1
+C:/Users/caine/dev/android-sdk/platform-tools/adb.exe shell monkey -p fr.icareetdedale.luduslatinus -c android.intent.category.LAUNCHER 1
 C:/Users/caine/dev/android-sdk/platform-tools/adb.exe exec-out screencap -p > capture.png
 
 # --- Python (depuis la racine du dépôt) ---
@@ -330,6 +330,15 @@ refusé.
 
 Tenue à jour par l'architecte à chaque changement. La plus récente en haut.
 
+- **Identifiant Play définitif : `fr.icareetdedale.luduslatinus`** (12/11/2026).
+  Choisi par Cédric à la création de l'appli dans la Play Console (impossible
+  à changer ensuite). Seul `applicationId` change (`android/app/build.gradle`
+  et `scripts/fix_android_build.py`) ; le `namespace` Kotlin reste
+  `com.luduslatinus.app` pour ne pas déplacer `MainActivity`. Une appli déjà
+  installée sous l'ancien identifiant sera vue comme une autre appli :
+  désinstaller l'ancienne. Micro-entreprise immatriculée (04/11), D-U-N-S
+  obtenu, passage du compte Play en organisation en cours de validation
+  par Google.
 - **Compte Play Console créé** (22/10/2026). Compte personnel, nom public
   « Icare & Dédale », validation d'identité en cours (aucune fiche d'appli
   possible avant). `docs/publication/fiche_store.md` : adresse de
