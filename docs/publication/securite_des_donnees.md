@@ -11,5 +11,7 @@ Document interne, à recopier dans la Play Console (Règles et programmes > Cont
 
 ## À revoir si
 
+- **Édition complète (codée le 12/11/2026)** : la permission BILLING figure dans tous les builds Android, même quand l'achat est coupé. L'appli n'envoie rien elle-même : le paiement et l'historique d'achats sont traités par Google Play. À la mise en production payante, vérifier dans l'aide de la Play Console si « Historique d'achats » doit être déclaré ;
+
 - **un achat intégré est ajouté** : Google Play Billing traite le paiement. Relire la déclaration « Historique d'achats » : Google indique que les données traitées par sa propre bibliothèque de facturation n'ont pas à être déclarées par le développeur, mais il faut le vérifier dans l'aide de la Play Console au moment de l'ajout ;
 - **une fonction en ligne est ajoutée** (synchronisation, classement) : tout le formulaire est à refaire.

@@ -15,6 +15,7 @@ class StorageService {
   UserProfile _currentProfile = UserProfile();
   static const String _saveFileName = 'ludus_latinus_save.json';
   static const String _indexFileName = 'ludus_latinus_profils.json';
+  static const String _editionFileName = 'ludus_latinus_edition.json';
 
   /// Identifiant du premier élève, celui du fichier historique.
   static const String idPremierProfil = 'defaut';
@@ -95,6 +96,31 @@ class StorageService {
       await fichier.writeAsString(json.encode({'actif': _idActif, 'profils': _ids}), flush: true);
     } catch (e) {
       debugPrint('[StorageService] Erreur écriture de l\'index des profils : $e');
+    }
+  }
+
+  // --- Édition complète ---
+
+  /// Achat de l'Édition complète mémorisé sur l'appareil : il sert à tous
+  /// les élèves et ouvre les leçons même sans connexion.
+  Future<bool> lireEditionComplete() async {
+    try {
+      final fichier = File('${await _dossier()}/$_editionFileName');
+      if (!await fichier.exists()) return false;
+      final map = json.decode(await fichier.readAsString()) as Map<String, dynamic>;
+      return map['edition_complete'] == true;
+    } catch (e) {
+      debugPrint('[StorageService] Achat mémorisé illisible : le Play Store le retrouvera ($e)');
+      return false;
+    }
+  }
+
+  Future<void> ecrireEditionComplete() async {
+    try {
+      final fichier = File('${await _dossier()}/$_editionFileName');
+      await fichier.writeAsString(json.encode({'edition_complete': true}), flush: true);
+    } catch (e) {
+      debugPrint('[StorageService] Erreur écriture de l\'achat : $e');
     }
   }
 

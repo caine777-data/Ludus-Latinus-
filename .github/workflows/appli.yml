@@ -23,6 +23,13 @@ name: Ludus Latinus (Android & Windows)
 
 on:
   workflow_dispatch:
+    inputs:
+      edition_payante:
+        # Laisser décoché tant que le produit « edition_complete » n'existe
+        # pas dans la Play Console : le test fermé se fait en version complète.
+        description: "Activer l'achat de l'Édition complète (Android)"
+        type: boolean
+        default: false
   push:
     # main est une copie de la branche de travail : la construire aussi
     # ferait deux fois le même travail. Elle reste lançable à la main.
@@ -127,12 +134,12 @@ jobs:
       # celui de l'exécution du workflow l'est par construction.
       - name: APK à installer
         run: |
-          flutter build apk --release --build-number ${{ github.run_number }}
+          flutter build apk --release --build-number ${{ github.run_number }} --dart-define=EDITION_PAYANTE=${{ inputs.edition_payante || false }}
           cp build/app/outputs/flutter-apk/app-release.apk ../LudusLatinus.apk
 
       - name: Paquet Play Store
         run: |
-          flutter build appbundle --release --build-number ${{ github.run_number }}
+          flutter build appbundle --release --build-number ${{ github.run_number }} --dart-define=EDITION_PAYANTE=${{ inputs.edition_payante || false }}
           cp build/app/outputs/bundle/release/app-release.aab ../LudusLatinus-PlayStore.aab
 
       - uses: actions/upload-artifact@v4

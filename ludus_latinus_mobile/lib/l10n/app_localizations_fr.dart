@@ -2231,4 +2231,69 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get titleEnterClick => 'Clique pour entrer';
+
+  @override
+  String get editionTitle => 'Édition complète';
+
+  @override
+  String get editionBadge => 'Édition complète';
+
+  @override
+  String get editionHeadline => 'Toute la Via Appia';
+
+  @override
+  String get editionFree =>
+      'Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits.';
+
+  @override
+  String editionUnlocks(int n) {
+    return 'L\'Édition complète ouvre les $n autres leçons, jusqu\'à la fin de la 3e, pour tous les élèves de cet appareil.';
+  }
+
+  @override
+  String get editionPromise =>
+      'Un seul achat, sans abonnement. Jamais de publicité, et les sesterces ne s\'achètent pas.';
+
+  @override
+  String get editionParent =>
+      'Demande à un parent : l\'achat passe par le compte Google de la famille.';
+
+  @override
+  String editionBuy(String prix) {
+    return 'Débloquer pour $prix';
+  }
+
+  @override
+  String get editionLoading => 'Connexion au Play Store…';
+
+  @override
+  String get editionUnavailable =>
+      'Achat indisponible pour l\'instant. Vérifie la connexion à Internet.';
+
+  @override
+  String get editionPending =>
+      'Achat en attente : la suite s\'ouvrira dès que Google l\'aura confirmé.';
+
+  @override
+  String get editionError => 'L\'achat n\'a pas abouti. Tu peux réessayer.';
+
+  @override
+  String get editionRestore => 'Restaurer mon achat';
+
+  @override
+  String get editionRestoreNone => 'Aucun achat trouvé sur ce compte Google.';
+
+  @override
+  String get editionThanks => 'Merci ! Toute la Via Appia est ouverte.';
+
+  @override
+  String get editionContinue => 'Continuer';
+
+  @override
+  String get editionSettingsActive =>
+      'Active : toutes les leçons sont ouvertes';
+
+  @override
+  String get editionSettingsHint =>
+      'Les mondes 4 à 26 en entier, en un seul achat';
 }

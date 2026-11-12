@@ -3756,6 +3756,114 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Clique pour entrer'**
   String get titleEnterClick;
+
+  /// No description provided for @editionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Édition complète'**
+  String get editionTitle;
+
+  /// No description provided for @editionBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'Édition complète'**
+  String get editionBadge;
+
+  /// No description provided for @editionHeadline.
+  ///
+  /// In fr, this message translates to:
+  /// **'Toute la Via Appia'**
+  String get editionHeadline;
+
+  /// No description provided for @editionFree.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits.'**
+  String get editionFree;
+
+  /// No description provided for @editionUnlocks.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'Édition complète ouvre les {n} autres leçons, jusqu\'à la fin de la 3e, pour tous les élèves de cet appareil.'**
+  String editionUnlocks(int n);
+
+  /// No description provided for @editionPromise.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un seul achat, sans abonnement. Jamais de publicité, et les sesterces ne s\'achètent pas.'**
+  String get editionPromise;
+
+  /// No description provided for @editionParent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande à un parent : l\'achat passe par le compte Google de la famille.'**
+  String get editionParent;
+
+  /// No description provided for @editionBuy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Débloquer pour {prix}'**
+  String editionBuy(String prix);
+
+  /// No description provided for @editionLoading.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion au Play Store…'**
+  String get editionLoading;
+
+  /// No description provided for @editionUnavailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Achat indisponible pour l\'instant. Vérifie la connexion à Internet.'**
+  String get editionUnavailable;
+
+  /// No description provided for @editionPending.
+  ///
+  /// In fr, this message translates to:
+  /// **'Achat en attente : la suite s\'ouvrira dès que Google l\'aura confirmé.'**
+  String get editionPending;
+
+  /// No description provided for @editionError.
+  ///
+  /// In fr, this message translates to:
+  /// **'L\'achat n\'a pas abouti. Tu peux réessayer.'**
+  String get editionError;
+
+  /// No description provided for @editionRestore.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaurer mon achat'**
+  String get editionRestore;
+
+  /// No description provided for @editionRestoreNone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun achat trouvé sur ce compte Google.'**
+  String get editionRestoreNone;
+
+  /// No description provided for @editionThanks.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci ! Toute la Via Appia est ouverte.'**
+  String get editionThanks;
+
+  /// No description provided for @editionContinue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer'**
+  String get editionContinue;
+
+  /// No description provided for @editionSettingsActive.
+  ///
+  /// In fr, this message translates to:
+  /// **'Active : toutes les leçons sont ouvertes'**
+  String get editionSettingsActive;
+
+  /// No description provided for @editionSettingsHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les mondes 4 à 26 en entier, en un seul achat'**
+  String get editionSettingsHint;
 }
 
 class _AppLocalizationsDelegate

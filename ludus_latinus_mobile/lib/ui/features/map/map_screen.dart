@@ -9,7 +9,7 @@ import '../settings/professeurs_screen.dart';
 import '../../../data/models/lesson.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
-import '../lesson/lesson_screen.dart';
+import '../edition/edition_complete_screen.dart';
 import '../../core/avatar_assets.dart';
 import 'via_appia_road.dart';
 import '../../../l10n/l10n.dart';
@@ -67,10 +67,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _openLesson(Lesson lesson) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => LessonScreen(repo: widget.repo, lesson: lesson)),
-    );
+    await ouvrirLecon(context, widget.repo, lesson);
     if (!mounted) return;
     final next = _nextLessonId();
     if (next != _pawnLessonId) {
@@ -636,6 +633,11 @@ class _MapScreenState extends State<MapScreen> {
                   Text(
                     '★' * widget.repo.starsForLesson(lesson.id).clamp(0, 3) + '☆' * (3 - widget.repo.starsForLesson(lesson.id).clamp(0, 3)),
                     style: const TextStyle(fontSize: 11, color: RomanColors.goldDark, fontWeight: FontWeight.bold),
+                  )
+                else if (isUnlocked && widget.repo.leconReservee(lesson))
+                  Text(
+                    context.l10n.editionBadge,
+                    style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: RomanColors.imperialPurple),
                   )
                 else if (isCurrentActive)
                   Container(

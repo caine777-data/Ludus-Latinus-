@@ -3,6 +3,7 @@ import 'dart:ui' show PlatformDispatcher;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'data/repositories/game_repository.dart';
+import 'data/services/achat_service.dart';
 import 'data/services/data_service.dart';
 import 'data/services/storage_service.dart';
 import 'data/services/rappel_service.dart';
@@ -31,6 +32,7 @@ void main() async {
     dataService: dataService,
     storageService: storageService,
     rappels: RappelService(),
+    achats: AchatService.pourCetteCompilation(storageService),
   );
 
   runApp(LudusLatinusApp(repository: repository));

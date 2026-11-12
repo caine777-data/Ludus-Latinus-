@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/game_repository.dart';
 import '../../../data/services/audio_service.dart';
 import '../../core/cinematic_player.dart';
+import '../edition/edition_complete_screen.dart';
 import 'about_screen.dart';
 import 'choix_profil_screen.dart';
 import 'professeurs_screen.dart';
@@ -49,6 +50,16 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 22),
+          if (repo.achats.estPayant) ...[
+            _Titre(context.l10n.editionTitle),
+            _Reglage(
+              icone: Icons.workspace_premium_outlined,
+              titre: context.l10n.editionTitle,
+              sousTitre: repo.editionComplete ? context.l10n.editionSettingsActive : context.l10n.editionSettingsHint,
+              onTap: () => EditionCompleteScreen.montrer(context, repo),
+            ),
+            const SizedBox(height: 22),
+          ],
           _Titre(context.l10n.profilesSection),
           _Reglage(
             icone: Icons.people_alt_outlined,

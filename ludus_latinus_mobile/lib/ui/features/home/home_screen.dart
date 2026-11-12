@@ -29,6 +29,7 @@ import '../../../data/models/lesson.dart';
 import '../../core/avatar_assets.dart';
 import '../settings/hero_creation_screen.dart';
 import 'ecran_titre_screen.dart';
+import '../edition/edition_complete_screen.dart';
 import '../settings/settings_screen.dart';
 import '../../../l10n/l10n.dart';
 import '../album/album_screen.dart';
@@ -951,14 +952,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Expanded(
                     child: ElevatedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => LessonScreen(repo: widget.repo, lesson: activeLesson),
-                          ),
-                        );
-                      },
+                      onPressed: () => ouvrirLecon(context, widget.repo, activeLesson),
                       icon: Icon(
                         isActiveCompleted ? Icons.replay_rounded : Icons.play_arrow_rounded,
                         size: 20,
@@ -1033,14 +1027,7 @@ class _HomeScreenState extends State<HomeScreen> {
               final isCurrent = (l.id == activeLesson.id);
 
               return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LessonScreen(repo: widget.repo, lesson: l),
-                    ),
-                  );
-                },
+                onTap: () => ouvrirLecon(context, widget.repo, l),
                 borderRadius: BorderRadius.circular(12),
                 child: Container(
                   width: 140,

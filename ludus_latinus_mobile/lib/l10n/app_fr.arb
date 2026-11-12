@@ -1793,5 +1793,37 @@
     }
   },
   "titleEnterTouch": "Touche l'écran pour entrer",
-  "titleEnterClick": "Clique pour entrer"
+  "titleEnterClick": "Clique pour entrer",
+  "editionTitle": "Édition complète",
+  "editionBadge": "Édition complète",
+  "editionHeadline": "Toute la Via Appia",
+  "editionFree": "Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits.",
+  "editionUnlocks": "L'Édition complète ouvre les {n} autres leçons, jusqu'à la fin de la 3e, pour tous les élèves de cet appareil.",
+  "@editionUnlocks": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "editionPromise": "Un seul achat, sans abonnement. Jamais de publicité, et les sesterces ne s'achètent pas.",
+  "editionParent": "Demande à un parent : l'achat passe par le compte Google de la famille.",
+  "editionBuy": "Débloquer pour {prix}",
+  "@editionBuy": {
+    "placeholders": {
+      "prix": {
+        "type": "String"
+      }
+    }
+  },
+  "editionLoading": "Connexion au Play Store…",
+  "editionUnavailable": "Achat indisponible pour l'instant. Vérifie la connexion à Internet.",
+  "editionPending": "Achat en attente : la suite s'ouvrira dès que Google l'aura confirmé.",
+  "editionError": "L'achat n'a pas abouti. Tu peux réessayer.",
+  "editionRestore": "Restaurer mon achat",
+  "editionRestoreNone": "Aucun achat trouvé sur ce compte Google.",
+  "editionThanks": "Merci ! Toute la Via Appia est ouverte.",
+  "editionContinue": "Continuer",
+  "editionSettingsActive": "Active : toutes les leçons sont ouvertes",
+  "editionSettingsHint": "Les mondes 4 à 26 en entier, en un seul achat"
 }

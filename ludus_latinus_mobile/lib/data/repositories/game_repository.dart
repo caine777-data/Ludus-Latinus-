@@ -3,6 +3,7 @@ import '../models/album.dart';
 import '../models/cursus_honorum.dart';
 import '../models/daily_quest.dart';
 import '../models/goodie_item.dart';
+import '../models/lesson.dart';
 import '../models/carte_pantheon.dart';
 import '../models/monument.dart';
 import '../models/mot_du_jour.dart';
@@ -10,6 +11,7 @@ import '../models/profile.dart';
 import '../models/srs_card.dart';
 import '../models/thesaurus_entry.dart';
 import '../models/world.dart';
+import '../services/achat_service.dart';
 import '../services/data_service.dart';
 import '../services/rappel_service.dart';
 import '../services/storage_service.dart';
@@ -47,11 +49,44 @@ class GameRepository extends ChangeNotifier {
   /// Rappels quotidiens (Android). Absent dans les tests.
   final RappelService? rappels;
 
+  /// Achat de l'Édition complète ; offerte par défaut (tests, test fermé, PC).
+  final AchatService achats;
+
   GameRepository({
     required this.dataService,
     required this.storageService,
     this.rappels,
-  });
+    AchatService? achats,
+  }) : achats = achats ?? AchatOffert() {
+    // Un achat confirmé rouvre aussitôt la carte et l'accueil.
+    this.achats.addListener(notifyListeners);
+  }
+
+  // ------------------------------------------------------------------
+  // Édition complète
+  // ------------------------------------------------------------------
+
+  /// Mondes entièrement gratuits ; au-delà, seule leur première leçon l'est
+  /// (un professeur doit pouvoir faire travailler le niveau de sa classe).
+  static const int mondesGratuits = 3;
+
+  bool get editionComplete => achats.editionComplete;
+
+  /// Vrai si la leçon demande l'Édition complète. Une leçon déjà réussie
+  /// reste ouverte : les testeurs du test fermé gardent ce qu'ils ont fait.
+  bool leconReservee(Lesson lecon) {
+    if (achats.editionComplete || isLessonCompleted(lecon.id)) return false;
+    for (var i = 0; i < worlds.length; i++) {
+      final rang = worlds[i].lessons.indexWhere((l) => l.id == lecon.id);
+      if (rang >= 0) return i >= mondesGratuits && rang > 0;
+    }
+    return false;
+  }
+
+  /// Leçons que l'Édition complète ajoute, pour l'écran d'achat.
+  int get nombreLeconsDeLEdition => worlds
+      .skip(mondesGratuits)
+      .fold(0, (total, monde) => total + (monde.lessons.length - 1).clamp(0, 1 << 20));
 
   // ------------------------------------------------------------------
   // Objectif du jour et rappel quotidien
@@ -409,6 +444,7 @@ class GameRepository extends ChangeNotifier {
   Future<void> initialize() async {
     await dataService.loadDataset();
     await storageService.init();
+    await achats.init();
     // Les rappels se recalent à chaque ouverture (série, prénom, heure).
     replanifierRappels();
     notifyListeners();
