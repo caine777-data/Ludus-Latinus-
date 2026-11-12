@@ -1,6 +1,6 @@
 # Play Console : réponses du tableau de bord
 
-Document interne (12/11/2026), à recopier dans la Play Console, menu « Contenu de l'application ». Les réponses sont vérifiées sur le code au commit `1bdeaef` : le manifeste fusionné de publication n'a pas de permission INTERNET (seulement notifications, démarrage, vibration, état réseau ajouté par une bibliothèque). L'Édition complète n'est pas encore codée : à son arrivée, relire les lignes marquées (Billing).
+Document interne (12/11/2026), à recopier dans la Play Console, menu « Contenu de l'application ». Les réponses sont vérifiées sur le code. Depuis l'Édition complète (commit `d7b0bb2`, AAB n° 100), la bibliothèque Google Play Billing ajoute les permissions INTERNET et BILLING au build de publication ; l'appli elle-même n'envoie toujours rien. Les lignes marquées (Billing) changent quand l'achat est activé en production.
 
 ## Règles et programmes
 

@@ -4,7 +4,7 @@ Document interne, à recopier dans la Play Console (Règles et programmes > Cont
 
 | Question | Réponse | Raison |
 |---|---|---|
-| Votre application collecte-t-elle ou partage-t-elle des types de données utilisateur obligatoires ? | **Non** | Aucune donnée ne quitte l'appareil : pas de permission INTERNET dans le build de publication. |
+| Votre application collecte-t-elle ou partage-t-elle des types de données utilisateur obligatoires ? | **Non** | Aucune donnée ne quitte l'appareil. Depuis l'Édition complète (AAB n° 100), la bibliothèque Google Play Billing ajoute les permissions INTERNET et BILLING : seul le Play Store s'en sert, pour l'achat ; l'appli n'envoie rien elle-même. |
 | Les données sont-elles chiffrées en transit ? | sans objet | Aucune transmission. |
 | Les utilisateurs peuvent-ils demander la suppression de leurs données ? | sans objet | Rien n'est collecté ; désinstaller l'appli efface tout. |
 | URL de la politique de confidentialité | https://icareetdedale.fr/confidentialite/ | Domaine du studio depuis le 19/10/2026 ; l'ancienne adresse Netlify y redirige. |
