@@ -1,6 +1,6 @@
 # Play Console : réponses du tableau de bord
 
-Document interne (12/11/2026), à recopier dans la Play Console, menu « Contenu de l'application ». Les réponses sont vérifiées sur le code. Depuis l'Édition complète (commit `d7b0bb2`, AAB n° 100), la bibliothèque Google Play Billing ajoute les permissions INTERNET et BILLING au build de publication ; l'appli elle-même n'envoie toujours rien. Les lignes marquées (Billing) changent quand l'achat est activé en production.
+**Saisi dans la Play Console le 13/11/2026** (déclarations enregistrées, à envoyer pour examen depuis la « Vue d'ensemble de la publication »). Document interne, rédigé le 12/11/2026, menu « Contenu de l'application ». Les réponses sont vérifiées sur le code. Depuis l'Édition complète (commit `d7b0bb2`, AAB n° 100), la bibliothèque Google Play Billing ajoute les permissions INTERNET et BILLING au build de publication ; l'appli elle-même n'envoie toujours rien. Les lignes marquées (Billing) changent quand l'achat est activé en production.
 
 ## Règles et programmes
 
@@ -35,12 +35,14 @@ Catégorie : **Éducation** (« Référence, actualités ou éducation » si le 
 | Peur | Non | Les créatures sont dessinées pour des collégiens. |
 | Sexualité, nudité | Non | Le mot « lupanar » a été retiré du dictionnaire (octobre 2026). |
 | Langage grossier | Non | |
-| Drogues, alcool, tabac | Non | Gaius est aubergiste, mais aucune boisson n'est montrée ni nommée. |
+| Drogues, alcool, tabac | **Oui : alcool, simple référence, rare** | Le contenu parle du vin : *vinum* au monde 8, Bacchus, Polyphème enivré par Ulysse. Le cacher exposerait à un refus pour déclaration trompeuse. |
 | Jeux d'argent simulés | **Non** | La taverne joue aux dés (approcher XXI), mais l'élève ne mise rien et ne perd jamais de sesterces : une victoire en rapporte, une défaite ne coûte rien. Si l'IARC demande une précision, la donner ainsi. |
 | Interactions entre utilisateurs, partage de position | Non | Hors ligne. |
 | Achats numériques | Non pour l'instant. (Billing) : **Oui** dès l'ajout de l'Édition complète. | |
 
-Classification attendue : PEGI 3 ou 7 (la violence légère donne souvent PEGI 7).
+Catégorie retenue : **Jeu** (l'appli contient des jeux). Violence déclarée : contre des humains (duels) et des créatures, cadre fantastique, style enfantin, réactions irréalistes, violence évoquée et rarement montrée de loin, aucun sang, pas de contexte de guerre réel.
+
+**Classification obtenue (13/11/2026)** : PEGI 3 (Europe), ESRB Tout public (légère violence fictive, mention d'alcool), USK 6, tous publics en Australie, au Brésil et ailleurs ; Corée 15+ et Taïwan 15 à cause de l'alcool (appli non diffusée là-bas).
 
 ## Fiche principale
 
@@ -53,3 +55,11 @@ Recopier `fiche_store.md` (nom, description courte, description complète) et le
 Catégorie : Éducation. Coordonnées : icareetdedale.studio@gmail.com, site https://icareetdedale.fr/.
 
 (Billing) : avant la production, ajouter à la description la phrase sur l'Édition complète, prévue dans `fiche_store.md`, « À revoir avant la mise en production ».
+
+## Autres déclarations saisies le 13/11/2026
+
+- Informations de connexion : « Non », aucune section limitée. **(Billing) : à repasser en « Oui » quand l'achat sera actif** (les produits payants comptent comme restriction) et fournir aux examinateurs un moyen d'accéder aux leçons réservées, car ils ne peuvent pas acheter.
+- Programme « Approuvé par les enseignants » : inscrit.
+- Sécurité des données : aucune collecte ; mention « S'engage à respecter les règles pour les contenus familiaux de Play » affichée.
+- Certification COPPA / RGPD cochée (appli sans collecte).
+- Statut de professionnel : « Oui » (EI Icare & Dédale), sans URL de conditions d'utilisation. Vérifier que les coordonnées publiques du compte ne montrent rien de personnel.
