@@ -1,6 +1,6 @@
 # Fiche Play Store de Ludus Latinus
 
-Brouillon de l'architecte (17/10/2026), à valider par Cédric avant toute saisie dans la Play Console. Les limites de longueur sont celles de Google Play.
+**Saisie dans la Play Console le 13/11/2026** (fiche par défaut fr-FR et paramètres enregistrés, à envoyer pour examen avec la première release de production). Rédigée le 17/10/2026. Les limites de longueur sont celles de Google Play.
 
 ## Nom de l'application (30 caractères max.)
 
@@ -55,9 +55,9 @@ Ludus Latinus est édité par Icare & Dédale.
 
 ## Catégorie et public
 
-- Catégorie : Éducation.
+- Type : Appli. Catégorie : « Enseignement » (libellé Google de la catégorie Éducation).
 - Public cible : 12 à 15 ans (programme Familles). À confirmer dans la Play Console : le questionnaire propose des tranches d'âge fixes.
-- Coordonnées : icareetdedale.studio@gmail.com.
+- Coordonnées publiques : icareetdedale.studio@gmail.com, site https://icareetdedale.fr/, pas de téléphone.
 - Politique de confidentialité : https://icareetdedale.fr/confidentialite/ (domaine en ligne depuis le 19/10/2026 ; l'ancienne adresse Netlify redirige ici, section Ludus Latinus).
 
 ## Visuels
@@ -66,7 +66,7 @@ Ludus Latinus est édité par Icare & Dédale.
 |---|---|---|
 | Icône | 512 × 512, PNG | prête : `store/icone_play_store_512.png` |
 | Image de présentation | 1024 × 500, JPG ou PNG | projet à valider : `store/presentation_1024x500.png` (illustration m21-03, script `scripts/assets/presentation_store.py`) |
-| Captures téléphone | 2 à 8, côté long au plus 2 fois le court | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, Paires éclair, Mot du jour, album, Bataille, page des professeurs (refaites le 30/10/2026, script `scripts/assets/captures_store.py`) |
+| Captures téléphone | 2 à 8, en 16:9 ou 9:16 depuis 2026 | 8 captures 1200 × 2400 dans `store/captures/`, prises sur une sauvegarde de démonstration : leçon, Via Appia, duel, Paires éclair, Mot du jour, album, Bataille, page des professeurs (refaites le 30/10/2026, script `scripts/assets/captures_store.py`). **Version importée** : `store/captures_9x16/`, 1233 × 2192, barres système retirées et bords prolongés (script `scripts/assets/captures_9x16.py`), car Google refuse désormais le 1:2 |
 | Captures tablette | facultatives, 16:9 | 8 captures 2560 × 1440 (tablette 10 pouces, paysage) dans `store/captures_tablette/` : leçon, Via Appia, duel, Ludi, Paires éclair, album, Bataille, page des professeurs (refaites le 30/10/2026 : capture 2560 × 1600 recadrée, barre d'état et barre de gestes retirées) |
 
 ## À revoir avant la mise en production
@@ -74,3 +74,9 @@ Ludus Latinus est édité par Icare & Dédale.
 - Si l'Édition complète est vendue, l'indiquer dans la description, conformément au modèle décidé (voir `AGENTS.md`, « Décisions de Cédric ») : « Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque tout le reste, en un seul achat, sans abonnement. » Google exige que les achats intégrés soient signalés. Recompter alors la partie gratuite sur le dataset du moment (119 leçons au 18/10, et non plus 113).
 - Compte développeur créé le 22/10/2026 (compte personnel, nom public Icare & Dédale, nom légal affiché par Google : Cédric Monna, France). La fiche ne peut être créée qu'après la validation d'identité par Google.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
+
+## Saisie du 13/11/2026
+
+- Déclaration IA : « Signaler les éléments comme créés ou modifiés avec l'IA », les 18 éléments cochés (icône, image de présentation, captures téléphone et tablette) : ils contiennent les illustrations Gemini. Les textes ne sont pas signalés.
+- Google mélange l'ordre des captures à l'import : vérifier l'ordre 01 à 08 après chaque import et le rétablir par glisser-déposer.
+- Vidéo : aucune pour l'instant. Projet : bande-annonce 16:9 de 30 à 50 s, deux tiers de vraies séquences de jeu, hébergée sur une chaîne YouTube Icare & Dédale (non répertoriée, « conçue pour les enfants »), avec le feu vert de Cédric.

@@ -52,7 +52,7 @@ Recopier `fiche_store.md` (nom, description courte, description complète) et le
 - captures téléphone : les 8 de `captures/`, dans l'ordre des numéros ;
 - captures tablette 10 pouces : les 8 de `captures_tablette/`. Les captures 7 pouces ne sont pas obligatoires.
 
-Catégorie : Éducation. Coordonnées : icareetdedale.studio@gmail.com, site https://icareetdedale.fr/.
+Catégorie : Enseignement (Éducation). Coordonnées : icareetdedale.studio@gmail.com, site https://icareetdedale.fr/. **Saisi le 13/11/2026**, captures téléphone importées depuis `store/captures_9x16/` (voir `fiche_store.md`).
 
 (Billing) : avant la production, ajouter à la description la phrase sur l'Édition complète, prévue dans `fiche_store.md`, « À revoir avant la mise en production ».
 
