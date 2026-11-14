@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -157,6 +158,48 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
     widget.onCompleted?.call();
   }
 
+  /// Vidéo remplie à l'écran, recadrée au besoin (BoxFit.cover).
+  Widget _videoRemplie(BoxFit fit) => FittedBox(
+        fit: fit,
+        child: SizedBox(
+          width: _controller.value.size.width,
+          height: _controller.value.size.height,
+          child: VideoPlayer(_controller),
+        ),
+      );
+
+  /// Choisit l'affichage de la vidéo selon la forme de l'écran.
+  ///
+  /// Les cinématiques sont verticales. Sur un écran de forme proche (téléphone
+  /// en portrait), on remplit l'écran : la perte sur les bords est minime.
+  /// Sur un écran nettement plus large (tablette en paysage), remplir couperait
+  /// près des deux tiers de la hauteur (le visage de Crassus disparaissait) :
+  /// on montre alors la vidéo entière, posée sur un fond flou tiré d'elle-même.
+  /// Le même contrôleur alimente les deux affichages, sans second décodage.
+  Widget _video(Size ecran) {
+    final rapportVideo = _controller.value.aspectRatio;
+    final rapportEcran = ecran.height == 0 ? rapportVideo : ecran.width / ecran.height;
+    if (rapportEcran <= rapportVideo * _ecartTolere) return _videoRemplie(BoxFit.cover);
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        ImageFiltered(
+          imageFilter: ui.ImageFilter.blur(sigmaX: _flouFond, sigmaY: _flouFond),
+          child: _videoRemplie(BoxFit.cover),
+        ),
+        // Assombrit le fond pour que la vidéo nette ressorte.
+        ColoredBox(color: Colors.black.withValues(alpha: 0.35)),
+        _videoRemplie(BoxFit.contain),
+      ],
+    );
+  }
+
+  /// Au-delà de 25 % d'écart de forme, le recadrage coupe trop d'image.
+  static const double _ecartTolere = 1.25;
+
+  /// Rayon du flou du fond : assez fort pour qu'on n'y lise plus de détail.
+  static const double _flouFond = 24;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,20 +207,11 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Vidéo verticale en plein écran (recadrée sur les écrans plus allongés).
+          // Vidéo verticale : plein écran en portrait, entière sur fond flou en paysage.
           AnimatedOpacity(
             opacity: _ready ? 1 : 0,
             duration: const Duration(milliseconds: 350),
-            child: _ready
-                ? FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: _controller.value.size.width,
-                      height: _controller.value.size.height,
-                      child: VideoPlayer(_controller),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            child: _ready ? LayoutBuilder(builder: (_, c) => _video(c.biggest)) : const SizedBox.shrink(),
           ),
 
           // Bouton « Passer » (zone tactile ≥ 48 dp).
