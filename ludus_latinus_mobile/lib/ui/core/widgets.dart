@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
-import 'themes.dart';
+import 'themes.dart';
 import '../../l10n/l10n.dart';
 export 'roman_ornaments.dart';
 export 'roman_audio_modal.dart';
@@ -22,15 +22,26 @@ void annoncerAuLecteur(BuildContext context, String message) {
 class ColonneLecture extends StatelessWidget {
   final Widget child;
   final double largeurMax;
-  const ColonneLecture({super.key, required this.child, this.largeurMax = 760});
+
+  /// À activer quand la colonne est le corps d'un Scaffold : depuis Android 15
+  /// l'appli s'affiche sous la barre de navigation du téléphone, qui masquait
+  /// alors les boutons du bas (Memoria, Bataille, Forum...). Désactivé par
+  /// défaut : dans une liste ou une feuille, la marge créerait un trou.
+  final bool protegerBas;
+
+  const ColonneLecture({super.key, required this.child, this.largeurMax = 760, this.protegerBas = false});
 
   @override
-  // heightFactor : centrée en largeur seulement. Sans lui, dans une barre du bas,
-  // la colonne prendrait toute la hauteur de l'écran et cacherait le contenu.
-  Widget build(BuildContext context) => Center(
-        heightFactor: 1,
-        child: ConstrainedBox(constraints: BoxConstraints(maxWidth: largeurMax), child: child),
-      );
+  Widget build(BuildContext context) {
+    // heightFactor : centrée en largeur seulement. Sans lui, dans une barre du bas,
+    // la colonne prendrait toute la hauteur de l'écran et cacherait le contenu.
+    final colonne = Center(
+      heightFactor: 1,
+      child: ConstrainedBox(constraints: BoxConstraints(maxWidth: largeurMax), child: child),
+    );
+    // top: false, la barre d'application protège déjà le haut.
+    return protegerBas ? SafeArea(top: false, child: colonne) : colonne;
+  }
 }
 
 class RomanButton extends StatelessWidget {

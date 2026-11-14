@@ -205,6 +205,8 @@ class _LatinEpigraphModalState extends State<LatinEpigraphModal> {
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.88,
       ),
+      // Le fond crème descend sous la barre du téléphone, les boutons restent au-dessus.
+      padding: EdgeInsets.only(bottom: MediaQuery.viewPaddingOf(context).bottom),
       decoration: const BoxDecoration(
         color: RomanColors.palatinCream,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

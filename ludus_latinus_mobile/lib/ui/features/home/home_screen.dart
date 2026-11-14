@@ -56,6 +56,11 @@ class _HomeScreenState extends State<HomeScreen> {
   // Statique : survit aux reconstructions et navigations, réinitialisé à chaque fermeture du process.
   static bool _introJoueeCeLancement = false;
 
+  /// Vrai pendant la séquence de démarrage (logo, intro, écran titre).
+  /// L'accueil se dessine une image avant que la vidéo du studio ne s'ouvre en
+  /// fondu : sans ce voile noir, l'élève voyait le menu environ une seconde.
+  bool _voileDemarrage = false;
+
   /// Surveille les cartes de l'album à annoncer. L'annonce n'apparaît que
   /// lorsque l'accueil est l'écran affiché : jamais en pleine partie, ni par-dessus
   /// le bilan d'une leçon ou une cinématique.
@@ -131,6 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // Vidéo d'introduction jouée au démarrage de l'application (une seule fois par session).
     if (!_introJoueeCeLancement) {
       _introJoueeCeLancement = true;
+      _voileDemarrage = true;
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!mounted) return;
         // L'intro ne passe qu'une fois : au-delà, deux vidéos avant le titre
@@ -145,6 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
         // Premier lancement : l'élève choisit son héros juste après le titre.
         if (!mounted) return;
+        setState(() => _voileDemarrage = false);
         final heroCree = await HeroCreationScreen.showIfNeeded(context, widget.repo);
         // Le héros vient d'être créé : on ouvre aussitôt la première leçon.
         // Avant, l'élève arrivait sur l'accueil et devait trouver seul la
@@ -178,6 +185,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Noir comme le fond de la vidéo du studio : le fondu d'entrée ne laisse rien deviner.
+    if (_voileDemarrage) return const ColoredBox(color: Colors.black);
     final profile = widget.repo.profile;
     final avatarImg = AvatarAssets.medaillon(profile);
 
@@ -1160,6 +1169,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return Container(
           height: MediaQuery.of(ctx).size.height * 0.85,
+          // Garde le bas du contenu au-dessus de la barre du téléphone (Android 15).
+          padding: EdgeInsets.only(bottom: MediaQuery.viewPaddingOf(ctx).bottom),
           decoration: const BoxDecoration(
             color: RomanColors.palatinCream,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

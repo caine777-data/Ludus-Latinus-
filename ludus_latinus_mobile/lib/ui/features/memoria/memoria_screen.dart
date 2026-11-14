@@ -396,7 +396,7 @@ class _MemoriaScreenState extends State<MemoriaScreen> with SingleTickerProvider
           ),
         ],
       ),
-      body: ColonneLecture(largeurMax: 900, child: Padding(
+      body: ColonneLecture(protegerBas: true, largeurMax: 900, child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Column(
           children: [

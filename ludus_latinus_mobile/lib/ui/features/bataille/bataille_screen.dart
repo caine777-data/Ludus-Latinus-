@@ -183,6 +183,7 @@ class _BatailleScreenState extends State<BatailleScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.bataTitle)),
       body: ColonneLecture(
+        protegerBas: true,
         largeurMax: 560,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),

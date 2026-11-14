@@ -34,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
     final profile = repo.profile;
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.settingsTitle)),
-      body: ColonneLecture(largeurMax: 900, child: ListView(
+      body: ColonneLecture(protegerBas: true, largeurMax: 900, child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           _Titre(context.l10n.settingsSectionHero),

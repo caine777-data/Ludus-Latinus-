@@ -71,6 +71,7 @@ class _ChoixProfilScreenState extends State<ChoixProfilScreen> {
         title: Text(context.l10n.profilesWho),
       ),
       body: ColonneLecture(
+        protegerBas: true,
         largeurMax: 640,
         child: FutureBuilder<List<UserProfile>>(
           future: _profils,

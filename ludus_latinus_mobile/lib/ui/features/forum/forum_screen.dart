@@ -60,7 +60,7 @@ class ForumScreen extends StatelessWidget {
               )
             ],
           ),
-          body: ColonneLecture(largeurMax: 900, child: ListView(
+          body: ColonneLecture(protegerBas: true, largeurMax: 900, child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               // 1. Fresque Panoramique du Forum Romain

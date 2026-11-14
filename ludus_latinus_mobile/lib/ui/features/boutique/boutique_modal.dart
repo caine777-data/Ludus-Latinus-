@@ -7,9 +7,9 @@ import '../../core/themes.dart';
 import '../../core/widgets.dart';
 import '../../core/particles_overlay.dart';
 import '../../core/game_juice.dart';
-import '../../core/avatar_assets.dart';
-import '../album/album_screen.dart';
-import '../../../data/models/album.dart';
+import '../../core/avatar_assets.dart';
+import '../album/album_screen.dart';
+import '../../../data/models/album.dart';
 import '../../../l10n/l10n.dart';
 
 /// Modal de la Boutique Impériale (Taberna Romana) & Penderie de l'Avatar.
@@ -247,6 +247,8 @@ class _BoutiqueModalState extends State<BoutiqueModal> {
 
         return Container(
           height: size.height * 0.90,
+          // Garde le bas du contenu au-dessus de la barre du téléphone (Android 15).
+          padding: EdgeInsets.only(bottom: MediaQuery.viewPaddingOf(context).bottom),
           decoration: const BoxDecoration(
             color: RomanColors.travertine,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

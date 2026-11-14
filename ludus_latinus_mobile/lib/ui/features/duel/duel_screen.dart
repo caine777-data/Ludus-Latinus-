@@ -95,6 +95,12 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
 
   List<Map<String, dynamic>> _duelDeck = [];
 
+  /// Énoncés posés récemment, d'un combat à l'autre pendant la session.
+  /// Le paquet est rebattu à chaque champion : sans cette mémoire, les mêmes
+  /// questions revenaient dès le combat suivant (retour de Cédric, 14/11/2026).
+  static final List<String> _poseesRecemment = [];
+  static const int _memoireQuestions = 40;
+
   // `monde` : rang du monde où la notion est enseignée. Une question n'est
   // posée qu'à l'élève qui a atteint ce monde (voir _questionsDuJoueur).
   final List<Map<String, dynamic>> _duelQuestions = [
@@ -459,11 +465,26 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
     return deck;
   }
 
+  /// Place en fin de paquet les questions posées récemment, les plus anciennes
+  /// d'abord, sans changer l'ordre des autres. Le paquet garde sa taille : un
+  /// élève qui n'a atteint qu'un monde retrouve ses questions, mais le plus tard possible.
+  List<Map<String, dynamic>> _repousserLesDejaPosees(List<Map<String, dynamic>> paquet) {
+    int rang(Map<String, dynamic> q) => _poseesRecemment.indexOf((q['q'] as String).toLowerCase());
+    final nouvelles = paquet.where((q) => rang(q) < 0).toList();
+    final revues = paquet.where((q) => rang(q) >= 0).toList()..sort((a, b) => rang(a).compareTo(rang(b)));
+    return [...nouvelles, ...revues];
+  }
+
   void _nextQuestion() {
     if (_duelDeck.isEmpty) {
-      _duelDeck = _questionsDuJoueur();
+      _duelDeck = _repousserLesDejaPosees(_questionsDuJoueur());
     }
     _currentQ = _duelDeck.removeAt(0);
+    final enonce = (_currentQ['q'] as String).toLowerCase();
+    _poseesRecemment
+      ..remove(enonce)
+      ..add(enonce);
+    if (_poseesRecemment.length > _memoireQuestions) _poseesRecemment.removeAt(0);
     final options = <String>[
       _currentQ['rep'] as String,
       ...(_currentQ['fausses'] as List<String>),

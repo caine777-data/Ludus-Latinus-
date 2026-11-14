@@ -1,7 +1,7 @@
 name: ludus_latinus_mobile
 description: "Ludus Latinus — L'épopée de la langue latine pour le Collège et les passionnés de Rome."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

@@ -101,6 +101,7 @@ class _ThesaurusScreenState extends State<ThesaurusScreen> with SingleTickerProv
       ),
       // Sur tablette, les quatre onglets gardent une largeur de lecture.
       body: ColonneLecture(
+        protegerBas: true,
         largeurMax: 900,
         child: TabBarView(
         controller: _tabController,

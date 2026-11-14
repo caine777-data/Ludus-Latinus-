@@ -104,7 +104,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(context.l10n.albumTitle)),
-      body: Center(
+      // Sous la barre de navigation du téléphone (Android 15), la dernière
+      // rangée de cartes était masquée : le bas est protégé.
+      body: SafeArea(top: false, child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 900),
           child: CustomScrollView(
@@ -181,7 +183,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 }
