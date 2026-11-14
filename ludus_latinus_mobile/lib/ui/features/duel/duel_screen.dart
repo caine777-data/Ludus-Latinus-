@@ -199,7 +199,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'monde': 9,
       'q': 'Comment appelle-t-on le casque de bronze du guerrier romain ?',
       'rep': 'La Galea',
-      'fausses': ['La Caliga', 'Le Sagum', 'La Balteus'],
+      'fausses': ['La Caliga', 'Le Sagum', 'Le Balteus'],
       'explication': 'La galea protégeait la tête, les joues et la nuque.',
     },
     {
@@ -207,7 +207,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'q': 'Que signifie « Rex » (3e déclinaison) ?',
       'rep': 'Le roi',
       'fausses': ['La loi', 'La reine', 'Le chef'],
-      'explication': 'Rex (génitif regis) donne « royal », « régime » et « souverain ».',
+      'explication': 'Rex (génitif regis) donne « royal », « régner » et « régicide ».',
     },
     {
       'monde': 11,

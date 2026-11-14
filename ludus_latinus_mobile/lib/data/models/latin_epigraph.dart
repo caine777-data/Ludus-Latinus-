@@ -67,7 +67,7 @@ class LatinEpigraph {
           texteGraver: 'CONSVMPTVM',
           formeDeveloppee: 'Consumptum',
           traduction: 'détruit / consumé',
-          roleGrammatical: 'Participe parfait passif à l\'accusatif masculin singulier',
+          roleGrammatical: 'Participe parfait passif à l\'accusatif neutre singulier (s\'accorde avec le temple sous-entendu)',
         ),
         EpigraphToken(
           texteGraver: 'RESTITVIT',
@@ -172,7 +172,7 @@ class LatinEpigraph {
           texteGraver: 'DEFENDENDA',
           formeDeveloppee: 'Defendenda',
           traduction: 'à défendre',
-          roleGrammatical: 'Adjectif verbal (gérondif d\'obligation en accord)',
+          roleGrammatical: 'Adjectif verbal à l\'ablatif féminin, accordé avec re publica : « qui doit être défendue »',
         ),
       ],
       traductionComplete: '« Par décret du Sénat pour la défense de la République. »',

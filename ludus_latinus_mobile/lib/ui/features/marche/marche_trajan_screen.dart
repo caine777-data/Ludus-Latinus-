@@ -294,7 +294,7 @@ const List<MissionNegociation> kMissionsNegociation = [
         reactionClient: '« Tu es dur en affaires... Mais j\'en ai besoin pour l\'arène. »',
       ),
       OptionNegociation(
-        texteLatin: '« Abi statim, avarus miles ! Nihil tibi vendam ! »',
+        texteLatin: '« Abi statim, avare miles ! Nihil tibi vendam ! »',
         traduction: '« Va-t\'en sur-le-champ, soldat avare ! Je ne te vendrai rien ! »',
         estBonChoix: false,
         sestercesGain: 0,
@@ -344,7 +344,7 @@ const List<MissionNegociation> kMissionsNegociation = [
     traductionClient: '« La sagesse ne peut s\'estimer par un prix ! Pourquoi exiger tant d\'or ? »',
     options: [
       OptionNegociation(
-        texteLatin: '« Sapientia inestimabilis est, sed librarius chartam emit ! LX HS (60 HS) sufficit ! »',
+        texteLatin: '« Sapientia inestimabilis est, sed librarius chartam emit ! LX HS (60 HS) sufficiunt ! »',
         traduction: '« La sagesse n\'a pas de prix, mais le copiste achète le papyrus ! 60 HS suffisent ! »',
         estBonChoix: true,
         sestercesGain: 30,

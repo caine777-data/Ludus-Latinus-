@@ -207,7 +207,7 @@
           "id": "m1-05",
           "type": "puzzle",
           "title": "La Légende : Romulus, Rémus et la Louve",
-          "content": "## Comment Rome est-elle née ?\n\nSelon la légende la plus célèbre de l'Antiquité, en **753 avant J.-C.**, deux jumeaux royaux, **Romulus et Rémus**, sont jetés dans un panier sur le fleuve Tibre par un oncle cruel.\n\nMiracle ! Le panier s'échoue au pied d'un figuier sauvage. Une louve (*Lupa*) entend leurs pleurs, les prend en pitié et les allaite dans sa grotte sacrée du mont Palatin.\n\nReconstitue cette phrase légendaire :\n*« Lupa pueros curat. »*\n*(Lupa = la louve, pueros = les enfants, curat = soigne / prend soin de)*",
+          "content": "## Comment Rome est-elle née ?\n\nSelon la légende la plus célèbre de l'Antiquité, deux jumeaux royaux, **Romulus et Rémus**, sont jetés dans un panier sur le fleuve Tibre par leur grand-oncle Amulius.\n\nMiracle ! Le panier s'échoue au pied d'un figuier sauvage. Une louve (*Lupa*) entend leurs pleurs, les prend en pitié et les allaite dans sa grotte sacrée du mont Palatin. Devenu grand, Romulus fonde Rome en **753 avant J.-C.**\n\nReconstitue cette phrase légendaire :\n*« Lupa pueros curat. »*\n*(Lupa = la louve, pueros = les enfants, curat = soigne / prend soin de)*",
           "latin": "Lupa pueros curat.",
           "mots": [
             "La louve",
@@ -741,7 +741,7 @@
         {
           "id": "m4-03",
           "type": "trou",
-          "title": "Le Cible de l'Action : L'Accusatif (Le COD)",
+          "title": "La Cible de l'Action : L'Accusatif (Le COD)",
           "content": "## Quand le mot devient COD, il attrape un -M !\n\nQuand un nom en **-a** devient la cible de l'action (le Complément d'Objet Direct / COD), les Romains lui ajoutaient un **-M** à la fin :\n- *Rosa* (Sujet) ➔ devient **ROSAM** (COD) !\n- *Puella* (Sujet) ➔ devient **PUELLAM** (COD) !\n\nExemple magique :\n*« Puer rosam videt. »*\n- *Puer* = l'enfant (Sujet)\n- *rosam* = la rose (COD, parce qu'il y a le **-m** !)\n- *videt* = voit (Verbe)\n\nComplète la terminaison pour que « la forêt » (*silva*) devienne le COD :",
           "consigne": "Mets silva au COD :",
           "avant": "Puer silv",
@@ -888,7 +888,7 @@
         {
           "id": "m5-02",
           "type": "trou",
-          "title": "Les Verbes d'Action (1er groupe en -ARE)",
+          "title": "Les Verbes d'Action (1re conjugaison en -ARE)",
           "content": "## Comment conjuguer au présent ?\n\nPrenons le verbe d'amour et d'amitié : **AMARE** (aimer).\n\nObserve les terminaisons de chaque personne :\n- *Am-**O*** = j'aime\n- *Am-**AS*** = tu aimes\n- *Am-**AT*** = il / elle aime (toujours un **-t** !)\n- *Am-**AMUS*** = nous aimons\n- *Am-**ATIS*** = vous aimez\n- *Am-**ANT*** = ils / elles aiment (toujours un **-nt** !)\n\nLes autres verbes en **-ARE** suivent le même modèle. Avec *cantare* (chanter), complète pour dire : « Les enfants chantent dans le jardin ».",
           "consigne": "Complète la terminaison de « ils chantent » :",
           "avant": "Pueri in horto cant",
@@ -2559,7 +2559,7 @@
           "id": "m15-01",
           "type": "quiz",
           "title": "Le Suffixe Magique de l'Imparfait : -BA-",
-          "content": "## Raconter le passé en latin\nEn 5ème, tu as appris le Présent (*amo* = j'aime, *amas* = tu aimes, *amat* = il aime).\n\nEn 4ème, place aux temps du passé ! Et bonne nouvelle : l'**Imparfait** latin est le temps le plus simple et régulier de toute la langue latine !\n\nIl se forme en insérant le son magique **-BA-** entre le radical et les désinences personnelles :\n- *Amo* (j'aime) ➔ **ama-BA-m** (j'aimais)\n- *Amas* (tu aimes) ➔ **ama-BA-s** (tu aimais)\n- *Amat* (il aime) ➔ **ama-BA-t** (il aimait)\n- *Amamus* (nous aimons) ➔ **ama-BA-mus** (nous aimions)\n- *Amatis* (vous aimez) ➔ **ama-BA-tis** (vous aimiez)\n- *Amant* (ils aiment) ➔ **ama-BA-nt** (ils aimaient)\n\n💡 **Même règle pour les autres groupes** :\n- *Legere* (lire) ➔ *legebam, legebas, legebat...* (je lisais, tu lisais, il lisait...)\n- *Audire* (entendre) ➔ *audiebam, audiebas, audiebat...*",
+          "content": "## Raconter le passé en latin\nEn 5ème, tu as appris le Présent (*amo* = j'aime, *amas* = tu aimes, *amat* = il aime).\n\nEn 4ème, place aux temps du passé ! Et bonne nouvelle : l'**Imparfait** latin est le temps le plus simple et régulier de toute la langue latine !\n\nIl se forme en insérant le son magique **-BA-** entre le radical et les désinences personnelles :\n- *Amo* (j'aime) ➔ **ama-BA-m** (j'aimais)\n- *Amas* (tu aimes) ➔ **ama-BA-s** (tu aimais)\n- *Amat* (il aime) ➔ **ama-BA-t** (il aimait)\n- *Amamus* (nous aimons) ➔ **ama-BA-mus** (nous aimions)\n- *Amatis* (vous aimez) ➔ **ama-BA-tis** (vous aimiez)\n- *Amant* (ils aiment) ➔ **ama-BA-nt** (ils aimaient)\n\n💡 **Même règle pour les autres conjugaisons** :\n- *Legere* (lire) ➔ *legebam, legebas, legebat...* (je lisais, tu lisais, il lisait...)\n- *Audire* (entendre) ➔ *audiebam, audiebas, audiebat...*",
           "question": "Quel son caractéristique s'intercale dans TOUS les verbes réguliers à l'imparfait latin ?",
           "options": [
             "-ba-",
@@ -2596,7 +2596,7 @@
           "id": "m15-02",
           "type": "trou",
           "title": "L'Imparfait du Verbe Être : Eram, Eras, Erat",
-          "content": "## J'étais, tu étais, il était...\nLe verbe être (*esse*) à l'imparfait est indispensable pour tous les récits de contes et d'histoire :\n\n- **ERAM** : j'étais\n- **ERAS** : tu étais\n- **ERAT** : il/elle était (*➔ formule magique pour commencer un récit !*)\n- Au pluriel, on ajoute à *era-* les terminaisons habituelles : **-mus** (nous), **-tis** (vous), **-nt** (ils, elles).\n\nExemple classique de Tite-Live :\n*« Romulus primus rex Romae erat. »* = « Romulus était le premier roi de Rome. »\n\nComplète pour dire : « Les élèves étaient à l'école » (*in schola*).",
+          "content": "## J'étais, tu étais, il était...\nLe verbe être (*esse*) à l'imparfait est indispensable pour tous les récits de contes et d'histoire :\n\n- **ERAM** : j'étais\n- **ERAS** : tu étais\n- **ERAT** : il/elle était (*➔ formule magique pour commencer un récit !*)\n- Au pluriel, on ajoute à *era-* les terminaisons habituelles : **-mus** (nous), **-tis** (vous), **-nt** (ils, elles).\n\nExemple :\n*« Romulus primus rex Romae erat. »* = « Romulus était le premier roi de Rome. »\n\nComplète pour dire : « Les élèves étaient à l'école » (*in schola*).",
           "consigne": "Complète le verbe être : « ils étaient » :",
           "avant": "Discipuli in schola er",
           "apres": ".",
@@ -3992,7 +3992,7 @@
                 "Consul a cive laudatur."
               ],
               "answer": 2,
-              "explanation": "« Civis » est le sujet ; « laudatur » (-tur) est le passif ; « a consule » = par le consul. La phrase 3 inverse les rôles (« le consul est loué par le citoyen »)."
+              "explanation": "« Civis » est le sujet ; « laudatur » (-tur) est le passif ; « a consule » = par le consul. « Consul a cive laudatur » inverse les rôles (« le consul est loué par le citoyen »)."
             },
             {
               "question": "Quelle préposition introduit le complément d'agent en latin ?",
@@ -4788,7 +4788,7 @@
         "genre": "masc. 2e décl.",
         "fr": "le glaive",
         "etym": "gladiateur, glaive",
-        "ex": "Gladius miles armat.",
+        "ex": "Gladius militem armat.",
         "ex_fr": "Le glaive arme le soldat.",
         "monde": "monde9"
       },
@@ -5158,8 +5158,8 @@
         "genre": "irrégulier",
         "fr": "aller",
         "etym": "itinéraire, initié",
-        "ex": "Quo vadis ?",
-        "ex_fr": "Où vas-tu ?",
+        "ex": "Romam eo.",
+        "ex_fr": "Je vais à Rome.",
         "monde": "monde20"
       },
       {
@@ -5188,8 +5188,8 @@
         "genre": "2e conjugaison",
         "fr": "avertir / conseiller",
         "etym": "moniteur, prémonition",
-        "ex": "Periculum monet.",
-        "ex_fr": "Il avertit du danger.",
+        "ex": "Amicum de periculo monet.",
+        "ex_fr": "Il avertit son ami du danger.",
         "monde": ""
       },
       {
@@ -5218,8 +5218,8 @@
         "genre": "3e conjugaison",
         "fr": "écrire",
         "etym": "écrire, script, scribe, écriture",
-        "ex": "Calamo in cera scribit.",
-        "ex_fr": "Il écrit au calame sur la cire.",
+        "ex": "Stilo in cera scribit.",
+        "ex_fr": "Il écrit au stylet sur la cire.",
         "monde": "monde2"
       },
       {
@@ -5258,8 +5258,8 @@
         "genre": "3e conjugaison",
         "fr": "vivre",
         "etym": "vivre, vital, vivace, survie",
-        "ex": "Dum spiro, spero.",
-        "ex_fr": "Tant que je respire, j'espère.",
+        "ex": "Dum vivimus, vivamus.",
+        "ex_fr": "Tant que nous vivons, vivons.",
         "monde": ""
       },
       {
@@ -5635,7 +5635,7 @@
       {
         "latin": "necare (neco, necavi, necatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "tuer",
         "etym": "internécin",
         "ex": "Hercules hydram necat.",
@@ -5645,7 +5645,7 @@
       {
         "latin": "currere (curro, cucurri, cursum)",
         "cat": "Verbe",
-        "genre": "3e groupe",
+        "genre": "3e conjugaison",
         "fr": "courir",
         "etym": "courir, course, courrier",
         "ex": "Puer in via currit.",
@@ -5655,7 +5655,7 @@
       {
         "latin": "ambulare (ambulo, ambulavi, ambulatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "se promener, marcher",
         "etym": "ambulant, ambulance, préambule",
         "ex": "Marcus in foro ambulat.",
@@ -5665,7 +5665,7 @@
       {
         "latin": "cantare (canto, cantavi, cantatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "chanter",
         "etym": "chanter, cantate, cantique",
         "ex": "Puella cantat.",
@@ -5675,7 +5675,7 @@
       {
         "latin": "laborare (laboro, laboravi, laboratum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "travailler",
         "etym": "labourer, laboratoire",
         "ex": "Agricola in agro laborat.",
@@ -5735,7 +5735,7 @@
       {
         "latin": "clamare (clamo, clamavi, clamatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "crier",
         "etym": "clamer, réclamer, exclamation",
         "ex": "Populus clamat.",
@@ -5835,7 +5835,7 @@
       {
         "latin": "emere (emo, emi, emptum)",
         "cat": "Verbe",
-        "genre": "3e groupe",
+        "genre": "3e conjugaison",
         "fr": "acheter",
         "etym": "exemption, préemption",
         "ex": "Mater panem emit.",
@@ -5845,7 +5845,7 @@
       {
         "latin": "vendere (vendo, vendidi, venditum)",
         "cat": "Verbe",
-        "genre": "3e groupe",
+        "genre": "3e conjugaison",
         "fr": "vendre",
         "etym": "vendre, vendeur",
         "ex": "Agricola poma vendit.",
@@ -5975,7 +5975,7 @@
       {
         "latin": "custodire (custodio, custodivi, custoditum)",
         "cat": "Verbe",
-        "genre": "4e groupe",
+        "genre": "4e conjugaison",
         "fr": "garder, surveiller",
         "etym": "custode",
         "ex": "Canis domum custodit.",
@@ -5995,7 +5995,7 @@
       {
         "latin": "mutare (muto, mutavi, mutatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "changer, transformer",
         "etym": "muter, mutation, commuter",
         "ex": "Circe viros in porcos mutat.",
@@ -6025,7 +6025,7 @@
       {
         "latin": "defendere (defendo, defendi, defensum)",
         "cat": "Verbe",
-        "genre": "3e groupe",
+        "genre": "3e conjugaison",
         "fr": "défendre",
         "etym": "défendre, défense",
         "ex": "Milites urbem defendunt.",
@@ -6105,7 +6105,7 @@
       {
         "latin": "navigare (navigo, navigavi, navigatum)",
         "cat": "Verbe",
-        "genre": "1er groupe",
+        "genre": "1re conjugaison",
         "fr": "naviguer",
         "etym": "naviguer, navigation",
         "ex": "Romani in mari navigant.",
@@ -6135,7 +6135,7 @@
       {
         "latin": "ducere (duco, duxi, ductum)",
         "cat": "Verbe",
-        "genre": "3e groupe",
+        "genre": "3e conjugaison",
         "fr": "conduire, mener",
         "etym": "conduire, produire, aqueduc",
         "ex": "Dux milites ducit.",
@@ -6265,7 +6265,7 @@
       {
         "latin": "fugere (fugio, fugi, fugitum)",
         "cat": "Verbe",
-        "genre": "3e groupe mixte",
+        "genre": "3e conjugaison mixte",
         "fr": "fuir",
         "etym": "fugitif, fugue",
         "ex": "Incolae e urbe fugiunt.",
@@ -7834,8 +7834,8 @@
       "genre": "verbe (3e conjugaison)",
       "francais": "Vaincre",
       "etymologie": "Donne invincible, vainqueur, victoire.",
-      "exemple": "Fortuna fortes adiuvat.",
-      "exemple_fr": "La fortune aide les courageux.",
+      "exemple": "Romani hostes vincunt.",
+      "exemple_fr": "Les Romains vainquent les ennemis.",
       "categorie": "Verbes Majeurs"
     },
     {
@@ -8047,7 +8047,7 @@
       {
         "id": "mon_meduse",
         "nom": "Méduse la Gorgone",
-        "nom_latin": "Medusa Gorgonis",
+        "nom_latin": "Medusa Gorgo",
         "categorie": "monstres",
         "rarete": "epique",
         "atk": 94,

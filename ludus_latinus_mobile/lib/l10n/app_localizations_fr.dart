@@ -103,7 +103,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountTooltipDayMode => 'Mode Lux Romana (Jour)';
 
   @override
-  String get accountTooltipNightMode => 'Mode Noctis Romana (Nuit)';
+  String get accountTooltipNightMode => 'Mode Nox Romana (Nuit)';
 
   @override
   String get accountTooltipShop => 'Taberna Romana (Boutique de Goodies)';

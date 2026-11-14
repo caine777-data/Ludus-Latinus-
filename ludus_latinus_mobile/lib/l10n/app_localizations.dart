@@ -271,7 +271,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountTooltipNightMode.
   ///
   /// In fr, this message translates to:
-  /// **'Mode Noctis Romana (Nuit)'**
+  /// **'Mode Nox Romana (Nuit)'**
   String get accountTooltipNightMode;
 
   /// No description provided for @accountTooltipShop.
