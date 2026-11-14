@@ -75,7 +75,7 @@
           "id": "m1-01",
           "type": "quiz",
           "title": "L'Alphabet secret des Romains",
-          "content": "## Bienvenue dans la Rome Antique !\n\nTu viens de traverser le temps et tu arrives au cœur de **Rome**, la capitale du plus vaste empire de l'Antiquité.\n\nPour te faire comprendre des Romains, il faut percer les secrets de leur écriture.\n\n## Le savais-tu ? 💡\nL'alphabet latin est l'ancêtre direct de notre alphabet français ! Pourtant, à l'époque de Jules César :\n- Il n'y avait **pas de J ni de W**.\n- La lettre **V** s'écrivait comme un V mais se prononçait toujours **[OU]** ou **[W]** ! Par exemple, le mot *villa* se prononçait *« ouilla »*.\n- La lettre **C** se prononçait **toujours [K]**, jamais [S] ! On disait *« Késar »* et non « César ».\n\n📌 **À retenir** : Les Romains écrivaient presque tout en lettres capitales sur la pierre, sans espaces entre les mots ! Heureusement, nous allons utiliser des espaces pour faciliter ta lecture.",
+          "content": "## Bienvenue dans la Rome Antique !\n\nTu viens de traverser le temps et tu arrives au cœur de **Rome**, la capitale du plus vaste empire de l'Antiquité.\n\nPour te faire comprendre des Romains, il faut percer les secrets de leur écriture.\n\n## Le savais-tu ? 💡\nL'alphabet latin est l'ancêtre direct de notre alphabet français ! Pourtant, à l'époque de Jules César :\n- Il n'y avait **pas de J ni de W**.\n- La lettre **V** s'écrivait comme un V mais se prononçait toujours **[OU]** ou **[W]** ! Par exemple, le mot *villa* se prononçait *« ouilla »*.\n- La lettre **C** se prononçait **toujours [K]**, jamais [S] ! On disait *« Kaïsar »* et non « César ».\n\n📌 **À retenir** : Les Romains écrivaient presque tout en lettres capitales sur la pierre, sans espaces entre les mots ! Heureusement, nous allons utiliser des espaces pour faciliter ta lecture.",
           "question": "Comment les Romains prononçaient-ils la lettre C dans le mot 'Circus' ?",
           "options": [
             "Toujours [K] : 'Kirkous'",
@@ -1037,7 +1037,7 @@
           "id": "m6-01",
           "type": "quiz",
           "title": "Les Rois de l'Arène : Rétiaires et Mirmillons",
-          "content": "## Dans les coulisses de l'amphithéâtre\n\nAu Colisée (*Amphitheatrum Flavium*), 50 000 spectateurs retiennent leur souffle.\n\nLes gladiateurs ne combattaient pas avec les mêmes armes, c'était un duel de styles :\n1. **LE RÉTIAIRE** (*Retiarius*) : Vêtu d'un simple pagne, il est rapide et agile. Ses armes sont un **filet plombé** (*rete*) pour emprisonner son adversaire, un grand **trident** et un poignard.\n2. **LE MIRMILLON** (*Murmillo*) : Un gladiateur lourdement protégé avec un grand bouclier rectangulaire (*scutum*), un glaive et un casque imposant orné d'un poisson.\n3. **LE THRACE** (*Thraex*) : Armé d'un poignard à lame courbée (*sica*) et d'un petit bouclier rond.\n\n💡 **Le savais-tu ?**\nLa plupart des gladiateurs étaient de véritables stars très populaires à Rome, avec leurs portraits peints sur les murs de la ville !",
+          "content": "## Dans les coulisses de l'amphithéâtre\n\nAu Colisée (*Amphitheatrum Flavium*), 50 000 spectateurs retiennent leur souffle.\n\nLes gladiateurs ne combattaient pas avec les mêmes armes, c'était un duel de styles :\n1. **LE RÉTIAIRE** (*Retiarius*) : Vêtu d'un simple pagne, il est rapide et agile. Ses armes sont un **filet plombé** (*rete*) pour emprisonner son adversaire, un grand **trident** et un poignard.\n2. **LE MIRMILLON** (*Murmillo*) : Un gladiateur lourdement protégé avec un grand bouclier rectangulaire (*scutum*), un glaive et un casque imposant orné d'un poisson.\n3. **LE THRACE** (*Thraex*) : Armé d'un poignard à lame courbée (*sica*) et d'un petit bouclier carré.\n\n💡 **Le savais-tu ?**\nLa plupart des gladiateurs étaient de véritables stars très populaires à Rome, avec leurs portraits peints sur les murs de la ville !",
           "question": "Quelle arme redoutable caractérise le gladiateur Rétiaire ?",
           "options": [
             "Un arc géant",
@@ -1096,7 +1096,7 @@
             "answer": 2,
             "explications": [
               "La fin -o veut dire « je » : celui qui parle, pas l'enfant.",
-              "Cette forme est celle de la phrase du cours sur les chevaux : elle parle de plusieurs.",
+              "La fin -unt est celle du pluriel (« ils courent »), or l'enfant est seul.",
               "",
               "La fin -m est celle du COD, celui qui subit l'action. Ici l'enfant agit."
             ]
@@ -1200,7 +1200,7 @@
           "id": "m7-01",
           "type": "quiz",
           "title": "Les Trésors Cachés : D'où viennent nos mots ?",
-          "content": "## Le super-pouvoir du Latin en Français\n\nSavais-tu que plus de **80 % des mots du dictionnaire français** proviennent directement du latin ?\n\nQuand tu connais un seul mot latin, tu comprends instantanément toute une famille de mots français compliqués !\n\nExemples extraordinaires :\n- **AQUA** (l'eau) ➔ *aquarium*, *aquatique*, *aquarelle*, *aqueduc*.\n- **TERRA** (la terre) ➔ *territoire*, *terrestre*, *terrier*, *atterrir*, *souterrain*.\n- **MANUS** (la main) ➔ *manuel*, *manipuler*, *manufacture*, *manucure*.\n- **PES, PEDIS** (le pied) ➔ *piéton*, *pédale*, *bipède*, *expédition* (littéralement : se sortir les pieds d'un piège !).",
+          "content": "## Le super-pouvoir du Latin en Français\n\nSavais-tu que plus de **80 % des mots du dictionnaire français** viennent du latin ?\n\nQuand tu connais un seul mot latin, tu comprends instantanément toute une famille de mots français compliqués !\n\nExemples extraordinaires :\n- **AQUA** (l'eau) ➔ *aquarium*, *aquatique*, *aquarelle*, *aqueduc*.\n- **TERRA** (la terre) ➔ *territoire*, *terrestre*, *terrier*, *atterrir*, *souterrain*.\n- **MANUS** (la main) ➔ *manuel*, *manipuler*, *manufacture*, *manucure*.\n- **PES, PEDIS** (le pied) ➔ *piéton*, *pédale*, *bipède*, *expédition* (littéralement : se sortir les pieds d'un piège !).",
           "question": "Quel mot latin a donné en français 'aquarium' et 'aquatique' ?",
           "options": [
             "Aqua (l'eau)",
@@ -1363,7 +1363,7 @@
           "id": "m8-01",
           "type": "quiz",
           "title": "Le Grand Marché du Forum (Mercatus)",
-          "content": "## Bienvenue au marché du Forum !\nLes Romains se pressent chaque matin au marché (*mercatus*) pour acheter de quoi manger :\n- **Panis** : le pain (aliment de base cuit dans des fours à bois).\n- **Aqua** : l'eau pure acheminée par les immenses aqueducs.\n- **Vinum** : le vin (que les Romains buvaient toujours coupé d'eau et de miel).\n- **Malum** : la pomme (et les fruits frais).\n- **Pecunia** : l'argent (qui a donné le mot français « pécuniaire » !).\n\n💡 **Le savais-tu ?**\nLes Romains mangeaient peu le matin : un morceau de pain (*panis*) frotté d'ail et quelques olives. Le vrai grand repas avait lieu le soir, c'était la **cena** !",
+          "content": "## Bienvenue au marché du Forum !\nLes Romains se pressent chaque matin au marché (*mercatus*) pour acheter de quoi manger :\n- **Panis** : le pain (aliment de base cuit dans des fours à bois).\n- **Aqua** : l'eau pure acheminée par les immenses aqueducs.\n- **Vinum** : le vin (que les Romains buvaient toujours coupé d'eau).\n- **Malum** : la pomme (et les fruits frais).\n- **Pecunia** : l'argent (qui a donné le mot français « pécuniaire » !).\n\n💡 **Le savais-tu ?**\nLes Romains mangeaient peu le matin : un morceau de pain (*panis*) frotté d'ail et quelques olives. Le vrai grand repas avait lieu le soir, c'était la **cena** !",
           "question": "Que signifie le mot latin 'panis' qui a donné notre mot 'panier' ?",
           "options": [
             "Le pain",
@@ -1745,7 +1745,7 @@
           "id": "m10-01",
           "type": "quiz",
           "title": "Pégase le Cheval Ailé (Pegasus)",
-          "content": "## Dans les airs avec les dieux !\nParmi les créatures les plus célèbres de l'Antiquité, **Pegasus** est le magnifique cheval ailé blanc :\n- Il est né de l'écume marine et du sang de la Gorgone Méduse.\n- D'un simple coup de sabot sur le mont Hélicon, il fit jaillir une source magique d'inspiration poétique (*l'Hippocrène*).\n- Il aida le héros Bellérophon à vaincre la redoutable **Chimère** (créature crachant le feu, à tête de lion, corps de chèvre et queue de serpent).\n\n💡 **Le savais-tu ?**\nAprès ses exploits, Jupiter plaça Pégase dans le ciel : il est devenu une brillante constellation d'étoiles visible les soirs d'automne !",
+          "content": "## Dans les airs avec les dieux !\nParmi les créatures les plus célèbres de l'Antiquité, **Pegasus** est le magnifique cheval ailé blanc :\n- Il est né du sang de la Gorgone Méduse.\n- D'un simple coup de sabot sur le mont Hélicon, il fit jaillir une source magique d'inspiration poétique (*l'Hippocrène*).\n- Il aida le héros Bellérophon à vaincre la redoutable **Chimère** (créature crachant le feu, à tête de lion, corps de chèvre et queue de serpent).\n\n💡 **Le savais-tu ?**\nAprès ses exploits, Jupiter plaça Pégase dans le ciel : il est devenu une brillante constellation d'étoiles visible les soirs d'automne !",
           "question": "Quel monstre crachant le feu le héros Bellérophon a-t-il terrassé grâce à Pégase ?",
           "options": [
             "La Chimère",
@@ -2317,7 +2317,7 @@
           "id": "m13-03",
           "type": "puzzle",
           "title": "La Flotte de Rome sur la Mer",
-          "content": "## Pourquoi « Mare Nostrum » ?\nAprès avoir vaincu la cité maritime de **Carthage** (commandée par le redoutable Hannibal Barca) lors des trois guerres puniques, Rome contrôle toutes les côtes de la Méditerranée.\n\nLes Romains appellent désormais fièrement la mer Méditerranée :\n*« Mare Nostrum »* (« Notre Mer »).\n\nExemple : *« Naves Romanae in mari navigant. »* = « Les navires romains naviguent sur la mer. »\n\nÀ toi ! *Navis* est le singulier de *naves*.",
+          "content": "## Pourquoi « Mare Nostrum » ?\nAprès avoir vaincu la cité maritime de **Carthage** (patrie du redoutable Hannibal Barca) lors des trois guerres puniques, Rome contrôle toutes les côtes de la Méditerranée.\n\nLes Romains appellent désormais fièrement la mer Méditerranée :\n*« Mare Nostrum »* (« Notre Mer »).\n\nExemple : *« Naves Romanae in mari navigant. »* = « Les navires romains naviguent sur la mer. »\n\nÀ toi ! *Navis* est le singulier de *naves*.",
           "latin": "Navis Romana in mari navigat.",
           "mots": [
             "Le navire",
@@ -2406,7 +2406,7 @@
           "id": "m14-01",
           "type": "quiz",
           "title": "Les Adjectifs de 2ème Classe : Fortis et Ingens",
-          "content": "## Comment qualifier les guerriers romains ?\nEn 5ème, tu as appris les adjectifs de 1ère classe (*bonus, bona, bonum*), qui se déclinent comme *dominus* et *rosa*.\n\nEn 4ème, voici les **adjectifs de 2ème classe** : ils suivent le modèle de la **3ème déclinaison** !\n\nLe modèle le plus célèbre est **fortis, fortis, forte** (courageux, fort) :\n- Masculin & Féminin : **fortis** (ex: *miles fortis* = le soldat courageux)\n- Neutre : **forte** (ex: *bellum forte* = une guerre rude)\n\nAutre exemple très fréquent :\n- **Ingens, ingentis** : immense, gigantesque\n- **Omnis, omnis, omne** : tout, chaque (*➔ omniscient, omnivore*)\n- **Sapiens, sapientis** : sage, intelligent",
+          "content": "## Comment qualifier les guerriers romains ?\nEn 5ème, tu as appris les adjectifs de 1ère classe (*bonus, bona, bonum*), qui se déclinent comme *dominus* et *rosa*.\n\nEn 4ème, voici les **adjectifs de 2ème classe** : ils suivent le modèle de la **3ème déclinaison** !\n\nLe modèle le plus célèbre est **fortis, fortis, forte** (courageux, fort) :\n- Masculin & Féminin : **fortis** (ex: *miles fortis* = le soldat courageux)\n- Neutre : **forte** (ex: *corpus forte* = un corps robuste)\n\nAutre exemple très fréquent :\n- **Ingens, ingentis** : immense, gigantesque\n- **Omnis, omnis, omne** : tout, chaque (*➔ omniscient, omnivore*)\n- **Sapiens, sapientis** : sage, intelligent",
           "question": "Comment s'accorde l'adjectif 'fortis' avec 'miles' (soldat, masculin singulier) ?",
           "options": [
             "Miles fortis",
@@ -3116,7 +3116,7 @@
           "id": "m18-03",
           "type": "puzzle",
           "title": "Proclamation Républicaine",
-          "content": "## L'écho des siècles\nReconstitue cette noble maxime républicaine qui résume tout l'honneur des citoyens romains de 4ème :\n\nExemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et la sagesse sauvent la République. »\n\nÉpreuve finale : un génitif de la 3e déclinaison et un parfait dans la même phrase !",
+          "content": "## L'écho des siècles\nReconstitue cette noble maxime républicaine qui résume tout l'honneur des citoyens romains :\n\nExemple : *« Virtus et sapientia rem publicam servant. »* = « Le courage et la sagesse sauvent la République. »\n\nÉpreuve finale : un génitif de la 3e déclinaison et un parfait dans la même phrase !",
           "latin": "Sapientia consulis rem publicam servavit.",
           "mots": [
             "La sagesse",
@@ -3603,7 +3603,7 @@
           "id": "m21-03",
           "type": "puzzle",
           "title": "La Lettre de Pline le Jeune (79 ap. J.-C.)",
-          "content": "## Le témoignage du 24 août 79\nLe jeune Pline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.\n\nExemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuvius nubem atram erigebat. »* = « Le mont Vésuve dressait un nuage noir. »\n\nÀ toi ! Même adjectif, même temps (l'imparfait en *-bat*), autre phrase.\n*Cinis, -eris* (m.) = la cendre ; *tego, -is, -ere* = recouvrir ; *urbs, urbis* (f.) = la ville.",
+          "content": "## Le témoignage de l'an 79\nPline le Jeune observe depuis la baie de Naples une colonne de fumée colossale s'élevant du mont Vésuve, ayant la forme d'un pin parasol géant.\n\nExemple, adapté de sa célèbre lettre à l'historien Tacite : *« Mons Vesuvius nubem atram erigebat. »* = « Le mont Vésuve dressait un nuage noir. »\n\nÀ toi ! Même adjectif, même temps (l'imparfait en *-bat*), autre phrase.\n*Cinis, -eris* (m.) = la cendre ; *tego, -is, -ere* = recouvrir ; *urbs, urbis* (f.) = la ville.",
           "latin": "Cinis ater urbem tegebat.",
           "mots": [
             "La cendre noire",
@@ -5379,7 +5379,7 @@
         "fr": "Hâte-toi lentement",
         "etym": "Devise impériale de prudence et d'efficacité.",
         "ex": "Festina lente in studiis.",
-        "ex_fr": "Travaille vite mais avec rigueur.",
+        "ex_fr": "Hâte-toi lentement dans tes études.",
         "monde": ""
       },
       {
@@ -5388,8 +5388,8 @@
         "genre": "rapport militaire",
         "fr": "Je suis venu, j'ai vu, j'ai vaincu",
         "etym": "Message laconique de César après Zéla.",
-        "ex": "Veni, vidi, vici.",
-        "ex_fr": "Victoire fulgurante.",
+        "ex": "Caesar scripsit : veni, vidi, vici.",
+        "ex_fr": "César écrivit : je suis venu, j'ai vu, j'ai vaincu.",
         "monde": "monde7"
       },
       {
@@ -5538,7 +5538,7 @@
         "genre": "masc. 2e décl.",
         "fr": "le dieu",
         "etym": "divin, déité, adieu",
-        "ex": "Iupiter deus caeli est.",
+        "ex": "Iuppiter deus caeli est.",
         "ex_fr": "Jupiter est le dieu du ciel.",
         "monde": "monde3"
       },
@@ -5578,7 +5578,7 @@
         "genre": "neutre 3e décl.",
         "fr": "la foudre",
         "etym": "fulminer, fulgurant",
-        "ex": "Iupiter fulmen iacit.",
+        "ex": "Iuppiter fulmen iacit.",
         "ex_fr": "Jupiter lance la foudre.",
         "monde": "monde3"
       },
@@ -6598,7 +6598,7 @@
         "genre": "2e conjugaison",
         "fr": "détruire",
         "etym": "indélébile",
-        "ex": "Pompeii urbs deleta est.",
+        "ex": "Urbs Pompeii deleta est.",
         "ex_fr": "La ville de Pompéi a été détruite.",
         "monde": "monde21"
       },
@@ -7753,7 +7753,7 @@
       "latin": "Lupus",
       "genre": "nom masc. (2e décl.)",
       "francais": "Le loup",
-      "etymologie": "Donne louve, louveteau, Lupulus !",
+      "etymologie": "Donne louve, louveteau.",
       "exemple": "Lupus in silva ululat.",
       "exemple_fr": "Le loup hurle dans la forêt.",
       "categorie": "Animaux & Nature"
@@ -8208,7 +8208,7 @@
         "rarete": "commune",
         "atk": 72,
         "def": 91,
-        "citation": "Aqua vitae et civitatis.",
+        "citation": "Aqua, vita civitatis.",
         "anecdote": "Prouesse d'ingénierie acheminant des millions de litres d'eau pure des montagnes jusqu'au cœur des cités.",
         "traduction": "L'eau, vie de la cité.",
         "image": "assets/images/album/mon_aqueduc.webp"

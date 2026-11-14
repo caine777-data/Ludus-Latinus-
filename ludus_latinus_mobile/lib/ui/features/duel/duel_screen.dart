@@ -326,7 +326,7 @@ class _DuelScreenState extends State<DuelScreen> with TickerProviderStateMixin {
       'q': 'Que désigne « Castra » en latin ?',
       'rep': 'Le camp militaire fortifié',
       'fausses': ['Le château', 'La maison de campagne', 'La prison'],
-      'explication': 'Castra (pluriel neutre) donne « castrum » et les terminaisons de villes (-chester).',
+      'explication': 'Castra (pluriel neutre) a donné les noms de villes en -chester (Manchester).',
     },
   ];
 

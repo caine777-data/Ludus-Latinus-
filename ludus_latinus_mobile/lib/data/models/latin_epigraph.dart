@@ -1,4 +1,6 @@
-/// Modèle et base de données des inscriptions lapidaires authentiques (Épigraphie romaine).
+/// Modèle et base de données des inscriptions du Forum (épigraphie romaine).
+/// Seules celles du Temple de Saturne et de l'Arc de Titus sont authentiques ;
+/// les quatre autres sont des reconstitutions plausibles, écrites pour le jeu.
 class EpigraphToken {
   final String texteGraver;
   final String formeDeveloppee;
@@ -214,7 +216,7 @@ class LatinEpigraph {
           roleGrammatical: 'Génitif pluriel (civis, civis - 3e déclinaison)',
         ),
       ],
-      traductionComplete: '« Consacré à Minerve Auguste pour le salut de tous les citoyens. »',
+      traductionComplete: '« Consacré à Minerve Auguste pour le salut des citoyens. »',
       contexteHistorique: 'Minerve, patronne des artisans, poètes et professeurs (*magistri*), était vénérée comme protectrice de l\'intelligence et de la concorde civique.',
     ),
     'rostra_augusta': LatinEpigraph(

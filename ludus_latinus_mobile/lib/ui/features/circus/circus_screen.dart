@@ -214,7 +214,7 @@ class _CircusMaximusScreenState extends State<CircusMaximusScreen>
       'q': 'Quelle faction porte la couleur blanche au cirque ?',
       'rep': 'Albati',
       'fausses': ['Veneti', 'Russati', 'Prasini'],
-      'explication': 'Albati dérive de albus (blanc mat), faction historique de vétérans.',
+      'explication': 'Albati dérive de albus (blanc mat).',
     },
 
     // --- 3. Verbes d\'Action, Impératifs & Adverbes de Vitesse ---

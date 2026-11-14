@@ -2,7 +2,7 @@
 
 Relu en entier : Thesaurus (224 mots et tableaux), Memoria (29), Album (66), Panthéon (26), Forum, glossaire, 119 leçons (cours, exercices, questions de grammaire, arènes), 6 épigraphes, Colisée (32), Circus (46), Marché de Trajan, missions de César, textes de l'interface.
 
-Bilan : 6 fautes (A), 15 incohérences (B), 26 remarques (C). Les A et les B ont été corrigés le 14/11/2026 avec l'accord de Cédric (script `scratch/latin/corriger_ab.py`). Les C restent à passer en revue avec lui.
+Bilan : 6 fautes (A), 15 incohérences (B), 26 remarques (C). Les A et les B ont été corrigés le 14/11/2026 avec l'accord de Cédric (script `scratch/latin/corriger_ab.py`). Les C ont été appliqués le même jour (script `scratch/latin/corriger_c.py`), sauf deux gardés à la demande de Cédric : aquaeductus en un mot et « Colosseum Duellum ».
 
 Gravité : A = faute de latin ou de sens (à corriger) ; B = incohérence ou imprécision (à corriger de préférence) ; C = remarque (au choix de Cédric).
 

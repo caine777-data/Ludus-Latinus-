@@ -100,7 +100,7 @@ const List<ArticleMarche> kArticlesMarche = [
     latin: "Posca et cibaria",
     prix: 22,
     emoji: "🥣",
-    description: "Boisson désaltérante des légionnaires (eau, posca et miel) et galettes de froment.",
+    description: "Boisson désaltérante des légionnaires (eau coupée de vinaigre) et galettes de froment.",
   ),
 ];
 
@@ -192,7 +192,7 @@ const List<ClientMarche> kClientsMarche = [
   ),
   ClientMarche(
     nom: 'Philosophus Sextus',
-    titre: 'Érudit de l\'Académie',
+    titre: 'Érudit du Portique',
     emoji: '📚',
     articleNom: 'Volumen Zenonis (Philosophie)',
     prixArticle: 75,
@@ -276,7 +276,7 @@ const List<MissionNegociation> kMissionsNegociation = [
     emoji: '⚔️',
     articleNom: 'Rudis lignea (Glaive en bois)',
     prixInitial: 18,
-    repliqueClient: '« Gladius nimium carus est ! Visne vendere pro XII HS (12 HS) ? »',
+    repliqueClient: '« Gladius nimium carus est ! Visne mihi eum XII HS (12 HS) vendere ? »',
     traductionClient: '« Ce glaive est trop cher ! Veux-tu me le vendre pour 12 sesterces ? »',
     options: [
       OptionNegociation(
@@ -336,7 +336,7 @@ const List<MissionNegociation> kMissionsNegociation = [
   ),
   MissionNegociation(
     nomClient: 'Philosophus Sextus',
-    titreClient: 'Érudit de l\'Académie',
+    titreClient: 'Érudit du Portique',
     emoji: '📚',
     articleNom: 'Volumen Zenonis (Papyrus de Philosophie)',
     prixInitial: 75,
@@ -344,7 +344,7 @@ const List<MissionNegociation> kMissionsNegociation = [
     traductionClient: '« La sagesse ne peut s\'estimer par un prix ! Pourquoi exiger tant d\'or ? »',
     options: [
       OptionNegociation(
-        texteLatin: '« Sapientia inestimabilis est, sed librarius chartam emit ! LX HS (60 HS) sufficiunt ! »',
+        texteLatin: '« Sapientia inaestimabilis est, sed librarius chartam emit ! LX HS (60 HS) sufficiunt ! »',
         traduction: '« La sagesse n\'a pas de prix, mais le copiste achète le papyrus ! 60 HS suffisent ! »',
         estBonChoix: true,
         sestercesGain: 30,
