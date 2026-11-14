@@ -22,11 +22,16 @@ enum CinematicType {
 /// Configuration d'une courte vidéo cinématique (vidéos verticales 9:16 avec bande-son).
 class CinematicConfig {
   final String assetPath;
+
+  /// Version 16:9 facultative, jouée quand l'écran est en paysage (tablette,
+  /// fenêtre Windows) à la place de la version verticale sur fond flou.
+  final String? assetPaysage;
   final String title;
   final String subtitle;
 
   const CinematicConfig({
     required this.assetPath,
+    this.assetPaysage,
     required this.title,
     required this.subtitle,
   });
@@ -37,6 +42,7 @@ class CinematicConfig {
         // Le nom du studio est déjà dans la vidéo : aucun texte par-dessus.
         return const CinematicConfig(
           assetPath: 'assets/cinematics/icare_dedale.mp4',
+          assetPaysage: 'assets/cinematics/icare_dedale_16x9.mp4',
           title: '',
           subtitle: '',
         );
@@ -116,7 +122,7 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
     // La vidéo a sa propre bande-son : la musique d'ambiance se tait.
     AudioService().enterMusic(null);
     _controller = VideoPlayerController.asset(
-      widget.config.assetPath,
+      _choisirVideo(),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
     _controller.addListener(_onTick);
@@ -132,6 +138,19 @@ class _RomanCinematicPlayerState extends State<RomanCinematicPlayer> {
     });
     // Filet de sécurité si la vidéo ne signale jamais sa fin.
     _safetyTimer = Timer(const Duration(seconds: 15), _handleExit);
+  }
+
+  /// Version paysage si elle existe et que l'écran est plus large que haut.
+  ///
+  /// On lit la taille de la vue plutôt que MediaQuery : le contexte n'est pas
+  /// encore utilisable dans initState, et la vidéo doit être choisie avant
+  /// d'initialiser le contrôleur. Une rotation pendant les 5 s de lecture
+  /// garde la vidéo choisie jusqu'à la fin (cas rare, sans conséquence).
+  String _choisirVideo() {
+    final paysage = widget.config.assetPaysage;
+    if (paysage == null) return widget.config.assetPath;
+    final taille = ui.PlatformDispatcher.instance.views.first.physicalSize;
+    return taille.width > taille.height ? paysage : widget.config.assetPath;
   }
 
   void _onTick() {
