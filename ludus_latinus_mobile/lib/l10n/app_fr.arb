@@ -1817,7 +1817,7 @@
     }
   },
   "editionLoading": "Connexion au Play Store…",
-  "editionUnavailable": "Achat indisponible pour l'instant. Vérifie la connexion à Internet.",
+  "editionUnavailable": "Achat indisponible pour l'instant. Vérifie la connexion à Internet, ou réessaie plus tard.",
   "editionPending": "Achat en attente : la suite s'ouvrira dès que Google l'aura confirmé.",
   "editionError": "L'achat n'a pas abouti. Tu peux réessayer.",
   "editionRestore": "Restaurer mon achat",
@@ -1825,5 +1825,5 @@
   "editionThanks": "Merci ! Toute la Via Appia est ouverte.",
   "editionContinue": "Continuer",
   "editionSettingsActive": "Active : toutes les leçons sont ouvertes",
-  "editionSettingsHint": "Les mondes 4 à 26 en entier, en un seul achat"
+  "editionSettingsHint": "Toutes les leçons des mondes 4 à 26, en un seul achat"
 }

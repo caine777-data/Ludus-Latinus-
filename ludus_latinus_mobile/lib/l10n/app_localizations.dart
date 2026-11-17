@@ -3814,7 +3814,7 @@ abstract class AppLocalizations {
   /// No description provided for @editionUnavailable.
   ///
   /// In fr, this message translates to:
-  /// **'Achat indisponible pour l\'instant. Vérifie la connexion à Internet.'**
+  /// **'Achat indisponible pour l\'instant. Vérifie la connexion à Internet, ou réessaie plus tard.'**
   String get editionUnavailable;
 
   /// No description provided for @editionPending.
@@ -3862,7 +3862,7 @@ abstract class AppLocalizations {
   /// No description provided for @editionSettingsHint.
   ///
   /// In fr, this message translates to:
-  /// **'Les mondes 4 à 26 en entier, en un seul achat'**
+  /// **'Toutes les leçons des mondes 4 à 26, en un seul achat'**
   String get editionSettingsHint;
 }
 

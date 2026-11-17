@@ -2268,7 +2268,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editionUnavailable =>
-      'Achat indisponible pour l\'instant. Vérifie la connexion à Internet.';
+      'Achat indisponible pour l\'instant. Vérifie la connexion à Internet, ou réessaie plus tard.';
 
   @override
   String get editionPending =>
@@ -2295,5 +2295,5 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get editionSettingsHint =>
-      'Les mondes 4 à 26 en entier, en un seul achat';
+      'Toutes les leçons des mondes 4 à 26, en un seul achat';
 }
