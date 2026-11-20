@@ -1540,6 +1540,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutVersionLoading => 'Version …';
 
   @override
+  String get reviewerCodeTitle => 'Code d\'accès';
+
+  @override
+  String get reviewerCodeHint => 'Code';
+
+  @override
+  String get reviewerCodeValidate => 'Valider';
+
+  @override
+  String get reviewerCodeOk => 'Édition complète ouverte.';
+
+  @override
   String get aboutPublisher => 'Édité par Icare & Dédale';
 
   @override

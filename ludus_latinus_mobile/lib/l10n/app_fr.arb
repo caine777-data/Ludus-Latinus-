@@ -1184,6 +1184,10 @@
     }
   },
   "aboutVersionLoading": "Version …",
+  "reviewerCodeTitle": "Code d'accès",
+  "reviewerCodeHint": "Code",
+  "reviewerCodeValidate": "Valider",
+  "reviewerCodeOk": "Édition complète ouverte.",
   "aboutPublisher": "Édité par Icare & Dédale",
   "aboutRights": "© 2026 Icare & Dédale. Tous droits réservés.",
   "aboutReplayStudio": "Revoir l'animation du studio",

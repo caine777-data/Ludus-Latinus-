@@ -2659,6 +2659,30 @@ abstract class AppLocalizations {
   /// **'Version …'**
   String get aboutVersionLoading;
 
+  /// No description provided for @reviewerCodeTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code d\'accès'**
+  String get reviewerCodeTitle;
+
+  /// No description provided for @reviewerCodeHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code'**
+  String get reviewerCodeHint;
+
+  /// No description provided for @reviewerCodeValidate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get reviewerCodeValidate;
+
+  /// No description provided for @reviewerCodeOk.
+  ///
+  /// In fr, this message translates to:
+  /// **'Édition complète ouverte.'**
+  String get reviewerCodeOk;
+
   /// No description provided for @aboutPublisher.
   ///
   /// In fr, this message translates to:

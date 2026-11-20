@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Empreinte du code examinateur (déjà présent par in_app_purchase).
+  crypto: ^3.0.7
   flutter_localizations:
     sdk: flutter
   intl: any

@@ -142,7 +142,7 @@ class SettingsScreen extends StatelessWidget {
             sousTitre: context.l10n.settingsAboutHint,
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const AboutScreen()),
+              MaterialPageRoute(builder: (_) => AboutScreen(achats: repo.achats)),
             ),
           ),
         ],

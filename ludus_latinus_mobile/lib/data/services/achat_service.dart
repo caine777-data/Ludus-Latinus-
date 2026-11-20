@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+import 'code_examinateur.dart';
 import 'storage_service.dart';
 
 /// Édition complète : un achat unique par Google Play Billing (décision de
@@ -59,6 +60,11 @@ abstract class AchatService extends ChangeNotifier {
   /// Cherche un achat fait sur le même compte Google ; vrai s'il est retrouvé.
   Future<bool> restaurer();
 
+  /// Ouvre l'Édition complète avec le code examinateur (voir
+  /// code_examinateur.dart) ; vrai si le code est bon. Sans effet quand
+  /// l'édition est offerte : il n'y a rien à ouvrir.
+  Future<bool> ouvrirAvecCode(String code) async => false;
+
   /// Choisit le service selon la compilation et la plateforme.
   static AchatService pourCetteCompilation(StorageService stockage) {
     if (!kEditionPayante || !Platform.isAndroid) return AchatOffert();
@@ -111,6 +117,14 @@ class AchatSimule extends AchatService {
 
   @override
   Future<bool> restaurer() async => _complete;
+
+  @override
+  Future<bool> ouvrirAvecCode(String code) async {
+    if (!codeExaminateurValide(code)) return false;
+    _complete = true;
+    notifyListeners();
+    return true;
+  }
 }
 
 /// Achat réel par Google Play Billing (paquet officiel in_app_purchase).
@@ -195,6 +209,16 @@ class AchatPlay extends AchatService {
       debugPrint('[AchatPlay] Restauration impossible : $e');
     }
     return _complete;
+  }
+
+  @override
+  Future<bool> ouvrirAvecCode(String code) async {
+    if (!codeExaminateurValide(code)) return false;
+    // Mémorisé comme un achat : l'examinateur garde l'accès s'il relance l'appli.
+    _complete = true;
+    await _stockage.ecrireEditionComplete();
+    _changer(EtatAchat.pret);
+    return true;
   }
 
   Future<void> _traiter(List<PurchaseDetails> achats) async {
