@@ -42,6 +42,9 @@ RÉVISER SANS OUBLIER
 ROME COMME TERRAIN DE JEU
 L'élève crée son héros, gagne des sesterces, restaure les monuments du Forum, gravit les rangs du Cursus Honorum et garde sa série de jours. Lupulus, un louveteau romain, l'accompagne et l'encourage.
 
+GRATUIT POUR COMMENCER
+Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque les 80 autres leçons, en un seul achat, sans abonnement.
+
 PENSÉ POUR LES FAMILLES ET LES PROFESSEURS
 • Les jeux récompensent le travail : chaque leçon du jour ouvre des parties payées en sesterces. Sans leçon, on joue pour la gloire.
 • Aucune publicité.
@@ -71,7 +74,7 @@ Ludus Latinus est édité par Icare & Dédale.
 
 ## À revoir avant la mise en production
 
-- Si l'Édition complète est vendue, l'indiquer dans la description, conformément au modèle décidé (voir `AGENTS.md`, « Décisions de Cédric ») : « Les mondes 1 à 3 et la première leçon de chaque monde sont gratuits. L'Édition complète débloque les 80 autres leçons, en un seul achat, sans abonnement. » Google exige que les achats intégrés soient signalés. Recompter alors la partie gratuite sur le dataset du moment (119 leçons au 18/10, et non plus 113).
+- Édition complète : bloc « GRATUIT POUR COMMENCER » ajouté à la description (choix A de Cédric), saisi dans la Play Console le 20/11/2026 (enregistré, pas encore envoyé à l'examen).
 - Compte développeur créé le 22/10/2026 (compte personnel, nom public Icare & Dédale, nom légal affiché par Google : Cédric Monna, France). La fiche ne peut être créée qu'après la validation d'identité par Google.
 - Les chiffres (26 mondes, 119 leçons, 224 mots) sont ceux du dataset du 18/10/2026.
 

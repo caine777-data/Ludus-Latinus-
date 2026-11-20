@@ -38,7 +38,7 @@ Catégorie : **Éducation** (« Référence, actualités ou éducation » si le 
 | Drogues, alcool, tabac | **Oui : alcool, simple référence, rare** | Le contenu parle du vin : *vinum* au monde 8, Bacchus, Polyphème enivré par Ulysse. Le cacher exposerait à un refus pour déclaration trompeuse. |
 | Jeux d'argent simulés | **Non** | La taverne joue aux dés (approcher XXI), mais l'élève ne mise rien et ne perd jamais de sesterces : une victoire en rapporte, une défaite ne coûte rien. Si l'IARC demande une précision, la donner ainsi. |
 | Interactions entre utilisateurs, partage de position | Non | Hors ligne. |
-| Achats numériques | Non pour l'instant. (Billing) : **Oui** dès l'ajout de l'Édition complète. | |
+| Achats numériques | **Oui** (20/11/2026) : achat d'articles numériques, sans tirage au hasard ni échange entre joueurs | Nouveau questionnaire enregistré le 20/11 : PEGI 3, USK 6, ESRB Tout public inchangés ; Brésil passe à 14 ans. Ajouté aussi : créatures « comme des humains » Non, animaux réels Non. |
 
 Catégorie retenue : **Jeu** (l'appli contient des jeux). Violence déclarée : contre des humains (duels) et des créatures, cadre fantastique, style enfantin, réactions irréalistes, violence évoquée et rarement montrée de loin, aucun sang, pas de contexte de guerre réel.
 
@@ -58,7 +58,7 @@ Catégorie : Enseignement (Éducation). Coordonnées : icareetdedale.studio@gmai
 
 ## Autres déclarations saisies le 13/11/2026
 
-- Informations de connexion : « Non », aucune section limitée. **(Billing) : à repasser en « Oui » quand l'achat sera actif** (les produits payants comptent comme restriction) et fournir aux examinateurs un moyen d'accéder aux leçons réservées, car ils ne peuvent pas acheter.
+- Informations de connexion : **« Oui » depuis le 20/11/2026** (les produits payants comptent comme restriction). Ensemble « Full edition access code » : instructions en anglais (Paramètres, À propos, 7 appuis sur la ligne Version) et code examinateur saisi par Cédric (code dans `Documents\LudusLatinus-cle\code_examinateur.txt`), case « accès complet, y compris le contenu payant » cochée.
 - Programme « Approuvé par les enseignants » : inscrit.
 - Sécurité des données : aucune collecte ; mention « S'engage à respecter les règles pour les contenus familiaux de Play » affichée.
 - Certification COPPA / RGPD cochée (appli sans collecte).
