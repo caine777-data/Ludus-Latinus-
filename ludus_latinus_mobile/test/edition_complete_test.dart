@@ -94,4 +94,30 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Merci ! Toute la Via Appia est ouverte.'), findsOneWidget);
   });
+
+  // L'élève qui termine les leçons gratuites n'a pas à chercher l'achat dans
+  // les Paramètres : toucher la leçon suivante (carte ou bouton Continuer,
+  // tous deux branchés sur ouvrirLecon) affiche l'écran d'achat.
+  testWidgets("Leçon réservée touchée : l'écran d'achat s'ouvre à sa place", (tester) async {
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 2.75;
+    addTearDown(tester.view.reset);
+    final repo = depot(AchatSimule());
+    final reservee = repo.worlds[GameRepository.mondesGratuits].lessons[1];
+    await tester.pumpWidget(MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: const Locale('fr'),
+      home: Builder(
+        builder: (context) => TextButton(
+          onPressed: () => ouvrirLecon(context, repo, reservee),
+          child: const Text('ouvrir'),
+        ),
+      ),
+    ));
+    await tester.tap(find.text('ouvrir'));
+    await tester.pumpAndSettle();
+    expect(find.byType(EditionCompleteScreen), findsOneWidget);
+    expect(find.text('Débloquer pour 3,99 €'), findsOneWidget);
+  });
 }
